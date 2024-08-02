@@ -13,6 +13,11 @@ const createUserRouter = createRouter("user");
 const createNormalRouter = createRouter("");
 const createAdminRouter = createRouter("admin");
 
+// db role
+// user role = 'gold '
+
+// ÷"/auth/forget-password"
+
 /**
  * nextjs 디테일 페이지 라우팅 방법은 경로/id 입니다.
  * id 대신 원하는 slug 를 사용하시면 되는데 그 인자를 받아서 자동으로 router 만들어주는 함수입니다.

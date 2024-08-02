@@ -6,5 +6,5 @@ export const cosmetic = [
   "Botox",
   "Filler",
   "Skinbooster",
-  "thun face",
+  "Thun face ",
 ];

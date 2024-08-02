@@ -47,7 +47,7 @@ const EmailVerificationPage = () => {
 
   const { minute, second, setStartTimer, startTimer, handleStopTimer } =
     useTimer({
-      time: 60,
+      time: 180,
       timeOver,
       setTimeOver,
     });

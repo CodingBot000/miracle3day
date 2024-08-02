@@ -24,6 +24,10 @@ export async function middleware(req: NextRequest) {
     if (req.nextUrl.pathname.startsWith("/user")) {
       return NextResponse.redirect(new URL("/", req.url));
     }
+
+    if (req.nextUrl.pathname.startsWith("/admin")) {
+      return NextResponse.redirect(new URL("/", req.url));
+    }
   }
 
   return await updateSession(req);

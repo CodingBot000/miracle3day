@@ -1,0 +1,38 @@
+.main {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 24px;
+  margin-top: 1rem;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-bottom: 1rem;
+
+  background-color: $blue;
+
+  padding: 12px 24px;
+  color: #fff;
+
+  position: sticky;
+  top: 64px;
+  z-index: 12;
+}
+
+.favorite {
+  position: absolute;
+  right: 1rem;
+}
+
+.thumbnail_box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3;
+}
+
+.thumbnail_box img {
+  border-radius: 8px;
+}

@@ -1,0 +1,49 @@
+.main {
+  display: inline-flex;
+  width: 100%;
+
+  max-width: 80%;
+  display: flex;
+
+  align-items: center;
+  flex-direction: column;
+  margin: 0 auto;
+
+  // height: 100vh;
+
+  @media screen and (min-width: 676px) {
+    width: 50%;
+  }
+}
+
+.form {
+  width: 100%;
+}
+
+.title {
+  margin-block: 3rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.code {
+  position: relative;
+  margin: 1rem 0;
+}
+
+.timer {
+  position: absolute;
+  bottom: 35%;
+  right: 5%;
+
+  color: $red;
+
+  font-weight: 300;
+  font-size: 0.875rem;
+}
+
+//modal
+
+.verify_notice {
+  margin: 1rem;
+}

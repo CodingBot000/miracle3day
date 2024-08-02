@@ -1,0 +1,27 @@
+.title {
+  padding: 1rem 0;
+
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.content {
+  height: 100vh;
+  overflow-y: scroll;
+  max-height: 100%;
+  word-wrap: break-word;
+}
+
+.btn_group {
+  display: flex;
+
+  gap: 1rem;
+
+  color: #fff;
+  border: none;
+
+  margin-top: auto;
+  margin-left: auto;
+
+  padding-top: 1rem;
+}

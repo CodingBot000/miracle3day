@@ -1,0 +1,54 @@
+.section {
+  max-width: 768px;
+  margin: 0 auto;
+  // min-height: 600px;
+}
+
+.text_wrapper {
+  margin: 2rem 0;
+
+  text-align: center;
+  line-height: 1.5rem;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.location_wrapper {
+  display: flex;
+  flex-wrap: wrap;
+
+  justify-content: center;
+  align-items: center;
+  margin: 3rem 0;
+  gap: 0.5rem;
+}
+
+.chip {
+  border-radius: 4px;
+  border: 1px solid black;
+
+  padding: 8px;
+  font-size: 0.875rem;
+
+  cursor: pointer;
+}
+
+.article_wrapper {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  margin: 0 1rem;
+}
+
+// chip css override
+.select_chip p {
+  background-color: #b024f2;
+  color: white;
+  border: none;
+  outline: none;
+
+  font-weight: 500;
+}

@@ -1,0 +1,19 @@
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: $blue;
+
+  padding: 12px 24px;
+  color: #fff;
+
+  position: sticky;
+  top: 64px;
+  z-index: 12;
+}
+
+.icons {
+  position: absolute;
+  right: 1rem;
+}

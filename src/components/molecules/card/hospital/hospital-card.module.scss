@@ -1,0 +1,30 @@
+.hospital_card_wrapper {
+  cursor: pointer;
+
+  border: 1px solid silver;
+
+  border-radius: 8px;
+}
+
+.thumbnail_box {
+  position: relative;
+  width: 100%;
+
+  aspect-ratio: 1;
+
+  & > img {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  @media screen and (min-width: 676px) {
+    aspect-ratio: 4 / 2;
+  }
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 1rem 0;
+  text-align: center;
+}

@@ -1,0 +1,31 @@
+.bg {
+  padding: 0.5rem 1rem;
+
+  position: sticky;
+  top: 0px;
+  height: 48px;
+  z-index: 10;
+  background: #fff;
+
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.wrapper {
+  height: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.wrapper div {
+  flex: 1;
+}
+
+.wrapper div:nth-child(2) {
+  display: flex;
+  justify-content: center;
+}

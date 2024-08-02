@@ -1,0 +1,16 @@
+.banner_img {
+  width: 100%;
+  aspect-ratio: 3;
+  position: relative;
+}
+
+.banner_name {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+
+  padding: 1rem;
+  background: #e5982c;
+  color: #fff;
+  border-radius: 8px;
+}

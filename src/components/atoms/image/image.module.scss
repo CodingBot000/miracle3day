@@ -1,0 +1,9 @@
+.thumbnail {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2;
+
+  & > img {
+    border-radius: 8px;
+  }
+}

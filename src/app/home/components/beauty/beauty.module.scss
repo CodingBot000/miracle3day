@@ -1,0 +1,10 @@
+.article_wrapper {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  margin: 0 1rem;
+
+  @media screen and (min-width: 450px) {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}

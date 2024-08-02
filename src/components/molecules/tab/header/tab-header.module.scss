@@ -1,0 +1,25 @@
+.menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 1rem 0;
+
+  cursor: pointer;
+}
+
+.li {
+  width: 88px;
+  text-align: center;
+
+  border-bottom: 1px solid #eee;
+  padding: 1rem;
+}
+
+.li:focus {
+  border-bottom: 2px solid black;
+}
+
+.active {
+  border-bottom: 2px solid black;
+}

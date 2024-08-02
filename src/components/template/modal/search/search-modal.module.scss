@@ -1,0 +1,38 @@
+.search {
+  outline: none;
+  border: 1px solid $gray-300;
+
+  border-radius: 4px;
+
+  width: 100%;
+
+  padding: 0.875rem 1rem;
+
+  box-sizing: border-box;
+
+  margin-bottom: 1rem;
+}
+
+.ul {
+  overflow-y: scroll;
+  height: 60vh;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.li {
+  color: $gray-400;
+  font-weight: 300;
+
+  padding: 1rem 0;
+
+  text-align: left;
+
+  text-indent: 0.5rem;
+
+  &:hover {
+    background-color: $gray-200;
+  }
+}

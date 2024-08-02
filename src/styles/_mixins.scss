@@ -1,0 +1,20 @@
+// button
+@mixin button-outline($color) {
+  color: $color;
+  border: 1px solid $color;
+
+  background-color: transparent;
+}
+
+@mixin button-contained($color) {
+  color: $white;
+  background-color: $color;
+}
+
+.container {
+  max-width: 768px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+
+  height: 80vh;
+}

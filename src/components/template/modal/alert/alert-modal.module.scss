@@ -1,0 +1,25 @@
+.title {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.content {
+  overflow-y: scroll;
+  word-wrap: break-word;
+
+  font-size: 0.875rem;
+
+  padding: 1rem 0;
+}
+
+.btn_group {
+  display: flex;
+
+  gap: 1rem;
+
+  color: #fff;
+  border: none;
+
+  margin-top: auto;
+  margin-left: auto;
+}

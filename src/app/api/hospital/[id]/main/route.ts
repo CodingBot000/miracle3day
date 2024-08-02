@@ -48,7 +48,7 @@ export async function GET(
       return Response.json({ data: null }, { status, statusText });
     }
 
-    if (!uuid) {
+    if (!uuid || uuid === "undefined") {
       const data = {
         ...hospitalData[0],
         favorite: [],

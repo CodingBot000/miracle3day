@@ -33,7 +33,7 @@ export async function generateMetadata(
   return {
     title: `${data.name} | ${capitalizeWord(searchParams.tab)}`,
     openGraph: {
-      // images: [...data.imageurls, ...previousImages],
+      images: [...data.imageurls, ...previousImages],
     },
   };
 }

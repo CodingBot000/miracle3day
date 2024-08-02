@@ -17,7 +17,7 @@ export async function generateMetadata(
     },
   };
 }
-
+  
 interface LocationDetailPageProps {
   params: {
     id: string;

@@ -10,8 +10,8 @@ import ScrollTop from "@/components/atoms/scrollTop";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "BeautyU",
-  description: "BeautyU",
+  title: "3Days Miracle",
+  description: "3Days Miracle",
 };
 
 export default function RootLayout({

@@ -47,7 +47,10 @@ export const Banner = ({ bannerItem = [] }: BannerProps) => {
                 fill
                 src={imgurl}
                 alt={name}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                layout="fill"
+                objectFit="cover"
+                objectPosition="center"
+                sizes="(max-width: 768px) 100vw, (max-width: 800px) 50vw, 33vw"
               />
               <span className={styles.banner_name}>{name}</span>
             </div>

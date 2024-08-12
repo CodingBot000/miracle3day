@@ -2,7 +2,6 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 export const uploadActions = async (prevState: any, formData: FormData) => {
   const supabase = createClient();

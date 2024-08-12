@@ -44,13 +44,14 @@ export const Banner = ({ bannerItem = [] }: BannerProps) => {
           <Link href={ROUTE.RECOMMEND_DETAIL("") + id}>
             <div className={styles.banner_img}>
               <Image
-                fill
                 src={imgurl}
                 alt={name}
-                layout="fill"
-                objectFit="cover"
-                objectPosition="center"
+                style={{
+                  objectFit: "cover",
+                  objectPosition: "center",
+                }}
                 sizes="(max-width: 768px) 100vw, (max-width: 800px) 50vw, 33vw"
+                fill
               />
               <span className={styles.banner_name}>{name}</span>
             </div>

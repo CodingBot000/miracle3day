@@ -64,7 +64,7 @@ Accordingly, please visit this page if you wish to access and view the current v
 <br /><br />
 
 
-
+{/* 
 COLLECTION OF INFORMATION
 <br /><br />
 
@@ -229,7 +229,7 @@ If you have any questions about this Privacy Policy, please contact us by email 
 
 Last updated on: 4th August, 2024
 
-        
+         */}
         </p>
       </ConfirmModal>
 

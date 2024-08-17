@@ -55,7 +55,7 @@ export const Menu = ({}) => {
 
         <div className={styles.chip_wrapper}>
           {list.map(({ href, menu }) => {
-            // let logRenderMenu = `log logRenderMenu title=${title} href=${href}`;
+            // let logRenderMenu = `log logRenderMenu title=${title} href=${href} menu=${menu}`;
             // console.log(logRenderMenu);
             // const isHref = title === "Location" ? href : "#";
             

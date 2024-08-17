@@ -43,6 +43,7 @@ export const ROUTE = {
   HOSPITAL_DETAIL: createDetailRouter("HOSPITAL"),
   EVENT: createNormalRouter("EVENT"),
   EVENT_DETAIL: createDetailRouter("EVENT"),
+  ABOUTUS: createNormalRouter("ABOUTUS"),
   RECOMMEND: createNormalRouter("RECOMMEND"),
   RECOMMEND_DETAIL: createDetailRouter("RECOMMEND"),
   FAVORITE: createUserRouter("FAVORITE"),

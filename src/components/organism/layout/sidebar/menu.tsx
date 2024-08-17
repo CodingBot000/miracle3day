@@ -23,11 +23,11 @@ type TMenuList = {
 const menuList: TMenuList[] = [
   {
     title: "Surgical Procedure",
-    list: createSidebarPath(surgical, "surgical"),
+    list: createSidebarPath(surgical, "procedure"),
   },
   {
     title: "Cosmetic Procedure",
-    list: createSidebarPath(cosmetic, "cosmetic"),
+    list: createSidebarPath(cosmetic, "procedure"),
   },
   {
     title: "Location",
@@ -38,7 +38,8 @@ const menuList: TMenuList[] = [
 const menu: TSubMenuList[] = [
   { title: "Favorite", href: ROUTE.FAVORITE },
   { title: "Event", href: ROUTE.EVENT },
-  { title: "About Us", href: "#" },
+  { title: "About Us", href: ROUTE.ABOUTUS },
+  // { title: "About Us", href: "#" },
 ];
 
 export const Menu = ({}) => {
@@ -47,16 +48,21 @@ export const Menu = ({}) => {
   const { handleOpenModal, open } = useModal();
 
   const renderMenuList = ({ title, list }: TMenuList) => {
+    
     return (
       <section key={title} className={styles.section}>
         <h2 className={styles.title}>{title}</h2>
 
         <div className={styles.chip_wrapper}>
           {list.map(({ href, menu }) => {
-            const isHref = title === "Location" ? href : "#";
+            // let logRenderMenu = `log logRenderMenu title=${title} href=${href} menu=${menu}`;
+            // console.log(logRenderMenu);
+            // const isHref = title === "Location" ? href : "#";
+            
 
             return (
-              <Link key={menu} href={isHref} onClick={handleOpenModal}>
+              // <Link key={menu} href={isHref} onClick={handleOpenModal}>
+              <Link key={menu} href={href} onClick={handleOpenModal}>
                 <Chip>{menu}</Chip>
               </Link>
             );
@@ -67,6 +73,9 @@ export const Menu = ({}) => {
   };
 
   const renderSubMenu = ({ title, href }: TSubMenuList) => {
+    // let logRenderSubMenu = `log renderSubMenu title=${title} href=${href}`;
+    // console.log(logRenderSubMenu);
+
     return (
       <div className={styles.subMenu} key={title}>
         <Link href={href} onClick={handleOpenModal}>

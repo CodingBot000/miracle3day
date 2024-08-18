@@ -22,6 +22,7 @@ export default async function Home({
 
   const renderLocalChip = () => {
     return (
+      <>
       <div className={styles.location_wrapper}>
         {location.map((name, i) => {
           const selectChipStyle =
@@ -40,13 +41,20 @@ export default async function Home({
             </Link>
           );
         })}
-        <Link
-          href={ROUTE.LOCATION_DETAIL("") + location[+locationNum || 0]}
-          scroll={true}
-        >
-          <Chip>{"See All"}</Chip>
-        </Link>
+        
       </div>
+      <br />
+      <div className={styles.align_right}>
+        <Link
+            href={ROUTE.LOCATION_DETAIL("") + location[+locationNum || 0]}
+            scroll={true}
+          >
+            {/* <Chip>{"See All"}</Chip> */}
+            See All
+          </Link>
+          </div>
+          <br />
+      </>
     );
   };
 

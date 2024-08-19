@@ -14,9 +14,12 @@ export const HospitalThumbnail = ({ imageurls }: SlideImgProps) => {
     <SlideImg imageurls={imageurls}>
       {(item) => {
         return (
+          //  <div className={styles.thumbnail_box}>
+          //   <Image fill src={item} alt={""} />
+          // </div>
           <div className={styles.thumbnail_box}>
-            <Image fill src={item} alt={""} />
-          </div>
+          <Image fill src={item} alt={""} className={styles.image} />
+        </div>
         );
       }}
     </SlideImg>

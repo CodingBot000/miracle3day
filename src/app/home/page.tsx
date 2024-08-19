@@ -48,7 +48,12 @@ export default async function Home({
             scroll={true}
           >
             
-            See All
+            <img
+            src={`/icons/icon_see_all.png`}
+            alt="see all"
+            width={38}
+            height={38}
+            />
           </Link>
           </p>
         <br />

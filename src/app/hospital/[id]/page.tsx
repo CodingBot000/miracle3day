@@ -64,14 +64,15 @@ const HospitalDetailPage = async ({
       <PageHeader name={data.name}>
         <HospitalFavoriteIcon isFavorite={isFavorite} />
       </PageHeader>
-      <div className={styles.main}>
+      <div>
         <HospitalThumbnail imageurls={data.imageurls} />
-
+        <div className={styles.main}>
         {/* tab */}
         <HospitalTab currentTab={searchParams.tab} id={params.id} />
 
         {/* floating */}
         <Floating float={getFloatList} />
+        </div>
       </div>
     </main>
   );

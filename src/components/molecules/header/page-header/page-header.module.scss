@@ -3,11 +3,12 @@
   justify-content: center;
   align-items: center;
 
-  background-color: $blue;
-
+  background-color: rgb(237, 228, 235);
+  height: 35px;
   padding: 12px 24px;
-  color: #fff;
-
+  color: #464344;
+  font-weight: bold;
+  font-size: 25px;
   position: sticky;
   top: 64px;
   z-index: 12;

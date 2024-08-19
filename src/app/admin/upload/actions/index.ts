@@ -139,9 +139,9 @@ export const uploadActions = async (prevState: any, formData: FormData) => {
     desc_facilities:
       "Separate Male/Female Restrooms, Wireless Internet, Parking, Valet Parking",
     desc_doctors_imgurls: [
-      "https://afsfroagcvtulsttshvc.supabase.co/storage/v1/object/public/hospitalstatic/staticdata/images/doctors/doctor_reone1.png",
-      "https://afsfroagcvtulsttshvc.supabase.co/storage/v1/object/public/hospitalstatic/staticdata/images/doctors/doctor_reone2.png",
-      "https://afsfroagcvtulsttshvc.supabase.co/storage/v1/object/public/hospitalstatic/staticdata/images/doctors/doctor_reone3.png",
+      "https://tqyarvckzieoraneohvv.supabase.co/storage/v1/object/public/hospitalstatic/staticdata/images/doctors/doctor_reone1.png",
+      "https://tqyarvckzieoraneohvv.supabase.co/storage/v1/object/public/hospitalstatic/staticdata/images/doctors/doctor_reone2.png",
+      "https://tqyarvckzieoraneohvv.supabase.co/storage/v1/object/public/hospitalstatic/staticdata/images/doctors/doctor_reone3.png",
     ],
     etc: "",
   });

@@ -24,14 +24,26 @@
   position: relative;
   width: 100%;
   aspect-ratio: 10 / 7;
-
   min-width: 80px;
-
   flex: 3;
 
   & img {
     border-radius: 8px;
+    width: 100%;           // 이미지가 부모의 가로 너비에 맞게 조정됩니다.
+    height: 100%;          // 이미지가 부모의 세로 높이에 맞게 조정됩니다.
+    object-fit: cover;     // 이미지가 부모 요소의 크기에 맞춰 크롭되며, 비율을 유지합니다.
   }
+  // position: relative;
+  // width: 100%;
+  // aspect-ratio: 10 / 7;
+
+  // min-width: 80px;
+
+  // flex: 3;
+
+  // & img {
+  //   border-radius: 8px;
+  // }
 }
 
 .content {

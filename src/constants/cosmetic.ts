@@ -6,7 +6,7 @@ export const cosmetic = [
   "Botox",
   "Filler",
   "Skinbooster",
-  "Thun face",
+  "Tune face",
 ];
 // export const cosmeticMapper = [
 //   {"Ulthera":2000},
@@ -16,7 +16,7 @@ export const cosmetic = [
 //   {"Botox":2004},
 //   {"Filler":2005},
 //   {"Skinbooster":2006},
-//   {"Thun face":2007},
+//   {"Tune face":2007},
 // ];
 
 // export const cosmeticMapper = [
@@ -27,5 +27,5 @@ export const cosmetic = [
 //   {2004:"Botox"},
 //   {2005:"Filler"},
 //   {2006:"Skinbooster"},
-//   {2007:"Thun face"},
+//   {2007:"Tune face"},
 // ];

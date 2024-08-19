@@ -6,6 +6,7 @@ import { Footer } from "@/components/organism/layout/footer";
 import { Header } from "@/components/organism/layout/header";
 import Providers from "@/provider";
 import ScrollTop from "@/components/atoms/scrollTop";
+import styles from "@/app/layout.module.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,13 +23,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>
-          <ScrollTop />
-          <div id="modal-root" />
-          <Header />
-          {children}
-          <Footer />
-        </Providers>
+        <div className={styles.bg}>
+          <Providers>
+            <ScrollTop />
+            <div id="modal-root" />
+            <Header />
+            {children}
+            <Footer />
+          </Providers>
+        </div>
       </body>
     </html>
   );

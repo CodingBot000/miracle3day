@@ -29,13 +29,14 @@ const ProcedureDetailPage = async ({
   params: { id },
 }: ProcedureDetailPageProps) => {
 
-    const formattedKey = id.toLowerCase().replace(/\s+/g, '');
+   const formattedKey = id.toLowerCase().replace(/(\s+|%20)/g, '');
     let surgery_id_unique = undefined
     // procedureMapper 배열을 순회하며 값을 찾음
     for (const procedure of procedureMapper) {
       // 각 요소의 키를 소문자로 변환하고 공백을 제거
       const procedureKey = Object.keys(procedure)[0].toLowerCase().replace(/\s+/g, '');
       
+      // console.log('procedureKey, formattedKey:' , procedureKey, formattedKey);
       // 입력 받은 키와 매칭되는 경우 해당 값을 반환
       if (procedureKey === formattedKey) {
         surgery_id_unique = procedure[Object.keys(procedure)[0]];
@@ -47,6 +48,7 @@ const ProcedureDetailPage = async ({
     if (!surgery_id_unique) {
         return (
             <main>
+              <p>{id}</p>
                 <p>mappingResult : {surgery_id_unique}</p>
                 <p>error {id}</p>
             </main>
@@ -62,7 +64,7 @@ const ProcedureDetailPage = async ({
     const name = data.data.name
     const imageurls = data.data.imageurls
     const description = data.data.description
-
+    
     if (!imageurls || imageurls.length === 0) {
         return (
             <main>
@@ -74,29 +76,40 @@ const ProcedureDetailPage = async ({
     }
     
     const src = imageurls[0]
-    
+
+    const parsedData = description.replace(/\\"/g, '"');
+    const descriptionArray = parsedData.split('\\n')
+ 
     return (
         <main>
-            <div className={styles.header}>
-                <p>{type}</p>            
+            <div className={styles.header_sub}>
+                <p>{type} Procedure</p>            
             </div>
             <div className={styles.header}>
                 <p>{name}</p>
             </div>
+            <br />
             <div className={styles.display_image}>
-                <img src={src} alt={name} />
+                <img src={src} height={350} alt={name} />
             </div>
             <br />
             <br />
             <div className={styles.description}>
             {/* <div style={{ whiteSpace: "pre-wrap"}}> */}
-                {description}
-            {/* {description.split('\n').map((line, index) => (
+                {/* {description} */}
+            {/* {description.split(/\n/).map((line, index) => (
                     <React.Fragment key={index}>
                         {line}
                         <br />
                     </React.Fragment>
                 ))}  */}
+                {
+                  descriptionArray.map(line =>
+                   <React.Fragment key={line}>
+                    {line}<br/>
+                   </React.Fragment>)
+                 }
+                
             </div>
         </main>
     );

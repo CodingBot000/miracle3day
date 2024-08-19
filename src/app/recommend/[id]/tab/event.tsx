@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-
+import { EVENT_ITEM_GRID_COLUMN } from "@/constants/key";
 import { EventCard } from "@/components/molecules/card";
 import { ROUTE } from "@/router";
 
@@ -12,7 +12,7 @@ import { daysYMDFormat } from "@/utils/days";
 const RecommendEvent = () => {
   return (
     <InfinityItemList
-      grid="2"
+      grid={EVENT_ITEM_GRID_COLUMN}
       fetchFn={getSurgeriesEventAPI}
       queryKey={"surgeries_event"}
     >

@@ -22,6 +22,7 @@ export default async function Home({
 
   const renderLocalChip = () => {
     return (
+      <>
       <div className={styles.location_wrapper}>
         {location.map((name, i) => {
           const selectChipStyle =
@@ -40,35 +41,41 @@ export default async function Home({
             </Link>
           );
         })}
-        <Link
-          href={ROUTE.LOCATION_DETAIL("") + location[+locationNum || 0]}
-          scroll={true}
-        >
-          <Chip>{"See All"}</Chip>
-        </Link>
-      </div>
+         </div>
+          <p className={styles.align_right}>
+          <Link
+            href={ROUTE.LOCATION_DETAIL("") + location[+locationNum || 0]}
+            scroll={true}
+          >
+            
+            See All
+          </Link>
+          </p>
+        <br />
+    
+      </>
     );
   };
 
   return (
     <main>
       <Banner bannerItem={bannerItem.data} />
-
+      <br /><br /><br />
       <section className={styles.section}>
         {/* Beauty */}
         <div className={styles.text_wrapper}>
-          <h2 className={styles.title}>New Beauty</h2>
-          <p>Make Attraction</p>
+          <p className={styles.title}>New Beauty</p>
+          <p className={styles.title_sub}>Make Attraction</p>
         </div>
 
         <Beauty />
       </section>
-
+      <br /><br /><br />
       {/* LocationHospital */}
       <section className={styles.section}>
         <div className={styles.text_wrapper}>
-          <h2 className={styles.title}>Hospitals</h2>
-          <p>Choose the region u want</p>
+          <p className={styles.title}>Hospitals</p>
+          <p className={styles.title_sub}>Choose the region u want</p>
         </div>
         {renderLocalChip()}
         <LocationHospital locationNum={locationNum} />

@@ -13,16 +13,24 @@
 
 .title {
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 2.5rem;
+  margin-bottom: 25px;
+}
+
+.title_sub {
+  font-size: 1.2rem;
 }
 
 .location_wrapper {
   display: flex;
   flex-wrap: wrap;
-
+  
   justify-content: center;
   align-items: center;
-  margin: 3rem 0;
+  // margin: 3rem 0;
+  margin-left: 3rem 0;
+  margin-right: 3rem 0;
+  margin-bottom: 20px;
   gap: 0.5rem;
 }
 
@@ -36,6 +44,14 @@
   cursor: pointer;
 }
 
+.align_right {
+  font-weight: bold;
+  font-size: 23px;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 20px;
+}
+
 .article_wrapper {
   display: grid;
   gap: 1rem;
@@ -45,10 +61,11 @@
 
 // chip css override
 .select_chip p {
-  background-color: #b024f2;
+  background-color: #1cd919;
   color: white;
-  border: none;
-  outline: none;
+  // border: none;
+  // outline: none;
+  border: 2px solid #00593e;
 
   font-weight: 500;
 }

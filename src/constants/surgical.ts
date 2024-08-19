@@ -28,5 +28,5 @@ export const procedureMapper: { [key: string]: number }[] = [
   {"Botox":2004},
   {"Filler":2005},
   {"Skinbooster":2006},
-  {"Thun face":2007},
+  {"Tune face":2007},
 ];

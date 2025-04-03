@@ -67,7 +67,8 @@ export default async function Home({
       <Banner bannerItem={bannerItem.data} />
       <br /><br /><br />
       <section className={styles.section}>
-        {/* Beauty */}
+
+        {/* New Beauty */}
         <div className={styles.text_wrapper}>
           <p className={styles.title}>New Beauty</p>
           <p className={styles.title_sub}>Make Attraction</p>
@@ -75,6 +76,7 @@ export default async function Home({
 
         <Beauty />
       </section>
+      
       <br /><br /><br />
       {/* LocationHospital */}
       <section className={styles.section}>

@@ -32,6 +32,7 @@ export const HospitalCard = ({
         <div className={styles.thumbnail_box}>
           <Image fill src={src} alt={alt} priority />
         </div>
+      
       </Link>
       <p className={styles.name}>{name}</p>
     </article>

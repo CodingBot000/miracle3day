@@ -1,4 +1,4 @@
-import "@/styles/_reset.scss";
+import "../styles/globals.scss";
 
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -6,7 +6,6 @@ import { Footer } from "@/components/organism/layout/footer";
 import { Header } from "@/components/organism/layout/header";
 import Providers from "@/provider";
 import ScrollTop from "@/components/atoms/scrollTop";
-import styles from "@/app/layout.module.css";
 import LoadingSpinner from "@/components/atoms/loading/spinner";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -24,12 +23,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className={styles.bg}>
+        <div className="bg-[rgb(247,248,250)]">
           <Providers>
             <ScrollTop />  
             <div id="modal-root" />
             <Header />
-            {children}
+            <main className="pt-4">
+              {children}
+            </main>
             <Footer />
             {/* <LoadingSpinner/> */}
             

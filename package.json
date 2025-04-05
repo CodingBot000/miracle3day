@@ -20,6 +20,7 @@
     "@types/googlemaps": "^3.43.3",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.12",
+    "framer-motion": "^12.6.3",
     "next": "14.2.4",
     "react": "^18",
     "react-dom": "^18",

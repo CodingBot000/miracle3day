@@ -1,0 +1,33 @@
+@tailwind utilities;
+
+.section {
+  @apply max-w-container mx-auto;
+}
+
+.text_wrapper {
+  @apply my-8 text-center leading-6;
+}
+
+.title {
+  @apply font-bold text-[2.5rem] mb-[25px];
+}
+
+.title_sub {
+  @apply text-[1.2rem];
+}
+
+.location_wrapper {
+  @apply flex flex-wrap justify-center items-center mb-5 gap-2;
+}
+
+.chip {
+  @apply rounded border border-black p-2 text-sm cursor-pointer;
+}
+
+.align_right {
+  @apply font-bold text-[23px] flex justify-end mr-5;
+}
+
+.article_wrapper {
+  @apply grid gap-4 mx-4;
+} 

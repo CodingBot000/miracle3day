@@ -1,6 +1,5 @@
 import Link from "next/link";
-
-import styles from "./home.module.scss";
+import styles from "./home.module.css";
 
 import { Chip } from "@/components/atoms/chip";
 import { location } from "@/constants";
@@ -12,6 +11,7 @@ import Beauty from "./components/beauty";
 import LocationHospital from "./components/location";
 import { Banner } from "@/components/organism/layout/banner";
 import { clsx } from "clsx";
+import { Hero } from "@/components/organism/layout/hero";
 
 export default async function Home({
   searchParams: { locationNum },
@@ -23,7 +23,7 @@ export default async function Home({
   const renderLocalChip = () => {
     return (
       <>
-      <div className={styles.location_wrapper}>
+      <div className="flex flex-wrap justify-center items-center mx-12 mb-5 gap-2">
         {location.map((name, i) => {
           const selectChipStyle =
             (locationNum === undefined && i === 0) || +locationNum === i;
@@ -31,7 +31,7 @@ export default async function Home({
           return (
             <Link
               className={clsx({
-                [styles.select_chip]: selectChipStyle,
+                "select-chip": selectChipStyle,
               })}
               key={name}
               href={`/home?locationNum=${i}`}
@@ -42,7 +42,7 @@ export default async function Home({
           );
         })}
          </div>
-          <p className={styles.align_right}>
+          <p className="font-bold text-[23px] flex justify-end mr-5">
           <Link
             href={ROUTE.LOCATION_DETAIL("") + location[+locationNum || 0]}
             scroll={true}
@@ -64,14 +64,15 @@ export default async function Home({
 
   return (
     <main>
+      <Hero />
       <Banner bannerItem={bannerItem.data} />
       <br /><br /><br />
-      <section className={styles.section}>
+      <section className="max-w-container mx-auto">
 
         {/* New Beauty */}
-        <div className={styles.text_wrapper}>
-          <p className={styles.title}>New Beauty</p>
-          <p className={styles.title_sub}>Make Attraction</p>
+        <div className="my-8 text-center leading-6">
+          <p className="font-bold text-[2.5rem] mb-[25px]">New Beauty</p>
+          <p className="text-[1.2rem]">Make Attraction</p>
         </div>
 
         <Beauty />
@@ -79,10 +80,10 @@ export default async function Home({
       
       <br /><br /><br />
       {/* LocationHospital */}
-      <section className={styles.section}>
-        <div className={styles.text_wrapper}>
-          <p className={styles.title}>Hospitals</p>
-          <p className={styles.title_sub}>Choose the region u want</p>
+      <section className="max-w-container mx-auto">
+        <div className="my-8 text-center leading-6">
+          <p className="font-bold text-[2.5rem] mb-[25px]">Hospitals</p>
+          <p className="text-[1.2rem]">Choose the region u want</p>
         </div>
         {renderLocalChip()}
         <LocationHospital locationNum={locationNum} />

@@ -1,0 +1,11 @@
+@tailwind utilities;
+
+.article_wrapper {
+  @apply grid gap-4 mx-4 grid-cols-[repeat(auto-fill,minmax(150px,1fr))];
+}
+
+@media screen and (min-width: 450px) {
+  .article_wrapper {
+    @apply grid-cols-[repeat(auto-fill,minmax(200px,1fr))];
+  }
+} 

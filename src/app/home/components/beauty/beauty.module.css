@@ -1,0 +1,21 @@
+@tailwind utilities;
+
+.article_wrapper {
+  @apply grid gap-4 mx-4 grid-cols-[repeat(auto-fill,minmax(150px,1fr))];
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+}
+
+@media screen and (min-width: 768px) {
+  .article_wrapper {
+    @apply grid-cols-3 gap-6 mx-auto;
+    max-width: 1024px; /* 데스크톱에서 컨테이너 최대 너비를 1024px로 변경 */
+    grid-template-rows: repeat(2, auto);
+    height: auto;
+  }
+  
+  .article_wrapper article {
+    width: 100%; /* 셀 너비를 100%로 수정하여 그리드 셀을 꽉 채움 */
+    padding: 0 10px; /* 좌우 패딩 추가 */
+  }
+} 

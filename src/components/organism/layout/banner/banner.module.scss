@@ -1,6 +1,7 @@
 .banner_img {
   width: 100%;
-  // aspect-ratio: 3/2; /* 세로를 2배로 */
+  max-width: 800px;
+  margin: 0 auto;
   position: relative;
   overflow: hidden; /* 이미지가 컨테이너를 넘지 않도록 */
   background-color: white;
@@ -15,7 +16,7 @@
 @media (min-width: 769px) {
   .banner_img {
     // aspect-ratio: 3/1.5; /* 세로를 50% 더 키움 */
-    aspect-ratio: 5/2; /* 세로를 50% 더 키움 */
+    aspect-ratio: 4/2; /* 세로를 50% 더 키움 */
   }
 }
 

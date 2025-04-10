@@ -50,7 +50,7 @@ export const Banner = ({ bannerItem = [] }: BannerProps) => {
                   objectFit: "cover",
                   objectPosition: "center",
                 }}
-                sizes="(max-width: 768px) 100vw, (max-width: 800px) 50vw, 33vw"
+                sizes="(max-width: 768px) 50vw, (max-width: 800px) 50vw, 33vw"
                 fill
               />
               <span className={styles.banner_name}>{name}</span>

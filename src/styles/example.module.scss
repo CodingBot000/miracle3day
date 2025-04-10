@@ -1,0 +1,33 @@
+.example_container {
+  @apply flex flex-col items-center justify-center p-6 rounded-lg;
+  
+  // 일반 SCSS와 Tailwind 혼합 사용 가능
+  background-color: $gray-200; // _variables.scss에서 정의한 변수 사용
+  
+  &:hover {
+    @apply shadow-lg bg-gray-100;
+    transition: all 0.3s ease;
+  }
+  
+  // 중첩 선택자 사용
+  .title {
+    @apply text-xl font-bold mb-4 text-black-200;
+    
+    @include responsive(tablet) { // _mixins.scss에서 정의한 믹스인 사용
+      @apply text-2xl;
+    }
+  }
+  
+  .content {
+    @apply text-sm leading-relaxed;
+    
+    p {
+      @apply mb-2;
+    }
+    
+    // 애니메이션 클래스 적용
+    .animated {
+      @apply animate-slide-in-left-right;
+    }
+  }
+} 

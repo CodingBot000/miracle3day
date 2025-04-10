@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import './_variables.scss';
+@import './_mixins.scss';
+@import './_reset.scss';
+@import './_animation.scss';
+
+// 커스텀 Tailwind 확장
+@layer base {
+  html {
+    @apply antialiased;
+  }
+  
+  body {
+    @apply bg-white text-black leading-normal;
+  }
+  
+  a {
+    @apply flex text-inherit no-underline cursor-pointer;
+  }
+  
+  a:focus,
+  a:hover,
+  a:active {
+    @apply outline-none;
+  }
+  
+  main {
+    @apply min-h-[calc(100vh-10rem)];
+  }
+}
+
+@layer components {
+  .container {
+    @apply max-w-[1280px] mx-auto px-6;
+  }
+  
+  .btn-outline {
+    @apply border border-current bg-transparent;
+  }
+  
+  .btn-contained {
+    @apply text-white;
+  }
+  
+  .select-chip p {
+    @apply bg-green text-white border-2 border-green-100 font-medium;
+  }
+} 

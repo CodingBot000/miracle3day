@@ -17,14 +17,17 @@ import { useFormState } from "react-dom";
 import { YoutubeIcon } from "@/components/icons/youtube";
 import { TikTokIcon } from "@/components/icons/tiktok";
 import { BlogIcon } from "@/components/icons/blog";
+import { GoogleIcon } from "@/components/icons/google";
+import { AppleIcon } from "@/components/icons/apple";
+import { FaceBookIcon } from "@/components/icons/facebook";
 
 const snsLoginList: TSnsType[] = ["google", "facebook", "apple"];
 
 // sns login icon
 const iconList: Record<TSnsType, string | JSX.Element> = {
-  apple: <YoutubeIcon />,
-  facebook: <TikTokIcon />,
-  google: <BlogIcon />,
+  apple: <AppleIcon />,
+  facebook: <FaceBookIcon />,
+  google: <GoogleIcon />,
 };
 
 const LoginPage = () => {

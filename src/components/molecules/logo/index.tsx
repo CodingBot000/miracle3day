@@ -7,7 +7,7 @@ const Logo = () => {
   return (
     <div>
       <Link href={ROUTE.HOME}>
-        <Image width={82} height={42} src={"/logo/logo.png"} alt="logo" />
+        <Image width={172} height={42} src={"/logo/logo.png"} alt="logo" />
       </Link>
     </div>
   );

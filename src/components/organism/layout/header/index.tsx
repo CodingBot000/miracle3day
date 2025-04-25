@@ -10,10 +10,8 @@ export const Header = () => {
   return (
     <header className={styles.bg}>
       <div className={styles.wrapper}>
-        <Menu />
-
         <Logo />
-
+        <Menu />
         <Auth />
       </div>
     </header>

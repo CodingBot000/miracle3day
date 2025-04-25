@@ -1,21 +1,20 @@
 "use client";
 
 import styles from "./sign-up.module.scss";
-
-import InputField from "@/components/molecules/form/input-field";
-
 import { ROUTE } from "@/router";
-
-import signUpActions from "./actions/sign-up.action";
-
 import Link from "next/link";
 import { NationModal } from "./components/modal/nations";
-
 import SignUpButton from "./components/button/sign-up";
 import { useFormState } from "react-dom";
 import { ChangeEvent, useEffect, useState } from "react";
 import { emailRegExp, passwordRegExp } from "@/utils/regexp";
 import { AlertModal } from "@/components/template/modal/alert";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Mail, Lock, User, UserPlus } from "lucide-react";
+import signUpActions from "./actions/sign-up.action";
+import { clsx } from "clsx";
 
 type InputKey = "email" | "password" | "password_confirm" | "name" | "nickname";
 
@@ -53,14 +52,6 @@ const SignUpPage = () => {
       value: "",
     },
   });
-
-  const inputFields: { label: string; name: InputKey }[] = [
-    { label: "Email", name: "email" },
-    { label: "Password", name: "password" },
-    { label: "Password Confirm", name: "password_confirm" },
-    { label: "Name", name: "name" },
-    { label: "Nickname", name: "nickname" },
-  ];
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -105,30 +96,111 @@ const SignUpPage = () => {
     <main className={styles.main}>
       <h1 className={styles.title}>Sign Up</h1>
       <form className={styles.form} action={formAction}>
-        {inputFields.map(({ label, name }) => (
-          <div key={name} className={styles.input_field}>
-            <InputField
-              label={label}
-              name={name}
-              type={name.startsWith("password") ? "password" : "text"}
-              onChange={handleChange}
-              value={input[name]?.value}
-              isError={input[name]?.error}
-            />
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="email">Email</Label>
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="Enter your email"
+                value={input.email.value}
+                onChange={handleChange}
+                className={clsx("pl-10", { "border-red-500": input.email.error })}
+              />
+            </div>
           </div>
-        ))}
+
+          <div className="space-y-2">
+            <Label htmlFor="password">Password</Label>
+            <div className="relative">
+              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                placeholder="Enter your password"
+                value={input.password.value}
+                onChange={handleChange}
+                className={clsx("pl-10", { "border-red-500": input.password.error })}
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="password_confirm">Password Confirm</Label>
+            <div className="relative">
+              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Input
+                id="password_confirm"
+                name="password_confirm"
+                type="password"
+                placeholder="Confirm your password"
+                value={input.password_confirm.value}
+                onChange={handleChange}
+                className={clsx("pl-10", { "border-red-500": input.password_confirm.error })}
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="name">Name</Label>
+            <div className="relative">
+              <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Input
+                id="name"
+                name="name"
+                type="text"
+                placeholder="Enter your name"
+                value={input.name.value}
+                onChange={handleChange}
+                className={clsx("pl-10", { "border-red-500": input.name.error })}
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="nickname">Nickname</Label>
+            <div className="relative">
+              <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Input
+                id="nickname"
+                name="nickname"
+                type="text"
+                placeholder="Enter your nickname"
+                value={input.nickname.value}
+                onChange={handleChange}
+                className={clsx("pl-10", { "border-red-500": input.nickname.error })}
+              />
+            </div>
+          </div>
+        </div>
 
         <div className={styles.input_field}>
           <NationModal />
         </div>
 
-        <div className={styles.btn}>
-          <SignUpButton disabled={disabled} />
+        <div className="space-y-4 mt-6">
+          <Button
+            type="submit"
+            className="w-full flex items-center justify-center gap-2"
+            disabled={disabled}
+          >
+            <UserPlus className="h-4 w-4" />
+            Sign Up
+          </Button>
+          
+          <Link href={ROUTE.LOGIN} className="block">
+            <Button 
+              variant="outline" 
+              className="w-full flex items-center justify-center gap-2"
+            >
+              Already have an account? Log in
+            </Button>
+          </Link>
         </div>
-
-        <Link className={styles.rollback} href={ROUTE.LOGIN}>
-          Already have an account? Log in
-        </Link>
       </form>
 
       <AlertModal open={!!message} onCancel={() => setMessage(null)}>

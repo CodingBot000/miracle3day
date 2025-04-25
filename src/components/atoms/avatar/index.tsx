@@ -8,6 +8,7 @@ interface AvatarProps {
 }
 
 const Avatar = ({ alt, src }: AvatarProps) => {
+  console.log(`Avatar src: ${src}`);
   return (
     <Image
       className={styles.avatar}

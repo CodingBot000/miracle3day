@@ -7,6 +7,7 @@ import { Header } from "@/components/organism/layout/header";
 import Providers from "@/provider";
 import ScrollTop from "@/components/atoms/scrollTop";
 import LoadingSpinner from "@/components/atoms/loading/spinner";
+import MobileMenu from "@/components/organism/layout/mobile-menu";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,6 +33,7 @@ export default function RootLayout({
               {children}
             </main>
             <Footer />
+            <MobileMenu />
             {/* <LoadingSpinner/> */}
             
           </Providers>

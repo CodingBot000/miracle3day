@@ -12,6 +12,7 @@ import LocationHospital from "./components/location";
 import { Banner } from "@/components/organism/layout/banner";
 import { clsx } from "clsx";
 import { Hero } from "@/components/organism/layout/hero";
+import Image from "next/image";
 
 export default async function Home({
   searchParams: { locationNum },
@@ -47,8 +48,7 @@ export default async function Home({
             href={ROUTE.LOCATION_DETAIL("") + location[+locationNum || 0]}
             scroll={true}
           >
-            
-            <img
+            <Image
             src={`/icons/icon_see_all.png`}
             alt="see all"
             width={38}

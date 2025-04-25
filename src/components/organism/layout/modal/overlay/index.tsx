@@ -1,62 +1,26 @@
 "use client";
 
-import { MouseEvent, PropsWithChildren, useEffect, useRef } from "react";
-
-import Portal from "@/components/common/portal";
-
-import styles from "./modal-overlay.module.scss";
-import { clsx } from "clsx";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 
 interface ModalOverlayProps {
   open: boolean;
   handleClick: () => void;
-
-  type?: "alert" | "overlay";
+  children: React.ReactNode;
+  className?: string;
 }
 
 export const ModalOverlay = ({
-  children,
   open,
   handleClick,
-  type = "overlay",
-}: PropsWithChildren<ModalOverlayProps>) => {
-  const modalRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [open]);
-
-  const handleOutsideClick = (e: MouseEvent<HTMLDivElement>) => {
-    if (modalRef.current === e.target) {
-      handleClick();
-    }
-  };
-
-  if (!open) return null;
-
+  children,
+  className,
+}: ModalOverlayProps) => {
   return (
-    <Portal>
-      <div
-        ref={modalRef}
-        onClick={handleOutsideClick}
-        className={styles.overlay}
-      >
-        <div
-          className={clsx(styles.open, {
-            [styles.alert]: type === "alert",
-          })}
-        >
-          {children}
-        </div>
-      </div>
-    </Portal>
+    <Dialog open={open} onOpenChange={handleClick}>
+      <DialogContent className={cn("sm:max-w-md", className)}>
+        {children}
+      </DialogContent>
+    </Dialog>
   );
 };

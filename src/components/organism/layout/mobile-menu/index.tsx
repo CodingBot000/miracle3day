@@ -2,33 +2,48 @@
 
 import { Home, Stethoscope, Calendar, MapPin, Heart } from "lucide-react";
 import styles from "./mobile-menu.module.scss";
+import { ROUTE } from "@/router";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { location } from "@/constants";
 
 const MobileMenu = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const locationNum = searchParams.get('locationNum') || '0';
+
   const handleHomeClick = () => {
-    console.log("Home clicked");
+    if (pathname === ROUTE.HOME) return;
+    router.push(ROUTE.HOME);
   };
 
   const handleProcedureClick = () => {
-    console.log("Procedure clicked");
+    if (pathname === ROUTE.RECOMMEND) return;
+    router.push(ROUTE.RECOMMEND);
   };
 
   const handleEventClick = () => {
-    console.log("Event clicked");
+    if (pathname === ROUTE.EVENT) return;
+    router.push(ROUTE.EVENT);
   };
 
   const handleLocationClick = () => {
-    console.log("Location clicked");
+    const currentLocation = location[parseInt(locationNum)];
+    const targetPath = ROUTE.LOCATION_DETAIL("") + currentLocation;
+    if (pathname === targetPath) return;
+    router.push(targetPath);
   };
 
   const handleFavoriteClick = () => {
-    console.log("Favorite clicked");
+    if (pathname === ROUTE.FAVORITE) return;
+    router.push(ROUTE.FAVORITE);
   };
 
   return (
     <div className={styles.mobile_menu}>
       <div className={styles.menu_item} onClick={handleHomeClick}>
         <Home className={styles.icon} />
-        <span className={styles.label}>홈</span>
+        <span className={styles.label}>Home</span>
       </div>
       <div className={styles.menu_item} onClick={handleProcedureClick}>
         <Stethoscope className={styles.icon} />

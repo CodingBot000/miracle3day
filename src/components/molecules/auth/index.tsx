@@ -3,10 +3,11 @@ import { ROUTE } from "@/router";
 import Link from "next/link";
 
 import styles from "./auth-header.module.scss";
-import Button from "@/components/atoms/button";
+import { Button } from "@/components/ui/button";
 
 import { getUserAPI } from "@/app/api/auth/getUser";
 import { User } from "@supabase/supabase-js";
+import { LogIn, User as UserIcon } from "lucide-react";
 
 const Auth = async () => {
   const users = await getUserAPI();
@@ -26,11 +27,30 @@ const Auth = async () => {
   return (
     <div className={styles.auth_header}>
       <Link href={href}>
-        <Button color="blue">
-          {users ? text(users.user) || users.user.email : "LOGIN"}
+        <Button 
+          variant="outline" 
+          className="flex items-center gap-2 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+        >
+          {users ? (
+            <>
+              <UserIcon className="h-4 w-4" />
+              <span>{text(users.user) || users.user.email}</span>
+            </>
+          ) : (
+            <>
+              <LogIn className="h-4 w-4" />
+              <span>LOGIN</span>
+            </>
+          )}
         </Button>
       </Link>
-      {isAdmin && <Link href={ROUTE.UPLOAD_HOSPITAL}>업로드 바로가기</Link>}
+      {isAdmin && (
+        <Link href={ROUTE.UPLOAD_HOSPITAL}>
+          <Button variant="ghost" className="text-blue-600 hover:text-blue-700">
+            업로드 바로가기
+          </Button>
+        </Link>
+      )}
     </div>
   );
 };

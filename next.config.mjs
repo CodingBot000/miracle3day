@@ -31,14 +31,11 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: "afsfroagcvtulsttshvc.supabase.co",
-        protocol: "https",
-      },
-      {
         hostname: "tqyarvckzieoraneohvv.supabase.co",
         protocol: "https",
       },
     ],
+    unoptimized: true,
   },
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")],

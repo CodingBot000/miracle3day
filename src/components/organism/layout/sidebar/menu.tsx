@@ -12,7 +12,7 @@ import { createSidebarPath } from "@/utils";
 import { ROUTE } from "@/router";
 import useModal from "@/hooks/useModal";
 import { clsx } from "clsx";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 
 type TSubMenuList = { title: string; href: string };
 type TMenuList = {
@@ -44,8 +44,21 @@ const menu: TSubMenuList[] = [
 
 export const Menu = ({}) => {
   const modalRef = useRef<HTMLDivElement>(null);
-
   const { handleOpenModal, open } = useModal();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
 
   const renderMenuList = ({ title, list }: TMenuList) => {
     
@@ -85,6 +98,10 @@ export const Menu = ({}) => {
     );
   };
 
+  if (isMobile) {
+    return null;
+  }
+
   return (
     <div className={styles.menu}>
       <MenuIcon onClick={handleOpenModal} />
@@ -100,13 +117,19 @@ export const Menu = ({}) => {
             <CancelIcon />
           </div>
 
-          {/* list menu */}
-          {menuList.map(renderMenuList)}
+          <div className={styles.menu_container}>
+            {/* list menu */}
+            {menuList.map(renderMenuList)}
 
-          {/* sub menu */}
-          {menu.map(renderSubMenu)}
+            {/* sub menu */}
+            <div className={styles.subMenu_container}>
+              {menu.map(renderSubMenu)}
+            </div>
+          </div>
         </div>
       </Portal>
     </div>
   );
 };
+
+export default Menu;

@@ -23,7 +23,23 @@ export const Hero = () => {
   // 현재 이미지의 투명도 상태 (1: 완전 불투명, 0: 완전 투명)
   const [activeOpacity, setActiveOpacity] = useState(1);
   
+  // 화면 포커싱 상태
+  const [isVisible, setIsVisible] = useState(true);
+
   useEffect(() => {
+    const handleVisibilityChange = () => {
+      setIsVisible(document.visibilityState === 'visible');
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
     const interval = setInterval(() => {
       // 현재 이미지를 천천히 투명하게 만들기 시작
       const fadeOutInterval = setInterval(() => {
@@ -53,7 +69,7 @@ export const Hero = () => {
     }, 5000); // 5초마다 이미지 전환
     
     return () => clearInterval(interval);
-  }, [nextIndex]);
+  }, [nextIndex, isVisible]);
   
   return (
     <div className={styles.hero_container}>

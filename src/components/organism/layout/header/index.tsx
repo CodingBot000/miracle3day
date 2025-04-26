@@ -11,8 +11,17 @@ export const Header = () => {
     <header className={styles.bg}>
       <div className={styles.wrapper}>
         <Logo />
-        <Menu />
-        <Auth />
+        {/* <Menu />
+        
+        <Auth /> */}
+        <div className={styles.rightWrapper}>
+          <div className={styles.menu}>
+            <Menu />
+          </div>
+          <div className={styles.auth}>
+            <Auth />
+          </div>
+        </div>
       </div>
     </header>
   );

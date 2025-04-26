@@ -13,18 +13,40 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  // align-items: center;
+  align-items: center;
   max-width: 1280px;
   margin: 0 auto;
 }
 
-.wrapper div {
-  flex: 1;
-}
+// .wrapper div {
+//   // flex: 1;
+// }
 
 .wrapper div:nth-child(2) {
   display: flex;
   justify-content: flex-end;
   margin-right: 0;
   gap: 5px;
+}
+
+.rightWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Menu와 Auth 사이 간격 */
+}
+
+/* Menu 스타일 */
+.menu {
+  display: flex;
+  align-items: center;
+}
+
+// .menu {
+//   margin-right: 0.5rem; /* Menu와 Auth 사이 약간 띄우기 */
+// }
+
+.auth_header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }

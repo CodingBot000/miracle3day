@@ -22,11 +22,11 @@ type TMenuList = {
 
 const menuList: TMenuList[] = [
   {
-    title: "Surgical Procedure",
+    title: "Surgical\nProcedure",
     list: createSidebarPath(surgical, "procedure"),
   },
   {
-    title: "Cosmetic Procedure",
+    title: "Cosmetic\nProcedure",
     list: createSidebarPath(cosmetic, "procedure"),
   },
   {
@@ -75,8 +75,9 @@ export const Menu = ({}) => {
 
             return (
               // <Link key={menu} href={isHref} onClick={handleOpenModal}>
-              <Link key={menu} href={href} onClick={handleOpenModal}>
-                <Chip>{menu}</Chip>
+              <Link key={menu} href={href} onClick={handleOpenModal} className={styles.menuItem}>
+                {/* <Chip>{menu}</Chip> */}
+                {menu}
               </Link>
             );
           })}
@@ -91,7 +92,7 @@ export const Menu = ({}) => {
 
     return (
       <div className={styles.subMenu} key={title}>
-        <Link href={href} onClick={handleOpenModal}>
+        <Link href={href} onClick={handleOpenModal}  className={styles.menuItem}>
           <nav className={styles.title}>{title}</nav>
         </Link>
       </div>

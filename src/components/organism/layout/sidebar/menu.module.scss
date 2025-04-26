@@ -8,7 +8,9 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
   transition: top 0.3s ease;
   padding: 20px;
-  background-color: white;
+  background: rgba(255, 255, 255, 0.7); /* ✅ 반투명 흰색 */
+  backdrop-filter: blur(10px); /* ✅ 뿌옇게 블러 추가 */
+  -webkit-backdrop-filter: blur(10px); /* ✅ 사파리 호환성 */
   z-index: 99;
   display: flex;
   flex-direction: column;
@@ -38,8 +40,9 @@
 
 .section {
   padding: 1rem;
-  flex: 1;
-  min-width: 300px;
+  flex: 1 1 150px;
+  // flex: 1;
+  // min-width: 300px;
 
   @media (max-width: 768px) {
     display: none;
@@ -47,23 +50,30 @@
 }
 
 .title {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   font-weight: bold;
   margin: 1rem 0;
-  text-align: center;
-
+  // text-align: center;
+  white-space: pre-line;
   @media (max-width: 768px) {
     display: none;
   }
 }
 
+.subMenuTitle {
+  font-size: 0.9rem; /* ✅ 더 작게 */
+  font-weight: normal; /* ✅ (필요에 따라) 조금 더 약하게 */
+  color: #333; /* (선택) 색상 조정 */
+}
+
 .chip_wrapper {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  // flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
   margin-top: 1rem;
-
+  // align-items: flex-start;
   @media (max-width: 768px) {
     display: none;
   }
@@ -83,9 +93,32 @@
 
 .menu_container {
   display: flex;
+  overflow-y: auto;
+  background-color: rgba(255, 255, 255, 0.2);
   flex-wrap: wrap;
   justify-content: space-around;
   width: 100%;
+
+  /*  스크롤바 커스텀 시작 */
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent; /* Firefox */
+  
+  &::-webkit-scrollbar {
+    width: 6px; /* Chrome, Safari, Edge */
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  /*  스크롤바 커스텀 끝 */
+
 
   @media (max-width: 768px) {
     display: none;
@@ -116,3 +149,21 @@
   }
 }
 
+.menuItem {
+  display: block; /* 블록 요소로 만들어 클릭 영역 키움 */
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: 
+    background-color 0.3s ease,
+    transform 0.3s ease; /* 스케일 전환도 부드럽게 */
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1); /*  배경 살짝 어둡게 */
+    color: #363fa8; /*  글자색 검정 */
+    transform: scale(1.05); /*  hover 시 5% 커지게 */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+    transition: 
+      background-color 0.4s ease,
+      transform 0.1s ease-in; /* hover 진입은  */
+  }
+}

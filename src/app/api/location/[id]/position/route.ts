@@ -1,4 +1,4 @@
-import { location as locationList } from "@/constants";
+import { locationNames as locationList } from "@/constants";
 import { createClient } from "@/utils/supabase/server";
 
 export async function GET(

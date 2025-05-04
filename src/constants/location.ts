@@ -1,4 +1,4 @@
-export const location = [
+export const locationNames: string[] = [
   "Apgujung",
   "Myungdong",
   "Gangnam",

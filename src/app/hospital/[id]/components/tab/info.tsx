@@ -2,12 +2,15 @@ import { getHospitalInfoAPI } from "@/app/api/hospital/[id]/info";
 import styles from "./styles/info.module.scss";
 import * as React from "react";
 import { Map } from "../../../../../components/common/map";
+import { HospitalDetailInfoOutDto } from "@/app/api/hospital/[id]/info/info.dto";
 import Avatar from "@/components/atoms/avatar";
+import { HospitalDetailMainOutput } from "@/app/api/hospital/[id]/main/main.dto";
 
 type TContent = { title: string; content: string };
 
 interface InfoTabProps {
   id: string;
+  hospitalData: HospitalDetailMainOutput;
 }
 
 const InfoDataList: {
@@ -32,10 +35,15 @@ const InfoDataList: {
   },
 ];
 
-const InfoTab = async ({ id }: InfoTabProps) => {
-  const { data: infoData } = await getHospitalInfoAPI({ id });
-
-  const infoDetailData = infoData.hospital_details;
+const InfoTab = async ({ id, hospitalData }: InfoTabProps) => {
+  // const { data: infoData } = await getHospitalInfoAPI({ id });
+  const infoData = hospitalData;
+  const infoDetailData = infoData.hospital_details[0] as {
+    desc_address: string;
+    desc_openninghour: string;
+    desc_facilities: string;
+    desc_doctors_imgurls: string[];
+  };
 
   const renderContent = ({ title, content }: TContent) => {
     return (
@@ -62,8 +70,12 @@ const InfoTab = async ({ id }: InfoTabProps) => {
         <h2 className={styles.title}>Doctors</h2>
 
         <div className={styles.avatar}>
-          {infoDetailData.desc_doctors_imgurls.map((img, i) => (
-            <Avatar key={i} src={img} alt={"doctor"} />
+          {infoData.hospital_details.map((detailData) => (
+            <Avatar
+              key={detailData.id_hospital}
+              src={detailData.desc_doctors_imgurls[0]}
+              alt={"doctor"}
+            />
           ))}
         </div>
       </div>

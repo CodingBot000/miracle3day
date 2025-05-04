@@ -39,7 +39,14 @@ export async function GET(
         blog,
         youtube,
         ticktok,
-        snapchat
+        snapchat,
+        map,
+        desc_address,
+        desc_openninghour,
+        desc_facilities,
+        desc_doctors_imgurls,
+        id_hospital,
+        etc
         `
       )
       .match({ id_hospital: id_unique });

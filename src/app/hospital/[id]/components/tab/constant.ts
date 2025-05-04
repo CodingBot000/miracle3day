@@ -2,22 +2,21 @@ import { TabItem } from "@/components/molecules/tab/types";
 import { TAB } from "@/constants/key";
 import { handleRouter } from "@/utils";
 
-export type TTabKey = "info" | "event" | "review";
+// export type TTabKey = "info" | "event" | "review";
+// export type TTabKey = "review" | "info" | "event";
+export type TTabKey = "event" | "info" | "review";
 
 export const tabList: TabItem<TTabKey>[] = [
   {
-    key: "info",
-    name: "Info",
-    href: handleRouter(TAB)("info"),
-  },
-  {
     key: "event",
     name: "Event",
-    href: handleRouter(TAB)("event"),
+  },
+  {
+    key: "info",
+    name: "Info",
   },
   {
     key: "review",
     name: "Review",
-    href: handleRouter(TAB)("review"),
   },
 ];

@@ -25,7 +25,7 @@ export type TFloatObj = Partial<
 >;
 
 export const TFloatLogoImg: Record<TFloatKey, string> = {
-  blog: "/icons/icon_sns_blog.png",
+  blog: "/icons/icon_sns_blog.svg",
   facebook: "/icons/icon_sns_facebook.png",
   instagram: "/icons/icon_sns_instagram.png",
   kakaotalk: "/icons/icon_sns_kakaotalk.png",

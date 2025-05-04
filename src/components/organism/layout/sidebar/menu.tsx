@@ -5,7 +5,7 @@ import styles from "./menu.module.scss";
 
 import { CancelIcon } from "@/components/icons/cancel";
 import Portal from "@/components/common/portal";
-import { cosmetic, location, surgical } from "@/constants";
+import { cosmetic, locationNames, surgical } from "@/constants";
 import { Chip } from "@/components/atoms/chip";
 import Link from "next/link";
 import { createSidebarPath } from "@/utils";
@@ -31,7 +31,7 @@ const menuList: TMenuList[] = [
   },
   {
     title: "Location",
-    list: createSidebarPath(location, "location"),
+    list: createSidebarPath(locationNames, "location"),
   },
 ];
 

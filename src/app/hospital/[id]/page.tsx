@@ -14,6 +14,7 @@ import { HospitalThumbnail } from "./components/thumbnail";
 import ScrollTop from "@/components/atoms/scrollTop";
 import { Metadata, ResolvingMetadata } from "next";
 import { capitalizeWord } from "@/utils/word";
+import { getHospitalInfoAPI } from "@/app/api/hospital/[id]/info";
 
 type Props = {
   params: { id: string };
@@ -44,9 +45,24 @@ const HospitalDetailPage = async ({
 }: HospitalDetailPageProps) => {
   if (params.id === "undefined") redirect("/");
 
+  console.log("API 호출 전 params.id:", params.id);
   const data = await getHospitalMainAPI({ id: params?.id });
+  // const infoData = await getHospitalInfoAPI({ id: params?.id });
+  console.log("API 호출 후 전체 데이터:", data);
+  console.log("hospital_details 데이터:", data.hospital_details);
+  
+  // hospital_details의 첫 번째 요소를 사용
+  const hospitalDetails = data.hospital_details[0] || {};
+  console.log("hospital_details 구조:", {
+    tel: hospitalDetails.tel,
+    homepage: hospitalDetails.homepage,
+    kakaotalk: hospitalDetails.kakaotalk,
+    blog: hospitalDetails.blog,
+    ticktok: hospitalDetails.ticktok,
+  });
+  const currentTab = searchParams.tab || "event";
 
-  const getFloatList = Object.entries(data.hospital_details).reduce<
+  const getFloatList = Object.entries(hospitalDetails).reduce<
     FloatItem[]
   >((acc, [key, value]) => {
     if (typeof value === "string" && Boolean(value)) {
@@ -67,11 +83,8 @@ const HospitalDetailPage = async ({
       <div>
         <HospitalThumbnail imageurls={data.imageurls} />
         <div className={styles.main}>
-        {/* tab */}
-        <HospitalTab currentTab={searchParams.tab} id={params.id} />
-
-        {/* floating */}
-        <Floating float={getFloatList} />
+          <HospitalTab id={params.id} initialTab={currentTab} hospitalData={data} />
+          <Floating float={getFloatList} />
         </div>
       </div>
     </main>

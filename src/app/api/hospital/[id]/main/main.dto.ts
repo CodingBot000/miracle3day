@@ -5,7 +5,7 @@ export interface HospitalDetailMainInputDto {
 }
 
 export interface HospitalDetails {
-  etc: string;
+ 
   tel: string;
   blog: string;
   ticktok: string;
@@ -15,11 +15,21 @@ export interface HospitalDetails {
   snapchat: string;
   instagram: string;
   kakaotalk: string;
+  map: string;
+ 
+  desc_address: string;
+  desc_openninghour: string;
+  desc_facilities: string;
+  desc_doctors_imgurls: string[];
+  id_hospital: number;
+  etc: string;
 }
 
 export interface HospitalDetailMainOutput {
   imageurls: string[];
   name: string;
+  latitude: number;
+  longitude: number;
   hospital_details: HospitalDetails[];
   favorite: FavoriteItem[];
 }

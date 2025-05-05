@@ -14,11 +14,11 @@ const ReviewTab = ({ id }: { id: string }) => {
     const fetchReviews = async () => {
       try {
         const res = await getHospitalReviewAPI({ id, pageParam: 0 });
-        console.log("✅ getHospitalReviewAPI param id:", id);
-        console.log("✅ getHospitalReviewAPI response:", res);
+        // console.log("getHospitalReviewAPI param id:", id);
+        // console.log("getHospitalReviewAPI response:", res);
         setReviews(res.data);
       } catch (error) {
-        console.error("❌ Error fetching reviews:", error);
+        console.error("Error fetching reviews:", error);
       }
     };
     fetchReviews();

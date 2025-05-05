@@ -1,4 +1,3 @@
-import React from "react";
 
 import styles from "./hospital-detail..module.scss";
 import HospitalTab from "./components/tab";
@@ -15,6 +14,9 @@ import ScrollTop from "@/components/atoms/scrollTop";
 import { Metadata, ResolvingMetadata } from "next";
 import { capitalizeWord } from "@/utils/word";
 import { getHospitalInfoAPI } from "@/app/api/hospital/[id]/info";
+import HospitalDetailContent from "./components/content";
+import dynamic from "next/dynamic";
+import HospitalScrollWrapper from "./hospital-scroll-wrapper";
 
 type Props = {
   params: { id: string };
@@ -39,6 +41,11 @@ export async function generateMetadata(
   };
 }
 
+// const InfoTab = dynamic(() => import("./components/tab/info"));
+// const EventTab = dynamic(() => import("./components/tab/event"));
+// const ReviewTab = dynamic(() => import("./components/tab/review"));
+
+
 const HospitalDetailPage = async ({
   params,
   searchParams,
@@ -62,6 +69,7 @@ const HospitalDetailPage = async ({
   });
   const currentTab = searchParams.tab || "event";
 
+
   const getFloatList = Object.entries(hospitalDetails).reduce<
     FloatItem[]
   >((acc, [key, value]) => {
@@ -83,7 +91,7 @@ const HospitalDetailPage = async ({
       <div>
         <HospitalThumbnail imageurls={data.imageurls} />
         <div className={styles.main}>
-          <HospitalTab id={params.id} initialTab={currentTab} hospitalData={data} />
+          <HospitalScrollWrapper hospitalData={data} />;
           <Floating float={getFloatList} />
         </div>
       </div>

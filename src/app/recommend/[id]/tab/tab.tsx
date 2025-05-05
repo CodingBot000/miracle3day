@@ -23,7 +23,7 @@ export const RecommendTab = ({ currentTab }: RecommendTabProps) => {
   return (
     <Suspense fallback={<LoadingSpinner />}>
       <TabComponent
-        component={Component[currentTab as TTabKey]}
+        // component={Component[currentTab as TTabKey]}
         currentTab={currentTab}
         list={tabList}
       />

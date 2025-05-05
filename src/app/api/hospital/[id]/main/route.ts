@@ -22,7 +22,9 @@ export async function GET(
       .select(
         `id_unique,
          imageurls,
-         name
+         name,
+         latitude,
+         longitude
         `
       )
       .match({ id_unique });

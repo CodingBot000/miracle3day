@@ -19,19 +19,34 @@ export const Map = ({ coordinates }: MapProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const onReady = () => {
-    if (!ref.current) return;
+    // console.log("Initializing map", ref.current, coordinates);
+    // console.log("coordinates[0].lat", Number(coordinates[0].lat));
+    // console.log("coordinates[0].lng", Number(coordinates[0].lng));
+    if (!ref.current) {
+      console.warn("X Map container not ready");
+      return;
+    }
+
+    if (!window.google?.maps) {
+      console.error("X Google Maps JS API not available");
+      return;
+    }
+
 
     const map = new window.google.maps.Map(ref.current, {
-      center: coordinates[0],
+      center: {
+        lat: Number(coordinates[0].lat),
+        lng: Number(coordinates[0].lng),
+      },
       zoom: 18,
     });
 
     coordinates.forEach((maker) => {
-      const makers = new google.maps.Marker({
+      new google.maps.Marker({
         title: maker.title,
         position: {
-          lat: maker.lat,
-          lng: maker.lng,
+          lat: Number(maker.lat),
+          lng: Number(maker.lng),
         },
         map,
       });
@@ -43,11 +58,10 @@ export const Map = ({ coordinates }: MapProps) => {
       <Script
         type="text/javascript"
         strategy="afterInteractive"
-        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY}&region=KR&language=en&callback=initMap`}
+        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY}&region=KR&language=en`}
         nonce={createNonce()}
-        onReady={onReady}
+        onLoad={onReady} 
       />
-
       <div ref={ref} id="map" className={styles.map}></div>
     </>
   );

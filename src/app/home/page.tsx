@@ -13,7 +13,7 @@ import { Banner } from "@/components/organism/layout/banner";
 import { clsx } from "clsx";
 import { Hero } from "@/components/organism/layout/hero";
 import Image from "next/image";
-import HeroVideo from "./components/hero/HeroVideo";
+import HeroVideo from "./components/hero/heroVideo";
 
 export default async function Home({
   searchParams: { locationNum },

@@ -119,6 +119,8 @@ module.exports = {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"),
+	require('@tailwindcss/line-clamp'),
+  ],
   important: true,
 }; 

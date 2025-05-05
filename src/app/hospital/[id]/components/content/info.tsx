@@ -9,7 +9,7 @@ import { HospitalDetailMainOutput } from "@/app/api/hospital/[id]/main/main.dto"
 type TContent = { title: string; content: string };
 
 interface InfoTabProps {
-  id: string;
+
   hospitalData: HospitalDetailMainOutput;
 }
 
@@ -35,7 +35,7 @@ const InfoDataList: {
   },
 ];
 
-const InfoTab = async ({ id, hospitalData }: InfoTabProps) => {
+const InfoTab = async ({ hospitalData }: InfoTabProps) => {
   // const { data: infoData } = await getHospitalInfoAPI({ id });
   const infoData = hospitalData;
   const infoDetailData = infoData.hospital_details[0] as {
@@ -55,6 +55,7 @@ const InfoTab = async ({ id, hospitalData }: InfoTabProps) => {
     );
   };
 
+  console.log(`infoDetailData:  ${infoData.latitude}  longitude:${infoData.longitude}`);
   return (
     <>
       {InfoDataList.map(({ id, title, content }) => (
@@ -70,16 +71,21 @@ const InfoTab = async ({ id, hospitalData }: InfoTabProps) => {
         <h2 className={styles.title}>Doctors</h2>
 
         <div className={styles.avatar}>
-          {infoData.hospital_details.map((detailData) => (
-            <Avatar
-              key={detailData.id_hospital}
-              src={detailData.desc_doctors_imgurls[0]}
-              alt={"doctor"}
-            />
-          ))}
+          {infoData.hospital_details.flatMap((detailData) =>
+            (detailData.desc_doctors_imgurls.length > 0
+              ? detailData.desc_doctors_imgurls
+              : ["/default/doctor_default.png"]
+            ).map((imgUrl, index) => (
+              <Avatar
+                key={`${detailData.id_hospital}-${index}`}
+                src={imgUrl}
+                alt="doctor"
+              />
+            ))
+          )}
         </div>
       </div>
-
+      
       <Map
         coordinates={[
           {

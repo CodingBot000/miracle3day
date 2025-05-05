@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import styles from "./review-card.module.scss";
+import { formatDate } from "@/app/utils/date/formatDate";
 
 interface ReviewCardProps {
   src: string;
@@ -9,6 +10,7 @@ interface ReviewCardProps {
   content: string;
   id: string;
   name: string;
+  created_at: string;
 }
 
 export const ReviewCard = ({
@@ -17,21 +19,33 @@ export const ReviewCard = ({
   id,
   content,
   name,
+  created_at,
 }: ReviewCardProps) => {
   return (
-    <article className={styles.review}>
-      <div className={styles.thumbnail}>
-        <Image fill src={src} alt={alt} />
-      </div>
-
-      <div className={styles.content}>
-        <p className={styles.review_content}>{content}</p>
-
-        <div className={styles.review_footer}>
-          <p className={styles.id}>{id}</p>
-          <p className={styles.hospital}>{name}</p>
+    <article className="w-full max-w-[280px] h-auto flex-shrink-0">
+      <div className="bg-white rounded-lg overflow-hidden transition-all duration-300 dark:bg-gray-950 h-full flex flex-col">
+        <Image
+          src={src}
+          alt={alt}
+          width={600}
+          height={300}
+          className="w-full h-[140px] object-cover"
+          style={{ aspectRatio: "600/300", objectFit: "cover" }}
+        />
+        <div className="p-3 text-xs leading-tight flex-1 flex flex-col">
+          <p className="font-medium line-clamp-3 mb-1">
+            {content}
+          </p>
+          <div className="space-y-[2px]">
+            <p className="text-gray-500 dark:text-gray-400 font-bold text-[0.75rem]">{name}</p>
+            <p className="text-gray-500 dark:text-gray-400 text-[0.75rem]">{id}</p>
+            <p className="text-gray-500 dark:text-gray-400 text-[0.75rem]">
+              {formatDate(created_at, { formatString: "PPP", locale: "en" })}
+            </p>
+          </div>
         </div>
       </div>
     </article>
+
   );
 };

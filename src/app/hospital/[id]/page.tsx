@@ -16,7 +16,7 @@ import { capitalizeWord } from "@/utils/word";
 import { getHospitalInfoAPI } from "@/app/api/hospital/[id]/info";
 import HospitalDetailContent from "./components/content";
 import dynamic from "next/dynamic";
-import HospitalScrollWrapper from "./hospital-scroll-wrapper";
+// import HospitalScrollWrapper from "./hospital-scroll-wrapper";
 
 type Props = {
   params: { id: string };
@@ -50,10 +50,11 @@ const HospitalDetailPage = async ({
   params,
   searchParams,
 }: HospitalDetailPageProps) => {
-  if (params.id === "undefined") redirect("/");
+  const hospitalId = params?.id;
+  if (hospitalId === "undefined") redirect("/");
 
-  console.log("API 호출 전 params.id:", params.id);
-  const data = await getHospitalMainAPI({ id: params?.id });
+  console.log("API 호출 전 params.id:", hospitalId);
+  const data = await getHospitalMainAPI({ id: hospitalId });
   // const infoData = await getHospitalInfoAPI({ id: params?.id });
   console.log("API 호출 후 전체 데이터:", data);
   console.log("hospital_details 데이터:", data.hospital_details);
@@ -81,7 +82,7 @@ const HospitalDetailPage = async ({
   }, []);
 
   const isFavorite = data?.favorite?.length > 0;
-
+  console.log("HospitalDetailPage hospitalId:", hospitalId);
   return (
     <main>
       <ScrollTop />
@@ -91,7 +92,7 @@ const HospitalDetailPage = async ({
       <div>
         <HospitalThumbnail imageurls={data.imageurls} />
         <div className={styles.main}>
-          <HospitalScrollWrapper hospitalData={data} />;
+          <HospitalDetailContent hospitalId={hospitalId} hospitalData={data} />;
           <Floating float={getFloatList} />
         </div>
       </div>

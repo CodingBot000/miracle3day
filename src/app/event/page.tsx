@@ -4,7 +4,7 @@ import { Metadata } from "next";
 import { ItemList } from "./itemList";
 
 export const metadata: Metadata = {
-  title: "BeautyU | Event",
+  title: "BeautyLink | Event",
 };
 
 const AllEventPage = () => {

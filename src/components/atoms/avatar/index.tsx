@@ -1,5 +1,7 @@
-import Image from "next/image";
+"use client";
 
+import Image from "next/image";
+import { useState } from "react";
 import styles from "./avatar.module.scss";
 
 interface AvatarProps {
@@ -8,14 +10,21 @@ interface AvatarProps {
 }
 
 const Avatar = ({ alt, src }: AvatarProps) => {
-  console.log(`Avatar src: ${src}`);
+  const [imgSrc, setImgSrc] = useState(src);
+  const fallback = "/default/doctor_default.png";
+
   return (
     <Image
       className={styles.avatar}
       width={92}
       height={92}
-      src={src}
+      src={imgSrc}
       alt={alt}
+      onError={() => {
+        if (imgSrc !== fallback) {
+          setImgSrc(fallback);
+        }
+      }}
     />
   );
 };

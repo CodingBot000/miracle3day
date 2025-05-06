@@ -2,7 +2,7 @@ import Link from "next/link";
 import styles from "./home.module.css";
 
 import { Chip } from "@/components/atoms/chip";
-import { location } from "@/constants";
+import { locationNames } from "@/constants";
 import { ROUTE } from "@/router";
 import { getBannerAPI } from "@/app/api/home/banner";
 
@@ -13,6 +13,7 @@ import { Banner } from "@/components/organism/layout/banner";
 import { clsx } from "clsx";
 import { Hero } from "@/components/organism/layout/hero";
 import Image from "next/image";
+import HeroVideo from "./components/hero/heroVideo";
 
 export default async function Home({
   searchParams: { locationNum },
@@ -25,7 +26,7 @@ export default async function Home({
     return (
       <>
       <div className="flex flex-wrap justify-center items-center mx-12 mb-5 gap-2">
-        {location.map((name, i) => {
+        {locationNames.map((name, i) => {
           const selectChipStyle =
             (locationNum === undefined && i === 0) || +locationNum === i;
 
@@ -45,7 +46,7 @@ export default async function Home({
          </div>
           <p className="font-bold text-[23px] flex justify-end mr-5">
           <Link
-            href={ROUTE.LOCATION_DETAIL("") + location[+locationNum || 0]}
+            href={ROUTE.LOCATION_DETAIL("") + locationNames[+locationNum || 0]}
             scroll={true}
           >
             <Image
@@ -64,24 +65,28 @@ export default async function Home({
 
   return (
     <main>
+      <HeroVideo />
       <Hero />
       <Banner bannerItem={bannerItem.data} />
       <br /><br /><br />
       <section className="max-w-container mx-auto">
 
         {/* New Beauty */}
-        <div className="my-8 text-center leading-6">
+        {/* <div className="my-8 text-center leading-6">
+          <p className="font-bold text-[2.5rem] mb-[25px]">New Beauty</p>
+          <p className="text-[1.2rem]">Make Attraction</p>
+        </div> */}
+      <div className="my-8 leading-6 pl-4 md:pl-6 lg:pl-8">
           <p className="font-bold text-[2.5rem] mb-[25px]">New Beauty</p>
           <p className="text-[1.2rem]">Make Attraction</p>
         </div>
-
         <Beauty />
       </section>
       
       <br /><br /><br />
       {/* LocationHospital */}
       <section className="max-w-container mx-auto">
-        <div className="my-8 text-center leading-6">
+        <div className="my-8 leading-6 pl-4 md:pl-6 lg:pl-8">
           <p className="font-bold text-[2.5rem] mb-[25px]">Hospitals</p>
           <p className="text-[1.2rem]">Choose the region u want</p>
         </div>

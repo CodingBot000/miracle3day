@@ -11,7 +11,7 @@ const RecommendReview = () => {
       queryKey={"surgeries_reviews"}
     >
       {(item) =>
-        item.data.map(({ id_unique, reviewimageurls, description }) => {
+        item.data.map(({ id_unique, reviewimageurls, description, created_at }) => {
           return (
             <ReviewCard
               key={id_unique}
@@ -20,6 +20,7 @@ const RecommendReview = () => {
               content={description}
               id={"id"}
               name={"name"}
+              created_at={created_at}
             />
           );
         })

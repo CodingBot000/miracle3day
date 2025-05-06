@@ -6,10 +6,12 @@ export async function GET() {
   try {
     const { data } = await supabase
       .from("hospital")
-      .select("imageurls, name, id_unique")
-      .order("created_at", { ascending: false })
+      .select("imageurls, name, id_unique, location")
+      // .order("created_at", { ascending: false })
       .limit(6);
 
+      
+      // console.log(`data![0].location: ${data![0].location}`);
     return Response.json({ data }, { status: 200, statusText: "success" });
   } catch (error) {
     if (error instanceof Error) {

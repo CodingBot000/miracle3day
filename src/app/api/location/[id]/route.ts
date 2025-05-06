@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { LIMIT } from "./constant";
-import { location as locationList } from "@/constants";
+import { locationNames as locationList } from "@/constants";
 
 export async function GET(
   req: Request,

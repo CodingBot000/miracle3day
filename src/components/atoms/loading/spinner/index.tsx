@@ -1,5 +1,5 @@
 import styles from "./spinner.module.scss";
-
+import { CircleLoader } from "react-spinners";
 interface LoadingSpinnerProps {
   show?: boolean;
   backdrop?: boolean;
@@ -17,7 +17,8 @@ const LoadingSpinner = ({
   if (backdrop) {
     return (
       <div className={styles.backdrop}>
-        <div className={styles.loader} />
+        <CircleLoader color="#e09ddf" />
+        {/* <div className={styles.loader} /> */}
       </div>
     );
   }
@@ -25,14 +26,16 @@ const LoadingSpinner = ({
   if (pageLoading) {
     return (
       <div className={styles.pageLoading}>
-        <div className={styles.loader} />
+        {/* <div className={styles.loader} /> */}
+        <CircleLoader color="#e09ddf" />
       </div>
     );
   }
 
   return (
     <div className={styles.scope}>
-      <div className={styles.loader} />
+      {/* <div className={styles.loader} /> */}
+      <CircleLoader color="#e09ddf" />
     </div>
   );
 };

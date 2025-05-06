@@ -1,32 +1,46 @@
+"use client";
+
+import { useRef, useState } from "react";
 import { tabList } from "./constant";
-
-import TabComponent from "@/components/molecules/tab";
-
 import dynamic from "next/dynamic";
+import TabHeader from "@/components/molecules/tab/header";
 
-const InfoTab = dynamic(() => import("./info"));
-const EventTab = dynamic(() => import("./event"));
-const ReviewTab = dynamic(() => import("./review"));
+type TabKey = 'event' | 'review' | 'info';
+
+type TabRefs = {
+  [key in TabKey]: React.RefObject<HTMLDivElement>;
+};
 
 interface HospitalTabProps {
-  currentTab: string;
-  id: string;
+  tabRefs: TabRefs;
 }
 
-const HospitalTab = ({ currentTab, id }: HospitalTabProps) => {
-  const Component: Record<string, JSX.Element> = {
-    info: <InfoTab id={id} />,
-    event: <EventTab />,
-    review: <ReviewTab />,
+export default function HospitalTab({ tabRefs }: HospitalTabProps) {
+  const [currentTab, setCurrentTab] = useState<TabKey>('event');
+
+  const handleTabChange = (key: string) => {
+    const element = tabRefs[key as keyof typeof tabRefs].current;
+    if (element) {
+      const tabMenuHeight = 150;
+      const elementPosition = element.offsetTop;
+      const offsetPosition = elementPosition - tabMenuHeight;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+      setCurrentTab(key as TabKey);
+    }
   };
 
   return (
-    <TabComponent
-      component={Component[currentTab]}
-      currentTab={currentTab}
-      list={tabList}
-    />
+    <section>
+      <TabHeader 
+        currentTab={currentTab}
+        list={tabList} 
+        onTabChange={handleTabChange} 
+      />
+    </section>
   );
-};
+}
 
-export default HospitalTab;

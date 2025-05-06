@@ -5,7 +5,6 @@ import { ROUTE } from "@/router";
 import Link from "next/link";
 import { NationModal } from "./components/modal/nations";
 import SignUpButton from "./components/button/sign-up";
-import { useFormState } from "react-dom";
 import { ChangeEvent, useEffect, useState } from "react";
 import { emailRegExp, passwordRegExp } from "@/utils/regexp";
 import { AlertModal } from "@/components/template/modal/alert";
@@ -23,12 +22,8 @@ type State = {
 };
 
 const SignUpPage = () => {
-  const [state, formAction] = useFormState<
-    { message: string | null },
-    FormData
-  >(signUpActions, { message: null });
-
   const [message, setMessage] = useState<string | null>(null);
+  const [formError, setFormError] = useState<{ [key in InputKey]?: string[] } | null>(null);
 
   const [input, setInput] = useState<State>({
     email: {
@@ -84,18 +79,25 @@ const SignUpPage = () => {
     }));
   };
 
-  const disabled = Object.values(input).every((e) => !e.error && e.value);
-
-  useEffect(() => {
-    if (state.message) {
-      setMessage(state.message);
+  const handleSubmit = async (formData: FormData) => {
+    try {
+      const result = await signUpActions(null, formData);
+      if (result.error) {
+        setFormError(result.error);
+      } else if (result.message) {
+        setMessage(result.message);
+      }
+    } catch (error) {
+      setMessage("회원가입 중 오류가 발생했습니다.");
     }
-  }, [state]);
+  };
+
+  const disabled = Object.values(input).every((e) => !e.error && e.value);
 
   return (
     <main className={styles.main}>
       <h1 className={styles.title}>Sign Up</h1>
-      <form className={styles.form} action={formAction}>
+      <form className={styles.form} action={handleSubmit}>
         <div className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
@@ -108,9 +110,12 @@ const SignUpPage = () => {
                 placeholder="Enter your email"
                 value={input.email.value}
                 onChange={handleChange}
-                className={clsx("pl-10", { "border-red-500": input.email.error })}
+                className={clsx("pl-10", { "border-red-500": input.email.error || !!formError?.email?.length })}
               />
             </div>
+            {formError?.email?.length && (
+              <p className="text-sm text-red-500">{formError.email[0]}</p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -124,9 +129,12 @@ const SignUpPage = () => {
                 placeholder="Enter your password"
                 value={input.password.value}
                 onChange={handleChange}
-                className={clsx("pl-10", { "border-red-500": input.password.error })}
+                className={clsx("pl-10", { "border-red-500": input.password.error || !!formError?.password?.length })}
               />
             </div>
+            {formError?.password?.length && (
+              <p className="text-sm text-red-500">{formError.password[0]}</p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -140,9 +148,12 @@ const SignUpPage = () => {
                 placeholder="Confirm your password"
                 value={input.password_confirm.value}
                 onChange={handleChange}
-                className={clsx("pl-10", { "border-red-500": input.password_confirm.error })}
+                className={clsx("pl-10", { "border-red-500": input.password_confirm.error || !!formError?.password_confirm?.length })}
               />
             </div>
+            {formError?.password_confirm?.length && (
+              <p className="text-sm text-red-500">{formError.password_confirm[0]}</p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -156,9 +167,12 @@ const SignUpPage = () => {
                 placeholder="Enter your name"
                 value={input.name.value}
                 onChange={handleChange}
-                className={clsx("pl-10", { "border-red-500": input.name.error })}
+                className={clsx("pl-10", { "border-red-500": input.name.error || !!formError?.name?.length })}
               />
             </div>
+            {formError?.name?.length && (
+              <p className="text-sm text-red-500">{formError.name[0]}</p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -172,9 +186,12 @@ const SignUpPage = () => {
                 placeholder="Enter your nickname"
                 value={input.nickname.value}
                 onChange={handleChange}
-                className={clsx("pl-10", { "border-red-500": input.nickname.error })}
+                className={clsx("pl-10", { "border-red-500": input.nickname.error || !!formError?.nickname?.length })}
               />
             </div>
+            {formError?.nickname?.length && (
+              <p className="text-sm text-red-500">{formError.nickname[0]}</p>
+            )}
           </div>
         </div>
 
@@ -204,7 +221,7 @@ const SignUpPage = () => {
       </form>
 
       <AlertModal open={!!message} onCancel={() => setMessage(null)}>
-        <p>{state?.message}</p>
+        <p>{message}</p>
       </AlertModal>
     </main>
   );

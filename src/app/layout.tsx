@@ -47,7 +47,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {/* <ProgressBar /> */}
+        <ProgressBar />
         {/* <PageTransitionOverlay /> */}
         <div className="bg-[rgb(247,248,250)]">
           <Providers>

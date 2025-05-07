@@ -5,5 +5,5 @@ interface NoDataProps {
 }
 
 export const NoData = ({ label }: NoDataProps) => {
-  return <div className={styles.noData}>{label || "No Data"}</div>;
+  return <div className={styles.noData}>{label || "No results found"}</div>;
 };

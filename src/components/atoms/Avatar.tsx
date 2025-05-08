@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import styles from "./avatar.module.scss";
 
 interface AvatarProps {
   src: string;
@@ -15,7 +14,7 @@ const Avatar = ({ alt, src }: AvatarProps) => {
 
   return (
     <Image
-      className={styles.avatar}
+      className="rounded-full border border-[#eee]"
       width={92}
       height={92}
       src={imgSrc}

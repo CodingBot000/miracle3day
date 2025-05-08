@@ -1,7 +1,5 @@
-import { Chip } from "@/components/atoms/chip";
 
-import ImageBox from "@/components/atoms/image";
-
+import { Chip } from "@/components/atoms/Chip";
 import styles from "./event-detail.module.scss";
 import { getEventDetailAPI } from "@/app/api/event/[id]";
 import LoadingSpinner from "@/components/atoms/loading/spinner";
@@ -11,6 +9,11 @@ import { ROUTE } from "@/router";
 import { daysYMDFormat } from "@/utils/days";
 
 import { ResolvingMetadata, Metadata } from "next";
+import { PriceDisplay } from "@/components/common/PriceDisplay";
+import { formatDate } from "@/app/utils/date/formatDate";
+import Image from "next/image";
+import ImageAutoRatio from "@/components/atoms/\bImageAutoRatio";
+
 
 export async function generateMetadata(
   { params }: { params: { id: string } },
@@ -43,20 +46,64 @@ const EventDetailPage = async ({ params: { id } }: EventDetailPageProps) => {
   const eventData = data[0];
   const hospitalData = data[0].id_hospital;
   const surgeryData = data[0].id_surgeries;
+  const title = eventData.name;
+  const dateFrom = eventData.date_from;
+  const dateTo = eventData.date_to;
+  const price = data[0].price;
+  const desc = eventData.description;
 
   return (
     <main>
       <section className={styles.section}>
-        <ImageBox src={eventData.imageurls[0]} alt={eventData.name} />
-        <div className={styles.info}>
+
+        {/* <div className="w-full rounded-lg overflow-hidden border bg-white"> */}
+          {/* <Image
+            src={eventData.imageurls[0]}
+            alt={eventData.name}
+            width={768}
+          layout="intrinsic"
+         className="w-full h-auto object-contain"
+          /> */}
+        
+        <ImageAutoRatio
+          src={eventData.imageurls[0]}
+          alt={eventData.id_unique.toString()}
+          objectFit="cover"
+          showSkeleton={true}
+          fallbackText="can't load image"
+          className="shadow-md"
+        />
+        {/* </div> */}
+        <div className="p-4 flex flex-col gap-1 text-sm md:min-h-[140px]">
+          <h3 className="font-bold text-xl leading-tight">{title}</h3>
+          <div className={styles.info}>
+            <time className="text-gray-500 text-sm mb-1">
+            {formatDate(dateFrom, { formatString: "PPP", locale: "en" })} ~ {formatDate(dateTo, { formatString: "PPP", locale: "en" })}
+              </time>
+          </div>
+          <PriceDisplay price={price} />
+          <div className={styles.surgical}>
+          <h2>Surgeries Package</h2>
+          <ul className={styles.surgical_ul}>
+            {surgeryData.map(({ id_unique, name }) => (
+              <li key={id_unique}>
+                <Chip>{name}</Chip> 
+              </li>
+            ))}
+          </ul>
+        </div>
+          <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">{desc}</p>
+      </div>
+
+        {/* <div className={styles.info}>
           <h1>{eventData.name}</h1>
           <p>
             {daysYMDFormat(eventData.date_from)} ~
             {daysYMDFormat(eventData.date_to)}
           </p>
-        </div>
+        </div> */}
 
-        <div className={styles.surgical}>
+        {/* <div className={styles.surgical}>
           <h2>Surgeries Package</h2>
           <ul className={styles.surgical_ul}>
             {surgeryData.map(({ id_unique, name }) => (
@@ -65,13 +112,45 @@ const EventDetailPage = async ({ params: { id } }: EventDetailPageProps) => {
               </li>
             ))}
           </ul>
+        </div> */}
+
+        {/* <div>{eventData.description}</div> */}
+
+        <div className="flex items-start gap-4">
+        <div className="relative w-full max-w-[300px] aspect-[16/9] rounded-lg overflow-hidden border">
+          <Image
+            src={hospitalData.imageurls[0]}
+            alt={hospitalData.name}
+            fill
+            className="object-cover object-center"
+          />
         </div>
 
-        <div>{eventData.description}</div>
+          <div className="flex-1 text-right">
+            <p className="p-4 text-base font-medium">{hospitalData.name}</p>
+            <div className="flex justify-end p-4">
+              <Link
+                href={ROUTE.HOSPITAL_DETAIL("") + hospitalData.id_unique}
+                className="text-blue-600 underline hover:text-blue-800"
+              >
+                병원보기
+              </Link>
+            </div>
+          </div>
+        </div>
 
-        <div className={styles.hospital}>
+        {/* <div className={styles.hospital}>
           <div className={styles.hospital_img}>
-            <ImageBox src={hospitalData.imageurls[0]} alt={hospitalData.name} />
+          <div className="rounded-lg overflow-hidden border bg-white">
+            <Image
+              src={hospitalData.imageurls[0]}
+              alt={hospitalData.id_unique.toString()}
+              width={300}
+              height={100}
+              className="object-contain"
+            />
+          </div>
+
           </div>
           <div className={styles.hospital_info}>
             <p>{hospitalData.name}</p>
@@ -81,7 +160,7 @@ const EventDetailPage = async ({ params: { id } }: EventDetailPageProps) => {
               </Link>
             </div>
           </div>
-        </div>
+        </div> */}
       </section>
     </main>
   );

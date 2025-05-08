@@ -5,7 +5,7 @@ import { Inter } from "next/font/google";
 import Providers from "@/provider";
 import { Footer } from "@/components/organism/layout/footer";
 import { Header } from "@/components/organism/layout/header";
-import ScrollTop from "@/components/atoms/scrollTop";
+import ScrollTop from "@/components/atoms/ScrollTop";
 import LoadingSpinner from "@/components/atoms/loading/spinner";
 import MobileMenu from "@/components/organism/layout/mobile-menu";
 import { ProgressBar } from "@/components/atoms/loading/progress-bar";
@@ -47,7 +47,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {/* <ProgressBar /> */}
+        <ProgressBar />
         {/* <PageTransitionOverlay /> */}
         <div className="bg-[rgb(247,248,250)]">
           <Providers>

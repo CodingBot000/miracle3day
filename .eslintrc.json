@@ -1,3 +1,20 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "next",
+    "next/core-web-vitals",
+    "plugin:react/recommended"
+  ],
+  "rules": {
+    "react-hooks/rules-of-hooks": "error",         // 훅은 컴포넌트나 커스텀 훅에서만 사용
+    "react-hooks/exhaustive-deps": "warn",         // 의존성 빠짐 경고
+    "@next/next/no-async-client-component": "error", // client 컴포넌트에서 async 금지
+    "react/react-in-jsx-scope": "off"
+  },
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  } 
 }

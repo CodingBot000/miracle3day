@@ -18,7 +18,7 @@ export const ItemList = () => {
     >
       {(item) =>
         item.data.map(
-          ({ description, imageurls, name, id_unique, date_from, date_to }) => {
+          ({ description, imageurls, name, id_unique, date_from, date_to, price }) => {
             return (
               <EventCard
                 key={id_unique}
@@ -28,6 +28,7 @@ export const ItemList = () => {
                 date={`${daysYMDFormat(date_from)} ~ ${daysYMDFormat(date_to)}`}
                 desc={description}
                 alt={name}
+                price={price}
               />
             );
           }

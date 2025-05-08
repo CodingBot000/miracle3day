@@ -1,15 +1,13 @@
-import styles from "./error-message.module.scss";
-
 interface ErrorMessageProps {
   message: string | string[];
 }
 
 export const ErrorMessage = ({ message }: ErrorMessageProps) => {
-  if (message instanceof Array) {
+  if (Array.isArray(message)) {
     return (
       <>
         {message.map((msg, i) => (
-          <p className={styles.errMessage} key={i}>
+          <p className="my-2 text-red-500" key={i}>
             {msg}
           </p>
         ))}
@@ -17,5 +15,5 @@ export const ErrorMessage = ({ message }: ErrorMessageProps) => {
     );
   }
 
-  return <p className={styles.errMessage}>{message}</p>;
+  return <p className="my-2 text-red-500">{message}</p>;
 };

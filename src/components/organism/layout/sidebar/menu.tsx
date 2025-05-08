@@ -6,7 +6,8 @@ import styles from "./menu.module.scss";
 import { CancelIcon } from "@/components/icons/cancel";
 import Portal from "@/components/common/portal";
 import { cosmetic, locationNames, surgical } from "@/constants";
-import { Chip } from "@/components/atoms/chip";
+
+import { Chip } from "@/components/atoms/Chip";
 import Link from "next/link";
 import { createSidebarPath } from "@/utils";
 import { ROUTE } from "@/router";

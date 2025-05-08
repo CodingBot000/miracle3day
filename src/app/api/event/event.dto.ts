@@ -40,6 +40,7 @@ export interface AllEventData {
   id_surgeries: SurgeryInfo[];
   description: string;
   id_unique: number;
+  price: number[];
 }
 
 export interface AllEventOutputDto extends InfinityScrollOutputDto {

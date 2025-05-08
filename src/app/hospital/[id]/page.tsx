@@ -10,7 +10,7 @@ import { HospitalFavoriteIcon } from "@/components/atoms/favorite";
 
 import { HospitalThumbnail } from "./components/thumbnail";
 
-import ScrollTop from "@/components/atoms/scrollTop";
+import ScrollTop from "@/components/atoms/ScrollTop";
 import { Metadata, ResolvingMetadata } from "next";
 import { capitalizeWord } from "@/utils/word";
 import { getHospitalInfoAPI } from "@/app/api/hospital/[id]/info";

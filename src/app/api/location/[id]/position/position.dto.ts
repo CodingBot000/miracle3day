@@ -1,4 +1,4 @@
-import { TCoordinatesType } from "@/components/common/map";
+import { TCoordinatesType } from "@/components/common/Map";
 
 export interface PositionInputDto {
   id: string;

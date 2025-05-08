@@ -4,6 +4,7 @@ import { getHospitalReviewAPI } from "@/app/api/hospital/[id]/review";
 import { HospitalDetailReviewOutDto } from "@/app/api/hospital/[id]/review/review";
 import { ReviewCard } from "@/components/molecules/card";
 import { InfinityItemList } from "@/components/template/InfinityItem";
+import { NoData } from "@/components/template/noData";
 import { useEffect, useState } from "react";
 
 
@@ -23,6 +24,11 @@ const ReviewTab = ({ id }: { id: string }) => {
     };
     fetchReviews();
   }, [id]);
+
+
+  if (!reviews || reviews.length === 0) {
+    return <NoData label="No reviews found"/>;
+  }
 
   return (
     <div>

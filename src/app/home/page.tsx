@@ -1,7 +1,7 @@
 import Link from "next/link";
 import styles from "./home.module.css";
 
-import { Chip } from "@/components/atoms/chip";
+import { Chip } from "@/components/atoms/Chip";
 import { locationNames } from "@/constants";
 import { ROUTE } from "@/router";
 import { getBannerAPI } from "@/app/api/home/banner";

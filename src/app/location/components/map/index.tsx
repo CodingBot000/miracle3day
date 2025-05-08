@@ -1,7 +1,6 @@
-import { Map, TCoordinatesType } from "@/components/common/map";
+import { Map, TCoordinatesType } from "@/components/common/Map";
 import PageHeader from "@/components/molecules/header/page-header";
 
-import styles from "./location-map.module.scss";
 
 interface LocationMapProps {
   position: TCoordinatesType[];
@@ -12,7 +11,7 @@ export const LocationMap = ({ position, name }: LocationMapProps) => {
   return (
     <>
       <PageHeader name={name} />
-      <div className={styles.map}>
+      <div className="flex mx-6">
         <Map coordinates={position} />
       </div>
     </>

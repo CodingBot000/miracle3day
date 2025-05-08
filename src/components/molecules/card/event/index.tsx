@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import styles from "./event-card.module.scss";
 import Link from "next/link";
+import { PriceDisplay } from "@/components/common/PriceDisplay";
 
 interface EventCardProps {
   src: string;
@@ -9,6 +10,7 @@ interface EventCardProps {
 
   title: string;
   date: string;
+  price: number[];
   desc: string;
 
   href: string;
@@ -21,6 +23,7 @@ export const EventCard = ({
   title,
   desc,
   date,
+  price,
   href,
   layout = "responsive",
 }: EventCardProps) => {
@@ -50,17 +53,13 @@ export const EventCard = ({
           />
         </div>
 
-        {/* 콘텐츠 영역 */}
-        <div
-          className={`
-            p-4 flex flex-col gap-1 text-sm
-            md:min-h-[140px]
-          `}
-        >
-          <h3 className="font-semibold text-sm leading-snug line-clamp-2">{title}</h3>
-          <time className="text-gray-500 dark:text-gray-400 text-xs">{date}</time>
-          <p className="text-gray-600 dark:text-gray-300 text-xs line-clamp-3">{desc}</p>
-        </div>
+        
+        <div className="p-4 flex flex-col gap-1 text-sm md:min-h-[140px]">
+          <h3 className="font-bold text-xl leading-tight">{title}</h3>
+          <time className="text-gray-500 text-sm mb-1">{date}</time>
+          <PriceDisplay price={price} />
+          <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">{desc}</p>
+      </div>
       </Link>
     </article>
   );

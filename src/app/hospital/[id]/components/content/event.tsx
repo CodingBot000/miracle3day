@@ -8,6 +8,7 @@ import { getHospitalEventAPI } from "@/app/api/hospital/[id]/event";
 import { InfinityItemList } from "@/components/template/InfinityItem";
 import { daysYMDFormat } from "@/utils/days";
 import { HospitalDetailEventOutDto } from "@/app/api/hospital/[id]/event/event.dto";
+import { NoData } from "@/components/template/noData";
 
 
 const HospitalEvent = ({ id }: { id: string }) => {
@@ -25,10 +26,15 @@ const HospitalEvent = ({ id }: { id: string }) => {
     fetchEvents();
   }, [id]);
 
+  if (!events || events.length === 0) {
+    return <NoData label="No events found"/>;
+  }
+
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
       {events.map(
-        ({ description, imageurls, name, id_unique, date_from, date_to }) => (
+        ({ description, imageurls, name, id_unique, date_from, date_to, price }) => (
           <div key={id_unique}>
             <EventCard
               layout="responsive"
@@ -36,6 +42,7 @@ const HospitalEvent = ({ id }: { id: string }) => {
               src={imageurls?.[0]}
               title={name}
               date={`${daysYMDFormat(date_from)} ~ ${daysYMDFormat(date_to)}`}
+              price={price}
               desc={description}
               alt={name}
             />

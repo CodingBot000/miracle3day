@@ -1,4 +1,4 @@
-import PageHeader from "@/components/molecules/header/page-header";
+import PageHeader from "@/components/molecules/header/PageHeader";
 import styles from "./aboutus.module.scss";
 import { Metadata } from "next";
 

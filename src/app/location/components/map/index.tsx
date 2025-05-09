@@ -1,5 +1,5 @@
 import { Map, TCoordinatesType } from "@/components/common/Map";
-import PageHeader from "@/components/molecules/header/page-header";
+import PageHeader from "@/components/molecules/header/PageHeader";
 
 
 interface LocationMapProps {

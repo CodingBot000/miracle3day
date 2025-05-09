@@ -1,4 +1,4 @@
-import PageHeader from "@/components/molecules/header/page-header";
+import PageHeader from "@/components/molecules/header/PageHeader";
 
 import { Metadata } from "next";
 import { ItemList } from "./itemList";

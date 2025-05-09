@@ -1,10 +1,6 @@
 import { ROUTE } from "@/router";
-
 import Link from "next/link";
-
-import styles from "./auth-header.module.scss";
 import { Button } from "@/components/ui/button";
-
 import { getUserAPI } from "@/app/api/auth/getUser";
 import { User } from "@supabase/supabase-js";
 import { LogIn, User as UserIcon } from "lucide-react";
@@ -15,17 +11,15 @@ const Auth = async () => {
   const href = users ? ROUTE.MY_PAGE : ROUTE.LOGIN;
 
   const text = (user: User) => {
-    const { app_metadata, user_metadata, ...rest } = user;
-
+    const { app_metadata, user_metadata } = user;
     const isSnsUser = app_metadata.provider !== "email";
-
     return isSnsUser ? user_metadata.name : user_metadata.nickname;
   };
 
   const isAdmin = users?.user.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL;
 
   return (
-    <div className={styles.auth_header}>
+    <div className="flex justify-end items-center gap-2 w-auto min-w-fit">
       <Link href={href}>
         <Button 
           variant="outline" 
@@ -44,6 +38,7 @@ const Auth = async () => {
           )}
         </Button>
       </Link>
+
       {isAdmin && (
         <Link href={ROUTE.UPLOAD_HOSPITAL}>
           <Button variant="ghost" className="text-blue-600 hover:text-blue-700">

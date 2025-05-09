@@ -5,7 +5,7 @@ import HospitalTab from "./components/tab";
 import { getHospitalMainAPI } from "../../api/hospital/[id]/main";
 import Floating, { FloatItem } from "./components/floating";
 import { redirect } from "next/navigation";
-import PageHeader from "@/components/molecules/header/page-header";
+import PageHeader from "@/components/molecules/header/PageHeader";
 import { HospitalFavoriteIcon } from "@/components/atoms/favorite";
 
 import { HospitalThumbnail } from "./components/thumbnail";

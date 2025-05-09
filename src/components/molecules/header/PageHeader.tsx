@@ -1,4 +1,3 @@
-import styles from "./page-header.module.scss";
 import { PropsWithChildren } from "react";
 
 interface PageHeaderProps {
@@ -7,10 +6,9 @@ interface PageHeaderProps {
 
 const PageHeader = ({ name, children }: PropsWithChildren<PageHeaderProps>) => {
   return (
-    <div className={styles.header}>
+    <div className="relative flex justify-center items-center bg-white min-h-[55px] py-3 px-6 text-[#464344] font-bold text-[25px] z-12">
       <h1>{name}</h1>
-
-      <div className={styles.icons}>{children}</div>
+      <div className="absolute right-4">{children}</div>
     </div>
   );
 };

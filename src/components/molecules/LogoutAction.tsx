@@ -5,7 +5,7 @@ import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-const LogoutBtn = async () => {
+const LogoutAction = async () => {
   const handleLogout = async () => {
     "use server";
     const supabase = createClient();
@@ -24,4 +24,4 @@ const LogoutBtn = async () => {
   );
 };
 
-export default LogoutBtn;
+export default LogoutAction;

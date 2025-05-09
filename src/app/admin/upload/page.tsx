@@ -1,6 +1,6 @@
 "use client";
 
-import PageHeader from "@/components/molecules/header/page-header";
+import PageHeader from "@/components/molecules/header/PageHeader";
 import InputField from "@/components/molecules/form/input-field";
 import styles from "./upload.module.scss";
 import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from "react";

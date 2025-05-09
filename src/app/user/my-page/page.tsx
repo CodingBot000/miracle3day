@@ -1,5 +1,5 @@
 import { getUserAPI } from "@/app/api/auth/getUser";
-import LogoutBtn from "@/components/molecules/logout";
+import LogoutAction from "@/components/molecules/logout";
 
 import styles from "./my-page.module.scss";
 import { notFound } from "next/navigation";
@@ -14,7 +14,7 @@ const MyPage = async () => {
       <div>{users.user.user_metadata.full_name}</div>
       <br />
       <div>
-        <LogoutBtn />
+        <LogoutAction />
       </div>
     </main>
   );

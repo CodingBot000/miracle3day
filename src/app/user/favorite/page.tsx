@@ -8,7 +8,7 @@ import { useState } from "react";
 import { getAllFavoriteAPI } from "../../api/auth/favorite";
 
 import { InfinityItemList } from "@/components/template/InfinityItem";
-import PageHeader from "@/components/molecules/header/page-header";
+import PageHeader from "@/components/molecules/header/PageHeader";
 import { ROUTE } from "@/router";
 import { FavoriteIcon } from "@/components/icons/favoriteIcon";
 import Button from "@/components/atoms/button";

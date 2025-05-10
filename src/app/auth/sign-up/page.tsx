@@ -15,7 +15,7 @@ import { Mail, Lock, User, UserPlus } from "lucide-react";
 import signUpActions from "./actions/sign-up.action";
 import { clsx } from "clsx";
 
-type InputKey = "email" | "password" | "password_confirm" | "name" | "nickname";
+type InputKey = "email" | "password" | "password_confirm" | "name" | "nickname" | "nation";
 
 type State = {
   [key in InputKey]: { value: string; error: boolean };
@@ -24,6 +24,7 @@ type State = {
 const SignUpPage = () => {
   const [message, setMessage] = useState<string | null>(null);
   const [formError, setFormError] = useState<{ [key in InputKey]?: string[] } | null>(null);
+  const [nation, setNation] = useState<string>("");
 
   const [input, setInput] = useState<State>({
     email: {
@@ -46,13 +47,17 @@ const SignUpPage = () => {
       error: false,
       value: "",
     },
+    nation: {
+      error: false,
+      value: "",
+    },
   });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     const regValid = (name: InputKey, value: string) => {
-      const reg: Record<Exclude<InputKey, "name" | "nickname">, RegExp> = {
+      const reg: Record<Exclude<InputKey, "name" | "nickname" | "nation">, RegExp> = {
         email: emailRegExp,
         password: passwordRegExp,
         password_confirm: passwordRegExp,
@@ -60,11 +65,11 @@ const SignUpPage = () => {
 
       if (name === "password_confirm") {
         return !reg[name].test(value) || input["password"].value !== value;
-      } else if (name === "nickname" || name === "name") {
+      } else if (name === "nickname" || name === "name" || name === "nation") {
         return false;
+      } else {
+        return !reg[name].test(value);
       }
-
-      return !reg[name].test(value);
     };
 
     const inputKey = name as InputKey;
@@ -80,6 +85,15 @@ const SignUpPage = () => {
   };
 
   const handleSubmit = async (formData: FormData) => {
+    const invalidFields = Object.entries(input).filter(([_, field]) => field.error || !field.value);
+    const errors: { [key in InputKey]?: string[] } = {};
+  
+    if (invalidFields.length > 0) {
+      invalidFields.forEach(([key]) => {
+        errors[key as InputKey] = ["This field is required or invalid."];
+      });
+    }
+
     try {
       const result = await signUpActions(null, formData);
       if (result.error) {
@@ -88,11 +102,11 @@ const SignUpPage = () => {
         setMessage(result.message);
       }
     } catch (error) {
-      setMessage("회원가입 중 오류가 발생했습니다.");
+      setMessage("An error occurred during sign-up.");
     }
   };
 
-  const disabled = Object.values(input).every((e) => !e.error && e.value);
+  // const disabled = Object.values(input).every((e) => e.error && !e.value);
 
   return (
     <main className={styles.main}>
@@ -196,14 +210,18 @@ const SignUpPage = () => {
         </div>
 
         <div className={styles.input_field}>
-          <NationModal />
+          <NationModal nation={nation} onSelect={(value) => setNation(value)} />
+          <input type="hidden" name="nation" value={nation} />
+          {formError?.nation?.length && (
+            <p className="text-sm text-red-500 mt-1">{formError.nation[0]}</p>
+          )}
         </div>
 
         <div className="space-y-4 mt-6">
           <Button
             type="submit"
             className="w-full flex items-center justify-center gap-2"
-            disabled={disabled}
+
           >
             <UserPlus className="h-4 w-4" />
             Sign Up

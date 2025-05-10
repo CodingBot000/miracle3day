@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Providers from "@/provider";
 import { Footer } from "@/components/organism/layout/footer";
-import { Header } from "@/components/organism/layout/header";
+import { LayoutHeader } from "@/components/organism/layout/header";
 import ScrollTop from "@/components/atoms/ScrollTop";
 import LoadingSpinner from "@/components/atoms/loading/spinner";
 import MobileMenu from "@/components/organism/layout/mobile-menu";
@@ -53,7 +53,7 @@ export default function RootLayout({
           <Providers>
             <ScrollTop />  
             <div id="modal-root" />
-            <Header />
+            <LayoutHeader />
             <main className="pt-4">
               {children}
             </main>

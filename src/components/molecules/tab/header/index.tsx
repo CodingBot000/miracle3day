@@ -14,10 +14,10 @@ const TabHeader = ({ list, currentTab, onTabChange }: TabHeaderProps) => {
   };
 
   const handleClick = (key: string) => {
-    console.log("handleClick key:", key);
+    // console.log("handleClick key:", key);
     
     if (onTabChange) {
-      console.log("handleClick onTabChange");
+      // console.log("handleClick onTabChange");
       onTabChange(key);
     }
   };

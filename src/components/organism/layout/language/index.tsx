@@ -1,24 +1,16 @@
 "use client";
 
-import styles from "./language.module.scss";
-
 import { useState } from "react";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import clsx from "clsx";
+} from "@/components/ui/dropdown-menu";
 import { Check } from "lucide-react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { languages } from "@/constants";
-
 
 export const LanguageDropdown = () => {
   const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
@@ -29,14 +21,10 @@ export const LanguageDropdown = () => {
         <Image
           src="/icons/globe_language.svg"
           alt="Select Language"
-         width={24}
+          width={24}
           height={24}
-          className={styles.icon}
-          style={{ cursor: "pointer" }}
+          className="cursor-pointer transition-opacity duration-200 ease-in-out hover:opacity-70"
         />
-        {/* <Button variant="outline" className="w-[150px]">
-          {selectedLanguage.label}
-        </Button> */}
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[150px]">
         {languages.map((option) => (
@@ -49,7 +37,9 @@ export const LanguageDropdown = () => {
                 "bg-muted text-primary font-semibold"
             )}
           >
-            {option.code === selectedLanguage.code && <Check className="w-4 h-4" />}
+            {option.code === selectedLanguage.code && (
+              <Check className="w-4 h-4" />
+            )}
             {option.label}
           </DropdownMenuItem>
         ))}
@@ -57,6 +47,5 @@ export const LanguageDropdown = () => {
     </DropdownMenu>
   );
 };
-
 
 export default LanguageDropdown;

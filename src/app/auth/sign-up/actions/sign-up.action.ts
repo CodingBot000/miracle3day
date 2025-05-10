@@ -26,12 +26,12 @@ export default async function signUpActions(
   if (!email || !password || !password_confirm || !name || !nickname || !nation) {
     return {
       error: {
-        email: ["이메일을 입력해주세요."],
-        password: ["비밀번호를 입력해주세요."],
-        password_confirm: ["비밀번호 확인을 입력해주세요."],
-        name: ["이름을 입력해주세요."],
-        nickname: ["닉네임을 입력해주세요."],
-        nation: ["국가를 선택해주세요."],
+        email: ["Please enter your email."],
+        password: ["Please enter your password."],
+        password_confirm: ["Please confirm your password."],
+        name: ["Please enter your name."],
+        nickname: ["Please enter your nickname."],
+        nation: ["Please select your country."],
       },
     };
   }
@@ -39,7 +39,7 @@ export default async function signUpActions(
   if (password !== password_confirm) {
     return {
       error: {
-        password_confirm: ["비밀번호가 일치하지 않습니다."],
+        password_confirm: ["Passwords do not match."],
       },
     };
   }
@@ -65,7 +65,7 @@ export default async function signUpActions(
     }
     return {
       error: {
-        email: ["회원가입 중 오류가 발생했습니다."],
+        email: ["An error occurred during sign-up."],
       },
     };
   }

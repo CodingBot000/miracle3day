@@ -8,11 +8,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Search } from "lucide-react";
 
-interface NationModalProps {}
+interface NationModalProps {
+  nation: string;
+  onSelect: (value: string) => void;
+}
 
-export const NationModal = ({}: NationModalProps) => {
+export const NationModal = ({ nation, onSelect }: NationModalProps) => {
   const { handleOpenModal, open } = useModal();
-  const [nationality, setNationality] = useState<string>("");
+  // const [nationality, setNationality] = useState<string>("");
 
   return (
     <div className="space-y-2">
@@ -23,7 +26,7 @@ export const NationModal = ({}: NationModalProps) => {
           id="nationality"
           name="nationality"
           readOnly
-          value={nationality}
+          value={nation}
           onFocus={handleOpenModal}
           placeholder="Select your nationality"
           className="pl-10 cursor-pointer"
@@ -31,7 +34,7 @@ export const NationModal = ({}: NationModalProps) => {
       </div>
       <SearchModal
         onCancel={handleOpenModal}
-        onClick={({ country_name }) => setNationality(country_name)}
+        onClick={({ country_name }) => onSelect(country_name)}
         itemList={country}
         open={open}
       />

@@ -4,7 +4,7 @@ import { BannerOutputDto } from "./banner.dto";
 export const getBannerAPI = async (): Promise<BannerOutputDto> => {
   const url = `${process.env.NEXT_PUBLIC_API_ROUTE}/api/home/banner`;
   // const url = `${process.env.NEXT_PUBLIC_API_ROUTE}/api/home/hospital/location?locationNum=${locationNum}`;
-  console.log(`Banner API URL: ${url}`);
+  // console.log(`Banner API URL: ${url}`);
   try {
     const data = await fetchUtils<BannerOutputDto>({ 
       url,
@@ -22,7 +22,7 @@ export const getBannerAPI = async (): Promise<BannerOutputDto> => {
 // max-age=60	브라우저가 최대 60초 동안은 무조건 캐시 사용
 // stale-while-revalidate=300	60초 지나도 최대 5분까지는 예전 캐시 보여주고, 백그라운드로 새로 요청
 
-    console.log('Banner Data:', JSON.stringify(data, null, 2));
+    // console.log('Banner Data:', JSON.stringify(data, null, 2));
     // console.log(`dataaaaaaa2: ${data[0].imgUrl}`);
     return data;
   } catch (error) {

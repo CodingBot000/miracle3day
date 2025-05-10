@@ -1,5 +1,5 @@
 import { getUserAPI } from "@/app/api/auth/getUser";
-import LogoutAction from "@/components/molecules/logout";
+import LogoutAction from "@/components/molecules/LogoutAction";
 
 import styles from "./my-page.module.scss";
 import { notFound } from "next/navigation";

@@ -57,7 +57,7 @@ const InfoTab = async ({ hospitalData }: InfoTabProps) => {
     );
   };
 
-  console.log(`infoDetailData:  ${infoData.latitude}  longitude:${infoData.longitude}`);
+  // console.log(`infoDetailData:  ${infoData.latitude}  longitude:${infoData.longitude}`);
 
   if (!InfoDataList || InfoDataList.length === 0) {
     return <NoData label="No info data found"/>;

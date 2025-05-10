@@ -61,15 +61,29 @@ const UploadTestPage = () => {
   const [preview, setPreview] = useState<Array<string | undefined>>([]);
   const [file, setFile] = useState<Array<File>>([]);
 
+  // const handleSubmit = async (formData: FormData) => {
+  //   try {
+  //     const result = await uploadActions(null, formData);
+  //     setFormState(result);
+  //   } catch (error) {
+  //     setFormState({ message: "업로드 중 오류가 발생했습니다.", status: "error" });
+  //   }
+  // };
   const handleSubmit = async (formData: FormData) => {
     try {
-      const result = await uploadActions(null, formData);
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+  
+      const result = await res.json();
       setFormState(result);
     } catch (error) {
       setFormState({ message: "업로드 중 오류가 발생했습니다.", status: "error" });
     }
   };
 
+  
   const handleUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
     if (!files) return;
@@ -108,10 +122,16 @@ const UploadTestPage = () => {
   return (
     <main>
       <PageHeader name="Upload Test" />
-      <form 
+      {/* <form 
         className={styles.form} 
         action={handleSubmit}
-      >
+      > */}
+        <form onSubmit={(e) => {
+          e.preventDefault();
+          const formData = new FormData(e.currentTarget);
+          handleSubmit(formData);
+        }}>
+
         <div className={styles.input_form}>
           <InputField label={"name"} name={"name"} required />
           <InputField label={"searchkey"} name={"searchkey"} required />

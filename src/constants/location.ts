@@ -15,5 +15,5 @@ export const locationMapper = [
   {"Gangnam":2},
   {"Chungdam":3},
   {"Songdo":4},
-  {"SonHongdaegdo":5},
+  {"Hongdae":5},
 ] as const;

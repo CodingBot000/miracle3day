@@ -138,6 +138,7 @@ const LoginPage = () => {
           {snsLoginList.map((sns) => (
             <Button
               key={sns}
+              type="button" // form 제출을 트리거 하지않도록 하기 위해 추가
               variant="outline"
               size="icon"
               className="h-10 w-10"

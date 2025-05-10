@@ -53,21 +53,21 @@ const HospitalDetailPage = async ({
   const hospitalId = params?.id;
   if (hospitalId === "undefined") redirect("/");
 
-  console.log("API 호출 전 params.id:", hospitalId);
+  // console.log("API 호출 전 params.id:", hospitalId);
   const data = await getHospitalMainAPI({ id: hospitalId });
   // const infoData = await getHospitalInfoAPI({ id: params?.id });
-  console.log("API 호출 후 전체 데이터:", data);
-  console.log("hospital_details 데이터:", data.hospital_details);
+  // console.log("API 호출 후 전체 데이터:", data);
+  // console.log("hospital_details 데이터:", data.hospital_details);
   
   // hospital_details의 첫 번째 요소를 사용
   const hospitalDetails = data.hospital_details[0] || {};
-  console.log("hospital_details 구조:", {
-    tel: hospitalDetails.tel,
-    homepage: hospitalDetails.homepage,
-    kakaotalk: hospitalDetails.kakaotalk,
-    blog: hospitalDetails.blog,
-    ticktok: hospitalDetails.ticktok,
-  });
+  // console.log("hospital_details 구조:", {
+  //   tel: hospitalDetails.tel,
+  //   homepage: hospitalDetails.homepage,
+  //   kakaotalk: hospitalDetails.kakaotalk,
+  //   blog: hospitalDetails.blog,
+  //   ticktok: hospitalDetails.ticktok,
+  // });
   const currentTab = searchParams.tab || "event";
 
 
@@ -82,7 +82,7 @@ const HospitalDetailPage = async ({
   }, []);
 
   const isFavorite = data?.favorite?.length > 0;
-  console.log("HospitalDetailPage hospitalId:", hospitalId);
+  // console.log("HospitalDetailPage hospitalId:", hospitalId);
   return (
     <main>
       <ScrollTop />

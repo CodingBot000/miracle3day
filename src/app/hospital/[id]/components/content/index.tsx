@@ -21,7 +21,7 @@ export default function HospitalDetailContent({ hospitalId, hospitalData } : Inf
     review: useRef<HTMLDivElement>(null),
     info: useRef<HTMLDivElement>(null),
   };
-  console.log("HospitalDetailContent hospitalId:", hospitalId);
+  // console.log("HospitalDetailContent hospitalId:", hospitalId);
   return (
     <>
         {/* /* PageHeader의 실제 높이 : min-height: 55px padding: 12px 24px (상하 12px) */ }

@@ -55,46 +55,50 @@ console.log("Array.isArray", Array.isArray(response.data));
 
   return (
     <div className="fixed top-[88px] left-0 w-full h-[calc(100vh-88px)] bg-white z-30 p-4 overflow-auto">
-      <div className="flex items-center mb-4">
-        <Input
-          placeholder="Search by treatment, clinic, location, or event name"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className="flex-grow"
-        />
-        <button onClick={onClose} className="ml-2 p-2 text-gray-500 hover:text-black">
-          <X />
-        </button>
-      </div>
-      <div className="mb-4">
-      <div className="text-sm font-medium text-gray-700 mb-2">Recommended</div>
-      <div className="flex flex-wrap gap-2">
-        {recommendedKeywords.map((word) => (
-          <button
-            key={word}
-            onClick={() => handleKeywordClick(word)}
-            className="px-3 py-1 rounded-full bg-gray-100 hover:bg-gray-200 text-sm"
-          >
-            {word}
+      <div className="flex justify-center mb-4">
+        <div className="flex w-full max-w-[500px] items-center">
+          <Input
+            placeholder="Search by treatment, clinic, location, or event name"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="flex-grow"
+          />
+          <button onClick={onClose} className="ml-2 p-2 text-gray-500 hover:text-black">
+            <X />
           </button>
-        ))}
+        </div>
       </div>
-    </div>
 
-    <div className="mb-4">
-      <div className="text-sm font-medium text-gray-700 mb-2">Trending</div>
-      <div className="flex flex-wrap gap-2">
-        {trendingKeywords.map((word) => (
-          <button
-            key={word}
-            onClick={() => handleKeywordClick(word)}
-            className="px-3 py-1 rounded-full bg-gray-100 hover:bg-gray-200 text-sm"
-          >
-            {word}
-          </button>
-        ))}
-      </div>
-    </div>
+      <div className="mb-4">
+  <div className="text-sm font-medium text-gray-700 mb-2">Recommended</div>
+  <div className="flex flex-wrap gap-2">
+    {recommendedKeywords.map((word) => (
+      <button
+        key={word}
+        onClick={() => handleKeywordClick(word)}
+        className="px-2 py-0.5 sm:px-3 sm:py-1 rounded-full bg-gray-100 hover:bg-gray-200 text-xs sm:text-sm"
+      >
+        {word}
+      </button>
+    ))}
+  </div>
+</div>
+
+<div className="mb-4">
+  <div className="text-sm font-medium text-gray-700 mb-2">Trending</div>
+  <div className="flex flex-wrap gap-2">
+    {trendingKeywords.map((word) => (
+      <button
+        key={word}
+        onClick={() => handleKeywordClick(word)}
+        className="px-2 py-0.5 sm:px-3 sm:py-1 rounded-full bg-gray-100 hover:bg-gray-200 text-xs sm:text-sm"
+      >
+        {word}
+      </button>
+    ))}
+  </div>
+</div>
+
 
       {loading && <div className="text-sm text-muted-foreground">Searching...</div>}
 
@@ -113,25 +117,33 @@ console.log("Array.isArray", Array.isArray(response.data));
           md:h-auto
         "
       >
-       {!loading && results &&
-        results.hospitals.length > 0 && (
-          results.hospitals.map(({ imageurls, name, id_unique, location }) => (
-              <article key={id_unique} className="w-full px-[10px]">
-                <HospitalCard
-                  alt={name}
-                  name={name}
-                  href={ROUTE.HOSPITAL_DETAIL("") + id_unique}
-                  src={imageurls[0]}
-                  locationNum={location}
-                />
-              </article>
-            ))
+        {(!loading && results) && (
+          <>
+          {results.hospitals.length > 0 && (
+            <>
+             <div className="col-span-full text-2xl font-semibold text-gray-800 mb-2">
+                 Hospital
+            </div>
+              {results.hospitals.map(({ imageurls, name, id_unique, location }) => (
+                  <article key={id_unique} className="w-full px-[10px]">
+                    <HospitalCard
+                      alt={name}
+                      name={name}
+                      href={ROUTE.HOSPITAL_DETAIL("") + id_unique}
+                      src={imageurls[0]}
+                      locationNum={location}
+                    />
+                  </article>
+                ))}
+            </>
           )
-          
         }
-        {!loading && results &&
-        results.events.length > 0 && (
-          results.events.map(({ description, imageurls, name, id_unique, date_from, date_to, price }) => (
+        {results.events.length > 0 && (
+          <>
+          <div className="col-span-full text-2xl font-semibold text-gray-800 mb-2">
+              Events
+          </div>
+          {results.events.map(({ description, imageurls, name, id_unique, date_from, date_to, price }) => (
               <div key={id_unique}>
                 <EventCard
                   layout="responsive"
@@ -144,12 +156,16 @@ console.log("Array.isArray", Array.isArray(response.data));
                   alt={name}
                 />
               </div>
-            ))
+            ))}
+          </>
           )
         }
-        {!loading && results &&
-        results.reviews.length > 0 && (
-          results.reviews.map((review) => (
+        {results.reviews.length > 0 && (
+          <>
+          <div className="col-span-full text-2xl font-semibold text-gray-800 mb-2">
+              Reviews
+          </div>
+          {results.reviews.map((review) => (
             <div
               key={review.id_unique}
               className="md:min-w-[280px] md:max-w-[280px] flex-shrink-0"
@@ -163,30 +179,16 @@ console.log("Array.isArray", Array.isArray(response.data));
                 created_at={review.created_at}
               />
             </div>
-          )
-          ))
-        }
+          ))}
+          </>
+        )}
+          </>
+        )}
+      
       </div>
     </div>
       
-      {/* {!loading && results.length > 0 && (
-        <div className="space-y-2">
-          {results.map((item) => (
-            <div
-              key={item.id}
-              onClick={() => {
-                router.push(`/hospital/${item.id_unique}`);
-                onClose();
-              }}
-              className="p-3 border rounded hover:bg-muted cursor-pointer"
-            >
-              <div className="font-medium">{item.name}</div>
-              <div className="text-sm text-muted-foreground">{item.location}</div>
-            </div>
-          ))}
-        </div>
-      )} */}
-
+    
       {!loading && query && results && results.hospitals.length === 0 && results.events.length === 0 && results.reviews.length === 0 && (
         <div className="text-sm text-muted-foreground">Search results not found</div>
       )}

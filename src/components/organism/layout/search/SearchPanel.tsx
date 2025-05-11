@@ -53,6 +53,19 @@ console.log("Array.isArray", Array.isArray(response.data));
     return () => clearTimeout(timeout);
   }, [query]);
 
+
+  if (loading) {
+    return (
+      <div className="text-sm text-muted-foreground">Searching...</div>
+    );
+  }
+
+  if (!results) {
+    return null; 
+  }
+
+  const styleConteList = "grid gap-4 mx-4 grid-cols-[repeat(auto-fill,minmax(150px,1fr))] md:grid-cols-3 md:gap-6 md:mx-auto md:max-w-[1024px] md:h-auto";
+
   return (
     <div className="fixed top-[88px] left-0 w-full h-[calc(100vh-88px)] bg-white z-30 p-4 overflow-auto">
       <div className="flex justify-center mb-4">
@@ -84,48 +97,35 @@ console.log("Array.isArray", Array.isArray(response.data));
   </div>
 </div>
 
-<div className="mb-4">
-  <div className="text-sm font-medium text-gray-700 mb-2">Trending</div>
-  <div className="flex flex-wrap gap-2">
-    {trendingKeywords.map((word) => (
-      <button
-        key={word}
-        onClick={() => handleKeywordClick(word)}
-        className="px-2 py-0.5 sm:px-3 sm:py-1 rounded-full bg-gray-100 hover:bg-gray-200 text-xs sm:text-sm"
-      >
-        {word}
-      </button>
-    ))}
+  <div className="mb-4">
+    <div className="text-sm font-medium text-gray-700 mb-2">Trending</div>
+    <div className="flex flex-wrap gap-2">
+      {trendingKeywords.map((word) => (
+        <button
+          key={word}
+          onClick={() => handleKeywordClick(word)}
+          className="px-2 py-0.5 sm:px-3 sm:py-1 rounded-full bg-gray-100 hover:bg-gray-200 text-xs sm:text-sm"
+        >
+          {word}
+        </button>
+      ))}
+    </div>
   </div>
-</div>
-
-
-      {loading && <div className="text-sm text-muted-foreground">Searching...</div>}
 
       <div className="w-full">
-      <div
-        className="
-          grid 
-          gap-4 
-          mx-4 
-          grid-cols-[repeat(auto-fill,minmax(150px,1fr))]
-          md:grid-cols-3 
-          md:gap-6 
-          md:mx-auto 
-          md:max-w-[1024px] 
-          md:grid-rows-2 
-          md:h-auto
-        "
-      >
-        {(!loading && results) && (
-          <>
+      {/* <div className={styleConteList}>
+        {(
+          <> */}
           {results.hospitals.length > 0 && (
-            <>
-             <div className="col-span-full text-2xl font-semibold text-gray-800 mb-2">
+             <div className="col-span-full text-2xl font-semibold text-gray-800 mt-16 mb-5">
                  Hospital
             </div>
+            )}
+      <div className={styleConteList}>
+        {(
+          <>
               {results.hospitals.map(({ imageurls, name, id_unique, location }) => (
-                  <article key={id_unique} className="w-full px-[10px]">
+                  <div key={id_unique}>
                     <HospitalCard
                       alt={name}
                       name={name}
@@ -133,16 +133,19 @@ console.log("Array.isArray", Array.isArray(response.data));
                       src={imageurls[0]}
                       locationNum={location}
                     />
-                  </article>
+                  </div>
                 ))}
             </>
           )
         }
+        </div>
         {results.events.length > 0 && (
-          <>
-          <div className="col-span-full text-2xl font-semibold text-gray-800 mb-2">
+
+          <div className="col-span-full text-2xl font-semibold text-gray-800 mt-16 mb-5">
               Events
           </div>
+        )}
+        <div className={styleConteList}>
           {results.events.map(({ description, imageurls, name, id_unique, date_from, date_to, price }) => (
               <div key={id_unique}>
                 <EventCard
@@ -157,14 +160,14 @@ console.log("Array.isArray", Array.isArray(response.data));
                 />
               </div>
             ))}
-          </>
-          )
-        }
+        </div>
         {results.reviews.length > 0 && (
-          <>
-          <div className="col-span-full text-2xl font-semibold text-gray-800 mb-2">
+          // <>
+          <div className="col-span-full text-2xl font-semibold text-gray-800 mt-16 mb-5">
               Reviews
           </div>
+        )}
+          <div className={styleConteList}>
           {results.reviews.map((review) => (
             <div
               key={review.id_unique}
@@ -180,18 +183,16 @@ console.log("Array.isArray", Array.isArray(response.data));
               />
             </div>
           ))}
-          </>
-        )}
-          </>
-        )}
-      
+          </div>
+        
       </div>
-    </div>
-      
-    
+
       {!loading && query && results && results.hospitals.length === 0 && results.events.length === 0 && results.reviews.length === 0 && (
         <div className="text-sm text-muted-foreground">Search results not found</div>
       )}
     </div>
+      
+    
+    // </div>
   );
 }

@@ -1,11 +1,7 @@
 "use client";
 
 import Image from "next/image";
-
-import styles from "./hospital-card.module.scss";
 import Link from "next/link";
-import { locationNames } from "@/constants";
-
 
 interface HospitalCardProps {
   src: string;
@@ -45,7 +41,7 @@ export const HospitalCard = ({
         <div className="p-4 space-y-2">
           <h3 className="text-xl font-semibold">{name}</h3>
           {locationNum !== undefined && (
-            <p className="text-gray-500 dark:text-gray-400">{locationNames[parseInt(locationNum)]}</p>
+            <p className="text-gray-500 dark:text-gray-400">{locationNum}</p>
           )}
           
           {/* <div className="flex items-center justify-between">

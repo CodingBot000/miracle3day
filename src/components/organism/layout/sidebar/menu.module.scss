@@ -8,9 +8,9 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
   transition: top 0.3s ease;
   padding: 20px;
-  background: rgba(255, 255, 255, 0.7); /* ✅ 반투명 흰색 */
-  backdrop-filter: blur(10px); /* ✅ 뿌옇게 블러 추가 */
-  -webkit-backdrop-filter: blur(10px); /* ✅ 사파리 호환성 */
+  background: rgba(255, 255, 255, 0.7); /*  반투명 흰색 */
+  backdrop-filter: blur(10px); /* 뿌옇게 블러 추가 */
+  -webkit-backdrop-filter: blur(10px); /*  사파리 호환성 */
   z-index: 99;
   display: flex;
   flex-direction: column;
@@ -61,8 +61,8 @@
 }
 
 .subMenuTitle {
-  font-size: 0.9rem; /* ✅ 더 작게 */
-  font-weight: normal; /* ✅ (필요에 따라) 조금 더 약하게 */
+  font-size: 0.9rem; /*  더 작게 */
+  font-weight: normal; /*  (필요에 따라) 조금 더 약하게 */
   color: #333; /* (선택) 색상 조정 */
 }
 

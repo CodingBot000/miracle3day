@@ -26,6 +26,7 @@ export const LayoutHeader = () => {
             <Menu />
           </div>
           <div>
+
             <button onClick={() => setShowSearch(true)}>
               <Search size={20} />
             </button>

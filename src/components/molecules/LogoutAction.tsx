@@ -1,27 +1,14 @@
+"use client";
+
 import Button from "@/components/atoms/button";
-import { ROUTE } from "@/router";
+import { logoutAction } from "@/app/auth/logout/logoutAction";
 
-import { createClient } from "@/utils/supabase/server";
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-
-const LogoutAction = async () => {
-  const handleLogout = async () => {
-    "use server";
-    const supabase = createClient();
-    await supabase.auth.signOut();
-
-    revalidatePath("/", "layout");
-    redirect(ROUTE.HOME);
-  };
-
+export default function LogoutAction() {
   return (
-    <form action={handleLogout}>
+    <form action={logoutAction}>
       <Button color="red" variant="outline">
         LOGOUT
       </Button>
     </form>
   );
-};
-
-export default LogoutAction;
+}

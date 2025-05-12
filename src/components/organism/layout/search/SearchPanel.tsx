@@ -34,9 +34,9 @@ const handleKeywordClick = (word: string) => {
         setLoading(true);
         try {
           const response = await getSearchAPI(query);
-          console.log("response.data:", response.data);
-          console.log("typeof results", typeof response.data);
-console.log("Array.isArray", Array.isArray(response.data));
+//           console.log("response.data:", response.data);
+//           console.log("typeof results", typeof response.data);
+// console.log("Array.isArray", Array.isArray(response.data));
           setResults(response.data);
         } catch (err) {
           console.error(err);

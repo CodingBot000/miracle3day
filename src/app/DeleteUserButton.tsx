@@ -25,9 +25,9 @@ export default function DeleteUserButton({ uid }: DeleteUserButtonProps) {
     const data = await res.json();
 
     if (data.success) {
-      setResult("✅ 유저 삭제 성공!");
+      setResult(" 유저 삭제 성공!");
     } else {
-      setResult("❌ 삭제 실패: " + data.error);
+      setResult(" 삭제 실패: " + data.error);
     }
 
     setLoading(false);

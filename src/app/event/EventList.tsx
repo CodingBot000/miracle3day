@@ -4,11 +4,11 @@ import { EventCard } from "@/components/molecules/card";
 import { InfinityItemList } from "@/components/template/InfinityItem";
 import { ROUTE } from "@/router";
 import { daysYMDFormat } from "@/utils/days";
-import { getAllEventAPI } from "../api/event";
+import { getAllEventAPI } from "@/app/api/event";
 
 import styles from "./event.module.scss";
 
-export const ItemList = () => {
+const ItemList  = () => {
   return (
     <InfinityItemList
       grid="2"
@@ -37,3 +37,5 @@ export const ItemList = () => {
     </InfinityItemList>
   );
 };
+
+export default ItemList;

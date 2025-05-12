@@ -7,7 +7,8 @@ import HospitalTab from "../tab";
 import { HospitalDetailMainOutput } from "@/app/api/hospital/[id]/main/main.dto";
 
 const InfoTab = dynamic(() => import("./info"));
-const EventTab = dynamic(() => import("./event"));
+// const EventTab = dynamic(() => import("./event"));
+const EventTab = dynamic(() => import("./HospitalEventWrapper"));
 const ReviewTab = dynamic(() => import("./review"));
 
 interface InfoTabProps {

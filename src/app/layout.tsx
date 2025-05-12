@@ -6,10 +6,10 @@ import Providers from "@/provider";
 import { Footer } from "@/components/organism/layout/footer";
 import { LayoutHeader } from "@/components/organism/layout/header";
 import ScrollTop from "@/components/atoms/ScrollTop";
-import LoadingSpinner from "@/components/atoms/loading/spinner";
+// import LoadingSpinner from "@/components/atoms/loading/spinner";
 import MobileMenu from "@/components/organism/layout/mobile-menu";
-import { ProgressBar } from "@/components/atoms/loading/progress-bar";
-import { PageTransitionOverlay } from "@/components/atoms/loading/page-transition-overlay";
+// import { ProgressBar } from "@/components/atoms/loading/progress-bar";
+// import { PageTransitionOverlay } from "@/components/atoms/loading/page-transition-overlay";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -47,7 +47,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ProgressBar />
+        {/* <ProgressBar /> */}
         {/* <PageTransitionOverlay /> */}
         <div className="bg-[rgb(247,248,250)]">
           <Providers>
@@ -59,7 +59,7 @@ export default function RootLayout({
             </main>
             <Footer />
             <MobileMenu />
-            {/* <LoadingSpinner/> */}
+     
           </Providers>
         </div>
       </body>

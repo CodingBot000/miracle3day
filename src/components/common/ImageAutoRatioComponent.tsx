@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
-interface ImageAutoRatioProps {
+interface ImageAutoRatioComponentProps {
   src: string;
   alt: string;
   objectFit?: "contain" | "cover" | "fill";
@@ -12,14 +12,14 @@ interface ImageAutoRatioProps {
   fallbackText?: string;
 }
 
-const ImageAutoRatio = ({
+const ImageAutoRatioComponent = ({
   src,
   alt,
   objectFit = "contain",
   className = "",
   showSkeleton = true,
   fallbackText = "Image not available",
-}: ImageAutoRatioProps) => {
+}: ImageAutoRatioComponentProps) => {
   const [aspectRatio, setAspectRatio] = useState<number | null>(null);
   const [hasError, setHasError] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -74,4 +74,4 @@ const ImageAutoRatio = ({
   );
 };
 
-export default ImageAutoRatio;
+export default ImageAutoRatioComponent;

@@ -1,11 +1,13 @@
 import { getHospitalInfoAPI } from "@/app/api/hospital/[id]/info";
 import styles from "./styles/info.module.scss";
 import * as React from "react";
-import { Map } from "../../../../../components/common/Map";
-import { HospitalDetailInfoOutDto } from "@/app/api/hospital/[id]/info/info.dto";
+
 import { HospitalDetailMainOutput } from "@/app/api/hospital/[id]/main/main.dto";
-import Avatar from "@/components/atoms/\bAvatar";
+
 import { NoData } from "@/components/template/noData";
+
+import { MapComponent } from "@/components/common/MapComponent";
+import Character from "@/components/common/Character";
 
 
 type TContent = { title: string; content: string };
@@ -83,7 +85,7 @@ const InfoTab = async ({ hospitalData }: InfoTabProps) => {
               ? detailData.desc_doctors_imgurls
               : ["/default/doctor_default.png"]
             ).map((imgUrl, index) => (
-              <Avatar
+              <Character
                 key={`${detailData.id_hospital}-${index}`}
                 src={imgUrl}
                 alt="doctor"
@@ -93,7 +95,7 @@ const InfoTab = async ({ hospitalData }: InfoTabProps) => {
         </div>
       </div>
       
-      <Map
+      <MapComponent
         coordinates={[
           {
             title: infoData.name,

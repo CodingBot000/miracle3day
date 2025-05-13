@@ -4,7 +4,7 @@ import Script from "next/script";
 import { useRef } from "react";
 import { createNonce } from "@/utils/security";
 import Image from "next/image";
-import ImageAutoRatio from "@/components/atoms/\bImageAutoRatio";
+import ImageAutoRatioComponent from "./ImageAutoRatioComponent";
 
 export type TCoordinatesType = {
   title?: string;
@@ -12,16 +12,16 @@ export type TCoordinatesType = {
   lng: number;
 };
 
-interface MapProps {
+interface MapComponentProps {
   coordinates: TCoordinatesType[];
 }
 
 
 
-  export const Map = ({ coordinates }: MapProps) => {
+  export const MapComponent = ({ coordinates }: MapComponentProps) => {
     const ref = useRef<HTMLDivElement>(null);
 
-
+    
     return (
       <div className="w-full">
             <p className="mb-2 text-center text-sm text-gray-500">block map rendering temporarily. This is dummy image.</p>

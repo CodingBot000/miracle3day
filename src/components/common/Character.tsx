@@ -3,12 +3,12 @@
 import Image from "next/image";
 import { useState } from "react";
 
-interface AvatarProps {
+interface CharacterProps {
   src: string;
   alt: string;
 }
 
-const Avatar = ({ alt, src }: AvatarProps) => {
+const Character = ({ alt, src }: CharacterProps) => {
   const [imgSrc, setImgSrc] = useState(src);
   const fallback = "/default/doctor_default.png";
 
@@ -28,4 +28,4 @@ const Avatar = ({ alt, src }: AvatarProps) => {
   );
 };
 
-export default Avatar;
+export default Character;

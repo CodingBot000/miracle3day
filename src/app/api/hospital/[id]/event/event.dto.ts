@@ -16,7 +16,7 @@ export interface HospitalDetailEventData {
   name: string;
   imageurls: string[];
   image_desc_urls: string[];
-  id_surgeries: number[];
+  id_surgeries: string[];
   description: string;
   id_unique: number;
   price: number[];

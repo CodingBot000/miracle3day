@@ -14,7 +14,7 @@ export interface SurgeriesReviewData {
   created_at: string; // ISO 날짜 문자열
   id_event: number;
   id_hospital: number;
-  id_surgeries: number[];
+  id_surgeries: string[];
   reviewimageurls: string[];
   description: string;
   id_unique: number;

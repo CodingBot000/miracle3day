@@ -7,11 +7,12 @@ import { ROUTE } from "@/router";
 
 import styles from "./item-list.module.scss";
 
-export const ItemList = () => {
+export const ItemList = ({ id }: { id: string }) => {
   return (
     <InfinityItemList
       className={styles.grid}
       fetchFn={getLocationDetailAPI}
+      id={id}
       queryKey={"surgeries_reviews"}
     >
       {(item) => {

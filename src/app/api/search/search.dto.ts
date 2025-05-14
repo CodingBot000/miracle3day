@@ -5,7 +5,7 @@
 //   name: string;
 //   imageurls: string[];
 //   location: string;
-//   id_surgeries: number[];
+//   id_surgeries: string[];
 
 import { EventDetailData } from "../event/[id]/event.dto";
 import { HospitalData } from "../event/event.dto";

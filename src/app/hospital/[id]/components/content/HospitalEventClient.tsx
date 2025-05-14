@@ -28,7 +28,7 @@ export default function HospitalEventClient({ id }: { id: string }) {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div className="grid grid-cols-3 md:grid-cols-3 gap-4">
       {events.map(({ description, imageurls, name, id_unique, date_from, date_to, price }) => (
         <div key={id_unique}>
           <EventCard
@@ -36,7 +36,8 @@ export default function HospitalEventClient({ id }: { id: string }) {
             href={ROUTE.EVENT_DETAIL("") + id_unique}
             src={imageurls?.[0]}
             title={name}
-            date={`${daysYMDFormat(date_from)} ~ ${daysYMDFormat(date_to)}`}
+            dateFrom={date_from}
+            dateTo={date_to}
             price={price}
             desc={description}
             alt={name}

@@ -4,7 +4,7 @@ export const styles = {
     grid items-stretch
     gap-4 
     mx-4 
-    grid-cols-1
+    grid-cols-2
     sm:grid-cols-2
     md:grid-cols-3
     md:gap-6 

@@ -1,18 +1,15 @@
-import Image from "next/image";
-
-import styles from "./event-card.module.scss";
 import Link from "next/link";
 import { PriceDisplay } from "@/components/common/PriceDisplay";
-
+import ImageAutoRatioComp from "@/components/common/ImageAutoRatioComp";
+import { daysYMDFormat } from "@/utils/days";
 interface EventCardProps {
   src: string;
   alt: string;
-
   title: string;
-  date: string;
+  dateFrom: string;
+  dateTo: string;
   price: number[];
   desc: string;
-
   href: string;
   layout?: "responsive";
 }
@@ -22,44 +19,44 @@ export const EventCard = ({
   alt,
   title,
   desc,
-  date,
+  dateFrom,
+  dateTo,
   price,
   href,
   layout = "responsive",
 }: EventCardProps) => {
   return (
-      <article className="bg-white dark:bg-gray-950 rounded-lg overflow-hidden transition hover:bg-purple-50">
-      <Link
-        href={href}
-        className={`
-          flex flex-row md:flex-col
-        `}
-      >
+    <article className="bg-white dark:bg-gray-950 rounded-lg overflow-hidden hover:bg-purple-50 shadow-sm">
+      <Link href={href} className="flex flex-col">
         {/* 이미지 영역 */}
-        <div
-          className={`
-            relative
-            w-[120px] h-[120px]
-            md:w-full md:h-[180px]
-            flex-shrink-0
-          `}
-        >
-          <Image
+        <div className="w-full">
+          <ImageAutoRatioComp
             src={src}
             alt={alt}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 120px, 100vw"
+            objectFit="cover"
+            showSkeleton={true}
+            fallbackText="can't load image"
+            className="w-full h-full shadow-md rounded-t-lg"
           />
         </div>
 
-        
-        <div className="p-4 flex flex-col gap-1 text-sm md:min-h-[140px]">
-          <h3 className="font-bold text-xl leading-tight">{title}</h3>
-          <time className="text-gray-500 text-sm mb-1">{date}</time>
+        {/* 텍스트 영역 */}
+        <div className="p-4 flex flex-col gap-2 justify-between text-xs sm:text-sm md:text-base">
+          <h3 className="font-bold text-lg sm:text-xl leading-tight line-clamp-2 min-h-[3.5rem]">
+            {title}
+          </h3>
+
+          <div className="flex justify-end text-xs text-gray-500 mb-1">
+            <time>
+              {daysYMDFormat(dateFrom)} ~ {daysYMDFormat(dateTo)}
+            </time>
+          </div>
+
           <PriceDisplay price={price} />
-          <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">{desc}</p>
-      </div>
+
+          <p className="text-gray-600 leading-relaxed line-clamp-3">{desc}</p>
+        </div>
+
       </Link>
     </article>
   );

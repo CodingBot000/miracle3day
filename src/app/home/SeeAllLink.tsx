@@ -10,6 +10,7 @@ export default function SeeAllLink({
 }: {
   location: LocationType;
 }) {
+  console.log('qq qq SeeAllLink location: ', location);
   return (
     <div className="flex justify-end mr-5">
       <Link

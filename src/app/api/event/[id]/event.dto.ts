@@ -20,7 +20,7 @@ export interface HospitalData {
   latitude: number;
   longitude: number;
   imageurls: string[]; // 이미지 URL 배열
-  id_surgeries: number[]; // 수술 ID 배열
+  id_surgeries: string[]; // 수술 ID 배열
   id_unique: number;
   location: string;
 }

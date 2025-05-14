@@ -22,7 +22,7 @@ export default async function HomePage() {
 
   const params = new URLSearchParams(search);
   const locationParam = params.get("locationNum");
-
+  console.log('qq qq HomePage locationParam: ', locationParam);
   const selectedLocation: LocationType | undefined = LOCATIONS.find(
     (loc) => loc === locationParam
   );

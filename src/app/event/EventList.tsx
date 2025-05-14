@@ -8,10 +8,11 @@ import { getAllEventAPI } from "@/app/api/event";
 
 import styles from "./event.module.scss";
 
-const ItemList  = () => {
+const EventList  = () => {
   return (
+    <div className="w-full max-w-[1024px] mx-auto px-4">
     <InfinityItemList
-      grid="2"
+      grid="4"
       fetchFn={getAllEventAPI}
       queryKey={"event_all"}
       className={styles.wrapper}
@@ -25,7 +26,8 @@ const ItemList  = () => {
                 href={ROUTE.EVENT_DETAIL("") + id_unique}
                 src={imageurls && imageurls[0]}
                 title={name}
-                date={`${daysYMDFormat(date_from)} ~ ${daysYMDFormat(date_to)}`}
+                dateFrom={date_from}
+                dateTo={date_to}
                 desc={description}
                 alt={name}
                 price={price}
@@ -35,7 +37,8 @@ const ItemList  = () => {
         )
       }
     </InfinityItemList>
+    </div>
   );
 };
 
-export default ItemList;
+export default EventList;

@@ -9,9 +9,11 @@ export async function GET(
   const supabase = createClient();
 
   const location = locationList.map((loc) => {
+    console.log('qq qq location route loc: ', loc);
+    console.log('qq qq location route params.id: ', params.id);
     return loc.toLowerCase() === params.id.toLowerCase();
   });
-
+  console.log('qq qq location route location: ', location);
   const { searchParams } = new URL(req.url);
   const pageParam = parseInt(searchParams.get("pageParam") as string);
 

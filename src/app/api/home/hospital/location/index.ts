@@ -3,9 +3,10 @@ import {
   HospitalLocationInputDto,
   HospitalLocationOutputDto,
 } from "./hospital-location.dto";
+import { LocationEnum } from "@/constants";
 
 export const getHospitalLocationAPI = async ({
-  locationNum = "0",
+  locationNum = LocationEnum.Apgujung,
 }: HospitalLocationInputDto) => {
   const url = `${process.env.NEXT_PUBLIC_API_ROUTE}/api/home/hospital/location?locationNum=${locationNum}`;
 

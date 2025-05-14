@@ -1,4 +1,5 @@
-import { TCoordinatesType } from "@/components/common/Map";
+
+import { TCoordinatesType } from "@/components/common/MapComponent";
 import {
   InfinityScrollInputDto,
   InfinityScrollOutputDto,

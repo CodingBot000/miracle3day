@@ -4,13 +4,13 @@ import { Home, Stethoscope, Calendar, MapPin, Heart } from "lucide-react";
 import styles from "./mobile-menu.module.scss";
 import { ROUTE } from "@/router";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import { locationNames } from "@/constants";
+import { LocationEnum, LOCATIONS } from "@/constants";
 
 const MobileMenu = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const locationNum = searchParams.get('locationNum') || '0';
+  const locationNum = searchParams.get('locationNum') || LocationEnum.Apgujung;
 
   const handleHomeClick = () => {
     if (pathname === ROUTE.HOME) return;
@@ -28,7 +28,7 @@ const MobileMenu = () => {
   };
 
   const handleLocationClick = () => {
-    const currentLocation = locationNames[parseInt(locationNum)];
+    const currentLocation = locationNum;
     const targetPath = ROUTE.LOCATION_DETAIL("") + currentLocation;
     if (pathname === targetPath) return;
     router.push(targetPath);

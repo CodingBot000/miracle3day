@@ -12,7 +12,7 @@ import { ResolvingMetadata, Metadata } from "next";
 import { PriceDisplay } from "@/components/common/PriceDisplay";
 import { formatDate } from "@/app/utils/date/formatDate";
 import Image from "next/image";
-import ImageAutoRatio from "@/components/atoms/\bImageAutoRatio";
+import ImageAutoRatioComp from "@/components/common/ImageAutoRatioComp";
 
 
 export async function generateMetadata(
@@ -51,6 +51,17 @@ const EventDetailPage = async ({ params: { id } }: EventDetailPageProps) => {
   const dateTo = eventData.date_to;
   const price = data[0].price;
   const desc = eventData.description;
+  console.log(`qq qq EventDetailPage 
+    id:${id}\n
+    eventData:${eventData}\n
+    hospitalData:${hospitalData}\n
+    surgeryData:${surgeryData}\n
+    title:${title}\n
+    dateFrom:${dateFrom}\n
+    dateTo:${dateTo}\n
+    price:${price}\n
+    desc:${desc}\n
+    `);
 
   return (
     <main>
@@ -65,7 +76,7 @@ const EventDetailPage = async ({ params: { id } }: EventDetailPageProps) => {
          className="w-full h-auto object-contain"
           /> */}
         
-        <ImageAutoRatio
+        <ImageAutoRatioComp
           src={eventData.imageurls[0]}
           alt={eventData.id_unique.toString()}
           objectFit="cover"

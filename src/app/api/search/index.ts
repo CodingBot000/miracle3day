@@ -4,8 +4,6 @@ import { SearchOutputDto } from "./search.dto";
 export const getSearchAPI = async (query: string): Promise<SearchOutputDto> => {
   const url = `${process.env.NEXT_PUBLIC_API_ROUTE}/api/search?q=${encodeURIComponent(query)}`;
 
-  // const url = `${process.env.NEXT_PUBLIC_API_ROUTE}/api/home/hospital/location?locationNum=${locationNum}`;
-  // console.log(`Banner API URL: ${url}`);
   try {
     const data = await fetchUtils<SearchOutputDto>({ 
       url,

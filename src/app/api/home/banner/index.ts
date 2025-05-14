@@ -3,7 +3,6 @@ import { BannerOutputDto } from "./banner.dto";
 
 export const getBannerAPI = async (): Promise<BannerOutputDto> => {
   const url = `${process.env.NEXT_PUBLIC_API_ROUTE}/api/home/banner`;
-  // const url = `${process.env.NEXT_PUBLIC_API_ROUTE}/api/home/hospital/location?locationNum=${locationNum}`;
   // console.log(`Banner API URL: ${url}`);
   try {
     const data = await fetchUtils<BannerOutputDto>({ 

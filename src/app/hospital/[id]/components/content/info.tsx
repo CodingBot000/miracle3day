@@ -1,11 +1,12 @@
 import { getHospitalInfoAPI } from "@/app/api/hospital/[id]/info";
 import styles from "./styles/info.module.scss";
 import * as React from "react";
-import { Map } from "../../../../../components/common/Map";
+
 import { HospitalDetailInfoOutDto } from "@/app/api/hospital/[id]/info/info.dto";
 import { HospitalDetailMainOutput } from "@/app/api/hospital/[id]/main/main.dto";
-import Avatar from "@/components/atoms/\bAvatar";
+import Avatar from "@/components/atoms/Character";
 import { NoData } from "@/components/template/noData";
+import { MapComponent } from "@/components/common/MapComponent";
 
 
 type TContent = { title: string; content: string };
@@ -93,7 +94,7 @@ const InfoTab = async ({ hospitalData }: InfoTabProps) => {
         </div>
       </div>
       
-      <Map
+      <MapComponent
         coordinates={[
           {
             title: infoData.name,

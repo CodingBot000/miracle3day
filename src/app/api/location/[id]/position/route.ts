@@ -1,4 +1,4 @@
-import { locationNames as locationList } from "@/constants";
+import { LOCATIONS as locationList } from "@/constants";
 import { createClient } from "@/utils/supabase/server";
 
 export async function GET(
@@ -7,7 +7,7 @@ export async function GET(
 ) {
   const supabase = createClient();
 
-  const location = locationList.findIndex((loc) => {
+  const location = locationList.map((loc) => {
     return loc.toLowerCase() === params.id.toLowerCase();
   });
 
@@ -17,7 +17,8 @@ export async function GET(
       .select(`id_unique,name,location,latitude,longitude`);
 
     // 지역전체
-    if (params.id === "ALL" || location === -1) {
+    // if (params.id === "ALL" || location === -1) {
+      if (params.id === "ALL") {
       const { data, error, status, statusText } = await query;
 
       if (error) {

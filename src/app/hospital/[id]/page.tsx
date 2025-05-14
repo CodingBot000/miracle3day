@@ -32,7 +32,8 @@ export async function generateMetadata(
   const data = await getHospitalMainAPI({ id: params?.id });
 
   const previousImages = (await parent).openGraph?.images || [];
-
+  // console.log("qq qq getHospitalMainAPI data.imageurls:", data.imageurls);
+  // console.log("qq qq getHospitalMainAPI params?.id:", params?.id);
   return {
     title: `${data.name} | ${capitalizeWord(searchParams.tab)}`,
     openGraph: {

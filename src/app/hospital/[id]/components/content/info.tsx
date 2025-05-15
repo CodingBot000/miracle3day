@@ -1,12 +1,7 @@
-import { getHospitalInfoAPI } from "@/app/api/hospital/[id]/info";
 import styles from "./styles/info.module.scss";
 import * as React from "react";
 import { HospitalDetailMainOutput } from "@/app/api/hospital/[id]/main/main.dto";
-import Avatar from "@/components/atoms/Character";
 import { NoData } from "@/components/template/NoData";
-import { MapComponent } from "@/components/common/MapComponent";
-
-
 import { MapComponent } from "@/components/common/MapComponent";
 import Character from "@/components/common/Character";
 

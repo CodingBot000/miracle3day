@@ -1,3 +1,3 @@
-export * from "./event";
-export * from "./hospital";
-export * from "./review";
+export * from "./EventCard";
+export * from "./HospitalCard";
+export * from "./ReviewCard";

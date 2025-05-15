@@ -1,7 +1,7 @@
-import LoadingSpinner from "@/components/atoms/loading/spinner";
+// import LoadingSpinner from "@/components/atoms/loading/spinner";
 
-const Loading = () => {
-  return <LoadingSpinner backdrop />;
-};
+// const Loading = () => {
+//   return <LoadingSpinner backdrop />;
+// };
 
-export default Loading;
+// export default Loading;

@@ -2,16 +2,17 @@
 
 import { getLocationDetailAPI } from "@/app/api/location/[id]";
 import { HospitalCard } from "@/components/molecules/card";
-import { InfinityItemList } from "@/components/template/InfinityItem";
+import { InfinityItemList } from "@/components/template/InfinityItemList";
 import { ROUTE } from "@/router";
 
 import styles from "./item-list.module.scss";
 
-export const ItemList = () => {
+export const ItemList = ({ id }: { id: string }) => {
   return (
     <InfinityItemList
       className={styles.grid}
       fetchFn={getLocationDetailAPI}
+      id={id}
       queryKey={"surgeries_reviews"}
     >
       {(item) => {

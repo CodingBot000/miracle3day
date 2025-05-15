@@ -85,7 +85,7 @@ export type Database = {
           description: string | null
           id: number
           id_hospital: number | null
-          id_surgeries: number[] | null
+          id_surgeries: string[] | null
           id_unique: number
           image_desc_urls: string[] | null
           imageurls: string[] | null
@@ -144,7 +144,7 @@ export type Database = {
         Row: {
           created_at: string
           id: number
-          id_surgeries: number[] | null
+          id_surgeries: string[] | null
           id_unique: number
           imageurls: string[] | null
           latitude: number
@@ -257,7 +257,7 @@ export type Database = {
           id: number
           id_event: number | null
           id_hospital: number | null
-          id_surgeries: number[] | null
+          id_surgeries: string[] | null
           id_unique: number
           reviewimageurls: string[] | null
           user_no: number | null

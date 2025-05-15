@@ -19,22 +19,23 @@ export async function GET(
       return Response.json({ data: null }, { status, statusText });
     }
 
-    const getSurgery = await supabase
-      .from("surgery_info")
-      .select("*")
-      .in("id_unique", data[0].id_surgeries);
+    // const getSurgery = await supabase
+    //   .from("surgery_info")
+    //   .select("*")
+    //   .in("id_unique", data[0].id_surgeries);
 
     const getHospital = await supabase
       .from("hospital")
       .select("*")
       .match({ id_unique: data[0].id_hospital });
-
+    console.log(`qq qq event/[id]/route.ts getHospital:${getHospital.data}`);
+ 
     if (!getHospital.data) return;
 
     const updatedData = data.map((e) => {
       return {
         ...e,
-        id_surgeries: getSurgery.data,
+        id_surgeries: getHospital.data[0].id_surgeries,
         id_hospital: getHospital.data[0],
       };
     });

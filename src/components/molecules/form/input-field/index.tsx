@@ -1,8 +1,7 @@
 "use client";
 
 import React, { forwardRef } from "react";
-import styles from "./input-field.module.scss";
-import { clsx } from "clsx";
+import clsx from "clsx";
 
 interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
@@ -14,16 +13,19 @@ interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
 const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
   ({ label, name, onChange, isError, ...props }, ref) => {
     return (
-      <div className={styles.input_form}>
-        <label className={styles.label}>
+      <div className="w-full">
+        <label
+          className="flex gap-2 p-3 border border-[#eee] rounded"
+        >
           {label}
           <input
-            className={clsx(styles.input, {
-              [styles.errorField]: isError,
-            })}
             name={name}
             ref={ref}
             onChange={onChange}
+            className={clsx(
+              "ml-auto min-w-[70%] outline-none border-none",
+              isError && "text-red-500"
+            )}
             {...props}
           />
         </label>

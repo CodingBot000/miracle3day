@@ -1,4 +1,4 @@
-import { TabItem } from "@/components/molecules/tab/types";
+import { TabItem } from "@/components/molecules/tab/TabItem";
 import { TAB } from "@/constants/key";
 import { handleRouter } from "@/utils";
 

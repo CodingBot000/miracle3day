@@ -5,8 +5,8 @@ import HospitalTab from "./components/tab";
 import { getHospitalMainAPI } from "../../api/hospital/[id]/main";
 import Floating, { FloatItem } from "./components/floating";
 import { redirect } from "next/navigation";
-import PageHeader from "@/components/molecules/header/page-header";
-import { HospitalFavoriteIcon } from "@/components/atoms/favorite";
+import PageHeader from "@/components/molecules/PageHeader";
+import { FavoriteButton } from "@/components/atoms/favorite/FavoriteButton";
 
 import { HospitalThumbnail } from "./components/thumbnail";
 
@@ -32,7 +32,8 @@ export async function generateMetadata(
   const data = await getHospitalMainAPI({ id: params?.id });
 
   const previousImages = (await parent).openGraph?.images || [];
-
+  // console.log("qq qq getHospitalMainAPI data.imageurls:", data.imageurls);
+  // console.log("qq qq getHospitalMainAPI params?.id:", params?.id);
   return {
     title: `${data.name} | ${capitalizeWord(searchParams.tab)}`,
     openGraph: {
@@ -53,21 +54,21 @@ const HospitalDetailPage = async ({
   const hospitalId = params?.id;
   if (hospitalId === "undefined") redirect("/");
 
-  console.log("API 호출 전 params.id:", hospitalId);
+  // console.log("API 호출 전 params.id:", hospitalId);
   const data = await getHospitalMainAPI({ id: hospitalId });
   // const infoData = await getHospitalInfoAPI({ id: params?.id });
-  console.log("API 호출 후 전체 데이터:", data);
-  console.log("hospital_details 데이터:", data.hospital_details);
+  // console.log("API 호출 후 전체 데이터:", data);
+  // console.log("hospital_details 데이터:", data.hospital_details);
   
   // hospital_details의 첫 번째 요소를 사용
   const hospitalDetails = data.hospital_details[0] || {};
-  console.log("hospital_details 구조:", {
-    tel: hospitalDetails.tel,
-    homepage: hospitalDetails.homepage,
-    kakaotalk: hospitalDetails.kakaotalk,
-    blog: hospitalDetails.blog,
-    ticktok: hospitalDetails.ticktok,
-  });
+  // console.log("hospital_details 구조:", {
+  //   tel: hospitalDetails.tel,
+  //   homepage: hospitalDetails.homepage,
+  //   kakaotalk: hospitalDetails.kakaotalk,
+  //   blog: hospitalDetails.blog,
+  //   ticktok: hospitalDetails.ticktok,
+  // });
   const currentTab = searchParams.tab || "event";
 
 
@@ -82,12 +83,12 @@ const HospitalDetailPage = async ({
   }, []);
 
   const isFavorite = data?.favorite?.length > 0;
-  console.log("HospitalDetailPage hospitalId:", hospitalId);
+  // console.log("HospitalDetailPage hospitalId:", hospitalId);
   return (
     <main>
       <ScrollTop />
       <PageHeader name={data.name}>
-        <HospitalFavoriteIcon isFavorite={isFavorite} />
+        <FavoriteButton isFavorite={isFavorite} />
       </PageHeader>
       <div>
         <HospitalThumbnail imageurls={data.imageurls} />

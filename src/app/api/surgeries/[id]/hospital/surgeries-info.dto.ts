@@ -16,7 +16,7 @@ export interface SurgeriesHospitalData {
   latitude: number;
   longitude: number;
   imageurls: string[];
-  id_surgeries: number[];
+  id_surgeries: string[];
   id_unique: number;
   location: string;
 }

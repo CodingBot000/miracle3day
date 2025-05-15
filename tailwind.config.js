@@ -4,6 +4,10 @@ module.exports = {
     content: [
     "./src/**/*.{js,ts,jsx,tsx,scss}"
   ],
+  safelist: [
+	  "top-0",
+	  "top-[-100%]"
+	],
   theme: {
   	extend: {
   		colors: {
@@ -119,8 +123,6 @@ module.exports = {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate"),
-	require('@tailwindcss/line-clamp'),
-  ],
+  plugins: [require("tailwindcss-animate")],
   important: true,
 }; 

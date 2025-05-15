@@ -32,7 +32,7 @@ const LocationDetailPage = async ({
   return (
     <main>
       <LocationMap name={id.toUpperCase()} position={data.position} />
-      <ItemList />
+      <ItemList id={id} />
     </main>
   );
 };

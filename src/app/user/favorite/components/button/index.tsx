@@ -1,5 +1,5 @@
-import Button, { ButtonProps } from "@/components/atoms/button";
-import LoadingSpinner from "@/components/atoms/loading/spinner";
+import Button, { ButtonProps } from "@/components/atoms/button/Button";
+import LoadingSpinner from "@/components/atoms/loading/LoadingSpinner";
 import React from "react";
 
 import { useFormStatus } from "react-dom";

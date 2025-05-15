@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { LIMIT } from "./constant";
-import { locationNames as locationList } from "@/constants";
+import { LOCATIONS as locationList } from "@/constants";
 
 export async function GET(
   req: Request,
@@ -8,10 +8,12 @@ export async function GET(
 ) {
   const supabase = createClient();
 
-  const location = locationList.findIndex((loc) => {
+  const location = locationList.map((loc) => {
+    console.log('qq qq location route loc: ', loc);
+    console.log('qq qq location route params.id: ', params.id);
     return loc.toLowerCase() === params.id.toLowerCase();
   });
-
+  console.log('qq qq location route location: ', location);
   const { searchParams } = new URL(req.url);
   const pageParam = parseInt(searchParams.get("pageParam") as string);
 
@@ -30,9 +32,9 @@ export async function GET(
       )
       .range(offset, limit);
 
-    if (location !== -1) {
+    // if (location !== -1) {
       baseListQuery.match({ location });
-    }
+    // }
 
     const { data, error, status, statusText, count } = await baseListQuery;
 

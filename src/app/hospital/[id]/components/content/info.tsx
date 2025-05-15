@@ -1,11 +1,7 @@
-import { getHospitalInfoAPI } from "@/app/api/hospital/[id]/info";
 import styles from "./styles/info.module.scss";
 import * as React from "react";
-
 import { HospitalDetailMainOutput } from "@/app/api/hospital/[id]/main/main.dto";
-
-import { NoData } from "@/components/template/noData";
-
+import { NoData } from "@/components/template/NoData";
 import { MapComponent } from "@/components/common/MapComponent";
 import Character from "@/components/common/Character";
 
@@ -59,7 +55,7 @@ const InfoTab = async ({ hospitalData }: InfoTabProps) => {
     );
   };
 
-  console.log(`infoDetailData:  ${infoData.latitude}  longitude:${infoData.longitude}`);
+  // console.log(`infoDetailData:  ${infoData.latitude}  longitude:${infoData.longitude}`);
 
   if (!InfoDataList || InfoDataList.length === 0) {
     return <NoData label="No info data found"/>;

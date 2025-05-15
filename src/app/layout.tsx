@@ -3,13 +3,14 @@ import "../styles/globals.scss";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Providers from "@/provider";
-import { Footer } from "@/components/organism/layout/footer";
-import { Header } from "@/components/organism/layout/header";
+import { Footer } from "@/components/organism/layout/Footer";
+import { LayoutHeader } from "@/components/organism/layout/LayoutHeader";
 import ScrollTop from "@/components/atoms/ScrollTop";
-import LoadingSpinner from "@/components/atoms/loading/spinner";
-import MobileMenu from "@/components/organism/layout/mobile-menu";
-import { ProgressBar } from "@/components/atoms/loading/progress-bar";
-import { PageTransitionOverlay } from "@/components/atoms/loading/page-transition-overlay";
+// import LoadingSpinner from "@/components/atoms/loading/spinner";
+import MenuMobile from "@/components/organism/layout/MenuMobile";
+import { ProgressBar } from "@/components/atoms/loading/ProgressBar";
+// import { ProgressBar } from "@/components/atoms/loading/progress-bar";
+// import { PageTransitionOverlay } from "@/components/atoms/loading/page-transition-overlay";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -53,13 +54,12 @@ export default function RootLayout({
           <Providers>
             <ScrollTop />  
             <div id="modal-root" />
-            <Header />
+            <LayoutHeader />
             <main className="pt-4">
               {children}
             </main>
             <Footer />
-            <MobileMenu />
-            {/* <LoadingSpinner/> */}
+            <MenuMobile />
           </Providers>
         </div>
       </body>

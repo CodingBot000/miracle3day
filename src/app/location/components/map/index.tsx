@@ -1,6 +1,5 @@
 import { MapComponent, TCoordinatesType } from "@/components/common/MapComponent";
-import PageHeader from "@/components/molecules/header/page-header";
-
+import PageHeader from "@/components/molecules/PageHeader";
 
 interface LocationMapProps {
   position: TCoordinatesType[];

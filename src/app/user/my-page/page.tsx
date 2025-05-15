@@ -1,23 +1,23 @@
+export const dynamic = "force-dynamic";
+
+import SuspenseWrapper from "@/components/atoms/SuspenseWrapper";
+import dynamicImport from "next/dynamic";
 import { getUserAPI } from "@/app/api/auth/getUser";
-import LogoutBtn from "@/components/molecules/logout";
-
-import styles from "./my-page.module.scss";
 import { notFound } from "next/navigation";
+import MyPageSkeleton from "./MyPageSkeleton";
 
-const MyPage = async () => {
+const MyPageClient = dynamicImport(() => import("./MyPageClient"), {
+  ssr: false,
+});
+
+export default async function MyPage() {
   const users = await getUserAPI();
 
   if (!users) notFound();
 
   return (
-    <main className={styles.mypage}>
-      <div>{users.user.user_metadata.full_name}</div>
-      <br />
-      <div>
-        <LogoutBtn />
-      </div>
-    </main>
+    <SuspenseWrapper fallback={<MyPageSkeleton />}>
+      <MyPageClient user={users.user} />
+    </SuspenseWrapper>
   );
-};
-
-export default MyPage;
+}

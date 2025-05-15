@@ -2,7 +2,7 @@
 import { Chip } from "@/components/atoms/Chip";
 import styles from "./event-detail.module.scss";
 import { getEventDetailAPI } from "@/app/api/event/[id]";
-import LoadingSpinner from "@/components/atoms/loading/spinner";
+import LoadingSpinner from "@/components/atoms/loading/LoadingSpinner";
 import Link from "next/link";
 import { ROUTE } from "@/router";
 

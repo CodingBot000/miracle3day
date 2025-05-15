@@ -3,8 +3,8 @@
 import { getHospitalReviewAPI } from "@/app/api/hospital/[id]/review";
 import { HospitalDetailReviewOutDto } from "@/app/api/hospital/[id]/review/review";
 import { ReviewCard } from "@/components/molecules/card";
-import { InfinityItemList } from "@/components/template/InfinityItem";
-import { NoData } from "@/components/template/noData";
+import { InfinityItemList } from "@/components/template/InfinityItemList";
+import { NoData } from "@/components/template/NoData";
 import { useEffect, useState } from "react";
 
 

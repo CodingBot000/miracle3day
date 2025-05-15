@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import { tabList } from "./constant";
 import dynamic from "next/dynamic";
-import TabHeader from "@/components/molecules/tab/header";
+import TabHeader from "@/components/molecules/tab/TabHeader";
 
 type TabKey = 'event' | 'review' | 'info';
 

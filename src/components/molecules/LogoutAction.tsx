@@ -1,6 +1,6 @@
 "use client";
 
-import Button from "@/components/atoms/button";
+import Button from "@/components/atoms/button/Button";
 import { logoutAction } from "@/app/auth/logout/logoutAction";
 
 export default function LogoutAction() {

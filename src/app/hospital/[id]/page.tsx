@@ -5,8 +5,8 @@ import HospitalTab from "./components/tab";
 import { getHospitalMainAPI } from "../../api/hospital/[id]/main";
 import Floating, { FloatItem } from "./components/floating";
 import { redirect } from "next/navigation";
-import PageHeader from "@/components/molecules/header/PageHeader";
-import { HospitalFavoriteIcon } from "@/components/atoms/favorite";
+import PageHeader from "@/components/molecules/PageHeader";
+import { FavoriteButton } from "@/components/atoms/favorite/FavoriteButton";
 
 import { HospitalThumbnail } from "./components/thumbnail";
 
@@ -88,7 +88,7 @@ const HospitalDetailPage = async ({
     <main>
       <ScrollTop />
       <PageHeader name={data.name}>
-        <HospitalFavoriteIcon isFavorite={isFavorite} />
+        <FavoriteButton isFavorite={isFavorite} />
       </PageHeader>
       <div>
         <HospitalThumbnail imageurls={data.imageurls} />

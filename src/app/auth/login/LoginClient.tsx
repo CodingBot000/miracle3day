@@ -6,7 +6,7 @@ import Link from "next/link";
 import { clsx } from "clsx";
 import { useFormAction } from "@/hooks/useFormAction";
 import { signInActions, snsLoginActions, TSnsType } from "./actions";
-import { AlertModal } from "@/components/template/modal/alert";
+import { AlertModal } from "@/components/template/modal/Modal";
 import { useRouter } from "next/navigation";
 import { YoutubeIcon } from "@/components/icons/youtube";
 import { TikTokIcon } from "@/components/icons/tiktok";

@@ -7,7 +7,7 @@ import { NationModal } from "./components/modal/nations";
 import SignUpButton from "./components/button/sign-up";
 import { ChangeEvent, useEffect, useState } from "react";
 import { emailRegExp, passwordRegExp } from "@/utils/regexp";
-import { AlertModal } from "@/components/template/modal/alert";
+import { AlertModal } from "@/components/template/modal/Modal";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";

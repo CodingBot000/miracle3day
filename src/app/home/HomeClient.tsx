@@ -1,9 +1,9 @@
 "use client";
 
-import { Banner } from "@/components/organism/layout/banner";
+import { Banner } from "@/components/organism/layout/Banner";
 import LocationHospital from "./components/location";
 import Beauty from "./components/beauty";
-import Hero from "@/components/organism/layout/hero";
+import Hero from "@/components/organism/layout/HeroSection";
 import HeroVideo from "./components/hero/heroVideo";
 import { Chip } from "@/components/atoms/Chip";
 import { ROUTE } from "@/router";

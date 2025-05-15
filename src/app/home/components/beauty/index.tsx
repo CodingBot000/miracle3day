@@ -1,5 +1,3 @@
-import Link from "next/link";
-import ThumbnailImg from "@/components/molecules/img/thumbnail";
 import { getHospitalBeautyAPI } from "../../../api/home/hospital";
 import { ROUTE } from "@/router";
 import { Skeleton } from "@/components/ui/skeleton";

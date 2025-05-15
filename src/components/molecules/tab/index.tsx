@@ -1,6 +1,6 @@
-import TabContent from "./content";
-import TabHeader from "./header";
-import { TabItem } from "./types";
+import TabContent from "./TabContent";
+import TabHeader from "./TabHeader";
+import { TabItem } from "./TabItem";
 
 import styles from "./styles/tab.module.scss";
 

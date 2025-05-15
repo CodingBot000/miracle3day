@@ -7,7 +7,7 @@
 // export default AllEventPage;
 export const dynamic = "force-dynamic";
 
-import PageHeader from "@/components/molecules/header/PageHeader";
+import PageHeader from "@/components/molecules/PageHeader";
 import SuspenseWrapper from "@/components/atoms/SuspenseWrapper";
 import dynamicImport from "next/dynamic";
 import EventSkeleton from "./EventSkeleton";

@@ -1,19 +1,19 @@
 "use client";
 
-import PageHeader from "@/components/molecules/header/PageHeader";
+import PageHeader from "@/components/molecules/PageHeader";
 import InputField from "@/components/molecules/form/input-field";
 import styles from "./upload.module.scss";
 import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import Button from "@/components/atoms/button";
+import Button from "@/components/atoms/button/Button";
 import { uploadActions } from "./actions";
 import { SurgeriesModal } from "./modal";
 import { createClient } from "@/utils/supabase/client";
 import { useQuery } from "@tanstack/react-query";
-import LoadingSpinner from "@/components/atoms/loading/spinner";
+import LoadingSpinner from "@/components/atoms/loading/LoadingSpinner";
 import { SubmitButton } from "./button";
 import useModal from "@/hooks/useModal";
-import { AlertModal } from "@/components/template/modal/alert";
+import { AlertModal } from "@/components/template/modal/Modal";
 import { useRouter } from "next/navigation";
 
 interface Surgery {

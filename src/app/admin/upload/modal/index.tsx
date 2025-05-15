@@ -1,13 +1,13 @@
 "use client";
 
 import InputField from "@/components/molecules/form/input-field";
-import { ModalOverlay } from "@/components/organism/layout/modal/overlay";
+import { ModalOverlay } from "@/components/organism/layout/ModalOverlay";
 
 import styles from "./surgeries-modal.module.scss";
 
 import useModal from "@/hooks/useModal";
 import { useState } from "react";
-import Button from "@/components/atoms/button";
+import Button from "@/components/atoms/button/Button";
 
 interface Surgery {
   created_at: string; // ISO 8601 형식의 날짜 문자열

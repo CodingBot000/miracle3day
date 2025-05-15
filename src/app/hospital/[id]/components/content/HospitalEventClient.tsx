@@ -6,7 +6,7 @@ import { ROUTE } from "@/router";
 import { getHospitalEventAPI } from "@/app/api/hospital/[id]/event";
 import { daysYMDFormat } from "@/utils/days";
 import { HospitalDetailEventOutDto } from "@/app/api/hospital/[id]/event/event.dto";
-import { NoData } from "@/components/template/noData";
+import { NoData } from "@/components/template/NoData";
 
 export default function HospitalEventClient({ id }: { id: string }) {
   const [events, setEvents] = useState<HospitalDetailEventOutDto["data"]>([]);

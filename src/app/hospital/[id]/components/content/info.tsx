@@ -5,7 +5,7 @@ import * as React from "react";
 import { HospitalDetailInfoOutDto } from "@/app/api/hospital/[id]/info/info.dto";
 import { HospitalDetailMainOutput } from "@/app/api/hospital/[id]/main/main.dto";
 import Avatar from "@/components/atoms/Character";
-import { NoData } from "@/components/template/noData";
+import { NoData } from "@/components/template/NoData";
 import { MapComponent } from "@/components/common/MapComponent";
 
 

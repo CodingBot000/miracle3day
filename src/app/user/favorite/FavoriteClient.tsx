@@ -3,11 +3,11 @@
 import { HospitalCard } from "@/components/molecules/card";
 import { useState } from "react";
 import { getAllFavoriteAPI } from "../../api/auth/favorite";
-import { InfinityItemList } from "@/components/template/InfinityItem";
-import PageHeader from "@/components/molecules/header/PageHeader";
+import { InfinityItemList } from "@/components/template/InfinityItemList";
+import PageHeader from "@/components/molecules/PageHeader";
 import { ROUTE } from "@/router";
 import { FavoriteIcon } from "@/components/icons/favoriteIcon";
-import Button from "@/components/atoms/button";
+import Button from "@/components/atoms/button/Button";
 import { favoriteActions } from "@/components/atoms/favorite/actions";
 import { SubmitButton } from "./components/button";
 import SkeletonCard from "@/components/molecules/card/SkeletonCard";

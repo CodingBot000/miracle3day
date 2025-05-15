@@ -5,8 +5,8 @@ import { useFormState } from "react-dom";
 import resetPasswordActions from "./actions";
 import { useEffect } from "react";
 import useModal from "@/hooks/useModal";
-import { AlertModal } from "@/components/template/modal/alert";
-import { SubmitButton } from "@/components/atoms/button/submit";
+import { AlertModal } from "@/components/template/modal/Modal";
+import { SubmitButton } from "@/components/atoms/button/SubmitButton";
 
 const ForgetPasswordClient = () => {
   const [state, actions] = useFormState<{ message: string }, FormData>(

@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { ROUTE } from "@/router";
-import Button from "@/components/atoms/button";
+import Button from "@/components/atoms/button/Button";
 import { ConfirmModal } from "@/components/template/modal";
 import useModal from "@/hooks/useModal";
 import React from "react";

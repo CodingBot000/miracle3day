@@ -4,6 +4,10 @@ module.exports = {
     content: [
     "./src/**/*.{js,ts,jsx,tsx,scss}"
   ],
+  safelist: [
+	  "top-0",
+	  "top-[-100%]"
+	],
   theme: {
   	extend: {
   		colors: {

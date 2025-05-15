@@ -1,6 +1,6 @@
 "use client";
 
-import SlideImg from "@/components/molecules/img/slide";
+import SlideImg from "@/components/molecules/SlideImg";
 import Image from "next/image";
 
 import styles from "./thumbnail.module.scss";

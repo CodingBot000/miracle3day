@@ -9,8 +9,8 @@ import { useTimer } from "@/hooks/useTimer";
 import VerifyButton from "./verifyButton";
 import verifyActions from "./actions/email-verification.actions";
 import useModal from "@/hooks/useModal";
-import { ModalOverlay } from "@/components/organism/layout/modal/overlay";
-import Button from "@/components/atoms/button";
+import { ModalOverlay } from "@/components/organism/layout/ModalOverlay";
+import Button from "@/components/atoms/button/Button";
 
 const EmailVerificationClient = () => {
   const router = useRouter();

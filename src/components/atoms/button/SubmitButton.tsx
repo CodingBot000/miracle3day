@@ -1,7 +1,6 @@
-import Button, { ButtonProps } from "@/components/atoms/button/Button";
-import LoadingSpinner from "@/components/atoms/loading/LoadingSpinner";
 import React from "react";
 
+import Button, { ButtonProps } from "./Button";
 import { useFormStatus } from "react-dom";
 
 interface SubmitButton extends ButtonProps {
@@ -17,11 +16,8 @@ export const SubmitButton = ({
   const { pending } = useFormStatus();
 
   return (
-    <>
-      {pending && <LoadingSpinner backdrop />}
-      <Button {...buttonProps} color="blue">
-        {children}
-      </Button>
-    </>
+    <Button {...buttonProps} disabled={disabled || pending}>
+      {children}
+    </Button>
   );
 };

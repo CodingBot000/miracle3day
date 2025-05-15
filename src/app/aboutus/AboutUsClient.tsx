@@ -1,6 +1,6 @@
 "use client";
 
-import PageHeader from "@/components/molecules/header/PageHeader";
+import PageHeader from "@/components/molecules/PageHeader";
 import { aboutUsContent } from "./aboutUsContent";
 
 const AboutUsClient = () => {

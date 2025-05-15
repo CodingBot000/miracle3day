@@ -5,7 +5,6 @@ import { useRef } from "react";
 import { createNonce } from "@/utils/security";
 import Image from "next/image";
 
-
 export type TCoordinatesType = {
   title?: string;
   lat: number;
@@ -34,13 +33,12 @@ interface MapComponentProps {
             />
           </div>
         );
-      
-//   };
+
+
 
     
 // export const Map = ({ coordinates }: MapProps) => {
 //   const ref = useRef<HTMLDivElement>(null);
-
 
   const onReady = () => {
     // console.log("Initializing map", ref.current, coordinates);
@@ -94,3 +92,4 @@ interface MapComponentProps {
     </>
   );
 };
+

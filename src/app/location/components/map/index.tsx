@@ -1,4 +1,3 @@
-
 import { MapComponent, TCoordinatesType } from "@/components/common/MapComponent";
 import PageHeader from "@/components/molecules/PageHeader";
 

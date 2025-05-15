@@ -14,7 +14,6 @@ import { formatDate } from "@/app/utils/date/formatDate";
 import Image from "next/image";
 import ImageAutoRatioComp from "@/components/common/ImageAutoRatioComp";
 
-
 export async function generateMetadata(
   { params }: { params: { id: string } },
   parent: ResolvingMetadata
@@ -75,7 +74,7 @@ const EventDetailPage = async ({ params: { id } }: EventDetailPageProps) => {
           layout="intrinsic"
          className="w-full h-auto object-contain"
           /> */}
-        
+
         <ImageAutoRatioComp
           src={eventData.imageurls[0]}
           alt={eventData.id_unique.toString()}

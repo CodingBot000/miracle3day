@@ -1,4 +1,3 @@
-
 import { TCoordinatesType } from "@/components/common/MapComponent";
 import {
   InfinityScrollInputDto,

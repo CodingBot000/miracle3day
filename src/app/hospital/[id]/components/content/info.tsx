@@ -9,6 +9,10 @@ import { NoData } from "@/components/template/NoData";
 import { MapComponent } from "@/components/common/MapComponent";
 
 
+import { MapComponent } from "@/components/common/MapComponent";
+import Character from "@/components/common/Character";
+
+
 type TContent = { title: string; content: string };
 
 interface InfoTabProps {
@@ -84,7 +88,7 @@ const InfoTab = async ({ hospitalData }: InfoTabProps) => {
               ? detailData.desc_doctors_imgurls
               : ["/default/doctor_default.png"]
             ).map((imgUrl, index) => (
-              <Avatar
+              <Character
                 key={`${detailData.id_hospital}-${index}`}
                 src={imgUrl}
                 alt="doctor"

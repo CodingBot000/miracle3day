@@ -1,8 +1,6 @@
 import { getHospitalInfoAPI } from "@/app/api/hospital/[id]/info";
 import styles from "./styles/info.module.scss";
 import * as React from "react";
-
-import { HospitalDetailInfoOutDto } from "@/app/api/hospital/[id]/info/info.dto";
 import { HospitalDetailMainOutput } from "@/app/api/hospital/[id]/main/main.dto";
 import Avatar from "@/components/atoms/Character";
 import { NoData } from "@/components/template/NoData";

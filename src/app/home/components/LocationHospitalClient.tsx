@@ -46,7 +46,7 @@ export default function LocationHospitalClient() {
     <div className={styles.hospitalCardGridStyle}>
       {data
         ? data.map(({ imageurls, name, id_unique }) => (
-            <article key={id_unique} className="md:w-full md:px-2">
+            <article key={id_unique} className="w-full px-2">
               <HospitalCard
                 alt={name}
                 name={name}
@@ -57,7 +57,7 @@ export default function LocationHospitalClient() {
             </article>
           ))
         : Array.from({ length: 6 }).map((_, index) => (
-            <article key={index} className="md:w-full md:px-2">
+            <article key={index} className="w-full px-2">
               <Skeleton className="w-full h-[200px] rounded-md" />
             </article>
           ))}

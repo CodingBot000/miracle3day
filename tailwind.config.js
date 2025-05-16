@@ -99,6 +99,7 @@ module.exports = {
   			container: '1280px'
   		},
   		screens: {
+  			xs: '480px',
   			laptop: '1024px',
   			tablet: '768px',
   			mobile: '360px'

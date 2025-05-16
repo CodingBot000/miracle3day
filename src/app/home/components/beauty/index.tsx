@@ -11,7 +11,7 @@ const Beauty = async () => {
       <div className={styles.hospitalCardGridStyle}>
         {data ? (
           data.map(({ imageurls, name, id_unique, location }) => (
-            <article key={id_unique} className="w-full px-[10px]  h-full">
+            <article key={id_unique} className="w-full px-2 h-full">
               <HospitalCard
                 alt={name}
                 name={name}
@@ -23,7 +23,7 @@ const Beauty = async () => {
           ))
         ) : (
           Array.from({ length: 6 }).map((_, index) => (
-            <article key={index} className="w-full px-[10px]">
+            <article key={index} className="w-full px-2">
               <Skeleton className="w-full h-[200px] rounded-md" />
             </article>
           ))

@@ -4,8 +4,6 @@ import { ROUTE } from "@/router";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-import styles from './error.module.scss'
-
 export default function Error({
   error,
   reset,
@@ -13,25 +11,19 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
-
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
-    // Log the error to an error reporting service
     console.error(error);
   }, [error]);
 
   return (
-    <div className={styles.error}>
-      <h2>Error!</h2>
+    <div className="h-screen my-[15%] mx-auto">
+      <h2 className="text-center text-xl font-semibold mb-4">Error!</h2>
       <button
-        onClick={
-          // Attempt to recover by trying to re-render the segment
-          () => router.replace(ROUTE.HOME)
-        }
+        onClick={() => router.replace(ROUTE.HOME)}
+        className="mx-auto flex bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
       >
-        {/* Try again */}
-
         Back Home
       </button>
     </div>

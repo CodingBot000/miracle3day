@@ -1,64 +1,40 @@
-import styles from "./styles/info.module.scss";
 import * as React from "react";
 import { HospitalDetailMainOutput } from "@/app/api/hospital/[id]/main/main.dto";
 import { NoData } from "@/components/template/NoData";
 import { MapComponent } from "@/components/common/MapComponent";
 import Character from "@/components/common/Character";
 
-
 type TContent = { title: string; content: string };
 
 interface InfoTabProps {
-
   hospitalData: HospitalDetailMainOutput;
 }
 
-const InfoDataList: {
-  id: number;
-  title: string;
-  content: "desc_address" | "desc_openninghour" | "desc_facilities";
-}[] = [
-  {
-    id: 0,
-    title: "Address",
-    content: "desc_address",
-  },
-  {
-    id: 1,
-    title: "Opening Hour",
-    content: "desc_openninghour",
-  },
-  {
-    id: 2,
-    title: "Facilities",
-    content: "desc_facilities",
-  },
-];
+const InfoDataList = [
+  { id: 0, title: "Address", content: "desc_address" },
+  { id: 1, title: "Opening Hour", content: "desc_openninghour" },
+  { id: 2, title: "Facilities", content: "desc_facilities" },
+] as const;
 
 const InfoTab = async ({ hospitalData }: InfoTabProps) => {
-  // const { data: infoData } = await getHospitalInfoAPI({ id });
-  const infoData = hospitalData;
-  const infoDetailData = infoData.hospital_details[0] as {
+  const infoDetailData = hospitalData.hospital_details[0] as {
     desc_address: string;
     desc_openninghour: string;
     desc_facilities: string;
     desc_doctors_imgurls: string[];
   };
 
-  const renderContent = ({ title, content }: TContent) => {
-    return (
-      <div className={styles.content_wrapper}>
-        <h2 className={styles.title}>{title}</h2>
-
-        <div className={styles.content}>{content}</div>
+  const renderContent = ({ title, content }: TContent) => (
+    <div className="my-4">
+      <h2 className="font-bold text-[0.8rem]">{title}</h2>
+      <div className="text-[0.8rem] leading-[1.3rem] indent-4 whitespace-pre-wrap break-keep my-4">
+        {content}
       </div>
-    );
-  };
+    </div>
+  );
 
-  // console.log(`infoDetailData:  ${infoData.latitude}  longitude:${infoData.longitude}`);
-
-  if (!InfoDataList || InfoDataList.length === 0) {
-    return <NoData label="No info data found"/>;
+  if (!InfoDataList.length) {
+    return <NoData label="No info data found" />;
   }
 
   return (
@@ -72,11 +48,10 @@ const InfoTab = async ({ hospitalData }: InfoTabProps) => {
         </React.Fragment>
       ))}
 
-      <div className={styles.content_wrapper}>
-        <h2 className={styles.title}>Doctors</h2>
-
-        <div className={styles.avatar}>
-          {infoData.hospital_details.flatMap((detailData) =>
+      <div className="my-4">
+        <h2 className="font-bold text-[0.8rem]">Doctors</h2>
+        <div className="my-4 flex gap-2">
+          {hospitalData.hospital_details.flatMap((detailData) =>
             (detailData.desc_doctors_imgurls.length > 0
               ? detailData.desc_doctors_imgurls
               : ["/default/doctor_default.png"]
@@ -90,13 +65,13 @@ const InfoTab = async ({ hospitalData }: InfoTabProps) => {
           )}
         </div>
       </div>
-      
+
       <MapComponent
         coordinates={[
           {
-            title: infoData.name,
-            lat: infoData.latitude,
-            lng: infoData.longitude,
+            title: hospitalData.name,
+            lat: hospitalData.latitude,
+            lng: hospitalData.longitude,
           },
         ]}
       />

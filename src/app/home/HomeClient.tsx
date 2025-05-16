@@ -4,7 +4,7 @@ import { Banner } from "@/components/organism/layout/Banner";
 import LocationHospital from "./components/location";
 import Beauty from "./components/beauty";
 import Hero from "@/components/organism/layout/HeroSection";
-import HeroVideo from "./components/hero/heroVideo";
+
 import { Chip } from "@/components/atoms/Chip";
 import { ROUTE } from "@/router";
 import { LocationEnum, LOCATIONS, LocationType } from "@/constants";
@@ -12,6 +12,7 @@ import clsx from "clsx";
 import Link from "next/link";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
+import HeroVideo from "./components/hero/HeroVideo";
 
 interface Props {
   bannerItem: Awaited<ReturnType<typeof import("@/app/api/home/banner").getBannerAPI>>;

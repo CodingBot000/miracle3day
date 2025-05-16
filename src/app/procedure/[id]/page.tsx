@@ -4,6 +4,7 @@ import { procedureMapper } from "@/constants";
 import { getProcedureInfoAPI } from "@/app/api/surgeries/[id]/info";
 import styles from "./procedure.module.scss";
 import React from "react";
+import ImageAutoRatioComp from "@/components/common/ImageAutoRatioComp";
 
 export async function generateMetadata(
   { params }: { params: { id: string } },
@@ -81,21 +82,35 @@ const ProcedureDetailPage = async ({
     const descriptionArray = parsedData.split('\\n')
  
     return (
-        <main>
-            <div className={styles.header_sub}>
-                <p>{type} Procedure</p>            
-            </div>
-            <div className={styles.header}>
-                <p>{name}</p>
-            </div>
-            <br />
-            <div className={styles.display_image}>
-                <img src={src} height={350} alt={name} />
-            </div>
-            <br />
-            <br />
-            <div className={styles.description}>
-            {/* <div style={{ whiteSpace: "pre-wrap"}}> */}
+      <main>
+        <div className="flex justify-center items-center font-bold text-[28px] h-[60px]">
+          <p>{type} Procedure</p>
+        </div>
+        <div className="flex justify-center items-center font-bold text-[34px] h-[60px]">
+          <p>{name}</p>
+        </div>
+    
+        <br />
+        <div className="flex justify-center items-center">
+          <ImageAutoRatioComp 
+           src={src}
+           alt={name}
+           objectFit="cover"
+           showSkeleton={true}
+           fallbackText="can't load image"
+           className="shadow-md"
+          />
+        </div>
+        <br />
+        <br />
+        <div className="mx-5 whitespace-pre-wrap">
+          {descriptionArray.map((line, idx) => (
+            <React.Fragment key={idx}>
+              {line}
+              <br />
+            </React.Fragment>
+          ))}
+                    {/* <div style={{ whiteSpace: "pre-wrap"}}> */}
                 {/* {description} */}
             {/* {description.split(/\n/).map((line, index) => (
                     <React.Fragment key={index}>
@@ -103,16 +118,12 @@ const ProcedureDetailPage = async ({
                         <br />
                     </React.Fragment>
                 ))}  */}
-                {
-                  descriptionArray.map(line =>
-                   <React.Fragment key={line}>
-                    {line}<br/>
-                   </React.Fragment>)
-                 }
-                
-            </div>
-        </main>
+  
+        </div>
+      </main>
     );
+    
+  
 };
 
 export default ProcedureDetailPage;

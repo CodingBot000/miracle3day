@@ -3,12 +3,16 @@ import { ROUTE } from "@/router";
 import { Skeleton } from "@/components/ui/skeleton";
 import { HospitalCard } from "@/components/molecules/card";
 import { styles } from "@/app/home/style/homeStyleSet.tailwind";
+
+
 const Beauty = async () => {
   const { data } = await getHospitalBeautyAPI();
 
   return (
     <div className="w-full">
-      <div className={styles.hospitalCardGridStyle}>
+      <div
+        className={styles.hospitalCardGridStyle}
+      >
         {data ? (
           data.map(({ imageurls, name, id_unique, location }) => (
             <article key={id_unique} className="w-full px-2 h-full">

@@ -102,7 +102,7 @@ module.exports = {
   			xs: '480px',
   			laptop: '1024px',
   			tablet: '768px',
-  			mobile: '360px'
+  			mobile: '425px'
   		},
   		keyframes: {
   			'slide-in-left-right': {

@@ -12,7 +12,7 @@ import clsx from "clsx";
 import Link from "next/link";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import HeroVideo from "./components/hero/HeroVideo";
+import HeroVideos from "./components/hero/HeroVideos";
 
 interface Props {
   bannerItem: Awaited<ReturnType<typeof import("@/app/api/home/banner").getBannerAPI>>;
@@ -36,7 +36,7 @@ export default function HomeClient({ bannerItem, selectedLocation }: Props) {
 
     return (
       <main>
-        <HeroVideo />
+        <HeroVideos />
         <Hero />
         <Banner bannerItem={bannerItem.data} />
 {/*   

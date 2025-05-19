@@ -9,7 +9,7 @@ import { ROUTE } from "@/router";
 import { daysYMDFormat } from "@/utils/days";
 
 import { ResolvingMetadata, Metadata } from "next";
-import { PriceDisplay } from "@/components/common/PriceDisplay";
+import { DiscountPriceDisplay } from "@/components/common/DiscountPriceDisplay";
 import { formatDate } from "@/app/utils/date/formatDate";
 import Image from "next/image";
 import ImageAutoRatioComp from "@/components/common/ImageAutoRatioComp";
@@ -84,7 +84,7 @@ const EventDetailPage = async ({ params: { id } }: EventDetailPageProps) => {
         </time>
       </div>
 
-      <PriceDisplay price={price} />
+      <DiscountPriceDisplay price={price} />
 
       <div className="mt-4">
         <h2 className="text-base font-semibold">Surgeries Package</h2>

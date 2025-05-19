@@ -1,29 +1,41 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { ROUTE } from "@/router";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function DiagnosticIntro() {
   return (
-    <section className="w-full bg-[#f5f5f5] py-12 px-4 md:px-12 overflow-hidden">
+    <section className="w-full bg-[#ede9e9] mt-5 py-5 px-4 md:px-12 overflow-hidden items-center justify-between">
       <div className="max-w-7xl mx-auto flex flex-row items-center justify-between gap-8 flex-nowrap">
         {/* 왼쪽 텍스트 블록 */}
         <div className="w-1/2 space-y-4 text-left">
-          <h2 className="text-3xl font-bold tracking-tight">
+          <h2 className="text-2xl font-bold tracking-tight">
             Diagnostic
           </h2>
           <p className="text-sm text-muted-foreground">
             Ready to get started? I can help you find the right treatment for your skin concerns.
           </p>
-          <p className="text-sm text-gray-600">
+          {/* <p className="text-sm text-gray-600">
             Discover the perfect treatment plan for your skin concerns. Our AI diagnostic tool uses advanced image recognition technology to analyze your skin and provide personalized recommendations.
-          </p>
+          </p> */}
 
-          <div className="mt-6">
-            <Link href="https://treatment-estimate-landinng-tan.vercel.app/">
-              <Button size="lg" className="px-8 py-6 text-base">
-                Start Diagnosis
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
+            <Link href={ROUTE.DIAGNOTSTIC}>
+              <Button
+                size="sm"
+                className="px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base bg-blue-500 w-full sm:w-auto"
+              >
+                Overall AI Treatment Flow
+              </Button>
+            </Link>
+            <Link href={ROUTE.ONLINE_CONSULTING}>
+              <Button
+                size="sm"
+                className="px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base bg-orange-400 w-full sm:w-auto"
+              >
+                Online Consultation
               </Button>
             </Link>
           </div>
@@ -33,10 +45,10 @@ export default function DiagnosticIntro() {
         <div className="w-1/2 flex justify-center">
           <Image
             src="/icons/diagnostic_icon.png"
-            width={400}
-            height={400}
+            width={200}
+            height={200}
             alt="AI Skin Diagnosis"
-            className="w-full max-w-[320px] h-auto"
+            className="max-w-[200px] h-auto"
           />
         </div>
       </div>

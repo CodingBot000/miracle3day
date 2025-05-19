@@ -29,7 +29,7 @@ export default function Beauty() {
     fetchData();
   }, []);
 
-  if (loading) return <div className="text-center py-10">Loading events...</div>;
+  if (loading) return <div className="text-center py-10">Loading New Beaties...</div>;
 
   return (
     <div className="w-full px-4 overflow-x-auto">

@@ -1,6 +1,7 @@
 "use client";
 
-import { Banner } from "@/components/organism/layout/Banner";
+// import SurgeryBannerGrid, { Banner } from "@/components/organism/layout/Banner";
+import SurgeryBannerGrid from "@/components/organism/layout/Banner";
 import LocationHospital from "./components/location";
 import Beauty from "./components/beauty";
 import Hero from "@/components/organism/layout/HeroSection";
@@ -37,8 +38,9 @@ export default function HomeClient({ bannerItem, selectedLocation }: Props) {
     return (
       <main>
         <HeroVideos />
-        <Hero />
-        <Banner bannerItem={bannerItem.data} />
+        {/* <Hero /> */}
+        {/* <Banner bannerItem={bannerItem.data} /> */}
+        {/* <SurgeryBannerGrid /> */}
 {/*   
         <section className="max-w-container mx-auto mt-12">
           <div className="my-8 leading-6 pl-4 md:pl-6 lg:pl-8">

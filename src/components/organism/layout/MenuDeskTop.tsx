@@ -29,6 +29,8 @@ const menuList = [
 const menu = [
   { title: "Favorite", href: ROUTE.FAVORITE },
   { title: "Event", href: ROUTE.EVENT },
+  { title: "Overall AI Treatment Flow", href: ROUTE.DIAGNOTSTIC },
+  { title: "Online Consultation", href: ROUTE.ONLINE_CONSULTING },
   { title: "About Us", href: ROUTE.ABOUTUS },
 ];
 
@@ -84,7 +86,7 @@ const Menu = () => {
                       key={menu}
                       href={href}
                       onClick={handleOpenModal}
-                      className="block px-4 py-2 rounded-lg transition-all duration-300 hover:bg-black/10 hover:text-[#363fa8] hover:scale-105 hover:shadow-md"
+                      className="text-[0.8rem] block px-4 rounded-lg transition-all duration-300 hover:bg-black/10 hover:text-[#363fa8] hover:scale-105 hover:shadow-md"
                     >
                       {menu}
                     </Link>
@@ -96,13 +98,13 @@ const Menu = () => {
             {/* Sub menu */}
             <div className="flex flex-col items-start gap-5 p-2 md:flex">
               {menu.map(({ title, href }) => (
-                <div key={title} className="flex flex-col items-center p-2 min-w-[150px] md:flex">
+                <div key={title} className="flex flex-col p-2 min-w-[150px] md:flex">
                   <Link
                     href={href}
                     onClick={handleOpenModal}
-                    className="block px-4 py-2 rounded-lg transition-all duration-300 hover:bg-black/10 hover:text-[#363fa8] hover:scale-105 hover:shadow-md"
+                    className="block px-4 rounded-lg transition-all duration-300 hover:bg-black/10 hover:text-[#363fa8] hover:scale-105 hover:shadow-md"
                   >
-                    <nav className="text-[1.1rem] font-bold my-4 whitespace-pre-line">{title}</nav>
+                    <nav className="text-[1.1rem] font-bold whitespace-pre-line">{title}</nav>
                   </Link>
                 </div>
               ))}

@@ -9,7 +9,7 @@ function calculateDiscount(original: number, discounted: number) {
   return `${percent}% off`;
 }
 
-export const PriceDisplay = ({ price }: { price?: number[] }) => {
+export const DiscountPriceDisplay = ({ price }: { price?: number[] }) => {
   if (
     !Array.isArray(price) ||
     price.length === 0 ||

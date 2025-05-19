@@ -20,6 +20,10 @@ export interface HospitalDetailEventData {
   description: string;
   id_unique: number;
   price: number[];
+  review_count: number;
+  scrap_count: number;
+  rating: number;
+  badges: string[];
 }
 
 export interface HospitalDetailEventOutDto extends InfinityScrollOutputDto {

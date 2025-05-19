@@ -12,6 +12,7 @@ import { ROUTE } from "@/router";
 import { Skeleton } from "@/components/ui/skeleton";
 import { daysYMDFormat } from "@/utils/days";
 import { styles } from "@/app/home/style/homeStyleSet.tailwind";
+import { ProductCard } from "@/components/molecules/card/ProductCard";
 
 export default function SearchPanel({ onClose }: { onClose: () => void }) {
   const [mounted, setMounted] = useState(false); // portal target 준비 체크
@@ -136,9 +137,9 @@ export default function SearchPanel({ onClose }: { onClose: () => void }) {
             </div>
           )}
           <div className={styles.hospitalCardGridStyle}>
-            {results.events.map(({ description, imageurls, name, id_unique, date_from, date_to, price }) => (
+            {results.events.map(({ description, imageurls, name, id_unique, date_from, date_to, price, review_count, scrap_count, rating, badges }) => (
               <div key={id_unique}>
-                <EventCard
+                {/* <EventCard
                   layout="responsive"
                   href={ROUTE.EVENT_DETAIL("") + id_unique}
                   src={imageurls?.[0]}
@@ -148,7 +149,22 @@ export default function SearchPanel({ onClose }: { onClose: () => void }) {
                   price={price}
                   desc={description}
                   alt={name}
-                />
+                /> */}
+<ProductCard
+                key={id_unique}
+                href={ROUTE.EVENT_DETAIL("") + id_unique}
+                src={imageurls && imageurls[0]}
+                productName={name}
+                dateFrom={date_from}
+                dateTo={date_to}
+                desc={description}
+                alt={name}
+                price={price}
+                reviewCount={review_count}
+                scrapCount={scrap_count}
+                rating={rating}
+                badges={badges}
+              />
               </div>
             ))}
           </div>

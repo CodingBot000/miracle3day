@@ -25,8 +25,8 @@ export const HospitalCard = ({
   return (
     <article onClick={() => onSelect && onSelect(name)}>
       <Link href={href}>
-        <div className="w-full max-w-md mx-auto">
-         <div className="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl dark:bg-gray-950 flex flex-col">
+        <div className="w-full mx-auto">
+         <div className="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl dark:bg-gray-950 flex flex-col h-full">
             <Image
               src={src}
               alt={alt}

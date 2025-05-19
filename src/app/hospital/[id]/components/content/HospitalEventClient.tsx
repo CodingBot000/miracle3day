@@ -7,6 +7,7 @@ import { getHospitalEventAPI } from "@/app/api/hospital/[id]/event";
 import { daysYMDFormat } from "@/utils/days";
 import { HospitalDetailEventOutDto } from "@/app/api/hospital/[id]/event/event.dto";
 import { NoData } from "@/components/template/NoData";
+import { ProductCard } from "@/components/molecules/card/ProductCard";
 
 export default function HospitalEventClient({ id }: { id: string }) {
   const [events, setEvents] = useState<HospitalDetailEventOutDto["data"]>([]);
@@ -29,9 +30,9 @@ export default function HospitalEventClient({ id }: { id: string }) {
 
   return (
     <div className="grid grid-cols-3 md:grid-cols-3 gap-4">
-      {events.map(({ description, imageurls, name, id_unique, date_from, date_to, price }) => (
+      {events.map(({ description, imageurls, name, id_unique, date_from, date_to, price, review_count, scrap_count, rating, badges }) => (
         <div key={id_unique}>
-          <EventCard
+          {/* <EventCard
             layout="responsive"
             href={ROUTE.EVENT_DETAIL("") + id_unique}
             src={imageurls?.[0]}
@@ -41,7 +42,22 @@ export default function HospitalEventClient({ id }: { id: string }) {
             price={price}
             desc={description}
             alt={name}
-          />
+          /> */}
+          <ProductCard
+                key={id_unique}
+                href={ROUTE.EVENT_DETAIL("") + id_unique}
+                src={imageurls && imageurls[0]}
+                productName={name}
+                dateFrom={date_from}
+                dateTo={date_to}
+                desc={description}
+                alt={name}
+                price={price}
+                reviewCount={review_count}
+                scrapCount={scrap_count}
+                rating={rating}
+                badges={badges}
+              />
         </div>
       ))}
     </div>

@@ -2,7 +2,7 @@
 
 import React from "react";
 
-export default function HeroVideo() {
+export default function HeroVideos() {
   return (
     <div className="relative w-full overflow-hidden bg-black">
       <div className="mx-auto max-w-[1280px]">

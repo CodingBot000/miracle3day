@@ -41,6 +41,10 @@ export interface AllEventData {
   description: string;
   id_unique: number;
   price: number[];
+  rating: number;
+  review_count: number;
+  scrap_count: number;
+  badges: string[];
 }
 
 export interface AllEventOutputDto extends InfinityScrollOutputDto {

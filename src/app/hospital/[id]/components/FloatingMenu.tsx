@@ -1,6 +1,5 @@
-import Image from "next/image";
+"use client";
 
-import styles from "./floating.module.scss";
 import { TellIcon } from "@/components/icons/tell";
 import { BlogIcon } from "@/components/icons/blog";
 import { SkillIconsInstagram } from "@/components/icons/instagram";
@@ -11,12 +10,12 @@ export type FloatItem = {
   name: string;
   href: string;
 };
+
 export interface FloatingProps {
   float: FloatItem[];
 }
 
-const Floating = ({ float }: FloatingProps) => {
-  // 이미지 파일이 없어서 임시로 svg 컴포넌트 생성
+const FloatingMenu = ({ float }: FloatingProps) => {
   const icon: Record<string, JSX.Element> = {
     instagram: <SkillIconsInstagram />,
     tel: <TellIcon />,
@@ -27,11 +26,10 @@ const Floating = ({ float }: FloatingProps) => {
   };
 
   return (
-    <div className={styles.floating}>
+    <div className="fixed top-1/2 right-[5%] flex flex-col gap-2">
       {float.map(({ name, href }) => {
         const tel = name === "tel" ? `tel:${href}` : href;
         return (
-          // target="_blank" 새창열기
           <a key={name} href={tel} target="_blank" rel="noopener noreferrer">
             {icon[name]}
           </a>
@@ -41,4 +39,4 @@ const Floating = ({ float }: FloatingProps) => {
   );
 };
 
-export default Floating;
+export default FloatingMenu;

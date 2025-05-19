@@ -1,14 +1,14 @@
 
-import styles from "./hospital-detail..module.scss";
-import HospitalTab from "./components/tab";
+
+import HospitalInfoTab from "./components/tab/HospitalInfoTab";
 
 import { getHospitalMainAPI } from "../../api/hospital/[id]/main";
-import Floating, { FloatItem } from "./components/floating";
+import FloatingMenu, { FloatItem } from "./components/FloatingMenu";
 import { redirect } from "next/navigation";
 import PageHeader from "@/components/molecules/PageHeader";
 import { FavoriteButton } from "@/components/atoms/favorite/FavoriteButton";
 
-import { HospitalThumbnail } from "./components/thumbnail";
+import { HospitalInfoBanner } from "./components/HospitalInfoBanner";
 
 import ScrollTop from "@/components/atoms/ScrollTop";
 import { Metadata, ResolvingMetadata } from "next";
@@ -91,10 +91,10 @@ const HospitalDetailPage = async ({
         <FavoriteButton isFavorite={isFavorite} />
       </PageHeader>
       <div>
-        <HospitalThumbnail imageurls={data.imageurls} />
-        <div className={styles.main}>
+        <HospitalInfoBanner imageurls={data.imageurls} />
+        <div className="max-w-[1024px] mx-auto px-6 mt-4">
           <HospitalDetailContent hospitalId={hospitalId} hospitalData={data} />;
-          <Floating float={getFloatList} />
+          <FloatingMenu float={getFloatList} />
         </div>
       </div>
     </main>

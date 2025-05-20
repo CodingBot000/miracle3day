@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { PriceDisplay } from "@/components/common/PriceDisplay";
+import { DiscountPriceDisplay } from "@/components/common/DiscountPriceDisplay";
 import ImageAutoRatioComp from "@/components/common/ImageAutoRatioComp";
 import { daysYMDFormat } from "@/utils/days";
 interface EventCardProps {
@@ -52,7 +52,7 @@ export const EventCard = ({
             </time>
           </div>
 
-          <PriceDisplay price={price} />
+          <DiscountPriceDisplay price={price} />
 
           <p className="text-gray-600 leading-relaxed line-clamp-3">{desc}</p>
         </div>

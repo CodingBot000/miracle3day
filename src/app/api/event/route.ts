@@ -6,7 +6,7 @@ export async function GET(req: NextRequest) {
   const supabase = createClient();
 
   try {
-    const { limit, nextCursor, offset } = infinityParams({ req, limits: 8 });
+    const { limit, nextCursor, offset } = infinityParams({ req, limits: 6 });
 
     const { data, error, status, statusText, count } = await supabase
       .from("event")

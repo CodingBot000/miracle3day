@@ -15,10 +15,9 @@ import LocationHospitalClient from "./components/LocationHospitalClient";
 import DiagnosticIntro from "./components/DiagnosticIntro";
 import RecommendEventList from "./components/recommend";
 import { Smile } from "lucide-react";
-import HeroVideos from "./components/hero/HeroVideos";
 
 export default async function HomePage() {
-  // const bannerItem = await getBannerAPI();
+  const bannerItem = await getBannerAPI();
 
   // 쿼리스트링 처리 방법  headers/cookies 직접 파싱 (SSR만 가능)
   const cookieStore = cookies();
@@ -33,9 +32,8 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* <HomeClient bannerItem={bannerItem} selectedLocation={selectedLocation} /> */}
-      <HeroVideos />
-      <section className="max-w-container mx-auto">
+      <HomeClient bannerItem={bannerItem} selectedLocation={selectedLocation} />
+      <section className="max-w-container mx-auto mt-20">
         {/* <div className="my-8 leading-6 pl-4 md:pl-6 lg:pl-8">
           <p className="font-bold text-[1.5rem] mb-[5px]">Diagnostic</p>
           <p className="text-[0.8rem]">Ready to get started? I can help you find the right treatment for your skin concerns.</p>

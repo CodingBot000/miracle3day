@@ -57,7 +57,7 @@ export default async function HomePage() {
           {/* 오른쪽 링크 버튼 */}
           <Link
             href={ROUTE.EVENT}
-            className="inline-flex items-center gap-1 text-[1.1rem] text-gray-600 hover:text-primary transition-colors"
+            className="inline-flex items-center gap-1 text-[1.1rem] text-gray-800 font-bold hover:text-primary transition-colors"
           >
             <Smile className="w-5 h-5" />
             View More

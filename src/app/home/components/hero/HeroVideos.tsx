@@ -4,7 +4,7 @@ import React from "react";
 
 export default function HeroVideos() {
   return (
-    <div className="relative w-full overflow-hidden bg-black">
+    <div className="relative w-full overflow-hidden bg-background">
       <div className="mx-auto max-w-[1280px]">
         <div className="relative h-[60vh] md:h-[540px] w-full">
           <video

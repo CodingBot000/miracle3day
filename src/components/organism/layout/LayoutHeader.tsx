@@ -13,12 +13,12 @@ import AuthClient from "@/components/molecules/auth/AuthClient";
 // const Auth = dynamic(() => import("@/components/molecules/auth/AuthServer"), {
 //   ssr: false,
 // });
-export const LayoutHeader = () => {
+const LayoutHeader = () => {
   const [showSearch, setShowSearch] = useState(false);
 
   return (
     <>
-    <header className="sticky top-0 z-10 bg-[#f2f4f2] flex items-center px-4 py-2 min-h-[88px]">
+    <header className="sticky top-0 z-10 bg-background flex items-center px-4 py-2 min-h-[88px]">
       <div className="w-full flex justify-between items-center max-w-[1280px] mx-auto">
         <Logo />
         <div className="flex items-center gap-2">
@@ -46,3 +46,5 @@ export const LayoutHeader = () => {
 
   );
 };
+
+export default LayoutHeader;

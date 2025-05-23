@@ -1,10 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ProductCard } from "@/components/molecules/card/ProductCard";
-import { getAllEventAPI } from "@/app/api/event";
 import { ROUTE } from "@/router";
-import type { AllEventOutputDto } from "@/app/api/event/event.dto";
 import { getHospitalBeautyAPI } from "@/app/api/home/hospital";
 import { HospitalBeautyOutputDto } from "@/app/api/home/hospital/beauty/hospital-beauty.dto";
 import { HospitalCard } from "@/components/molecules/card/HospitalCard";

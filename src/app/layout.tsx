@@ -4,11 +4,13 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Providers from "@/provider";
 import { Footer } from "@/components/organism/layout/Footer";
-import { LayoutHeader } from "@/components/organism/layout/LayoutHeader";
+// import { LayoutHeader } from "@/components/organism/layout/LayoutHeader";
 import ScrollTop from "@/components/atoms/ScrollTop";
 // import LoadingSpinner from "@/components/atoms/loading/spinner";
 import MenuMobile from "@/components/organism/layout/MenuMobile";
 import { ProgressBar } from "@/components/atoms/loading/ProgressBar";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
 // import { ProgressBar } from "@/components/atoms/loading/progress-bar";
 // import { PageTransitionOverlay } from "@/components/atoms/loading/page-transition-overlay";
 
@@ -40,26 +42,34 @@ export const viewport = {
   initialScale: 1,
 };
 
+
+const LayoutHeader = dynamic(() => import("@/components/organism/layout/LayoutHeader"), {
+  ssr: false,
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" className="h-full">
+      <body className={inter.className + " min-h-screen flex flex-col"}>
         <ProgressBar />
         {/* <PageTransitionOverlay /> */}
-        <div className="bg-[rgb(247,248,250)]">
+        <div className="bg-background flex flex-col flex-1 min-h-screen">
           <Providers>
             <ScrollTop />  
             <div id="modal-root" />
-            <LayoutHeader />
-            <main className="pt-4">
+            <Suspense fallback={<div>Loading header...</div>}>
+              <LayoutHeader />
+            </Suspense>
+            <main className="pt-4 flex-1 pb-[72px]"> {/* 72px은 모바일 메뉴바의 높이 */}
               {children}
             </main>
-            <Footer />
             <MenuMobile />
+            <Footer />
+           
           </Providers>
         </div>
       </body>

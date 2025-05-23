@@ -47,7 +47,7 @@ export const ROUTE = {
   // DIAGNOTSTIC_DETAIL: createDetailRouter("DIAGNOTSTIC"),
   // ONLINE_CONSULTING: createNormalRouter("ONLINE_CONSULTING"),
   // ONLINE_CONSULTING_DETAIL: createDetailRouter("ONLINE_CONSULTING"),
-  DIAGNOTSTIC: "https://treatment-estimate-landinng-tan.vercel.app/",
+  DIAGNOTSTIC: "https://treatment-estimate-landinng-tan.vercel.app/estimate",
   
   ONLINE_CONSULTING: createNormalRouter("ONLINE_CONSULTING"),
   ONLINE_CONSULTING_DETAIL: createDetailRouter("ONLINE_CONSULTING"),

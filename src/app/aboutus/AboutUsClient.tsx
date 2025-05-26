@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { LucideSparkles } from "lucide-react";
 import Image from "next/image";
-import { aboutUsContent } from "./aboutUsContent";
+import { aboutUsContent } from "@/app/contents/aboutUsContent";
 
 export default function AboutUsPage() {
   return (
@@ -16,7 +16,6 @@ export default function AboutUsPage() {
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
             {aboutUsContent.info1.description}
           </p>
-          {/* 고급 클리닉, 도시 배경, 아름다움과 전문성 강조 */}
           <div className="relative w-full aspect-[16/9] mt-8 rounded-xl overflow-hidden shadow-lg">
             <Image
               src="/default/aboutus_hero.jpg"
@@ -30,7 +29,6 @@ export default function AboutUsPage() {
 
         <Separator className="my-12" />
 
-        {/* About Section */}
         <section className="space-y-10 text-base leading-relaxed text-gray-700">
           <Card className="shadow-md">
             <CardContent className="p-6 md:p-10 space-y-6">

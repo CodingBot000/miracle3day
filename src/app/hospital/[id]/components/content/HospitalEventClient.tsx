@@ -32,17 +32,7 @@ export default function HospitalEventClient({ id }: { id: string }) {
     <div className="grid grid-cols-3 md:grid-cols-3 gap-4">
       {events.map(({ description, imageurls, name, id_unique, date_from, date_to, price, review_count, scrap_count, rating, badges }) => (
         <div key={id_unique}>
-          {/* <EventCard
-            layout="responsive"
-            href={ROUTE.EVENT_DETAIL("") + id_unique}
-            src={imageurls?.[0]}
-            title={name}
-            dateFrom={date_from}
-            dateTo={date_to}
-            price={price}
-            desc={description}
-            alt={name}
-          /> */}
+
           <ProductCard
                 key={id_unique}
                 href={ROUTE.EVENT_DETAIL("") + id_unique}

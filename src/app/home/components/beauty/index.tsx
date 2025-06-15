@@ -3,12 +3,12 @@
 import { useEffect, useState } from "react";
 import { ROUTE } from "@/router";
 import { getHospitalBeautyAPI } from "@/app/api/home/hospital";
-import { HospitalBeautyOutputDto } from "@/app/api/home/hospital/beauty/hospital-beauty.dto";
+import { HospitalOutputDto } from "@/app/models/hospitalData.dto";
 import { HospitalCard } from "@/components/molecules/card/HospitalCard";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Beauty() {
-  const [datas, setDatas] = useState<HospitalBeautyOutputDto["data"]>([]);
+  const [datas, setDatas] = useState<HospitalOutputDto["data"]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -32,12 +32,12 @@ export default function Beauty() {
     <div className="w-full px-4 overflow-x-auto">
       <div className="flex gap-4 w-max">
       {datas ? (
-          datas.map(({ imageurls, name, id_unique, location }) => (
-            <article key={id_unique} className="w-full px-2 h-full">
+          datas.map(({ imageurls, name, id_unique, id_uuid, location }) => (
+            <article key={id_uuid} className="w-full px-2 h-full">
               <HospitalCard
                 alt={name}
                 name={name}
-                href={ROUTE.HOSPITAL_DETAIL("") + id_unique}
+                href={ROUTE.HOSPITAL_DETAIL("") + id_uuid}
                 src={imageurls[0]}
                 locationNum={location}
               />

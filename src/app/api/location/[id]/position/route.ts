@@ -1,5 +1,6 @@
 import { LOCATIONS as locationList } from "@/constants";
 import { createClient } from "@/utils/supabase/server";
+import { TABLE_HOSPITAL } from "@/constants/tables";
 
 export async function GET(
   req: Request,
@@ -13,7 +14,7 @@ export async function GET(
 
   try {
     let query = supabase
-      .from("hospital")
+      .from(TABLE_HOSPITAL)
       .select(`id_unique,name,location,latitude,longitude`);
 
     // 지역전체

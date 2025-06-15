@@ -9,6 +9,7 @@ export interface LocationDetailInputDto extends InfinityScrollInputDto {
 
 export interface LocationDetailData {
   id_unique: string;
+  id_uuid: string;
   imageurls: string[];
   name: string;
 }

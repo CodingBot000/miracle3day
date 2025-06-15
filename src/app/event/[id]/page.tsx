@@ -25,7 +25,7 @@ export async function generateMetadata(
   const event = data[0];
 
   return {
-    title: `${event.id_hospital.name} | ${data[0].name}`,
+    title: `${event.hospitalData.name} | ${data[0].name}`,
     description: event.description,
     openGraph: {
       images: [...data[0].imageurls, ...previousImages],
@@ -38,12 +38,14 @@ interface EventDetailPageProps {
 }
 
 const EventDetailPage = async ({ params: { id } }: EventDetailPageProps) => {
+  console.log("EventDetailPage id:", id);
   const { data } = await getEventDetailAPI({ id });
 
   if (!data) return <LoadingSpinner backdrop />;
 
   const eventData = data[0];
-  const hospitalData = data[0].id_hospital;
+  const hospitalData = data[0].hospitalData;
+  const hospitalUUID = data[0].id_uuid_hospital;
   const surgeryData = data[0].id_surgeries;
   const title = eventData.name;
   const dateFrom = eventData.date_from;
@@ -54,7 +56,10 @@ const EventDetailPage = async ({ params: { id } }: EventDetailPageProps) => {
     id:${id}\n
     eventData:${eventData}\n
     hospitalData:${hospitalData}\n
+    hospitalUUID:${hospitalUUID}\n
     surgeryData:${surgeryData}\n
+    
+
     title:${title}\n
     dateFrom:${dateFrom}\n
     dateTo:${dateTo}\n
@@ -86,16 +91,17 @@ const EventDetailPage = async ({ params: { id } }: EventDetailPageProps) => {
 
       <DiscountPriceDisplay price={price} />
 
-      <div className="mt-4">
+      {/* <div className="mt-4">
         <h2 className="text-base font-semibold">Surgeries Package</h2>
         <ul className="flex items-center my-4 gap-1">
-          {surgeryData.map(({ id_unique, name }) => (
+          
+          {surgeryData.map(({  name, id_unique }) => (
             <li key={id_unique}>
               <Chip>{name}</Chip>
             </li>
           ))}
         </ul>
-      </div>
+      </div> */}
 
       <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">{desc}</p>
     </div>
@@ -114,7 +120,7 @@ const EventDetailPage = async ({ params: { id } }: EventDetailPageProps) => {
         <p className="p-4 text-base font-medium">{hospitalData.name}</p>
         <div className="flex justify-end p-4">
           <Link
-            href={ROUTE.HOSPITAL_DETAIL("") + hospitalData.id_unique}
+            href={ROUTE.HOSPITAL_DETAIL("") + hospitalData.id_uuid}
             className="text-blue-600 underline hover:text-blue-800"
           >
             병원보기

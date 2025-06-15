@@ -20,7 +20,7 @@ export default function SearchPanel({ onClose }: { onClose: () => void }) {
   const [results, setResults] = useState<SearchItem>();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-
+  
   const recommendedKeywords = [
     "Botox", "Ulthera", "Hair Transplantation", "Laser Lifting",
     "Thermage", "InMode", "Shrink", "Filler"
@@ -118,12 +118,12 @@ export default function SearchPanel({ onClose }: { onClose: () => void }) {
             </div>
           )}
           <div className={styles.hospitalCardGridStyle}>
-            {results.hospitals.map(({ imageurls, name, id_unique, location }) => (
-              <div key={id_unique}>
+            {results.hospitals.map(({ imageurls, name, id_unique, id_uuid, location }) => (
+              <div key={id_uuid}>
                 <HospitalCard
                   alt={name}
                   name={name}
-                  href={ROUTE.HOSPITAL_DETAIL("") + id_unique}
+                  href={ROUTE.HOSPITAL_DETAIL("") + id_uuid}
                   src={imageurls[0]}
                   locationNum={location}
                 />
@@ -137,19 +137,9 @@ export default function SearchPanel({ onClose }: { onClose: () => void }) {
             </div>
           )}
           <div className={styles.hospitalCardGridStyle}>
-            {results.events.map(({ description, imageurls, name, id_unique, date_from, date_to, price, review_count, scrap_count, rating, badges }) => (
+            {results.events.map(({ description, imageurls, name, id_unique, id_uuid_hospital, date_from, date_to, price, review_count, scrap_count, rating, badges }) => (
               <div key={id_unique}>
-                {/* <EventCard
-                  layout="responsive"
-                  href={ROUTE.EVENT_DETAIL("") + id_unique}
-                  src={imageurls?.[0]}
-                  title={name}
-                  dateFrom={date_from}
-                  dateTo={date_to}
-                  price={price}
-                  desc={description}
-                  alt={name}
-                /> */}
+
 <ProductCard
                 key={id_unique}
                 href={ROUTE.EVENT_DETAIL("") + id_unique}

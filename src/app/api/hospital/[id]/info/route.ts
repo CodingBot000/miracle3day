@@ -1,45 +1,59 @@
+import { TABLE_DOCTOR, TABLE_HOSPITAL, TABLE_HOSPITAL_BUSINESS_HOUR, TABLE_HOSPITAL_DETAIL, TABLE_HOSPITAL_TREATMENT } from "@/constants/tables";
 import { createClient } from "@/utils/supabase/server";
 
 export async function GET(
   req: Request,
   { params }: { params: { id: string } }
 ) {
-  const id_unique = params.id;
+  const id_uuid = params.id;
   const supabase = createClient();
-
+  console.log("qq api/hospital/[id]/info/rout.ts", req);
   try {
-    const { data, error, status, statusText } = await supabase
-      .from("hospital")
-      .select(
-        `id_unique, name, latitude, longitude
-        `
-      )
-      .match({ id_unique });
+    const { data: infoData, error: infoError, status, statusText } = await supabase
+      .from(TABLE_HOSPITAL)
+      .select(`*`)
+      .match({ id_uuid: id_uuid });
 
     const { data: detailData, error: detailError } = await supabase
-      .from("hospital_details")
-      .select(
-        `
-        map,
-        desc_address,
-        desc_openninghour,
-        desc_facilities,
-        desc_doctors_imgurls,
-        id_hospital,
-        etc
-        `
-      )
-      .match({ id_hospital: id_unique });
+      .from(TABLE_HOSPITAL_DETAIL)
+      .select(`*`)
+      .match({ id_uuid_hospital: id_uuid });
+      
 
-    if (error || detailError) {
+      
+      const { data: businessHourData, error: businessHourError } = await supabase
+      .from(TABLE_HOSPITAL_BUSINESS_HOUR)
+      .select(`*`)
+      .match({ id_uuid_hospital: id_uuid });
+
+      const { data: treatmentData, error: treatmentError } = await supabase
+      .from(TABLE_HOSPITAL_TREATMENT)
+      .select(`*`)
+      .match({ id_uuid_hospital: id_uuid });
+    
+      const { data: doctorsData, error: doctorsError } = await supabase
+      .from(TABLE_DOCTOR)
+      .select(`*`)
+  
+      .match({ id_uuid_hospital: id_uuid });
+    
+
+    if (infoError || detailError || businessHourError || treatmentError || doctorsError) {
       return Response.json({ data: null }, { status, statusText });
     }
 
     return Response.json(
       {
         data: {
-          ...data[0],
+          // ...infoData[0],
+          hospital_info: infoData[0],
           hospital_details: detailData[0],
+          business_hours: businessHourData,
+          treatments: treatmentData,
+          
+          doctors: doctorsData,
+          // favorite: favoriteData,
+      
         },
       },
       { status: 200, statusText: "success" }

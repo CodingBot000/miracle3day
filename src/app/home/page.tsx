@@ -16,6 +16,7 @@ import DiagnosticIntro from "./components/DiagnosticIntro";
 import RecommendEventList from "./components/recommend";
 import { Smile } from "lucide-react";
 import HeroVideos from "./components/hero/HeroVideos";
+import CategoryMenu from "@/components/organism/layout/CategoryMenu";
 
 export default async function HomePage() {
   // const bannerItem = await getBannerAPI();
@@ -42,7 +43,9 @@ export default async function HomePage() {
           <p className="text-[0.5rem]">Discover the perfect treatment plan for your skin concerns. Our Al dianostic tool uses advanced image recognition technology to analyze your skin and provide personalized recommendations.</p> */}
           <DiagnosticIntro />
         {/* </div> */}
-         
+        <div className="my-8 px-4 md:px-6 lg:px-8">
+          <CategoryMenu />
+        </div>
       </section>
       <section className="max-w-container mx-auto mt-20">
         {/* <div className="my-8 leading-6 pl-4 md:pl-6 lg:pl-8">

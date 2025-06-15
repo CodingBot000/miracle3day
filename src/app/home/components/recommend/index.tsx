@@ -16,7 +16,7 @@ export default function RecommendEventList() {
         const data = await getAllEventAPI({ pageParam: 1 });
         setEvents(data.data);
       } catch (error) {
-        console.error("Failed to fetch events:", error);
+        console.error("Failed to fetch RecommendEventList :", error);
       } finally {
         setLoading(false);
       }

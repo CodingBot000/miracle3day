@@ -7,10 +7,11 @@
 //   location: string;
 //   id_surgeries: string[];
 
-import { EventDetailData } from "../event/[id]/event.dto";
-import { HospitalData } from "../event/event.dto";
-import { ReviewData } from "../hospital/[id]/review/review";
-
+// import { EventDetailData } from "../event/[id]/event.dto";
+import { EventDetailData } from "@/app/models/eventDetailData.dto";
+import { HospitalData } from "@/app/models/hospitalData.dto";
+// import { ReviewData } from "../hospital/[id]/review/review";
+import { ReviewData } from "@/app/models/reviewData.dto";
  
 // }
 export interface SearchItem {

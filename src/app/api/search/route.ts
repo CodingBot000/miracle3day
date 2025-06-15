@@ -1,3 +1,4 @@
+import { TABLE_EVENT, TABLE_HOSPITAL, TABLE_REVIEW } from "@/constants/tables";
 import { createClient } from "@/utils/supabase/server";
 
 export async function GET(req: Request) {
@@ -13,17 +14,17 @@ export async function GET(req: Request) {
     // 병렬 검색 실행
     const [hospitalRes, eventRes, reviewsRes] = await Promise.all([
       supabase
-        .from("hospital")
+        .from(TABLE_HOSPITAL)
         .select("*")
         .ilike("search_key", `%${normalizedQ}%`),
 
       supabase
-        .from("event")
+        .from(TABLE_EVENT)
         .select("*")
         .ilike("search_key", `%${normalizedQ}%`),
 
       supabase
-        .from("reviews")
+        .from(TABLE_REVIEW)
         .select("*")
         .ilike("search_key", `%${normalizedQ}%`),
     ]);
@@ -31,17 +32,17 @@ export async function GET(req: Request) {
     // 각각에 source 태그 붙이기
     const hospitalData = (hospitalRes.data ?? []).map(item => ({
       ...item,
-      source: "hospital",
+      source: TABLE_HOSPITAL,
     }));
 
     const eventData = (eventRes.data ?? []).map(item => ({
       ...item,
-      source: "event",
+      source: TABLE_EVENT,
     }));
 
     const reviewsData = (reviewsRes.data ?? []).map(item => ({
       ...item,
-      source: "reviews",
+      source: TABLE_REVIEW,
     }));
 
     // const combined = [...hospitalData, ...eventData, ...reviewsData];

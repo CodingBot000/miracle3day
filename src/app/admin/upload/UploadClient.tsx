@@ -2,7 +2,6 @@
 
 import PageHeader from "@/components/molecules/PageHeader";
 import InputField from "@/components/molecules/form/input-field";
-import styles from "./upload.module.scss";
 import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Button from "@/components/atoms/button/Button";
@@ -15,6 +14,7 @@ import { SubmitButton } from "./button";
 import useModal from "@/hooks/useModal";
 import { AlertModal } from "@/components/template/modal/Modal";
 import { useRouter } from "next/navigation";
+import { useFormStatus } from "react-dom";
 
 interface Surgery {
   created_at: string;
@@ -29,6 +29,7 @@ interface Surgery {
 const imageUploadLength = 6;
 
 const UploadTestPage = () => {
+  const state = useFormStatus();
   const router = useRouter();
   const ref = useRef<HTMLInputElement>(null);
   const supabase = createClient();
@@ -79,6 +80,7 @@ const UploadTestPage = () => {
       const result = await res.json();
       setFormState(result);
     } catch (error) {
+      console.log("upload error", error);
       setFormState({ message: "업로드 중 오류가 발생했습니다.", status: "error" });
     }
   };
@@ -126,73 +128,83 @@ const UploadTestPage = () => {
         className={styles.form} 
         action={handleSubmit}
       > */}
-        <form onSubmit={(e) => {
+      <form
+        onSubmit={(e) => {
           e.preventDefault();
           const formData = new FormData(e.currentTarget);
           handleSubmit(formData);
-        }}>
+        }}
+        className="max-w-[746px] my-8 mx-auto w-[calc(100%-24px)]"
+      >
+      <div className="space-y-4">
+        <InputField label="name" name="name" required />
+        <InputField label="searchkey" name="searchkey" required />
+        <InputField label="search_key" name="search_key" required />
+        <InputField label="latitude" name="latitude" required />
+        <InputField label="longitude" name="longitude" required />
+        <InputField label="location" name="location" required />
+        <SurgeriesModal itemList={surgeryList} />
+      </div>
+       {/* tune face
+        liposuction  */}
+      <div className="flex justify-between my-4">
+        <h2>image 등록</h2>
+        <p>등록 {preview.length}/{imageUploadLength}</p>
+      </div>
 
-        <div className={styles.input_form}>
-          <InputField label={"name"} name={"name"} required />
-          <InputField label={"searchkey"} name={"searchkey"} required />
-          <InputField label={"latitude"} name={"latitude"} required />
-          <InputField label={"longitude"} name={"longitude"} required />
-          <InputField label={"location"} name={"location"} required />
-          <SurgeriesModal itemList={surgeryList} />
-        </div>
 
-        <div className={styles.title}>
-          <h2>image 등록</h2>
-          <p>등록 {preview.length}/{imageUploadLength}</p>
-        </div>
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-2 w-full aspect-[1/1]">
+        {Array.from({ length: imageUploadLength }, (_, i) => (
+          <div className="relative mx-auto w-full" key={i}>
+            {preview[i] ? (
+              <div
+                id={file[i]?.lastModified.toString()}
+                className="absolute top-4 right-4 z-20 px-2 py-1 bg-black text-white cursor-pointer"
+                onClick={(e) => handleDeletePreview(e, i)}
+              >
+                삭제
+              </div>
+            ) : (
+              <label
+                htmlFor="imageurls"
+                className="flex items-center justify-center w-full h-full border border-black"
+              >
+                이미지 업로드
+              </label>
+            )}
+            {preview[i] && (
+              <Image
+                src={preview[i]}
+                alt={`preview-${i}`}
+                fill
+                className=""
+              />
+            )}
+          </div>
+        ))}
+        <input
+          ref={ref}
+          id="imageurls"
+          multiple
+          name="imageurls"
+          accept="image/*"
+          type="file"
+          className="hidden"
+          onChange={handleUpload}
+        />
+      </div>
 
-        <div className={styles.img_wrapper}>
-          {Array.from({ length: imageUploadLength }, (v, i) => (
-            <div className={styles.img_box} key={i}>
-              {preview[i] ? (
-                <div
-                  id={file[i]?.lastModified.toString()}
-                  className={styles.delete_btn}
-                  onClick={(e) => handleDeletePreview(e, i)}
-                >
-                  삭제
-                </div>
-              ) : (
-                <label className={styles.img_label} htmlFor={`imageurls`}>
-                  이미지 업로드
-                </label>
-              )}
-              {preview[i] && (
-                <Image
-                  src={preview[i]}
-                  alt={`preview-${i}`}
-                  fill
-                  className={styles.img_preview}
-                />
-              )}
-            </div>
-          ))}
-          <input
-            ref={ref}
-            id={"imageurls"}
-            multiple
-            name="imageurls"
-            accept="image/*"
-            type="file"
-            className={styles.img}
-            onChange={handleUpload}
-          />
-        </div>
-        <div className={styles.btn_group}>
-          <Button type="reset" color="red">
-            cancel
-          </Button>
-          <SubmitButton />
-        </div>
+      <div className="flex justify-center mt-8 gap-8">
+        <Button type="reset" color="red">cancel</Button>
+        <Button color="blue" disabled={state.pending}>
+          {state.pending ? "...submit" : "preview"}
+        </Button>
+      </div>
+
       </form>
 
       <AlertModal onCancel={handleModal} open={open}>
-        {Array.isArray(formState?.message) ? formState?.message[0] : formState?.message}
+        Upload Client Test error: {Array.isArray(formState?.message) ? formState?.message[0] : formState?.message}
       </AlertModal>
     </main>
   );

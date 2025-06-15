@@ -1,7 +1,8 @@
 "use client";
 
 import { getHospitalReviewAPI } from "@/app/api/hospital/[id]/review";
-import { HospitalDetailReviewOutDto } from "@/app/api/hospital/[id]/review/review";
+// import { HospitalDetailReviewOutDto } from "@/app/api/hospital/[id]/review/review";
+import { HospitalDetailReviewOutDto } from "@/app/models/reviewData.dto";
 import { ReviewCard } from "@/components/molecules/card";
 import { InfinityItemList } from "@/components/template/InfinityItemList";
 import { NoData } from "@/components/template/NoData";
@@ -9,14 +10,22 @@ import { useEffect, useState } from "react";
 
 
 const ReviewTab = ({ id }: { id: string }) => {
+  console.log("ReviewTab ReviewTab id:", id);
   const [reviews, setReviews] = useState<HospitalDetailReviewOutDto["data"]>([]);
 
   useEffect(() => {
+    if (!id) {
+      console.warn("ReviewTab: id is undefined, skipping fetch");
+      return;
+    }
+    
     const fetchReviews = async () => {
       try {
+        console.log("ReviewTab fetchReviews id:", id);
         const res = await getHospitalReviewAPI({ id, pageParam: 0 });
         // console.log("getHospitalReviewAPI param id:", id);
         // console.log("getHospitalReviewAPI response:", res);
+        console.log("ReviewTab fetchReviews res:", res);
         setReviews(res.data);
       } catch (error) {
         console.error("Error fetching reviews:", error);

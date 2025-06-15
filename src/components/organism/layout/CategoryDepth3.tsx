@@ -3,7 +3,7 @@ import { CategoryNode } from "@/app/contents/category/categoryNode";
 interface CategoryDepth3Props {
   items: CategoryNode[];
   selected?: string;
-  onSelect?: (key: string) => void;
+  onSelect?: (key: string, index: number) => void; 
 }
 
 export default function CategoryDepth3({ items, selected, onSelect }: CategoryDepth3Props) {
@@ -15,12 +15,12 @@ export default function CategoryDepth3({ items, selected, onSelect }: CategoryDe
         columnGap: 2,
       }}
     >
-      {items.map((item) => (
+      {items.map((item, idx) => (
         <button
           key={item.key}
           className={`px-2 py-1 rounded border text-xs font-medium transition
             ${selected === item.key
-              ? "bg-orange-400 text-white border-orange-400"
+              ? "bg-blue-600 text-white border-blue-600"
               : "bg-gray-50 text-gray-700 border-gray-200 hover:bg-orange-50"}
           `}
           style={{
@@ -30,7 +30,7 @@ export default function CategoryDepth3({ items, selected, onSelect }: CategoryDe
             padding: "2px 8px",
             margin: 0,
           }}
-          onClick={() => onSelect?.(item.key)}
+          onClick={() => onSelect?.(item.key, idx)}
         >
           {item.label}
         </button>

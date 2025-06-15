@@ -10,11 +10,11 @@ export async function middleware(req: NextRequest) {
 
   if (auth.data.user) {
     // login user
-    if (auth.data.user.email !== process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
-      if (req.nextUrl.pathname.startsWith("/admin")) {
-        return NextResponse.redirect(new URL("/", req.url));
-      }
-    }
+    // if (auth.data.user.email !== process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
+    //   if (req.nextUrl.pathname.startsWith("/admin")) {
+    //     return NextResponse.redirect(new URL("/", req.url));
+    //   }
+    // }
 
     if (req.nextUrl.pathname.startsWith("/auth")) {
       return NextResponse.redirect(new URL("/", req.url));
@@ -25,9 +25,9 @@ export async function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL("/", req.url));
     }
 
-    if (req.nextUrl.pathname.startsWith("/admin")) {
-      return NextResponse.redirect(new URL("/", req.url));
-    }
+    // if (req.nextUrl.pathname.startsWith("/admin")) {
+    //   return NextResponse.redirect(new URL("/", req.url));
+    // }
   }
 
   return await updateSession(req);

@@ -1,3 +1,4 @@
+import { TABLE_HOSPITAL } from "@/constants/tables";
 import { createClient } from "@/utils/supabase/server";
 
 export async function GET(req: Request) {
@@ -7,8 +8,8 @@ export async function GET(req: Request) {
   const locationNum = searchParams.get("locationNum");
 
   const { data = [], count } = await supabase
-    .from("hospital")
-    .select("imageurls, name, location, id_unique", { count: "exact" })
+    .from(TABLE_HOSPITAL)
+    .select("id_uuid, imageurls, name, location, id_unique", { count: "exact" })
     .match({ location: locationNum })
     .limit(9);
 

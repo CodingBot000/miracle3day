@@ -7,6 +7,7 @@ import { SKIN_BEAUTY_CATEGORIES } from "../../../app/contents/category/skinBeaut
 import { PLASTIC_SURGERY_CATEGORIES } from "../../../app/contents/category/plasticSurgeryCategories";
 import { CATEGORY_ICONS } from "../../../app/contents/menuIconData";
 import { CategoryNode } from "@/app/contents/category/categoryNode";
+import { useRouter } from "next/navigation";
 
 const toIconList = (nodes: CategoryNode[], icons: any) =>
   nodes.map(node => ({
@@ -20,6 +21,7 @@ export default function CategoryMenu() {
   const [tab, setTab] = useState<"skin" | "surgery" | "recommend">("recommend");
   const [selected1, setSelected1] = useState<string | null>(null); // 1뎁스 key
   const [selected2, setSelected2] = useState<string | null>(null); // 2뎁스 key
+  const router = useRouter();
 
   // 현재 카테고리 데이터
   const rootNodes = tab === "skin" ? SKIN_BEAUTY_CATEGORIES : PLASTIC_SURGERY_CATEGORIES;
@@ -56,7 +58,10 @@ export default function CategoryMenu() {
   };
 
   const handleSelect2 = (key: string) => {
-    setSelected2(key);
+    // key == selected2
+    // setSelected2(key);
+    router.push(`/category/${tab}/${selected1}/${key}`);
+    // setSelected2(key);
   };
 
   const handleSelect3 = (key: string) => {
@@ -68,7 +73,7 @@ export default function CategoryMenu() {
   
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 w-full">
         <CategoryDepth1
-          title="피부"
+          title="Skin"
           categories={toIconList(SKIN_BEAUTY_CATEGORIES, CATEGORY_ICONS.skin)}
           selected={tab === "skin" ? (selected1 ?? "") : ""}
           onSelect={key => {
@@ -77,7 +82,7 @@ export default function CategoryMenu() {
           }}
         />
         <CategoryDepth1
-          title="성형"
+          title="Surgery"
           categories={toIconList(PLASTIC_SURGERY_CATEGORIES, CATEGORY_ICONS.surgery)}
           selected={tab === "surgery" ? (selected1 ?? "") : ""}
           onSelect={key => {
@@ -96,14 +101,14 @@ export default function CategoryMenu() {
         />
       )}
 
-    
+{/*     
       {(tab === "skin" || tab === "surgery") && !!selected2 && !!depth3List.length && (
         <CategoryDepth3
           items={depth3List}
           selected={""}
           onSelect={handleSelect3}
         />
-      )}
+      )} */}
     </div>
   );
 }

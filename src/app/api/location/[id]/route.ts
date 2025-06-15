@@ -1,6 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { LIMIT } from "./constant";
 import { LOCATIONS as locationList } from "@/constants";
+import { TABLE_HOSPITAL } from "@/constants/tables";
 
 export async function GET(
   req: Request,
@@ -22,7 +23,7 @@ export async function GET(
 
   try {
     const baseListQuery = supabase
-      .from("hospital")
+      .from(TABLE_HOSPITAL)
       .select(
         `id_unique,
          imageurls,

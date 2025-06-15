@@ -1,5 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { LIMIT } from "./constant";
+import { TABLE_HOSPITAL } from "@/constants/tables";
 
 export async function GET(
   req: Request,
@@ -36,7 +37,7 @@ export async function GET(
     }
 
     const { data, error, status, statusText, count } = await supabase
-      .from("hospital")
+      .from(TABLE_HOSPITAL)
       .select("*", { count: "exact" })
       .overlaps("id_surgeries", surgeriesIds)
       .range(offset, limit);

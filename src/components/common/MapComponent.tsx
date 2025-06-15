@@ -7,8 +7,8 @@ import Image from "next/image";
 
 export type TCoordinatesType = {
   title?: string;
-  lat: number;
-  lng: number;
+  latitude: number;
+  longitude: number;
 };
 
 interface MapComponentProps {
@@ -57,8 +57,8 @@ interface MapComponentProps {
 
     const map = new window.google.maps.Map(ref.current, {
       center: {
-        lat: Number(coordinates[0].lat),
-        lng: Number(coordinates[0].lng),
+        lat: Number(coordinates[0].latitude),
+        lng: Number(coordinates[0].longitude),
       },
       zoom: 18,
     });
@@ -67,8 +67,8 @@ interface MapComponentProps {
       new google.maps.Marker({
         title: maker.title,
         position: {
-          lat: Number(maker.lat),
-          lng: Number(maker.lng),
+          lat: Number(maker.latitude),
+          lng: Number(maker.longitude),
         },
         map,
       });

@@ -1,3 +1,4 @@
+import { TABLE_EVENT } from "@/constants/tables";
 import { infinityParams } from "@/utils/inifinityQuery";
 import { createClient } from "@/utils/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
@@ -9,7 +10,7 @@ export async function GET(req: NextRequest) {
     const { limit, nextCursor, offset } = infinityParams({ req, limits: 6 });
 
     const { data, error, status, statusText, count } = await supabase
-      .from("event")
+      .from(TABLE_EVENT)
       .select("*", { count: "exact" })
       .range(offset, limit)
       .order("date_to", { ascending: true });

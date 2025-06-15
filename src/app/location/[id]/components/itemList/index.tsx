@@ -18,14 +18,14 @@ export const ItemList = ({ id }: { id: string }) => {
       {(item) => {
         return (
           <>
-            {item.data.map(({ id_unique, imageurls, name }) => {
+            {item.data.map(({ id_unique, imageurls, name, id_uuid }) => {
               return (
                 <HospitalCard
-                  key={id_unique}
+                  key={id_uuid}
                   src={imageurls[0]}
                   alt={name}
                   name={name}
-                  href={ROUTE.HOSPITAL_DETAIL("") + id_unique}
+                  href={ROUTE.HOSPITAL_DETAIL("") + id_uuid}
                 />
               );
             })}

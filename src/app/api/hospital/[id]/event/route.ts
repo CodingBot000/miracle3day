@@ -1,5 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { LIMIT } from "./constnat";
+import { TABLE_EVENT } from "@/constants/tables";
 
 export async function GET(
   req: Request,
@@ -17,9 +18,9 @@ export async function GET(
 
   try {
     const { data, error, count, status, statusText } = await supabase
-      .from("event")
+      .from(TABLE_EVENT)
       .select("*", { count: "exact" })
-      .match({ id_hospital })
+      .eq( "id_uuid_hospital", id_hospital )
       .range(offset, limit)
       .order("created_at", { ascending: true });
 

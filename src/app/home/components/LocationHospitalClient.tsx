@@ -45,12 +45,12 @@ export default function LocationHospitalClient() {
   return (
     <div className={styles.hospitalCardGridStyle}>
       {data
-        ? data.map(({ imageurls, name, id_unique }) => (
-            <article key={id_unique} className="w-full px-2">
+        ? data.map(({ imageurls, name, id_unique, id_uuid }) => (
+            <article key={id_uuid} className="w-full px-2">
               <HospitalCard
                 alt={name}
                 name={name}
-                href={ROUTE.HOSPITAL_DETAIL("") + id_unique}
+                href={ROUTE.HOSPITAL_DETAIL("") + id_uuid}
                 src={imageurls[0]}
                 locationNum={locationParam}
               />

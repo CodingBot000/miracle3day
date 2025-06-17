@@ -20,7 +20,10 @@ import { Label } from "@/components/ui/label";
 import { Mail, Lock, LogIn, UserPlus } from "lucide-react";
 import { useState } from "react";
 
-const snsLoginList: TSnsType[] = ["google", "facebook", "apple"];
+import SignUpButton from "./components/button/signUp";
+import { SNS_FACEBOOK, SNS_GOOGLE, SNS_APPLE } from "@/constants/key";
+
+const snsLoginList: TSnsType[] = [SNS_GOOGLE, SNS_FACEBOOK, SNS_APPLE];
 
 // sns login icon
 const iconList: Record<TSnsType, string | JSX.Element> = {
@@ -106,7 +109,8 @@ const LoginPage = () => {
             Login
           </Button>
           
-          <Link href={ROUTE.SIGN_UP} className="block">
+          <SignUpButton />
+          {/* <Link href={ROUTE.SIGN_UP} className="block">
             <Button 
               variant="outline" 
               className="w-full flex items-center justify-center gap-2"
@@ -114,7 +118,7 @@ const LoginPage = () => {
               <UserPlus className="h-4 w-4" />
               Sign Up
             </Button>
-          </Link>
+          </Link> */}
         </div>
 
         <div className="text-center mt-4">

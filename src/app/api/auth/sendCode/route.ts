@@ -16,7 +16,7 @@ export async function GET(req: Request) {
       throw new Error("Not Found User");
     }
 
-    const user = users[0];
+    const user = users[0]!;
 
     // 이미 인증을 한 유저
     if (user.email_verify) {

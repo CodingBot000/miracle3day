@@ -21,6 +21,10 @@ const verifyActions = async (prevState: any, formData: FormData) => {
 
   const code = formData.get("code") as string;
 
+  if (!userInfo.email) {
+    throw new Error("userInfo.email is required");
+  }
+
   const verifyCode = await supabase.auth.verifyOtp({
     email: userInfo.email,
     token: code,
@@ -42,7 +46,15 @@ const verifyActions = async (prevState: any, formData: FormData) => {
   const requireKey = ["email", "nickname", "name"];
 
   for (let key in userInfo) {
-    if (requireKey.includes(key)) insertDb[key] = userInfo[key];
+    // if (requireKey.includes(key)) insertDb[key] = userInfo[key];
+    const value = userInfo[key];
+    if (requireKey.includes(key) && typeof value === "string") {
+      insertDb[key] = value;
+    }
+  }
+
+  if (!insertDb) {
+    throw new Error("insertDb is required");
   }
 
   const getUser = await supabase

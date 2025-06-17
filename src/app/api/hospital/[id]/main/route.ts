@@ -15,7 +15,7 @@ export async function GET(
   console.log("hospital/[id]/main/route.ts req:", req);
   console.log("hospital/[id]/main/route.ts searchParams:", searchParams);
   const userId = searchParams.get("uuid") as string;
-  console.log("hospital/[id]/main/route.ts uuid:", userId);
+  console.log("hospital/[id]/main/route.ts userId:", userId);
   try {
     const {
       data: hospitalData,
@@ -26,13 +26,13 @@ export async function GET(
       .from(TABLE_HOSPITAL)
       .select(`*`)
       .match({ id_uuid: id_uuid });
-      console.log("hospitalData select table ", hospitalData);
+      // console.log("hospitalData select table ", hospitalData);
     const { data: detailData, error: detailError } = await supabase
       .from(TABLE_HOSPITAL_DETAIL)
       .select(`*`)
 
       .match({ id_uuid_hospital: id_uuid });
-console.log("hospital detailData select table ", detailData);
+// console.log("hospital detailData select table ", detailData);
 
 
 const { data: businessHourData, error: businessHourError } = await supabase
@@ -40,14 +40,14 @@ const { data: businessHourData, error: businessHourError } = await supabase
 .select(`*`)
 .match({ id_uuid_hospital: id_uuid });
 
-console.log("hospital businessHourData select table ", businessHourData);
+// console.log("hospital businessHourData select table ", businessHourData);
 
 const { data: treatmentData, error: treatmentError } = await supabase
 .from(TABLE_HOSPITAL_TREATMENT)
 .select(`*`)
 .match({ id_uuid_hospital: id_uuid });
 
-console.log("hospital treatmentData select table ", treatmentData);
+// console.log("hospital treatmentData select table ", treatmentData);
 
 const { data: doctorsData, error: doctorsError } = await supabase
 .from(TABLE_DOCTOR)
@@ -55,7 +55,7 @@ const { data: doctorsData, error: doctorsError } = await supabase
 
 .match({ id_uuid_hospital: id_uuid });
 
-console.log("hospital doctorsData select table ", doctorsData);
+// console.log("hospital doctorsData select table ", doctorsData);
 
 
 
@@ -66,7 +66,7 @@ console.log("hospital doctorsData select table ", doctorsData);
 
     // uuid 없다는건 user가 login을 안했다는 의미 
     if (!userId || userId === "undefined") {
-      console.log("hospital data select uuid error uuid:", userId);
+      console.log("hospital data select userId is undefined user not login or not set userId. This is not Error  / userId -> ", userId);
       const data = {
         // ...hospitalData[0],
         hospital_info: hospitalData[0],

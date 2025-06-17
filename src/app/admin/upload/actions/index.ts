@@ -1,6 +1,10 @@
 "use server";
 
-import { STORAGE_IMAGES, TABLE_HOSPITAL, TABLE_HOSPITAL_DETAIL } from "@/constants/tables";
+import {
+  STORAGE_IMAGES,
+  TABLE_HOSPITAL,
+  TABLE_HOSPITAL_DETAIL,
+} from "@/constants/tables";
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 
@@ -15,7 +19,7 @@ export const uploadActions = async (prevState: any, formData: FormData) => {
   const longitude = formData.get("longitude") as string;
   const location = formData.get("location") as string;
   const imageurls = formData.getAll("imageurls");
-console.log("uploadActions") 
+  console.log("uploadActions");
   const filenames = await Promise.all(
     imageurls
       .filter((entry) => entry instanceof File)
@@ -25,20 +29,23 @@ console.log("uploadActions")
           .upload(`hospitalimg/${e.name}`, e);
 
         if (upload.error) {
-          console.log("uploadActions filenames upload.error: ", upload.error) ;
+          console.log("uploadActions filenames upload.error: ", upload.error);
           return {
             ...prevState,
             message: upload.error.message,
             status: "error",
           };
         }
-        console.log("uploadActions filenames return") ;
+        console.log("uploadActions filenames return");
         return `${process.env.NEXT_PUBLIC_IMG_URL}${upload.data?.path}`;
       })
   );
 
   if (filenames.find((e) => e.message)) {
-    console.log("uploadActions -a filenames.find error: ", filenames[0].message) ;
+    console.log(
+      "uploadActions -a filenames.find error: ",
+      filenames[0].message
+    );
     return {
       ...prevState,
       message: filenames[0].message,
@@ -53,7 +60,7 @@ console.log("uploadActions")
     .limit(1);
 
   if (!lastUnique.data || lastUnique.error) {
-    console.log("uploadActions -b") ;
+    console.log("uploadActions -b");
     return {
       ...prevState,
       message: lastUnique.error.code || lastUnique.error.message,
@@ -61,8 +68,17 @@ console.log("uploadActions")
     };
   }
 
+  let id_lastUnique = 0;
+  if (
+    lastUnique.data &&
+    lastUnique.data.length > 0 &&
+    lastUnique.data[0]?.id_unique !== undefined
+  ) {
+    id_lastUnique = lastUnique.data[0].id_unique + 1;
+  }
+
   const form = {
-    id_unique: lastUnique.data[0].id_unique + 1,
+    id_unique: id_lastUnique,
     name,
     id_surgeries: surgeries.split(","),
     searchkey,
@@ -96,13 +112,16 @@ console.log("uploadActions")
         status: "error",
       };
     }
-  } 
+  };
 
   console.log("uploadActions insertHospital error 1 : ", insertHospital.error);
   if (insertHospital.error) {
     // error 발생 시 업로드 했더 이미지 삭제
     removeStorageImg();
-    console.log("uploadActions insertHospital error 2 : ", insertHospital.error);
+    console.log(
+      "uploadActions insertHospital error 2 : ",
+      insertHospital.error
+    );
     return {
       ...prevState,
       message: insertHospital.error.message,
@@ -110,7 +129,10 @@ console.log("uploadActions")
     };
   }
 
-  const hospitalDetailDefaultValue = (id_uuid_hospital: string, id_hospital: string) => ({
+  const hospitalDetailDefaultValue = (
+    id_uuid_hospital: string,
+    id_hospital: string
+  ) => ({
     id_uuid_hospital,
     id_hospital,
     tel: "0507-1433-0210",
@@ -158,8 +180,13 @@ console.log("uploadActions")
 
   const { error } = await supabase
     .from(TABLE_HOSPITAL_DETAIL)
-    .insert([hospitalDetailDefaultValue(insertHospital.data[0].id_uuid, insertHospital.data[0].id_unique)]);
-  
+    .insert([
+      hospitalDetailDefaultValue(
+        insertHospital.data[0].id_uuid,
+        insertHospital.data[0].id_unique
+      ),
+    ]);
+
   if (error) {
     console.log("uploadActions error 3 : ", error);
     removeStorageImg();

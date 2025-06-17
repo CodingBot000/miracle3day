@@ -23,17 +23,25 @@ export default async function signUpActions(
   const nickname = formData.get("nickname") as string;
   const nation = formData.get("nation") as string;
 
-  if (!email || !password || !password_confirm || !name || !nickname || !nation) {
-    return {
-      error: {
-        email: ["Please enter your email."],
-        password: ["Please enter your password."],
-        password_confirm: ["Please confirm your password."],
-        name: ["Please enter your name."],
-        nickname: ["Please enter your nickname."],
-        nation: ["Please select your country."],
-      },
-    };
+  const fields = [
+    { key: "email", value: email, message: "Please enter your email." },
+    { key: "password", value: password, message: "Please enter your password." },
+    { key: "password_confirm", value: password_confirm, message: "Please confirm your password." },
+    { key: "name", value: name, message: "Please enter your name." },
+    { key: "nickname", value: nickname, message: "Please enter your nickname." },
+    { key: "nation", value: nation, message: "Please select your country." },
+  ];
+  
+  const error: Record<string, string[]> = {};
+  
+  for (const field of fields) {
+    if (!field.value) {
+      error[field.key] = [field.message];
+    }
+  }
+  
+  if (Object.keys(error).length > 0) {
+    return { error };
   }
 
   if (password !== password_confirm) {
@@ -65,7 +73,7 @@ export default async function signUpActions(
     }
     return {
       error: {
-        email: ["An error occurred during sign-up."],
+        email: ["An error occurred during sign-up action."],
       },
     };
   }

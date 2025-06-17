@@ -5,8 +5,9 @@ import { createClient } from "@/utils/supabase/server";
 import { Provider } from "@supabase/supabase-js";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { SNS_FACEBOOK, SNS_GOOGLE, SNS_APPLE } from "@/constants/key";
 
-export type TSnsType = Extract<Provider, "facebook" | "google" | "apple">;
+export type TSnsType = Extract<Provider, typeof SNS_FACEBOOK | typeof SNS_GOOGLE | typeof SNS_APPLE>;
 
 export const snsLoginActions = async (prevState: any, snsType: TSnsType) => {
   const referer = headers().get("referer") as string;

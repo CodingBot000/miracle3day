@@ -15,11 +15,20 @@ export async function middleware(req: NextRequest) {
     //     return NextResponse.redirect(new URL("/", req.url));
     //   }
     // }
-
-    if (req.nextUrl.pathname.startsWith("/auth")) {
+    // const allowedAuthPaths = ["/auth/sign-up/complete-profile", "/auth/logout"];
+    console.log('middleware.ts auth.data.user req.nextUrl.pathname:' , req.nextUrl.pathname);
+    // const allowedAuthPaths = ["/auth/sign-up/complete-profile/"];
+    // if (req.nextUrl.pathname.startsWith("/auth") &&
+    //   !allowedAuthPaths.some((path) => req.nextUrl.pathname.startsWith(path))) 
+    //  {
+    if (req.nextUrl.pathname.startsWith("/auth")) 
+     {
+      console.log('middleware.ts auth.data.user redirect /');
       return NextResponse.redirect(new URL("/", req.url));
     }
+    console.log('middleware.ts auth.data.user redirect / no');
   } else {
+    console.log('middleware.ts not  login user');
     // not login user
     if (req.nextUrl.pathname.startsWith("/user")) {
       return NextResponse.redirect(new URL("/", req.url));

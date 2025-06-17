@@ -4,7 +4,7 @@ import styles from "./sign-up.module.scss";
 import { ROUTE } from "@/router";
 import Link from "next/link";
 import { NationModal } from "./components/modal/nations";
-import SignUpButton from "./components/button/sign-up";
+import SignUpConfirmButton from "./components/button/sign-up";
 import { ChangeEvent, useEffect, useState } from "react";
 import { emailRegExp, passwordRegExp } from "@/utils/regexp";
 import { AlertModal } from "@/components/template/modal/Modal";
@@ -29,27 +29,27 @@ const SignUpPage = () => {
   const [input, setInput] = useState<State>({
     email: {
       error: false,
-      value: "",
+      value: "pokerface582@gmail.com",
     },
-    name: {
+    displayName: {
       error: false,
-      value: "",
+      value: "김철수",
     },
     nickname: {
       error: false,
-      value: "",
+      value: "철수nickname",
     },
     password: {
       error: false,
-      value: "",
+      value: "zmnh123@",
     },
     password_confirm: {
       error: false,
-      value: "",
+      value: "zmnh123@",
     },
     nation: {
       error: false,
-      value: "",
+      value: "KR",
     },
   });
 
@@ -62,7 +62,6 @@ const SignUpPage = () => {
         password: passwordRegExp,
         password_confirm: passwordRegExp,
       };
-
       if (name === "password_confirm") {
         return !reg[name].test(value) || input["password"].value !== value;
       } else if (name === "nickname" || name === "name" || name === "nation") {
@@ -95,14 +94,18 @@ const SignUpPage = () => {
     }
 
     try {
+      console.log('signupclient formData:', Object.fromEntries(formData.entries()));
       const result = await signUpActions(null, formData);
+      console.log('signupclient result:', result);
+      console.log('signupclient result.error:', result.error);
+      console.log('signupclient result.message:', result.message);
       if (result.error) {
         setFormError(result.error);
       } else if (result.message) {
         setMessage(result.message);
       }
     } catch (error) {
-      setMessage("An error occurred during sign-up.");
+      setMessage("An error occurred during sign-up...");
     }
   };
 
@@ -218,6 +221,9 @@ const SignUpPage = () => {
         </div>
 
         <div className="space-y-4 mt-6">
+          {/* <SignUpButton disabled={Object.values(input).every((e) => e.error && !e.value)} /> */}
+          <SignUpConfirmButton disabled={true} />
+{/*           
           <Button
             type="submit"
             className="w-full flex items-center justify-center gap-2"
@@ -225,7 +231,7 @@ const SignUpPage = () => {
           >
             <UserPlus className="h-4 w-4" />
             Sign Up
-          </Button>
+          </Button> */}
           
           <Link href={ROUTE.LOGIN} className="block">
             <Button 

@@ -7,7 +7,7 @@ interface SignUpButtonProps {
   disabled: boolean;
 }
 
-const SignUpButton = ({ disabled }: SignUpButtonProps) => {
+const SignUpConfirmButton = ({ disabled }: SignUpButtonProps) => {
   const { pending } = useFormStatus();
 
   return (
@@ -17,4 +17,4 @@ const SignUpButton = ({ disabled }: SignUpButtonProps) => {
   );
 };
 
-export default SignUpButton;
+export default SignUpConfirmButton;

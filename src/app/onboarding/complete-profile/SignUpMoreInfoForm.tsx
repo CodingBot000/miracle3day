@@ -156,7 +156,9 @@ export default function SignUpMoreInfoForm() {
           <div className="space-y-4">
             <div>
               <Label>Display Name</Label>
-              <p className="text-sm text-gray-500 mb-2">This name will be shown to other users</p>
+              <p className="text-sm text-gray-500 mb-2">
+                This name will be shown to other users.
+                </p>
               <Input
                 type="text"
                 value={formData.displayName}
@@ -168,7 +170,11 @@ export default function SignUpMoreInfoForm() {
 
             <div>
               <Label>Full Name (Optional)</Label>
-              <p className="text-sm text-gray-500 mb-2">Please enter your legal name</p>
+              <p className="text-sm text-gray-500 mb-2">
+                Please enter your legal name. 
+                Only used for personalized medical consultations or appointment records.
+                This information never be shown to other users.
+                </p>
               <Input
                 type="text"
                 value={formData.fullName}
@@ -179,7 +185,9 @@ export default function SignUpMoreInfoForm() {
 
             <div>
               <Label>Birth Date</Label>
-              <p className="text-sm text-gray-500 mb-2">You must be at least 14 years old</p>
+              <p className="text-sm text-gray-500 mb-2">
+                You must be at least 14 years old.
+                If you provide your exact date of birth, we can offer more personalized recommendations and consultations.</p>
               <div className="grid grid-cols-3 gap-2">
                 <Select
                   value={formData.birthMonth}
@@ -239,7 +247,10 @@ export default function SignUpMoreInfoForm() {
 
             <div>
               <Label>Gender</Label>
-              <p className="text-sm text-gray-500 mb-2">Select your gender</p>
+              <p className="text-sm text-gray-500 mb-2">
+                Select your gender.
+                Optimized treatment recommendations vary depending on your gender.
+                </p>
               <RadioGroup
                 value={formData.gender}
                 onValueChange={(value) => setFormData(prev => ({ ...prev, gender: value }))}
@@ -271,7 +282,10 @@ export default function SignUpMoreInfoForm() {
 
             <div>
               <Label>Email (Optional)</Label>
-              <p className="text-sm text-gray-500 mb-2">This will be used for account recovery and notifications</p>
+              <p className="text-sm text-gray-500 mb-2">
+              If you signed up using social login, you can optionally provide a secondary email if you&apos;d like to receive additional information.
+
+              </p>
               <Input
                 type="email"
                 value={formData.email}

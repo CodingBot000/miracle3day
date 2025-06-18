@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Mail, Lock, User, UserPlus } from "lucide-react";
 import signUpActions from "./actions/sign-up.action";
 import { clsx } from "clsx";
+import { CountryCode } from "@/app/models/country-code.dto";
 
 type InputKey = "email" | "password" | "password_confirm" | "name" | "nickname" | "nation";
 
@@ -31,7 +32,7 @@ const SignUpPage = () => {
       error: false,
       value: "pokerface582@gmail.com",
     },
-    displayName: {
+    name: {
       error: false,
       value: "김철수",
     },
@@ -57,7 +58,7 @@ const SignUpPage = () => {
     const { name, value } = e.target;
 
     const regValid = (name: InputKey, value: string) => {
-      const reg: Record<Exclude<InputKey, "name" | "nickname" | "nation">, RegExp> = {
+      const reg: Record<Exclude<InputKey, "name" | "nickname" | "name" | "nation">, RegExp> = {
         email: emailRegExp,
         password: passwordRegExp,
         password_confirm: passwordRegExp,
@@ -213,7 +214,8 @@ const SignUpPage = () => {
         </div>
 
         <div className={styles.input_field}>
-          <NationModal nation={nation} onSelect={(value) => setNation(value)} />
+          
+          <NationModal nation={nation} onSelect={(value: CountryCode) => setNation(value.country_code)} />
           <input type="hidden" name="nation" value={nation} />
           {formError?.nation?.length && (
             <p className="text-sm text-red-500 mt-1">{formError.nation[0]}</p>

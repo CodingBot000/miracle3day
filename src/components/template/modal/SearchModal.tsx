@@ -20,7 +20,7 @@ import { Search, X } from "lucide-react";
 import {
   CountryCode,
   CountryOutputDto,
-} from "@/app/api/auth/countryCode/country-code";
+} from "@/app/models/country-code.dto";
 
 export interface SearchModalProps {
   open: boolean;

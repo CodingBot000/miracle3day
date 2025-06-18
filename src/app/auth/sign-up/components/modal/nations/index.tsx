@@ -3,14 +3,14 @@
 import { SearchModal } from "@/components/template/modal";
 import { country } from "@/constants/country";
 import useModal from "@/hooks/useModal";
-import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Search } from "lucide-react";
+import { CountryCode } from "@/app/models/country-code.dto";
 
 interface NationModalProps {
   nation: string;
-  onSelect: (value: string) => void;
+  onSelect: (value: CountryCode) => void;
 }
 
 export const NationModal = ({ nation, onSelect }: NationModalProps) => {
@@ -33,10 +33,10 @@ export const NationModal = ({ nation, onSelect }: NationModalProps) => {
         />
       </div>
       <SearchModal
-        onCancel={handleOpenModal}
-        onClick={({ country_name }) => onSelect(country_name)}
-        itemList={country}
         open={open}
+        itemList={country}
+        onCancel={handleOpenModal}
+        onClick={onSelect}
       />
     </div>
   );

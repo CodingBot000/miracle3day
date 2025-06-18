@@ -1,3 +1,4 @@
+import { TABLE_MEMBERS } from "@/constants/tables";
 import { createClient } from "@/utils/supabase/server";
 
 type SignUpParams = {
@@ -19,7 +20,7 @@ export async function signUp({
   const supabase = createClient();
 
   const { data: existingUser } = await supabase
-    .from("user")
+    .from(TABLE_MEMBERS)
     .select("email")
     .match({ email })
     .single();

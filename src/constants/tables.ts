@@ -8,7 +8,7 @@ const TABLE_TREATMENT = "treatment";
 const TABLE_EVENT = "event";
 const TABLE_REVIEW = "reviews";
 const TABLE_FAVORITE = "favorite";
-const TABLE_USER = "user";
+const TABLE_MEMBERS = "members";
 const TABLE_SURGERY_INFO = "surgery_info";
 // const TABLE_HOSPITAL = "hospital_test";
 // const TABLE_DOCTOR = "doctor_test";
@@ -32,7 +32,7 @@ export {
   TABLE_EVENT,
   TABLE_REVIEW,
   TABLE_FAVORITE,
-  TABLE_USER,
+  TABLE_MEMBERS,
   STORAGE_IMAGES,
   STORAGE_HOSPITAL_IMG,
   STORAGE_DOCTOR_IMG

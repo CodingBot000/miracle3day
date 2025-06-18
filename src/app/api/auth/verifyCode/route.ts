@@ -1,3 +1,4 @@
+import { TABLE_MEMBERS } from "@/constants/tables";
 import { createClient } from "@/utils/supabase/server";
 
 export async function POST(req: Request) {
@@ -22,7 +23,7 @@ export async function POST(req: Request) {
     }
 
     const findUser = await supabase
-      .from("user")
+      .from(TABLE_MEMBERS)
       .select("uuid,email,email_verify")
       .match({ email });
 
@@ -35,7 +36,7 @@ export async function POST(req: Request) {
     }
 
     const createEmailVerify = await supabase
-      .from("user")
+      .from(TABLE_MEMBERS)
       .update({ email_verify: true })
       .match({ uuid: findUser.data[0]!.uuid });
 

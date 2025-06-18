@@ -1,6 +1,7 @@
 "use server";
 
 import { country } from "@/constants/country";
+import { TABLE_MEMBERS } from "@/constants/tables";
 import { ROUTE } from "@/router";
 
 import { createClient } from "@/utils/supabase/server";
@@ -58,7 +59,7 @@ const verifyActions = async (prevState: any, formData: FormData) => {
   }
 
   const getUser = await supabase
-    .from("user")
+    .from(TABLE_MEMBERS)
     .select("user_no")
     .limit(1)
     .order("user_no", { ascending: false });
@@ -76,7 +77,7 @@ const verifyActions = async (prevState: any, formData: FormData) => {
 
   // user 테이블 insert
   const saveUserProfile = await supabase
-    .from("user")
+    .from(TABLE_MEMBERS)
     .insert([{ ...insertDb, id_country, uuid, user_no }]);
 
   if (saveUserProfile.error) {

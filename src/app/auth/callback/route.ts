@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 // The client you created from the Server-Side Auth instructions
 import { createClient } from "@/utils/supabase/server";
 import { ROUTE } from "@/router";
+import { TABLE_MEMBERS } from "@/constants/tables";
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
@@ -54,8 +55,8 @@ export async function GET(request: Request) {
           }
         });
         console.log(userInfo);
-        // ✅ 사용자 정보 DB에 upsert
-        await supabase.from("user").upsert({
+        // 사용자 정보 DB에 upsert 소셜로그인에서는 생일, 성별 국가 등 정보가 이 타이밍에 가져올수없음
+        await supabase.from(TABLE_MEMBERS).upsert({
           uuid: user.id, // auth.users.id → foreign key
           email: user.email ?? "",
           name: user.user_metadata?.full_name ?? "",         // 이름 (Google/Apple 등에서 옴)
@@ -76,22 +77,22 @@ export async function GET(request: Request) {
 
         const { id } = user;
 
-       // 👇 user 테이블에서 추가정보 입력 여부 확인
+       //  user 테이블에서 추가정보 입력 여부 확인 소셜로그인에서는 생일, 성별 국가 등 정보가 가입하는 순간에는 갖고올수없어서 이미 입력했는지 여부를 확인해야함
        const { data: userRow } = await supabase
-       .from("user")
+       .from(TABLE_MEMBERS)
        .select("id_country, birth_date, gender, secondary_email") // 생년월일, 성별 등도 추가 가능
        .eq("uuid", id)
        .maybeSingle();
 
 
         const needsProfileSetup = !userRow?.id_country || !userRow?.birth_date || !userRow?.gender || !userRow?.secondary_email;
-
+        
         console.log(`auth callback route.ts userRow: ${userRow}`);
         console.log(`auth callback route.ts needsProfileSetup: ${needsProfileSetup}`);
         //추가 정보 필요 → /onboarding/complete-profile로 리디렉션
         if (needsProfileSetup) {
                                          
-          const redirectUrl = `${origin}/onboarding/complete-profile?code=${code}`;
+          const redirectUrl = `${origin}/onboarding/complete-profile?code=${id}`;
           console.log("auth callbacek needsProfileSetup move to :", redirectUrl);
           return NextResponse.redirect(redirectUrl);
         }

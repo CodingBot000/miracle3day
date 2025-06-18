@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { LIMIT } from "./constant";
-import { TABLE_HOSPITAL, TABLE_REVIEW, TABLE_USER } from "@/constants/tables";
+import { TABLE_HOSPITAL, TABLE_REVIEW, TABLE_MEMBERS } from "@/constants/tables";
 
 export async function GET(
   req: Request,
@@ -42,7 +42,7 @@ export async function GET(
     .eq( "id_uuid_hospital", id_uuid_hospital );
       
     const { data: userData, error: userError, status: userStatus, statusText: userStatusText } = await supabase
-    .from(TABLE_USER)
+    .from(TABLE_MEMBERS)
     .select("*")
     // .match({ id_uuid_hospital: id_hospital })
     .match( { user_no : hospitalData?.[0]?.user_no } );

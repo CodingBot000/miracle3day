@@ -1,3 +1,4 @@
+import { TABLE_MEMBERS } from "@/constants/tables";
 import { createClient } from "@/utils/supabase/server";
 
 export async function GET(req: Request) {
@@ -8,7 +9,7 @@ export async function GET(req: Request) {
 
   try {
     const { data: users, error: userError } = await supabase
-      .from("user")
+      .from(TABLE_MEMBERS)
       .select("uuid,email,email_verify")
       .match({ email });
 

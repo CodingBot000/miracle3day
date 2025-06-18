@@ -4,23 +4,19 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { NationModal } from "@/app/auth/sign-up/components/modal/nations";
 import { useRouter, useSearchParams } from "next/navigation";
 import { updateProfileAPI } from "@/app/api/auth/update-profile";
 import { CountryCode } from "@/app/models/country-code.dto";
-
-interface SignUpMoreInfoFormProps {
-  uuid: string;
-}
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { Calendar } from "lucide-react";
 
 interface FormData {
   displayName: string;
   fullName: string;
-  birthYear: string;
-  birthMonth: string;
-  birthDay: string;
+  birthDate: Date | null;
   gender: string;
   email: string;
 }
@@ -28,12 +24,49 @@ interface FormData {
 const initialFormData: FormData = {
   displayName: "",
   fullName: "",
-  birthYear: "",
-  birthMonth: "",
-  birthDay: "",
+  birthDate: null,
   gender: "",
   email: "",
 };
+
+// 14세 이상 제한을 위한 날짜 계산
+const getMaxDate = () => {
+  const date = new Date();
+  date.setFullYear(date.getFullYear() - 14);
+  return date;
+};
+
+// 100세 제한을 위한 날짜 계산
+const getMinDate = () => {
+  const date = new Date();
+  date.setFullYear(date.getFullYear() - 100);
+  return date;
+};
+
+const CustomInput = ({ value, onClick, placeholder, className }: any) => (
+  <div className="flex items-center cursor-pointer" onClick={onClick}>
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      className="h-5 w-5 text-gray-400 mr-2"
+      fill="none" 
+      viewBox="0 0 24 24" 
+      stroke="currentColor"
+    >
+      <path 
+        strokeLinecap="round" 
+        strokeLinejoin="round" 
+        strokeWidth={2} 
+        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" 
+      />
+    </svg>
+    <input 
+      value={value || ''} 
+      className={`${className} cursor-pointer`}
+      placeholder={placeholder}
+      readOnly
+    />
+  </div>
+);
 
 export default function SignUpMoreInfoForm() {
   const searchParams = useSearchParams();
@@ -45,43 +78,6 @@ export default function SignUpMoreInfoForm() {
   const [nation, setNation] = useState<CountryCode | null>(null);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  // 현재 연도 계산
-  const currentYear = new Date().getFullYear();
-  // 14세 이상 제한을 위한 최소/최대 연도 계산
-  const minYear = currentYear - 100;
-  const maxYear = currentYear - 14;
-
-  // 월 선택 옵션
-  const months = [
-    { value: "01", label: "January" },
-    { value: "02", label: "February" },
-    { value: "03", label: "March" },
-    { value: "04", label: "April" },
-    { value: "05", label: "May" },
-    { value: "06", label: "June" },
-    { value: "07", label: "July" },
-    { value: "08", label: "August" },
-    { value: "09", label: "September" },
-    { value: "10", label: "October" },
-    { value: "11", label: "November" },
-    { value: "12", label: "December" },
-  ];
-
-  // 선택된 월의 일수 계산
-  const getDaysInMonth = (year: string, month: string) => {
-    return new Date(parseInt(year), parseInt(month), 0).getDate();
-  };
-
-  // 일 선택 옵션 생성
-  const getDayOptions = () => {
-    if (!formData.birthYear || !formData.birthMonth) return [];
-    const daysInMonth = getDaysInMonth(formData.birthYear, formData.birthMonth);
-    return Array.from({ length: daysInMonth }, (_, i) => {
-      const day = String(i + 1).padStart(2, "0");
-      return { value: day, label: day };
-    });
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -99,13 +95,11 @@ export default function SignUpMoreInfoForm() {
         return;
       }
 
-      // Birth Date 검증
-      if (!formData.birthYear || !formData.birthMonth || !formData.birthDay) {
+      if (!formData.birthDate) {
         setErrors(prev => ({ ...prev, birthDate: "Birth date is required" }));
         return;
       }
 
-      // Gender 검증
       if (!formData.gender) {
         setErrors(prev => ({ ...prev, gender: "Gender is required" }));
         return;
@@ -116,7 +110,6 @@ export default function SignUpMoreInfoForm() {
         return;
       }
 
-      // 이메일이 입력된 경우에만 유효성 검사
       if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
         setErrors(prev => ({ ...prev, email: "Please enter a valid email address" }));
         return;
@@ -127,9 +120,9 @@ export default function SignUpMoreInfoForm() {
         displayName: formData.displayName,
         fullName: formData.fullName,
         nation: nation.country_code,
-        birthYear: formData.birthYear,
-        birthMonth: formData.birthMonth,
-        birthDay: formData.birthDay,
+        birthYear: formData.birthDate.getFullYear().toString(),
+        birthMonth: (formData.birthDate.getMonth() + 1).toString().padStart(2, '0'),
+        birthDay: formData.birthDate.getDate().toString().padStart(2, '0'),
         gender: formData.gender,
         email: formData.email
       });
@@ -138,7 +131,6 @@ export default function SignUpMoreInfoForm() {
         throw new Error(response.error);
       }
 
-      // 성공 시 홈페이지로 이동
       router.push("/");
     } catch (error) {
       if (error instanceof Error) {
@@ -152,19 +144,23 @@ export default function SignUpMoreInfoForm() {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow">
+        <h1 className="text-3xl font-bold text-center text-gray-900">
+          Additional Information
+        </h1>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-4">
             <div>
               <Label>Display Name</Label>
               <p className="text-sm text-gray-500 mb-2">
                 This name will be shown to other users.
-                </p>
+              </p>
               <Input
                 type="text"
                 value={formData.displayName}
                 onChange={(e) => setFormData(prev => ({ ...prev, displayName: e.target.value }))}
                 required
                 placeholder="Enter your display name"
+                autoComplete="nickname"
               />
             </div>
 
@@ -174,12 +170,13 @@ export default function SignUpMoreInfoForm() {
                 Please enter your legal name. 
                 Only used for personalized medical consultations or appointment records.
                 This information never be shown to other users.
-                </p>
+              </p>
               <Input
                 type="text"
                 value={formData.fullName}
                 onChange={(e) => setFormData(prev => ({ ...prev, fullName: e.target.value }))}
                 placeholder="Enter your full name"
+                autoComplete="name"
               />
             </div>
 
@@ -188,57 +185,26 @@ export default function SignUpMoreInfoForm() {
               <p className="text-sm text-gray-500 mb-2">
                 You must be at least 14 years old.
                 If you provide your exact date of birth, we can offer more personalized recommendations and consultations.</p>
-              <div className="grid grid-cols-3 gap-2">
-                <Select
-                  value={formData.birthMonth}
-                  onValueChange={(value) => setFormData(prev => ({ ...prev, birthMonth: value }))}
+              <div className="relative">
+                <div 
+                  className={`border rounded-md ${
+                    errors.birthDate ? "border-red-500" : "border-input"
+                  }`}
                 >
-                  <SelectTrigger className={errors.birthDate ? "border-red-500" : ""}>
-                    <SelectValue placeholder="Month" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {months.map((month) => (
-                      <SelectItem key={month.value} value={month.value}>
-                        {month.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-
-                <Select
-                  value={formData.birthDay}
-                  onValueChange={(value) => setFormData(prev => ({ ...prev, birthDay: value }))}
-                >
-                  <SelectTrigger className={errors.birthDate ? "border-red-500" : ""}>
-                    <SelectValue placeholder="Day" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {getDayOptions().map((day) => (
-                      <SelectItem key={day.value} value={day.value}>
-                        {day.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-
-                <Select
-                  value={formData.birthYear}
-                  onValueChange={(value) => setFormData(prev => ({ ...prev, birthYear: value }))}
-                >
-                  <SelectTrigger className={errors.birthDate ? "border-red-500" : ""}>
-                    <SelectValue placeholder="Year" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {Array.from({ length: maxYear - minYear + 1 }, (_, i) => {
-                      const year = String(maxYear - i);
-                      return (
-                        <SelectItem key={year} value={year}>
-                          {year}
-                        </SelectItem>
-                      );
-                    })}
-                  </SelectContent>
-                </Select>
+                  <DatePicker
+                    selected={formData.birthDate}
+                    onChange={(date: Date | null) => setFormData(prev => ({ ...prev, birthDate: date }))}
+                    dateFormat="yyyy-MM-dd"
+                    maxDate={getMaxDate()}
+                    minDate={getMinDate()}
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
+                    placeholderText="Select your birth date"
+                    className="w-full p-2 outline-none bg-transparent"
+                    customInput={<CustomInput />}
+                  />
+                </div>
               </div>
               {errors.birthDate && (
                 <p className="text-sm text-red-500 mt-1">{errors.birthDate}</p>
@@ -250,7 +216,7 @@ export default function SignUpMoreInfoForm() {
               <p className="text-sm text-gray-500 mb-2">
                 Select your gender.
                 Optimized treatment recommendations vary depending on your gender.
-                </p>
+              </p>
               <RadioGroup
                 value={formData.gender}
                 onValueChange={(value) => setFormData(prev => ({ ...prev, gender: value }))}
@@ -283,8 +249,7 @@ export default function SignUpMoreInfoForm() {
             <div>
               <Label>Email (Optional)</Label>
               <p className="text-sm text-gray-500 mb-2">
-              If you signed up using social login, you can optionally provide a secondary email if you&apos;d like to receive additional information.
-
+                If you signed up using social login, you can optionally provide a secondary email if you&apos;d like to receive additional information.
               </p>
               <Input
                 type="email"

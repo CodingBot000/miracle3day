@@ -57,4 +57,5 @@ export const ROUTE = {
   FAVORITE: createUserRouter("FAVORITE"),
   UPDATE_PASSWORD: createNormalRouter("update-password"),
   UPLOAD_HOSPITAL: createAdminRouter("upload"),
+  WITHDRAWAL: '/auth/withdrawal',
 };

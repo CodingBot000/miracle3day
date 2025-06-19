@@ -8,6 +8,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { findCountry } from "@/constants/country";
 import { useRouter } from "next/navigation";
+import { ROUTE } from "@/router";
 
 interface MyPageMyInfoClientDetailProps {
   user: UserOutputDto;
@@ -81,6 +82,14 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
                 <span className="text-gray-600"></span>
                 <div className="flex items-center">
                   <LogoutAction />
+                </div>
+              </div>
+              <div className="flex justify-between items-center p-4 border-t">
+                <span className="text-gray-600">Account</span>
+                <div className="flex items-center">
+                  <Link href={ROUTE.WITHDRAWAL} className="text-gray-400 hover:text-gray-500 text-sm">
+                    Withdrawal
+                  </Link>
                 </div>
               </div>
             </div>

@@ -9,6 +9,7 @@ export async function middleware(req: NextRequest) {
   const auth = await supabase.auth.getUser();
 
   if (auth.data.user) {
+    const allowedAuthPaths = ["/auth/withdrawal"];
     // login user
     // if (auth.data.user.email !== process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
     //   if (req.nextUrl.pathname.startsWith("/admin")) {
@@ -17,11 +18,11 @@ export async function middleware(req: NextRequest) {
     // }
     // const allowedAuthPaths = ["/auth/sign-up/complete-profile", "/auth/logout"];
     console.log('middleware.ts auth.data.user req.nextUrl.pathname:' , req.nextUrl.pathname);
-    // const allowedAuthPaths = ["/auth/sign-up/complete-profile/"];
-    // if (req.nextUrl.pathname.startsWith("/auth") &&
-    //   !allowedAuthPaths.some((path) => req.nextUrl.pathname.startsWith(path))) 
-    //  {
-    if (req.nextUrl.pathname.startsWith("/auth")) 
+    
+    
+    if (req.nextUrl.pathname.startsWith("/auth")
+    &&  !allowedAuthPaths.some((path) => req.nextUrl.pathname.startsWith(path))) 
+    
      {
       console.log('middleware.ts auth.data.user redirect /');
       return NextResponse.redirect(new URL("/", req.url));

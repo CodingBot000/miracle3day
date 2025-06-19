@@ -1,4 +1,5 @@
-'use client';
+// 'use client';
+export const dynamic = "force-dynamic";
 
 import { withdrawAction } from './actions';
 import Link from 'next/link';

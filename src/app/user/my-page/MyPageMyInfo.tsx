@@ -6,6 +6,7 @@ import { User } from "@supabase/supabase-js";
 import { ArrowLeft, Camera, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { findCountry } from "@/constants/country";
 
 interface MyPageMyInfoClientDetailProps {
   user: UserOutputDto;
@@ -20,7 +21,7 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
           <Link href="/user/my-page" className="p-2">
             <ArrowLeft className="w-6 h-6" />
           </Link>
-          <h1 className="text-lg font-medium ml-2">내 정보 수정</h1>
+          <h1 className="text-lg font-medium ml-2">Modify My Information</h1>
         </div>
 
         <div className="p-4">
@@ -28,23 +29,15 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
           <div className="flex flex-col items-center mb-8">
             <div className="relative">
               <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
-                {user?.userInfo?.avatar ? (
+                
                   <Image
-                    src={user.userInfo.avatar}
+                    src={user?.userInfo?.avatar || "/default/profile_default.png"}
                     alt="Profile"
                     width={96}
                     height={96}
                     className="object-cover"
                   />
-                ) : (
-                  <Image
-                    src="/default/profile_default.png"
-                    alt="Default Profile"
-                    width={96}
-                    height={96}
-                    className="object-cover"
-                  />
-                )}
+                
               </div>
               <button className="absolute bottom-0 right-0 bg-white rounded-full p-2 shadow-md">
                 <Camera className="w-5 h-5" />
@@ -55,51 +48,51 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
 
           {/* Info List */}
           <div className="space-y-4">
-            <h3 className="text-lg font-medium mb-4">내 정보</h3>
+            <h3 className="text-lg font-medium mb-4">My Information</h3>
             
             <div className="bg-white rounded-lg">
               <div className="flex justify-between items-center p-4 border-b">
-                <span className="text-gray-600">닉네임</span>
+                <span className="text-gray-600">Display Name</span>
                 <div className="flex items-center">
                   <span>{user?.userInfo?.nickname || "asdfasfd"}</span>
                   <ChevronRight className="w-5 h-5 ml-2 text-gray-400" />
                 </div>
               </div>
 
-              <div className="flex justify-between items-center p-4 border-b">
+              {/* <div className="flex justify-between items-center p-4 border-b">
                 <span className="text-gray-600">이름</span>
                 <div className="flex items-center">
                   <span className="text-gray-400">이름이 설정되어 있지 않습니다.</span>
                   <ChevronRight className="w-5 h-5 ml-2 text-gray-400" />
                 </div>
-              </div>
+              </div> */}
 
               <div className="flex justify-between items-center p-4 border-b">
-                <span className="text-gray-600">성별</span>
+                <span className="text-gray-600">Gender</span>
                 <div className="flex items-center">
-                  <span>{user?.userInfo?.gender === "M" ? "남성" : "여성"}</span>
+                  <span>{user?.userInfo?.gender === "M" ? "Male" : "Female"}</span>
                   <ChevronRight className="w-5 h-5 ml-2 text-gray-400" />
                 </div>
               </div>
 
-              <div className="flex justify-between items-center p-4 border-b">
+              {/* <div className="flex justify-between items-center p-4 border-b">
                 <span className="text-gray-600">출생연도</span>
                 <div className="flex items-center">
                   <span>1977</span>
                   <ChevronRight className="w-5 h-5 ml-2 text-gray-400" />
                 </div>
-              </div>
+              </div> */}
 
               <div className="flex justify-between items-center p-4 border-b">
-                <span className="text-gray-600">전화번호 인증</span>
+                <span className="text-gray-600">Phone Number Verification</span>
                 <div className="flex items-center">
-                  <span className="text-blue-600">전화번호 인증</span>
+                  <span className="text-blue-600">Phone Number Verification</span>
                   <ChevronRight className="w-5 h-5 ml-2 text-gray-400" />
                 </div>
               </div>
 
               <div className="flex justify-between items-center p-4 border-b">
-                <span className="text-gray-600">이메일</span>
+                <span className="text-gray-600">Email</span>
                 <div className="flex items-center">
                   <span>{user?.userInfo?.email || "pokerface582@nate.com"}</span>
                   <ChevronRight className="w-5 h-5 ml-2 text-gray-400" />
@@ -107,23 +100,32 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
               </div>
 
               <div className="flex justify-between items-center p-4 border-b">
-                <span className="text-gray-600">국적</span>
+                <span className="text-gray-600">Secondary Email</span>
                 <div className="flex items-center">
-                  <span>{user?.userInfo?.id_country || "KR"}</span>
+                  <span>{user?.userInfo?.secondary_email || "not set"}</span>
+                  <ChevronRight className="w-5 h-5 ml-2 text-gray-400" />
+                </div>
+              </div>
+
+
+              <div className="flex justify-between items-center p-4 border-b">
+                <span className="text-gray-600">Nationality</span>
+                <div className="flex items-center">
+                  <span>{findCountry(user?.userInfo?.id_country)?.country_name || ""}</span>
                   <ChevronRight className="w-5 h-5 ml-2 text-gray-400" />
                 </div>
               </div>
 
               <div className="flex justify-between items-center p-4 border-b">
-                <span className="text-gray-600">시술 경험</span>
+                <span className="text-gray-600">Treatment Experience</span>
                 <div className="flex items-center">
-                  <span>공개</span>
+                  <span>Public</span>
                   <ChevronRight className="w-5 h-5 ml-2 text-gray-400" />
                 </div>
               </div>
 
               <div className="flex justify-between items-center p-4">
-                <span className="text-gray-600">로그아웃</span>
+                <span className="text-gray-600"></span>
                 <div className="flex items-center">
                   <LogoutAction />
                 </div>

@@ -40,7 +40,7 @@ export default function MyPageIntro({ user }: MyPageIntroClientProps) {
         <div className="bg-white rounded-lg p-6 mb-4 shadow-sm">
           <div className="flex justify-between items-center mb-6">
             <div className="flex items-center space-x-2">
-              <span className="text-xl font-semibold">부지런한래피8welcome!</span>
+              <span className="text-xl font-semibold">{user?.userInfo?.nickname}</span>
             </div>
             <div className="flex space-x-2">
               <button className="p-2 hover:bg-gray-100 rounded-full">

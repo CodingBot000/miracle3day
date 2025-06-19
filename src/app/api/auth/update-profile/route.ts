@@ -32,7 +32,7 @@ export async function PUT(req: Request) {
     // 업데이트할 데이터 객체 생성
     const updateData: Record<string, any> = {
       nickname: displayName,
-      id_country: countryData.id,
+      id_country: countryData.country_code,
       birth_date: birthDate,
       gender: gender,
       updated_at: new Date().toISOString()

@@ -71,6 +71,7 @@ const CustomInput = ({ value, onClick, placeholder, className }: any) => (
 export default function SignUpMoreInfoForm() {
   const searchParams = useSearchParams();
   const uuid = searchParams.get('code');
+  const returnUrl = searchParams.get('returnUrl') || "/";
 
   console.log("SignUpMoreInfoForm uuid", uuid);
   const router = useRouter();
@@ -131,7 +132,8 @@ export default function SignUpMoreInfoForm() {
         throw new Error(response.error);
       }
 
-      router.push("/");
+      // router.push("/");
+      router.push(returnUrl);
     } catch (error) {
       if (error instanceof Error) {
         setErrors(prev => ({ ...prev, submit: error.message }));

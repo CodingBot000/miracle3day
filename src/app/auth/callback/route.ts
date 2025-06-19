@@ -27,33 +27,33 @@ export async function GET(request: Request) {
         const { email, user_metadata, app_metadata } = user;
         const { full_name, avatar_url } = user_metadata ?? {};
         const provider = app_metadata?.provider ?? "email";
-        userInfo?.identities.map((identity) => {
-          if (identity.provider === "google") {
-            // const { data: userInfo } = await supabase.auth.getUserInfo();
-            // console.log(userInfo);
-            console.log(`identity.id: ${identity.id}`);
-            console.log(`identity.identity_id: ${identity.identity_id}`);
-            console.log(`identity.provider: ${identity.provider}`);
-            console.log(`identity.user_id: ${identity.user_id}`);
-            console.log(`identity.created_at: ${identity.created_at}`);
+        // userInfo?.identities.map((identity) => {
+        //   if (identity.provider === "google") {
+        //     // const { data: userInfo } = await supabase.auth.getUserInfo();
+        //     // console.log(userInfo);
+        //     console.log(`identity.id: ${identity.id}`);
+        //     console.log(`identity.identity_id: ${identity.identity_id}`);
+        //     console.log(`identity.provider: ${identity.provider}`);
+        //     console.log(`identity.user_id: ${identity.user_id}`);
+        //     console.log(`identity.created_at: ${identity.created_at}`);
             
-            console.log(`identity.identity_data: ${identity.identity_data}`);
-            console.log("identity_data (JSON):", JSON.stringify(identity.identity_data, null, 2));
-            // "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocI5D4EJWDxc1sGmAqUdN9mOLrP25IOFp0pGj5kzZctYzbpj9ahc=s96-c",
-            // "email": "pokerface582@gmail.com",
-            // "email_verified": true,
-            // "full_name": "Bot coding",
-            // "iss": "https://accounts.google.com",
-            // "name": "Bot coding",
-            // "phone_verified": false,
-            // "picture": "https://lh3.googleusercontent.com/a/ACg8ocI5D4EJWDxc1sGmAqUdN9mOLrP25IOFp0pGj5kzZctYzbpj9ahc=s96-c",
-            // "provider_id": "114433813927840384505",
-            // "sub": "114433813927840384505"
-            console.log(`identity.last_sign_in_at: ${identity.last_sign_in_at}`);
-            console.log(`identity.updated_at: ${identity.updated_at}`);
+        //     console.log(`identity.identity_data: ${identity.identity_data}`);
+        //     console.log("identity_data (JSON):", JSON.stringify(identity.identity_data, null, 2));
+        //     // "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocI5D4EJWDxc1sGmAqUdN9mOLrP25IOFp0pGj5kzZctYzbpj9ahc=s96-c",
+        //     // "email": "pokerface582@gmail.com",
+        //     // "email_verified": true,
+        //     // "full_name": "Bot coding",
+        //     // "iss": "https://accounts.google.com",
+        //     // "name": "Bot coding",
+        //     // "phone_verified": false,
+        //     // "picture": "https://lh3.googleusercontent.com/a/ACg8ocI5D4EJWDxc1sGmAqUdN9mOLrP25IOFp0pGj5kzZctYzbpj9ahc=s96-c",
+        //     // "provider_id": "114433813927840384505",
+        //     // "sub": "114433813927840384505"
+        //     console.log(`identity.last_sign_in_at: ${identity.last_sign_in_at}`);
+        //     console.log(`identity.updated_at: ${identity.updated_at}`);
             
-          }
-        });
+        //   }
+        // });
         console.log(userInfo);
         // 사용자 정보 DB에 upsert 소셜로그인에서는 생일, 성별 국가 등 정보가 이 타이밍에 가져올수없음
         await supabase.from(TABLE_MEMBERS).upsert({
@@ -92,7 +92,7 @@ export async function GET(request: Request) {
         //추가 정보 필요 → /onboarding/complete-profile로 리디렉션
         if (needsProfileSetup) {
                                          
-          const redirectUrl = `${origin}/onboarding/complete-profile?code=${id}`;
+          const redirectUrl = `${origin}/onboarding/complete-profile?code=${id}/returnUrl=/`;
           console.log("auth callbacek needsProfileSetup move to :", redirectUrl);
           return NextResponse.redirect(redirectUrl);
         }

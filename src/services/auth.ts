@@ -1,3 +1,4 @@
+import { TABLE_MEMBERS } from "@/constants/tables";
 import { createClient } from "@/utils/supabase/server";
 
 type SignUpParams = {
@@ -15,16 +16,17 @@ export async function signUp({
   nickname,
   nation,
 }: SignUpParams) {
+  console.log('auth signUp params:', { email, password, name, nickname, nation });
   const supabase = createClient();
 
   const { data: existingUser } = await supabase
-    .from("user")
+    .from(TABLE_MEMBERS)
     .select("email")
     .match({ email })
     .single();
-
+    console.log('auth signUp params:', { email, password, name, nickname, nation });
   if (existingUser) {
-    throw new Error("이미 존재하는 이메일입니다.");
+    throw new Error("already exists email");
   }
 
   const { data: countryCode } = await supabase
@@ -34,7 +36,7 @@ export async function signUp({
     .single();
 
   if (!countryCode) {
-    throw new Error("국가 코드를 찾을 수 없습니다.");
+    throw new Error("country code not found");
   }
 
   const { error } = await supabase.auth.signUp({
@@ -48,8 +50,13 @@ export async function signUp({
       },
     },
   });
-
+  console.log(`auth signUp error message:  ${error?.message} 
+    code:${error?.code} 
+     cause:${error?.cause} 
+      status:${error?.status} 
+      name:${error?.name} 
+      `);
   if (error) {
-    throw new Error(error.message);
+    throw new Error(`sign up error: ${error.message}`);
   }
 } 

@@ -28,22 +28,24 @@ const ReviewTab = ({ id }: { id: string }) => {
         console.log("ReviewTab fetchReviews res:", res);
         setReviews(res.data);
       } catch (error) {
-        console.error("Error fetching reviews:", error);
+        console.error("ReviewTab Error fetching reviews:", error);
       }
     };
     fetchReviews();
   }, [id]);
 
-
+  console.log("ReviewTab reviews:", reviews);
   if (!reviews || reviews.length === 0) {
     return <NoData label="No reviews found"/>;
   }
+
 
   return (
     <div>
       {/* 모바일: grid-cols-2 / 데스크탑: flex row scroll */}
       <div className="grid grid-cols-2 gap-3 px-4 md:flex md:overflow-x-auto md:gap-4 md:px-2">
-        {reviews.map((review) => (
+        reviews
+        {/* {reviews.map((review) => (
           <div
             key={review.id_unique}
             className="md:min-w-[280px] md:max-w-[280px] flex-shrink-0"
@@ -57,7 +59,7 @@ const ReviewTab = ({ id }: { id: string }) => {
               created_at={review.created_at}
             />
           </div>
-        ))}
+        ))} */}
       </div>
     </div>
   );

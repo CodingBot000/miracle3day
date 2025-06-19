@@ -1,5 +1,6 @@
 "use server";
 
+import { TABLE_MEMBERS } from "@/constants/tables";
 import { ROUTE } from "@/router";
 import { createClient } from "@/utils/supabase/server";
 
@@ -11,7 +12,7 @@ const resetPasswordActions = async (
 
   const email = formData.get("email") as string;
 
-  const findUser = await supabase.from("user").select("email").match({ email });
+  const findUser = await supabase.from(TABLE_MEMBERS).select("email").match({ email });
 
   if (!findUser.data?.length) {
     return {

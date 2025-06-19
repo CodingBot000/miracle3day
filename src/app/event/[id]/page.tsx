@@ -25,10 +25,10 @@ export async function generateMetadata(
   const event = data[0];
 
   return {
-    title: `${event.hospitalData.name} | ${data[0].name}`,
-    description: event.description,
+    title: `${event?.hospitalData?.name} | ${data[0]?.name}`,
+    description: event?.description,
     openGraph: {
-      images: [...data[0].imageurls, ...previousImages],
+      images: [...(data[0]?.imageurls || []), ...previousImages],
     },
   };
 }

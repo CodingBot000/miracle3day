@@ -7,12 +7,7 @@ import { Button } from "@/components/ui/button";
 import { LogIn, User as UserIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
-interface Props {
-  user: { user: User } | null;
-}
-
-// export default function AuthClient({ user }: Props) {
-  export default function AuthClient() {
+export default function AuthClient() {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
@@ -25,8 +20,6 @@ interface Props {
     fetchUser();
   }, []);
 
-  const href = user ? ROUTE.MY_PAGE : ROUTE.LOGIN;
-
   const text = (user: User) => {
     const { app_metadata, user_metadata } = user;
     const isSnsUser = app_metadata.provider !== "email";
@@ -35,21 +28,25 @@ interface Props {
 
   const isAdmin = user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL;
 
+  if (!user) {
+    return (
+      <div className="flex justify-end items-center gap-2 w-auto min-w-fit">
+        <Link href={ROUTE.LOGIN}>
+          <Button variant="outline" className="flex items-center gap-2 hover:bg-blue-50 hover:text-blue-600 transition-colors">
+            <LogIn className="h-4 w-4" />
+            <span>LOGIN</span>
+          </Button>
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <div className="flex justify-end items-center gap-2 w-auto min-w-fit">
-      <Link href={href}>
+      <Link href={ROUTE.MY_PAGE}>
         <Button variant="outline" className="flex items-center gap-2 hover:bg-blue-50 hover:text-blue-600 transition-colors">
-          {user ? (
-            <>
-              <UserIcon className="h-4 w-4" />
-              <span>{text(user) || user.email}</span>
-            </>
-          ) : (
-            <>
-              <LogIn className="h-4 w-4" />
-              <span>LOGIN</span>
-            </>
-          )}
+          <UserIcon className="h-4 w-4" />
+          <span>{text(user) || user.email}</span>
         </Button>
       </Link>
 

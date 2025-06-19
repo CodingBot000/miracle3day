@@ -9,7 +9,7 @@ import formatCount from "@/utils/number-formating/index";
 import { DiscountPriceDisplay } from "@/components/common/DiscountPriceDisplay";
 
 export interface ProductCardProps {
-  src: string;
+  src?: string;
   location?: string;
   productName: string;
   dateFrom: string;
@@ -41,6 +41,8 @@ export function ProductCard({
 }: ProductCardProps) {
   const [scrapped, setScrapped] = useState(false);
 
+  const resolvedSrc = src || "/default/hospital_default.png";
+
   const handleToggleScrap = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault(); // 링크 이동 방지
     setScrapped((prev) => !prev);
@@ -64,7 +66,7 @@ export function ProductCard({
 >
   <div className="relative aspect-[4/3.5]">
     <Image
-      src={src}
+      src={resolvedSrc}
       alt={productName}
       className="object-cover"
       fill

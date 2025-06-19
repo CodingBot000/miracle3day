@@ -1,12 +1,12 @@
 import { createClient } from "@/utils/supabase/server";
 import { LIMIT } from "./constant";
-import { TABLE_HOSPITAL, TABLE_REVIEW, TABLE_USER } from "@/constants/tables";
+import { TABLE_HOSPITAL, TABLE_REVIEW, TABLE_MEMBERS } from "@/constants/tables";
 
 export async function GET(
   req: Request,
   { params }: { params: { id: string } }
 ) {
-  const id_hospital = params.id;
+  const id_uuid_hospital = params.id;
 
   const { searchParams } = new URL(req.url);
   const pageParam = parseInt(searchParams.get("pageParam") as string);
@@ -15,7 +15,7 @@ export async function GET(
   const limit = offset + LIMIT - 1;
 
   const supabase = createClient();
-  console.log("api/hospital/[id]/review/route.ts id_hospital:", id_hospital);
+  console.log("api/hospital/[id]/review/route.ts id_uuid_hospital:", id_uuid_hospital);
   try {
     // const { data, count, error, status, statusText } = await supabase
     //   .from(TABLE_REVIEW)
@@ -30,7 +30,7 @@ export async function GET(
     .from(TABLE_REVIEW)
     .select("*", { count: "exact" })
     // .match({ id_uuid_hospital: id_hospital })
-    .match({ id_uuid_hospital: id_hospital})
+    .match({ id_uuid_hospital: id_uuid_hospital})
     .range(offset, limit)
     .order("created_at", { ascending: true });
     
@@ -39,10 +39,10 @@ export async function GET(
     .from(TABLE_HOSPITAL)
     .select("*")
     // .match({ id_uuid_hospital: id_hospital })
-    .eq( "id_uuid_hospital", id_hospital );
+    .eq( "id_uuid_hospital", id_uuid_hospital );
       
     const { data: userData, error: userError, status: userStatus, statusText: userStatusText } = await supabase
-    .from(TABLE_USER)
+    .from(TABLE_MEMBERS)
     .select("*")
     // .match({ id_uuid_hospital: id_hospital })
     .match( { user_no : hospitalData?.[0]?.user_no } );

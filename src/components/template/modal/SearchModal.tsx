@@ -12,14 +12,15 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogClose,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 import {
   CountryCode,
   CountryOutputDto,
-} from "@/app/api/auth/countryCode/country-code";
+} from "@/app/models/country-code.dto";
 
 export interface SearchModalProps {
   open: boolean;
@@ -61,33 +62,23 @@ export const SearchModal = ({
     onCancel();
   };
 
-  const handleKeyDown: KeyboardEventHandler = (e) => {
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      setSelectedIndex((prev) =>
-        prev < searchList.length - 1 ? prev + 1 : prev
-      );
-    }
-    if (e.key === "ArrowUp") {
-      e.preventDefault();
-      setSelectedIndex((prev) => (prev > 0 ? prev - 1 : 0));
-    }
-    if (e.key === "Enter") {
-      e.preventDefault();
-      const selected = searchList[selectedIndex];
-      if (selected) handleSelect(selected);
-    }
+  const onClose = () => {
+    onCancel();
   };
 
   return (
-    <Dialog open={open} onOpenChange={() => {}} modal={true}>
+    <Dialog open={open} onOpenChange={onClose} modal={true}>
       <DialogContent
-        className="max-w-md sm:rounded-xl animate-in fade-in-0 zoom-in-95"
-        onPointerDownOutside={(e) => e.preventDefault()} // 막기
-        onEscapeKeyDown={(e) => e.preventDefault()} // ESC 막기
+        className="[&>button]:hidden max-w-md sm:rounded-xl animate-in fade-in-0 zoom-in-95"
+        // onPointerDownOutside={(e) => e.preventDefault()} // 막기
+        // onEscapeKeyDown={(e) => e.preventDefault()} // ESC 막기
       >
         <DialogHeader>
-          <DialogTitle className="text-lg font-semibold">국가 검색</DialogTitle>
+          <DialogTitle className="text-lg font-semibold">Search Country</DialogTitle>
+          <DialogClose onClick={onClose} className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+            <X className="h-4 w-4" />
+            <span className="sr-only">Close</span>
+          </DialogClose>
         </DialogHeader>
 
         <div className="space-y-4 pt-2">
@@ -99,7 +90,6 @@ export const SearchModal = ({
               placeholder="Search country"
               name="search"
               onChange={handleOnChange}
-              onKeyDown={handleKeyDown}
               autoComplete="off"
             />
           </div>
@@ -109,11 +99,12 @@ export const SearchModal = ({
               {searchList.map((item, i) => (
                 <div
                   key={i}
-                  className={`p-2 rounded-md cursor-pointer transition-colors ${
-                    i === selectedIndex
-                      ? "bg-blue-100 text-blue-700 font-semibold"
-                      : "hover:bg-gray-100"
-                  }`}
+                  className={`p-2 rounded-md cursor-pointer transition-colors`}
+                  // className={`p-2 rounded-md cursor-pointer transition-colors ${
+                  //   i === selectedIndex
+                  //     ? "bg-blue-100 text-blue-700 font-semibold"
+                  //     : "hover:bg-gray-100"
+                  // }`}
                   onClick={() => handleSelect(item)}
                 >
                   {item.country_name}

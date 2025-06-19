@@ -1,3 +1,4 @@
+import { TABLE_MEMBERS } from "@/constants/tables";
 import { createClient } from "@/utils/supabase/server";
 
 export async function POST(req: Request) {
@@ -22,18 +23,22 @@ export async function POST(req: Request) {
     }
 
     const findUser = await supabase
-      .from("user")
+      .from(TABLE_MEMBERS)
       .select("uuid,email,email_verify")
       .match({ email });
 
-    if (!findUser.data || !findUser.data[0].uuid) {
+    // if (userError || !users || users.length === 0) {
+    //   throw new Error("Not Found User");
+    // }
+
+    if (!findUser || !findUser.data || findUser.data.length == 0 || !findUser.data[0]!.uuid) {
       throw Error("Not Found User");
     }
 
     const createEmailVerify = await supabase
-      .from("user")
+      .from(TABLE_MEMBERS)
       .update({ email_verify: true })
-      .match({ uuid: findUser.data[0].uuid });
+      .match({ uuid: findUser.data[0]!.uuid });
 
     if (createEmailVerify.error) {
       const { error } = createEmailVerify;

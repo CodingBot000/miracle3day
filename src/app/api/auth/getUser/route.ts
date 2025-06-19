@@ -1,3 +1,4 @@
+import { TABLE_MEMBERS } from "@/constants/tables";
 import { createClient } from "@/utils/supabase/server";
 
 export async function POST(req: Request) {
@@ -11,7 +12,7 @@ export async function POST(req: Request) {
     }
 
     const { data, error, status, statusText } = await supabase
-      .from("user")
+      .from(TABLE_MEMBERS)
       .select("*")
       .match({ email: body.email });
 

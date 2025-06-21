@@ -1,6 +1,6 @@
 
 
-import HospitalInfoTab from "./components/tab/HospitalInfoTab";
+import HospitalDetailPageTab from "./components/tab/HospitalDetailPageTab";
 
 import { getHospitalMainAPI } from "../../api/hospital/[id]/main";
 import FloatingMenu, { FloatItem } from "./components/FloatingMenu";
@@ -32,10 +32,10 @@ export async function generateMetadata(
   console.log(`HospitalDetailPage generateMetadata  params:${params} params.id: ${params?.id}  searchParams:${searchParams}`);
 
   const data = await getHospitalMainAPI({ id: params?.id });
-  console.log("qq generateMetadata data", data);
-  console.log("qq generateMetadata data.hospital_info", data.hospital_info);
-  console.log("qq generateMetadata data.hospital_info.imageurls", data.hospital_info.imageurls);
-  console.log("qq generateMetadata data.hospital_info.name", data.hospital_info.name);
+  // console.log("qq generateMetadata data", data);
+  // console.log("qq generateMetadata data.hospital_info", data.hospital_info);
+  // console.log("qq generateMetadata data.hospital_info.imageurls", data.hospital_info.imageurls);
+  // console.log("qq generateMetadata data.hospital_info.name", data.hospital_info.name);
   const previousImages = (await parent).openGraph?.images || [];
   // console.log("qq qq getHospitalMainAPI data.imageurls:", data.imageurls);
   // console.log("qq qq getHospitalMainAPI params?.id:", params?.id);
@@ -56,13 +56,13 @@ const HospitalDetailPage = async ({
   params,
   searchParams,
 }: HospitalDetailPageProps) => {
-  const hospitalId = params?.id;
+  const id_uuid_hospital = params?.id;
   console.log(`HospitalDetailPage async params:${params} params.id: ${params?.id}  searchParams:${searchParams}`);
 
-  if (hospitalId === "undefined") redirect("/");
+  if (id_uuid_hospital === "undefined") redirect("/");
 
   
-  const data = await getHospitalMainAPI({ id: hospitalId });
+  const data = await getHospitalMainAPI({ id: id_uuid_hospital });
   // const infoData = await getHospitalInfoAPI({ id: params?.id });
   // console.log("API 호출 후 전체 데이터:", data);
   // console.log("hospital_details 데이터:", data.hospital_details);
@@ -88,10 +88,10 @@ const HospitalDetailPage = async ({
 
     return acc;
   }, []);
-  console.log("qq data", data);
-  console.log("qq data.hospital_info", data.hospital_info);
-  console.log("qq data.hospital_info.imageurls", data.hospital_info.imageurls);
-  console.log("qq data.hospital_info.name", data.hospital_info.name);
+  // console.log("qq data", data);
+  // console.log("qq data.hospital_info", data.hospital_info);
+  // console.log("qq data.hospital_info.imageurls", data.hospital_info.imageurls);
+  // console.log("qq data.hospital_info.name", data.hospital_info.name);
   const isFavorite = data?.favorite?.length > 0;
   // console.log("HospitalDetailPage hospitalId:", hospitalId);
   return (
@@ -103,8 +103,8 @@ const HospitalDetailPage = async ({
       <div>
         <HospitalInfoBanner imageurls={data.hospital_info.imageurls} />
         <div className="max-w-[1024px] mx-auto px-6 mt-4">
-          <HospitalDetailContent hospitalId={hospitalId} hospitalData={data} />;
-          <FloatingMenu float={getFloatList} />
+          <HospitalDetailContent hospitalData={data} />;
+          {/* <FloatingMenu float={getFloatList} /> */}
         </div>
       </div>
     </main>

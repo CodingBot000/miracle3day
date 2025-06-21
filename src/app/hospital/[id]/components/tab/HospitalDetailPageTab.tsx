@@ -11,11 +11,11 @@ type TabRefs = {
   [key in TabKey]: React.RefObject<HTMLDivElement>;
 };
 
-interface HospitalInfoTabProps {
+interface HospitalDetailPageTabProps {
   tabRefs: TabRefs;
 }
 
-export default function HospitalInfoTab({ tabRefs }: HospitalInfoTabProps) {
+export default function HospitalDetailPageTab({ tabRefs }:HospitalDetailPageTabProps) {
   const [currentTab, setCurrentTab] = useState<TabKey>('event');
 
   const handleTabChange = (key: string) => {

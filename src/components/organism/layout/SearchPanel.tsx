@@ -124,7 +124,7 @@ export default function SearchPanel({ onClose }: { onClose: () => void }) {
                   alt={name}
                   name={name}
                   href={ROUTE.HOSPITAL_DETAIL("") + id_uuid}
-                  src={imageurls[0]}
+                  src={imageurls?.[0] || "/default/hospital_default.png"}
                   locationNum={location}
                 />
               </div>
@@ -159,7 +159,7 @@ export default function SearchPanel({ onClose }: { onClose: () => void }) {
             ))}
           </div>
 
-          {results.reviews.length > 0 && (
+          {/* {results.reviews.length > 0 && (
             <div className="col-span-full text-2xl font-semibold text-gray-800 mt-16 mb-5">
               Reviews
             </div>
@@ -180,7 +180,7 @@ export default function SearchPanel({ onClose }: { onClose: () => void }) {
                 />
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
       )}
 

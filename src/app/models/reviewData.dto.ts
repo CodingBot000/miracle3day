@@ -4,6 +4,7 @@ import {
   } from "@/types/infinite";
 import { HospitalData } from "./hospitalData.dto";
 import { UserData } from "./userData.dto";
+import { UserInfoDto } from "../api/auth/getUser/getUser.dto";
   
   export interface HospitalDetailReviewInputDto extends InfinityScrollInputDto {
     id: string;
@@ -21,13 +22,21 @@ import { UserData } from "./userData.dto";
     user_no: number | null;
     search_key: string;
     id_uuid_hospital: string;
-    hospital: HospitalData;
-    user: UserData | null;
-    // hospital: { name: string };
-    // user: { nickname: string } | null;
   }
 
-  export interface HospitalDetailReviewOutDto extends InfinityScrollOutputDto {
-    data: ReviewData[];
+  export interface ReviewDataWithMember {
+    member: UserInfoDto | null;
+    review: ReviewData;
   }
+
+  export interface HospitalDetailReviewOutDto  extends InfinityScrollOutputDto {
+    data: {
+      hospitalData: HospitalData | null;
+      reviewsWithMember: ReviewDataWithMember[];
+    };
+    nextCursor: boolean;
+  }
+  // export interface HospitalDetailReviewOutDto extends InfinityScrollOutputDto {
+  //   data: ReviewResponseData;
+  // }
   

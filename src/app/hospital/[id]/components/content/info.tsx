@@ -39,35 +39,38 @@ const InfoTab = async ({ hospitalData }: InfoTabProps) => {
 
   return (
     <>
+      <Separator />
       {/* 병원 기본 정보 */}
       <div className="my-4">
-        <h2 className="font-bold text-[0.8rem]">병원 정보</h2>
+        <h2 className="font-bold text-[0.8rem]">Hospital Info</h2>
         <div className="text-[0.8rem] leading-[1.3rem] indent-4 whitespace-pre-wrap break-keep my-4">
-          <p>병원명: {infoData.name}</p>
-          <p>도로명 주소: {infoData.address_full_road}</p>
-          <p>지번 주소: {infoData.address_full_jibun}</p>
-          {infoData.address_detail && <p>상세 주소: {infoData.address_detail}</p>}
-          {infoData.directions_to_clinic && <p>찾아오는 길: {infoData.directions_to_clinic}</p>}
+          <p>Hospital Name: {infoData.name}</p>
+          <p>Road Address: {infoData.address_full_road}</p>
+          <p>Lot Address: {infoData.address_full_jibun}</p>
+          {infoData.address_detail && <p>Detail Address: {infoData.address_detail}</p>}
+          {infoData.directions_to_clinic && <p>Directions: {infoData.directions_to_clinic}</p>}
         </div>
       </div>
 
       <Separator />
 
       {/* 영업시간 */}
-      <div className="my-4">
-        <h2 className="font-bold text-[0.8rem]">영업시간</h2>
-        <div className="text-[0.8rem] leading-[1.3rem] indent-4 whitespace-pre-wrap break-keep my-4">
+      <div className="my-2">
+        <h2 className="font-bold text-[0.8rem]">Business Hours</h2>
+        <div className="max-w-md text-[0.8rem] leading-[1.3rem] indent-4 whitespace-pre-wrap break-keep my-2">
           {business_hours.map((hour, index) => (
             <div key={index} className="flex justify-between items-center">
-              <span className="w-20">{hour.day_of_week}</span>
+              <span className={"w-20"}>
+                {hour.day_of_week}
+              </span>
               <span className="flex-1">
                 {hour.open_time && hour.close_time 
-                  ? `${hour.open_time} - ${hour.close_time}`
-                  : '휴진'}
+                  ? <span className={`${hour.status === 'closed' ? 'text-gray-400' : 'text-gray-500'}`}>{`${hour.open_time} - ${hour.close_time}`}</span>
+                  : <span className="text-red-500">Closed</span>}
               </span>
-              <span className="text-sm text-gray-500">
-                {hour.status === 'open' ? '진료중' : 
-                 hour.status === 'closed' ? '휴진' : '문의'}
+              <span className={`text-sm ${hour.status === 'closed' ? 'text-red-500' : 'text-gray-500'}`}>
+                {hour.status === 'open' ? 'Open' : 
+                 hour.status === 'closed' ? 'Closed' : 'Contact'}
               </span>
             </div>
           ))}
@@ -78,30 +81,30 @@ const InfoTab = async ({ hospitalData }: InfoTabProps) => {
 
       {/* 시설 정보 */}
       <div className="my-4">
-        <h2 className="font-bold text-[0.8rem]">시설 정보</h2>
+        <h2 className="font-bold text-[0.8rem]">Facilities</h2>
         <div className="text-[0.8rem] leading-[1.3rem] indent-4 whitespace-pre-wrap break-keep my-4">
           <div className="flex flex-wrap gap-2">
             {infoDetailData.has_private_recovery_room === 1 && (
-              <span className="bg-gray-100 px-3 py-1 rounded-full">개인 회복실</span>
+              <span className="bg-gray-100 px-3 py-1 rounded-full">Private Recovery Room</span>
             )}
             {infoDetailData.has_parking === 1 && (
-              <span className="bg-gray-100 px-3 py-1 rounded-full">주차장</span>
+              <span className="bg-gray-100 px-3 py-1 rounded-full">Parking</span>
             )}
             {infoDetailData.has_cctv === 1 && (
               <span className="bg-gray-100 px-3 py-1 rounded-full">CCTV</span>
             )}
             {infoDetailData.has_night_counseling === 1 && (
-              <span className="bg-gray-100 px-3 py-1 rounded-full">야간 상담</span>
+              <span className="bg-gray-100 px-3 py-1 rounded-full">Night Consultation</span>
             )}
             {infoDetailData.has_female_doctor === 1 && (
-              <span className="bg-gray-100 px-3 py-1 rounded-full">여성 의사</span>
+              <span className="bg-gray-100 px-3 py-1 rounded-full">Female Doctor</span>
             )}
             {infoDetailData.has_anesthesiologist === 1 && (
-              <span className="bg-gray-100 px-3 py-1 rounded-full">마취 전문의</span>
+              <span className="bg-gray-100 px-3 py-1 rounded-full">Anesthesiologist</span>
             )}
             {infoDetailData.specialist_count > 0 && (
               <span className="bg-gray-100 px-3 py-1 rounded-full">
-                전문의 {infoDetailData.specialist_count}명
+                {infoDetailData.specialist_count} Specialist(s)
               </span>
             )}
           </div>
@@ -112,7 +115,7 @@ const InfoTab = async ({ hospitalData }: InfoTabProps) => {
 
       {/* 의사 정보 */}
       <div className="my-4">
-        <h2 className="font-bold text-[0.8rem]">의료진</h2>
+        <h2 className="font-bold text-[0.8rem]">Doctors</h2>
         <div className="my-4 space-y-4">
           {infoDoctors.map((doctor, index) => (
             <div key={index} className="flex gap-4">
@@ -124,7 +127,7 @@ const InfoTab = async ({ hospitalData }: InfoTabProps) => {
                 <div className="flex items-center gap-2">
                   <h4 className="text-[0.8rem] font-medium">{doctor.name}</h4>
                   <span className="text-[0.7rem] text-gray-500">
-                    {doctor.chief === 1 ? '대표원장' : '의사'}
+                    {doctor.chief === 1 ? 'Representative clinic director' : 'Clinic director'}
                   </span>
                 </div>
                 <p className="text-[0.7rem] text-gray-600">{doctor.bio}</p>

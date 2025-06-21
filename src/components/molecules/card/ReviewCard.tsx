@@ -3,7 +3,7 @@ import Image from "next/image";
 import { formatDate } from "@/app/utils/date/formatDate";
 
 interface ReviewCardProps {
-  src: string;
+  src?: string;
   alt: string;
 
   content: string;
@@ -20,17 +20,26 @@ export const ReviewCard = ({
   name,
   created_at,
 }: ReviewCardProps) => {
+  console.log(`ReviewCard ================================================`);
+  console.log(`ReviewCard name: ${name}`);
+  console.log(`ReviewCard created_at: ${created_at}`);
+  console.log(`ReviewCard src: ${src}`);
+  console.log(`ReviewCard content: ${content}`);
+  
   return (
     <article className="w-full max-w-[280px] h-auto flex-shrink-0">
       <div className="bg-white rounded-lg overflow-hidden transition-all duration-300 dark:bg-gray-950 h-full flex flex-col">
-        <Image
-          src={src}
+        {src && (
+          <Image
+          src={src!}
           alt={alt}
           width={600}
           height={300}
           className="w-full h-[140px] object-cover"
           style={{ aspectRatio: "600/300", objectFit: "cover" }}
         />
+      )}
+        
         <div className="p-3 text-xs leading-tight flex-1 flex flex-col">
           <p className="font-medium line-clamp-3 mb-1">
             {content}
@@ -40,6 +49,7 @@ export const ReviewCard = ({
             <p className="text-gray-500 dark:text-gray-400 text-[0.75rem]">{id}</p>
             <p className="text-gray-500 dark:text-gray-400 text-[0.75rem]">
               {formatDate(created_at, { formatString: "PPP", locale: "en" })}
+
             </p>
           </div>
         </div>

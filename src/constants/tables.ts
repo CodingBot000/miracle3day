@@ -4,6 +4,7 @@ const TABLE_HOSPITAL_DETAIL = "hospital_details";
 const TABLE_HOSPITAL_TREATMENT = "hospital_treatment";
 const TABLE_HOSPITAL_BUSINESS_HOUR = "hospital_business_hour";
 const TABLE_ADMIN = "admin";
+const TABLE_FEEDBACK = "feedback";
 const TABLE_TREATMENT = "treatment";
 const TABLE_EVENT = "event";
 const TABLE_REVIEW = "reviews";
@@ -33,6 +34,7 @@ export {
   TABLE_REVIEW,
   TABLE_FAVORITE,
   TABLE_MEMBERS,
+  TABLE_FEEDBACK,
   STORAGE_IMAGES,
   STORAGE_HOSPITAL_IMG,
   STORAGE_DOCTOR_IMG

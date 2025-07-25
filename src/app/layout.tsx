@@ -57,7 +57,8 @@ export default function RootLayout({
       <body className={inter.className + " min-h-screen flex flex-col"}>
         <ProgressBar />
         {/* <PageTransitionOverlay /> */}
-        <div className="bg-background flex flex-col flex-1 min-h-screen">
+        {/* <div className="bg-background flex flex-col flex-1 min-h-screen"> */}
+        <div className="bg-gradient-hero flex flex-col flex-1 min-h-screen">
           <Providers>
             <ScrollTop />  
             <div id="modal-root" />

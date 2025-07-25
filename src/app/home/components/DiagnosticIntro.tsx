@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export default function DiagnosticIntro() {
   return (
-    <section className="w-full bg-[#f5b67f] mt-5 py-5 px-4 md:px-12 overflow-hidden items-center justify-between">
+    <section className="w-full bg-gradient-diagnostic mt-5 py-5 px-4 md:px-12 overflow-hidden items-center justify-between">
       <div className="max-w-7xl mx-auto flex flex-row items-center justify-between gap-8 flex-nowrap">
         {/* 왼쪽 텍스트 블록 */}
         <div className="w-1/2 space-y-4 text-left">

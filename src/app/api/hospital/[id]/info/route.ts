@@ -7,7 +7,7 @@ export async function GET(
 ) {
   const id_uuid = params.id;
   const supabase = createClient();
-  console.log("qq api/hospital/[id]/info/rout.ts", req);
+  console.log("qq api/hospital/[id]/info/route.ts", req);
   try {
     const { data: infoData, error: infoError, status, statusText } = await supabase
       .from(TABLE_HOSPITAL)

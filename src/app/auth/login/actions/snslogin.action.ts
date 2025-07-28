@@ -11,17 +11,26 @@ export type TSnsType = Extract<Provider, typeof SNS_FACEBOOK | typeof SNS_GOOGLE
 
 export const snsLoginActions = async (prevState: any, snsType: TSnsType) => {
   const referer = headers().get("referer") as string;
+  const headersList = headers();
+  const host = headersList.get("host") || "";
+  const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
 
   const supabase = createClient();
+
+  // 동적으로 callback URL 생성
+  const callbackUrl = process.env.NEXT_PUBLIC_API_ROUTE 
+    ? `${process.env.NEXT_PUBLIC_API_ROUTE}/auth/callback`
+    : `${protocol}://${host}/auth/callback`;
 
   const { error, data } = await supabase.auth.signInWithOAuth({
     provider: snsType,
     options: {
-      redirectTo: process.env.NEXT_PUBLIC_API_ROUTE + "/auth/callback",
+      redirectTo: callbackUrl,
       queryParams: {
         access_type: "offline",
         prompt: "consent",
       },
+      scopes: snsType === "google" ? "email profile" : undefined,
     },
   });
 
@@ -30,6 +39,7 @@ export const snsLoginActions = async (prevState: any, snsType: TSnsType) => {
   }
 
   if (error) {
-    redirect(createActionRedirectUrl(referer, error?.message));
+    console.error(`SNS Login Error [${snsType}]:`, error);
+    redirect(createActionRedirectUrl(referer, `SNS 로그인 실패: ${error?.message}`));
   }
 };

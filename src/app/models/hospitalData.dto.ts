@@ -51,6 +51,8 @@ export interface HospitalData {
     address_detail_en: string;
     directions_to_clinic: string;
     directions_to_clinic_en: string;
+    id_uuid_admin: string,
+    thumbnail_url: string,
     hospital_details: HospitalDetailInfo;
   }
   // export interface HospitalInfo {
@@ -89,6 +91,22 @@ export interface HospitalData {
     has_female_doctor: number;
     has_anesthesiologist: number;
     specialist_count: number;
+    email: string;
+    kakao_talk: string;
+    line: string;
+    we_chat: string;
+    whats_app: string;
+    telegram: string;
+    facebook_messenger: string;
+    instagram: string;
+    tiktok: string;
+    youtube: string;
+    other_channel: string;
+    sns_content_agreement: number;
+    available_language: string[];
+    introuction: string;
+    introuction_en: string;
+
   }
   export interface HospitalDetailInfoOutDto {
     data: HospitalInfo;

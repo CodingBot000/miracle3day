@@ -9,6 +9,13 @@ module.exports = {
 	  "top-[-100%]"
 	],
   theme: {
+	container: {
+			center: true,
+			padding: '2rem',
+			screens: {
+				'2xl': '1400px'
+			}
+		},
   	extend: {
   		colors: {
 		
@@ -105,6 +112,17 @@ module.exports = {
   			tablet: '768px',
   			mobile: '425px'
   		},
+		backgroundImage: {
+				'gradient-primary': 'var(--gradient-primary)',
+				'gradient-hero': 'var(--gradient-hero)',
+				'gradient-card': 'var(--gradient-card)',
+				'gradient-diagnostic': 'var(--gradient-diagnostic)',
+		},
+		boxShadow: {
+			'soft': 'var(--shadow-soft)',
+			'card': 'var(--shadow-card)',
+			'float': 'var(--shadow-float)'
+		},
   		keyframes: {
   			'slide-in-left-right': {
   				from: {
@@ -116,7 +134,9 @@ module.exports = {
   			}
   		},
   		animation: {
-  			'slide-in-left-right': 'slide-in-left-right 0.3s ease-out'
+  			'slide-in-left-right': 'slide-in-left-right 0.3s ease-out',
+			'accordion-down': 'accordion-down 0.2s ease-out',
+			'accordion-up': 'accordion-up 0.2s ease-out'
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

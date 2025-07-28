@@ -1,5 +1,6 @@
 'use server';
 
+import { useUserStore } from '@/stores/useUserStore';
 import { adminsAuthClient } from '@/utils/supabase/admins';
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
@@ -25,6 +26,7 @@ export async function withdrawAction() {
   //   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   //   process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY!
   // );
+  useUserStore.getState().clearUser();
   await adminsAuthClient.deleteUser(uuid);
 
   // 3. 세션 종료

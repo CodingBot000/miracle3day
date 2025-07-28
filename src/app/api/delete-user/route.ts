@@ -1,4 +1,5 @@
 
+import { useUserStore } from "@/stores/useUserStore";
 import { createClient } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -11,7 +12,8 @@ export async function POST(req: NextRequest) {
   );
 
   const { error } = await supabase.auth.admin.deleteUser(uid);
-
+  useUserStore.getState().clearUser();
+  
   if (error) {
     console.error("유저 삭제 실패:", error.message);
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });

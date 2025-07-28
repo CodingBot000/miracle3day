@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -43,7 +43,10 @@ const getMinDate = () => {
   return date;
 };
 
-const CustomInput = ({ value, onClick, placeholder, className }: any) => (
+// const CustomInput = ({ value, onClick, placeholder, className }: any) => (
+const CustomInput = React.forwardRef<HTMLInputElement, any>(
+  ({ value, onClick, placeholder, className }, ref) =>
+     (
   <div className="flex items-center cursor-pointer" onClick={onClick}>
     <svg 
       xmlns="http://www.w3.org/2000/svg" 
@@ -66,14 +69,17 @@ const CustomInput = ({ value, onClick, placeholder, className }: any) => (
       readOnly
     />
   </div>
+     )
 );
 
+CustomInput.displayName = "CustomInput";
 export default function SignUpMoreInfoForm() {
   const searchParams = useSearchParams();
+  // console.log("SignUpMoreInfoForm searchParams:", searchParams);
   const uuid = searchParams.get('code');
   const returnUrl = searchParams.get('returnUrl') || "/";
 
-  console.log("SignUpMoreInfoForm uuid", uuid);
+  console.log("SignUpMoreInfoFormmm uuid", uuid);
   const router = useRouter();
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [nation, setNation] = useState<CountryCode | null>(null);

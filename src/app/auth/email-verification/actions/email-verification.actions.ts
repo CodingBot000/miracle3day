@@ -72,7 +72,7 @@ const verifyActions = async (prevState: any, formData: FormData) => {
   }
 
   const uuid = verifyCode.data.user?.id;
-  const id_country = countryCode?.id;
+  const id_country = countryCode?.country_code;
   const user_no = getUser.data[0]?.user_no + 1;
 
   // user 테이블 insert

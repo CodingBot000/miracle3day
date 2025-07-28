@@ -31,6 +31,14 @@ export function createClient() {
           }
         },
       },
+      cookieOptions: {
+        name: "sb-user-token",
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        maxAge: 60 * 60 * 24 * 30, // 30일
+        path: "/",
+        httpOnly: true, // 서버에서는 httpOnly true로 설정
+      }
     }
   );
 }

@@ -46,7 +46,7 @@ export async function signUp({
       data: {
         name,
         nickname,
-        id_country: countryCode.id,
+        id_country: countryCode.country_code,
       },
     },
   });

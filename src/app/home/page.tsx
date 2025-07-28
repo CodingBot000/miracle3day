@@ -73,7 +73,9 @@ export default async function HomePage() {
       </section>
       <section className="max-w-container mx-auto mt-20">
         <div className="my-8 leading-6 pl-4 md:pl-6 lg:pl-8">
+          
           <p className="font-bold text-[1.5rem] mb-[5px]">New Beauty</p>
+          {/* <p className="text-[1.0rem]">Make Attraction</p> */}
           <p className="text-[1.0rem]">Make Attraction</p>
         </div>
          <Beauty />

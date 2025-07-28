@@ -17,6 +17,11 @@ export async function GET(request: Request) {
     const supabase = createClient();
     const { error: sessionError } = await supabase.auth.exchangeCodeForSession(code);
     
+    if (sessionError) {
+      console.error("Session exchange error:", sessionError);
+      return NextResponse.redirect(`${origin}${ROUTE.LOGIN}?error=session_exchange_failed`);
+    }
+    
     if (!sessionError) {
       const { data: { user }, error: userError } = await supabase.auth.getUser();
       const { data: userInfo } = await supabase.auth.getUserIdentities(); // 더 자세한 정보
@@ -81,7 +86,7 @@ export async function GET(request: Request) {
           //추가 정보 필요 → /onboarding/complete-profile로 리디렉션
           if (needsProfileSetup) {
                                           
-            const redirectUrl = `${origin}/onboarding/complete-profile?code=${id}/returnUrl=/`;
+            const redirectUrl = `${origin}/onboarding/complete-profile?code=${id}&returnUrl=/`;
             console.log("auth callbacek needsProfileSetup move to :", redirectUrl);
             return NextResponse.redirect(redirectUrl);
           }

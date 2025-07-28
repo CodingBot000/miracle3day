@@ -20,18 +20,18 @@ export const getUserAPI = async (): Promise<UserOutputDto | null> => {
   .eq("uuid", authUser.id)
   .single();
 
-
   console.log("getUserAPI member:", JSON.stringify(member, null, 2));
   console.log("getUserAPI authUser:", JSON.stringify(authUser, null, 2));
-  // console.log("getUserAPI error:", error);
+  
+  if (error) {
+    console.error("getUserAPI error:", error);
+    return null;
+  }
+  
   const userInfo = {
     auth_user: authUser,
     ...member,
   };
-
-  if (!userInfo.auth_user) {
-    return null;
-  }
 
   return {
     userInfo: userInfo,

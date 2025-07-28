@@ -17,7 +17,7 @@ export interface UserInfoDto {
   updated_at: string;
   uuid: string;
   user_no: number;
-  id_country: number;
+  id_country: string;
   avatar: string;
   provider: string;
   last_login_at: string;

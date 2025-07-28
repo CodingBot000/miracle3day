@@ -11,6 +11,7 @@ const TABLE_REVIEW = "reviews";
 const TABLE_FAVORITE = "favorite";
 const TABLE_MEMBERS = "members";
 const TABLE_SURGERY_INFO = "surgery_info";
+const TABLE_RESERVATIONS = "reservations";
 // const TABLE_HOSPITAL = "hospital_test";
 // const TABLE_DOCTOR = "doctor_test";
 // const TABLE_HOSPITAL_DETAIL = "hospital_details_test";
@@ -35,6 +36,7 @@ export {
   TABLE_FAVORITE,
   TABLE_MEMBERS,
   TABLE_FEEDBACK,
+  TABLE_RESERVATIONS,
   STORAGE_IMAGES,
   STORAGE_HOSPITAL_IMG,
   STORAGE_DOCTOR_IMG

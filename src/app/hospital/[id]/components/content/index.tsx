@@ -7,6 +7,7 @@ import { HospitalDetailMainOutput } from "@/app/api/hospital/[id]/main/main.dto"
 import ReservationClient from "./ReservationClient";
 import { ROUTE } from "@/router";
 import { useRouter } from "next/navigation";
+import { useReservationStore } from "@/stores/useReservationStore";
 
 const InfoTab = dynamic(() => import("./info"));
 // const EventTab = dynamic(() => import("./event"));
@@ -33,6 +34,12 @@ export default function HospitalDetailContent({ hospitalData } : DetailPageTabPr
   // 예약 정보 받는 콜백
   const handleReservation = (date: string, time: string) => {
     setReservationInfo({ date, time });
+    const user = useReservationStore.getState().reservationUserInfo;
+    useReservationStore.getState().setReservationUserInfo({
+      ...user,
+      date: date,
+      time: time,
+    });
     setShowBottomBar(true);
   };
 

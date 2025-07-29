@@ -23,7 +23,7 @@ export interface ReservationInputDto {
   consultation_request?: string;
   additional_info?: string;
   preferred_languages?: string[];
-  status?: string;
+  status_code?: number;
   created_at?: string;
 }
 

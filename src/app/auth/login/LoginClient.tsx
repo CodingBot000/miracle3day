@@ -64,7 +64,7 @@ const LoginPage = () => {
         action={handleSubmit}
         className="max-w-[380px] mx-auto flex flex-col items-center justify-center gap-2 h-full"
       >
-        <div className="space-y-4">
+        {/* <div className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <div className="relative">
@@ -110,15 +110,7 @@ const LoginPage = () => {
           </Button>
           
           <SignUpButton />
-          {/* <Link href={ROUTE.SIGN_UP} className="block">
-            <Button 
-              variant="outline" 
-              className="w-full flex items-center justify-center gap-2"
-            >
-              <UserPlus className="h-4 w-4" />
-              Sign Up
-            </Button>
-          </Link> */}
+     
         </div>
 
         <div className="text-center mt-4">
@@ -139,7 +131,7 @@ const LoginPage = () => {
               Or continue with
             </span>
           </div>
-        </div>
+        </div> */}
 
         <div className="flex justify-center gap-4">
           {snsLoginList.map((sns) => (

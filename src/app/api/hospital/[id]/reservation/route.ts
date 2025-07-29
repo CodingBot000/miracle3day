@@ -12,7 +12,6 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     const hospitalId = params.id;
 
     const reservationData: ReservationInputDto = {
-      id_user: body.id_user,
       id_uuid_hospital: hospitalId,
       name: body.name,
       english_name: body.english_name,
@@ -32,7 +31,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
       consultation_request: body.consultation_request,
       additional_info: body.additional_info,
       preferred_languages: body.preferred_languages ?? [],
-      status: "pending", // 기본 상태
+      status_code: PENDING, // 기본 상태
       created_at: new Date().toISOString(),
     };
 

@@ -51,13 +51,13 @@ export default function ReservationClient({ initialUserData, hospitalId }: Reser
   // Zustand store에서 데이터 가져오기
   const reservationUserInfo = useReservationStore.getState().reservationUserInfo;
   
-  // console.log("ReservationClient reservationUserInfo", reservationUserInfo);
-  // console.log("ReservationClient initialUserData", initialUserData);
+  console.log("ReservationClient reservationUserInfo", reservationUserInfo);
+  console.log("ReservationClient initialUserData", initialUserData);
 
-  // // 컴포넌트 마운트 시 데이터 셋팅
+  // 컴포넌트 마운트 시 데이터 셋팅
   useEffect(() => {
     const userInfo = initialUserData?.userInfo;
-    
+    console.log('ReservationClient userInfo : ', userInfo);
     if (!userInfo) {
       console.log("ReservationClient userInfo not found");
       return;
@@ -101,7 +101,7 @@ export default function ReservationClient({ initialUserData, hospitalId }: Reser
     }
 
     setFormData(newFormData);
-  }, []);
+  }, [initialUserData]);
 
   const handleInputChange = (field: string, value: string | boolean) => {
     setFormData(prev => ({
@@ -113,7 +113,7 @@ export default function ReservationClient({ initialUserData, hospitalId }: Reser
   const handleConfirm = async () => {
     // 폼 데이터 검증
     const newErrors: { [key: string]: string } = {};
-    
+    console.log('Rservationa aaaaa1');
     if (!initialUserData?.userInfo?.uuid) newErrors.uuid = 'User UUID is required';
     if (!formData.englishName) newErrors.englishName = 'English name is required';
     if (!formData.nationality) newErrors.nationality = 'Nationality is required';
@@ -124,18 +124,17 @@ export default function ReservationClient({ initialUserData, hospitalId }: Reser
     if (!formData.time) newErrors.time = 'Time is required';
     if (!formData.agreeReservation) newErrors.agreeReservation = 'Please agree to reservation terms';
     if (!formData.agreeNoShow) newErrors.agreeNoShow = 'Please agree to no-show policy';
-    
+    console.log('Rservationa aaaaa 2:', initialUserData?.userInfo?.uuid);
+    console.log('Rservationa aaaaa 2 3:', initialUserData?.userInfo);
+    console.log('Rservationa aaaaa 2 4 :', initialUserData);
     setErrors(newErrors);
 
-    const id_user = initialUserData?.userInfo?.uuid;
-    
     if (Object.keys(newErrors).length === 0) {
-      
       // API 전송 준비
       const reservationData = {
         date: formData.date,
         time: formData.time,
-        id_user: id_user,
+        id_user: initialUserData?.userInfo?.uuid,
         id_uuid_hospital: hospitalId,
         name: formData.englishName,
         english_name: formData.englishName,
@@ -157,17 +156,17 @@ export default function ReservationClient({ initialUserData, hospitalId }: Reser
         preferred_languages: formData.interpreterLanguage ? [formData.interpreterLanguage] : []
       };
 
-      
+      console.log('Reservation data ready for submission:', reservationData);
+      console.log('Rservationa aaaa');
       try {
-        
         const response = await fetch(`/api/hospital/${hospitalId}/reservation`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(reservationData),
         })
-        
+
         const data = await response.json();
-        
+
         if (response.ok && data.success) {
           console.log("Reservation created:", data.data);
         } else {
@@ -364,7 +363,6 @@ export default function ReservationClient({ initialUserData, hospitalId }: Reser
                 </label>
                 <input
                   type="number"
-                  min={1}
                   value={formData.visitorsCount}
                   onChange={(e) => handleInputChange('visitorsCount', e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"

@@ -11,6 +11,7 @@ import MenuMobile from "@/components/organism/layout/MenuMobile";
 import { ProgressBar } from "@/components/atoms/loading/ProgressBar";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
+import CookieConsent from "@/components/template/CookieConsent";
 // import { ProgressBar } from "@/components/atoms/loading/progress-bar";
 // import { PageTransitionOverlay } from "@/components/atoms/loading/page-transition-overlay";
 
@@ -67,11 +68,13 @@ export default function RootLayout({
             </Suspense>
             <main className="pt-4 flex-1 pb-[72px]"> {/* 72px은 모바일 메뉴바의 높이 */}
               {children}
+              
             </main>
+            <CookieConsent />
             <MenuMobile />
             <Footer />
            
-          </Providers>
+          </Providers> 
         </div>
       </body>
     </html>

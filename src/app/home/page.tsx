@@ -17,6 +17,7 @@ import RecommendEventList from "./components/recommend";
 import { Smile } from "lucide-react";
 import HeroVideos from "./components/hero/HeroVideos";
 import CategoryMenu from "@/components/organism/layout/CategoryMenu";
+import AgeChecker from "@/components/template/AgeChecker";
 
 export default async function HomePage() {
   // const bannerItem = await getBannerAPI();
@@ -35,7 +36,7 @@ export default async function HomePage() {
   return (
     <>
       {/* <HomeClient bannerItem={bannerItem} selectedLocation={selectedLocation} /> */}
-      <HeroVideos />
+      {/* <HeroVideos /> */}
       <section className="max-w-container mx-auto">
         {/* <div className="my-8 leading-6 pl-4 md:pl-6 lg:pl-8">
           <p className="font-bold text-[1.5rem] mb-[5px]">Diagnostic</p>
@@ -79,17 +80,18 @@ export default async function HomePage() {
           <p className="text-[1.0rem]">Make Attraction</p>
         </div>
          <Beauty />
+         <AgeChecker />
       </section>
-      <section className="max-w-container mx-auto mt-20">
+      {/* <section className="max-w-container mx-auto mt-20">
         <div className="my-8 leading-6 pl-4 md:pl-6 lg:pl-8">
           <p className="font-bold text-[1.5rem] mb-[5px]">Hospitals</p>
           <p className="text-[1.0rem]">Choose the location u want</p>
         </div>
         <LocationChipSelector />
         <SeeAllLink location={selectedLocation ?? LocationEnum.Apgujung} />    
-        {/* <LocationHospital locationNum={selectedLocation} /> */}
+
         <LocationHospitalClient />
-      </section>
+      </section> */}
     </>
   );
 }

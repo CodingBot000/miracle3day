@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouCam API Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .container {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 4px;
+            white-space: pre-wrap;
+        }
+        .error {
+            color: red;
+        }
+        .success {
+            color: green;
+        }
+        input[type="file"] {
+            margin: 10px 0;
+        }
+        .concerns {
+            margin: 15px 0;
+        }
+        label {
+            display: block;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>YouCam Skin Analysis API Test</h1>
+        
+        <div>
+            <h3>Step 1: Select Image</h3>
+            <input type="file" id="imageFile" accept="image/jpeg,image/png">
+        </div>
+
+        <div class="concerns">
+            <h3>Step 2: Select Analysis Mode</h3>
+            <label>
+                <input type="radio" name="mode" value="SD" checked> Standard (SD)
+            </label>
+            <label>
+                <input type="radio" name="mode" value="HD"> High Definition (HD)
+            </label>
+        </div>
+
+        <div class="concerns">
+            <h3>Step 3: Select Concerns (choose 4, 7, or 14)</h3>
+            <button onclick="selectConcerns(4)">Select First 4</button>
+            <button onclick="selectConcerns(7)">Select First 7</button>
+            <button onclick="selectConcerns(14)">Select All 14</button>
+            <button onclick="clearConcerns()">Clear All</button>
+            
+            <div id="concernsList" style="margin-top: 10px;"></div>
+        </div>
+
+        <button onclick="testAnalysis()">Run Skin Analysis</button>
+
+        <div id="result" class="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        const SD_CONCERNS = [
+            'Wrinkle', 'Droopy_upper_eyelid', 'Firmness', 'Acne',
+            'Moisture', 'Eye_bag', 'Dark_circle', 'Spots',
+            'Radiance', 'Redness', 'Oiliness', 'Pore', 'Texture'
+        ];
+
+        function renderConcerns() {
+            const mode = document.querySelector('input[name="mode"]:checked').value;
+            const concernsList = document.getElementById('concernsList');
+            concernsList.innerHTML = '';
+            
+            SD_CONCERNS.forEach(concern => {
+                const label = document.createElement('label');
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.value = mode === 'HD' ? `HD_${concern}` : concern;
+                checkbox.className = 'concern-checkbox';
+                label.appendChild(checkbox);
+                label.appendChild(document.createTextNode(' ' + concern.replace(/_/g, ' ')));
+                concernsList.appendChild(label);
+            });
+        }
+
+        function selectConcerns(count) {
+            const checkboxes = document.querySelectorAll('.concern-checkbox');
+            checkboxes.forEach((cb, index) => {
+                cb.checked = index < count;
+            });
+        }
+
+        function clearConcerns() {
+            document.querySelectorAll('.concern-checkbox').forEach(cb => cb.checked = false);
+        }
+
+        document.querySelectorAll('input[name="mode"]').forEach(radio => {
+            radio.addEventListener('change', renderConcerns);
+        });
+
+        renderConcerns();
+
+        async function testAnalysis() {
+            const resultDiv = document.getElementById('result');
+            const fileInput = document.getElementById('imageFile');
+            
+            if (!fileInput.files[0]) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = 'Please select an image file';
+                resultDiv.style.display = 'block';
+                return;
+            }
+
+            const selectedConcerns = Array.from(document.querySelectorAll('.concern-checkbox:checked'))
+                .map(cb => cb.value);
+
+            if (![4, 7, 14].includes(selectedConcerns.length)) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = `Please select exactly 4, 7, or 14 concerns. You selected ${selectedConcerns.length}`;
+                resultDiv.style.display = 'block';
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('image', fileInput.files[0]);
+            formData.append('concerns', JSON.stringify(selectedConcerns));
+            formData.append('mode', document.querySelector('input[name="mode"]:checked').value);
+
+            resultDiv.className = 'result';
+            resultDiv.textContent = 'Analyzing... This may take 30-60 seconds...';
+            resultDiv.style.display = 'block';
+
+            try {
+                const response = await fetch('/api/ai/youcam/skin-analysis', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.className = 'result success';
+                    resultDiv.textContent = 'Analysis Complete!\n\n' + JSON.stringify(data.data, null, 2);
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = 'Error: ' + data.error;
+                }
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = 'Error: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

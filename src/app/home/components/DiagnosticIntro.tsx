@@ -38,6 +38,15 @@ export default function DiagnosticIntro() {
                 Online Consultation
               </Button>
             </Link>
+            <Link href={ROUTE.AI_ANALYSIS_PAGE}>
+              <Button
+                size="sm"
+                className="px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base bg-orange-400 w-full sm:w-auto"
+              >
+                AI Skin Analysis
+              </Button>
+            </Link>
+            
           </div>
         </div>
 

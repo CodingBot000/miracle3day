@@ -43,10 +43,17 @@ export default function DiagnosticIntro() {
                 size="sm"
                 className="px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base bg-orange-400 w-full sm:w-auto"
               >
-                AI Skin Analysis
+                AI Skin Analysis(S2S)
               </Button>
             </Link>
-            
+            <Link href={ROUTE.AI_ANALYSIS_CAMERA_PAGE}>
+              <Button
+                size="sm"
+                className="px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base bg-orange-400 w-full sm:w-auto"
+              >
+                AI Skin Analysis(Camera)
+              </Button>
+            </Link>
           </div>
         </div>
 

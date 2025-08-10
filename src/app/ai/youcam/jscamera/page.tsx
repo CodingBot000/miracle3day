@@ -1,21 +1,21 @@
 'use client';
 
 import { useState } from 'react';
-import ImageUploader from './components/ImageUploader';
+import { SkinConcern } from '../../../api/ai/youcam/lib/types';
+import CameraInterface from './components/CameraInterface';
 import ConcernSelector from './components/ConcernSelector';
 import AnalysisResults from './components/AnalysisResults';
-import { SkinConcern } from '../api/ai/youcam/lib/types';
 
-export default function AIAnalysisPage() {
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+export default function JSCameraPage() {
   const [selectedConcerns, setSelectedConcerns] = useState<SkinConcern[]>([]);
   const [analysisMode, setAnalysisMode] = useState<'SD' | 'HD'>('SD');
+  const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisResult, setAnalysisResult] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const handleImageSelect = (file: File) => {
-    setSelectedImage(file);
+  const handleImageCapture = (imageData: string) => {
+    setCapturedImage(imageData);
     setError(null);
     setAnalysisResult(null);
   };
@@ -26,8 +26,8 @@ export default function AIAnalysisPage() {
   };
 
   const handleAnalyze = async () => {
-    if (!selectedImage) {
-      setError('Please select an image');
+    if (!capturedImage) {
+      setError('Please capture an image first');
       return;
     }
 
@@ -41,8 +41,18 @@ export default function AIAnalysisPage() {
     setError(null);
 
     try {
+      // Convert base64 to File for existing API
+      const base64Data = capturedImage.replace(/^data:image\/[a-z]+;base64,/, '');
+      const byteCharacters = atob(base64Data);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const file = new File([byteArray], 'captured-image.jpg', { type: 'image/jpeg' });
+
       const formData = new FormData();
-      formData.append('image', selectedImage);
+      formData.append('image', file);
       formData.append('concerns', JSON.stringify(selectedConcerns));
       formData.append('mode', analysisMode);
 
@@ -66,7 +76,7 @@ export default function AIAnalysisPage() {
   };
 
   const handleReset = () => {
-    setSelectedImage(null);
+    setCapturedImage(null);
     setSelectedConcerns([]);
     setAnalysisResult(null);
     setError(null);
@@ -77,23 +87,23 @@ export default function AIAnalysisPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white rounded-lg shadow-lg p-6">
           <h1 className="text-3xl font-bold text-gray-900 mb-8">
-            AI Skin Analysis
+            YouCam JS Camera Kit - Skin Analysis
           </h1>
 
           {!analysisResult ? (
             <>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div>
-                  <h2 className="text-xl font-semibold mb-4">Step 1: Upload Your Photo</h2>
-                  <ImageUploader 
-                    onImageSelect={handleImageSelect} 
-                    selectedImage={selectedImage}
+                  <h2 className="text-xl font-semibold mb-4">Step 1: Capture Your Photo</h2>
+                  <CameraInterface 
+                    onImageCapture={handleImageCapture}
+                    capturedImage={capturedImage}
                   />
                 </div>
 
                 <div>
-                  <h2 className="text-xl font-semibold mb-4">Step 2: Select Skin Concerns</h2>
-                  <div className="mb-4">
+                  <h2 className="text-xl font-semibold mb-4">Step 2: Select Analysis Options</h2>
+                  <div className="mb-6">
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Analysis Mode
                     </label>
@@ -120,6 +130,8 @@ export default function AIAnalysisPage() {
                       </button>
                     </div>
                   </div>
+
+                  <h3 className="text-lg font-medium mb-3">Select Skin Concerns</h3>
                   <ConcernSelector
                     mode={analysisMode}
                     selectedConcerns={selectedConcerns}
@@ -137,9 +149,9 @@ export default function AIAnalysisPage() {
               <div className="mt-8 flex justify-center">
                 <button
                   onClick={handleAnalyze}
-                  disabled={isAnalyzing || !selectedImage || selectedConcerns.length === 0}
+                  disabled={isAnalyzing || !capturedImage || selectedConcerns.length === 0}
                   className={`px-8 py-3 rounded-md font-semibold text-white ${
-                    isAnalyzing || !selectedImage || selectedConcerns.length === 0
+                    isAnalyzing || !capturedImage || selectedConcerns.length === 0
                       ? 'bg-gray-400 cursor-not-allowed'
                       : 'bg-blue-600 hover:bg-blue-700'
                   }`}
@@ -156,7 +168,7 @@ export default function AIAnalysisPage() {
                   onClick={handleReset}
                   className="px-8 py-3 bg-gray-600 text-white rounded-md font-semibold hover:bg-gray-700"
                 >
-                  Analyze Another Photo
+                  Capture Another Photo
                 </button>
               </div>
             </>

@@ -5,7 +5,11 @@
       "Bash(ls:*)",
       "WebFetch(domain:yce.perfectcorp.com)",
       "Bash(npm install:*)",
-      "Bash(mv:*)"
+      "Bash(mv:*)",
+      "Bash(mkdir:*)",
+      "Bash(rmdir:*)",
+      "Bash(npm run build:*)",
+      "WebFetch(domain:plugins-media.makeupar.com)"
     ],
     "deny": []
   }

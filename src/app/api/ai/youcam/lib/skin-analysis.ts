@@ -261,6 +261,8 @@ export class YouCamSkinAnalysis {
       }
     ];
     
+    const errors: string[] = [];
+    
     for (const format of payloadFormats) {
       console.log(`\nTrying payload format: ${format.name}`);
       console.log('Request body:', JSON.stringify(format.body, null, 2));
@@ -280,12 +282,26 @@ export class YouCamSkinAnalysis {
         console.log('Task created successfully:', taskData);
         return taskData.result.task_id;
       } else {
-        const errorData = await response.text();
-        console.log(`Failed with ${format.name}: ${response.status} - ${errorData}`);
+        const errorText = await response.text();
+        console.log(`Failed with ${format.name}: ${response.status} - ${errorText}`);
+        
+        try {
+          const errorData = JSON.parse(errorText);
+          // Extract meaningful error message from server response
+          const serverError = errorData.error || errorData.message || errorText;
+          const errorCode = errorData.error_code || '';
+          const detailedError = errorCode ? `${serverError} (Code: ${errorCode})` : serverError;
+          errors.push(`${format.name}: ${detailedError}`);
+        } catch {
+          // If not valid JSON, use raw error text
+          errors.push(`${format.name}: HTTP ${response.status} - ${errorText}`);
+        }
       }
     }
     
-    throw new Error('Task creation failed: all payload formats failed');
+    // Create comprehensive error message with all server errors
+    const errorMessage = `Error: ${errors.join(' | ')}`;
+    throw new Error(errorMessage);
   }
 
   public async getTaskStatus(taskId: string): Promise<TaskStatusResponse> {

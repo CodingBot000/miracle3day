@@ -22,7 +22,7 @@ export const HospitalCard = ({
   locationNum,
   onSelect,
 }: HospitalCardProps) => {
-  console.log(`HospitalCard name:${name} href:${href}`);
+  // console.log(`HospitalCard name:${name} href:${href}`);
   return (
     <article onClick={() => onSelect && onSelect(name)}>
       <Link href={href}>

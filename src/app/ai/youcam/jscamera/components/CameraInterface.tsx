@@ -25,11 +25,23 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
   const [cameraError, setCameraError] = useState<string | null>(null);
   const [isVideoReady, setIsVideoReady] = useState(false);
   
+  // Face guidance states
+  const [faceGuidance, setFaceGuidance] = useState<{
+    message: string;
+    type: 'success' | 'warning' | 'error' | 'info';
+    canCapture: boolean;
+  }>({
+    message: '카메라를 열어주세요',
+    type: 'info',
+    canCapture: false
+  });
+  
   // Refs
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const cleanupRef = useRef<(() => void) | null>(null);
+  const ymkInstanceRef = useRef<any>(null);
 
   // Utility functions
   const isSecureContext = useCallback(() => {
@@ -126,7 +138,11 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
       const handleVideoReady = () => {
         console.log('Video ready');
         setIsVideoReady(true);
-        // Don't set isCameraOpen here since it's already set in openCamera
+        setFaceGuidance({
+          message: "카메라가 준비되었습니다!",
+          type: "success",
+          canCapture: true
+        });
       };
 
       // Set up single event listener
@@ -165,8 +181,204 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
     }
   }, [isSecureContext, isGetUserMediaAvailable]);
 
-  // Capture photo
+
+  // Face quality analysis function
+  const analyzeFaceQuality = useCallback((quality: any) => {
+    if (!quality.hasFace) {
+      return {
+        message: "얼굴을 화면에 보여주세요 👤",
+        type: "error" as const,
+        canCapture: false
+      };
+    }
+    
+    if (quality.area === "toosmall") {
+      return {
+        message: "카메라에 더 가까이 와주세요 🔍",
+        type: "warning" as const,
+        canCapture: false
+      };
+    }
+    
+    if (quality.area === "outofboundary") {
+      return {
+        message: "너무 가깝습니다. 조금 멀어져 주세요 ↩️",
+        type: "warning" as const,
+        canCapture: false
+      };
+    }
+    
+    if (quality.area === "good") {
+      if (quality.frontal === "good") {
+        return {
+          message: "완벽합니다! 이제 촬영하세요 📸✨",
+          type: "success" as const,
+          canCapture: true
+        };
+      } else {
+        return {
+          message: "정면을 바라봐 주세요 👀",
+          type: "warning" as const,
+          canCapture: false
+        };
+      }
+    }
+    
+    return {
+      message: "얼굴 위치를 조정해주세요",
+      type: "warning" as const,
+      canCapture: false
+    };
+  }, []);
+
+  // YouCam SDK initialization (simplified for stability)
+  const initializeYMK = useCallback(() => {
+    console.log('YouCam SDK available, using standard webcam mode for stability');
+    setUseWebcam(true);
+    setIsSDKLoaded(true);
+    setFaceGuidance({
+      message: "표준 웹캠 모드",
+      type: "info",
+      canCapture: true
+    });
+  }, []);
+
+  const handleSDKLoad = useCallback(() => {
+    console.log('YouCam SDK script loaded');
+    if (window.YMK) {
+      initializeYMK();
+    } else {
+      setUseWebcam(true);
+      setIsSDKLoaded(true);
+    }
+  }, [initializeYMK]);
+
+  // YouCam camera controls
+  const openYouCamCamera = useCallback(() => {
+    if (ymkInstanceRef.current) {
+      try {
+        console.log('Opening YouCam camera...');
+        setFaceGuidance({
+          message: "카메라를 준비중입니다...",
+          type: "info",
+          canCapture: false
+        });
+        
+        // Try various methods to open camera
+        if (ymkInstanceRef.current.openSkincareCamera) {
+          ymkInstanceRef.current.openSkincareCamera();
+        } else if (ymkInstanceRef.current.openCamera) {
+          ymkInstanceRef.current.openCamera();
+        } else if (ymkInstanceRef.current.start) {
+          ymkInstanceRef.current.start();
+        }
+        
+        setIsVideoReady(true);
+        
+        // Set initial guidance for face detection
+        setTimeout(() => {
+          setFaceGuidance({
+            message: "얼굴을 화면 중앙에 맞춰주세요 📷",
+            type: "info",
+            canCapture: false
+          });
+        }, 1000);
+        
+      } catch (error) {
+        console.error('YouCam camera failed:', error);
+        setCameraError('YouCam camera failed. Switching to standard webcam.');
+        setUseWebcam(true);
+        startWebcam();
+      }
+    }
+  }, [startWebcam]);
+
+  const closeYouCamCamera = useCallback(() => {
+    if (ymkInstanceRef.current) {
+      try {
+        console.log('Closing YouCam camera...');
+        if (ymkInstanceRef.current.close) {
+          ymkInstanceRef.current.close();
+        } else if (ymkInstanceRef.current.stop) {
+          ymkInstanceRef.current.stop();
+        }
+      } catch (error) {
+        console.error('Error closing YouCam camera:', error);
+      }
+    }
+    
+    setFaceGuidance({
+      message: "카메라를 열어주세요",
+      type: "info",
+      canCapture: false
+    });
+  }, []);
+
+  const captureYouCamPhoto = useCallback(() => {
+    if (ymkInstanceRef.current && faceGuidance.canCapture) {
+      try {
+        console.log('Capturing photo with YouCam...');
+        if (ymkInstanceRef.current.capture) {
+          ymkInstanceRef.current.capture();
+        } else if (ymkInstanceRef.current.takeSnapshot) {
+          ymkInstanceRef.current.takeSnapshot();
+        }
+      } catch (error) {
+        console.error('YouCam capture failed:', error);
+        setCameraError('Photo capture failed. Please try again.');
+      }
+    } else if (!faceGuidance.canCapture) {
+      // Show guidance message briefly
+      const originalMessage = faceGuidance.message;
+      setFaceGuidance({
+        ...faceGuidance,
+        message: "얼굴 위치를 먼저 조정해주세요!"
+      });
+      
+      setTimeout(() => {
+        setFaceGuidance({
+          ...faceGuidance,
+          message: originalMessage
+        });
+      }, 2000);
+    }
+  }, [faceGuidance]);
+
+  // Main camera controls
+  const openCamera = useCallback(() => {
+    console.log('Opening camera...');
+    
+    // Set camera as opening to trigger UI update
+    setIsCameraOpen(true);
+    setIsVideoReady(false);
+    setCameraError(null);
+    
+    setFaceGuidance({
+      message: "카메라 준비 중...",
+      type: "info", 
+      canCapture: false
+    });
+    
+    // Always use webcam for stability
+    startWebcam().catch((error) => {
+      console.error('Failed to start webcam:', error);
+      setIsCameraOpen(false);
+      setCameraError('Failed to start camera. Please try again.');
+    });
+  }, [startWebcam]);
+
+  const closeCamera = useCallback(() => {
+    console.log('Closing camera...');
+    cleanup();
+    setFaceGuidance({
+      message: "카메라를 열어주세요",
+      type: "info",
+      canCapture: false
+    });
+  }, [cleanup]);
+
   const capturePhoto = useCallback(() => {
+    // Simple webcam capture logic
     if (!videoRef.current || !canvasRef.current || !isVideoReady) {
       setCameraError('Camera not ready');
       return;
@@ -193,47 +405,6 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
     }
   }, [isVideoReady, onImageCapture, cleanup]);
 
-  // YouCam SDK initialization
-  const initializeYMK = useCallback(() => {
-    console.log('YouCam SDK available, falling back to webcam');
-    setUseWebcam(true);
-    setIsSDKLoaded(true);
-  }, []);
-
-  const handleSDKLoad = useCallback(() => {
-    console.log('YouCam SDK script loaded');
-    if (window.YMK) {
-      initializeYMK();
-    } else {
-      setUseWebcam(true);
-      setIsSDKLoaded(true);
-    }
-  }, [initializeYMK]);
-
-  // Main camera controls
-  const openCamera = useCallback(() => {
-    console.log('Opening camera...');
-    
-    // First set camera as opening to trigger UI update
-    setIsCameraOpen(true);
-    setIsVideoReady(false);
-    setCameraError(null);
-    
-    // Then start webcam
-    if (useWebcam) {
-      startWebcam().catch((error) => {
-        console.error('Failed to start webcam:', error);
-        setIsCameraOpen(false);
-        setCameraError('Failed to start camera. Please try again.');
-      });
-    }
-  }, [useWebcam, startWebcam]);
-
-  const closeCamera = useCallback(() => {
-    console.log('Closing camera...');
-    cleanup();
-  }, [cleanup]);
-
   // Effects
   useEffect(() => {
     // Initial setup
@@ -256,9 +427,43 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
 
       <div className="mb-4 p-3 bg-gray-100 rounded-lg">
         <p className="text-sm text-gray-600">
-          📷 Using standard webcam for capture
+          📷 웹캠 카메라 모드
         </p>
       </div>
+
+      {/* Face Guidance Display */}
+      {isCameraOpen && (
+        <div className={`mb-4 p-4 rounded-lg border-2 transition-all duration-300 ${
+          faceGuidance.type === 'success' ? 'bg-green-50 border-green-200' :
+          faceGuidance.type === 'warning' ? 'bg-yellow-50 border-yellow-200' :
+          faceGuidance.type === 'error' ? 'bg-red-50 border-red-200' :
+          'bg-blue-50 border-blue-200'
+        }`}>
+          <div className="flex items-center">
+            <div className={`w-3 h-3 rounded-full mr-3 ${
+              faceGuidance.type === 'success' ? 'bg-green-500' :
+              faceGuidance.type === 'warning' ? 'bg-yellow-500' :
+              faceGuidance.type === 'error' ? 'bg-red-500' :
+              'bg-blue-500'
+            }`}></div>
+            <p className={`font-medium ${
+              faceGuidance.type === 'success' ? 'text-green-800' :
+              faceGuidance.type === 'warning' ? 'text-yellow-800' :
+              faceGuidance.type === 'error' ? 'text-red-800' :
+              'text-blue-800'
+            }`}>
+              {faceGuidance.message}
+            </p>
+          </div>
+          
+          <div className="mt-2 text-xs text-gray-600">
+            {faceGuidance.canCapture ? 
+              '✅ 촬영 가능 상태' : 
+              '⏳ 카메라 준비 중...'
+            }
+          </div>
+        </div>
+      )}
 
       {cameraError && (
         <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
@@ -378,14 +583,14 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
                 <div className="flex justify-center gap-4">
                   <button
                     onClick={capturePhoto}
-                    disabled={!isVideoReady}
-                    className={`px-4 py-2 rounded-md font-medium ${
-                      isVideoReady
-                        ? 'bg-green-600 hover:bg-green-700 text-white'
+                    disabled={!faceGuidance.canCapture}
+                    className={`px-4 py-2 rounded-md font-medium transition-all ${
+                      faceGuidance.canCapture
+                        ? 'bg-green-600 hover:bg-green-700 text-white scale-105 shadow-lg'
                         : 'bg-gray-400 cursor-not-allowed text-gray-200'
                     }`}
                   >
-                    📸 Take Photo
+                    {faceGuidance.canCapture ? '📸 사진 촬영' : '⏳ 카메라 준비 중...'}
                   </button>
                   <button
                     onClick={closeCamera}
@@ -402,13 +607,13 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
 
       <div className="mt-4 p-4 bg-blue-50 rounded-lg">
         <h3 className="font-semibold text-sm text-blue-900 mb-2">
-          Camera Tips:
+          카메라 사용 팁:
         </h3>
         <ul className="text-xs text-blue-700 space-y-1">
-          <li>• Allow camera access when prompted by your browser</li>
-          <li>• Ensure good lighting for best results</li>
-          <li>• Position your face in the center of the frame</li>
-          <li>• Remove makeup for most accurate skin analysis</li>
+          <li>• 브라우저에서 카메라 권한을 허용해주세요</li>
+          <li>• 밝은 조명에서 촬영하시면 더 정확합니다</li>
+          <li>• 얼굴을 화면 중앙에 위치시켜주세요</li>
+          <li>• 정확한 분석을 위해 화장을 지워주세요</li>
         </ul>
       </div>
     </div>

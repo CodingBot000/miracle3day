@@ -6,19 +6,38 @@ import { User } from "@supabase/supabase-js";
 import { Button } from "@/components/ui/button";
 import { LogIn, User as UserIcon } from "lucide-react";
 import { useEffect, useState } from "react";
+import { createClient } from "@/utils/supabase/client";
 
 export default function AuthClient() {
   const [user, setUser] = useState<User | null>(null);
+  const supabase = createClient();
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await fetch("/api/auth/getUser/session");
-      const data = await res.json();
-      setUser(data.user);
+      try {
+        const res = await fetch("/api/auth/getUser/session");
+        const data = await res.json();
+        setUser(data.user);
+      } catch (error) {
+        console.error('Error fetching user:', error);
+      }
     };
 
     fetchUser();
-  }, []);
+
+    // Listen for auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        if (event === 'SIGNED_OUT' || !session) {
+          setUser(null);
+        } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+          setUser(session.user);
+        }
+      }
+    );
+
+    return () => subscription.unsubscribe();
+  }, [supabase.auth]);
 
   const text = (user: User) => {
     const { app_metadata, user_metadata } = user;

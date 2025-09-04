@@ -9,7 +9,8 @@
       "Bash(mkdir:*)",
       "Bash(rmdir:*)",
       "Bash(npm run build:*)",
-      "WebFetch(domain:plugins-media.makeupar.com)"
+      "WebFetch(domain:plugins-media.makeupar.com)",
+      "Bash(npm run lint)"
     ],
     "deny": []
   }

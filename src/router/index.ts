@@ -48,7 +48,8 @@ export const ROUTE = {
   // ONLINE_CONSULTING: createNormalRouter("ONLINE_CONSULTING"),
   // ONLINE_CONSULTING_DETAIL: createDetailRouter("ONLINE_CONSULTING"),
   DIAGNOTSTIC: "https://treatment-estimate-landinng-tan.vercel.app/estimate",
-  
+  AI_ANALYSIS_PAGE: "/ai/youcam/s2s",
+  AI_ANALYSIS_CAMERA_PAGE: "/ai/youcam/jscamera",
   ONLINE_CONSULTING: createNormalRouter("ONLINE_CONSULTING"),
   ONLINE_CONSULTING_DETAIL: createDetailRouter("ONLINE_CONSULTING"),
   ABOUTUS: createNormalRouter("ABOUTUS"),

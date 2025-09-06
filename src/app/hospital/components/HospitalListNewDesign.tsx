@@ -1,0 +1,130 @@
+"use client";
+
+import { HospitalData } from "@/app/models/hospitalData.dto";
+import { LocationEnum } from "@/constants";
+import { useRouter } from "next/navigation";
+import HospitalListCard from "./HospitalListCard";
+
+interface HospitalListNewDesignProps {
+  initialData: HospitalData[];
+  initialLocation: LocationEnum;
+}
+
+const HospitalListNewDesign = ({ initialData }: HospitalListNewDesignProps) => {
+  const router = useRouter();
+
+  const handleBackClick = () => {
+    router.back();
+  };
+
+  return (
+    <div className="w-full max-w-[360px] mx-auto bg-white min-h-screen">
+      {/* Header with back button */}
+      <div className="flex items-center h-14 px-4 border-b border-gray-100 relative">
+        <button 
+          onClick={handleBackClick}
+          className="flex items-center justify-center w-6 h-6"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.0711 5L8 12.0711L15.0711 19.1421" stroke="#1C1C1C" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+      </div>
+
+      {/* Content */}
+      <div className="px-4 py-8 border-b-8 border-gray-50">
+        <div className="space-y-6">
+          {/* Title */}
+          <h1 className="text-lg font-semibold text-black leading-[26.6px]">
+            hospital list
+          </h1>
+
+          {/* Hospital List */}
+          <div className="space-y-12">
+            {initialData.map((hospital, index) => (
+              <HospitalListCard 
+                key={hospital.id_uuid} 
+                hospital={hospital}
+                showCategories={index === 0} // Only show categories for first item as in Figma
+              />
+            ))}
+            
+            {/* Add example hospitals if no data */}
+            {initialData.length === 0 && (
+              <>
+                <HospitalListCard 
+                  hospital={{
+                    id: 1,
+                    created_at: "",
+                    name: "Seoul Aesthetic Clinic",
+                    searchkey: "",
+                    latitude: 0,
+                    longitude: 0,
+                    imageurls: [],
+                    id_surgeries: [],
+                    id_unique: 1,
+                    id_uuid: "1",
+                    location: "Seoul"
+                  }}
+                  showCategories={true}
+                />
+                <HospitalListCard 
+                  hospital={{
+                    id: 2,
+                    created_at: "",
+                    name: "Seoul Aesthetic Clinic",
+                    searchkey: "",
+                    latitude: 0,
+                    longitude: 0,
+                    imageurls: [],
+                    id_surgeries: [],
+                    id_unique: 2,
+                    id_uuid: "2",
+                    location: "Seoul"
+                  }}
+                  showCategories={false}
+                />
+                <HospitalListCard 
+                  hospital={{
+                    id: 3,
+                    created_at: "",
+                    name: "Seoul Aesthetic Clinic",
+                    searchkey: "",
+                    latitude: 0,
+                    longitude: 0,
+                    imageurls: [],
+                    id_surgeries: [],
+                    id_unique: 3,
+                    id_uuid: "3",
+                    location: "Busan"
+                  }}
+                  showCategories={false}
+                  showTreatmentInfo={true}
+                />
+                <HospitalListCard 
+                  hospital={{
+                    id: 4,
+                    created_at: "",
+                    name: "Seoul Aesthetic Clinic",
+                    searchkey: "",
+                    latitude: 0,
+                    longitude: 0,
+                    imageurls: [],
+                    id_surgeries: [],
+                    id_unique: 4,
+                    id_uuid: "4",
+                    location: "3-min walk from Gangnam Station, Seoul"
+                  }}
+                  showCategories={false}
+                  showTreatmentInfo={true}
+                />
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default HospitalListNewDesign;

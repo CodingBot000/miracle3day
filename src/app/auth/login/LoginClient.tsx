@@ -64,7 +64,7 @@ const LoginPage = () => {
         action={handleSubmit}
         className="max-w-[380px] mx-auto flex flex-col items-center justify-center gap-2 h-full"
       >
-        <div className="space-y-4">
+        {/* <div className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <div className="relative">
@@ -110,15 +110,7 @@ const LoginPage = () => {
           </Button>
           
           <SignUpButton />
-          {/* <Link href={ROUTE.SIGN_UP} className="block">
-            <Button 
-              variant="outline" 
-              className="w-full flex items-center justify-center gap-2"
-            >
-              <UserPlus className="h-4 w-4" />
-              Sign Up
-            </Button>
-          </Link> */}
+     
         </div>
 
         <div className="text-center mt-4">
@@ -139,8 +131,8 @@ const LoginPage = () => {
               Or continue with
             </span>
           </div>
-        </div>
-
+        </div> */}
+{/* 
         <div className="flex justify-center gap-4">
           {snsLoginList.map((sns) => (
             <Button
@@ -152,6 +144,31 @@ const LoginPage = () => {
               onClick={() => handleSnsLogin(sns)}
             >
               {iconList[sns]}
+            </Button>
+          ))}
+        </div> */}
+
+
+        <div className="space-y-3">
+          <p className="text-center text-xl text-gray-500">Start with just one Click</p>
+          {snsLoginList.map((sns) => (
+            <Button
+              key={sns}
+              type="button"
+              variant="outline"
+              className={`w-full h-12 flex items-center justify-start gap-3 px-4 ${
+                sns === 'facebook' 
+                  ? 'bg-blue-600 text-white border-blue-600 hover:bg-blue-700' 
+                  : sns === 'google'
+                  ? 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                  : 'bg-black text-white border-black hover:bg-gray-900'
+              }`}
+              onClick={() => handleSnsLogin(sns)}
+            >
+              {iconList[sns]}
+              <span className="font-medium">
+                Continue with {sns.charAt(0).toUpperCase() + sns.slice(1)}
+              </span>
             </Button>
           ))}
         </div>

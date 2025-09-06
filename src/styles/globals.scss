@@ -48,6 +48,16 @@
   .select-chip p {
     @apply bg-green text-white border-2 border-green-100 font-medium;
   }
+  
+  /* Hide scrollbar while maintaining functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;     /* Firefox */
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;             /* Chrome, Safari and Opera */
+  }
 }
 
 
@@ -111,7 +121,8 @@
 
     /* Beauty-specific gradients */
     --gradient-primary: linear-gradient(135deg, hsl(342 75% 65%), hsl(342 85% 75%));
-    --gradient-hero: linear-gradient(135deg, hsl(342 50% 96%) 0%, hsl(342 25% 95%) 100%);
+    // --gradient-hero: linear-gradient(135deg, hsl(342 50% 96%) 0%, hsl(342 25% 95%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(345, 20%, 96%) 100%);
     --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(342 50% 98%) 100%);
     --gradient-diagnostic: linear-gradient(10deg, hsl(340, 30%, 80%) 0%, hsl(340, 100%, 95%) 100%);
 

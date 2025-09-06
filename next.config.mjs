@@ -7,6 +7,10 @@ const __dirname = path.dirname(__filename);
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   trailingSlash: true,
+  // Skip static optimization for pages using useSearchParams
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
+  },
   async headers() {
     return [
       {

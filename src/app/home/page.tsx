@@ -17,6 +17,12 @@ import RecommendEventList from "./components/recommend";
 import { Smile } from "lucide-react";
 import HeroVideos from "./components/hero/HeroVideos";
 import CategoryMenu from "@/components/organism/layout/CategoryMenu";
+import AgeChecker from "@/components/template/AgeChecker";
+import Hero from "../landing/hero";
+import MiddleSection1 from "../landing/MiddleSection1";
+import MiddleSection2 from "../landing/MiddleSection2";
+import MiddleSection3 from "../landing/MiddleSection3";
+
 
 export default async function HomePage() {
   // const bannerItem = await getBannerAPI();
@@ -35,29 +41,34 @@ export default async function HomePage() {
   return (
     <>
       {/* <HomeClient bannerItem={bannerItem} selectedLocation={selectedLocation} /> */}
-      <HeroVideos />
-      <section className="max-w-container mx-auto">
-        {/* <div className="my-8 leading-6 pl-4 md:pl-6 lg:pl-8">
-          <p className="font-bold text-[1.5rem] mb-[5px]">Diagnostic</p>
-          <p className="text-[0.8rem]">Ready to get started? I can help you find the right treatment for your skin concerns.</p>
-          <p className="text-[0.5rem]">Discover the perfect treatment plan for your skin concerns. Our Al dianostic tool uses advanced image recognition technology to analyze your skin and provide personalized recommendations.</p> */}
+      {/* <HeroVideos /> */}
+      {/* <section className="max-w-container mx-auto">
           <DiagnosticIntro />
-        {/* </div> */}
         <div className="my-8 px-4 md:px-6 lg:px-8">
           <CategoryMenu />
         </div>
-      </section>
-      <section className="max-w-container mx-auto mt-20">
-        {/* <div className="my-8 leading-6 pl-4 md:pl-6 lg:pl-8">
-          <p className="font-bold text-[1.5rem] mb-[5px]">Recommend</p>
-          <Link href={ROUTE.EVENT} className="text-sm text-gray-500">View More</Link> */}
-          <div className="my-8 px-4 md:px-6 lg:px-8">
-        {/* 상단 제목 & 버튼 */}
+      </section> */}
+          <Hero />
+          <MiddleSection1 />
+          <section className="max-w-container mx-auto mt-20">
+            <div className="my-8 leading-6 pl-4 md:pl-6 lg:pl-8">
+              
+              <p className="font-bold text-[1.5rem] mb-[5px]">New Beauty</p>
+              {/* <p className="text-[1.0rem]">Make Attraction</p> */}
+              <p className="text-[1.0rem]">Make Attraction</p>
+            </div>
+            <Beauty />
+  
+        </section>
+          <MiddleSection2 />
+          <MiddleSection3 />
+      {/* <section className="max-w-container mx-auto mt-20">
+            <div className="my-8 px-4 md:px-6 lg:px-8">
+  
         <div className="flex items-center justify-between mb-4">
-          {/* 왼쪽 텍스트 */}
+  
           <p className="font-bold text-[1.5rem]">Recommend</p>
-
-          {/* 오른쪽 링크 버튼 */}
+ 
           <Link
             href={ROUTE.EVENT}
             className="inline-flex items-center gap-1 text-[1.1rem] text-gray-800 font-bold hover:text-primary transition-colors"
@@ -67,29 +78,31 @@ export default async function HomePage() {
           </Link>
         </div>
           <RecommendEventList />
-          
         </div>
-         
-      </section>
-      <section className="max-w-container mx-auto mt-20">
+      </section> */}
+
+      {/* <section className="max-w-container mx-auto mt-20">
         <div className="my-8 leading-6 pl-4 md:pl-6 lg:pl-8">
-          
+         
           <p className="font-bold text-[1.5rem] mb-[5px]">New Beauty</p>
-          {/* <p className="text-[1.0rem]">Make Attraction</p> */}
           <p className="text-[1.0rem]">Make Attraction</p>
         </div>
          <Beauty />
-      </section>
-      <section className="max-w-container mx-auto mt-20">
+         <AgeChecker />
+      </section> */}
+
+
+
+      {/* <section className="max-w-container mx-auto mt-20">
         <div className="my-8 leading-6 pl-4 md:pl-6 lg:pl-8">
           <p className="font-bold text-[1.5rem] mb-[5px]">Hospitals</p>
           <p className="text-[1.0rem]">Choose the location u want</p>
         </div>
         <LocationChipSelector />
         <SeeAllLink location={selectedLocation ?? LocationEnum.Apgujung} />    
-        {/* <LocationHospital locationNum={selectedLocation} /> */}
+
         <LocationHospitalClient />
-      </section>
+      </section> */}
     </>
   );
 }

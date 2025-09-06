@@ -10,7 +10,14 @@
       "Bash(rmdir:*)",
       "Bash(npm run build:*)",
       "WebFetch(domain:plugins-media.makeupar.com)",
-      "Bash(npm run lint)"
+      "Bash(npm run lint)",
+      "Bash(touch:*)",
+      "Bash(rm:*)",
+      "Bash(claude doctor)",
+      "Bash(npm i:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(sudo npm cache clean --force)",
+      "Bash(npm cache clean:*)"
     ],
     "deny": []
   }

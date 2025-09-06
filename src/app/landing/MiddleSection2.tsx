@@ -13,7 +13,7 @@ const steps: ProcessStep[] = [
   {
     number: 1,
     title: "Upload a photo",
-    description: "Share a photo of the area you're concerned about for accurate analysis."
+    description: "Share a photo of the area you&apos;re concerned about for accurate analysis."
   },
   {
     number: 2,

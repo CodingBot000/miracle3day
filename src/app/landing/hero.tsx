@@ -173,7 +173,7 @@ function MotionMarquee({
       <div 
         className="absolute inset-0 z-10 pointer-events-none"
         style={{
-          background: 'linear-gradient(to right, white 0%, transparent 10%, transparent 90%, white 100%)'
+          background: "linear-gradient(to right, white 0%, transparent 10%, transparent 90%, white 100%)"
         }}
       />
       
@@ -199,7 +199,7 @@ function MotionMarquee({
           {React.Children.map(children, (child, idx) => 
             React.cloneElement(child as React.ReactElement, {
               key: `duplicate-${idx}`,
-              'aria-hidden': true
+              "aria-hidden": true
             })
           )}
         </motion.div>

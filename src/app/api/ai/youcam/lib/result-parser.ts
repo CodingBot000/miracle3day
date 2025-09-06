@@ -1,4 +1,4 @@
-import { ParsedAnalysisResult, ScoreInfo, SkinConcern } from './types';
+import { ParsedAnalysisResult, ScoreInfo, SkinConcern, SkinScore } from './types';
 import { promisify } from 'util';
 import { unzip } from 'zlib';
 

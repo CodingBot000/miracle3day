@@ -12,7 +12,7 @@ const features: FeatureCard[] = [
   {
     icon: "bg-yellow-200",
     title: "Access the Latest in K-Beauty",
-    description: "Discover Seoul's top beauty trends."
+    description: "Discover Seoul&apos;s top beauty trends."
   },
   {
     icon: "bg-blue-200", 
@@ -44,7 +44,7 @@ export default function MiddleSection1() {
 
         {/* 부제목 */}
         <p className="text-gray-600 text-base md:text-lg mb-12 max-w-2xl mx-auto">
-          Get a doctor's recommendation
+          Get a doctor&apos;s recommendation
           <br />
           for the latest K-beauty treatments.
         </p>

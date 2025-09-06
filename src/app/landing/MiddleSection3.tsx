@@ -26,7 +26,7 @@ const testimonials: Testimonial[] = [
     name: "Olivia",
     country: "CA", 
     flag: "🇨🇦",
-    review: "The whole process was so easy, from visiting hospitals, making consultation appointments and follow-up care. It's a perfect service for people like me who don't have time!"
+    review: "The whole process was so easy, from visiting hospitals, making consultation appointments and follow-up care. It&apos;s a perfect service for people like me who don&apos;t have time!"
   }
 ];
 

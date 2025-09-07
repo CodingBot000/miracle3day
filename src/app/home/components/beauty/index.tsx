@@ -29,11 +29,12 @@ export default function Beauty() {
   if (loading) return <div className="text-center py-10">Loading New Beaties...</div>;
 
   return (
-    <div className="w-full px-4 overflow-x-auto scrollbar-hide">
-      <div className="flex gap-4 w-max">
-      {datas ? (
-          datas.map(({ imageurls, name, id_unique, id_uuid, location }) => (
-            <article key={id_uuid} className="w-full px-2 h-full">
+    <div className="w-full px-4">
+      {/* Desktop: 4 columns, Mobile: 2x2 grid */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {datas ? (
+          datas.slice(0, 4).map(({ imageurls, name, id_uuid, location }) => (
+            <article key={id_uuid} className="w-full">
               <HospitalCard
                 alt={name}
                 name={name}
@@ -44,9 +45,9 @@ export default function Beauty() {
             </article>
           ))
         ) : (
-          Array.from({ length: 6 }).map((_, index) => (
-            <article key={index} className="w-full px-2">
-              <Skeleton className="w-full h-[200px] rounded-md" />
+          Array.from({ length: 4 }).map((_, index) => (
+            <article key={index} className="w-full">
+              <Skeleton className="w-full h-[280px] rounded-xl" />
             </article>
           ))
         )}

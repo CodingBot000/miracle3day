@@ -18,29 +18,35 @@ const HospitalListNewDesign = ({ initialData }: HospitalListNewDesignProps) => {
   };
 
   return (
-    <div className="w-full max-w-[360px] mx-auto bg-white min-h-screen">
+    <div className="w-full max-w-7xl mx-auto bg-white min-h-screen">
       {/* Header with back button */}
-      <div className="flex items-center h-14 px-4 border-b border-gray-100 relative">
+      <div className="flex items-center h-14 px-4 md:px-6 lg:px-8 border-b border-gray-100 relative">
         <button 
           onClick={handleBackClick}
-          className="flex items-center justify-center w-6 h-6"
+          className="flex items-center justify-center w-6 h-6 mr-3"
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M15.0711 5L8 12.0711L15.0711 19.1421" stroke="#1C1C1C" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>
+        <p className="text-sm md:text-base text-gray-700 font-medium">
+          Awsome Korean Premium Clinics For You
+        </p>
       </div>
 
       {/* Content */}
-      <div className="px-4 py-8 border-b-8 border-gray-50">
+      <div className="px-4 md:px-6 lg:px-8 py-8 border-b-8 border-gray-50">
         <div className="space-y-6">
           {/* Title */}
-          <h1 className="text-lg font-semibold text-black leading-[26.6px]">
+          <h1 className="text-lg md:text-xl lg:text-2xl font-semibold text-black leading-[26.6px]">
             hospital list
+          </h1>
+          <h1 className="text-sm md:text-base text-gray-400 leading-[26.6px]">
+            Korean dermatology clinics with services for international patients
           </h1>
 
           {/* Hospital List */}
-          <div className="space-y-12">
+          <div className="space-y-8 md:space-y-12">
             {initialData.map((hospital, index) => (
               <HospitalListCard 
                 key={hospital.id_uuid} 
@@ -50,7 +56,7 @@ const HospitalListNewDesign = ({ initialData }: HospitalListNewDesignProps) => {
             ))}
             
             {/* Add example hospitals if no data */}
-            {initialData.length === 0 && (
+            {/* {initialData.length === 0 && (
               <>
                 <HospitalListCard 
                   hospital={{
@@ -119,7 +125,7 @@ const HospitalListNewDesign = ({ initialData }: HospitalListNewDesignProps) => {
                   showTreatmentInfo={true}
                 />
               </>
-            )}
+            )} */}
           </div>
         </div>
       </div>

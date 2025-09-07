@@ -22,21 +22,36 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
   };
 
   return (
-    <div className="w-full max-w-[360px] mx-auto bg-white min-h-screen relative">
+    <div className="max-w-container mx-auto bg-white min-h-screen relative">
       {/* Header with back button */}
-      <div className="flex items-center h-14 px-4 border-b border-gray-100 relative">
-        <button 
+      {/* <div className="flex items-center h-14 px-4 border-b border-gray-100 relative"> */}
+        {/* <button 
           onClick={handleBackClick}
           className="flex items-center justify-center w-6 h-6"
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M15.0711 5L8 12.0711L15.0711 19.1421" stroke="#1C1C1C" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
+        
         </button>
+         */}
+
+         <div className="flex items-center h-14 px-4 md:px-6 lg:px-8 border-b border-gray-100 relative">
+        <button 
+          onClick={handleBackClick}
+          className="flex items-center justify-center w-6 h-6 mr-3"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.0711 5L8 12.0711L15.0711 19.1421" stroke="#1C1C1C" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+        <p className="text-sm md:text-base text-gray-700 font-medium">
+          Introuduce Korean Premium Clinic
+        </p>
       </div>
 
       {/* Hero Image */}
-      <div className="w-full h-[202.5px] relative">
+      <div className="w-full h-[400px] relative">
         <Image
           src={hospital_info.imageurls?.[0] || "/placeholder-hospital.jpg"}
           alt={hospital_info.name}

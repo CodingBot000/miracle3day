@@ -51,14 +51,38 @@ export default async function HomePage() {
           <Hero />
           <MiddleSection1 />
           <section className="max-w-container mx-auto mt-20">
-            <div className="my-8 leading-6 pl-4 md:pl-6 lg:pl-8">
+              <div className="text-center mb-8">
+              <p className="text-pink-400 text-sm font-medium mb-4 tracking-wide">
+             Clinic List
+            </p>
+
+            {/* 메인 제목 */}
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Dermatology clinics in Korea for foreigners
+            </h2>
+          </div>
+            {/* <div className="my-8 leading-6 pl-4 md:pl-6 lg:pl-8">
               
               <p className="font-bold text-[1.5rem] mb-[5px]">New Beauty</p>
-              {/* <p className="text-[1.0rem]">Make Attraction</p> */}
+    
               <p className="text-[1.0rem]">Make Attraction</p>
+            </div> */}
+            {/* See All Clinics Link */}
+            <div className="text-right mt-8 px-4">
+              <Link 
+                href="/hospital"
+                className="inline-flex items-center gap-1 text-gray-400 hover:text-gray-700 transition-colors text-sm font-medium"
+              >
+                See All Clinics
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </Link>
             </div>
-            <Beauty />
   
+            <Beauty />
+            
+         
         </section>
           <MiddleSection2 />
           <MiddleSection3 />

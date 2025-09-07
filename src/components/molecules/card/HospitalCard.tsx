@@ -25,27 +25,20 @@ export const HospitalCard = ({
   return (
     <article onClick={() => onSelect && onSelect(name)}>
       <Link href={href}>
-        <div className="w-full max-w-sm mx-auto">
-          <div className="bg-white rounded-lg shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md border border-gray-100">
+        <div className="w-full">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-100 h-full transition-all duration-300 hover:shadow-md">
             {/* Hospital Image */}
-            <div className="relative ">
-              <Image
-                src={src}
-                alt={alt}
-                width={400}
-                height={240}
-                className="w-full h-48 object-cover  rounded-xl"
-                style={{ aspectRatio: "400/240", objectFit: "cover" }}
-              />
+            <div className="relative h-40 md:h-48 rounded-t-xl overflow-hidden">
+              <Image src={src} alt={alt} fill className="object-cover" />
             </div>
             
             {/* Hospital Info */}
-            <div className="p-4">
-              <h3 className="font-semibold text-gray-900 text-lg mb-1 line-clamp-2">
+            <div className="p-3 md:p-4">
+              <h3 className="font-semibold text-gray-900 text-sm md:text-lg mb-1 line-clamp-2">
                 {name}
               </h3>
               {locationNum && (
-                <p className="text-gray-500 text-sm mb-3">
+                <p className="text-gray-500 text-xs md:text-sm">
                   {locationNum}
                 </p>
               )}

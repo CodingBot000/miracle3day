@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import React, { useMemo } from "react";
+import { ROUTE } from "@/router";
+import { Button } from "@/components/ui/button";
 
 type Card = {
   title: string;
@@ -106,16 +108,31 @@ export default function Hero() {
         <div className="mt-6 flex flex-col gap-3 w-full max-w-xs mx-auto">
           <Link
             href="https://treatment-estimate-landinng-tan.vercel.app/"
-            className="w-full h-12 px-6 flex items-center justify-center rounded-full bg-pink-400 text-white font-medium hover:bg-pink-500 transition-colors duration-200 shadow-sm"
+            className="w-full h-12 px-6 flex items-center justify-center rounded-[14px] bg-pink-400 text-white font-medium hover:bg-pink-500 transition-colors duration-200 shadow-sm"
           >
             Get My Recommendation
           </Link>
-          <Link
-            href="/faq"
-            className="w-full h-12 px-6 flex items-center justify-center rounded-full border-2 border-pink-400 bg-white text-pink-400 font-medium hover:bg-pink-50 transition-colors duration-200"
+<Link
+  href="/faq"
+  className="inline-flex items-center justify-center
+             h-12 px-8 rounded-[14px]
+             border border-solid border-[#ff6c86]
+             bg-white text-[#ff6c86] text-lg font-medium
+             transition-colors
+             hover:bg-[#ff6c86]/5
+             focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff6c86]/40"
+>
+  Go to Korean Clinic
+</Link>
+
+          <Link 
+          href={ROUTE.AI_ANALYSIS_CAMERA_PAGE}
+            className="w-full h-12 px-6 flex items-center justify-center rounded-[14px] bg-orange-400 text-white font-medium hover:bg-orange-500 transition-colors duration-200 shadow-sm"
           >
-            Go to Korean Clinic
-          </Link>
+              
+                AI Skin Analysis(Camera)
+              
+            </Link>
         </div>
         
       </motion.div>

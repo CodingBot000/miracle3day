@@ -9,7 +9,7 @@ export async function GET() {
       .from(TABLE_HOSPITAL)
       .select("id_uuid, imageurls, name, location")
       // .order("created_at", { ascending: false })
-      .limit(6);
+      .limit(4);
 
       
        

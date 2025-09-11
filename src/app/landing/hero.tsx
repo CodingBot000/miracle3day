@@ -112,8 +112,9 @@ export default function Hero() {
           >
             Get My Recommendation
           </Link>
-<Link
-  href="/faq"
+          <Link
+                href="/hospital"
+
   className="inline-flex items-center justify-center
              h-12 px-8 rounded-[14px]
              border border-solid border-[#ff6c86]

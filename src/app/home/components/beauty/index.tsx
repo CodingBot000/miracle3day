@@ -33,11 +33,11 @@ export default function Beauty() {
       {/* Desktop: 4 columns, Mobile: 2x2 grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {datas ? (
-          datas.slice(0, 4).map(({ imageurls, name, id_uuid, location }) => (
+          datas.slice(0, 4).map(({ imageurls, name_en, id_uuid, location }) => (
             <article key={id_uuid} className="w-full">
               <HospitalCard
-                alt={name}
-                name={name}
+                alt={name_en}
+                name={name_en}
                 href={ROUTE.HOSPITAL_DETAIL("") + id_uuid}
                 src={imageurls[0]}
                 locationNum={location}

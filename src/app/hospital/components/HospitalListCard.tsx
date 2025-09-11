@@ -18,27 +18,38 @@ const HospitalListCard = ({ hospital, showCategories = false, showTreatmentInfo 
     { label: "IT", bgColor: "#F5F5F7" }
   ];
 
+  console.log('hospital.name_en:' , hospital.name_en );
+  console.log('hospital.thumbnail_url :', hospital.thumbnail_url );
+  console.log('hospital.imageurls?[0] :', hospital.imageurls?[0] : "") ;
   return (
+    
+
     <Link href={ROUTE.HOSPITAL_DETAIL(hospital.id_uuid)} className="block">
       <div className="space-y-4 md:space-y-6">
         {/* Hospital Card */}
         <div className="flex items-start gap-4 md:gap-6">
           {/* Hospital Image - Responsive: 160x160 (mobile) to 350x350 (desktop) */}
           <div className="w-40 h-40 sm:w-48 sm:h-48 md:w-50 md:h-50 lg:w-55 lg:h-55 xl:w-60 xl:h-60 bg-gray-200 rounded-lg flex-shrink-0">
-            {hospital.imageurls?.[0] && (
+            {hospital.thumbnail_url ? (
               <img
-                src={hospital.imageurls[0]}
-                alt={hospital.name}
+                src={hospital.thumbnail_url}
+                alt={hospital.name_en}
                 className="w-full h-full object-cover rounded-lg"
               />
-            )}
+            ) : hospital.imageurls?.[0] ? (
+              <img
+                src={hospital.imageurls[0]}
+                alt={hospital.name_en}
+                className="w-full h-full object-cover rounded-lg"
+              />
+            ) : null}
           </div>
 
           {/* Hospital Info */}
           <div className="flex-1 space-y-2 md:space-y-4">
             <div className="space-y-2 md:space-y-4">
               <h3 className="text-base md:text-lg lg:text-xl xl:text-2xl font-normal text-black leading-tight">
-                {hospital.name}
+                {hospital.name_en}
               </h3>
               <p className="text-sm md:text-base lg:text-lg text-gray-500">
                 {hospital.location}

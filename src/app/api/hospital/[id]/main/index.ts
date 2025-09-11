@@ -23,7 +23,7 @@ export const getHospitalMainAPI = async ({
       cache: "no-cache",
     },
   });
-  // console.log("qq getHospitalMainAPI data", data);
+  console.log("qq getHospitalMainAPI data", data);
   // console.log("qq getHospitalMainAPI data.hospital_info", data.hospital_info);
   // console.log("qq getHospitalMainAPI data.hospital_info.imageurls", data.hospital_info.imageurls);
   // console.log("qq getHospitalMainAPI data.hospital_info.name", data.hospital_info.name);

@@ -18,7 +18,7 @@ const HospitalDoctorList = ({ doctors }: HospitalDoctorListProps) => {
             <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
               <Image
                 src={doctor.image_url || "/placeholder-doctor.jpg"}
-                alt={doctor.name}
+                alt={doctor.name_en}
                 width={48}
                 height={48}
                 className="object-cover w-full h-full"
@@ -27,17 +27,15 @@ const HospitalDoctorList = ({ doctors }: HospitalDoctorListProps) => {
             
             <div className="flex-1 space-y-2">
               <h3 className="text-base font-medium text-black leading-[22.4px]">
-                {doctor.name}
+                {doctor.chief === 1 && (
+                  <span className="text-blue-600 mr-2">👑</span>
+                )}
+                {doctor.name_en}
               </h3>
               <div className="space-y-0">
                 {doctor.bio && (
                   <p className="text-sm text-gray-500 leading-[14px]">
-                    {doctor.bio}
-                  </p>
-                )}
-                {doctor.chief === 1 && (
-                  <p className="text-sm text-gray-500 leading-[14px]">
-                    12+ years clinical experience
+                    {doctor.bio_en}
                   </p>
                 )}
               </div>

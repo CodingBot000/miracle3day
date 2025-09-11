@@ -18,23 +18,54 @@ import CookieConsent from "@/components/template/CookieConsent";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Beauty Main - Your Beauty Journey",
-  description: "Find the best beauty clinics and treatments in Korea. Book appointments, read reviews, and get expert advice.",
-  keywords: "beauty, clinic, korea, aesthetic, treatment, appointment, review",
-  authors: [{ name: "Beauty Main Team" }],
+  metadataBase: new URL("https://miracle3day.vercel.app"),
+title: "MimoTok - Your Beauty Journey",
+  description:
+    "Find the best beauty clinics and treatments in Korea. Book appointments, read reviews, and get expert advice.",
+  keywords: [
+    "beauty",
+    "clinic",
+    "korea",
+    "mimotok",
+    "aesthetic",
+    "treatment",
+    "appointment",
+    "review",
+  ],
+  authors: [{ name: "MimoTok Team" }],
   robots: "index, follow",
+  alternates: {
+    canonical: "/", // 필요 시 언어별 canonical 매핑 가능
+    languages: {
+      "en-US": "/",
+      "ja-JP": "/ja",
+      "zh-CN": "/zh",
+    },
+  },
   openGraph: {
-    title: "Beauty Main - Your Beauty Journey",
-    description: "Find the best beauty clinics and treatments in Korea. Book appointments, read reviews, and get expert advice.",
     type: "website",
+    siteName: "MimoTok",
+    title: "MimoTok - Your Beauty Journey",
+    description:
+      "Find the best beauty clinics and treatments in Korea. Book appointments, read reviews, and get expert advice.",
+    url: "/", // 이 페이지의 정규 URL
     locale: "en_US",
-    alternateLocale: ["en_US", "ja_JP", "zh_CN"],
-    siteName: "Beauty Main",
+    alternateLocale: ["ja_JP", "zh_CN"],
+    images: [
+      {
+        url: "/mimotok_preview.png", // public/mimotok_preview.png (1200x630)
+        width: 1200,
+        height: 630,
+        alt: "MimoTok preview",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Beauty Main - Your Beauty Journey",
-    description: "Find the best beauty clinics and treatments in Korea. Book appointments, read reviews, and get expert advice.",
+    title: "MimoTok - Your Beauty Journey",
+    description:
+      "Find the best beauty clinics and treatments in Korea. Book appointments, read reviews, and get expert advice.",
+    images: ["/mimotok_preview.png"],
   },
 };
 

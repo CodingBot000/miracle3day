@@ -67,7 +67,7 @@ const HospitalListCard = ({ hospital, href, showCategories = false, showTreatmen
               
                <div className="flex items-center gap-2 text-xs text-gray-500">
                 <span className="font-bold">Location :</span>
-                <span>{region?.label}</span>
+                <span>{region?.label.en}</span>
               </div>   
               <p className="text-sm md:text-base lg:text-lg text-gray-500">
                 
@@ -85,7 +85,7 @@ const HospitalListCard = ({ hospital, href, showCategories = false, showTreatmen
         </div>
 
         {/* Categories (only show for first item) */}
-        {showCategories && (
+        {/* {showCategories && (
           <div className="flex items-center gap-2 flex-wrap">
             {categories.map((category, index) => (
               <span
@@ -97,7 +97,7 @@ const HospitalListCard = ({ hospital, href, showCategories = false, showTreatmen
               </span>
             ))}
           </div>
-        )}
+        )} */}
       </div>
     </Link>
   );

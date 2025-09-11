@@ -31,7 +31,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
     type: 'success' | 'warning' | 'error' | 'info';
     canCapture: boolean;
   }>({
-    message: '카메라를 열어주세요',
+    message: 'Please open the camera',
     type: 'info',
     canCapture: false
   });
@@ -139,7 +139,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
         console.log('Video ready');
         setIsVideoReady(true);
         setFaceGuidance({
-          message: "카메라가 준비되었습니다!",
+          message: "Camera is ready!",
           type: "success",
           canCapture: true
         });
@@ -186,7 +186,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
   const analyzeFaceQuality = useCallback((quality: any) => {
     if (!quality.hasFace) {
       return {
-        message: "얼굴을 화면에 보여주세요 👤",
+        message: "Please show your face on the screen 👤",
         type: "error" as const,
         canCapture: false
       };
@@ -194,7 +194,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
     
     if (quality.area === "toosmall") {
       return {
-        message: "카메라에 더 가까이 와주세요 🔍",
+        message: "Please move closer to the camera 🔍",
         type: "warning" as const,
         canCapture: false
       };
@@ -259,7 +259,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
       try {
         console.log('Opening YouCam camera...');
         setFaceGuidance({
-          message: "카메라를 준비중입니다...",
+          message: "Preparing camera...",
           type: "info",
           canCapture: false
         });
@@ -278,7 +278,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
         // Set initial guidance for face detection
         setTimeout(() => {
           setFaceGuidance({
-            message: "얼굴을 화면 중앙에 맞춰주세요 📷",
+            message: "Please center your face on the screen 📷",
             type: "info",
             canCapture: false
           });
@@ -308,7 +308,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
     }
     
     setFaceGuidance({
-      message: "카메라를 열어주세요",
+      message: "Please open the camera",
       type: "info",
       canCapture: false
     });
@@ -354,7 +354,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
     setCameraError(null);
     
     setFaceGuidance({
-      message: "카메라 준비 중...",
+      message: "Preparing camera...",
       type: "info", 
       canCapture: false
     });
@@ -371,7 +371,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
     console.log('Closing camera...');
     cleanup();
     setFaceGuidance({
-      message: "카메라를 열어주세요",
+      message: "Please open the camera",
       type: "info",
       canCapture: false
     });
@@ -458,8 +458,8 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
           
           <div className="mt-2 text-xs text-gray-600">
             {faceGuidance.canCapture ? 
-              '✅ 촬영 가능 상태' : 
-              '⏳ 카메라 준비 중...'
+              '✅ Camera Ready': 
+              '⏳ Preparing Camera...'
             }
           </div>
         </div>
@@ -590,7 +590,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
                         : 'bg-gray-400 cursor-not-allowed text-gray-200'
                     }`}
                   >
-                    {faceGuidance.canCapture ? '📸 사진 촬영' : '⏳ 카메라 준비 중...'}
+                    {faceGuidance.canCapture ? '📸 Take Photo': '⏳ Preparing Camera...'}
                   </button>
                   <button
                     onClick={closeCamera}
@@ -607,7 +607,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
 
       <div className="mt-4 p-4 bg-blue-50 rounded-lg">
         <h3 className="font-semibold text-sm text-blue-900 mb-2">
-          카메라 사용 팁:
+          Camera Usage Tips:
         </h3>
         <ul className="text-xs text-blue-700 space-y-1">
 <li>• Please allow camera access in your browser</li>

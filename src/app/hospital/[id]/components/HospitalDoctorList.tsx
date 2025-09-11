@@ -43,52 +43,6 @@ const HospitalDoctorList = ({ doctors }: HospitalDoctorListProps) => {
           </div>
         ))}
         
-        {/* Example doctors if no doctors data */}
-        {doctors.length === 0 && (
-          <>
-            <div className="flex items-start gap-6">
-              <div className="w-12 h-12 rounded-full bg-gray-200 flex-shrink-0"></div>
-              <div className="flex-1 space-y-2">
-                <h3 className="text-base font-medium text-black leading-[22.4px]">
-                  Dr. Daniel Park, MD
-                </h3>
-                <p className="text-sm text-gray-500 leading-[14px]">
-                  Board-certified dermatologist
-                </p>
-                <p className="text-sm text-gray-500 leading-[14px]">
-                  Laser, scar & pigment care
-                </p>
-                <p className="text-sm text-gray-500 leading-[14px]">
-                  12+ years clinical experience
-                </p>
-              </div>
-            </div>
-            
-            <div className="flex items-start gap-6">
-              <div className="w-12 h-12 rounded-full bg-gray-200 flex-shrink-0"></div>
-              <div className="flex-1 space-y-2">
-                <h3 className="text-base font-semibold text-black leading-[22.4px]">
-                  의사 1
-                </h3>
-                <p className="text-sm text-gray-500 leading-[14px]">
-                  Filler & Botox specialist
-                </p>
-              </div>
-            </div>
-            
-            <div className="flex items-start gap-6">
-              <div className="w-12 h-12 rounded-full bg-gray-200 flex-shrink-0"></div>
-              <div className="flex-1 space-y-2">
-                <h3 className="text-base font-semibold text-black leading-[22.4px]">
-                  의사 1
-                </h3>
-                <p className="text-sm text-gray-500 leading-[14px]">
-                  Natural, subtle results
-                </p>
-              </div>
-            </div>
-          </>
-        )}
       </div>
     </div>
   );

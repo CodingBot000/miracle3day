@@ -5,10 +5,13 @@ export type CategoryNode = {
   };
   
 
-  export type CategoryNodeRegion = {
+export type CategoryNodeRegion = {
   key: number;
   name: string;
-  label: string;
+  label: {
+    ko: string;
+    en: string;
+  };
   unit?: string;
   department?: string;
   children?: CategoryNodeRegion[];

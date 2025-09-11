@@ -44,7 +44,7 @@ export const HospitalCard = ({
               </h3>
               {locationNum && (
                 <p className="text-gray-500 text-xs md:text-sm">
-                  {region?.label}
+                  {region?.label.en}
                   
                 </p>
               )}

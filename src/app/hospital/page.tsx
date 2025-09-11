@@ -8,7 +8,7 @@ type Props = {
 };
 
 export const metadata: Metadata = {
-  title: "Hospital List | Beauty Well",
+  title: "Clinic List | Beauty Well",
   description: "Find the best beauty and medical hospitals in Korea",
 };
 

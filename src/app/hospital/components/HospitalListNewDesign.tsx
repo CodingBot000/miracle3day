@@ -39,14 +39,14 @@ const HospitalListNewDesign = ({ initialData }: HospitalListNewDesignProps) => {
       <div className="px-4 md:px-6 lg:px-8 py-8 border-b-8 border-gray-50">
         <div className="space-y-6">
           {/* Title */}
-          <h1 className="text-lg md:text-xl lg:text-2xl font-semibold text-black leading-[26.6px]">
-            hospital list
-          </h1>
-          <h1 className="text-sm md:text-base text-gray-400 leading-[26.6px]">
+          {/* <h1 className="text-lg md:text-xl lg:text-2xl font-semibold text-black leading-[26.6px]">
+            Clinic List
+          </h1> */}
+          <h1 className="text-sm md:text-base text-gray-500 leading-[26.6px]">
             Korean dermatology clinics with services for international patients
           </h1>
 
-          {/* Hospital List */}
+          {/* Clinic List */}
           <div className="space-y-8 md:space-y-12">
             {initialData.map((hospital, index) => (
               <HospitalListCard 

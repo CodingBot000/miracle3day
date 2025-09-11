@@ -62,37 +62,37 @@ YMK.addEventListener("faceQualityChanged", function(quality) {
     }
     
     // 얼굴 크기/거리 체크
-    switch(quality.area) {
+    switch (quality.area) {
         case "toosmall":
-            showGuidance("카메라에 더 가까이 와주세요 📷", "warning");
+            showGuidance("Please show your face on the screen 📷", "warning");
             captureButton.disabled = true;
             break;
-            
+
         case "outofboundary":
-            showGuidance("카메라에서 조금 멀어져 주세요 ↔️", "warning");
+            showGuidance("Please move slightly away from the camera ↔️", "warning");
             captureButton.disabled = true;
             break;
-            
+
         case "good":
             // 정면 방향도 체크
             if (quality.frontal === "good") {
-                showGuidance("완벽합니다! 촬영할 수 있습니다 ✅", "success");
-                captureButton.disabled = false;
+            showGuidance("Perfect! You can take a photo ✅", "success");
+            captureButton.disabled = false;
             } else {
-                showGuidance("정면을 바라봐 주세요 👁️", "warning");
-                captureButton.disabled = true;
+            showGuidance("Please face the camera 👁️", "warning");
+            captureButton.disabled = true;
             }
             break;
-            
+
         default:
-            showGuidance("얼굴 위치를 조정해주세요", "warning");
+            showGuidance("Please adjust your face position", "warning");
             captureButton.disabled = true;
-    }
-    
-    // 정면 방향 추가 체크 (area가 good이 아닌 경우에도)
-    if (quality.frontal === "notgood" && quality.area !== "good") {
-        showGuidance("정면을 바라보며 적절한 거리를 맞춰주세요", "warning");
-    }
+        }
+
+        // 정면 방향 추가 체크 (area가 good이 아닌 경우에도)
+        if (quality.frontal === "notgood" && quality.area !== "good") {
+        showGuidance("Please face forward and maintain an appropriate distance", "warning");
+        }
 });
 
 // 가이드 메시지 표시 함수
@@ -124,7 +124,7 @@ YMK.addEventListener("faceQualityChanged", function(quality) {
 function analyzeFaceQuality(quality) {
     if (!quality.hasFace) {
         return {
-            message: "얼굴을 화면에 보여주세요 👤",
+            message: "Please show your face on the screen 👤",
             type: "error",
             canCapture: false,
             needsVibration: true
@@ -133,46 +133,46 @@ function analyzeFaceQuality(quality) {
     
     if (quality.area === "toosmall") {
         return {
-            message: "카메라에 더 가까이 와주세요 🔍",
+            message: "Please move closer to the camera 🔍",
             type: "warning",
             canCapture: false,
             needsVibration: false
         };
     }
     
-    if (quality.area === "outofboundary") {
+   if (quality.area === "outofboundary") {
         return {
-            message: "너무 가깝습니다. 조금 멀어져 주세요 ↩️",
+            message: "Too close. Please move a bit away ↩️",
             type: "warning",
             canCapture: false,
             needsVibration: false
         };
-    }
-    
-    if (quality.area === "good") {
+        }
+
+        if (quality.area === "good") {
         if (quality.frontal === "good") {
             return {
-                message: "완벽합니다! 이제 촬영하세요 📸✨",
-                type: "success",
-                canCapture: true,
-                needsVibration: false
+            message: "Perfect! You can take the photo now 📸✨",
+            type: "success",
+            canCapture: true,
+            needsVibration: false
             };
         } else {
             return {
-                message: "정면을 바라봐 주세요 👀",
-                type: "warning",
-                canCapture: false,
-                needsVibration: false
+            message: "Please face the camera 👀",
+            type: "warning",
+            canCapture: false,
+            needsVibration: false
             };
         }
-    }
-    
-    return {
-        message: "얼굴 위치를 조정해주세요",
+        }
+
+        return {
+        message: "Please adjust your face position",
         type: "warning",
         canCapture: false,
         needsVibration: false
-    };
+        };
 }
 
 function updateVisualGuidance(guidanceData) {

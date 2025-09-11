@@ -55,7 +55,19 @@ const HospitalAmenities = ({ hospitalDetails }: HospitalAmenitiesProps) => {
         </svg>
       ),
       available: hospitalDetails.has_female_doctor === 1
+    },
+    {
+      id: 'anesthesiologist',
+      title: 'Anesthesiologist',
+      description: 'Available for safe anesthesia management.',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2a5 5 0 110 10 5 5 0 010-10zm0 1.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7zM12 14c5.523 0 10 4.477 10 10v1H2v-1c0-5.523 4.477-10 10-10z" fill="#8B5A8C"/>
+        </svg>
+      ),
+      available: hospitalDetails.has_anesthesiologist === 1
     }
+    
   ];
 
   return (

@@ -12,6 +12,37 @@ const HospitalLocation = ({ hospitalInfo }: HospitalLocationProps) => {
         Hospital Location
       </h2>
       
+      <div className="space-y-2 mb-4">
+       <div className="flex items-center gap-1">
+          <span className="text-sm font-semibold text-gray-800 min-w-[80px]">
+            Address:
+          </span>
+          <span className="text-sm text-gray-800">
+            {hospitalInfo.address_full_road_en}
+          </span>
+        </div>
+        
+        <div className="flex items-center gap-1">
+          <span className="text-sm font-semibold text-gray-800 min-w-[80px]">
+            Jibun:
+          </span>
+          <span className="text-sm text-gray-800">
+            {hospitalInfo.address_full_jibun_en}
+          </span>
+        </div>
+        
+        {hospitalInfo.directions_to_clinic_en && (
+         <div className="flex items-center gap-1">
+            <span className="text-sm font-semibold text-gray-800 min-w-[80px]">
+              Directions:
+          </span>
+          <span className="text-sm text-gray-800">
+            {hospitalInfo.directions_to_clinic_en}
+          </span>
+        </div>
+        )}
+      </div>
+      
       <div className="w-full h-[328px] rounded-lg overflow-hidden">
         <MapComponent
           coordinates={[

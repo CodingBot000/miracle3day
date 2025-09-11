@@ -51,81 +51,10 @@ const HospitalListNewDesign = ({ initialData }: HospitalListNewDesignProps) => {
               <HospitalListCard 
                 key={hospital.id_uuid} 
                 hospital={hospital}
-                showCategories={index === 0} // Only show categories for first item as in Figma
+                showCategories={index === 0} 
               />
             ))}
             
-            {/* Add example hospitals if no data */}
-            {/* {initialData.length === 0 && (
-              <>
-                <HospitalListCard 
-                  hospital={{
-                    id: 1,
-                    created_at: "",
-                    name: "Seoul Aesthetic Clinic",
-                    searchkey: "",
-                    latitude: 0,
-                    longitude: 0,
-                    imageurls: [],
-                    id_surgeries: [],
-                    id_unique: 1,
-                    id_uuid: "1",
-                    location: "Seoul"
-                  }}
-                  showCategories={true}
-                />
-                <HospitalListCard 
-                  hospital={{
-                    id: 2,
-                    created_at: "",
-                    name: "Seoul Aesthetic Clinic",
-                    searchkey: "",
-                    latitude: 0,
-                    longitude: 0,
-                    imageurls: [],
-                    id_surgeries: [],
-                    id_unique: 2,
-                    id_uuid: "2",
-                    location: "Seoul"
-                  }}
-                  showCategories={false}
-                />
-                <HospitalListCard 
-                  hospital={{
-                    id: 3,
-                    created_at: "",
-                    name: "Seoul Aesthetic Clinic",
-                    searchkey: "",
-                    latitude: 0,
-                    longitude: 0,
-                    imageurls: [],
-                    id_surgeries: [],
-                    id_unique: 3,
-                    id_uuid: "3",
-                    location: "Busan"
-                  }}
-                  showCategories={false}
-                  showTreatmentInfo={true}
-                />
-                <HospitalListCard 
-                  hospital={{
-                    id: 4,
-                    created_at: "",
-                    name: "Seoul Aesthetic Clinic",
-                    searchkey: "",
-                    latitude: 0,
-                    longitude: 0,
-                    imageurls: [],
-                    id_surgeries: [],
-                    id_unique: 4,
-                    id_uuid: "4",
-                    location: "3-min walk from Gangnam Station, Seoul"
-                  }}
-                  showCategories={false}
-                  showTreatmentInfo={true}
-                />
-              </>
-            )} */}
           </div>
         </div>
       </div>

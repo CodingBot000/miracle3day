@@ -9,9 +9,23 @@ export async function GET(req: Request) {
 
   const { data = [], count } = await supabase
     .from(TABLE_HOSPITAL)
-    .select("id_uuid, imageurls, name, location, id_unique", { count: "exact" })
-    .match({ location: locationNum })
-    .limit(9);
+     .select(`
+    created_at,
+    name,
+    name_en,
+    searchkey,
+    latitude,
+    longitude,
+    thumbnail_url,
+    imageurls,
+    id_surgeries,
+    id_unique,
+    id_uuid,
+    location
+  `,
+      { count: "exact" })
+    // .match({ location: locationNum })
+    // .limit(9);
 
   const response = {
     data,

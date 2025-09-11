@@ -15,6 +15,7 @@ interface HospitalDetailNewDesignProps {
 
 const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps) => {
   const router = useRouter();
+  console.log('HospitalDetailNewDesign hospitalData:', hospitalData);
   const { hospital_info, hospital_details, doctors, business_hours } = hospitalData;
 
   const handleBackClick = () => {
@@ -67,10 +68,10 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
           {/* Hospital Name and Description */}
           <div className="space-y-2">
             <h1 className="text-2xl font-medium text-gray-900 leading-[33.6px]">
-              {hospital_info.name}
+              {hospital_info.name_en}
             </h1>
             <p className="text-base text-gray-500 leading-[22.4px]">
-              {hospital_details.introuction || "We promise visible results with a calm, comfortable experience. Board-certified doctors consult directly and treat with vetted devices and strict hygiene."}
+              {hospital_details.introduction_en || "We promise visible results with a calm, comfortable experience. Board-certified doctors consult directly and treat with vetted devices and strict hygiene."}
             </p>
           </div>
 

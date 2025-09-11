@@ -4,3 +4,12 @@ export type CategoryNode = {
     children?: CategoryNode[];
   };
   
+
+  export type CategoryNodeRegion = {
+  key: number;
+  name: string;
+  label: string;
+  unit?: string;
+  department?: string;
+  children?: CategoryNodeRegion[];
+};

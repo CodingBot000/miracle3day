@@ -18,6 +18,7 @@ const HospitalListPage = async ({ searchParams }: Props) => {
   // Fetch initial hospital data
   const data = await getHospitalLocationAPI({ locationNum });
   
+  // console.log('qqqqq data:', data);
   return (
     <main className="min-h-screen bg-white">
       <HospitalListNewDesign initialData={data.data} initialLocation={locationNum} />

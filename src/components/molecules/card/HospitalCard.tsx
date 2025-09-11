@@ -1,5 +1,6 @@
 "use client";
 
+import { findRegionByKey, REGIONS } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -22,6 +23,10 @@ export const HospitalCard = ({
   locationNum,
   onSelect,
 }: HospitalCardProps) => {
+              const locationKey = parseInt(locationNum!, 10);
+              const region = findRegionByKey(REGIONS, locationKey);
+        
+
   return (
     <article onClick={() => onSelect && onSelect(name)}>
       <Link href={href}>
@@ -39,7 +44,8 @@ export const HospitalCard = ({
               </h3>
               {locationNum && (
                 <p className="text-gray-500 text-xs md:text-sm">
-                  {locationNum}
+                  {region?.label}
+                  
                 </p>
               )}
             </div>

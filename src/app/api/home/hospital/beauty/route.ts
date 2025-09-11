@@ -7,7 +7,20 @@ export async function GET() {
   try {
     const { data } = await supabase
       .from(TABLE_HOSPITAL)
-      .select("id_uuid, imageurls, name, location")
+      .select(`
+    created_at,
+    name,
+    name_en,
+    searchkey,
+    latitude,
+    longitude,
+    thumbnail_url,
+    imageurls,
+    id_surgeries,
+    id_unique,
+    id_uuid,
+    location
+  `)
       // .order("created_at", { ascending: false })
       .limit(4);
 
@@ -19,6 +32,7 @@ export async function GET() {
         console.log(`\n[Item ${index + 1}]`);
         console.log("id_uuid:", item.id_uuid);
         console.log("Name:", item.name);
+        console.log("Name_en:", item.name_en);
         console.log("Image URLs:", item.imageurls);
         
         console.log("location:", item.location);

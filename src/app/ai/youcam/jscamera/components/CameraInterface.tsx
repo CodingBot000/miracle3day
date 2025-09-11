@@ -427,7 +427,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
 
       <div className="mb-4 p-3 bg-gray-100 rounded-lg">
         <p className="text-sm text-gray-600">
-          📷 웹캠 카메라 모드
+          📷 WebCam Camera Mode
         </p>
       </div>
 
@@ -610,10 +610,10 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
           카메라 사용 팁:
         </h3>
         <ul className="text-xs text-blue-700 space-y-1">
-          <li>• 브라우저에서 카메라 권한을 허용해주세요</li>
-          <li>• 밝은 조명에서 촬영하시면 더 정확합니다</li>
-          <li>• 얼굴을 화면 중앙에 위치시켜주세요</li>
-          <li>• 정확한 분석을 위해 화장을 지워주세요</li>
+<li>• Please allow camera access in your browser</li>
+<li>• Better accuracy under bright lighting</li>
+<li>• Position your face at the center of the screen</li>
+<li>• For accurate analysis, please remove any makeup</li>
         </ul>
       </div>
     </div>

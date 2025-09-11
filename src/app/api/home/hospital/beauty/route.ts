@@ -19,7 +19,9 @@ export async function GET() {
     id_surgeries,
     id_unique,
     id_uuid,
-    location
+    location,
+    address_full_road_en,
+    address_full_jibun_en
   `)
       // .order("created_at", { ascending: false })
       .limit(4);

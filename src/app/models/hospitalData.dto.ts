@@ -36,10 +36,10 @@ export interface FullHospital {
     id_uuid_admin: string;
 }
 
-// 목록 전용(가볍게)
+// 목록 전용
 export type HospitalData = Pick<
   FullHospital,
-  'created_at' | 'name' | 'name_en' | 'searchkey' | 'latitude' | 'longitude' | 'thumbnail_url' | 'imageurls' | 'id_surgeries' | 'id_unique' | 'id_uuid' | 'location'
+  'created_at' | 'name' | 'name_en' | 'searchkey' | 'latitude' | 'longitude' | 'thumbnail_url' | 'imageurls' | 'id_surgeries' | 'id_unique' | 'id_uuid' | 'location' | 'address_full_road_en' | 'address_full_jibun_en'
 >;
 
 

@@ -4,6 +4,7 @@ import { HospitalData } from "@/app/models/hospitalData.dto";
 import { LocationEnum } from "@/constants";
 import { useRouter } from "next/navigation";
 import HospitalListCard from "./HospitalListCard";
+import { ROUTE } from "@/router";
 
 interface HospitalListNewDesignProps {
   initialData: HospitalData[];
@@ -51,6 +52,7 @@ const HospitalListNewDesign = ({ initialData }: HospitalListNewDesignProps) => {
               <HospitalListCard 
                 key={hospital.id_uuid} 
                 hospital={hospital}
+                 href={ROUTE.HOSPITAL_DETAIL("") + hospital.id_uuid}
                 showCategories={index === 0} 
               />
             ))}

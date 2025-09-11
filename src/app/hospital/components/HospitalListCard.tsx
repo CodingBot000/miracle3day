@@ -1,16 +1,18 @@
 "use client";
 
 import { HospitalData } from "@/app/models/hospitalData.dto";
+import { findRegionByKey, REGIONS } from "@/constants";
 import { ROUTE } from "@/router";
 import Link from "next/link";
 
 interface HospitalListCardProps {
   hospital: HospitalData;
+    href: string;
   showCategories?: boolean;
   showTreatmentInfo?: boolean;
 }
 
-const HospitalListCard = ({ hospital, showCategories = false, showTreatmentInfo = false }: HospitalListCardProps) => {
+const HospitalListCard = ({ hospital, href, showCategories = false, showTreatmentInfo = false }: HospitalListCardProps) => {
   const categories = [
     { label: "Laser toning", bgColor: "#F5F5F7" },
     { label: "acne scar", bgColor: "#F5F5F7" },
@@ -21,10 +23,12 @@ const HospitalListCard = ({ hospital, showCategories = false, showTreatmentInfo 
   console.log('hospital.name_en:' , hospital.name_en );
   console.log('hospital.thumbnail_url :', hospital.thumbnail_url );
   console.log('hospital.imageurls?[0] :', hospital.imageurls?[0] : "") ;
+
+  const region = findRegionByKey(REGIONS, parseInt(hospital.location!, 10));
   return (
     
 
-    <Link href={ROUTE.HOSPITAL_DETAIL(hospital.id_uuid)} className="block">
+    <Link href={href} className="block">
       <div className="space-y-4 md:space-y-6">
         {/* Hospital Card */}
         <div className="flex items-start gap-4 md:gap-6">
@@ -51,16 +55,30 @@ const HospitalListCard = ({ hospital, showCategories = false, showTreatmentInfo 
               <h3 className="text-base md:text-lg lg:text-xl xl:text-2xl font-normal text-black leading-tight">
                 {hospital.name_en}
               </h3>
+              <div className="flex items-center gap-2 text-xs text-gray-500">
+                <span className="font-bold">Road Name:</span>
+                <span>{hospital.address_full_road_en}</span>
+              </div>   
+              
+              <div className="flex items-center gap-2 text-xs text-gray-500">
+                <span className="font-bold">Lot number address:</span>
+                <span>{hospital.address_full_jibun_en}</span>
+              </div>   
+              
+               <div className="flex items-center gap-2 text-xs text-gray-500">
+                <span className="font-bold">Location :</span>
+                <span>{region?.label}</span>
+              </div>   
               <p className="text-sm md:text-base lg:text-lg text-gray-500">
-                {hospital.location}
+                
               </p>
               {showTreatmentInfo && (
                 <p className="text-sm md:text-base lg:text-lg text-gray-500">
-                  Laser toning, acne scar treatment
+                  {/* Laser toning, acne scar treatment */}
                 </p>
               )}
               <p className="text-sm md:text-base lg:text-lg text-gray-500">
-                ★4.8 (120+ reviews)
+                {/* ★4.8 (120+ reviews) */}
               </p>
             </div>
           </div>

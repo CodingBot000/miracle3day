@@ -21,12 +21,17 @@ export async function GET(req: Request) {
     id_surgeries,
     id_unique,
     id_uuid,
-    location
+    location,
+    address_full_road_en,
+    address_full_jibun_en
   `,
       { count: "exact" })
     // .match({ location: locationNum })
     // .limit(9);
 
+    
+  console.log('API Route - locationNum:', locationNum);
+  console.log('API Route - data sample:', data?.[0]);
   const response = {
     data,
     total: count,

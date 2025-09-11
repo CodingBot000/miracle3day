@@ -23,8 +23,8 @@ export const HospitalCard = ({
   locationNum,
   onSelect,
 }: HospitalCardProps) => {
-              const locationKey = parseInt(locationNum!, 10);
-              const region = findRegionByKey(REGIONS, locationKey);
+  const locationKey = parseInt(locationNum!, 10);
+  const region = findRegionByKey(REGIONS, locationKey);
         
 
   return (

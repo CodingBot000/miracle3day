@@ -322,7 +322,7 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
               </div>
 
               <div>
-                <ReservationClient on/>
+                {/* <ReservationClient on/> */}
               </div>
             </div>
           </div>

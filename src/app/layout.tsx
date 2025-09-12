@@ -98,8 +98,9 @@ export default function RootLayout({
               <LayoutHeader />
             </Suspense>
             <main className="pt-4 flex-1 pb-[72px]"> {/* 72px은 모바일 메뉴바의 높이 */}
-              {children}
-              
+              <div className="max-w-[1200px] mx-auto px-4">
+                {children}
+              </div>
             </main>
             <CookieConsent />
             <MenuMobile />

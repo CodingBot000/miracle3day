@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { HospitalDetailMainOutput } from "@/app/api/hospital/[id]/main/main.dto";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -10,6 +11,7 @@ import HospitalAmenities from "./HospitalAmenities";
 import HospitalConsultationButton from "./HospitalConsultationButton";
 import HospitalBusinessHours from "./HospitalBusinessHours";
 import ResponsiveImageMosaic from "@/components/template/ResponsiveImageMosaic";
+import ImageGalleryModal from "@/components/template/modal/ImageGalleryModal";
 
 interface HospitalDetailNewDesignProps {
   hospitalData: HospitalDetailMainOutput;
@@ -17,6 +19,8 @@ interface HospitalDetailNewDesignProps {
 
 const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps) => {
   const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
   console.log('HospitalDetailNewDesign hospitalData:', hospitalData);
   const { hospital_info, hospital_details, doctors, business_hours } = hospitalData;
 
@@ -25,7 +29,11 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
   };
 
   const handleImageClicked = () => {
+    setIsModalOpen(true);
+  };
 
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -113,6 +121,13 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
 
       {/* Bottom Consultation Button */}
       <HospitalConsultationButton hospitalId={hospital_info.id_uuid} />
+      
+      {/* Image Gallery Modal */}
+      <ImageGalleryModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        images={hospital_info.imageurls || []}
+      />
     </div>
   );
 };

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import ReservationModal from "@/components/template/modal/ReservationModal";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { FiChevronRight } from "react-icons/fi";
+import { HospitalData } from "@/app/models/hospitalData.dto";
 
 interface ReservationClientProps {
   id: string;

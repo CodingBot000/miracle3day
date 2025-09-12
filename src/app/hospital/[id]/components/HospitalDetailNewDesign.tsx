@@ -8,6 +8,8 @@ import HospitalLocation from "./HospitalLocation";
 import HospitalDoctorList from "./HospitalDoctorList";
 import HospitalAmenities from "./HospitalAmenities";
 import HospitalConsultationButton from "./HospitalConsultationButton";
+import HospitalBusinessHours from "./HospitalBusinessHours";
+import ResponsiveImageMosaic from "@/components/template/ResponsiveImageMosaic";
 
 interface HospitalDetailNewDesignProps {
   hospitalData: HospitalDetailMainOutput;
@@ -20,6 +22,10 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
 
   const handleBackClick = () => {
     router.back();
+  };
+
+  const handleImageClicked = () => {
+
   };
 
   return (
@@ -52,7 +58,7 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
       </div>
 
       {/* Hero Image */}
-      <div className="w-full h-[400px] relative">
+      {/* <div className="w-full h-[400px] relative">
         <Image
           src={hospital_info.imageurls?.[0] || "/placeholder-hospital.jpg"}
           alt={hospital_info.name}
@@ -60,6 +66,19 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
           className="object-cover"
           priority
         />
+      </div> */}
+      <div className="w-full h-[400px] relative">
+        <ResponsiveImageMosaic
+          images ={hospital_info.imageurls}
+          onOpen={handleImageClicked}
+          />
+        {/* <Image
+          src={hospital_info.imageurls?.[0] || "/placeholder-hospital.jpg"}
+          alt={hospital_info.name}
+          fill
+          className="object-cover"
+          priority
+        /> */}
       </div>
 
       {/* Hospital Info Section */}
@@ -80,11 +99,14 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
         </div>
       </div>
 
+      <HospitalBusinessHours business_hours={business_hours} />
+     
       {/* Hospital Location */}
       <HospitalLocation hospitalInfo={hospital_info} />
 
       {/* Doctor List */}
       <HospitalDoctorList doctors={doctors} />
+
 
       {/* Hospital Amenities */}
       <HospitalAmenities hospitalDetails={hospital_details} />

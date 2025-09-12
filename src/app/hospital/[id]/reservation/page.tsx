@@ -2,6 +2,8 @@ import { getUserAPI } from '@/app/api/auth/getUser';
 import ReservationClient from './ReservationClient';
 import { redirect } from 'next/navigation';
 import { ROUTE } from '@/router';
+import { getHospitalInfoAPI } from '@/app/api/hospital/[id]/info';
+import { getHospitalMainAPI } from '@/app/api/hospital/[id]/main';
 
 interface PageProps {
   params: {
@@ -12,7 +14,7 @@ interface PageProps {
 export default async function ReservationPage({ params }: PageProps) {
   // 서버에서 사용자 정보 가져오기
   const userData = await getUserAPI();
-  
+  const hospitalData = await getHospitalMainAPI({id: params.id });
   console.log("ReservationPage server userData:", userData);
   
   // 로그인되지 않은 경우 로그인 페이지로 리다이렉트
@@ -20,5 +22,10 @@ export default async function ReservationPage({ params }: PageProps) {
     redirect(`${ROUTE.LOGIN}?redirect=/hospital/${params.id}/reservation`);
   }
   
-  return <ReservationClient initialUserData={userData} hospitalId={params.id} />;
+  return (
+    <ReservationClient 
+    initialUserData={userData} 
+    hospitalId={params.id} 
+    hospitalData={hospitalData}/>
+  );
 }

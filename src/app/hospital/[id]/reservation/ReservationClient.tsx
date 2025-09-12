@@ -10,13 +10,16 @@ import { NationModal } from '@/app/auth/sign-up/components/modal/nations';
 import { CountryCode } from '@/app/models/country-code.dto';
 import { useReservationStore } from '@/stores/useReservationStore';
 import { UserOutputDto } from '@/app/api/auth/getUser/getUser.dto';
+import { HospitalDetailMainOutput } from '@/app/api/hospital/[id]/main/main.dto';
+import ReservationModal from '@/components/template/modal/ReservationModal';
 
 interface ReservationClientProps {
   initialUserData: UserOutputDto | null;
   hospitalId: string;
+  hospitalData: HospitalDetailMainOutput;
 }
 
-export default function ReservationClient({ initialUserData, hospitalId }: ReservationClientProps) {
+export default function ReservationClient({ initialUserData, hospitalId, hospitalData }: ReservationClientProps) {
   const router = useRouter();
   const [formData, setFormData] = useState({
     date: '',
@@ -77,13 +80,15 @@ export default function ReservationClient({ initialUserData, hospitalId }: Reser
     if (userInfo?.gender) {
       switch(userInfo.gender) {
         case 'M':
-         newFormData.gender = "male";
+          newFormData.gender = "male";
+          break;
         case 'F':
-          newFormData.gender = 'femal';
+          newFormData.gender = 'female';
+          break;
         default:
           newFormData.gender = 'other';
+          break;
       }
-      // newFormData.gender = userInfo.gender;
     }
     if (userInfo?.id_country) {
       newFormData.nationality = userInfo.id_country;
@@ -111,72 +116,81 @@ export default function ReservationClient({ initialUserData, hospitalId }: Reser
   };
 
   const handleConfirm = async () => {
-    // 폼 데이터 검증
-    const newErrors: { [key: string]: string } = {};
-    console.log('Rservationa aaaaa1');
-    if (!initialUserData?.userInfo?.uuid) newErrors.uuid = 'User UUID is required';
-    if (!formData.englishName) newErrors.englishName = 'English name is required';
-    if (!formData.nationality) newErrors.nationality = 'Nationality is required';
-    if (!formData.email) newErrors.email = 'Email is required';
-    if (!formData.phoneNumber) newErrors.phoneNumber = 'Phone number is required';
-    if (!formData.koreaPhone) newErrors.koreaPhone = 'Korea phone number is required';
-    if (!formData.date) newErrors.date = 'Date is required';
-    if (!formData.time) newErrors.time = 'Time is required';
-    if (!formData.agreeReservation) newErrors.agreeReservation = 'Please agree to reservation terms';
-    if (!formData.agreeNoShow) newErrors.agreeNoShow = 'Please agree to no-show policy';
-    console.log('Rservationa aaaaa 2:', initialUserData?.userInfo?.uuid);
-    console.log('Rservationa aaaaa 2 3:', initialUserData?.userInfo);
-    console.log('Rservationa aaaaa 2 4 :', initialUserData);
-    setErrors(newErrors);
+    try {
+      // 폼 데이터 검증
+      const newErrors: { [key: string]: string } = {};
+      console.log('🔍 Step 1: Starting validation...');
+      
+      if (!initialUserData?.userInfo?.uuid) newErrors.uuid = 'User UUID is required';
+      if (!formData.englishName) newErrors.englishName = 'English name is required';
+      if (!formData.nationality) newErrors.nationality = 'Nationality is required';
+      if (!formData.email) newErrors.email = 'Email is required';
+      if (!formData.phoneNumber) newErrors.phoneNumber = 'Phone number is required';
+      if (!formData.koreaPhone) newErrors.koreaPhone = 'Korea phone number is required';
+      if (!formData.date) newErrors.date = 'Date is required';
+      if (!formData.time) newErrors.time = 'Time is required';
+      if (!formData.agreeReservation) newErrors.agreeReservation = 'Please agree to reservation terms';
+      if (!formData.agreeNoShow) newErrors.agreeNoShow = 'Please agree to no-show policy';
+      
+      console.log('🔍 Step 2: Validation errors:', newErrors);
+      console.log('Rservationa aaaaa 2 4 :', initialUserData);
+      
+      setErrors(newErrors);
+      
+      console.log('🔍 Step 3: Error count:', Object.keys(newErrors).length);
 
-    if (Object.keys(newErrors).length === 0) {
-      // API 전송 준비
-      const reservationData = {
-        date: formData.date,
-        time: formData.time,
-        id_user: initialUserData?.userInfo?.uuid,
-        id_uuid_hospital: hospitalId,
-        name: formData.englishName,
-        english_name: formData.englishName,
-        passport_name: formData.passportName,
-        nationality: formData.nationality,
-        gender: formData.gender as 'male' | 'female' | 'other',
-        birth_date: formData.dateOfBirth,
-        email: formData.email,
-        phone: formData.phoneCountry + ' ' + formData.phoneNumber,
-        phone_korea: formData.koreaPhone,
-        preferred_date: formData.date,
-        preferred_time: formData.time,
-        visitor_count: parseInt(formData.visitorsCount) || undefined,
-        reservation_headcount: parseInt(formData.reservationCount) || undefined,
-        treatment_experience: formData.treatmentExperience === 'true',
-        area_to_improve: formData.improvementAreas,
-        consultation_request: formData.consultationFor,
-        additional_info: formData.treatmentExperience,
-        preferred_languages: formData.interpreterLanguage ? [formData.interpreterLanguage] : []
-      };
+      if (Object.keys(newErrors).length === 0) {
+        console.log('🔍 Step 4: No validation errors, proceeding with API call...');
+        
+        // API 전송 준비
+        const reservationData = {
+          date: formData.date,
+          time: formData.time,
+          id_user: initialUserData?.userInfo?.uuid,
+          id_uuid_hospital: hospitalId,
+          name: formData.englishName,
+          english_name: formData.englishName,
+          passport_name: formData.passportName,
+          nationality: formData.nationality,
+          gender: formData.gender as 'male' | 'female' | 'other',
+          birth_date: formData.dateOfBirth,
+          email: formData.email,
+          phone: formData.phoneCountry + ' ' + formData.phoneNumber,
+          phone_korea: formData.koreaPhone,
+          preferred_date: formData.date,
+          preferred_time: formData.time,
+          visitor_count: parseInt(formData.visitorsCount) || undefined,
+          reservation_headcount: parseInt(formData.reservationCount) || undefined,
+          treatment_experience: formData.treatmentExperience === 'true',
+          area_to_improve: formData.improvementAreas,
+          consultation_request: formData.consultationFor,
+          additional_info: formData.treatmentExperience,
+          preferred_languages: formData.interpreterLanguage ? [formData.interpreterLanguage] : []
+        };
 
-      console.log('Reservation data ready for submission:', reservationData);
-      console.log('Rservationa aaaa');
-      try {
+        console.log('🔍 Step 5: Reservation data ready:', reservationData);
+        
         const response = await fetch(`/api/hospital/${hospitalId}/reservation`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(reservationData),
-        })
+        });
 
+        console.log('🔍 Step 6: API response received:', response.status);
+        
         const data = await response.json();
+        console.log('🔍 Step 7: API response data:', data);
 
         if (response.ok && data.success) {
-          console.log("Reservation created:", data.data);
+          console.log("✅ Reservation created successfully:", data.data);
         } else {
-          console.error("Reservation failed:", data.error);
+          console.error("❌ Reservation failed:", data.error);
         }
-        
-
-      } catch (err) {
-        console.log(" Network or undexpecrted error:", err);
+      } else {
+        console.log('🔍 Step 4: Validation failed, not submitting');
       }
+    } catch (err) {
+      console.error("🚨 Error in handleConfirm:", err);
     }
   };
 
@@ -219,18 +233,18 @@ export default function ReservationClient({ initialUserData, hospitalId }: Reser
             <div className="flex items-start space-x-4 p-4 border border-gray-200 rounded-lg">
               <div className="w-16 h-16 bg-gray-200 rounded-lg flex-shrink-0"></div>
               <div className="flex-1">
-                <h3 className="font-medium text-gray-900">Cheongdam Eclat De | Skin Treatment in Cheongdam Dermatology</h3>
+                <h3 className="font-medium text-gray-900">{hospitalData.hospital_info.name_en} </h3>
                 <p className="text-gray-600 text-sm mt-1">{formData.date}, {formData.time}</p>
-                <button className="mt-2 px-4 py-1 text-sm border border-gray-300 rounded hover:bg-gray-50">
+                {/* <button className="mt-2 px-4 py-1 text-sm border border-gray-300 rounded hover:bg-gray-50">
                   OPTIONS
-                </button>
+                </button> */}
               </div>
             </div>
-            <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+            {/* <div className="mt-4 p-4 bg-gray-50 rounded-lg">
               <p className="text-sm text-gray-700">
                 Lifting &amp; Oligio X Package: Includes 100 shots of Oligio X + Cleansing + Sebum Removal (X-Lotion) + Topical Anesthesia + Regeneration Laser &amp; Deposit (20%) x 1
               </p>
-            </div>
+            </div> */}
           </div>
 
           {/* Basic Information */}
@@ -306,6 +320,10 @@ export default function ReservationClient({ initialUserData, hospitalId }: Reser
                   onCancel={() => setCountryModalOpen(false)}
                 />
               </div>
+
+              <div>
+                <ReservationClient on/>
+              </div>
             </div>
           </div>
 
@@ -365,7 +383,7 @@ export default function ReservationClient({ initialUserData, hospitalId }: Reser
                   type="number"
                   value={formData.visitorsCount}
                   onChange={(e) => handleInputChange('visitorsCount', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 />
               </div>
 

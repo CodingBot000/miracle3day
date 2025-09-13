@@ -33,10 +33,10 @@ const HospitalDoctorList = ({ doctors }: HospitalDoctorListProps) => {
                 {doctor.name_en}
               </h3>
               <div className="space-y-0">
-                {doctor.bio && (
-                  <p className="text-sm text-gray-500 leading-[14px]">
+                {doctor.bio_en && (
+                  <div className="text-sm text-gray-500 leading-[14px] whitespace-pre-line">
                     {doctor.bio_en}
-                  </p>
+                  </div>
                 )}
               </div>
             </div>

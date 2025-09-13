@@ -12,6 +12,7 @@ import HospitalConsultationButton from "./HospitalConsultationButton";
 import HospitalBusinessHours from "./HospitalBusinessHours";
 import ResponsiveImageMosaic from "@/components/template/ResponsiveImageMosaic";
 import ImageGalleryModal from "@/components/template/modal/ImageGalleryModal";
+import HospitalLanguageSupport from "./HospitalLanguageSupport";
 
 interface HospitalDetailNewDesignProps {
   hospitalData: HospitalDetailMainOutput;
@@ -35,7 +36,7 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
-
+  console.log('HospitalDetailNewDesign hospitalData:' ,hospitalData);
   return (
     <div className="max-w-container mx-auto bg-white min-h-screen relative">
       {/* Header with back button */}
@@ -88,7 +89,9 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
           priority
         /> */}
       </div>
+      <div>
 
+      </div>
       {/* Hospital Info Section */}
       <div className="px-4 py-8 border-b-8 border-gray-50">
         <div className="space-y-6">
@@ -97,9 +100,12 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
             <h1 className="text-2xl font-medium text-gray-900 leading-[33.6px]">
               {hospital_info.name_en}
             </h1>
-            <p className="text-base text-gray-500 leading-[22.4px]">
-              {hospital_details.introduction_en || "We promise visible results with a calm, comfortable experience. Board-certified doctors consult directly and treat with vetted devices and strict hygiene."}
-            </p>
+            {hospital_details.introduction_en && (
+                <div className="text-base text-gray-500 leading-[22.4px] whitespace-pre-line">
+                  {hospital_details.introduction_en}
+                </div>
+              )}
+          
           </div>
 
           {/* Contact Information */}
@@ -114,7 +120,10 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
 
       {/* Doctor List */}
       <HospitalDoctorList doctors={doctors} />
-
+      <HospitalLanguageSupport available_languages={hospital_details.available_language}/>
+      
+      
+        
 
       {/* Hospital Amenities */}
       <HospitalAmenities hospitalDetails={hospital_details} />

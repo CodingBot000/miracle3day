@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { FiArrowLeft, FiCalendar, FiAlertTriangle } from 'react-icons/fi';
 import { FaRegCalendarAlt } from 'react-icons/fa';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import { country } from '@/constants/country';
 import CountrySelectModal from '@/components/template/modal/CountrySelectModal';
 import { NationModal } from '@/app/auth/sign-up/components/modal/nations';
@@ -12,6 +14,8 @@ import { useReservationStore } from '@/stores/useReservationStore';
 import { UserOutputDto } from '@/app/api/auth/getUser/getUser.dto';
 import { HospitalDetailMainOutput } from '@/app/api/hospital/[id]/main/main.dto';
 import ReservationModal from '@/components/template/modal/ReservationModal';
+import ReservationCalendarClient from '../components/content/ReservationCalendarClient';
+import HospitalListCard from '../../components/HospitalListCard';
 
 interface ReservationClientProps {
   initialUserData: UserOutputDto | null;
@@ -43,12 +47,14 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
     interpreterLanguage: '',
     agreeReservation: false,
     agreeNoShow: false,
+  
 
   });
 
   const [nation, setNation] = useState<CountryCode | null>(null);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [countryModalOpen, setCountryModalOpen] = useState(false);
+  const [birthDate, setBirthDate] = useState<Date | null>(null);
   const selectedCountry = country.find(c => `${c.country_name} (+${c.phone_code})` === formData.phoneCountry) || country[0];
 
   // Zustand store에서 데이터 가져오기
@@ -63,18 +69,22 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
     console.log('ReservationClient userInfo : ', userInfo);
     if (!userInfo) {
       console.log("ReservationClient userInfo not found");
+      // Set default birth date to 20 years ago if no user data
+      const defaultDate = new Date();
+      defaultDate.setFullYear(defaultDate.getFullYear() - 20);
+      setBirthDate(defaultDate);
       return;
     }
     
     const newFormData = { ...formData };
 
     // reservationUserInfo에서 셋팅
-    if (reservationUserInfo?.date) {
-      newFormData.date = reservationUserInfo.date;
-    }
-    if (reservationUserInfo?.time) {
-      newFormData.time = reservationUserInfo.time;
-    }
+    // if (reservationUserInfo?.date) {
+    //   newFormData.date = reservationUserInfo.date;
+    // }
+    // if (reservationUserInfo?.time) {
+    //   newFormData.time = reservationUserInfo.time;
+    // }
 
     // userInfo에서 셋팅
     if (userInfo?.gender) {
@@ -103,11 +113,29 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
     }
     if (userInfo?.birth_date) {
       newFormData.dateOfBirth = userInfo.birth_date;
+      // Parse the birth_date string to Date object
+      const parsedDate = new Date(userInfo.birth_date);
+      if (!isNaN(parsedDate.getTime())) {
+        setBirthDate(parsedDate);
+      }
     }
 
     setFormData(newFormData);
   }, [initialUserData]);
 
+  const handleReservation = (date: string, time: string) => {
+    formData.date = date;
+    formData.time = time;
+    // setReservationInfo({ date, time });
+    // const user = useReservationStore.getState().reservationUserInfo;
+    // useReservationStore.getState().setReservationUserInfo({
+    //   ...user,
+    //   date: date,
+    //   time: time,
+    // });
+    // setShowBottomBar(true);
+  };
+  
   const handleInputChange = (field: string, value: string | boolean) => {
     setFormData(prev => ({
       ...prev,
@@ -130,7 +158,7 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
       if (!formData.date) newErrors.date = 'Date is required';
       if (!formData.time) newErrors.time = 'Time is required';
       if (!formData.agreeReservation) newErrors.agreeReservation = 'Please agree to reservation terms';
-      if (!formData.agreeNoShow) newErrors.agreeNoShow = 'Please agree to no-show policy';
+      // if (!formData.agreeNoShow) newErrors.agreeNoShow = 'Please agree to no-show policy';
       
       console.log('🔍 Step 2: Validation errors:', newErrors);
       console.log('Rservationa aaaaa 2 4 :', initialUserData);
@@ -183,14 +211,18 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
 
         if (response.ok && data.success) {
           console.log("✅ Reservation created successfully:", data.data);
+          router.back();
         } else {
+          
           console.error("❌ Reservation failed:", data.error);
+          alert(data.error || "An error occurred while processing your reservation. Please try again.");
         }
       } else {
         console.log('🔍 Step 4: Validation failed, not submitting');
       }
     } catch (err) {
       console.error("🚨 Error in handleConfirm:", err);
+      alert("A network error has occurred. Please check your internet connection and try again.");
     }
   };
 
@@ -229,9 +261,17 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
         <div className="max-w-4xl mx-auto px-4 pb-8">
           {/* Reservation Items */}
           <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-            <h2 className="text-lg font-semibold mb-4">Reservation items</h2>
+            {/* <h2 className="text-lg font-semibold mb-4">Reservation items</h2> */}
             <div className="flex items-start space-x-4 p-4 border border-gray-200 rounded-lg">
-              <div className="w-16 h-16 bg-gray-200 rounded-lg flex-shrink-0"></div>
+              <div className="w-16 h-16 bg-gray-200 rounded-lg flex-shrink-0">
+                 {/* {hospitalData.hospital_info.thumbnail_url ? ( */}
+              <img
+                src={hospitalData.hospital_info.thumbnail_url!}
+                alt={hospitalData.hospital_info.name_en}
+                className="w-full h-full object-cover rounded-lg"
+              />
+              {/* } */}
+              </div>
               <div className="flex-1">
                 <h3 className="font-medium text-gray-900">{hospitalData.hospital_info.name_en} </h3>
                 <p className="text-gray-600 text-sm mt-1">{formData.date}, {formData.time}</p>
@@ -322,7 +362,7 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
               </div>
 
               <div>
-                {/* <ReservationClient on/> */}
+                <ReservationCalendarClient id={hospitalId} onReservation={handleReservation} />
               </div>
             </div>
           </div>
@@ -360,18 +400,46 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+                  <FaRegCalendarAlt className="mr-2 text-gray-400" />
                   Date of Birth
                 </label>
                 <div className="relative">
-                  <input
-                    type="text"
-                    value={formData.dateOfBirth}
-                    onChange={(e) => handleInputChange('dateOfBirth', e.target.value)}
+                  <DatePicker
+                    selected={birthDate}
+                    onChange={(date: Date | null) => {
+                      setBirthDate(date);
+                      if (date) {
+                        const formattedDate = date.toLocaleDateString('en-US', {
+                          month: '2-digit',
+                          day: '2-digit',
+                          year: 'numeric'
+                        });
+                        handleInputChange('dateOfBirth', formattedDate);
+                      } else {
+                        handleInputChange('dateOfBirth', '');
+                      }
+                    }}
+                    dateFormat="MM/dd/yyyy"
+                    placeholderText="mm/dd/yyyy"
+                    maxDate={new Date()}
+                    showYearDropdown
+                    showMonthDropdown
+                    dropdownMode="select"
+                    onKeyDown={(e) => {
+                      // Prevent manual typing except Tab, Escape and navigation keys
+                      const allowedKeys = ['Tab', 'Escape', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'];
+                      if (!allowedKeys.includes(e.key)) {
+                        e.preventDefault();
+                      }
+                    }}
+                    onChangeRaw={(e) => {
+                      // Prevent any raw input changes
+                      e?.preventDefault();
+                    }}
                     className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="mm/dd/yyyy"
                   />
-                  <FaRegCalendarAlt className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                  
                 </div>
               </div>
 
@@ -383,6 +451,7 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
                   type="number"
                   value={formData.visitorsCount}
                   onChange={(e) => handleInputChange('visitorsCount', e.target.value)}
+                  onWheel={(e) => e.currentTarget.blur()}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 />
               </div>
@@ -466,7 +535,7 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
                 </select>
               </div>
 
-              <div className="flex items-start space-x-3">
+              {/* <div className="flex items-start space-x-3">
                 <input
                   type="checkbox"
                   checked={formData.agreeNoShow}
@@ -477,7 +546,7 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
                   If there are accumulated no-shows, there may be restrictions on future services. Please make sure to visit on the confirmed date/time and avoid being late.
                 </label>
               </div>
-              {errors.agreeNoShow && <p className="text-red-500 text-sm mt-1">{errors.agreeNoShow}</p>}
+              {errors.agreeNoShow && <p className="text-red-500 text-sm mt-1">{errors.agreeNoShow}</p>} */}
 
               <p className="text-red-500 text-sm">You must accept the terms and conditions to proceed.</p>
 

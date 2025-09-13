@@ -6,12 +6,12 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import { FiChevronRight } from "react-icons/fi";
 import { HospitalData } from "@/app/models/hospitalData.dto";
 
-interface ReservationClientProps {
+interface ReservationCalendarClientProps {
   id: string;
   onReservation?: (date: string, time: string) => void;
 }
 
-export default function ReservationClient({ id, onReservation }: ReservationClientProps) {
+export default function ReservationCalendarClient({ id, onReservation }: ReservationCalendarClientProps) {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<{ date: string; time: string } | null>(null);
 
@@ -35,7 +35,10 @@ export default function ReservationClient({ id, onReservation }: ReservationClie
 
   return (
     <div>
-      <div className="mb-4 text-2xl font-semibold text-gray-800">Select reservation date</div>
+      {/* <div className="mb-4 text-2xl font-semibold text-gray-800">Select reservation date</div> */}
+      <label className="block text-sm font-medium text-gray-700 mb-1">
+        Select reservation date <span className="text-red-500">*</span>
+      </label>
       <button
         className="w-full flex items-center border border-teal-400 rounded-md px-4 py-3 text-left hover:shadow focus:outline-none transition bg-white"
         onClick={() => setOpen(true)}

@@ -81,34 +81,71 @@ const LayoutHeader = dynamic(() => import("@/components/organism/layout/LayoutHe
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="h-full">
-      <body className={inter.className + " min-h-screen flex flex-col"}>
+    <html lang="en" className="h-full overflow-x-hidden"> {/* 가로 스크롤 차단(보조) */}
+      <body className={inter.className + " min-h-screen flex flex-col overflow-x-hidden"}>
         <ProgressBar />
         {/* <PageTransitionOverlay /> */}
-        {/* <div className="bg-background flex flex-col flex-1 min-h-screen"> */}
-        <div className="bg-gradient-hero flex flex-col flex-1 min-h-screen">
+
+        {/* 배경/루트 래퍼: 변형/음수마진으로 넘칠 때를 대비해 clip */}
+        <div className="bg-gradient-hero flex flex-col flex-1 min-h-screen w-full overflow-x-clip">
           <Providers>
-            <ScrollTop />  
+            <ScrollTop />
             <div id="modal-root" />
+
             <Suspense fallback={<div>Loading header...</div>}>
               <LayoutHeader />
             </Suspense>
-            <main className="pt-4 flex-1 pb-[72px]"> {/* 72px은 모바일 메뉴바의 높이 */}
-              <div className="max-w-[1200px] mx-auto px-4">
+
+            {/* 메인은 항상 뷰포트폭에 맞춤 */}
+            <main className="pt-4 flex-1 pb-[72px] w-full">
+              {/* 컨텐츠 컨테이너: 데스크탑 1200px 제한 + 모바일 꽉 채우기 */}
+              <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8 min-w-0">
                 {children}
               </div>
             </main>
+
             <CookieConsent />
             <MenuMobile />
             <Footer />
-           
-          </Providers> 
+          </Providers>
         </div>
       </body>
     </html>
   );
 }
+
+// export default function RootLayout({
+//   children,
+// }: Readonly<{
+//   children: React.ReactNode;
+// }>) {
+//   return (
+//     <html lang="en" className="h-full">
+//       <body className={inter.className + " min-h-screen flex flex-col"}>
+//         <ProgressBar />
+//         {/* <PageTransitionOverlay /> */}
+//         {/* <div className="bg-background flex flex-col flex-1 min-h-screen"> */}
+//         <div className="bg-gradient-hero flex flex-col flex-1 min-h-screen">
+//           <Providers>
+//             <ScrollTop />  
+//             <div id="modal-root" />
+//             <Suspense fallback={<div>Loading header...</div>}>
+//               <LayoutHeader />
+//             </Suspense>
+//             <main className="pt-4 flex-1 pb-[72px]"> {/* 72px은 모바일 메뉴바의 높이 */}
+//               <div className="max-w-[1200px] mx-auto px-4">
+//                 {children}
+//               </div>
+//             </main>
+//             <CookieConsent />
+//             <MenuMobile />
+//             <Footer />
+           
+//           </Providers> 
+//         </div>
+//       </body>
+//     </html>
+//   );
+// }

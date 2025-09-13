@@ -21,7 +21,7 @@ const HospitalConsultationButton = ({ hospitalId }: HospitalConsultationButtonPr
           onClick={handleConsultationClick}
           className="w-full h-12 bg-[#FB718F] text-white rounded-lg font-semibold text-base leading-[22.4px] hover:bg-[#f5648a] transition-colors"
         >
-          a consultation appointment
+          Schedule a Consultation
         </button>
       </div>
     </div>

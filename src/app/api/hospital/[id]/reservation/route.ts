@@ -6,12 +6,16 @@ import { TABLE_RESERVATIONS } from "@/constants/tables";
 
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
   try {
+    console.log('🔍 API Route: POST reservation started');
     const supabase = createClient();
     const body = await req.json();
+    console.log('🔍 API Route: Request body:', body);
 
     const hospitalId = params.id;
+    console.log('🔍 API Route: Hospital ID:', hospitalId);
 
     const reservationData: ReservationInputDto = {
+      id_user: body.id_user,
       id_uuid_hospital: hospitalId,
       name: body.name,
       english_name: body.english_name,
@@ -31,9 +35,11 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
       consultation_request: body.consultation_request,
       additional_info: body.additional_info,
       preferred_languages: body.preferred_languages ?? [],
-      status_code: PENDING, // 기본 상태
+      status_code: 1, // PENDING 상태 코드
       created_at: new Date().toISOString(),
     };
+    
+    console.log('🔍 API Route: Prepared reservation data:', reservationData);
 
     const { data, error } = await supabase
       .from(TABLE_RESERVATIONS)

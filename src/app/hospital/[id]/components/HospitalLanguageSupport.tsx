@@ -1,34 +1,29 @@
-import { DoctorData } from "@/app/models/hospitalData.dto";
-import Image from "next/image";
+import { languages } from "@/constants/languages";
 
 interface HospitalLanguageSupportProps {
-  doctors: DoctorData[];
+  available_languages: string[];
 }
 
-const HospitalLanguageSupport = ({ doctors }: HospitalLanguageSupportProps) => {
+const HospitalLanguageSupport = ({ available_languages }: HospitalLanguageSupportProps) => {
+
   return (
     <div className="px-4 py-8 border-b-8 border-gray-50">
       <h2 className="text-lg font-semibold text-black mb-4 leading-[26.6px]">
         Languages Supported
       </h2>
       
-      <div className="space-y-6">
-        {doctors.map((doctor, index) => (
-          <div key={index} className="flex items-start gap-6">
-            <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
-              <Image
-                src={doctor.image_url || "/placeholder-doctor.jpg"}
-                alt={doctor.name}
-                width={48}
-                height={48}
-                className="object-cover w-full h-full"
-              />
-            </div>
-            
-            
-          </div>
-        ))}
-        
+      <div className="flex flex-wrap gap-3">
+        {available_languages && available_languages.map((languageCode, index) => {
+          const language = languages.find(lang => lang.code === languageCode);
+          return language ? (
+            <span
+              key={index}
+              className="inline-block px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full"
+            >
+              {language.label}
+            </span>
+          ) : null;
+        })}
       </div>
     </div>
   );

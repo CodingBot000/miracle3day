@@ -3,14 +3,14 @@ import SuspenseWrapper from "@/components/atoms/SuspenseWrapper";
 import dynamicImport from "next/dynamic";
 import EventSkeleton from "./EventSkeleton";
 
-const ReservationClient = dynamicImport(() => import("./ReservationClient"), {
+const ReservationCalendarClient = dynamicImport(() => import("./ReservationCalendarClient"), {
   ssr: false,
 });
 
 export default function ReservationWrapper({ id }: { id: string }) {
   return (
     <SuspenseWrapper fallback={<EventSkeleton />}>
-      <ReservationClient id={id} />
+      <ReservationCalendarClient id={id} />
     </SuspenseWrapper>
   );
 }

@@ -27,7 +27,7 @@ const steps: ProcessStep[] = [
   },
   {
     number: 4,
-    title: "Book a consultation",
+    title: "Schedule a Consultation",
     description: "Connect directly with a trusted clinic to schedule your treatment."
   }
 ];

@@ -11,20 +11,37 @@ interface ReservationModalProps {
   timeSlots?: TimeSlot[];
 }
 
-const getDefaultTimeSlots = (): TimeSlot[] => {
-  const slots: TimeSlot[] = [];
-  let hour = 10;
-  let minute = 0;
-  while (hour < 18 || (hour === 18 && minute === 0)) {
-    const time = `${hour.toString().padStart(2, '0')}:${minute === 0 ? '00' : '30'}`;
-    slots.push({ time, enabled: true });
-    if (minute === 0) minute = 30;
-    else {
-      minute = 0;
-      hour++;
-    }
+const getDefaultTimeSlots = (selectedDate?: Date | null): TimeSlot[] => {
+  const allSlots: TimeSlot[] = [
+    { time: '10:00', enabled: true },
+    { time: '10:30', enabled: true },
+    { time: '11:00', enabled: true },
+    { time: '11:30', enabled: true },
+    { time: '12:00', enabled: true },
+    { time: '12:30', enabled: true },
+    { time: '13:00', enabled: true },
+    { time: '13:30', enabled: true },
+    { time: '14:00', enabled: true },
+    { time: '14:30', enabled: true },
+    { time: '15:00', enabled: true },
+    { time: '15:30', enabled: true },
+    { time: '16:00', enabled: true },
+    { time: '16:30', enabled: true },
+    { time: '17:00', enabled: true },
+    { time: '17:30', enabled: true },
+    { time: '18:00', enabled: true }
+  ];
+
+  if (!selectedDate) return allSlots;
+
+  const dayOfWeek = selectedDate.getDay(); // 0 = Sunday, 6 = Saturday
+  
+  // 토요일인 경우 13:00까지만 표시
+  if (dayOfWeek === 6) {
+    return allSlots.filter(slot => slot.time <= '13:00');
   }
-  return slots;
+  
+  return allSlots;
 };
 
 const getToday = () => {
@@ -40,7 +57,7 @@ const ReservationModal: React.FC<ReservationModalProps> = ({ onConfirm, onClose,
     return new Date(today.getFullYear(), today.getMonth(), 1);
   });
 
-  const slots = useMemo(() => timeSlots || getDefaultTimeSlots(), [timeSlots]);
+  const slots = useMemo(() => timeSlots || getDefaultTimeSlots(selectedDate), [timeSlots, selectedDate]);
 
   const getCalendarDates = () => {
     const year = currentMonth.getFullYear();
@@ -62,8 +79,12 @@ const ReservationModal: React.FC<ReservationModalProps> = ({ onConfirm, onClose,
     return date < today;
   };
 
+  const isSunday = (date: Date) => {
+    return date.getDay() === 0; // 0 = Sunday
+  };
+
   const handleDateSelect = (date: Date | null) => {
-    if (!date || isBeforeToday(date)) return;
+    if (!date || isBeforeToday(date) || isSunday(date)) return;
     setSelectedDate(date);
     setSelectedTime(null);
   };
@@ -122,7 +143,7 @@ const ReservationModal: React.FC<ReservationModalProps> = ({ onConfirm, onClose,
             ))}
             {getCalendarDates().map((date, idx) => {
               if (!date) return <div key={idx}></div>;
-              const disabled = isBeforeToday(date);
+              const disabled = isBeforeToday(date) || isSunday(date);
               const selected = selectedDate && date.getFullYear() === selectedDate.getFullYear() && date.getMonth() === selectedDate.getMonth() && date.getDate() === selectedDate.getDate();
               return (
                 <button

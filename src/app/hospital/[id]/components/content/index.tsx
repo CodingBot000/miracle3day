@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import HospitalDetailPageTab from "../tab/HospitalDetailPageTab";
 import { HospitalDetailMainOutput } from "@/app/api/hospital/[id]/main/main.dto";
-import ReservationClient from "./ReservationClient";
+import ReservationCalendarClient from "./ReservationCalendarClient";
 import { ROUTE } from "@/router";
 import { useRouter } from "next/navigation";
 import { useReservationStore } from "@/stores/useReservationStore";
@@ -57,7 +57,7 @@ export default function HospitalDetailContent({ hospitalData } : DetailPageTabPr
         <div className="mt-12" ref={tabRefs.event}><EventTab id={id_uuid_hospital} /></div>
         <div className="mt-12" ref={tabRefs.review}><ReviewTab id={id_uuid_hospital} /></div>
         <div className="mt-12" ref={tabRefs.review}>
-          <ReservationClient id={id_uuid_hospital} onReservation={handleReservation} />
+          <ReservationCalendarClient id={id_uuid_hospital} onReservation={handleReservation} />
         </div>
         <div className="mt-12" ref={tabRefs.info}><InfoTab hospitalData={hospitalData} /></div>
 

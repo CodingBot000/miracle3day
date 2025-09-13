@@ -120,7 +120,7 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
 
       {/* Doctor List */}
       <HospitalDoctorList doctors={doctors} />
-      <HospitalLanguageSupport available_languages={hospital_details.available_language}/>
+      <HospitalLanguageSupport available_language={hospital_details.available_languages}/>
       
       
         

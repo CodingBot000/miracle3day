@@ -182,7 +182,7 @@ export type HospitalDetail = Pick<
     youtube: string;
     other_channel: string;
     sns_content_agreement: number;
-    available_language: string[];
+    available_languages: string[];
     introduction: string;
     introduction_en: string;
 

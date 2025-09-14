@@ -39,6 +39,20 @@ function normalizeKey(key: string): string {
 export default function TreatmentsViewer({ lang }: Props) {
   const searchParams = useSearchParams();
   
+  // Debug: Log component initialization
+  console.log('🔧 TreatmentsViewer initialized with lang:', lang);
+  console.log('🔧 SearchParams:', Object.fromEntries(searchParams.entries()));
+  
+  // Alternative method to get URL parameters (fallback)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const treatmentFromWindow = urlParams.get('treatment');
+      console.log('🌐 Window URL treatment param:', treatmentFromWindow);
+      console.log('🌐 Full URL:', window.location.href);
+    }
+  }, []);
+  
   // 루트 키가 treatments 또는 오타(treatemtns) 모두 지원
 type RawJson = { treatments?: unknown; treatemtns?: unknown };
 
@@ -59,35 +73,61 @@ const treatments: Treatment[] = useMemo(() => {
     : Array.isArray(raw.treatemtns)
       ? raw.treatemtns
       : [];
-  return (list as unknown[]).filter(isTreatment) as Treatment[];
+  const filteredTreatments = (list as unknown[]).filter(isTreatment) as Treatment[];
+  console.log('📋 Loaded treatments:', filteredTreatments.length);
+  console.log('📋 Treatment keys:', filteredTreatments.map(t => t.key));
+  return filteredTreatments;
 }, []);
 
   // Find matching treatment based on URL parameter with normalized key comparison
   const treatmentFromUrl = useMemo(() => {
     const treatmentParam = searchParams.get('treatment');
-    if (!treatmentParam) return null;
+    console.log('🔍 URL treatment parameter:', treatmentParam);
+    
+    if (!treatmentParam) {
+      console.log('🔍 No treatment parameter found in URL');
+      return null;
+    }
     
     const normalizedParam = normalizeKey(treatmentParam);
-    return treatments.find(treatment => 
-      normalizeKey(treatment.key) === normalizedParam
-    );
+    console.log('🔍 Normalized URL param:', normalizedParam);
+    
+    const matchedTreatment = treatments.find(treatment => {
+      const normalizedTreatmentKey = normalizeKey(treatment.key);
+      const isMatch = normalizedTreatmentKey === normalizedParam;
+      console.log(`🔍 Comparing: "${normalizedTreatmentKey}" === "${normalizedParam}" -> ${isMatch}`);
+      return isMatch;
+    });
+    
+    console.log('🔍 Matched treatment from URL:', matchedTreatment?.key || 'None');
+    return matchedTreatment || null;
   }, [searchParams, treatments]);
 
   const [activeKey, setActiveKey] = useState<string | null>(null);
 
   // Set initial active key based on URL parameter or default to first treatment
   useEffect(() => {
+    console.log('⚡ useEffect triggered');
+    console.log('⚡ treatmentFromUrl:', treatmentFromUrl?.key || 'None');
+    console.log('⚡ treatments.length:', treatments.length);
+    console.log('⚡ current activeKey:', activeKey);
+    
     if (treatmentFromUrl) {
+      console.log('⚡ Setting activeKey from URL:', treatmentFromUrl.key);
       setActiveKey(treatmentFromUrl.key);
     } else if (treatments.length > 0 && !activeKey) {
+      console.log('⚡ Setting activeKey to first treatment:', treatments[0].key);
       setActiveKey(treatments[0].key);
+    } else {
+      console.log('⚡ No activeKey changes needed');
     }
   }, [treatmentFromUrl, treatments, activeKey]);
 
-  const active = useMemo(
-    () => treatments.find((t) => t.key === activeKey) ?? null,
-    [treatments, activeKey]
-  );
+  const active = useMemo(() => {
+    const foundTreatment = treatments.find((t) => t.key === activeKey) ?? null;
+    console.log('🎯 Active treatment updated:', { activeKey, foundTitle: foundTreatment?.title });
+    return foundTreatment;
+  }, [treatments, activeKey]);
 
   // 상세 섹션 구성 (라벨 다국어)
   const sections: {
@@ -126,7 +166,9 @@ const treatments: Treatment[] = useMemo(() => {
   ];
 
   const handleDropdownChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setActiveKey(e.target.value);
+    const newKey = e.target.value;
+    console.log('📱 Dropdown changed to:', newKey);
+    setActiveKey(newKey);
   };
 
   return (
@@ -178,7 +220,10 @@ const treatments: Treatment[] = useMemo(() => {
                 return (
                   <li key={t.key}>
                     <button
-                      onClick={() => setActiveKey(t.key)}
+                      onClick={() => {
+                        console.log('🖱️ Sidebar clicked:', t.key);
+                        setActiveKey(t.key);
+                      }}
                       className={[
                         "w-full text-left px-4 py-3 rounded-xl",
                         "hover:bg-neutral-100 transition",

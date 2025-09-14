@@ -9,11 +9,11 @@
       },
       "effectsDuration": {
         "ko": "효과는 보통 시술 2~3일 후부터 나타나 1~2주에 최대가 되며, 1회 효과는 평균 3~6개월(개인·부위에 따라 최대 약 9개월) 지속됩니다.",
-        "en": "Results typically begin in 2–3 days, peak at 1–2 weeks, and last about 3–6 months (up to ~9 months depending on area and individual)."
+        "en": "Results typically begin in 2-3 days, peak at 1-2 weeks, and last about 3-6 months (up to ~9 months depending on area and individual)."
       },
       "painAnesthesia": {
         "ko": "주사 통증은 경미한 편이며 대개 마취 없이 5~10분 내 시술합니다. 예민 부위는 도포마취를 사용하기도 합니다.",
-        "en": "Injection discomfort is usually mild; procedures often take 5–10 minutes without anesthesia. Topical anesthetic may be used for sensitive areas."
+        "en": "Injection discomfort is usually mild; procedures often take 5-10 minutes without anesthesia. Topical anesthetic may be used for sensitive areas."
       },
       "downtime": {
         "ko": "다운타임은 거의 없으며, 일시적인 홍조·멍이 생겨도 대개 1주 내 사라집니다.",
@@ -25,7 +25,7 @@
       },
       "sessionFrequency": {
         "ko": "시술 시간은 약 5~10분. 효과 유지 목적이라면 보통 3~6개월 간격으로 반복을 권장하며, 너무 잦은 시술은 내성 위험을 높일 수 있습니다.",
-        "en": "Takes ~5–10 minutes. For maintenance, repeat every 3–6 months; overly frequent sessions may increase tolerance risk."
+        "en": "Takes ~5-10 minutes. For maintenance, repeat every 3-6 months; overly frequent sessions may increase tolerance risk."
       },
       "candidatesContraindications": {
         "ko": "표정주름 개선 및 근육 축소가 필요한 성인에게 적합. 임신·수유 중이거나 일부 신경근 질환이 있는 경우는 피해야 합니다.",
@@ -33,11 +33,11 @@
       },
       "costKRW": {
         "ko": "부위·제품·용량에 따라 상이하나, 사각턱 약 5만~20만 원, 승모근·종아리 약 10만~50만 원 수준(병원별 상이).",
-        "en": "Varies by area/product/units; representative ranges: masseter ~₩50,000–₩200,000; trapezius/calves ~₩100,000–₩500,000 (clinic-dependent)."
+        "en": "Varies by area/product/units; representative ranges: masseter ~₩50,000-₩200,000; trapezius/calves ~₩100,000-₩500,000 (clinic-dependent)."
       },
       "reviewsSummary": {
         "ko": "미간·이마 주름 개선, 턱선 슬림해짐 후기가 많으며, 약 3~4일 차에 변화를 느꼈다는 사례가 흔합니다. 3~6개월 이후 점차 원상 복귀합니다.",
-        "en": "Frequent reports of smoother frown/forehead lines and slimmer jawline; many notice changes around day 3–4. Gradual return toward baseline after 3–6 months."
+        "en": "Frequent reports of smoother frown/forehead lines and slimmer jawline; many notice changes around day 3-4. Gradual return toward baseline after 3-6 months."
       },
       "precautions": {
         "ko": "시술 후 4시간은 눕지 말고, 며칠간은 세게 문지르거나 사우나·격한 운동을 피합니다(열에 약해 확산 가능).",
@@ -53,11 +53,11 @@
       "title": { "ko": "스킨보톡스", "en": "Skin Botox (Microbotox)" },
       "overview": {
         "ko": "보툴리눔 톡신을 4~5배 희석해 피부 진피층에 촘촘히 주사하여 모공 축소, 피부결·잔주름 개선, 탄력 증진을 노리는 시술입니다.",
-        "en": "Diluted botulinum toxin (≈4–5×) is microinjected into the dermis to improve pores, skin texture, fine lines, and elasticity."
+        "en": "Diluted botulinum toxin (≈4-5×) is microinjected into the dermis to improve pores, skin texture, fine lines, and elasticity."
       },
       "effectsDuration": {
         "ko": "1주 전후로 피부가 매끈해지는 느낌이 들며, 1회 효과는 보통 2~3개월로 짧습니다. 3개월 간격으로 반복해 효과를 잇는 경우가 많습니다.",
-        "en": "Smoother skin is often felt around 1 week; single-session effects last ~2–3 months. Many maintain results with ~3-month intervals."
+        "en": "Smoother skin is often felt around 1 week; single-session effects last ~2-3 months. Many maintain results with ~3-month intervals."
       },
       "painAnesthesia": {
         "ko": "얕은 부위를 다수 주사해 통증이 상당한 편입니다. 도포마취와 냉각 장치를 병행하기도 합니다.",
@@ -65,7 +65,7 @@
       },
       "downtime": {
         "ko": "즉시 일상 복귀 가능하나, 미세 붉은 자국/팽진(엠보싱)·멍이 1~2일(멍은 ~1주) 관찰될 수 있습니다.",
-        "en": "Back to daily life immediately; tiny red blebs/embossing and bruises may occur, settling in 1–2 days (bruises ~1 week)."
+        "en": "Back to daily life immediately; tiny red blebs/embossing and bruises may occur, settling in 1-2 days (bruises ~1 week)."
       },
       "sideEffectsSafety": {
         "ko": "전신 부작용은 드물고 안전성이 높은 편입니다. 단, 너무 잦은 시술은 내성 가능성이 있고, 깊게 주입되면 표정 불균형 등의 문제가 생길 수 있어 숙련된 시술이 필요합니다.",
@@ -73,7 +73,7 @@
       },
       "sessionFrequency": {
         "ko": "시술 시간 10~20분. 보통 2~3개월 간격으로 반복합니다.",
-        "en": "Takes 10–20 minutes; typically repeated every 2–3 months."
+        "en": "Takes 10-20 minutes; typically repeated every 2-3 months."
       },
       "candidatesContraindications": {
         "ko": "넓은 모공, 잔주름, 피부결 개선을 원하는 성인에게 적합. 입 주변 등은 시술 난도가 높아 숙련도가 중요합니다.",
@@ -81,7 +81,7 @@
       },
       "costKRW": {
         "ko": "국산 기준 풀페이스 약 20만 원대, 수입산 30만 원대; 부분 시술 9~10만 원부터, 3회 패키지 60~90만 원 등(병원별 상이).",
-        "en": "Approximate pricing: full-face domestic ~₩200k, imported ~₩300k; partial areas from ~₩90k–₩100k; 3-session packages ~₩600k–₩900k (varies by clinic)."
+        "en": "Approximate pricing: full-face domestic ~₩200,000, imported ~₩300,000; partial areas from ~₩90,000-₩100,000; 3-session packages ~₩600,000-₩900,000 (varies by clinic)."
       },
       "reviewsSummary": {
         "ko": "‘효과는 좋지만 지속이 짧다’는 후기가 많으며, 모공 조임·결 개선 만족 후기가 다수입니다.",
@@ -105,7 +105,7 @@
       },
       "effectsDuration": {
         "ko": "시술 직후 리프팅이 보이고, 2~3개월간 콜라겐 재생으로 추가 호전됩니다. 보통 1~2년 지속(개인·실 종류·개수에 따라 차이).",
-        "en": "Immediate lift, with further improvement over 2–3 months via collagen remodeling; effects typically last ~1–2 years depending on thread type/number and individual factors."
+        "en": "Immediate lift, with further improvement over 2-3 months via collagen remodeling; effects typically last ~1-2 years depending on thread type/number and individual factors."
       },
       "painAnesthesia": {
         "ko": "국소마취 하에 진행하며, 당김·뻐근함이 있을 수 있으나 대체로 참을만한 수준입니다.",
@@ -113,7 +113,7 @@
       },
       "downtime": {
         "ko": "경미한 붓기·멍이 있을 수 있으나 대개 다음 날부터 일상 복귀 가능합니다. 1~2주 내 대부분 완화됩니다.",
-        "en": "Mild swelling/bruising is common; most resume daily activities the next day, with symptoms settling over 1–2 weeks."
+        "en": "Mild swelling/bruising is common; most resume daily activities the next day, with symptoms settling over 1-2 weeks."
       },
       "sideEffectsSafety": {
         "ko": "일시적 멍·부기·이물감이 흔하며, 드물게 염증·감염·실 표출·이동 등이 보고됩니다. 흡수성 실을 사용해 안전성은 비교적 높은 편입니다.",
@@ -121,15 +121,15 @@
       },
       "sessionFrequency": {
         "ko": "시술 약 30분 내외. 보통 1회로 충분하며, 1~2년 후 효과 감소 시 추가 시술을 고려합니다.",
-        "en": "Around 30 minutes; often a single session suffices, with optional touch-ups after ~1–2 years."
+        "en": "Around 30 minutes; often a single session suffices, with optional touch-ups after ~1-2 years."
       },
       "candidatesContraindications": {
         "ko": "경미~중등도 처짐 개선을 원하는 30~50대에 적합. 심한 처짐은 수술적 리프팅이 필요할 수 있습니다. 임신부·켈로이드 체질·시술부 염증 시는 피합니다.",
-        "en": "Suited for mild–moderate laxity (commonly 30s–50s). Severe ptosis may need surgical lifting. Avoid in pregnancy, keloid-prone patients, or active infection."
+        "en": "Suited for mild-moderate laxity (commonly 30s-50s). Severe ptosis may need surgical lifting. Avoid in pregnancy, keloid-prone patients, or active infection."
       },
       "costKRW": {
         "ko": "실 종류·개수·병원에 따라 편차가 크며, 대략 수십만 원~100만 원 이상. 평균 약 50~80만 원 수준으로 보고됩니다.",
-        "en": "Wide range depending on thread types and counts: from several hundred thousand KRW to over 1 million; averages ~₩500k–₩800k are often reported."
+        "en": "Wide range depending on thread types and counts: from several hundred thousand KRW to over 1 million; averages ~₩500,000-₩800,000 are often reported."
       },
       "reviewsSummary": {
         "ko": "즉시 리프팅과 턱선 정돈, 처짐 개선 후기가 많고, 당김 느낌이 시간이 지나며 자연스러워졌다는 평가가 흔합니다.",
@@ -137,7 +137,7 @@
       },
       "precautions": {
         "ko": "1~2주간 큰 하품·과도한 입 벌림·사우나·격한 운동을 피하고, 턱선 시술 시 고개를 세게 돌리는 행동을 자제합니다.",
-        "en": "For ~1–2 weeks, avoid wide mouth opening, saunas, vigorous exercise; minimize abrupt neck rotations after jawline threads."
+        "en": "For ~1-2 weeks, avoid wide mouth opening, saunas, vigorous exercise; minimize abrupt neck rotations after jawline threads."
       },
       "providerNotes": {
         "ko": "개인 얼굴 구조·탄력에 맞춘 실 선택·개수·벡터 설계가 중요하므로 숙련된 전문의와 충분히 상담하세요.",
@@ -153,7 +153,7 @@
       },
       "effectsDuration": {
         "ko": "시술 직후 약간의 타이트닝이 보이고, 2~3개월에 효과가 극대화됩니다. 개인차가 있으나 보통 6개월~1년 유지됩니다.",
-        "en": "Mild immediate tightening with maximal effect at ~2–3 months; benefits generally persist ~6–12 months."
+        "en": "Mild immediate tightening with maximal effect at ~2-3 months; benefits generally persist ~6-12 months."
       },
       "painAnesthesia": {
         "ko": "크림마취 후 진행하며 깊은 열감과 따끔거림이 있을 수 있습니다. 최신 기기는 쿨링·진동으로 통증이 완화되었습니다.",
@@ -169,7 +169,7 @@
       },
       "sessionFrequency": {
         "ko": "약 40~60분 소요. 1회로도 효과가 있으나 6~12개월 간격의 정기 시술을 권장합니다.",
-        "en": "Takes ~40–60 minutes. A single session helps; consider maintenance every 6–12 months."
+        "en": "Takes ~40-60 minutes. A single session helps; consider maintenance every 6-12 months."
       },
       "candidatesContraindications": {
         "ko": "초기 노화로 탄력이 저하된 30대 이후에 적합. 최근 실·필러 시술이 있다면 간섭 가능성이 있어 시기 조율이 필요합니다. 임신부·안면 금속 임플란트 보유자는 피합니다.",
@@ -177,7 +177,7 @@
       },
       "costKRW": {
         "ko": "안면 1회 약 100만~300만 원(샷 수·병원에 따라 편차). 예: FLX 300샷 ~120~150만, 600샷 ~200만 내외, 900샷 ~250만 원 이상.",
-        "en": "Face session roughly ₩1.0–3.0M depending on shots/clinic. Examples: FLX 300 shots ~₩1.2–1.5M; 600 shots ~₩2.0M; 900 shots ≥₩2.5M."
+        "en": "Face session roughly ₩1,000,000-3,000,000 depending on shots/clinic. Examples: FLX 300 shots ~₩1,200,000-1,500,000; 600 shots ~₩2,000,000; 900 shots ₩2,500,000 or more."
       },
       "reviewsSummary": {
         "ko": "다운타임이 거의 없고, 수개월에 걸친 탄력·결 개선 후기가 많습니다. 통증 체감과 체감 효과는 개인차가 큽니다.",
@@ -201,7 +201,7 @@
       },
       "effectsDuration": {
         "ko": "즉시 타이트닝 후 2~6개월에 최대 효과. 보통 약 1년 유지, 개인차 있음.",
-        "en": "Mild immediate tightening; peak results at ~2–6 months; durability around ~1 year, varies by individual."
+        "en": "Mild immediate tightening; peak results at ~2-6 months; durability around ~1 year, varies by individual."
       },
       "painAnesthesia": {
         "ko": "통증이 있는 편. 주로 도포마취를 사용하며 민감자는 수면마취를 고려하기도 합니다.",
@@ -209,7 +209,7 @@
       },
       "downtime": {
         "ko": "표면 손상이 없어 일상 복귀가 빠름. 약한 붓기·뻐근함이 1~2일 있을 수 있음.",
-        "en": "No surface injury; quick return to daily life. Mild swelling/soreness may persist for 1–2 days."
+        "en": "No surface injury; quick return to daily life. Mild swelling/soreness may persist for 1-2 days."
       },
       "sideEffectsSafety": {
         "ko": "숙련도 의존. 드물게 신경 자극으로 일시 감각 이상 보고. 전문의에게 시술 권장.",
@@ -217,7 +217,7 @@
       },
       "sessionFrequency": {
         "ko": "보통 6~12개월 간격으로 1회씩 유지 시술.",
-        "en": "Maintenance commonly every 6–12 months."
+        "en": "Maintenance commonly every 6-12 months."
       },
       "candidatesContraindications": {
         "ko": "중등도 처짐 개선에 적합. 염증성 여드름이 심하면 치료 후 권장.",
@@ -225,7 +225,7 @@
       },
       "costKRW": {
         "ko": "300샷 약 100~150만 원, 600샷 150~200만 원+, 전체+목은 200만 원 이상이 흔함(병원별 상이).",
-        "en": "Roughly ₩1.0–1.5M for ~300 shots; ₩1.5–2.0M+ for ~600 shots; full face+neck often ≥₩2.0M (varies)."
+        "en": "Around ₩1,000,000-1,500,000 (~300 shots); ₩1,500,000-2,000,000 (~600 shots); full face + neck often starts around ₩2,000,000 (varies by clinic)."
       },
       "reviewsSummary": {
         "ko": "이중턱·턱선 정리 만족도가 높으나 통증·비용 부담 언급도 있음.",
@@ -273,7 +273,7 @@
       },
       "costKRW": {
         "ko": "1회 약 5만~15만 원(평균 7~10만 원), 3회 패키지 20만 원대(병원별 상이).",
-        "en": "About ₩50k–₩150k per session (avg ₩70k–₩100k); 3-session packages ~₩200k (varies)."
+        "en": "About ₩50,000-₩150,000 per session (avg ₩70,000-₩100,000); 3-session packages ~₩200,000 (varies)."
       },
       "reviewsSummary": {
         "ko": "‘일주일 후 밝아졌다’는 톤업·잡티 개선 후기가 많으나 지속 관리를 권장.",
@@ -313,7 +313,7 @@
       },
       "sessionFrequency": {
         "ko": "문제·강도에 따라 2~6주 간격으로 여러 회.",
-        "en": "Multiple sessions every 2–6 weeks depending on indication/fluence."
+        "en": "Multiple sessions every 2-6 weeks depending on indication/fluence."
       },
       "candidatesContraindications": {
         "ko": "색소·문신·모공·흉터 자국 개선 희망자. 햇빛에 많이 그을린 상태는 피함.",
@@ -361,7 +361,7 @@
       },
       "sessionFrequency": {
         "ko": "보통 4~6주 간격 3~5회.",
-        "en": "Typically 3–5 sessions every 4–6 weeks."
+        "en": "Typically 3-5 sessions every 4-6 weeks."
       },
       "candidatesContraindications": {
         "ko": "여드름 흉터·모공·잔주름·광노화 개선 목적. 최근 박피·레이저 후 회복기에는 지양.",
@@ -393,7 +393,7 @@
       },
       "effectsDuration": {
         "ko": "2주 전후부터 촉촉·매끈 느낌. 3~4회 시리즈 후 유지가 안정적.",
-        "en": "Noticeable plump/smooth feel around ~2 weeks; more stable effects after 3–4 sessions."
+        "en": "Noticeable plump/smooth feel around ~2 weeks; more stable effects after 3-4 sessions."
       },
       "painAnesthesia": {
         "ko": "매우 가는 바늘/멀티니들 인젝터 사용. 도포마취 후 진행해 통증 완화.",
@@ -401,7 +401,7 @@
       },
       "downtime": {
         "ko": "미세 팽진·점상 멍이 1~3일. 메이크업으로 커버 가능.",
-        "en": "Pinpoint blebs/bruises for 1–3 days; often coverable with makeup."
+        "en": "Pinpoint blebs/bruises for 1-3 days; often coverable with makeup."
       },
       "sideEffectsSafety": {
         "ko": "전반적 안전. 일시적 붓기·가려움 가능.",
@@ -409,7 +409,7 @@
       },
       "sessionFrequency": {
         "ko": "보통 3~4주 간격 3~4회, 이후 3~6개월 간격 유지.",
-        "en": "Typically 3–4 sessions at 3–4-week intervals; maintenance every 3–6 months."
+        "en": "Typically 3-4 sessions at 3-4-week intervals; maintenance every 3-6 months."
       },
       "candidatesContraindications": {
         "ko": "잔주름·건성·탄력저하 개선 희망자에게 적합.",
@@ -441,7 +441,7 @@
       },
       "effectsDuration": {
         "ko": "1~2주 후 촉촉·윤기. 3~4회 시리즈 후 유지가 좋음.",
-        "en": "Hydration/glow visible in 1–2 weeks; better durability after 3–4 sessions."
+        "en": "Hydration/glow visible in 1-2 weeks; better durability after 3-4 sessions."
       },
       "painAnesthesia": {
         "ko": "도포마취·쿨링 병행, 따끔거림은 경미~중등.",
@@ -449,7 +449,7 @@
       },
       "downtime": {
         "ko": "미세 발적·멍 1~3일. 즉시 일상 가능.",
-        "en": "Minor redness/bruising 1–3 days; immediate daily activity."
+        "en": "Minor redness/bruising 1-3 days; immediate daily activity."
       },
       "sideEffectsSafety": {
         "ko": "대체로 안전. 일시 트러블 가능성.",
@@ -457,7 +457,7 @@
       },
       "sessionFrequency": {
         "ko": "3~4주 간격 3회 권장, 이후 3~6개월 유지 시술.",
-        "en": "Three sessions every 3–4 weeks, then maintenance every 3–6 months."
+        "en": "Three sessions every 3-4 weeks, then maintenance every 3-6 months."
       },
       "candidatesContraindications": {
         "ko": "건성·윤기 저하·미세잔주름 개선 희망자.",
@@ -465,7 +465,7 @@
       },
       "costKRW": {
         "ko": "일반 물광(HA) 1회 약 10~20만 원, 프리미엄 라인 20~30만 원, 3회 패키지 ~50만 원 내외(병원별 상이).",
-        "en": "Typical HA sessions ₩100k–₩200k; premium lines ₩200k–₩300k; 3-session packages ~₩500k (varies)."
+        "en": "Typical HA sessions ₩100,000-₩200,000; premium lines ₩200,000-₩300,000; 3-session packages ~₩500,000 (varies)."
       },
       "reviewsSummary": {
         "ko": "‘속부터 차오르는 보습, 화장발 개선’ 후기가 다수.",
@@ -497,7 +497,7 @@
       },
       "downtime": {
         "ko": "멍·붓기 1~7일. 뭉침은 마사지 금지, 자연 개선 관찰.",
-        "en": "Bruising/swelling for 1–7 days; avoid massaging lumps to allow settling."
+        "en": "Bruising/swelling for 1-7 days; avoid massaging lumps to allow settling."
       },
       "sideEffectsSafety": {
         "ko": "일반적 부작용은 멍·부기·뭉침. HA 필러는 히알루로니다아제로 용해 가능. 과도 시술은 조직 변형 위험.",
@@ -513,7 +513,7 @@
       },
       "costKRW": {
         "ko": "히알루론산 1cc 약 10만~30만 원, 수입 고급 라인은 더 높음. 코 1cc 평균 약 23만 원 보고 사례.",
-        "en": "HA ~₩100k–₩300k per cc; premium imports higher. Nose 1 cc averages ~₩230k in some surveys."
+        "en": "HA ~₩100,000-₩300,000 per cc; premium imports higher. Nose 1 cc averages ~₩230,000 in some surveys."
       },
       "reviewsSummary": {
         "ko": "즉각적인 윤곽 변화 만족도 높음. 과다 주입 시 부자연스러움 우려.",
@@ -537,7 +537,7 @@
       },
       "effectsDuration": {
         "ko": "1~2회로는 미미하며, 보통 5~10회 누적 시 개선. 유지 효과는 수개월~1년 정도.",
-        "en": "Minimal change after 1–2 sessions; typically 5–10 treatments yield visible results. Maintenance lasts several months up to a year."
+        "en": "Minimal change after 1-2 sessions; typically 5-10 treatments yield visible results. Maintenance lasts several months up to a year."
       },
       "painAnesthesia": {
         "ko": "따끔거림·열감이 있으나 대개 마취 필요 없음.",
@@ -553,7 +553,7 @@
       },
       "sessionFrequency": {
         "ko": "1~2주 간격으로 5~10회 시리즈, 이후 유지 시술.",
-        "en": "Series of 5–10 sessions every 1–2 weeks; maintenance thereafter."
+        "en": "Series of 5-10 sessions every 1-2 weeks; maintenance thereafter."
       },
       "candidatesContraindications": {
         "ko": "기미·색소침착·홍조 개선 희망자. 최근 일광노출·감염 시 피함.",
@@ -561,7 +561,7 @@
       },
       "costKRW": {
         "ko": "1회 5만~15만 원, 10회 패키지 50~100만 원 수준.",
-        "en": "₩50k–₩150k per session; ₩500k–₩1.0M for 10-session packages."
+        "en": "₩50,000-₩150,000 per session; ₩500,000-₩1,000,000 for 10-session packages."
       },
       "reviewsSummary": {
         "ko": "‘기미가 옅어졌다’는 후기 다수, 반복 시술 필요성이 언급됨.",
@@ -585,7 +585,7 @@
       },
       "effectsDuration": {
         "ko": "1회로는 일시적. 보통 4~6주 간격 5~10회 누적 시 반영구 제모.",
-        "en": "Single session is temporary; semi-permanent reduction after 5–10 sessions at 4–6 week intervals."
+        "en": "Single session is temporary; semi-permanent reduction after 5-10 sessions at 4-6 week intervals."
       },
       "painAnesthesia": {
         "ko": "따끔거림·고무줄 튀는 느낌. 대개 크림 마취 없이 가능하나 민감 부위는 마취 권장.",
@@ -601,7 +601,7 @@
       },
       "sessionFrequency": {
         "ko": "부위·모발 성장주기 따라 4~6주 간격 5~10회.",
-        "en": "5–10 sessions spaced 4–6 weeks, depending on area/growth cycle."
+        "en": "5-10 sessions spaced 4-6 weeks, depending on area/growth cycle."
       },
       "candidatesContraindications": {
         "ko": "잦은 제모로 불편한 사람. 흰털·금발에는 효과 적음.",
@@ -609,7 +609,7 @@
       },
       "costKRW": {
         "ko": "부위별 1회 3만~20만 원. 다리·겨드랑이 패키지 50~100만 원대.",
-        "en": "₩30k–₩200k per session depending on area; leg/axilla packages ₩500k–₩1.0M."
+        "en": "₩30,000-₩200,000 per session depending on area; leg/axilla packages ₩500,000-₩1,000,000."
       },
       "reviewsSummary": {
         "ko": "‘털이 줄고 자라지 않는다’ 후기 다수. 세션 누적이 중요.",
@@ -641,7 +641,7 @@
       },
       "downtime": {
         "ko": "레이저는 다운타임 거의 없음. 실리프팅은 붓기·멍 1~2주 가능.",
-        "en": "Minimal downtime for lasers; thread lifting may cause bruising/swelling for 1–2 weeks."
+        "en": "Minimal downtime for lasers; thread lifting may cause bruising/swelling for 1-2 weeks."
       },
       "sideEffectsSafety": {
         "ko": "각 시술의 부작용(통증·멍·피부 자극 등)이 복합될 수 있으므로 숙련된 의료진에게 받아야 안전.",
@@ -649,15 +649,15 @@
       },
       "sessionFrequency": {
         "ko": "HIFU·RF는 6~12개월 주기, 실리프팅은 1~2년 유지 후 보강.",
-        "en": "HIFU/RF every 6–12 months; threads every 1–2 years with touch-ups."
+        "en": "HIFU/RF every 6-12 months; threads every 1-2 years with touch-ups."
       },
       "candidatesContraindications": {
         "ko": "복합적 처짐·탄력저하가 있는 30~50대. 얇은 피부·급격 체중변화자는 주의.",
-        "en": "For combined laxity in 30s–50s; caution in thin skin or rapid weight change."
+        "en": "For combined laxity in 30s-50s; caution in thin skin or rapid weight change."
       },
       "costKRW": {
         "ko": "조합 범위 따라 수백만 원대. 예: 울쎄라+써마지+실리프팅 400만~700만 원 수준.",
-        "en": "Combination packages often ₩4.0M–₩7.0M depending on scope."
+        "en": "Combination packages often ₩4,000,000-₩7,000,000 depending on scope."
       },
       "reviewsSummary": {
         "ko": "‘턱선·탄력이 동시에 개선됐다’는 후기 다수. 통증·비용은 부담 요인.",
@@ -681,7 +681,7 @@
       },
       "effectsDuration": {
         "ko": "1~2주 후 결 변화가 느껴지고, 4~8주에 걸쳐 점진적 탄력·흉터 개선이 나타납니다. 누적 시리즈 후 수개월 유지됩니다.",
-        "en": "Texture changes appear in 1–2 weeks, with progressive remodeling over 4–8 weeks. Series treatments maintain results for months."
+        "en": "Texture changes appear in 1-2 weeks, with progressive remodeling over 4-8 weeks. Series treatments maintain results for months."
       },
       "painAnesthesia": {
         "ko": "도포마취 후 진행하며 따끔거림·열감이 경미~중등입니다.",
@@ -689,7 +689,7 @@
       },
       "downtime": {
         "ko": "홍조·건조·각질이 2~5일 나타날 수 있습니다.",
-        "en": "Redness, dryness, and flaking may last 2–5 days."
+        "en": "Redness, dryness, and flaking may last 2-5 days."
       },
       "sideEffectsSafety": {
         "ko": "일시적 자극·염증·색 변화 가능성이 있으며, 과도한 강도는 PIH 위험을 높일 수 있습니다.",
@@ -697,7 +697,7 @@
       },
       "sessionFrequency": {
         "ko": "4~6주 간격 3~5회 권장, 이후 분기별 유지 시술.",
-        "en": "Recommended 3–5 sessions every 4–6 weeks; quarterly maintenance thereafter."
+        "en": "Recommended 3-5 sessions every 4-6 weeks; quarterly maintenance thereafter."
       },
       "candidatesContraindications": {
         "ko": "여드름 흉터·모공·결 개선 희망자. 활성 여드름·감염·켈로이드 경향은 주의/지양.",
@@ -705,7 +705,7 @@
       },
       "costKRW": {
         "ko": "회당 10만~30만 원대(장비·앰플 구성에 따라 상이).",
-        "en": "Typically ₩100k–₩300k per session depending on device/serums."
+        "en": "Typically ₩100,000-₩300,000 per session depending on device/serums."
       },
       "reviewsSummary": {
         "ko": "‘결이 매끈해지고 모공이 줄었다’는 후기가 많으며, 초기 홍조는 흔하나 일시적입니다.",
@@ -729,7 +729,7 @@
       },
       "effectsDuration": {
         "ko": "1~2개월에 걸쳐 탄력·결 개선, 시리즈 후 6~12개월 유지가 흔합니다.",
-        "en": "Firming/texture improvements build over 1–2 months; durability of 6–12 months after a series."
+        "en": "Firming/texture improvements build over 1-2 months; durability of 6-12 months after a series."
       },
       "painAnesthesia": {
         "ko": "도포/국소마취 병행. 일반 MTS보다 통증 체감이 약간 큰 편입니다.",
@@ -737,7 +737,7 @@
       },
       "downtime": {
         "ko": "홍조·부기 1~3일, 미세딱지 가능.",
-        "en": "Redness/swelling for 1–3 days; tiny crusting may occur."
+        "en": "Redness/swelling for 1-3 days; tiny crusting may occur."
       },
       "sideEffectsSafety": {
         "ko": "경미한 화상·색 변동 드물게 보고. 숙련도와 파라미터 설정이 안전성 좌우.",
@@ -745,7 +745,7 @@
       },
       "sessionFrequency": {
         "ko": "4~6주 간격 3~4회 권장, 이후 반기 유지.",
-        "en": "3–4 sessions every 4–6 weeks; semiannual maintenance."
+        "en": "3-4 sessions every 4-6 weeks; semiannual maintenance."
       },
       "candidatesContraindications": {
         "ko": "여드름 흉터·널어진 모공·초기 탄력저하. 금속 임플란트 부위는 주의.",
@@ -753,7 +753,7 @@
       },
       "costKRW": {
         "ko": "회당 20만~60만 원대(장비/팁 소모품에 따라 변동).",
-        "en": "Approximately ₩200k–₩600k per session depending on device/consumables."
+        "en": "Approximately ₩200,000-₩600,000 per session depending on device/consumables."
       },
       "reviewsSummary": {
         "ko": "‘모공·흉터가 완만히 개선된다’는 후기가 다수. 통증·비용이 단점으로 언급됩니다.",
@@ -785,7 +785,7 @@
       },
       "downtime": {
         "ko": "홍조·부기·미세딱지·각질이 3~7일. 재생기 보습·자차 중요.",
-        "en": "Redness/swelling/crusting/flaking for 3–7 days; moisturization and SPF essential during healing."
+        "en": "Redness/swelling/crusting/flaking for 3-7 days; moisturization and SPF essential during healing."
       },
       "sideEffectsSafety": {
         "ko": "과치료 시 색 변화·흉 위험. 숙련된 시술자 필요.",
@@ -793,7 +793,7 @@
       },
       "sessionFrequency": {
         "ko": "4~8주 간격 3~5회 권장.",
-        "en": "Typically 3–5 sessions at 4–8 week intervals."
+        "en": "Typically 3-5 sessions at 4-8 week intervals."
       },
       "candidatesContraindications": {
         "ko": "여드름 흉터·광노화·잔주름. 최근 박피/레이저 후 회복기라면 지양.",
@@ -801,7 +801,7 @@
       },
       "costKRW": {
         "ko": "부위·밀도에 따라 회당 20만~60만 원대.",
-        "en": "₩200k–₩600k per session depending on area/density."
+        "en": "₩200,000-₩600,000 per session depending on area/density."
       },
       "reviewsSummary": {
         "ko": "‘흉터가 완만히 옅어지고 결이 좋아졌다’는 평가가 많음.",
@@ -825,7 +825,7 @@
       },
       "effectsDuration": {
         "ko": "수주~수개월에 걸쳐 결·흉터·잔주름 개선, 시리즈 후 유지.",
-        "en": "Improves texture/scars/fine lines over weeks–months; maintained after a series."
+        "en": "Improves texture/scars/fine lines over weeks-months; maintained after a series."
       },
       "painAnesthesia": {
         "ko": "도포마취 후 열감·따끔거림 tolerable.",
@@ -833,7 +833,7 @@
       },
       "downtime": {
         "ko": "홍조 1~3일, 미세부종·건조감 가능.",
-        "en": "Redness 1–3 days; mild edema/dryness possible."
+        "en": "Redness 1-3 days; mild edema/dryness possible."
       },
       "sideEffectsSafety": {
         "ko": "박피 대비 부작용 낮으나 과치료 시 색 변화 가능.",
@@ -841,7 +841,7 @@
       },
       "sessionFrequency": {
         "ko": "4주 간격 3~5회.",
-        "en": "3–5 sessions every ~4 weeks."
+        "en": "3-5 sessions every ~4 weeks."
       },
       "candidatesContraindications": {
         "ko": "다운타임이 짧은 흉터·결 개선을 원하는 경우 적합.",
@@ -849,7 +849,7 @@
       },
       "costKRW": {
         "ko": "회당 20만~50만 원대.",
-        "en": "Approximately ₩200k–₩500k per session."
+        "en": "Approximately ₩200,000-₩500,000 per session."
       },
       "reviewsSummary": {
         "ko": "‘회복이 빠르고 결이 개선’ 평가가 흔함.",
@@ -873,7 +873,7 @@
       },
       "effectsDuration": {
         "ko": "수주에 걸쳐 둘레감소가 진행되며, 2~4주 간격으로 2~4회 누적 시 변화가 뚜렷합니다.",
-        "en": "Circumference reduction unfolds over weeks; 2–4 sessions at 2–4 week intervals yield visible change."
+        "en": "Circumference reduction unfolds over weeks; 2-4 sessions at 2-4 week intervals yield visible change."
       },
       "painAnesthesia": {
         "ko": "주입 시 따가움·압통·열감. 냉각/국소마취로 완화 가능.",
@@ -881,7 +881,7 @@
       },
       "downtime": {
         "ko": "부기·압통·멍이 3~7일(부위·용량에 따라) 지속될 수 있습니다.",
-        "en": "Swelling, tenderness, and bruising may last 3–7 days depending on area/dose."
+        "en": "Swelling, tenderness, and bruising may last 3-7 days depending on area/dose."
       },
       "sideEffectsSafety": {
         "ko": "신경자극, 불균일함, 경화 결절 드물게 보고. 해부학 고려한 깊이·분산 주입이 중요합니다.",
@@ -889,7 +889,7 @@
       },
       "sessionFrequency": {
         "ko": "2~4주 간격 2~4회 권장, 이후 필요 시 보강.",
-        "en": "Recommend 2–4 sessions every 2–4 weeks; touch-ups as needed."
+        "en": "Recommend 2-4 sessions every 2-4 weeks; touch-ups as needed."
       },
       "candidatesContraindications": {
         "ko": "턱밑·볼살·팔뚝 등 국소 지방. 임신·수유·간질환·약물 알레르기 시 피함.",
@@ -897,7 +897,7 @@
       },
       "costKRW": {
         "ko": "부위·앰플 수에 따라 1회 10만~40만 원대.",
-        "en": "₩100k–₩400k per session depending on area/ampoule count."
+        "en": "₩100,000-₩400,000 per session depending on area/ampoule count."
       },
       "reviewsSummary": {
         "ko": "‘붓기 빠지며 라인이 서서히 정리’ 피드백. 멍·압통 불편이 단점.",
@@ -921,15 +921,15 @@
       },
       "effectsDuration": {
         "ko": "수주~수개월에 걸쳐 점진 개선, 시리즈 후 유지가 안정적입니다.",
-        "en": "Gradual improvements over weeks–months; more stable after a series."
+        "en": "Gradual improvements over weeks-months; more stable after a series."
       },
       "painAnesthesia": {
         "ko": "도포마취 후 다점 주입, 따끔거림 경미~중등.",
-        "en": "Topical anesthesia; multiple microinjections with mild–moderate sting."
+        "en": "Topical anesthesia; multiple microinjections with mild-moderate sting."
       },
       "downtime": {
         "ko": "붉은 점상 자국·미세멍이 1~3일.",
-        "en": "Pinpoint redness/bruises for 1–3 days."
+        "en": "Pinpoint redness/bruises for 1-3 days."
       },
       "sideEffectsSafety": {
         "ko": "자가 성분이라 알레르기 낮음. 채혈·주입 관련 멍·종창 가능.",
@@ -945,7 +945,7 @@
       },
       "costKRW": {
         "ko": "회당 20만~60만 원대(부위·배합 요법에 따라 상이).",
-        "en": "₩200k–₶600k per session depending on area and combinations."
+        "en": "₩200,000-₩600,000 per session depending on area and combinations."
       },
       "reviewsSummary": {
         "ko": "‘자연스러운 윤기·탄력’ 후기가 많아 관리형 시술로 선호됩니다.",
@@ -969,7 +969,7 @@
       },
       "effectsDuration": {
         "ko": "서서히 발현되며 2~3회 시리즈 후 1~2년 유지가 흔합니다.",
-        "en": "Gradual onset; after 2–3 sessions, results often last 1–2 years."
+        "en": "Gradual onset; after 2-3 sessions, results often last 1-2 years."
       },
       "painAnesthesia": {
         "ko": "국소마취 또는 마취 혼합 주입, 주입 후 압통·부종 가능.",
@@ -977,7 +977,7 @@
       },
       "downtime": {
         "ko": "가벼운 멍·부종 3~7일. 주입 후 ‘5-5-5 마사지’ 권장(5일간 하루 5회 5분).",
-        "en": "Mild bruising/swelling 3–7 days; “5-5-5” massage often advised (5 min, 5 times/day, 5 days)."
+        "en": "Mild bruising/swelling 3-7 days; “5-5-5” massage often advised (5 min, 5 times/day, 5 days)."
       },
       "sideEffectsSafety": {
         "ko": "과밀 주입 시 결절·비대칭 가능. 희석·교반·층별 주입 등 테크닉이 중요합니다.",
@@ -985,7 +985,7 @@
       },
       "sessionFrequency": {
         "ko": "4~8주 간격 2~3회, 이후 연 1회 내외 보강.",
-        "en": "2–3 sessions 4–8 weeks apart; yearly touch-ups."
+        "en": "2-3 sessions 4-8 weeks apart; yearly touch-ups."
       },
       "candidatesContraindications": {
         "ko": "볼륨 소실·탄력저하·미세주름 개선 희망자. 자가면역·활성 감염 시 지양.",
@@ -993,7 +993,7 @@
       },
       "costKRW": {
         "ko": "바이알당 40만~80만 원대, 부위·용량에 따라 총액 변동.",
-        "en": "₩400k–₩800k per vial; total varies by area/dose."
+        "en": "₩400,000-₩800,000 per vial; total varies by area/dose."
       },
       "reviewsSummary": {
         "ko": "‘자연스럽게 차오른다’는 평이 많으며, 즉각 효과보다 장기 개선을 선호하는 층에 호평.",
@@ -1007,6 +1007,343 @@
         "ko": "희석 비율·주입층·부위별 디자인이 결과 좌우. 결절 예방 테크닉 필수.",
         "en": "Outcome depends on dilution, plane, and area design; nodule-preventing technique is essential."
       }
+    },
+      {
+      "key": "Lipodissolve",
+      "title": { "ko": "다이어트 주사", "en": "Lipodissolve (Fat-Dissolving Injection)" },
+      "overview": {
+        "ko": "지방분해 성분(PPC, 디옥시콜릭 등)을 국소 부위 피하지방층에 주입하여 지방세포를 파괴·분해하는 주사 시술입니다.",
+        "en": "Lipolytic agents (e.g., PPC, deoxycholic acid) are injected into localized subcutaneous fat to lyse and break down adipocytes."
+      },
+      "effectsDuration": {
+        "ko": "이중턱, 팔뚝, 복부, 허벅지 등의 군살 감소에 도움. 개인차가 있으나 2~4회 후 눈에 띄는 변화를 기대할 수 있으며, 생활습관을 유지하면 효과가 장기간 지속될 수 있습니다.",
+        "en": "Helps reduce localized bulges (double chin, upper arms, abdomen, thighs). Many notice visible changes after 2-4 sessions; results can be long-lasting with lifestyle maintenance."
+      },
+      "painAnesthesia": {
+        "ko": "가벼운 따끔거림과 뻐근함이 있으며, 크림 마취로 조절 가능합니다.",
+        "en": "Mild stinging and soreness; manageable with topical anesthetic cream."
+      },
+      "downtime": {
+        "ko": "시술 직후 일상생활 가능. 멍·붓기는 대개 2~5일 내 완화됩니다.",
+        "en": "Immediate return to daily life. Bruising and swelling typically settle within 2-5 days."
+      },
+      "sideEffectsSafety": {
+        "ko": "부위별 멍, 일시적 통증·붓기 가능. 드물게 피부 윤곽의 불균형이 생길 수 있어 숙련된 시술이 필요합니다.",
+        "en": "Bruising and transient pain/swelling may occur. Rarely, contour irregularities—experienced technique is important."
+      },
+      "sessionFrequency": {
+        "ko": "약 10~20분 소요. 2~4주 간격으로 3~5회 권장.",
+        "en": "About 10-20 minutes per session. Recommended 3-5 sessions at 2-4-week intervals."
+      },
+      "candidatesContraindications": {
+        "ko": "특정 부위 지방 감소를 원하는 성인에게 적합. 임산부, 간·신장 질환자는 피해야 합니다.",
+        "en": "Suitable for adults seeking focal fat reduction. Avoid in pregnancy and in liver/kidney disease."
+      },
+      "costKRW": {
+        "ko": "1회 10만~30만 원(부위·약제에 따라 상이).",
+        "en": "₩100,000-₩300,000 per session (varies by area and agent)."
+      },
+      "reviewsSummary": {
+        "ko": "몇 차례 시술 후 둘레 감소와 라인 정리가 서서히 나타났다는 후기가 많습니다.",
+        "en": "Many report gradual circumference reduction and improved contour after several sessions."
+      },
+      "precautions": {
+        "ko": "시술 후 1~2일은 음주·사우나를 피하고, 마사지·운동을 병행하면 효과에 도움될 수 있습니다.",
+        "en": "Avoid alcohol and saunas for 1-2 days post-treatment; gentle massage and exercise may enhance results."
+      },
+      "providerNotes": {
+        "ko": "시술 부위·용량을 개인에 맞게 계획하는 것이 중요하며, 해부학에 익숙한 의료진의 시술을 권장합니다.",
+        "en": "Customize injection sites and dosing per patient; choose clinicians skilled in regional anatomy."
+      }
+    },
+    {
+      "key": "ContourInjection",
+      "title": { "ko": "윤곽 주사", "en": "Contour Injection" },
+      "overview": {
+        "ko": "얼굴 부위의 불필요한 지방·부기를 줄여 갸름한 윤곽을 만드는 혼합 주사 시술입니다.",
+        "en": "A blended injectable that reduces unwanted facial fat or puffiness to create a slimmer facial contour."
+      },
+      "effectsDuration": {
+        "ko": "턱선·볼살 슬림화에 도움. 보통 3~5회 후 변화가 보이며, 효과는 수개월 지속됩니다.",
+        "en": "Helps slim the jawline and cheeks. Changes typically seen after 3-5 sessions, with effects lasting several months."
+      },
+      "painAnesthesia": {
+        "ko": "약간의 따끔거림이 있으나 대체로 무마취도 가능합니다.",
+        "en": "Mild stinging; often performed without anesthesia."
+      },
+      "downtime": {
+        "ko": "멍·붓기가 2~3일 정도 있을 수 있으나 즉시 일상 복귀 가능합니다.",
+        "en": "Bruising/swelling may last 2-3 days; most resume normal activities immediately."
+      },
+      "sideEffectsSafety": {
+        "ko": "과도한 시술 시 볼 꺼짐이 생길 수 있어 주의가 필요합니다. 임신·수유부 및 특정 질환자는 피해야 합니다.",
+        "en": "Overtreatment may cause hollow cheeks. Avoid in pregnancy/lactation and in certain medical conditions."
+      },
+      "sessionFrequency": {
+        "ko": "약 5~10분 소요. 1~2주 간격으로 3~5회 권장.",
+        "en": "Takes ~5-10 minutes. Recommended 3-5 sessions at 1-2-week intervals."
+      },
+      "candidatesContraindications": {
+        "ko": "얼굴 라인 정리를 원하는 성인에게 적합하나, 급격한 체중 변동이 있는 경우에는 권장하지 않습니다.",
+        "en": "Suitable for adults seeking facial line refinement; not recommended with rapid weight fluctuations."
+      },
+      "costKRW": {
+        "ko": "1회 10만~20만 원.",
+        "en": "₩100,000-₩200,000 per session."
+      },
+      "reviewsSummary": {
+        "ko": "여러 차례 시술 후 턱선이 정돈되고 얼굴이 가벼워졌다는 평가가 많습니다.",
+        "en": "Common feedback includes a more defined jawline and a lighter facial look after multiple sessions."
+      },
+      "precautions": {
+        "ko": "시술 후 24시간은 음주와 격한 운동을 피합니다.",
+        "en": "Avoid alcohol and strenuous exercise for 24 hours after treatment."
+      },
+      "providerNotes": {
+        "ko": "개인별 지방량·피부 탄력에 따라 효과 차이가 커 맞춤 상담·설계가 중요합니다.",
+        "en": "Outcomes vary with baseline fat and skin elasticity—personalized planning is essential."
+      }
+    },
+    {
+      "key": "DoubleEyelidSurgery",
+      "title": { "ko": "쌍꺼풀 수술", "en": "Double Eyelid Surgery" },
+      "overview": {
+        "ko": "눈꺼풀에 주름선을 만들어 눈을 크게 보이게 하는 성형 수술로, 매몰법·절개법이 대표적입니다.",
+        "en": "Cosmetic eyelid surgery that creates a supratarsal crease to enlarge the eyes; common methods are non-incisional (buried suture) and incisional."
+      },
+      "effectsDuration": {
+        "ko": "또렷한 눈매를 기대할 수 있으며, 반영구적으로 지속됩니다.",
+        "en": "Produces a crisper eye shape with semi-permanent to permanent longevity."
+      },
+      "painAnesthesia": {
+        "ko": "국소마취 또는 수면마취로 진행하며, 수술 중 통증은 거의 없습니다.",
+        "en": "Performed under local or sedation anesthesia with minimal intraoperative pain."
+      },
+      "downtime": {
+        "ko": "실밥 제거 5~7일, 사회복귀 1~2주, 자연스러운 라인은 1~3개월에 완성됩니다.",
+        "en": "Suture removal at 5-7 days; social downtime ~1-2 weeks; natural settling over 1-3 months."
+      },
+      "sideEffectsSafety": {
+        "ko": "붓기·멍·라인 비대칭이 가능하며, 드물게 재수술이 필요할 수 있습니다.",
+        "en": "Swelling, bruising, and crease asymmetry can occur; occasional revision may be required."
+      },
+      "sessionFrequency": {
+        "ko": "30분~1시간, 1회 시술(수술)입니다.",
+        "en": "30-60 minutes; single operation."
+      },
+      "candidatesContraindications": {
+        "ko": "쌍꺼풀 라인을 원하는 경우 적합하나, 안검하수가 심하면 교정을 병행해야 합니다.",
+        "en": "Suitable for those desiring a double-eyelid crease; significant ptosis may require correction."
+      },
+      "costKRW": {
+        "ko": "약 100만~250만 원.",
+        "en": "Approximately ₩1,000,000-2,500,000."
+      },
+      "reviewsSummary": {
+        "ko": "눈매가 또렷해졌다는 만족 후기가 많고, 초기 붓기는 흔합니다.",
+        "en": "High satisfaction for brighter eyes; early swelling is common."
+      },
+      "precautions": {
+        "ko": "초기에는 냉찜질로 부기 완화, 1주간 음주·흡연을 피합니다.",
+        "en": "Use cold compresses initially; avoid alcohol and smoking for about a week."
+      },
+      "providerNotes": {
+        "ko": "개인 눈꺼풀 해부학에 맞춘 맞춤 디자인이 결과를 좌우합니다.",
+        "en": "Customized design based on eyelid anatomy is critical."
+      }
+    },
+    {
+      "key": "Rhinoplasty",
+      "title": { "ko": "코 성형", "en": "Rhinoplasty" },
+      "overview": {
+        "ko": "낮은 코 높이기, 코끝 교정, 콧볼 축소 등으로 코의 전체적 균형을 개선하는 수술입니다.",
+        "en": "Surgery to improve nasal harmony—such as dorsum augmentation, tip refinement, and alar base reduction."
+      },
+      "effectsDuration": {
+        "ko": "입체적이고 균형 잡힌 윤곽을 기대할 수 있으며, 효과는 반영구적입니다.",
+        "en": "Enhances three-dimensional balance with durable, often permanent results."
+      },
+      "painAnesthesia": {
+        "ko": "수면 또는 전신마취로 진행하며, 수술 후 뻐근함이 있을 수 있습니다.",
+        "en": "Performed under sedation or general anesthesia; postoperative soreness is common."
+      },
+      "downtime": {
+        "ko": "약 1주 내 부목 제거, 2주 전후 사회복귀가 가능합니다.",
+        "en": "Splint removal around 1 week; social return ~2 weeks."
+      },
+      "sideEffectsSafety": {
+        "ko": "붓기·멍·감각 저하, 드물게 보형물 이동이 보고됩니다.",
+        "en": "Swelling, bruising, hypoesthesia, and rarely implant shift may occur."
+      },
+      "sessionFrequency": {
+        "ko": "1~2시간, 1회 수술.",
+        "en": "1-2 hours; single operation."
+      },
+      "candidatesContraindications": {
+        "ko": "낮은 코, 휜 코, 매부리 등 개선 희망자. 성장기 미성년자는 제외합니다.",
+        "en": "For low dorsum, crooked or humped noses; exclude growing minors."
+      },
+      "costKRW": {
+        "ko": "약 300만~600만 원.",
+        "en": "Approximately ₩3,000,000-6,000,000."
+      },
+      "reviewsSummary": {
+        "ko": "얼굴 균형이 좋아졌다는 평가가 많으나, 붓기 가라앉는 데 수주가 소요됩니다.",
+        "en": "Many report improved facial balance; swelling takes weeks to settle."
+      },
+      "precautions": {
+        "ko": "부목 유지, 금주·금연, 외부 충격을 피하는 것이 중요합니다.",
+        "en": "Maintain the nasal splint, avoid alcohol/smoking, and protect from external trauma."
+      },
+      "providerNotes": {
+        "ko": "경험 많은 전문의에게 맞춤 상담을 받고, 보형물·자가조직 선택을 신중히 결정합니다.",
+        "en": "Seek experienced surgeons and decide graft/implant options through personalized planning."
+      }
+    },
+    {
+      "key": "FacialContouringSurgery",
+      "title": { "ko": "안면윤곽 수술", "en": "Facial Contouring Surgery" },
+      "overview": {
+        "ko": "광대, 사각턱, 턱끝 뼈를 절제·교정하여 얼굴형을 개선하는 수술입니다.",
+        "en": "Osteotomies and contouring of the zygoma, mandibular angle, and chin to reshape facial form."
+      },
+      "effectsDuration": {
+        "ko": "갸름하고 균형 잡힌 얼굴형으로 개선되며, 효과는 반영구적입니다.",
+        "en": "Achieves a slimmer, more balanced facial outline with permanent results."
+      },
+      "painAnesthesia": {
+        "ko": "전신마취로 진행하며, 수술 후 통증·붓기가 있습니다.",
+        "en": "Performed under general anesthesia; postoperative pain and swelling are expected."
+      },
+      "downtime": {
+        "ko": "입원 1~2일, 사회복귀 2~4주, 부기 완전 소실까지 3~6개월 필요합니다.",
+        "en": "Hospitalization 1-2 days; social return in 2-4 weeks; swelling resolves over 3-6 months."
+      },
+      "sideEffectsSafety": {
+        "ko": "감각 저하, 비대칭, 출혈, 신경 손상 가능성이 있습니다.",
+        "en": "Risks include hypoesthesia, asymmetry, bleeding, and nerve injury."
+      },
+      "sessionFrequency": {
+        "ko": "2~4시간 소요, 1회 수술.",
+        "en": "Takes 2-4 hours; single operation."
+      },
+      "candidatesContraindications": {
+        "ko": "광대 돌출, 사각턱, 턱끝 불균형 교정을 원하는 경우.",
+        "en": "For prominent zygoma, square jaw, or chin imbalance requiring correction."
+      },
+      "costKRW": {
+        "ko": "약 700만~1,500만 원.",
+        "en": "Approximately ₩7,000,000-15,000,000."
+      },
+      "reviewsSummary": {
+        "ko": "윤곽 변화가 크지만, 회복 기간이 길어 계획적인 일정 관리가 필요합니다.",
+        "en": "Delivers substantial contour change but requires prolonged recovery—plan schedules accordingly."
+      },
+      "precautions": {
+        "ko": "초기에는 부드러운 음식 위주 섭취, 압박 밴드를 지시에 따라 착용합니다.",
+        "en": "Begin with a soft diet and wear compression bands as instructed."
+      },
+      "providerNotes": {
+        "ko": "고난도 수술이므로 풍부한 경험의 의료진을 선택해야 합니다.",
+        "en": "A complex procedure—choose highly experienced maxillofacial/plastic surgeons."
+      }
+    },
+    {
+      "key": "Liposuction",
+      "title": { "ko": "지방흡입", "en": "Liposuction" },
+      "overview": {
+        "ko": "캐뉼라로 지방을 흡입해 과잉 지방을 제거하는 체형 교정 수술입니다.",
+        "en": "Body-contouring surgery that removes excess fat using suction cannulas."
+      },
+      "effectsDuration": {
+        "ko": "복부·허벅지·팔뚝 등 사이즈 감소에 효과적이며, 제거된 지방세포는 반영구적이지만 체중 관리는 필요합니다.",
+        "en": "Effectively reduces size in areas like abdomen, thighs, and arms; removed fat cells are permanent, but weight control remains important."
+      },
+      "painAnesthesia": {
+        "ko": "국소·수면·전신마취 중 선택하며, 수술 후 통증·압통이 있습니다.",
+        "en": "Performed under local, sedation, or general anesthesia; postoperative pain/tenderness is common."
+      },
+      "downtime": {
+        "ko": "압박복 착용이 필수. 멍·붓기 1~2주, 라인은 1~3개월에 걸쳐 안정됩니다.",
+        "en": "Compression garments are mandatory. Bruising/swelling 1-2 weeks; contour stabilizes over 1-3 months."
+      },
+      "sideEffectsSafety": {
+        "ko": "불균일한 지방 제거, 감염, 출혈, 피부 탄력 저하가 발생할 수 있습니다.",
+        "en": "Potential risks include contour irregularity, infection, bleeding, and skin laxity."
+      },
+      "sessionFrequency": {
+        "ko": "1~3시간, 부위별 1회 수술.",
+        "en": "1-3 hours; typically single session per area."
+      },
+      "candidatesContraindications": {
+        "ko": "부분 비만 교정을 원하는 경우 적합하며, 비만 치료 자체를 목적으로 하지는 않습니다.",
+        "en": "For localized adiposity; not a treatment for general obesity."
+      },
+      "costKRW": {
+        "ko": "부위당 300만~700만 원.",
+        "en": "₩3,000,000-7,000,000 per area."
+      },
+      "reviewsSummary": {
+        "ko": "즉각적인 부피 감소를 체감하나, 최종 라인은 수개월에 걸쳐 정돈됩니다.",
+        "en": "Immediate volume reduction is felt; final contour refines over several months."
+      },
+      "precautions": {
+        "ko": "압박복을 꾸준히 착용하고, 운동·식이요법을 병행합니다.",
+        "en": "Wear compression consistently and combine with exercise and dietary control."
+      },
+      "providerNotes": {
+        "ko": "흡입량·부위·피부 질을 고려한 수술 계획과 경험 많은 팀이 중요합니다.",
+        "en": "Surgical planning must consider volume, areas, and skin quality; experienced teams are key."
+      }
+    },
+    {
+      "key": "StemCell",
+      "title": { "ko": "Stem Cell 치료(줄기세포 시술)", "en": "Stem Cell Therapy" },
+      "overview": {
+        "ko": "줄기세포 또는 줄기세포 배양액을 피부·조직에 주입해 재생과 항노화를 유도하는 시술입니다.",
+        "en": "Injection of stem cells or conditioned media into skin/tissue to promote regeneration and anti-aging."
+      },
+      "effectsDuration": {
+        "ko": "피부 탄력·톤 개선, 주름·흉터 완화에 도움. 효과는 수개월~1년 이상 지속될 수 있습니다.",
+        "en": "Improves elasticity and tone; softens wrinkles and scars. Effects may last several months to a year or more."
+      },
+      "painAnesthesia": {
+        "ko": "국소마취 후 주사하며 통증은 경미한 편입니다.",
+        "en": "Injected under local anesthesia with generally mild pain."
+      },
+      "downtime": {
+        "ko": "주사 후 1~2일 홍조·붓기가 있을 수 있으나 일상생활은 바로 가능합니다.",
+        "en": "Redness/swelling for 1-2 days; return to daily activities immediately."
+      },
+      "sideEffectsSafety": {
+        "ko": "비용이 고가이며 장기 효과에 대한 연구가 진행 중입니다. 드물게 알레르기·감염이 발생할 수 있습니다.",
+        "en": "High cost and evolving long-term evidence; rare allergy or infection may occur."
+      },
+      "sessionFrequency": {
+        "ko": "30분~1시간 소요. 3~4주 간격으로 2~3회 권장.",
+        "en": "30-60 minutes per session; 2-3 sessions at 3-4-week intervals are commonly recommended."
+      },
+      "candidatesContraindications": {
+        "ko": "안티에이징·피부 재생을 원하는 성인. 임산부·면역질환자는 제외합니다.",
+        "en": "Adults seeking anti-aging/regeneration; exclude pregnancy and immune disorders."
+      },
+      "costKRW": {
+        "ko": "회당 200만~500만 원 이상.",
+        "en": "Around ₩2,000,000-5,000,000 per session; may be higher depending on the clinic and regimen."
+      },
+      "reviewsSummary": {
+        "ko": "수주에 걸쳐 피부 광택과 탄력도가 좋아졌다는 관리형 후기가 많습니다.",
+        "en": "Maintenance-style feedback notes healthier glow and firmness over weeks."
+      },
+      "precautions": {
+        "ko": "보습·자외선 차단을 철저히 하고, 음주·흡연을 피합니다.",
+        "en": "Maintain moisturization and strict SPF; avoid alcohol and smoking."
+      },
+      "providerNotes": {
+        "ko": "고가·고난도 시술로, 전문 클리닉에서 개인 상태에 맞춘 계획이 필요합니다.",
+        "en": "A high-cost, technique-sensitive therapy—seek specialized clinics for individualized planning."
+      }
+
     }
   ]
 }

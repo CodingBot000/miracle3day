@@ -49,7 +49,11 @@ export default async function HomePage() {
         </div>
       </section> */}
           <Hero />
+     
           <MiddleSection1 />
+          
+          
+          
           <section className="max-w-container mx-auto mt-20">
               <div className="text-center mb-8">
               <p className="text-pink-400 text-sm font-medium mb-4 tracking-wide">

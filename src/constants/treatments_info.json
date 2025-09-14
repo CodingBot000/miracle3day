@@ -1,0 +1,1012 @@
+{
+  "treatments": [
+    {
+      "key": "Botox",
+      "title": { "ko": "보톡스", "en": "Botox" },
+      "overview": {
+        "ko": "보툴리눔 톡신을 근육에 주사해 움직임을 일시적으로 줄여 주름을 완화하고(이마·미간·눈가), 발달한 근육을 축소해 라인 개선(사각턱·승모근·종아리 등)에 도움을 주는 주사 시술입니다.",
+        "en": "Botulinum toxin is injected into specific muscles to temporarily reduce movement, softening dynamic wrinkles (forehead, glabella, crow’s feet) and slimming overdeveloped muscles (masseter, trapezius, calves) for contour improvement."
+      },
+      "effectsDuration": {
+        "ko": "효과는 보통 시술 2~3일 후부터 나타나 1~2주에 최대가 되며, 1회 효과는 평균 3~6개월(개인·부위에 따라 최대 약 9개월) 지속됩니다.",
+        "en": "Results typically begin in 2–3 days, peak at 1–2 weeks, and last about 3–6 months (up to ~9 months depending on area and individual)."
+      },
+      "painAnesthesia": {
+        "ko": "주사 통증은 경미한 편이며 대개 마취 없이 5~10분 내 시술합니다. 예민 부위는 도포마취를 사용하기도 합니다.",
+        "en": "Injection discomfort is usually mild; procedures often take 5–10 minutes without anesthesia. Topical anesthetic may be used for sensitive areas."
+      },
+      "downtime": {
+        "ko": "다운타임은 거의 없으며, 일시적인 홍조·멍이 생겨도 대개 1주 내 사라집니다.",
+        "en": "Minimal downtime; transient redness or bruising generally resolves within a week."
+      },
+      "sideEffectsSafety": {
+        "ko": "전반적으로 안전하나, 약물이 의도치 않은 근육에 작용하면 일시적 눈꺼풀 처짐 등이 생길 수 있습니다. 반복 시 항체 형성으로 효과가 감소할 수 있어 적정 용량·간격이 중요합니다.",
+        "en": "Generally safe; unintended diffusion may cause temporary ptosis. Repeated high-frequency dosing can lead to antibody formation and reduced effect, so proper dosing/intervals matter."
+      },
+      "sessionFrequency": {
+        "ko": "시술 시간은 약 5~10분. 효과 유지 목적이라면 보통 3~6개월 간격으로 반복을 권장하며, 너무 잦은 시술은 내성 위험을 높일 수 있습니다.",
+        "en": "Takes ~5–10 minutes. For maintenance, repeat every 3–6 months; overly frequent sessions may increase tolerance risk."
+      },
+      "candidatesContraindications": {
+        "ko": "표정주름 개선 및 근육 축소가 필요한 성인에게 적합. 임신·수유 중이거나 일부 신경근 질환이 있는 경우는 피해야 합니다.",
+        "en": "Suitable for adults seeking wrinkle softening or muscle reduction. Avoid during pregnancy/lactation or with certain neuromuscular disorders."
+      },
+      "costKRW": {
+        "ko": "부위·제품·용량에 따라 상이하나, 사각턱 약 5만~20만 원, 승모근·종아리 약 10만~50만 원 수준(병원별 상이).",
+        "en": "Varies by area/product/units; representative ranges: masseter ~₩50,000–₩200,000; trapezius/calves ~₩100,000–₩500,000 (clinic-dependent)."
+      },
+      "reviewsSummary": {
+        "ko": "미간·이마 주름 개선, 턱선 슬림해짐 후기가 많으며, 약 3~4일 차에 변화를 느꼈다는 사례가 흔합니다. 3~6개월 이후 점차 원상 복귀합니다.",
+        "en": "Frequent reports of smoother frown/forehead lines and slimmer jawline; many notice changes around day 3–4. Gradual return toward baseline after 3–6 months."
+      },
+      "precautions": {
+        "ko": "시술 후 4시간은 눕지 말고, 며칠간은 세게 문지르거나 사우나·격한 운동을 피합니다(열에 약해 확산 가능).",
+        "en": "Avoid lying down for ~4 hours post-treatment; avoid vigorous rubbing, saunas, and intense exercise for a few days (heat may increase diffusion)."
+      },
+      "providerNotes": {
+        "ko": "개인별 근육 상태에 맞는 용량·부위 설정이 중요하므로, 해부학에 숙련된 피부과/성형외과 전문의에게 받는 것을 권장합니다.",
+        "en": "Proper mapping and dosing based on individual muscle anatomy are critical; seek experienced dermatology/plastic surgery specialists."
+      }
+    },
+    {
+      "key": "SkinBotox",
+      "title": { "ko": "스킨보톡스", "en": "Skin Botox (Microbotox)" },
+      "overview": {
+        "ko": "보툴리눔 톡신을 4~5배 희석해 피부 진피층에 촘촘히 주사하여 모공 축소, 피부결·잔주름 개선, 탄력 증진을 노리는 시술입니다.",
+        "en": "Diluted botulinum toxin (≈4–5×) is microinjected into the dermis to improve pores, skin texture, fine lines, and elasticity."
+      },
+      "effectsDuration": {
+        "ko": "1주 전후로 피부가 매끈해지는 느낌이 들며, 1회 효과는 보통 2~3개월로 짧습니다. 3개월 간격으로 반복해 효과를 잇는 경우가 많습니다.",
+        "en": "Smoother skin is often felt around 1 week; single-session effects last ~2–3 months. Many maintain results with ~3-month intervals."
+      },
+      "painAnesthesia": {
+        "ko": "얕은 부위를 다수 주사해 통증이 상당한 편입니다. 도포마취와 냉각 장치를 병행하기도 합니다.",
+        "en": "Multiple superficial injections can be quite painful; topical anesthesia and cooling are commonly used."
+      },
+      "downtime": {
+        "ko": "즉시 일상 복귀 가능하나, 미세 붉은 자국/팽진(엠보싱)·멍이 1~2일(멍은 ~1주) 관찰될 수 있습니다.",
+        "en": "Back to daily life immediately; tiny red blebs/embossing and bruises may occur, settling in 1–2 days (bruises ~1 week)."
+      },
+      "sideEffectsSafety": {
+        "ko": "전신 부작용은 드물고 안전성이 높은 편입니다. 단, 너무 잦은 시술은 내성 가능성이 있고, 깊게 주입되면 표정 불균형 등의 문제가 생길 수 있어 숙련된 시술이 필요합니다.",
+        "en": "Systemic side effects are rare. Overly frequent sessions may raise tolerance risk; injections placed too deep can affect expression, requiring experienced technique."
+      },
+      "sessionFrequency": {
+        "ko": "시술 시간 10~20분. 보통 2~3개월 간격으로 반복합니다.",
+        "en": "Takes 10–20 minutes; typically repeated every 2–3 months."
+      },
+      "candidatesContraindications": {
+        "ko": "넓은 모공, 잔주름, 피부결 개선을 원하는 성인에게 적합. 입 주변 등은 시술 난도가 높아 숙련도가 중요합니다.",
+        "en": "Good for adults seeking pore/texture refinement and fine-line improvement; perioral areas demand advanced technique."
+      },
+      "costKRW": {
+        "ko": "국산 기준 풀페이스 약 20만 원대, 수입산 30만 원대; 부분 시술 9~10만 원부터, 3회 패키지 60~90만 원 등(병원별 상이).",
+        "en": "Approximate pricing: full-face domestic ~₩200k, imported ~₩300k; partial areas from ~₩90k–₩100k; 3-session packages ~₩600k–₩900k (varies by clinic)."
+      },
+      "reviewsSummary": {
+        "ko": "‘효과는 좋지만 지속이 짧다’는 후기가 많으며, 모공 조임·결 개선 만족 후기가 다수입니다.",
+        "en": "Common feedback: noticeable smoothing but short-lived; many report tighter pores and improved texture."
+      },
+      "precautions": {
+        "ko": "시술 후 당일 즉시 세안·화장은 피하고 수 시간 뒤 또는 다음 날 가볍게 시작합니다. 멍·확산 방지를 위해 3일 정도 음주·사우나를 피합니다.",
+        "en": "Avoid cleansing/makeup immediately after; resume lightly a few hours later or next day. Avoid alcohol/sauna for ~3 days to minimize bruising/diffusion."
+      },
+      "providerNotes": {
+        "ko": "얕은 진피층에 균일하게 주입해야 하므로 경험 많은 피부과 전문의에게 시술받는 것이 중요합니다.",
+        "en": "Uniform microdeposition in the superficial dermis is key; choose a dermatologist experienced with microbotox techniques."
+      }
+    },
+    {
+      "key": "ThreadLift",
+      "title": { "ko": "실리프팅", "en": "Thread Lift" },
+      "overview": {
+        "ko": "PDO/PLLA 등 의료용 실을 진피·피하층에 삽입해 처진 조직을 기계적으로 당기고, 콜라겐 생성을 촉진해 리프팅·탄력 개선을 유도하는 비수술 시술입니다.",
+        "en": "Medical threads (e.g., PDO/PLLA) are inserted into dermal/subdermal layers to mechanically suspend sagging tissues and stimulate collagen for lifting and elasticity."
+      },
+      "effectsDuration": {
+        "ko": "시술 직후 리프팅이 보이고, 2~3개월간 콜라겐 재생으로 추가 호전됩니다. 보통 1~2년 지속(개인·실 종류·개수에 따라 차이).",
+        "en": "Immediate lift, with further improvement over 2–3 months via collagen remodeling; effects typically last ~1–2 years depending on thread type/number and individual factors."
+      },
+      "painAnesthesia": {
+        "ko": "국소마취 하에 진행하며, 당김·뻐근함이 있을 수 있으나 대체로 참을만한 수준입니다.",
+        "en": "Performed under local anesthesia; patients may feel pulling or soreness, generally tolerable."
+      },
+      "downtime": {
+        "ko": "경미한 붓기·멍이 있을 수 있으나 대개 다음 날부터 일상 복귀 가능합니다. 1~2주 내 대부분 완화됩니다.",
+        "en": "Mild swelling/bruising is common; most resume daily activities the next day, with symptoms settling over 1–2 weeks."
+      },
+      "sideEffectsSafety": {
+        "ko": "일시적 멍·부기·이물감이 흔하며, 드물게 염증·감염·실 표출·이동 등이 보고됩니다. 흡수성 실을 사용해 안전성은 비교적 높은 편입니다.",
+        "en": "Common: transient bruising, swelling, foreign body sensation. Rare: infection, extrusion, migration. Absorbable threads offer a relatively favorable safety profile."
+      },
+      "sessionFrequency": {
+        "ko": "시술 약 30분 내외. 보통 1회로 충분하며, 1~2년 후 효과 감소 시 추가 시술을 고려합니다.",
+        "en": "Around 30 minutes; often a single session suffices, with optional touch-ups after ~1–2 years."
+      },
+      "candidatesContraindications": {
+        "ko": "경미~중등도 처짐 개선을 원하는 30~50대에 적합. 심한 처짐은 수술적 리프팅이 필요할 수 있습니다. 임신부·켈로이드 체질·시술부 염증 시는 피합니다.",
+        "en": "Suited for mild–moderate laxity (commonly 30s–50s). Severe ptosis may need surgical lifting. Avoid in pregnancy, keloid-prone patients, or active infection."
+      },
+      "costKRW": {
+        "ko": "실 종류·개수·병원에 따라 편차가 크며, 대략 수십만 원~100만 원 이상. 평균 약 50~80만 원 수준으로 보고됩니다.",
+        "en": "Wide range depending on thread types and counts: from several hundred thousand KRW to over 1 million; averages ~₩500k–₩800k are often reported."
+      },
+      "reviewsSummary": {
+        "ko": "즉시 리프팅과 턱선 정돈, 처짐 개선 후기가 많고, 당김 느낌이 시간이 지나며 자연스러워졌다는 평가가 흔합니다.",
+        "en": "Many report immediate lift and improved jawline; initial tightness typically softens to a natural feel over time."
+      },
+      "precautions": {
+        "ko": "1~2주간 큰 하품·과도한 입 벌림·사우나·격한 운동을 피하고, 턱선 시술 시 고개를 세게 돌리는 행동을 자제합니다.",
+        "en": "For ~1–2 weeks, avoid wide mouth opening, saunas, vigorous exercise; minimize abrupt neck rotations after jawline threads."
+      },
+      "providerNotes": {
+        "ko": "개인 얼굴 구조·탄력에 맞춘 실 선택·개수·벡터 설계가 중요하므로 숙련된 전문의와 충분히 상담하세요.",
+        "en": "Outcome depends on thread selection, vector planning, and counts tailored to facial anatomy; consult experienced providers."
+      }
+    },
+    {
+      "key": "Thermage",
+      "title": { "ko": "고주파 리프팅(써마지)", "en": "RF Lifting (Thermage)" },
+      "overview": {
+        "ko": "고주파(RF)를 진피·지방층에 전달해 콜라겐 수축·재형성을 유도, 표면 손상 없이 탄력·주름 개선을 돕는 대표적 비수술 리프팅입니다.",
+        "en": "Radiofrequency energy heats dermal/subcutaneous layers to contract and remodel collagen, tightening skin and softening wrinkles without surface damage."
+      },
+      "effectsDuration": {
+        "ko": "시술 직후 약간의 타이트닝이 보이고, 2~3개월에 효과가 극대화됩니다. 개인차가 있으나 보통 6개월~1년 유지됩니다.",
+        "en": "Mild immediate tightening with maximal effect at ~2–3 months; benefits generally persist ~6–12 months."
+      },
+      "painAnesthesia": {
+        "ko": "크림마취 후 진행하며 깊은 열감과 따끔거림이 있을 수 있습니다. 최신 기기는 쿨링·진동으로 통증이 완화되었습니다.",
+        "en": "Performed with topical anesthesia; patients feel deep heat and prickling. Newer devices reduce discomfort via cooling and vibration."
+      },
+      "downtime": {
+        "ko": "다운타임이 거의 없어 시술 직후 일상 복귀가 가능합니다. 일시적 홍조·부기가 수시간~하루 내 가라앉습니다.",
+        "en": "Minimal downtime; most resume normal activities immediately. Transient redness/swelling settles within hours to a day."
+      },
+      "sideEffectsSafety": {
+        "ko": "전반적으로 안전하나 드물게 화상, 지속 홍반, 드물게 지방 위축에 따른 볼 꺼짐이 보고됩니다. 적정 에너지·팁 사용이 중요합니다.",
+        "en": "Generally safe; rare risks include burns, persistent erythema, or fat atrophy. Proper energy settings and tip selection are critical."
+      },
+      "sessionFrequency": {
+        "ko": "약 40~60분 소요. 1회로도 효과가 있으나 6~12개월 간격의 정기 시술을 권장합니다.",
+        "en": "Takes ~40–60 minutes. A single session helps; consider maintenance every 6–12 months."
+      },
+      "candidatesContraindications": {
+        "ko": "초기 노화로 탄력이 저하된 30대 이후에 적합. 최근 실·필러 시술이 있다면 간섭 가능성이 있어 시기 조율이 필요합니다. 임신부·안면 금속 임플란트 보유자는 피합니다.",
+        "en": "Good for early laxity (typically 30+). Coordinate timing if recent threads/fillers may interact with heat. Avoid in pregnancy or with facial metal implants."
+      },
+      "costKRW": {
+        "ko": "안면 1회 약 100만~300만 원(샷 수·병원에 따라 편차). 예: FLX 300샷 ~120~150만, 600샷 ~200만 내외, 900샷 ~250만 원 이상.",
+        "en": "Face session roughly ₩1.0–3.0M depending on shots/clinic. Examples: FLX 300 shots ~₩1.2–1.5M; 600 shots ~₩2.0M; 900 shots ≥₩2.5M."
+      },
+      "reviewsSummary": {
+        "ko": "다운타임이 거의 없고, 수개월에 걸친 탄력·결 개선 후기가 많습니다. 통증 체감과 체감 효과는 개인차가 큽니다.",
+        "en": "Praised for minimal downtime and gradual texture/tightening over months; perceived pain and results vary by individual."
+      },
+      "precautions": {
+        "ko": "시술 후 일시적 열감·홍조 시 진정·보습 관리에 신경 쓰고, 과도한 열 자극은 며칠 피합니다.",
+        "en": "After treatment, manage transient heat/redness with soothing and moisturization; avoid excessive heat exposure for a few days."
+      },
+      "providerNotes": {
+        "ko": "피부 두께·탄력·볼륨 상태에 따른 샷 수·에너지 최적화가 중요하며, 숙련된 의료진의 기기·팁 선택이 결과를 좌우합니다.",
+        "en": "Optimize energy and shot counts to skin thickness, elasticity, and volume; device/tip selection by experienced providers drives outcomes."
+      }
+    },
+    {
+      "key": "Ulthera",
+      "title": { "ko": "울쎄라", "en": "Ultherapy (HIFU)" },
+      "overview": {
+        "ko": "고강도 집속 초음파(HIFU)로 SMAS(근막)층까지 열에너지를 전달해 콜라겐 재생을 유도하는 프리미엄 비수술 리프팅입니다. 처진 얼굴선, 이중턱, 눈꺼풀 처짐 등에 효과적입니다.",
+        "en": "High-intensity focused ultrasound (HIFU) delivers heat to the SMAS layer to stimulate collagen remodeling for lifting. Effective for sagging jawline, double chin, and eyelid laxity."
+      },
+      "effectsDuration": {
+        "ko": "즉시 타이트닝 후 2~6개월에 최대 효과. 보통 약 1년 유지, 개인차 있음.",
+        "en": "Mild immediate tightening; peak results at ~2–6 months; durability around ~1 year, varies by individual."
+      },
+      "painAnesthesia": {
+        "ko": "통증이 있는 편. 주로 도포마취를 사용하며 민감자는 수면마취를 고려하기도 합니다.",
+        "en": "Procedurally painful for many; usually performed with topical anesthesia, with sedation in sensitive patients."
+      },
+      "downtime": {
+        "ko": "표면 손상이 없어 일상 복귀가 빠름. 약한 붓기·뻐근함이 1~2일 있을 수 있음.",
+        "en": "No surface injury; quick return to daily life. Mild swelling/soreness may persist for 1–2 days."
+      },
+      "sideEffectsSafety": {
+        "ko": "숙련도 의존. 드물게 신경 자극으로 일시 감각 이상 보고. 전문의에게 시술 권장.",
+        "en": "Operator-dependent; rare transient nerve irritation reported. Seek experienced providers."
+      },
+      "sessionFrequency": {
+        "ko": "보통 6~12개월 간격으로 1회씩 유지 시술.",
+        "en": "Maintenance commonly every 6–12 months."
+      },
+      "candidatesContraindications": {
+        "ko": "중등도 처짐 개선에 적합. 염증성 여드름이 심하면 치료 후 권장.",
+        "en": "Suited for mild-to-moderate laxity. Defer if significant inflammatory acne is present."
+      },
+      "costKRW": {
+        "ko": "300샷 약 100~150만 원, 600샷 150~200만 원+, 전체+목은 200만 원 이상이 흔함(병원별 상이).",
+        "en": "Roughly ₩1.0–1.5M for ~300 shots; ₩1.5–2.0M+ for ~600 shots; full face+neck often ≥₩2.0M (varies)."
+      },
+      "reviewsSummary": {
+        "ko": "이중턱·턱선 정리 만족도가 높으나 통증·비용 부담 언급도 있음.",
+        "en": "High satisfaction for double-chin/jawline contouring; pain and cost noted as drawbacks."
+      },
+      "precautions": {
+        "ko": "시술 당일 메이크업 제거 등 기본 준비. 1주간 강한 마사지·때미는 행위는 피함.",
+        "en": "Arrive with makeup removed; avoid vigorous massage/scrubbing for ~1 week."
+      },
+      "providerNotes": {
+        "ko": "샷 수·에너지·벡터 최적화가 관건. 숙련된 의료진 선택이 중요.",
+        "en": "Optimize shots/energy/vectors to anatomy; provider experience is critical."
+      }
+    },
+    {
+      "key": "IPL",
+      "title": { "ko": "IPL", "en": "Intense Pulsed Light (IPL)" },
+      "overview": {
+        "ko": "레이저가 아닌 광선 기반 장비로 넓은 파장대를 필터링해 잡티·홍조·톤 개선 등 다목적 피부개선을 돕습니다.",
+        "en": "A non-laser light device using broad-spectrum pulses filtered to target pigment, redness, and overall tone."
+      },
+      "effectsDuration": {
+        "ko": "잡티는 1주 내 딱지 탈락 후 옅어짐. 홍조·톤은 시리즈 시술로 점진 개선, 수개월 유지 후 서서히 회귀 가능.",
+        "en": "Pigmented spots darken then shed in ~1 week. Redness/tone improve gradually with a series; effects last months then fade."
+      },
+      "painAnesthesia": {
+        "ko": "젤 도포 후 조사. 따끔거림·열감은 있으나 대개 참을 만.",
+        "en": "Performed over cooling gel; snapping/heat sensations are generally tolerable."
+      },
+      "downtime": {
+        "ko": "경한 홍조·열감 수시간. 잡티 치료 시 미세 딱지 1주 내 자연 탈락.",
+        "en": "Mild redness/heat for hours; tiny crusts after spot treatment fall off within ~1 week."
+      },
+      "sideEffectsSafety": {
+        "ko": "기미는 악화 위험이 있어 단독 치료 지양, 전문의 판단 필요.",
+        "en": "Melasma may worsen with IPL monotherapy; seek professional guidance."
+      },
+      "sessionFrequency": {
+        "ko": "보통 4주 간격 3회 시리즈 권장, 이후 필요 시 유지.",
+        "en": "Commonly 3 sessions at 4-week intervals, then as needed."
+      },
+      "candidatesContraindications": {
+        "ko": "잡티·홍조·톤 개선 희망자에게 적합. 임신, 광과민, 과다 일광 노출 시 피함.",
+        "en": "Good for pigment/redness/tone; avoid in pregnancy, photosensitivity, or recent sunburn/tan."
+      },
+      "costKRW": {
+        "ko": "1회 약 5만~15만 원(평균 7~10만 원), 3회 패키지 20만 원대(병원별 상이).",
+        "en": "About ₩50k–₩150k per session (avg ₩70k–₩100k); 3-session packages ~₩200k (varies)."
+      },
+      "reviewsSummary": {
+        "ko": "‘일주일 후 밝아졌다’는 톤업·잡티 개선 후기가 많으나 지속 관리를 권장.",
+        "en": "Many report brighter tone and lighter spots after a week; ongoing maintenance recommended."
+      },
+      "precautions": {
+        "ko": "시술 전 1주 스크럽·레티놀 중단, 시술 후 냉찜질·자차 필수, 딱지 만지지 않기.",
+        "en": "Stop scrubs/retinoids 1 week prior; post-care includes cooling, strict SPF, and avoiding picking."
+      },
+      "providerNotes": {
+        "ko": "피부 상태에 맞춘 파라미터·필터 선택 중요. 콘택트렌즈는 제거 권장.",
+        "en": "Parameter/filter selection should match skin concerns; remove contact lenses before treatment."
+      }
+    },
+    {
+      "key": "PicoLaser",
+      "title": { "ko": "피코 레이저", "en": "Pico Laser" },
+      "overview": {
+        "ko": "피코초 단위의 짧은 펄스로 색소를 미세 분쇄해 주변 조직 손상을 줄이는 레이저. 기미·잡티·문신·모공결 개선에 활용.",
+        "en": "Ultra-short picosecond pulses shatter pigment with minimal collateral injury; used for melasma, spots, tattoos, and texture/pores."
+      },
+      "effectsDuration": {
+        "ko": "저강도 피코토닝은 시술 직후 생활 가능, 1주 내 홍조 소실. 고강도 치료는 딱지·색 변화가 1주 내 호전.",
+        "en": "Low-fluence toning has minimal downtime; redness settles within a day. Higher-fluence treatments form crusts that resolve in ~1 week."
+      },
+      "painAnesthesia": {
+        "ko": "연고마취·쿨링 병행 시 따끔거림·열감이 견딜만. 문신 제거 등 고에너지 시 통증 증가.",
+        "en": "Topical anesthetic/cooling reduce snapping heat pain; tattoo-level energies can be more painful."
+      },
+      "downtime": {
+        "ko": "대체로 짧음. 집중 치료 부위는 일시적 진해짐·딱지→자연 탈락. 자차·보습 중요.",
+        "en": "Generally brief; treated macules may transiently darken and crust before shedding. Emphasize SPF and moisturization."
+      },
+      "sideEffectsSafety": {
+        "ko": "짧은 펄스로 부작용률이 낮은 편. 과치료 시 색소 변동 가능.",
+        "en": "Short pulses lower adverse events; over-treatment can still cause pigmentary changes."
+      },
+      "sessionFrequency": {
+        "ko": "문제·강도에 따라 2~6주 간격으로 여러 회.",
+        "en": "Multiple sessions every 2–6 weeks depending on indication/fluence."
+      },
+      "candidatesContraindications": {
+        "ko": "색소·문신·모공·흉터 자국 개선 희망자. 햇빛에 많이 그을린 상태는 피함.",
+        "en": "For pigment/tattoos/texture; avoid when heavily tanned."
+      },
+      "costKRW": {
+        "ko": "목적·부위에 따라 상이(병원 개별가).",
+        "en": "Varies widely by indication/area (clinic-specific)."
+      },
+      "reviewsSummary": {
+        "ko": "‘잡티가 옅어지고 결이 매끈’ 피드백 다수. 과치료 시 일시적 색 저하/과다 보고.",
+        "en": "Frequent reports of lighter spots and smoother texture; temporary hypo/hyper-pigmentation with aggressive settings."
+      },
+      "precautions": {
+        "ko": "딱지 자연 탈락 전 강한 자극·직사광선 회피, 보습·자차 철저.",
+        "en": "Avoid sun/irritants until crusts shed; maintain moisturization and high-SPF."
+      },
+      "providerNotes": {
+        "ko": "기미는 보수적 에너지·간격 조절이 안전. 파장·스팟·플루언스 최적화 필요.",
+        "en": "Treat melasma conservatively; tune wavelength/spot/fluence carefully."
+      }
+    },
+    {
+      "key": "FractionalLaser",
+      "title": { "ko": "프락셔널 레이저", "en": "Fractional Laser (e.g., Fraxel)" },
+      "overview": {
+        "ko": "레이저를 미세 점 형태로 분할 조사해 microthermal zone을 만들고 주변 정상 조직의 치유로 재생을 유도하는 피부재생 레이저.",
+        "en": "Laser energy is fractionated into microthermal zones, prompting regeneration from surrounding intact skin for resurfacing."
+      },
+      "effectsDuration": {
+        "ko": "여러 회 시리즈로 여드름 흉터·모공·잔주름·톤을 점진 개선. 결과는 수개월 이상 유지 가능.",
+        "en": "Series treatments gradually improve acne scars, pores, fine lines, and tone; results can last months."
+      },
+      "painAnesthesia": {
+        "ko": "도포마취 후 시술. 따가움·열감이 있으나 조절 가능.",
+        "en": "Performed under topical anesthesia; stinging/heat sensations are manageable."
+      },
+      "downtime": {
+        "ko": "홍조·부기·거친 결감이 수일 지속. 각질탈락 후 매끈해짐.",
+        "en": "Redness/swelling/roughness for several days; smoother feel after desquamation."
+      },
+      "sideEffectsSafety": {
+        "ko": "일시적 색 변화·감염·과치료 시 흉 가능성. 전문 클리닉 권장.",
+        "en": "Temporary pigment shift, infection risk, and scarring if over-treated; choose experienced clinics."
+      },
+      "sessionFrequency": {
+        "ko": "보통 4~6주 간격 3~5회.",
+        "en": "Typically 3–5 sessions every 4–6 weeks."
+      },
+      "candidatesContraindications": {
+        "ko": "여드름 흉터·모공·잔주름·광노화 개선 목적. 최근 박피·레이저 후 회복기에는 지양.",
+        "en": "Best for acne scars/pores/fine lines/photoaging; defer during recovery from peels/lasers."
+      },
+      "costKRW": {
+        "ko": "기기·범위에 따라 상이(병원 개별가).",
+        "en": "Highly variable by device/coverage (clinic-specific)."
+      },
+      "reviewsSummary": {
+        "ko": "‘결이 부드러워지고 흉터가 옅어졌다’는 후기 다수.",
+        "en": "Commonly reported smoother texture and softened scars."
+      },
+      "precautions": {
+        "ko": "자극 제품(레티놀/산)은 회복 후 재개. 자차·보습 필수.",
+        "en": "Hold retinoids/acids until healing; strict SPF and moisturization."
+      },
+      "providerNotes": {
+        "ko": "에너지·패스 수·간격은 피부 상태에 맞춰 조절.",
+        "en": "Adjust energy/passes/intervals to skin condition."
+      }
+    },
+    {
+      "key": "RejuranHealer",
+      "title": { "ko": "리쥬란 힐러", "en": "Rejuran Healer (PN Skin Booster)" },
+      "overview": {
+        "ko": "연어 유래 폴리뉴클레오티드(PN)를 진피에 다점 주입해 콜라겐 합성과 치유를 촉진, 피부결·탄력·보습을 개선하는 주사형 스킨부스터.",
+        "en": "Poly-nucleotides (PN) derived from salmon are microinjected into the dermis to promote collagen synthesis and healing, improving texture, elasticity, and hydration."
+      },
+      "effectsDuration": {
+        "ko": "2주 전후부터 촉촉·매끈 느낌. 3~4회 시리즈 후 유지가 안정적.",
+        "en": "Noticeable plump/smooth feel around ~2 weeks; more stable effects after 3–4 sessions."
+      },
+      "painAnesthesia": {
+        "ko": "매우 가는 바늘/멀티니들 인젝터 사용. 도포마취 후 진행해 통증 완화.",
+        "en": "Uses very fine needles/multi-needle injectors; topical anesthesia reduces discomfort."
+      },
+      "downtime": {
+        "ko": "미세 팽진·점상 멍이 1~3일. 메이크업으로 커버 가능.",
+        "en": "Pinpoint blebs/bruises for 1–3 days; often coverable with makeup."
+      },
+      "sideEffectsSafety": {
+        "ko": "전반적 안전. 일시적 붓기·가려움 가능.",
+        "en": "Generally safe; transient swelling/itching may occur."
+      },
+      "sessionFrequency": {
+        "ko": "보통 3~4주 간격 3~4회, 이후 3~6개월 간격 유지.",
+        "en": "Typically 3–4 sessions at 3–4-week intervals; maintenance every 3–6 months."
+      },
+      "candidatesContraindications": {
+        "ko": "잔주름·건성·탄력저하 개선 희망자에게 적합.",
+        "en": "Good for fine lines, dryness, and laxity."
+      },
+      "costKRW": {
+        "ko": "병원/용량에 따라 상이(보통 회당 수십만 원대).",
+        "en": "Varies by dose/clinic; commonly several hundred thousand KRW per session."
+      },
+      "reviewsSummary": {
+        "ko": "‘광이 난다, 화장발이 좋아졌다’는 후기 다수.",
+        "en": "Frequent feedback: dewier glow and better makeup adherence."
+      },
+      "precautions": {
+        "ko": "당일 과음·사우나 지양, 멍 방지 위해 자극 최소화.",
+        "en": "Avoid alcohol/sauna same day; minimize irritation to reduce bruising."
+      },
+      "providerNotes": {
+        "ko": "다점 균일 주입과 개인 피부 상태별 용량 조절이 관건.",
+        "en": "Uniform micro-deposition and dosing tailored to skin condition are key."
+      }
+    },
+    {
+      "key": "SkinBooster",
+      "title": { "ko": "스킨부스터", "en": "Skin Booster (e.g., HA, NCTF)" },
+      "overview": {
+        "ko": "히알루론산(HA)·비타민·아미노산·핵산 등 복합 성분을 진피에 소량 다점 주입해 보습·광채·결 개선을 노리는 관리형 주사.",
+        "en": "Microinjection of HA and nutritive cocktails (vitamins, amino acids, nucleotides) into the dermis for hydration, glow, and texture refinement."
+      },
+      "effectsDuration": {
+        "ko": "1~2주 후 촉촉·윤기. 3~4회 시리즈 후 유지가 좋음.",
+        "en": "Hydration/glow visible in 1–2 weeks; better durability after 3–4 sessions."
+      },
+      "painAnesthesia": {
+        "ko": "도포마취·쿨링 병행, 따끔거림은 경미~중등.",
+        "en": "Topical anesthetic/cooling; mild-to-moderate stings."
+      },
+      "downtime": {
+        "ko": "미세 발적·멍 1~3일. 즉시 일상 가능.",
+        "en": "Minor redness/bruising 1–3 days; immediate daily activity."
+      },
+      "sideEffectsSafety": {
+        "ko": "대체로 안전. 일시 트러블 가능성.",
+        "en": "Generally safe; occasional transient breakouts."
+      },
+      "sessionFrequency": {
+        "ko": "3~4주 간격 3회 권장, 이후 3~6개월 유지 시술.",
+        "en": "Three sessions every 3–4 weeks, then maintenance every 3–6 months."
+      },
+      "candidatesContraindications": {
+        "ko": "건성·윤기 저하·미세잔주름 개선 희망자.",
+        "en": "For dryness, dullness, and fine lines."
+      },
+      "costKRW": {
+        "ko": "일반 물광(HA) 1회 약 10~20만 원, 프리미엄 라인 20~30만 원, 3회 패키지 ~50만 원 내외(병원별 상이).",
+        "en": "Typical HA sessions ₩100k–₩200k; premium lines ₩200k–₩300k; 3-session packages ~₩500k (varies)."
+      },
+      "reviewsSummary": {
+        "ko": "‘속부터 차오르는 보습, 화장발 개선’ 후기가 다수.",
+        "en": "Common praise for deep hydration and improved makeup fit."
+      },
+      "precautions": {
+        "ko": "당일 세안·메이크업은 수 시간 뒤 가볍게, 3일간 음주·사우나 지양.",
+        "en": "Light cleansing/makeup after a few hours; avoid alcohol/sauna for ~3 days."
+      },
+      "providerNotes": {
+        "ko": "성분·점탄성·니들 방식 선택이 결과 좌우.",
+        "en": "Choose formulations/viscosity and injection method to match goals."
+      }
+    },
+    {
+      "key": "Filler",
+      "title": { "ko": "필러", "en": "Dermal Filler (HA, etc.)" },
+      "overview": {
+        "ko": "히알루론산(HA) 등을 주입해 볼륨을 보완·형성하는 시술. 팔자·볼·코·턱 등 윤곽 교정에 사용.",
+        "en": "Injection of HA and other fillers to restore or augment volume for contouring nasolabial folds, cheeks, nose, chin, etc."
+      },
+      "effectsDuration": {
+        "ko": "즉시 효과. 유지기간은 제품·부위에 따라 약 6개월~2년.",
+        "en": "Immediate results; durability ~6 months to 2 years depending on product and area."
+      },
+      "painAnesthesia": {
+        "ko": "도포마취 또는 국소마취 병행. 주입 시 압통 가능.",
+        "en": "Topical or local anesthesia used; pressure-type pain during injection is possible."
+      },
+      "downtime": {
+        "ko": "멍·붓기 1~7일. 뭉침은 마사지 금지, 자연 개선 관찰.",
+        "en": "Bruising/swelling for 1–7 days; avoid massaging lumps to allow settling."
+      },
+      "sideEffectsSafety": {
+        "ko": "일반적 부작용은 멍·부기·뭉침. HA 필러는 히알루로니다아제로 용해 가능. 과도 시술은 조직 변형 위험.",
+        "en": "Common AEs: bruising, edema, nodules. HA fillers are reversible with hyaluronidase. Overuse risks tissue changes."
+      },
+      "sessionFrequency": {
+        "ko": "보통 1회로 충분하나 수주 내 보완 주입 가능. 유지기간 경과 후 재시술.",
+        "en": "Often one session suffices; touch-ups may be done in weeks; repeat when effect wanes."
+      },
+      "candidatesContraindications": {
+        "ko": "볼륨 부족(팔자·볼·코·턱 등) 개선 희망자. 임신·수유·성분 알러지 시 피함.",
+        "en": "For volume deficits (NL folds, cheeks, nose, chin). Avoid in pregnancy/lactation or with filler component allergy."
+      },
+      "costKRW": {
+        "ko": "히알루론산 1cc 약 10만~30만 원, 수입 고급 라인은 더 높음. 코 1cc 평균 약 23만 원 보고 사례.",
+        "en": "HA ~₩100k–₩300k per cc; premium imports higher. Nose 1 cc averages ~₩230k in some surveys."
+      },
+      "reviewsSummary": {
+        "ko": "즉각적인 윤곽 변화 만족도 높음. 과다 주입 시 부자연스러움 우려.",
+        "en": "High satisfaction from instant contour changes; overfilling can look unnatural."
+      },
+      "precautions": {
+        "ko": "1주일간 강한 압박·마사지·엎드려 자기 피하기. 아스피린류 복용 시 멍 주의.",
+        "en": "Avoid strong pressure/massage/prone sleeping for ~1 week; caution with aspirin-like meds."
+      },
+      "providerNotes": {
+        "ko": "해부학 지식·제품 선택·주입층·용량 조절이 결과와 안전성 좌우. 부작용 시 녹이는 응급대응 가능 여부 확인.",
+        "en": "Outcome/safety depend on anatomy, product choice, plane, and dosage; ensure reversibility plans are in place."
+      }
+    },
+    {
+      "key": "LaserToning",
+      "title": { "ko": "레이저 토닝", "en": "Laser Toning" },
+      "overview": {
+        "ko": "저출력 레이저를 반복 조사해 피부 속 색소를 서서히 줄여 기미·잡티·홍조 개선에 쓰이는 치료. 피부결·톤 개선에도 활용됩니다.",
+        "en": "Low-fluence laser beams are repeatedly delivered to gradually reduce pigmentation (melasma, spots, redness) and improve skin tone/texture."
+      },
+      "effectsDuration": {
+        "ko": "1~2회로는 미미하며, 보통 5~10회 누적 시 개선. 유지 효과는 수개월~1년 정도.",
+        "en": "Minimal change after 1–2 sessions; typically 5–10 treatments yield visible results. Maintenance lasts several months up to a year."
+      },
+      "painAnesthesia": {
+        "ko": "따끔거림·열감이 있으나 대개 마취 필요 없음.",
+        "en": "Snapping/heat sensation, usually tolerable without anesthesia."
+      },
+      "downtime": {
+        "ko": "시술 직후 약간 홍조·열감, 수시간~하루 내 호전.",
+        "en": "Mild redness/heat resolves within hours to a day."
+      },
+      "sideEffectsSafety": {
+        "ko": "안전성이 높으나 과치료 시 저색소·반점 위험.",
+        "en": "Safe overall; overtreatment may cause hypopigmentation or mottling."
+      },
+      "sessionFrequency": {
+        "ko": "1~2주 간격으로 5~10회 시리즈, 이후 유지 시술.",
+        "en": "Series of 5–10 sessions every 1–2 weeks; maintenance thereafter."
+      },
+      "candidatesContraindications": {
+        "ko": "기미·색소침착·홍조 개선 희망자. 최근 일광노출·감염 시 피함.",
+        "en": "Best for melasma/pigment/redness; avoid after recent sun exposure or active infection."
+      },
+      "costKRW": {
+        "ko": "1회 5만~15만 원, 10회 패키지 50~100만 원 수준.",
+        "en": "₩50k–₩150k per session; ₩500k–₩1.0M for 10-session packages."
+      },
+      "reviewsSummary": {
+        "ko": "‘기미가 옅어졌다’는 후기 다수, 반복 시술 필요성이 언급됨.",
+        "en": "Many reviews note lightened melasma; emphasize need for repeated treatments."
+      },
+      "precautions": {
+        "ko": "시술 전후 자외선 차단·보습 철저.",
+        "en": "Strict SPF and moisturization before/after sessions."
+      },
+      "providerNotes": {
+        "ko": "기미는 에너지 낮게 시작, 점진 조정이 안전.",
+        "en": "Start with conservative fluence for melasma; adjust gradually."
+      }
+    },
+    {
+      "key": "LaserHairRemoval",
+      "title": { "ko": "레이저 제모", "en": "Laser Hair Removal" },
+      "overview": {
+        "ko": "특정 파장의 레이저를 모낭 색소에 흡수시켜 모근을 파괴해 털의 성장을 억제하는 시술.",
+        "en": "Laser light targets melanin in hair follicles, destroying roots to inhibit regrowth."
+      },
+      "effectsDuration": {
+        "ko": "1회로는 일시적. 보통 4~6주 간격 5~10회 누적 시 반영구 제모.",
+        "en": "Single session is temporary; semi-permanent reduction after 5–10 sessions at 4–6 week intervals."
+      },
+      "painAnesthesia": {
+        "ko": "따끔거림·고무줄 튀는 느낌. 대개 크림 마취 없이 가능하나 민감 부위는 마취 권장.",
+        "en": "Snapping sensation like rubber band; usually tolerable, topical anesthesia optional for sensitive zones."
+      },
+      "downtime": {
+        "ko": "시술 직후 붉음·열감이 수시간. 대부분 다음날 정상.",
+        "en": "Redness/heat for hours; skin returns to normal by next day."
+      },
+      "sideEffectsSafety": {
+        "ko": "드물게 화상·색소침착 가능. 피부톤·모발 색에 맞는 장비 선택 중요.",
+        "en": "Rare risk of burns/pigment change; match device to skin/hair type."
+      },
+      "sessionFrequency": {
+        "ko": "부위·모발 성장주기 따라 4~6주 간격 5~10회.",
+        "en": "5–10 sessions spaced 4–6 weeks, depending on area/growth cycle."
+      },
+      "candidatesContraindications": {
+        "ko": "잦은 제모로 불편한 사람. 흰털·금발에는 효과 적음.",
+        "en": "Best for those bothered by frequent shaving; less effective for white/blond hair."
+      },
+      "costKRW": {
+        "ko": "부위별 1회 3만~20만 원. 다리·겨드랑이 패키지 50~100만 원대.",
+        "en": "₩30k–₩200k per session depending on area; leg/axilla packages ₩500k–₩1.0M."
+      },
+      "reviewsSummary": {
+        "ko": "‘털이 줄고 자라지 않는다’ 후기 다수. 세션 누적이 중요.",
+        "en": "Commonly reported less/finer regrowth; emphasize need for multiple sessions."
+      },
+      "precautions": {
+        "ko": "시술 전 일광노출·왁싱 피하기, 시술 후 보습·자차 필수.",
+        "en": "Avoid tanning/waxing before; moisturize and apply SPF after."
+      },
+      "providerNotes": {
+        "ko": "피부톤·모발 굵기별로 알렉산드라이트·다이오드 등 장비 선택 필요.",
+        "en": "Choose Alexandrite, Diode, etc. based on skin tone/hair thickness."
+      }
+    },
+    {
+      "key": "LiftingCombination",
+      "title": { "ko": "리프팅 조합 전략", "en": "Lifting Combination Strategy" },
+      "overview": {
+        "ko": "HIFU(울쎄라)·고주파(써마지)·실리프팅을 조합해 개인 피부 상태에 맞춰 시너지 효과를 내는 전략.",
+        "en": "Combining HIFU (Ultherapy), RF (Thermage), and Thread Lift tailored to individual skin for synergistic results."
+      },
+      "effectsDuration": {
+        "ko": "단일 시술 대비 리프팅·탄력 개선이 뚜렷하고, 유지기간도 연장됨.",
+        "en": "Produces stronger lifting/firming and longer durability compared to single modality."
+      },
+      "painAnesthesia": {
+        "ko": "HIFU·RF는 도포마취, 실리프팅은 국소마취 병행.",
+        "en": "Topical anesthesia for HIFU/RF; local anesthesia for threads."
+      },
+      "downtime": {
+        "ko": "레이저는 다운타임 거의 없음. 실리프팅은 붓기·멍 1~2주 가능.",
+        "en": "Minimal downtime for lasers; thread lifting may cause bruising/swelling for 1–2 weeks."
+      },
+      "sideEffectsSafety": {
+        "ko": "각 시술의 부작용(통증·멍·피부 자극 등)이 복합될 수 있으므로 숙련된 의료진에게 받아야 안전.",
+        "en": "Risks combine (pain, swelling, irritation); require experienced providers."
+      },
+      "sessionFrequency": {
+        "ko": "HIFU·RF는 6~12개월 주기, 실리프팅은 1~2년 유지 후 보강.",
+        "en": "HIFU/RF every 6–12 months; threads every 1–2 years with touch-ups."
+      },
+      "candidatesContraindications": {
+        "ko": "복합적 처짐·탄력저하가 있는 30~50대. 얇은 피부·급격 체중변화자는 주의.",
+        "en": "For combined laxity in 30s–50s; caution in thin skin or rapid weight change."
+      },
+      "costKRW": {
+        "ko": "조합 범위 따라 수백만 원대. 예: 울쎄라+써마지+실리프팅 400만~700만 원 수준.",
+        "en": "Combination packages often ₩4.0M–₩7.0M depending on scope."
+      },
+      "reviewsSummary": {
+        "ko": "‘턱선·탄력이 동시에 개선됐다’는 후기 다수. 통증·비용은 부담 요인.",
+        "en": "Frequent feedback: jawline/elasticity improved simultaneously; pain/cost seen as downsides."
+      },
+      "precautions": {
+        "ko": "시술 순서·에너지·실 종류 설계가 중요. 사후관리(보습·자차) 병행.",
+        "en": "Plan order, energy, and thread type carefully; combine with aftercare (hydration, SPF)."
+      },
+      "providerNotes": {
+        "ko": "HIFU는 깊은 층, RF는 표층, 실리프팅은 물리적 당김을 보완해 각기 다른 층을 공략.",
+        "en": "HIFU targets deep fascia, RF acts on dermis, threads provide mechanical lift—complementary layers."
+      }
+    },
+    {
+      "key": "MTS",
+      "title": { "ko": "MTS(마이크로니들링)", "en": "MTS (Microneedling)" },
+      "overview": {
+        "ko": "미세 바늘로 피부 표면에 균일한 미세 상처를 내어 재생을 유도하고 콜라겐 생성을 촉진하는 시술입니다. 여드름 흉터, 모공, 잔주름, 피부결 개선에 활용됩니다.",
+        "en": "Creates controlled micro-injuries with fine needles to trigger regeneration and collagen synthesis. Used for acne scars, enlarged pores, fine lines, and texture."
+      },
+      "effectsDuration": {
+        "ko": "1~2주 후 결 변화가 느껴지고, 4~8주에 걸쳐 점진적 탄력·흉터 개선이 나타납니다. 누적 시리즈 후 수개월 유지됩니다.",
+        "en": "Texture changes appear in 1–2 weeks, with progressive remodeling over 4–8 weeks. Series treatments maintain results for months."
+      },
+      "painAnesthesia": {
+        "ko": "도포마취 후 진행하며 따끔거림·열감이 경미~중등입니다.",
+        "en": "Performed under topical anesthesia; mild to moderate stinging/heat."
+      },
+      "downtime": {
+        "ko": "홍조·건조·각질이 2~5일 나타날 수 있습니다.",
+        "en": "Redness, dryness, and flaking may last 2–5 days."
+      },
+      "sideEffectsSafety": {
+        "ko": "일시적 자극·염증·색 변화 가능성이 있으며, 과도한 강도는 PIH 위험을 높일 수 있습니다.",
+        "en": "Temporary irritation/inflammation or pigment changes are possible; overly aggressive settings raise PIH risk."
+      },
+      "sessionFrequency": {
+        "ko": "4~6주 간격 3~5회 권장, 이후 분기별 유지 시술.",
+        "en": "Recommended 3–5 sessions every 4–6 weeks; quarterly maintenance thereafter."
+      },
+      "candidatesContraindications": {
+        "ko": "여드름 흉터·모공·결 개선 희망자. 활성 여드름·감염·켈로이드 경향은 주의/지양.",
+        "en": "Ideal for acne scars/pores/texture. Avoid or use caution with active acne, infection, or keloid tendency."
+      },
+      "costKRW": {
+        "ko": "회당 10만~30만 원대(장비·앰플 구성에 따라 상이).",
+        "en": "Typically ₩100k–₩300k per session depending on device/serums."
+      },
+      "reviewsSummary": {
+        "ko": "‘결이 매끈해지고 모공이 줄었다’는 후기가 많으며, 초기 홍조는 흔하나 일시적입니다.",
+        "en": "Common feedback: smoother texture and reduced pores; early redness is common but transient."
+      },
+      "precautions": {
+        "ko": "1주간 강한 자외선·사우나·자극성 화장품(레티놀/산) 지양, 보습·자차 철저.",
+        "en": "Avoid intense sun, saunas, and strong actives (retinoids/acids) for ~1 week; emphasize moisturization and SPF."
+      },
+      "providerNotes": {
+        "ko": "바늘 길이·패스 수·압력을 피부 타입과 부위에 맞게 정밀 조정해야 합니다.",
+        "en": "Needle length, passes, and pressure must be tailored to skin type and area."
+      }
+    },
+    {
+      "key": "MicroneedlingRF",
+      "title": { "ko": "RF 마이크로니들링", "en": "RF Microneedling" },
+      "overview": {
+        "ko": "절연 바늘을 진피층에 삽입해 RF(고주파) 에너지를 전달, 콜라겐 수축·재형성을 강화해 흉터·모공·탄력 개선을 유도합니다.",
+        "en": "Insulated needles deliver radiofrequency energy into the dermis to contract and remodel collagen, improving scars, pores, and laxity."
+      },
+      "effectsDuration": {
+        "ko": "1~2개월에 걸쳐 탄력·결 개선, 시리즈 후 6~12개월 유지가 흔합니다.",
+        "en": "Firming/texture improvements build over 1–2 months; durability of 6–12 months after a series."
+      },
+      "painAnesthesia": {
+        "ko": "도포/국소마취 병행. 일반 MTS보다 통증 체감이 약간 큰 편입니다.",
+        "en": "Topical/local anesthesia; typically a bit more painful than standard microneedling."
+      },
+      "downtime": {
+        "ko": "홍조·부기 1~3일, 미세딱지 가능.",
+        "en": "Redness/swelling for 1–3 days; tiny crusting may occur."
+      },
+      "sideEffectsSafety": {
+        "ko": "경미한 화상·색 변동 드물게 보고. 숙련도와 파라미터 설정이 안전성 좌우.",
+        "en": "Minor burns/pigment shifts are rare; safety depends on parameters and operator skill."
+      },
+      "sessionFrequency": {
+        "ko": "4~6주 간격 3~4회 권장, 이후 반기 유지.",
+        "en": "3–4 sessions every 4–6 weeks; semiannual maintenance."
+      },
+      "candidatesContraindications": {
+        "ko": "여드름 흉터·널어진 모공·초기 탄력저하. 금속 임플란트 부위는 주의.",
+        "en": "For acne scars, enlarged pores, early laxity; caution near metal implants."
+      },
+      "costKRW": {
+        "ko": "회당 20만~60만 원대(장비/팁 소모품에 따라 변동).",
+        "en": "Approximately ₩200k–₩600k per session depending on device/consumables."
+      },
+      "reviewsSummary": {
+        "ko": "‘모공·흉터가 완만히 개선된다’는 후기가 다수. 통증·비용이 단점으로 언급됩니다.",
+        "en": "Often cited steady improvement of pores/scars; pain and cost are common downsides."
+      },
+      "precautions": {
+        "ko": "1주간 강한 열·운동·각질 제거 회피, 재생·보습 위주 스킨케어.",
+        "en": "Avoid heat, intense workouts, and exfoliation for ~1 week; use soothing/hydrating care."
+      },
+      "providerNotes": {
+        "ko": "에너지/침투 깊이 매핑과 격자 패턴 최적화가 결과를 좌우합니다.",
+        "en": "Outcome hinges on energy/depth mapping and optimized grid patterns."
+      }
+    },
+    {
+      "key": "FractionalCO2",
+      "title": { "ko": "프락셔널 CO₂ 레이저", "en": "Fractional CO₂ Laser" },
+      "overview": {
+        "ko": "CO₂ 레이저를 점 형태로 분할 조사해 표피/진피에 미세 열손상을 만들고 재생을 유도, 여드름 흉터·주름·모공 개선에 효과적입니다.",
+        "en": "Fractionated CO₂ creates microthermal zones in the epidermis/dermis to trigger regeneration, effective for acne scars, wrinkles, and pores."
+      },
+      "effectsDuration": {
+        "ko": "수주~수개월에 걸쳐 점진 개선. 시리즈 후 장기 유지가 가능합니다.",
+        "en": "Gradual improvements over weeks to months; durable results after a series."
+      },
+      "painAnesthesia": {
+        "ko": "도포마취 필수 수준의 따가움·열감.",
+        "en": "Requires topical anesthesia due to stinging/heat."
+      },
+      "downtime": {
+        "ko": "홍조·부기·미세딱지·각질이 3~7일. 재생기 보습·자차 중요.",
+        "en": "Redness/swelling/crusting/flaking for 3–7 days; moisturization and SPF essential during healing."
+      },
+      "sideEffectsSafety": {
+        "ko": "과치료 시 색 변화·흉 위험. 숙련된 시술자 필요.",
+        "en": "Overtreatment risks pigment changes/scarring; choose experienced providers."
+      },
+      "sessionFrequency": {
+        "ko": "4~8주 간격 3~5회 권장.",
+        "en": "Typically 3–5 sessions at 4–8 week intervals."
+      },
+      "candidatesContraindications": {
+        "ko": "여드름 흉터·광노화·잔주름. 최근 박피/레이저 후 회복기라면 지양.",
+        "en": "For acne scars/photoaging/fine lines; defer if recovering from recent peels/lasers."
+      },
+      "costKRW": {
+        "ko": "부위·밀도에 따라 회당 20만~60만 원대.",
+        "en": "₩200k–₩600k per session depending on area/density."
+      },
+      "reviewsSummary": {
+        "ko": "‘흉터가 완만히 옅어지고 결이 좋아졌다’는 평가가 많음.",
+        "en": "Many note gradual scar softening and smoother texture."
+      },
+      "precautions": {
+        "ko": "재생기엔 자극 성분 중단, 세안/메이크업은 의료진 지시에 따름.",
+        "en": "Hold actives during healing; follow provider guidance for cleansing/makeup."
+      },
+      "providerNotes": {
+        "ko": "스팟 크기·밀도·에너지를 피부 타입별로 보수적 시작 후 단계 조정.",
+        "en": "Start conservatively with spot size/density/fluence and titrate by skin type."
+      }
+    },
+    {
+      "key": "ErbiumGlass1550",
+      "title": { "ko": "어븀글라스 1550nm(비박피 프락셔널)", "en": "Erbium-Glass 1550 nm (Non-ablative Fractional)" },
+      "overview": {
+        "ko": "1550nm 파장으로 진피에 열컬럼을 형성해 콜라겐 리모델링을 유도하는 비박피 레이저. 다운타임이 짧은 편입니다.",
+        "en": "Delivers 1550 nm columns of heat into the dermis for collagen remodeling; a non-ablative option with shorter downtime."
+      },
+      "effectsDuration": {
+        "ko": "수주~수개월에 걸쳐 결·흉터·잔주름 개선, 시리즈 후 유지.",
+        "en": "Improves texture/scars/fine lines over weeks–months; maintained after a series."
+      },
+      "painAnesthesia": {
+        "ko": "도포마취 후 열감·따끔거림 tolerable.",
+        "en": "Topical anesthesia; tolerable heat/snap."
+      },
+      "downtime": {
+        "ko": "홍조 1~3일, 미세부종·건조감 가능.",
+        "en": "Redness 1–3 days; mild edema/dryness possible."
+      },
+      "sideEffectsSafety": {
+        "ko": "박피 대비 부작용 낮으나 과치료 시 색 변화 가능.",
+        "en": "Lower risk than ablative lasers, but pigment shifts possible with over-treatment."
+      },
+      "sessionFrequency": {
+        "ko": "4주 간격 3~5회.",
+        "en": "3–5 sessions every ~4 weeks."
+      },
+      "candidatesContraindications": {
+        "ko": "다운타임이 짧은 흉터·결 개선을 원하는 경우 적합.",
+        "en": "Good choice when shorter downtime is desired for scars/texture."
+      },
+      "costKRW": {
+        "ko": "회당 20만~50만 원대.",
+        "en": "Approximately ₩200k–₩500k per session."
+      },
+      "reviewsSummary": {
+        "ko": "‘회복이 빠르고 결이 개선’ 평가가 흔함.",
+        "en": "Often praised for quick recovery and texture gains."
+      },
+      "precautions": {
+        "ko": "1주 자차·보습·자극 회피.",
+        "en": "1 week of SPF, hydration, and irritation avoidance."
+      },
+      "providerNotes": {
+        "ko": "밀도·패스 수·에너지 누적량 관리가 핵심.",
+        "en": "Manage density, passes, and cumulative energy carefully."
+      }
+    },
+    {
+      "key": "LipolysisInjection",
+      "title": { "ko": "지방분해주사", "en": "Lipolysis Injection" },
+      "overview": {
+        "ko": "인젝터블 성분(예: 데옥시콜산, 복합 칵테일)을 국소 지방 부위에 주입해 지방세포 파괴·배출을 촉진, 윤곽 개선을 돕습니다.",
+        "en": "Injectables (e.g., deoxycholic acid, mixed cocktails) are delivered to localized fat to lyse adipocytes and enhance clearance, refining contours."
+      },
+      "effectsDuration": {
+        "ko": "수주에 걸쳐 둘레감소가 진행되며, 2~4주 간격으로 2~4회 누적 시 변화가 뚜렷합니다.",
+        "en": "Circumference reduction unfolds over weeks; 2–4 sessions at 2–4 week intervals yield visible change."
+      },
+      "painAnesthesia": {
+        "ko": "주입 시 따가움·압통·열감. 냉각/국소마취로 완화 가능.",
+        "en": "Stinging, pressure pain, warmth during injection; cooling/local anesthesia helps."
+      },
+      "downtime": {
+        "ko": "부기·압통·멍이 3~7일(부위·용량에 따라) 지속될 수 있습니다.",
+        "en": "Swelling, tenderness, and bruising may last 3–7 days depending on area/dose."
+      },
+      "sideEffectsSafety": {
+        "ko": "신경자극, 불균일함, 경화 결절 드물게 보고. 해부학 고려한 깊이·분산 주입이 중요합니다.",
+        "en": "Rare nerve irritation, contour irregularity, or firm nodules; anatomical depth and dispersion are critical."
+      },
+      "sessionFrequency": {
+        "ko": "2~4주 간격 2~4회 권장, 이후 필요 시 보강.",
+        "en": "Recommend 2–4 sessions every 2–4 weeks; touch-ups as needed."
+      },
+      "candidatesContraindications": {
+        "ko": "턱밑·볼살·팔뚝 등 국소 지방. 임신·수유·간질환·약물 알레르기 시 피함.",
+        "en": "Submental, buccal, arm fat, etc.; avoid in pregnancy, lactation, liver disease, or with drug allergies."
+      },
+      "costKRW": {
+        "ko": "부위·앰플 수에 따라 1회 10만~40만 원대.",
+        "en": "₩100k–₩400k per session depending on area/ampoule count."
+      },
+      "reviewsSummary": {
+        "ko": "‘붓기 빠지며 라인이 서서히 정리’ 피드백. 멍·압통 불편이 단점.",
+        "en": "Feedback notes gradual contouring as swelling subsides; bruising/tenderness are common downsides."
+      },
+      "precautions": {
+        "ko": "48시간 강한 압박·마사지·음주·사우나 지양.",
+        "en": "Avoid strong pressure, massage, alcohol, and saunas for 48 hours."
+      },
+      "providerNotes": {
+        "ko": "해부학적 위험구역 회피, 농도·용량·주입 깊이 개별화가 핵심.",
+        "en": "Avoid danger zones; individualize concentration, dosage, and injection depth."
+      }
+    },
+    {
+      "key": "PRP",
+      "title": { "ko": "PRP(자가혈 성장인자)", "en": "PRP (Platelet-Rich Plasma)" },
+      "overview": {
+        "ko": "본인 혈액에서 추출한 혈소판 농축액을 주사해 성장인자로 재생을 촉진, 결·잔주름·흉터·두피 상태 개선에 활용됩니다.",
+        "en": "Autologous platelet concentrate is injected to deliver growth factors for regeneration—used for texture, fine lines, scars, and scalp health."
+      },
+      "effectsDuration": {
+        "ko": "수주~수개월에 걸쳐 점진 개선, 시리즈 후 유지가 안정적입니다.",
+        "en": "Gradual improvements over weeks–months; more stable after a series."
+      },
+      "painAnesthesia": {
+        "ko": "도포마취 후 다점 주입, 따끔거림 경미~중등.",
+        "en": "Topical anesthesia; multiple microinjections with mild–moderate sting."
+      },
+      "downtime": {
+        "ko": "붉은 점상 자국·미세멍이 1~3일.",
+        "en": "Pinpoint redness/bruises for 1–3 days."
+      },
+      "sideEffectsSafety": {
+        "ko": "자가 성분이라 알레르기 낮음. 채혈·주입 관련 멍·종창 가능.",
+        "en": "Low allergy risk as autologous; bruising/swelling from phlebotomy/injection possible."
+      },
+      "sessionFrequency": {
+        "ko": "4주 간격 3회 권장, 이후 반기 유지.",
+        "en": "Three sessions ~4 weeks apart; semiannual maintenance."
+      },
+      "candidatesContraindications": {
+        "ko": "결·탄력 개선, 얕은 흉터, 두피 케어 희망자. 혈액질환·감염 시 지양.",
+        "en": "For texture/elasticity, shallow scars, scalp; avoid with hematologic issues or infection."
+      },
+      "costKRW": {
+        "ko": "회당 20만~60만 원대(부위·배합 요법에 따라 상이).",
+        "en": "₩200k–₶600k per session depending on area and combinations."
+      },
+      "reviewsSummary": {
+        "ko": "‘자연스러운 윤기·탄력’ 후기가 많아 관리형 시술로 선호됩니다.",
+        "en": "Often described as natural glow/firmness; favored as a maintenance therapy."
+      },
+      "precautions": {
+        "ko": "48시간 음주·사우나·강한 운동 지양, 보습·자차 권장.",
+        "en": "Avoid alcohol/sauna/intense exercise for 48 hours; moisturize and use SPF."
+      },
+      "providerNotes": {
+        "ko": "원심분리 품질·플레이트릿 농도·주입 층이 결과에 영향.",
+        "en": "Centrifugation quality, platelet concentration, and injection plane affect outcomes."
+      }
+    },
+    {
+      "key": "Sculptra",
+      "title": { "ko": "스컬트라(콜라겐 부스터)", "en": "Sculptra (Poly-L-Lactic Acid)" },
+      "overview": {
+        "ko": "폴리-L-젖산(PLLA) 현탁액을 주입해 수개월에 걸쳐 콜라겐 생성을 유도, 볼륨·탄력·주름 개선을 돕는 콜라겐 부스터입니다.",
+        "en": "Poly-L-lactic acid suspension is injected to stimulate collagen over months, improving volume, elasticity, and wrinkles."
+      },
+      "effectsDuration": {
+        "ko": "서서히 발현되며 2~3회 시리즈 후 1~2년 유지가 흔합니다.",
+        "en": "Gradual onset; after 2–3 sessions, results often last 1–2 years."
+      },
+      "painAnesthesia": {
+        "ko": "국소마취 또는 마취 혼합 주입, 주입 후 압통·부종 가능.",
+        "en": "Local anesthesia or lidocaine-mixed injections; tenderness/swelling may follow."
+      },
+      "downtime": {
+        "ko": "가벼운 멍·부종 3~7일. 주입 후 ‘5-5-5 마사지’ 권장(5일간 하루 5회 5분).",
+        "en": "Mild bruising/swelling 3–7 days; “5-5-5” massage often advised (5 min, 5 times/day, 5 days)."
+      },
+      "sideEffectsSafety": {
+        "ko": "과밀 주입 시 결절·비대칭 가능. 희석·교반·층별 주입 등 테크닉이 중요합니다.",
+        "en": "Nodules/asymmetry possible with overconcentration; dilution, agitation, and proper plane are key."
+      },
+      "sessionFrequency": {
+        "ko": "4~8주 간격 2~3회, 이후 연 1회 내외 보강.",
+        "en": "2–3 sessions 4–8 weeks apart; yearly touch-ups."
+      },
+      "candidatesContraindications": {
+        "ko": "볼륨 소실·탄력저하·미세주름 개선 희망자. 자가면역·활성 감염 시 지양.",
+        "en": "For volume loss, laxity, and fine lines; avoid with autoimmune issues or active infection."
+      },
+      "costKRW": {
+        "ko": "바이알당 40만~80만 원대, 부위·용량에 따라 총액 변동.",
+        "en": "₩400k–₩800k per vial; total varies by area/dose."
+      },
+      "reviewsSummary": {
+        "ko": "‘자연스럽게 차오른다’는 평이 많으며, 즉각 효과보다 장기 개선을 선호하는 층에 호평.",
+        "en": "Praised for natural, gradual fullness; favored by those preferring long-term improvement over immediate results."
+      },
+      "precautions": {
+        "ko": "초기 며칠간 마사지 준수, 강한 압박·사우나 회피.",
+        "en": "Adhere to early massage protocol; avoid strong pressure/saunas initially."
+      },
+      "providerNotes": {
+        "ko": "희석 비율·주입층·부위별 디자인이 결과 좌우. 결절 예방 테크닉 필수.",
+        "en": "Outcome depends on dilution, plane, and area design; nodule-preventing technique is essential."
+      }
+    }
+  ]
+}

@@ -125,41 +125,79 @@ const treatments: Treatment[] = useMemo(() => {
     { field: "providerNotes", label: { ko: "의료진 메모", en: "Provider Notes" } },
   ];
 
-  return (
-    <div className="mx-auto max-w-5xl px-4 py-8 grid grid-cols-1 md:grid-cols-12 gap-6">
-      {/* Left: 리스트 */}
-      <aside className="md:col-span-4">
-        <h2 className="text-xl font-semibold mb-3">
-          {lang === "ko" ? "시술 리스트" : "Treatments"}
-        </h2>
-        <div className="rounded-2xl border p-2">
-          <ul className="flex flex-col">
-            {treatments.map((t) => {
-              const isActive = t.key === activeKey;
-              const title = pickLang(lang, t.title) || t.key;
-              return (
-                <li key={t.key}>
-                  <button
-                    onClick={() => setActiveKey(t.key)}
-                    className={[
-                      "w-full text-left px-4 py-3 rounded-xl",
-                      "hover:bg-neutral-100 transition",
-                      isActive ? "bg-neutral-100 font-medium" : "",
-                    ].join(" ")}
-                    aria-current={isActive ? "page" : undefined}
-                  >
-                    <div className="text-sm text-neutral-500">{t.key}</div>
-                    <div className="text-base">{title}</div>
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </aside>
+  const handleDropdownChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setActiveKey(e.target.value);
+  };
 
-      {/* Right: 상세 */}
-      <section className="md:col-span-8">
+  return (
+    <div className="mx-auto max-w-5xl px-4 py-8">
+      {/* Mobile: Select Dropdown - Show on screens smaller than 768px */}
+      <div className="block md:hidden mb-6">
+        <h2 className="text-xl font-semibold mb-4">
+          {lang === "ko" ? "시술 선택" : "Select Treatment"}
+        </h2>
+        <div className="relative">
+          <select
+            value={activeKey || ""}
+            onChange={handleDropdownChange}
+            className="w-full px-4 py-3 text-base bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 appearance-none cursor-pointer shadow-sm"
+          >
+            {treatments.length > 0 ? (
+              treatments.map((t) => {
+                const title = pickLang(lang, t.title) || t.key;
+                return (
+                  <option key={t.key} value={t.key}>
+                    {title}
+                  </option>
+                );
+              })
+            ) : (
+              <option value="">No treatments available</option>
+            )}
+          </select>
+          {/* Custom dropdown arrow */}
+          <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+            <svg className="w-5 h-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex flex-col md:grid md:grid-cols-12 md:gap-6">
+        {/* Desktop: Left Sidebar - Show on screens 768px and larger */}
+        <aside className="hidden md:block md:col-span-4">
+          <h2 className="text-xl font-semibold mb-3">
+            {lang === "ko" ? "시술 리스트" : "Treatments"}
+          </h2>
+          <div className="rounded-2xl border p-2">
+            <ul className="flex flex-col">
+              {treatments.map((t) => {
+                const isActive = t.key === activeKey;
+                const title = pickLang(lang, t.title) || t.key;
+                return (
+                  <li key={t.key}>
+                    <button
+                      onClick={() => setActiveKey(t.key)}
+                      className={[
+                        "w-full text-left px-4 py-3 rounded-xl",
+                        "hover:bg-neutral-100 transition",
+                        isActive ? "bg-neutral-100 font-medium" : "",
+                      ].join(" ")}
+                      aria-current={isActive ? "page" : undefined}
+                    >
+                      <div className="text-sm text-neutral-500">{t.key}</div>
+                      <div className="text-base">{title}</div>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </aside>
+
+        {/* Content: Treatment Details */}
+        <section className="w-full md:col-span-8 mt-0">
         {active ? (
           <div className="space-y-6">
             <header className="space-y-1">
@@ -193,7 +231,8 @@ const treatments: Treatment[] = useMemo(() => {
               : "Select a treatment to view details."}
           </div>
         )}
-      </section>
+        </section>
+      </div>
     </div>
   );
 }

@@ -12,6 +12,8 @@ const TABLE_FAVORITE = "favorite";
 const TABLE_MEMBERS = "members";
 const TABLE_SURGERY_INFO = "surgery_info";
 const TABLE_RESERVATIONS = "reservations";
+const TABLE_POINT_TRANSACTIONS = "point_transactions";
+const TABLE_ATTENDANCE_MONTHLY = "attendance_monthly";
 // const TABLE_HOSPITAL = "hospital_test";
 // const TABLE_DOCTOR = "doctor_test";
 // const TABLE_HOSPITAL_DETAIL = "hospital_details_test";
@@ -22,6 +24,8 @@ const TABLE_RESERVATIONS = "reservations";
 const STORAGE_IMAGES = "images";
 const STORAGE_HOSPITAL_IMG = "hospitalimg";
 const STORAGE_DOCTOR_IMG = "doctors";
+const STORAGE_MEMBER = "member";
+const BUCKET_USERS = "users";
 
 export {
   TABLE_HOSPITAL,
@@ -37,7 +41,11 @@ export {
   TABLE_MEMBERS,
   TABLE_FEEDBACK,
   TABLE_RESERVATIONS,
+  TABLE_POINT_TRANSACTIONS,
+  TABLE_ATTENDANCE_MONTHLY,
   STORAGE_IMAGES,
   STORAGE_HOSPITAL_IMG,
-  STORAGE_DOCTOR_IMG
+  STORAGE_DOCTOR_IMG,
+  STORAGE_MEMBER,
+  BUCKET_USERS
 }; 

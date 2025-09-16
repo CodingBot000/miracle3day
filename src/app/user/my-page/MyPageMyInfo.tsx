@@ -12,6 +12,10 @@ import { ROUTE } from "@/router";
 import ModalAttendanceButton from "@/components/template/ModalAttendanceButton";
 import AttendanceSection from "@/components/template/AttendanceSection";
 import AttendanceModalButton from "@/components/template/AttendanceModalButton2";
+import { fetchPoint } from "@/services/attendance";
+import { useEffect, useState, useRef } from "react";
+import { uploadProfileImage } from "@/services/profileImage";
+import { toast } from "sonner";
 
 interface MyPageMyInfoClientDetailProps {
   user: UserOutputDto;
@@ -19,10 +23,64 @@ interface MyPageMyInfoClientDetailProps {
 
 export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
   const router = useRouter();
-
+  const [point, setPoint] = useState<number>(0);
+  const [isUploading, setIsUploading] = useState<boolean>(false);
+  const [avatarUrl, setAvatarUrl] = useState<string>(user?.userInfo?.avatar || "/default/profile_default.png");
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  
+  useEffect(() => {
+    void loadTodayAttendance();
+  }, []);
   const handleProfileNavigation = () => {
     if (user?.userInfo?.uuid) {
       router.push(`/onboarding/complete-profile?code=${user.userInfo.uuid}&returnUrl=/user/my-page`);
+    }
+  };
+
+  async function loadTodayAttendance() {
+    try {
+      const curPoint = await fetchPoint();
+      setPoint(curPoint);
+    } catch (e) {
+      console.error(e);
+      // setHasCheckedInToday(false);
+    }
+  }
+
+  const handleCameraClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file || !user?.userInfo?.uuid) {
+      return;
+    }
+
+    if (!file.type.startsWith('image/')) {
+      alert('Please select an image file');
+      return;
+    }
+
+    setIsUploading(true);
+    
+    try {
+      const result = await uploadProfileImage({
+        file,
+        userUuid: user.userInfo.uuid,
+      });
+
+      if (result.success && result.imagePath) {
+        setAvatarUrl(result.imagePath);
+        toast.success('Profile image updated successfully');
+      } else {
+        toast.error(`Failed to upload image: ${result.error}`);
+      }
+    } catch (error) {
+      console.error('Upload error:', error);
+      toast.error('Failed to upload image');
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -55,16 +113,27 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
             <div className="relative">
               <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
                 <Image
-                  src={user?.userInfo?.avatar || "/default/profile_default.png"}
+                  src={avatarUrl}
                   alt="Profile"
                   width={96}
                   height={96}
                   className="object-cover"
                 />
               </div>
-              <button className="absolute bottom-0 right-0 bg-white rounded-full p-2 shadow-md">
+              <button 
+                onClick={handleCameraClick}
+                disabled={isUploading}
+                className="absolute bottom-0 right-0 bg-white rounded-full p-2 shadow-md disabled:opacity-50"
+              >
                 <Camera className="w-5 h-5" />
               </button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="hidden"
+              />
             </div>
             <h2 className="mt-4 text-xl font-medium">{user?.userInfo?.nickname || ""}</h2>
           </div>
@@ -74,7 +143,8 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
             <h3 className="text-lg font-medium mb-4">My Information</h3>
             {/* <ModalAttendanceButton /> */}
             {/* <AttendanceSection /> */}
-            <AttendanceModalButton />
+            {/* checked In */ }
+            <AttendanceModalButton /> point: {point}
             <div className="bg-white rounded-lg">
               {renderProfileField("Gender", user?.userInfo?.gender ? (user.userInfo.gender === "M" ? "Male" : "Female") : null, !user?.userInfo?.gender)}
               {renderProfileField("Nationality", findCountry(user?.userInfo?.id_country)?.country_name, !findCountry(user?.userInfo?.id_country)?.country_name)}

@@ -40,7 +40,7 @@ export default function CookieConsent() {
         <p>
           Welcome to MimoTok - Your Free Clinic Booking Solution
           We use cookies to personalize content and to analyze our traffic.
-          By clicking "Accept and continue" you agree with the use of analytical and tracking cookies. For more information, <Link href="" className="text-blue-600 underline hover:text-blue-800">check the Cookie Policy</Link>
+          By clicking &quot;Accept and continue&quot; you agree with the use of analytical and tracking cookies. For more information, <Link href="" className="text-blue-600 underline hover:text-blue-800">check the Cookie Policy</Link>
         </p>
         <div className="mt-3 flex gap-2">
           {/* <button onClick={rejectCookies} className="bg-gray-200 px-4 py-2 rounded">

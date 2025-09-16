@@ -9,12 +9,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
-type MonthResp = { ym: string; attendedDays: number[] };
-
-function toYM(date: Date) {
-  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
-}
+import {
+  fetchAttendanceMonth,
+  checkTodayAttendance,
+  submitCheckIn,
+  type MonthResp,
+} from "@/services/attendance";
 
 export default function AttendanceModalButton() {
   const today = new Date();
@@ -27,37 +27,30 @@ export default function AttendanceModalButton() {
 
   // 컴포넌트 마운트 시 오늘 출석 상태 확인
   React.useEffect(() => {
-    void checkTodayAttendance();
+    void loadTodayAttendance();
   }, []);
 
   // 모달 열릴 때 현재 월 로드
   React.useEffect(() => {
     if (!open) return;
-    void fetchMonth(new Date(year, month - 1, 1));
+    void loadMonth(new Date(year, month - 1, 1));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
-  async function checkTodayAttendance() {
+  async function loadTodayAttendance() {
     try {
-      const ym = toYM(today);
-      const res = await fetch(`/api/attendance?ym=${ym}`, { cache: "no-store" });
-      if (!res.ok) throw new Error("Failed to fetch today's attendance");
-      const data: MonthResp = await res.json();
-      const todayDay = today.getDate();
-      setHasCheckedInToday(data.attendedDays.includes(todayDay));
+      const hasCheckedIn = await checkTodayAttendance();
+      setHasCheckedInToday(hasCheckedIn);
     } catch (e) {
       console.error(e);
       setHasCheckedInToday(false);
     }
   }
 
-  async function fetchMonth(ymDate: Date) {
+  async function loadMonth(ymDate: Date) {
     setLoading(true);
     try {
-      const ym = toYM(ymDate);
-      const res = await fetch(`/api/attendance?ym=${ym}`, { cache: "no-store" });
-      if (!res.ok) throw new Error("Failed to fetch month");
-      const data: MonthResp = await res.json();
+      const data = await fetchAttendanceMonth(ymDate);
       const [y, m] = data.ym.split("-").map(Number);
       setYear(y);
       setMonth(m);
@@ -70,25 +63,23 @@ export default function AttendanceModalButton() {
   }
 
   async function handleCheckIn(date: Date) {
-    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const res = await fetch("/api/attendance", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ tz }),
-    });
-    if (!res.ok) return false;
-    const data = await res.json();
-    if (!data.was_already) {
-      setAttendedDays((prev) =>
-        prev.includes(data.day) ? prev : [...prev, data.day].sort((a, b) => a - b)
-      );
-      // 오늘 체크인한 경우 버튼 상태 업데이트
-      const todayDay = today.getDate();
-      if (data.day === todayDay) {
-        setHasCheckedInToday(true);
+    try {
+      const data = await submitCheckIn();
+      if (!data.was_already) {
+        setAttendedDays((prev) =>
+          prev.includes(data.day) ? prev : [...prev, data.day].sort((a, b) => a - b)
+        );
+        // 오늘 체크인한 경우 버튼 상태 업데이트
+        const todayDay = today.getDate();
+        if (data.day === todayDay) {
+          setHasCheckedInToday(true);
+        }
       }
+      return !data.was_already;
+    } catch (e) {
+      console.error(e);
+      return false;
     }
-    return !data.was_already;
   }
 
   return (

@@ -1,6 +1,7 @@
 // app/api/attendance/route.ts
 import { NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server"; 
+import { TABLE_ATTENDANCE_MONTHLY, TABLE_MEMBERS, TABLE_POINT_TRANSACTIONS } from "@/constants/tables";
 
 /** GET /api/attendance?ym=2025-09 또는 ym=2025-09-01
  *  반환: { ym: 'YYYY-MM-01', attendedDays: number[] }
@@ -32,7 +33,7 @@ export async function GET(req: Request) {
   
   // 해당 월의 출석 데이터 조회
   const { data, error } = await supabase
-    .from("attendance_monthly")
+    .from(TABLE_ATTENDANCE_MONTHLY)
     .select("days")
     .eq("user_id", user.id)
     .eq("ym", ym)
@@ -96,7 +97,7 @@ export async function POST(req: Request) {
   
   // 기존 출석 데이터 조회
   const { data: existing, error: selectError } = await supabase
-    .from("attendance_monthly")
+    .from(TABLE_ATTENDANCE_MONTHLY)
     .select("days")
     .eq("user_id", user.id)
     .eq("ym", ym)
@@ -125,7 +126,7 @@ export async function POST(req: Request) {
   days[day - 1] = true;
   
   const { error: upsertError } = await supabase
-    .from("attendance_monthly")
+    .from(TABLE_ATTENDANCE_MONTHLY)
     .upsert({
       user_id: user.id,
       ym,
@@ -145,7 +146,7 @@ export async function POST(req: Request) {
   const pointsAwarded = 10;
   
   const { error: pointError } = await supabase
-    .from("point_transactions")
+    .from(TABLE_POINT_TRANSACTIONS)
     .insert({
       user_id: user.id,
       amount: pointsAwarded,
@@ -155,7 +156,24 @@ export async function POST(req: Request) {
     });
 
   // 포인트 삽입 에러는 무시 (이미 존재하는 경우)
-  
+  if (!pointError) {
+    // TABLE_MEMBERS.point_balance 누적 업데이트
+    const { data: memberRow, error: memberSelectError } = await supabase
+      .from(TABLE_MEMBERS)
+      .select("point_balance")
+      .eq("user_id", user.id)
+      .single();
+
+    if (!memberSelectError) {
+      const currentBalance = (memberRow?.point_balance as number | null) ?? 0;
+      const { error: memberUpdateError } = await supabase
+        .from(TABLE_MEMBERS)
+        .update({ point_balance: currentBalance + pointsAwarded })
+        .eq("user_id", user.id);
+      // 업데이트 실패시에도 흐름은 계속 진행
+    }
+  }
+
   return NextResponse.json({
     ym,
     day,

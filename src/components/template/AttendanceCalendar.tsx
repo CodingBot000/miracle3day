@@ -1,5 +1,6 @@
 "use client";
 
+/* eslint-disable react/prop-types */
 import * as React from "react";
 import { DayPicker, DayProps } from "react-day-picker";
 import "react-day-picker/dist/style.css"; // ✅ 기본 스타일 불러오기 (필수)

@@ -12,6 +12,7 @@ import { ProgressBar } from "@/components/atoms/loading/ProgressBar";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import CookieConsent from "@/components/template/CookieConsent";
+import { Toaster } from "sonner";
 // import { ProgressBar } from "@/components/atoms/loading/progress-bar";
 // import { PageTransitionOverlay } from "@/components/atoms/loading/page-transition-overlay";
 
@@ -109,6 +110,7 @@ export default function RootLayout({
             <CookieConsent />
             {/* <MenuMobile /> */}
             <Footer />
+            <Toaster richColors position="top-center" duration={1500}/>
           </Providers>
         </div>
       </body>

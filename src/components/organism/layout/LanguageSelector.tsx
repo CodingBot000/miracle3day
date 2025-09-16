@@ -10,10 +10,10 @@ import {
 import { Check } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { languages } from "@/constants";
+import { translateLanguage } from "@/constants";
 
 export const LanguageSelector = () => {
-  const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
+  const [selectedLanguage, setSelectedLanguage] = useState(translateLanguage[0]);
 
   return (
     <DropdownMenu>
@@ -27,7 +27,7 @@ export const LanguageSelector = () => {
         />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[150px]">
-        {languages.map((option) => (
+        {translateLanguage.map((option) => (
           <DropdownMenuItem
             key={option.code}
             onClick={() => setSelectedLanguage(option)}

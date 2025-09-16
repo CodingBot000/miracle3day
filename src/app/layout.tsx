@@ -107,7 +107,7 @@ export default function RootLayout({
             </main>
 
             <CookieConsent />
-            <MenuMobile />
+            {/* <MenuMobile /> */}
             <Footer />
           </Providers>
         </div>

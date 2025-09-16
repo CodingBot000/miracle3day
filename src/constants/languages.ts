@@ -14,3 +14,12 @@ export const languages = [
     { label: "Bahasa Indonesia", code: "id-ID" },
     { label: "简体中文", code: "zh-CN" }
   ];
+
+  export const translateLanguage = [
+    { label: "English", code: "en-US" },
+    { label: "日本語", code: "ja-JP" },
+    { label: "繁體中文(台灣)", code: "zh-TW" },
+    { label: "繁體中文(香港)", code: "zh-HK" },
+    { label: "ภาษาไทย", code: "th-TH" },
+    { label: "Tiếng Việt", code: "vi-VN" }
+  ]

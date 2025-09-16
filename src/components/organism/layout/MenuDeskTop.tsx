@@ -48,10 +48,9 @@ const Menu = () => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  if (isMobile) return null;
 
   return (
-    <div className="hidden md:flex items-center">
+    <div className="flex items-center">
       <MenuIcon
         onClick={() => {
           console.log("Menu Clicked open", open);
@@ -96,7 +95,7 @@ const Menu = () => {
             ))}
 
             {/* Sub menu */}
-            <div className="flex flex-col items-start gap-5 p-2 md:flex">
+            <div className="hidden md:flex flex-col items-start gap-5 p-2">
               {menu.map(({ title, href }) => (
                 <div key={title} className="flex flex-col p-2 min-w-[150px] md:flex">
                   <Link

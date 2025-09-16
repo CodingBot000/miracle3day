@@ -9,6 +9,9 @@ import Image from "next/image";
 import { findCountry } from "@/constants/country";
 import { useRouter } from "next/navigation";
 import { ROUTE } from "@/router";
+import ModalAttendanceButton from "@/components/template/ModalAttendanceButton";
+import AttendanceSection from "@/components/template/AttendanceSection";
+import AttendanceModalButton from "@/components/template/AttendanceModalButton2";
 
 interface MyPageMyInfoClientDetailProps {
   user: UserOutputDto;
@@ -69,7 +72,9 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
           {/* Info List */}
           <div className="space-y-4">
             <h3 className="text-lg font-medium mb-4">My Information</h3>
-            
+            {/* <ModalAttendanceButton /> */}
+            {/* <AttendanceSection /> */}
+            <AttendanceModalButton />
             <div className="bg-white rounded-lg">
               {renderProfileField("Gender", user?.userInfo?.gender ? (user.userInfo.gender === "M" ? "Male" : "Female") : null, !user?.userInfo?.gender)}
               {renderProfileField("Nationality", findCountry(user?.userInfo?.id_country)?.country_name, !findCountry(user?.userInfo?.id_country)?.country_name)}

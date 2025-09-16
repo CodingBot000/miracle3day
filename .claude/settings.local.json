@@ -17,7 +17,8 @@
       "Bash(npm i:*)",
       "Bash(npm uninstall:*)",
       "Bash(sudo npm cache clean --force)",
-      "Bash(npm cache clean:*)"
+      "Bash(npm cache clean:*)",
+      "Bash(npx tsc:*)"
     ],
     "deny": []
   }

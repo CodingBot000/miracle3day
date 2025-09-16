@@ -6,7 +6,7 @@ import dynamicImport from "next/dynamic";
 
 
 export const metadata: Metadata = {
-  title: "BeautyLink | PrivacyPage",
+  title: "BeautyWell | PrivacyPage",
 };
 
 const PrivacyClient = dynamicImport(() => import("./PrivacyClient"), {

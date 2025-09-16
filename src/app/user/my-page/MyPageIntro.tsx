@@ -20,7 +20,7 @@ const MY_ACTIVITY_MENU: MenuItem[] = [
 ];
 
 const CUSTOMER_SUPPORT_MENU: MenuItem[] = [
-  { title: "BeautyLink promotion", href: "/promotions" },
+  { title: "BeautyWell promotion", href: "/promotions" },
   { title: "FAQ", href: "/faq" },
   { title: "Notice", href: "/notice" },
   { title: "Side effect assurance care service", href: "/care-service" },
@@ -69,7 +69,7 @@ export default function MyPageIntro({ user }: MyPageIntroClientProps) {
               </Link>
             </div>
             <div className="flex justify-between items-center py-2">
-              <span>BeautyLink Cash</span>
+              <span>BeautyWell Cash</span>
               <Link href="/cash" className="flex items-center">
                 <span className="font-semibold">₩0</span>
                 <span className="ml-1">›</span>

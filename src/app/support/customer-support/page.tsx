@@ -6,7 +6,7 @@ import dynamicImport from "next/dynamic";
 
 
 export const metadata: Metadata = {
-  title: "BeautyLink | CustomerSupport",
+  title: "BeautyWell | CustomerSupport",
 };
 
 const CustomerSupportClient = dynamicImport(() => import("./CustomerSupportClient"), {

@@ -50,7 +50,7 @@ export default function TermsClient() {
       <div className="mb-8">
         <h1 className="text-2xl font-bold">Welcome!</h1>
         <p className="text-gray-600 mt-2">
-          In order to use BeautyLink, you need to agree to terms and conditions below.
+          In order to use BeautyWell, you need to agree to terms and conditions below.
         </p>
       </div>
 

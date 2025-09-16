@@ -15,7 +15,7 @@ import EventSkeleton from "./EventSkeleton";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "BeautyLink | Event",
+  title: "BeautyWell | Event",
 };
 
 const EventClient = dynamicImport(() => import("./EventList"), {

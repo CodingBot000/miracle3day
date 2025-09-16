@@ -6,7 +6,7 @@ import SuspenseWrapper from "@/components/atoms/SuspenseWrapper";
 import ForgetPasswordSkeleton from "./ForgetPasswordSkeleton";
 
 export const metadata: Metadata = {
-  title: "BeautyLink | Forget Password",
+  title: "BeautyWell | Forget Password",
 };
 
 const ForgetPasswordClient = dynamicImport(() => import("./ForgetPasswordClient"), {

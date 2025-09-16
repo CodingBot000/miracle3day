@@ -21,9 +21,9 @@ export default function TermsClient() {
      
 
         <h2 className="text-xl font-semibold mt-6 mb-2">
-            {termsContent.BeautyLinkPlatformAndContent.title}
+            {termsContent.BeautyWellPlatformAndContent.title}
             </h2>
-        <p className="mb-4">{termsContent.BeautyLinkPlatformAndContent.content}</p>
+        <p className="mb-4">{termsContent.BeautyWellPlatformAndContent.content}</p>
  
 
         <h2 className="text-xl font-semibold mt-6 mb-2">

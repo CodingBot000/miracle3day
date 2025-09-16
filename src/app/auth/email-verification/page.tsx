@@ -6,7 +6,7 @@ import dynamicImport from "next/dynamic";
 import EmailVerificationSkeleton from "./EmailVerificationSkeleton";
 
 export const metadata: Metadata = {
-  title: "BeautyLink | Email Verification",
+  title: "BeautyWell | Email Verification",
 };
 
 const EmailVerificationClient = dynamicImport(

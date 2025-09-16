@@ -7,7 +7,7 @@
 //       {/* <DeleteUserButton uid="109baff6-2d4a-4119-818d-e65fd9289a41" /> */}
 //       {/* todo footer 내용 */}
 
-//       <address>ⓒ BeautyLink Corp.</address>
+//       <address>ⓒ BeautyWell Corp.</address>
 //     </footer>
 //   );
 // };
@@ -39,7 +39,7 @@ export const Footer = () => {
       </div>
 
       <div className="flex flex-wrap justify-center items-center gap-2">
-        <span>@BeautyLink Corp</span>
+        <span>@BeautyWell Corp</span>
         <span className="mx-1">|</span>
         <Link href="/legal/privacy" className="hover:underline">
           Privacy Policy

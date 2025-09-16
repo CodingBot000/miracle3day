@@ -28,9 +28,9 @@ export default async function MyPage() {
   return (
     <SuspenseWrapper fallback={<MyPageSkeleton />}>
       {/* <MyPageClient user={users} /> */}
-      <MyPageIntro user={users}/>
+      {/* <MyPageIntro user={users}/> */}
       <MyPageMyInfo user={users}/>
-      <MyPageMyIntroOther user={users}/>
+      {/* <MyPageMyIntroOther user={users}/> */}
     </SuspenseWrapper>
   );
 }

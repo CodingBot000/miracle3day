@@ -6,7 +6,8 @@ import Logo from "@/components/molecules/Logo";
 import LanguageSelector from "./LanguageSelector";
 
 import { useState } from "react";
-import { Search } from "lucide-react";
+import { Search, MessageSquareText } from "lucide-react";
+import Link from "next/link";
 import SearchPanel from "./SearchPanel";
 import AuthClient from "@/components/molecules/auth/AuthClient";
 
@@ -25,6 +26,12 @@ const LayoutHeader = () => {
           <div className="flex items-center">
             <Menu />
           </div>
+          {/* community */}
+          
+            <Link href="/community">
+              <MessageSquareText size={20} />
+            </Link>
+      
           <div>
 
             <button onClick={() => setShowSearch(true)}>

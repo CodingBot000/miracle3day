@@ -4,7 +4,11 @@ import { createClient } from '@/utils/supabase/server'
 import CommentSection from '@/components/molecules/CommentSection'
 import LikeButton from '@/components/atoms/button/LikeButton'
 import ReportButton from '@/components/atoms/button/ReportButton'
-import { Member } from '@/app/models/communityData.dto'
+import { Member, CommunityPost } from '@/app/models/communityData.dto'
+import PostNotFoundFallback from './PostNotFoundFallback'
+import SetCommunityHeader from '../../SetCommunityHeader'
+import { ANONYMOUS_FALLBACK, isAnonymousCategoryName } from '../../utils'
+import { useDelayedViewHit } from '@/hooks/useDelayedViewHit'
 
 async function getCurrentUser(): Promise<Member | null> {
   const supabase = createClient()
@@ -32,24 +36,22 @@ function getLoginUrl() {
   return '/auth/login'
 }
 
-async function getPost(id: string) {
+async function getPost(id: string): Promise<CommunityPost | null> {
   const supabase = createClient()
   const { data, error } = await supabase
     .from('community_posts')
-    .select(`
-      *,
-      author:members(nickname),
-      category:community_categories(name)
-    `)
+    .select(
+      'id, uuid_author, title, content, id_category, view_count, is_deleted, created_at, updated_at, author_name_snapshot, author_avatar_snapshot'
+    )
     .eq('id', id)
     .eq('is_deleted', false)
-    .single()
-  
+    .maybeSingle()
+
   if (error || !data) {
     return null
   }
-  
-  return data
+
+  return data as CommunityPost
 }
 
 async function getComments(postId: string) {
@@ -77,22 +79,50 @@ export default async function PostDetailPage({
 }: {
   params: { id: string }
 }) {
+  useDelayedViewHit(parseInt(params.id));
   const currentUser = await getCurrentUser()
-  
   if (!currentUser) {
     redirect(getLoginUrl())
   }
 
   const post = await getPost(params.id)
-  
   if (!post) {
-    redirect('/')
+    return <PostNotFoundFallback />
   }
 
   const comments = await getComments(params.id)
   const isAuthor = currentUser.uuid === post.uuid_author
 
   const supabase = createClient()
+
+  let categoryName: string | null = null
+
+  if (post.id_category) {
+    const { data: categoryRow } = await supabase
+      .from('community_categories')
+      .select('name')
+      .eq('id', post.id_category)
+      .eq('is_active', true)
+      .maybeSingle()
+
+    categoryName = categoryRow?.name ?? null
+  }
+
+  const anonymousCategory = isAnonymousCategoryName(categoryName)
+  const authorName = anonymousCategory
+    ? ANONYMOUS_FALLBACK.name
+    : post.author_name_snapshot?.trim() || ANONYMOUS_FALLBACK.name
+  const authorAvatar = anonymousCategory
+    ? ANONYMOUS_FALLBACK.avatar
+    : post.author_avatar_snapshot?.trim() || ANONYMOUS_FALLBACK.avatar
+
+  const formattedCreatedAt = new Intl.DateTimeFormat('ko-KR', {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    timeZone: 'Asia/Seoul',
+  }).format(new Date(post.created_at))
+
   const { count: likesCount } = await supabase
     .from('community_likes')
     .select('id', { count: 'exact' })
@@ -107,18 +137,35 @@ export default async function PostDetailPage({
 
   return (
     <div className="max-w-4xl mx-auto">
+      <SetCommunityHeader>
+        <div className="mt-4">
+          <span className="inline-flex px-4 py-2 rounded-full bg-blue-50 text-blue-700 text-sm font-medium">
+            {categoryName ?? 'All Posts'}
+          </span>
+        </div>
+      </SetCommunityHeader>
       <div className="bg-white rounded-lg shadow-lg p-8">
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
-              {post.category && (
+              {categoryName && (
                 <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
-                  {post.category.name}
+                  {categoryName}
                 </span>
               )}
-              <span className="text-gray-500 text-sm">
-                {post.author?.nickname || 'Anonymous'} · {new Date(post.created_at).toLocaleDateString()}
-              </span>
+              <div className="flex items-center gap-3 text-gray-500 text-sm">
+                <span className="block h-9 w-9 overflow-hidden rounded-full bg-gray-200">
+                  <img
+                    src={authorAvatar}
+                    alt={authorName}
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                  />
+                </span>
+                <span className="font-medium text-gray-900">{authorName}</span>
+                <span>·</span>
+                <span>{formattedCreatedAt}</span>
+              </div>
             </div>
             {isAuthor && (
               <div className="flex gap-2">

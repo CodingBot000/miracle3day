@@ -23,9 +23,9 @@ const LayoutHeader = () => {
       <div className="w-full flex justify-between items-center max-w-[1280px] mx-auto">
         <Logo />
         <div className="flex items-center gap-2">
-          <div className="flex items-center">
+          {/* <div className="flex items-center">
             <Menu />
-          </div>
+          </div> */}
           {/* community */}
           
             <Link href="/community">

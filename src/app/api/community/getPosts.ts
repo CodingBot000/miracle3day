@@ -1,20 +1,28 @@
 // api/community.ts
 import { createClient } from '@/utils/supabase/server'
 import type {
+  CommunityCategory,
   CommunityPost,
   CommunityPostsDTO,
   CountRow,
 } from '@/app/models/communityData.dto'
 
-export async function getCommunityPostsDTO(): Promise<CommunityPostsDTO> {
+export async function getCommunityPostsDTO(categoryId?: string): Promise<CommunityPostsDTO> {
   const supabase = createClient()
 
-  // 1) posts (임베딩/조인 없음)
-  const { data: posts, error: postError } = await supabase
+  let query = supabase
     .from('community_posts')
-    .select('id, uuid_author, title, content, id_category, view_count, is_deleted, created_at, updated_at')
+    .select(
+      'id, uuid_author, title, content, id_category, view_count, is_deleted, created_at, updated_at, author_name_snapshot, author_avatar_snapshot'
+    )
     .eq('is_deleted', false)
     .order('created_at', { ascending: false })
+
+  if (categoryId) {
+    query = query.eq('id_category', categoryId)
+  }
+  
+  const { data: posts, error: postError } = await query
 
   if (postError) {
     console.error('Error fetching posts:', postError)
@@ -77,4 +85,20 @@ export async function getCommunityPostsDTO(): Promise<CommunityPostsDTO> {
     commentsCount,
     likesCount,
   }
+}
+
+export async function getCommunityCategories(): Promise<CommunityCategory[]> {
+  const supabase = createClient()
+  const { data, error } = await supabase
+    .from('community_categories')
+    .select('id, name, description, order_index, is_active')
+    .eq('is_active', true)
+    .order('order_index', { ascending: true })
+
+  if (error) {
+    console.error('Error fetching categories:', error)
+    return []
+  }
+
+  return (data ?? []) as CommunityCategory[]
 }

@@ -20,9 +20,11 @@ export interface Member {
     updated_at: string
     author?: Member
     category?: CommunityCategory
-    likes_count?: number
-    comments_count?: number
-    is_liked?: boolean
+    like_count?: number
+    comment_count?: number
+    is_liked?: boolean,
+    author_name_snapshot?: string,
+    author_avatar_snapshot?: string,
   }
   
   export interface CommunityComment {

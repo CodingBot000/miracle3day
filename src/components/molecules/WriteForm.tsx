@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/utils/supabase/client'
 import type { CommunityCategory } from '@/app/models/communityData.dto'
+import { isAnonymousCategoryName } from '@/app/community/utils'
 
 interface WriteFormProps {
   authorUuid: string
@@ -36,15 +37,40 @@ export default function WriteForm({
     setIsSubmitting(true)
 
     try {
+      const supabase = createClient()
+      const resolvedCategoryId = categoryId === '' ? null : categoryId
+      const selectedCategory = resolvedCategoryId
+        ? categories.find((category) => String(category.id) === resolvedCategoryId)
+        : undefined
+      const anonymousCategory = isAnonymousCategoryName(selectedCategory?.name)
+
+      let authorNameSnapshot: string | null = null
+      let authorAvatarSnapshot: string | null = null
+
+      if (!anonymousCategory) {
+        const { data: memberRow, error: memberError } = await supabase
+          .from('members')
+          .select('nickname, avatar')
+          .eq('uuid', authorUuid)
+          .maybeSingle()
+
+        if (memberError) {
+          console.error('Failed to load author snapshot info:', memberError)
+        }
+
+        authorNameSnapshot = memberRow?.nickname?.trim() ? memberRow.nickname.trim() : null
+        authorAvatarSnapshot = memberRow?.avatar?.trim() ? memberRow.avatar.trim() : null
+      }
+
       const postData = {
         title: title.trim(),
         content: content.trim(),
-        id_category: categoryId === '' ? null : categoryId,
-        uuid_author: authorUuid
+        id_category: resolvedCategoryId,
+        uuid_author: authorUuid,
+        author_name_snapshot: anonymousCategory ? null : authorNameSnapshot,
+        author_avatar_snapshot: anonymousCategory ? null : authorAvatarSnapshot,
       }
 
-      const supabase = createClient()
-      
       if (postId) {
         const { error } = await supabase
           .from('community_posts')

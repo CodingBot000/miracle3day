@@ -1,7 +1,8 @@
-import Link from 'next/link'
 import { getCommunityCategories, getCommunityPostsDTO } from '@/app/api/community/getPosts'
 import type { CommunityCategory } from '@/app/models/communityData.dto'
 import PostList from './PostList'
+import WritePostButton from './WritePostButton'
+import { createClient } from '@/utils/supabase/server'
 
 interface CommunityPageProps {
   searchParams?: {
@@ -10,6 +11,10 @@ interface CommunityPageProps {
 }
 
 export default async function HomePage({ searchParams }: CommunityPageProps) {
+  const supabase = createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  const isAuthenticated = !!user
+
   const categories = await getCommunityCategories()
   const categoryMap = new Map<string, CommunityCategory>(
     categories.map((category) => [category.id, category])
@@ -47,16 +52,11 @@ export default async function HomePage({ searchParams }: CommunityPageProps) {
         <h2 className="text-2xl font-bold">
           {activeCategoryLabel ? `${activeCategoryLabel} Posts` : 'Community Posts'}
         </h2>
-        <Link
-          href="/community/write"
-          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
-        >
-          Write Post
-        </Link>
+        <WritePostButton isAuthenticated={isAuthenticated} />
       </div>
 
       <div className="bg-white rounded-lg shadow">
-        <PostList posts={enrichedPosts} />
+        <PostList posts={enrichedPosts} isAuthenticated={isAuthenticated} />
       </div>
     </div>
   )

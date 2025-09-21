@@ -7,12 +7,14 @@ import { toast } from 'sonner'
 import { createClient } from '@/utils/supabase/client'
 import type { CommunityPost } from '@/app/models/communityData.dto'
 import { ANONYMOUS_FALLBACK, isAnonymousCategoryName } from './utils'
+import { useLoginGuard } from '@/hooks/useLoginGuard'
 
 interface PostListProps {
   posts: CommunityPost[]
+  isAuthenticated: boolean
 }
 
-export default function PostList({ posts }: PostListProps) {
+export default function PostList({ posts, isAuthenticated }: PostListProps) {
   const router = useRouter()
   const dateFormatter = useMemo(() => new Intl.DateTimeFormat('ko-KR', {
     year: 'numeric',
@@ -20,6 +22,8 @@ export default function PostList({ posts }: PostListProps) {
     day: 'numeric',
     timeZone: 'Asia/Seoul',
   }), [])
+
+  const { requireLogin, loginModal } = useLoginGuard(isAuthenticated)
 
   const formatDate = (value: string) => {
     const parsed = new Date(value)
@@ -35,6 +39,10 @@ export default function PostList({ posts }: PostListProps) {
     }
 
     event.preventDefault()
+
+     if (!requireLogin()) {
+      return
+    }
 
     const supabase = createClient()
 
@@ -74,13 +82,17 @@ export default function PostList({ posts }: PostListProps) {
   }
 
   return (
-    <div className="divide-y divide-gray-200">
-      {posts.length === 0 ? (
-        <div className="p-8 text-center text-gray-500">No posts yet.</div>
-      ) : (
-        posts.map((post) => {
-          const authorPresentation = getAuthorPresentation(post)
+    <>
+      {loginModal}
+      <div className="divide-y divide-gray-200">
+        {posts.length === 0 ? (
+          <div className="p-8 text-center text-gray-500">No posts yet.</div>
+        ) : (
+          posts.map((post) => {
+            const authorPresentation = getAuthorPresentation(post)
           const formattedDate = formatDate(post.created_at)
+          const commentCount = post.comment_count ?? post.comment_count ?? 0
+          const likeCount = post.like_count ?? post.like_count ?? 0
 
           return (
             <Link
@@ -123,11 +135,11 @@ export default function PostList({ posts }: PostListProps) {
                   </div>
                   <div className="flex items-center gap-1">
                     <span>💬</span>
-                    <span>{post.comment_count ?? 0}</span>
+                    <span>{commentCount}</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <span>❤️</span>
-                    <span>{post.like_count ?? 0}</span>
+                    <span>{likeCount}</span>
                   </div>
                 </div>
               </div>
@@ -135,6 +147,7 @@ export default function PostList({ posts }: PostListProps) {
           )
         })
       )}
-    </div>
+      </div>
+    </>
   )
 }

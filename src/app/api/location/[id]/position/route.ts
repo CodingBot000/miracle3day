@@ -15,7 +15,8 @@ export async function GET(
   try {
     let query = supabase
       .from(TABLE_HOSPITAL)
-      .select(`id_unique,name,location,latitude,longitude`);
+      .select(`id_unique,name,location,latitude,longitude`)
+      .eq('show', true);
 
     // 지역전체
     // if (params.id === "ALL" || location === -1) {

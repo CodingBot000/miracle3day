@@ -14,6 +14,8 @@ interface HospitalListNewDesignProps {
 const HospitalListNewDesign = ({ initialData }: HospitalListNewDesignProps) => {
   const router = useRouter();
 
+  // Hospital data received successfully with show field
+
   const handleBackClick = () => {
     router.back();
   };

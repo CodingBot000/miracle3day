@@ -21,6 +21,17 @@ export default function LikeButton({
   const [isLoading, setIsLoading] = useState(false)
   const supabase = createClient()
 
+  const syncLikeCount = async (nextCount: number) => {
+    const { error } = await supabase
+      .from('community_posts')
+      .update({ like_count: nextCount, updated_at: new Date().toISOString() })
+      .eq('id', postId)
+
+    if (error) {
+      console.error('Failed to sync like count:', error)
+    }
+  }
+
   const handleToggleLike = async () => {
     if (isLoading) return
     
@@ -36,7 +47,11 @@ export default function LikeButton({
         
         if (!error) {
           setIsLiked(false)
-          setLikesCount(prev => prev - 1)
+          setLikesCount((prev) => {
+            const next = prev - 1
+            void syncLikeCount(next)
+            return next
+          })
         }
       } else {
         const { error } = await supabase
@@ -48,7 +63,11 @@ export default function LikeButton({
         
         if (!error) {
           setIsLiked(true)
-          setLikesCount(prev => prev + 1)
+          setLikesCount((prev) => {
+            const next = prev + 1
+            void syncLikeCount(next)
+            return next
+          })
         }
       }
     } catch (error) {

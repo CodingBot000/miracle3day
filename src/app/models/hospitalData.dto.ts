@@ -31,19 +31,32 @@ export interface FullHospital {
   searchkey: string;
   id_unique: string;
   id_surgeries: string[]; // 수술 ID 배열
-     show: number;
+  show: boolean;
     search_key: string;
     id_uuid_admin: string;
 }
 
 // 목록 전용
-export type HospitalData = Pick<
-  FullHospital,
-  'created_at' | 'name' | 'name_en' | 'searchkey' | 'latitude' | 'longitude' | 'thumbnail_url' | 'imageurls' | 'id_surgeries' | 'id_unique' | 'id_uuid' | 'location' | 'address_full_road_en' | 'address_full_jibun_en'
->;
+export interface HospitalData {
+  created_at: string;
+  name: string;
+  name_en: string;
+  searchkey: string | null;
+  latitude: number;
+  longitude: number;
+  thumbnail_url: string | null;
+  imageurls: string[];
+  id_surgeries: string[] | null;
+  id_unique: number;
+  id_uuid: string;
+  location: string;
+  address_full_road_en: string;
+  address_full_jibun_en: string;
+  show: boolean;
+}
 
 
-// 상세 전용(더 풍부)
+// 상세 전용
 export type HospitalDetail = Pick<
   FullHospital,
   | 'id_uuid'
@@ -194,6 +207,7 @@ export type HospitalDetail = Pick<
   
   export interface HospitalOutputDto {
     data: HospitalData[];
+    total: number;
   }
   
   export interface HospitalByLocationInputDto {

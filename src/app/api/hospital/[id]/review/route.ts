@@ -23,6 +23,7 @@ export async function GET(
     const { data: hospitalData, error: hospitalError } = await supabase
       .from(TABLE_HOSPITAL)
       .select("*")
+      .eq('show', true)
       .eq("id_uuid", id_uuid_hospital)
       .single();
     console.log("api/hospital/[id]/review/route.ts hospitalData:", hospitalData);

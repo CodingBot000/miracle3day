@@ -25,7 +25,7 @@ export async function GET(
     } = await supabase
       .from(TABLE_HOSPITAL)
       .select(`*`)
-      .match({ id_uuid: id_uuid });
+      .match({ id_uuid: id_uuid, show: true });
       // console.log("hospitalData select table ", hospitalData);
     const { data: detailData, error: detailError } = await supabase
       .from(TABLE_HOSPITAL_DETAIL)

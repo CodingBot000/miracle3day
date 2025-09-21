@@ -12,7 +12,7 @@ export async function GET(
     const { data: infoData, error: infoError, status, statusText } = await supabase
       .from(TABLE_HOSPITAL)
       .select(`*`)
-      .match({ id_uuid: id_uuid });
+      .match({ id_uuid: id_uuid, show: true });
 
     const { data: detailData, error: detailError } = await supabase
       .from(TABLE_HOSPITAL_DETAIL)

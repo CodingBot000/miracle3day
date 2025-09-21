@@ -33,6 +33,7 @@ export async function GET(
     const getHospital = await supabase
       .from(TABLE_HOSPITAL)
       .select("*")
+      .eq('show', true)
       .eq("id_uuid", eventData[0].id_uuid_hospital);
       // .match({ id_uuid: eventData[0].id_uuid_hospital });
    

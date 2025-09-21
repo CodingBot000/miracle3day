@@ -31,6 +31,7 @@ export async function GET(
         `,
         { count: "exact" }
       )
+      .eq('show', true)
       .range(offset, limit);
 
     // if (location !== -1) {

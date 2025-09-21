@@ -4,11 +4,47 @@ import { createClient } from '@/utils/supabase/server'
 import CommentSection from '@/components/molecules/CommentSection'
 import LikeButton from '@/components/atoms/button/LikeButton'
 import ReportButton from '@/components/atoms/button/ReportButton'
-import { Member, CommunityPost } from '@/app/models/communityData.dto'
+import { Member, CommunityPost, CommunityComment } from '@/app/models/communityData.dto'
 import PostNotFoundFallback from './PostNotFoundFallback'
 import SetCommunityHeader from '../../SetCommunityHeader'
 import { ANONYMOUS_FALLBACK, isAnonymousCategoryName } from '../../utils'
-import { useDelayedViewHit } from '@/hooks/useDelayedViewHit'
+
+function buildCommentTree(comments: CommunityComment[]): CommunityComment[] {
+  const commentMap = new Map<number, CommunityComment & { replies: CommunityComment[] }>()
+  const roots: CommunityComment[] = []
+
+  comments.forEach((comment) => {
+    commentMap.set(comment.id, {
+      ...comment,
+      replies: [],
+    })
+  })
+
+  comments.forEach((comment) => {
+    const node = commentMap.get(comment.id)
+    if (!node) return
+
+    if (comment.id_parent) {
+      const parent = commentMap.get(comment.id_parent)
+      if (parent) {
+        parent.replies = [...(parent.replies ?? []), node]
+      } else {
+        roots.push(node)
+      }
+    } else {
+      roots.push(node)
+    }
+  })
+
+  return roots
+}
+
+function countComments(comments: CommunityComment[]): number {
+  return comments.reduce((total, comment) => {
+    const replies = comment.replies ?? []
+    return total + 1 + countComments(replies)
+  }, 0)
+}
 
 async function getCurrentUser(): Promise<Member | null> {
   const supabase = createClient()
@@ -79,7 +115,6 @@ export default async function PostDetailPage({
 }: {
   params: { id: string }
 }) {
-  useDelayedViewHit(parseInt(params.id));
   const currentUser = await getCurrentUser()
   if (!currentUser) {
     redirect(getLoginUrl())
@@ -90,7 +125,9 @@ export default async function PostDetailPage({
     return <PostNotFoundFallback />
   }
 
-  const comments = await getComments(params.id)
+  const rawComments = await getComments(params.id)
+  const commentTree = buildCommentTree(rawComments)
+  const totalComments = countComments(commentTree)
   const isAuthor = currentUser.uuid === post.uuid_author
 
   const supabase = createClient()
@@ -134,6 +171,19 @@ export default async function PostDetailPage({
     .eq('id_post', post.id)
     .eq('uuid_member', currentUser.uuid)
     .single()
+
+  const likeCountValue = likesCount ?? post.like_count ?? 0
+  const nextViewCount = (post.view_count ?? 0) + 1
+
+  await supabase
+    .from('community_posts')
+    .update({
+      view_count: nextViewCount,
+      comment_count: totalComments,
+      like_count: likeCountValue,
+      updated_at: new Date().toISOString(),
+    })
+    .eq('id', post.id)
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -187,16 +237,16 @@ export default async function PostDetailPage({
               <LikeButton
                 postId={post.id}
                 initialLiked={!!userLike}
-                initialCount={likesCount || 0}
+                initialCount={likeCountValue}
                 userId={currentUser.uuid}
               />
               <div className="flex items-center gap-1 text-gray-500">
                 <span>👁</span>
-                <span>{post.view_count}</span>
+                <span>{nextViewCount}</span>
               </div>
               <div className="flex items-center gap-1 text-gray-500">
                 <span>💬</span>
-                <span>{comments.length}</span>
+                <span>{totalComments}</span>
               </div>
             </div>
             <ReportButton
@@ -209,7 +259,7 @@ export default async function PostDetailPage({
 
         <CommentSection
           postId={post.id}
-          comments={comments}
+          comments={commentTree}
           currentUser={currentUser}
         />
       </div>

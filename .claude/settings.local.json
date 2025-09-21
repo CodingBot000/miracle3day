@@ -18,7 +18,13 @@
       "Bash(npm uninstall:*)",
       "Bash(sudo npm cache clean --force)",
       "Bash(npm cache clean:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(npm run dev:*)",
+      "Bash(curl:*)",
+      "Bash(node:*)",
+      "Bash(kill:*)",
+      "Bash(PORT=3000 npm run dev)",
+      "Bash(timeout 5 curl -s \"http://localhost:3000/hospital\")"
     ],
     "deny": []
   }

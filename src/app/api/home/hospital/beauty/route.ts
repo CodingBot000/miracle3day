@@ -21,8 +21,10 @@ export async function GET() {
     id_uuid,
     location,
     address_full_road_en,
-    address_full_jibun_en
+    address_full_jibun_en,
+    show
   `)
+      .eq('show', true)
       // .order("created_at", { ascending: false })
       .limit(4);
 
@@ -36,7 +38,7 @@ export async function GET() {
         console.log("Name:", item.name);
         console.log("Name_en:", item.name_en);
         console.log("Image URLs:", item.imageurls);
-        
+        console.log("show:", item.show);
         console.log("location:", item.location);
         console.log("------------------------");
       });

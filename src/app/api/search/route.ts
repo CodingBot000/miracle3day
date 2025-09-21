@@ -16,6 +16,7 @@ export async function GET(req: Request) {
       supabase
         .from(TABLE_HOSPITAL)
         .select("*")
+        .eq('show', true)
         .ilike("search_key", `%${normalizedQ}%`),
 
       supabase

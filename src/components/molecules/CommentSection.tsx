@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { createClient } from "@/utils/supabase/client";
+import { createClient } from '@/utils/supabase/client'
 import { CommunityComment, Member } from '@/app/models/communityData.dto'
 import CommentItem from './CommentItem'
 
@@ -19,6 +19,27 @@ export default function CommentSection({
   const [comments, setComments] = useState(initialComments)
   const [newComment, setNewComment] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const supabase = createClient()
+
+  const countComments = (items: CommunityComment[]): number => {
+    return items.reduce((total, item) => {
+      const replies = item.replies ?? []
+      return total + 1 + countComments(replies)
+    }, 0)
+  }
+
+  const syncCommentCount = async (nextComments: CommunityComment[]) => {
+    const total = countComments(nextComments)
+
+    const { error } = await supabase
+      .from('community_posts')
+      .update({ comment_count: total, updated_at: new Date().toISOString() })
+      .eq('id', postId)
+
+    if (error) {
+      console.error('Failed to sync comment count:', error)
+    }
+  }
 
   const handleSubmitComment = async () => {
     if (!newComment.trim() || isSubmitting) return
@@ -26,7 +47,7 @@ export default function CommentSection({
     setIsSubmitting(true)
 
     try {
-      const { data, error } = await createClient()
+      const { data, error } = await supabase
         .from('community_comments')
         .insert({
           id_post: postId,
@@ -37,8 +58,8 @@ export default function CommentSection({
         .single()
 
       if (!error && data) {
-        const newCommentWithReplies = { 
-          ...data, 
+        const newCommentWithReplies = {
+          ...data,
           replies: [],
           author: {
             uuid: currentUser.uuid,
@@ -46,7 +67,9 @@ export default function CommentSection({
             avatar: currentUser.avatar
           }
         }
-        setComments([...comments, newCommentWithReplies])
+        const nextComments = [...comments, newCommentWithReplies]
+        setComments(nextComments)
+        await syncCommentCount(nextComments)
         setNewComment('')
       }
     } catch (error) {
@@ -59,22 +82,24 @@ export default function CommentSection({
 
   const handleDeleteComment = async (commentId: number) => {
     try {
-      const { error } = await createClient()
+      const { error } = await supabase
         .from('community_comments')
         .update({ is_deleted: true })
         .eq('id', commentId)
 
       if (!error) {
-        const removeComment = (comments: CommunityComment[]): CommunityComment[] => {
-          return comments
+        const removeComment = (items: CommunityComment[]): CommunityComment[] => {
+          return items
             .filter(c => c.id !== commentId)
             .map(c => ({
               ...c,
               replies: c.replies ? removeComment(c.replies) : []
             }))
         }
-        
-        setComments(removeComment(comments))
+
+        const nextComments = removeComment(comments)
+        setComments(nextComments)
+        await syncCommentCount(nextComments)
       }
     } catch (error) {
       console.error('Error deleting comment:', error)
@@ -84,7 +109,7 @@ export default function CommentSection({
 
   const handleReplySubmit = async (parentId: number, content: string) => {
     try {
-      const { data, error } = await createClient()
+      const { data, error } = await supabase
         .from('community_comments')
         .insert({
           id_post: postId,
@@ -106,8 +131,8 @@ export default function CommentSection({
           }
         }
 
-        const addReply = (comments: CommunityComment[]): CommunityComment[] => {
-          return comments.map(c => {
+        const addReply = (items: CommunityComment[]): CommunityComment[] => {
+          return items.map(c => {
             if (c.id === parentId) {
               return {
                 ...c,
@@ -120,8 +145,10 @@ export default function CommentSection({
             }
           })
         }
-        
-        setComments(addReply(comments))
+
+        const nextComments = addReply(comments)
+        setComments(nextComments)
+        await syncCommentCount(nextComments)
       }
     } catch (error) {
       console.error('Error posting reply:', error)
@@ -129,10 +156,12 @@ export default function CommentSection({
     }
   }
 
+  const totalComments = countComments(comments)
+
   return (
     <div className="mt-8 pt-8 border-t">
       <h3 className="text-xl font-semibold mb-6">
-        {comments.length} Comments
+        {totalComments} Comments
       </h3>
 
       <div className="mb-6">

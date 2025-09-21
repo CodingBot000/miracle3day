@@ -39,6 +39,7 @@ export async function GET(
     const { data, error, status, statusText, count } = await supabase
       .from(TABLE_HOSPITAL)
       .select("*", { count: "exact" })
+      .eq('show', true)
       .overlaps("id_surgeries", surgeriesIds)
       .range(offset, limit);
 

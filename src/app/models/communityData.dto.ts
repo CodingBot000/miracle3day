@@ -15,13 +15,13 @@ export interface Member {
     content: string
     id_category?: string
     view_count: number
+    comment_count?: number
+    like_count?: number
     is_deleted: boolean
     created_at: string
     updated_at: string
     author?: Member
     category?: CommunityCategory
-    like_count?: number
-    comment_count?: number
     is_liked?: boolean,
     author_name_snapshot?: string,
     author_avatar_snapshot?: string,

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef } from "react";
+import Image from "next/image";
 
 type Props = {
   images: string[];
@@ -181,8 +182,16 @@ const DesktopMosaic = (
               return (
                 <div
                   key={`empty-${slot}`}
-                  className="w-full h-full rounded-xl bg-gray-100"
-                />
+                  className="w-full h-full rounded-xl bg-gray-100 flex items-center justify-center"
+                >
+                  <Image
+                    src="/logo/logo_icon.png"
+                    alt="Logo"
+                    width={80}
+                    height={80}
+                    className="opacity-30"
+                  />
+                </div>
               );
             }
             return (

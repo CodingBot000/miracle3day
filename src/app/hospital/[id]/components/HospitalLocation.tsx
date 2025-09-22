@@ -15,7 +15,7 @@ const HospitalLocation = ({ hospitalInfo }: HospitalLocationProps) => {
       <div className="space-y-2 mb-4">
        <div className="flex items-center gap-1">
           <span className="text-sm font-semibold text-gray-800 min-w-[80px]">
-            Address:
+            Road Name Address:
           </span>
           <span className="text-sm text-gray-800">
             {hospitalInfo.address_full_road_en}
@@ -24,7 +24,7 @@ const HospitalLocation = ({ hospitalInfo }: HospitalLocationProps) => {
         
         <div className="flex items-center gap-1">
           <span className="text-sm font-semibold text-gray-800 min-w-[80px]">
-            Jibun:
+            Lot Number Addreess:
           </span>
           <span className="text-sm text-gray-800">
             {hospitalInfo.address_full_jibun_en}

@@ -100,11 +100,11 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-2xl mx-auto">
         {/* Header */}
-        <div className="bg-white px-4 py-4 flex items-center border-b">
+        <div className="flex-col px-4 py-4 flex items-center border-b">
           {/* <Link href="/user/my-page" className="p-2">
             <ArrowLeft className="w-6 h-6" />
           </Link> */}
-          <h1 className="text-lg font-medium ml-2">My Page</h1>
+          <h1 className="text-lg font-bold ml-2">My Page</h1>
         </div>
 
         <div className="p-4">
@@ -151,7 +151,7 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
               {renderProfileField("Phone Number Verification", "Phone Number Verification", false)}
               {renderProfileField("Email", user?.userInfo?.email, false)}
               {renderProfileField("Secondary Email", user?.userInfo?.secondary_email, false)}
-              {renderProfileField("Treatment Experience", "Public", false)}
+              {/*   {renderProfileField("Treatment Experience", "Public", false)} */}
 
               <div className="flex justify-between items-center p-4">
                 <span className="text-gray-600"></span>

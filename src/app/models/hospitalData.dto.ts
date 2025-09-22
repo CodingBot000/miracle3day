@@ -32,8 +32,9 @@ export interface FullHospital {
   id_unique: string;
   id_surgeries: string[]; // 수술 ID 배열
   show: boolean;
-    search_key: string;
-    id_uuid_admin: string;
+  search_key: string;
+  id_uuid_admin: string;
+  favorite_count: number;
 }
 
 // 목록 전용
@@ -128,6 +129,7 @@ export type HospitalDetail = Pick<
   | 'directions_to_clinic_en'
   | 'id_uuid_admin'
   | 'thumbnail_url'
+  | 'favorite_count'
 >  & {
   hospital_details: HospitalDetailInfo;
 };

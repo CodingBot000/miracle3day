@@ -15,6 +15,7 @@ const toIconList = (nodes: CategoryNode[], icons: any) =>
   nodes.map((node) => ({
     key: node.key,
     label: node.label,
+    name: node.name,
     icon: icons[node.key]?.src ?? "",
   }));
 
@@ -49,6 +50,7 @@ export default function CategoryDetailPage() {
     selected1Node?.children?.map((node) => ({
       key: node.key,
       label: node.label,
+      name: node.name,
     })) ?? [];
 
   // 3뎁스: 현재 선택된 2뎁스의 children
@@ -59,6 +61,7 @@ export default function CategoryDetailPage() {
     selected2Node?.children?.map((node) => ({
       key: node.key,
       label: node.label,
+      name: node.name,
     })) ?? [];
 
   // 1뎁스 변경 시: 2뎁스/3뎁스 자동 초기화

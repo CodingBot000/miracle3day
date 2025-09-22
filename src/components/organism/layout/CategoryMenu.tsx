@@ -35,6 +35,7 @@ export default function CategoryMenu() {
   const depth2List = selected1Node?.children?.map(node => ({
     key: node.key,
     label: node.label,
+    name: node.name,
   })) ?? [];
 
   // 3뎁스: 현재 선택된 2뎁스의 children
@@ -42,6 +43,7 @@ export default function CategoryMenu() {
   const depth3List = selected2Node?.children?.map(node => ({
     key: node.key,
     label: node.label,
+    name: node.name,
   })) ?? [];
 
   // 추천 클릭시

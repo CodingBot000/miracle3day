@@ -253,6 +253,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
       
       // Simple video ready detection
       const handleVideoReady = () => {
+        console.log('🎥 handleVideoReady called!');
         const video = videoRef.current;
         if (video) {
           console.log('🎥 Video ready - dimensions:', video.videoWidth, 'x', video.videoHeight);
@@ -265,6 +266,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
           console.log('🎥 Video ready but no video ref');
         }
         
+        console.log('✨ Setting isVideoReady to true');
         setIsVideoReady(true);
         setFaceGuidance({
           message: "Camera is ready! Please position your face in the center",
@@ -272,24 +274,48 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
           canCapture: false
         });
         
-        // Wait a moment for video metadata to be fully loaded
-        setTimeout(() => {
-          console.log('🚀 Starting face detection after delay');
-          if (videoRef.current && videoRef.current.videoWidth > 0) {
-            console.log('✅ Video has valid dimensions, starting face detection');
+        // Enhanced video metadata loading with proper event handling
+        const waitForMetadata = () => {
+          const video = videoRef.current;
+          console.log('📋 waitForMetadata called - video dimensions:', video?.videoWidth, 'x', video?.videoHeight);
+          
+          if (video && video.videoWidth > 0 && video.videoHeight > 0) {
+            console.log('✅ Video metadata fully loaded - dimensions:', video.videoWidth, 'x', video.videoHeight);
+            console.log('🚀 About to call startFaceDetection');
             startFaceDetection();
           } else {
-            console.log('⚠️ Video still has no dimensions, retrying in 1 second');
-            setTimeout(() => {
-              if (videoRef.current && videoRef.current.videoWidth > 0) {
-                console.log('✅ Video dimensions ready on retry, starting face detection');
+            console.log('⏳ Video metadata not ready, checking next frame...');
+            // Use requestAnimationFrame to check again on the next frame
+            requestAnimationFrame(() => {
+              const retryVideo = videoRef.current;
+              console.log('🔄 Retry check - video dimensions:', retryVideo?.videoWidth, 'x', retryVideo?.videoHeight);
+              
+              if (retryVideo && retryVideo.videoWidth > 0 && retryVideo.videoHeight > 0) {
+                console.log('✅ Video metadata ready on next frame');
+                console.log('🚀 About to call startFaceDetection (retry)');
                 startFaceDetection();
               } else {
-                console.log('❌ Video dimensions still not ready after retry');
+                console.log('⏳ Still not ready, trying timeout...');
+                // Final fallback after a short delay
+                setTimeout(() => {
+                  const finalRetryVideo = videoRef.current;
+                  console.log('🔄 Final retry - video dimensions:', finalRetryVideo?.videoWidth, 'x', finalRetryVideo?.videoHeight);
+                  
+                  if (finalRetryVideo && finalRetryVideo.videoWidth > 0) {
+                    console.log('✅ Video metadata ready after timeout');
+                    console.log('🚀 About to call startFaceDetection (final retry)');
+                    startFaceDetection();
+                  } else {
+                    console.log('❌ Video metadata still not ready - will retry when detection runs');
+                  }
+                }, 200);
               }
-            }, 1000);
+            });
           }
-        }, 500);
+        };
+        
+        // Start checking for metadata immediately, then with frame-based timing
+        waitForMetadata();
       };
 
       // Set up single event listener
@@ -330,192 +356,193 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
 
 
   // Real-time face detection function
-  const detectFace = useCallback(async () => {
-    console.log('detectFace called', { 
-      hasVideo: !!videoRef.current, 
-      isVideoReady, 
-      timestamp: Date.now() 
-    });
-       
-    if (!videoRef.current || !isVideoReady) {
-      console.log('detectFace: video not ready');
-      return;
-    }
+  const detectFace = useCallback(() => {
+    console.log('🔍 detectFace called');
     
-    const video = videoRef.current;
-    const videoWidth = video.videoWidth;
-    const videoHeight = video.videoHeight;
-    
-    console.log('detectFace: video dimensions', { 
-      videoWidth, 
-      videoHeight, 
-      readyState: video.readyState,
-      hasVideoMetadata: video.videoWidth > 0 && video.videoHeight > 0
-    });
-    
-    if (videoWidth === 0 || videoHeight === 0) {
-      console.log('❌ detectFace: invalid dimensions - width:', videoWidth, 'height:', videoHeight);
-      console.log('Video element state:', {
-        readyState: video.readyState,
-        networkState: video.networkState,
-        currentTime: video.currentTime,
-        duration: video.duration || 'not available'
-      });
-      return;
-    }
-    
-    console.log('✅ Video dimensions are valid, proceeding with face detection');
-    
-    try {
-      // Create canvas for face detection
-      const canvas = document.createElement('canvas');
-      canvas.width = videoWidth;
-      canvas.height = videoHeight;
-      const ctx = canvas.getContext('2d');
+    // Use requestAnimationFrame for smooth video frame processing
+    requestAnimationFrame(() => {
+      console.log('🖼️ requestAnimationFrame executed');
       
-      if (!ctx) return;
-      
-      ctx.drawImage(video, 0, 0, videoWidth, videoHeight);
-      
-      // Enhanced face detection with multiple quality metrics
-      const imageData = ctx.getImageData(0, 0, videoWidth, videoHeight);
-      const data = imageData.data;
-      
-      // Face detection region (center area)
-      const centerX = videoWidth / 2;
-      const centerY = videoHeight / 2;
-      const faceRegionSize = Math.min(videoWidth, videoHeight) * 0.4;
-      
-      // Calculate multiple metrics for face quality assessment
-      let totalBrightness = 0;
-      let brightnessVariance = 0;
-      let edgeCount = 0;
-      let pixelCount = 0;
-      let skinPixelCount = 0;
-      
-      const regionStartX = Math.max(0, centerX - faceRegionSize/2);
-      const regionEndX = Math.min(videoWidth, centerX + faceRegionSize/2);
-      const regionStartY = Math.max(0, centerY - faceRegionSize/2);
-      const regionEndY = Math.min(videoHeight, centerY + faceRegionSize/2);
-      
-      // First pass: calculate average brightness and skin detection
-      for (let y = regionStartY; y < regionEndY; y += 2) {
-        for (let x = regionStartX; x < regionEndX; x += 2) {
-          const i = (Math.floor(y) * videoWidth + Math.floor(x)) * 4;
-          const r = data[i];
-          const g = data[i + 1];
-          const b = data[i + 2];
-          
-          const brightness = (r + g + b) / 3;
-          totalBrightness += brightness;
-          
-          // Enhanced skin tone detection
-          if (r > 60 && g > 40 && b > 20 && r > b && 
-              Math.abs(r - g) < 50 && r < 220 && g < 200 && b < 180) {
-            skinPixelCount++;
-          }
-          
-          pixelCount++;
-        }
+      if (!videoRef.current) {
+        console.log('❌ No video ref');
+        return;
       }
       
-      const avgBrightness = totalBrightness / pixelCount;
+      const video = videoRef.current;
+      const videoWidth = video.videoWidth;
+      const videoHeight = video.videoHeight;
       
-      // Second pass: calculate variance and edge detection
-      for (let y = regionStartY + 1; y < regionEndY - 1; y += 2) {
-        for (let x = regionStartX + 1; x < regionEndX - 1; x += 2) {
-          const i = (Math.floor(y) * videoWidth + Math.floor(x)) * 4;
-          const r = data[i];
-          const g = data[i + 1];
-          const b = data[i + 2];
-          
-          const brightness = (r + g + b) / 3;
-          brightnessVariance += Math.pow(brightness - avgBrightness, 2);
-          
-          // Simple edge detection
-          if (x > 0 && x < videoWidth - 1 && y > 0 && y < videoHeight - 1) {
-            const iLeft = (Math.floor(y) * videoWidth + Math.floor(x - 1)) * 4;
-            const iRight = (Math.floor(y) * videoWidth + Math.floor(x + 1)) * 4;
-            const iUp = (Math.floor(y - 1) * videoWidth + Math.floor(x)) * 4;
-            const iDown = (Math.floor(y + 1) * videoWidth + Math.floor(x)) * 4;
+      console.log('detectFace: video dimensions', { 
+        videoWidth, 
+        videoHeight, 
+        readyState: video.readyState,
+        hasVideoMetadata: video.videoWidth > 0 && video.videoHeight > 0
+      });
+      
+      if (videoWidth === 0 || videoHeight === 0) {
+        console.log('❌ detectFace: invalid dimensions - width:', videoWidth, 'height:', videoHeight);
+        console.log('Video element state:', {
+          readyState: video.readyState,
+          networkState: video.networkState,
+          currentTime: video.currentTime,
+          duration: video.duration || 'not available'
+        });
+        return;
+      }
+      
+      console.log('✅ Video dimensions are valid, proceeding with face detection');
+      
+      try {
+        // Create canvas for face detection
+        const canvas = document.createElement('canvas');
+        canvas.width = videoWidth;
+        canvas.height = videoHeight;
+        const ctx = canvas.getContext('2d');
+        
+        if (!ctx) return;
+        
+        ctx.drawImage(video, 0, 0, videoWidth, videoHeight);
+        
+        // Enhanced face detection with multiple quality metrics
+        const imageData = ctx.getImageData(0, 0, videoWidth, videoHeight);
+        const data = imageData.data;
+        
+        // Face detection region (center area)
+        const centerX = videoWidth / 2;
+        const centerY = videoHeight / 2;
+        const faceRegionSize = Math.min(videoWidth, videoHeight) * 0.4;
+        
+        // Calculate multiple metrics for face quality assessment
+        let totalBrightness = 0;
+        let brightnessVariance = 0;
+        let edgeCount = 0;
+        let pixelCount = 0;
+        let skinPixelCount = 0;
+        
+        const regionStartX = Math.max(0, centerX - faceRegionSize/2);
+        const regionEndX = Math.min(videoWidth, centerX + faceRegionSize/2);
+        const regionStartY = Math.max(0, centerY - faceRegionSize/2);
+        const regionEndY = Math.min(videoHeight, centerY + faceRegionSize/2);
+        
+        // First pass: calculate average brightness and skin detection
+        for (let y = regionStartY; y < regionEndY; y += 2) {
+          for (let x = regionStartX; x < regionEndX; x += 2) {
+            const i = (Math.floor(y) * videoWidth + Math.floor(x)) * 4;
+            const r = data[i];
+            const g = data[i + 1];
+            const b = data[i + 2];
             
-            const horizontalGrad = Math.abs((data[iRight] + data[iRight + 1] + data[iRight + 2]) - 
-                                          (data[iLeft] + data[iLeft + 1] + data[iLeft + 2]));
-            const verticalGrad = Math.abs((data[iDown] + data[iDown + 1] + data[iDown + 2]) - 
-                                        (data[iUp] + data[iUp + 1] + data[iUp + 2]));
+            const brightness = (r + g + b) / 3;
+            totalBrightness += brightness;
             
-            if (horizontalGrad > 30 || verticalGrad > 30) {
-              edgeCount++;
+            // Enhanced skin tone detection
+            if (r > 60 && g > 40 && b > 20 && r > b && 
+                Math.abs(r - g) < 50 && r < 220 && g < 200 && b < 180) {
+              skinPixelCount++;
+            }
+            
+            pixelCount++;
+          }
+        }
+        
+        const avgBrightness = totalBrightness / pixelCount;
+        
+        // Second pass: calculate variance and edge detection
+        for (let y = regionStartY + 1; y < regionEndY - 1; y += 2) {
+          for (let x = regionStartX + 1; x < regionEndX - 1; x += 2) {
+            const i = (Math.floor(y) * videoWidth + Math.floor(x)) * 4;
+            const r = data[i];
+            const g = data[i + 1];
+            const b = data[i + 2];
+            
+            const brightness = (r + g + b) / 3;
+            brightnessVariance += Math.pow(brightness - avgBrightness, 2);
+            
+            // Simple edge detection
+            if (x > 0 && x < videoWidth - 1 && y > 0 && y < videoHeight - 1) {
+              const iLeft = (Math.floor(y) * videoWidth + Math.floor(x - 1)) * 4;
+              const iRight = (Math.floor(y) * videoWidth + Math.floor(x + 1)) * 4;
+              const iUp = (Math.floor(y - 1) * videoWidth + Math.floor(x)) * 4;
+              const iDown = (Math.floor(y + 1) * videoWidth + Math.floor(x)) * 4;
+              
+              const horizontalGrad = Math.abs((data[iRight] + data[iRight + 1] + data[iRight + 2]) - 
+                                            (data[iLeft] + data[iLeft + 1] + data[iLeft + 2]));
+              const verticalGrad = Math.abs((data[iDown] + data[iDown + 1] + data[iDown + 2]) - 
+                                          (data[iUp] + data[iUp + 1] + data[iUp + 2]));
+              
+              if (horizontalGrad > 30 || verticalGrad > 30) {
+                edgeCount++;
+              }
             }
           }
         }
+        
+        brightnessVariance = Math.sqrt(brightnessVariance / pixelCount);
+        const skinRatio = skinPixelCount / pixelCount;
+        const edgeRatio = edgeCount / pixelCount;
+        
+        // Face detection based on multiple factors (more lenient for debugging)
+        const hasFace = skinRatio > 0.05 && // Minimum skin pixels (reduced)
+                       brightnessVariance > 10 && // Sufficient texture (reduced)
+                       edgeRatio > 0.01 && // Sufficient edges (reduced)
+                       avgBrightness > 20 && avgBrightness < 250; // Reasonable lighting (expanded)
+        
+        console.log('Face detection criteria:', {
+          skinRatioCheck: skinRatio > 0.05,
+          brightnessVarianceCheck: brightnessVariance > 10,
+          edgeRatioCheck: edgeRatio > 0.01,
+          brightnessCheck: avgBrightness > 20 && avgBrightness < 250,
+          finalHasFace: hasFace
+        });
+        
+        // Calculate quality scores
+        const positionQuality = calculatePositionQuality(hasFace, skinRatio * 100, centerX, centerY, videoWidth, videoHeight);
+        const lightingQuality = calculateLightingQuality(avgBrightness, brightnessVariance);
+        const straightnessQuality = calculateStraightnessQuality(edgeRatio);
+        
+        // Detailed debug output
+        console.log('Face Detection Results:', {
+          hasFace,
+          skinRatio: skinRatio.toFixed(3),
+          skinPixelCount,
+          pixelCount,
+          avgBrightness: avgBrightness.toFixed(1),
+          brightnessVariance: brightnessVariance.toFixed(1),
+          edgeRatio: edgeRatio.toFixed(3),
+          edgeCount,
+          positionQuality: positionQuality.toFixed(1),
+          lightingQuality: lightingQuality.toFixed(1),
+          straightnessQuality: straightnessQuality.toFixed(1),
+          faceSize: (skinRatio * 100).toFixed(1)
+        });
+        
+        // Update face metrics with all quality scores
+        setFaceMetrics({
+          faceCount: hasFace ? 1 : 0,
+          faceSize: skinRatio * 100,
+          faceCenterX: centerX,
+          faceCenterY: centerY,
+          isFrameCentered: hasFace && skinRatio > 0.2,
+          positionQuality,
+          lightingQuality,
+          straightnessQuality
+        });
+        
+        console.log('setFaceMetrics called with:', {
+          positionQuality,
+          lightingQuality,
+          straightnessQuality,
+          faceCount: hasFace ? 1 : 0
+        });
+        
+        // Analyze face position and provide guidance
+        analyzeFacePosition(hasFace, skinRatio, centerX, centerY, videoWidth, videoHeight);
+        
+      } catch (error) {
+        console.error('Face detection error:', error);
       }
-      
-      brightnessVariance = Math.sqrt(brightnessVariance / pixelCount);
-      const skinRatio = skinPixelCount / pixelCount;
-      const edgeRatio = edgeCount / pixelCount;
-      
-      // Face detection based on multiple factors (more lenient for debugging)
-      const hasFace = skinRatio > 0.05 && // Minimum skin pixels (reduced)
-                     brightnessVariance > 10 && // Sufficient texture (reduced)
-                     edgeRatio > 0.01 && // Sufficient edges (reduced)
-                     avgBrightness > 20 && avgBrightness < 250; // Reasonable lighting (expanded)
-      
-      console.log('Face detection criteria:', {
-        skinRatioCheck: skinRatio > 0.05,
-        brightnessVarianceCheck: brightnessVariance > 10,
-        edgeRatioCheck: edgeRatio > 0.01,
-        brightnessCheck: avgBrightness > 20 && avgBrightness < 250,
-        finalHasFace: hasFace
-      });
-      
-      // Calculate quality scores
-      const positionQuality = calculatePositionQuality(hasFace, skinRatio * 100, centerX, centerY, videoWidth, videoHeight);
-      const lightingQuality = calculateLightingQuality(avgBrightness, brightnessVariance);
-      const straightnessQuality = calculateStraightnessQuality(edgeRatio);
-      
-      // Detailed debug output
-      console.log('Face Detection Results:', {
-        hasFace,
-        skinRatio: skinRatio.toFixed(3),
-        skinPixelCount,
-        pixelCount,
-        avgBrightness: avgBrightness.toFixed(1),
-        brightnessVariance: brightnessVariance.toFixed(1),
-        edgeRatio: edgeRatio.toFixed(3),
-        edgeCount,
-        positionQuality: positionQuality.toFixed(1),
-        lightingQuality: lightingQuality.toFixed(1),
-        straightnessQuality: straightnessQuality.toFixed(1),
-        faceSize: (skinRatio * 100).toFixed(1)
-      });
-      
-      // Update face metrics with all quality scores
-      setFaceMetrics({
-        faceCount: hasFace ? 1 : 0,
-        faceSize: skinRatio * 100,
-        faceCenterX: centerX,
-        faceCenterY: centerY,
-        isFrameCentered: hasFace && skinRatio > 0.2,
-        positionQuality,
-        lightingQuality,
-        straightnessQuality
-      });
-      
-      console.log('setFaceMetrics called with:', {
-        positionQuality,
-        lightingQuality,
-        straightnessQuality,
-        faceCount: hasFace ? 1 : 0
-      });
-      
-      // Analyze face position and provide guidance
-      analyzeFacePosition(hasFace, skinRatio, centerX, centerY, videoWidth, videoHeight);
-      
-    } catch (error) {
-      console.error('Face detection error:', error);
-    }
-  }, [isVideoReady, calculatePositionQuality, calculateLightingQuality, calculateStraightnessQuality]);
+    }); // Close requestAnimationFrame
+  }, [calculatePositionQuality, calculateLightingQuality, calculateStraightnessQuality]);
   
   // Face position analysis with English messages
   const analyzeFacePosition = useCallback((hasFace: boolean, faceSize: number, centerX: number, centerY: number, videoWidth: number, videoHeight: number) => {
@@ -595,24 +622,28 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
     }
   }, [lastDetectionTime]);
   
-  // Start face detection
+  // Start face detection with requestAnimationFrame-based timing
   const startFaceDetection = useCallback(() => {
-    console.log('🎯 Starting face detection...');
+    console.log('🎯 startFaceDetection function called!');
+    console.log('🎯 Starting face detection with requestAnimationFrame...');
     
+    // Clear any existing interval
     if (faceDetectionInterval) {
-      console.log('⏹️ Clearing existing face detection interval');
+      console.log('⏹️ Clearing existing face detection interval:', faceDetectionInterval);
       clearInterval(faceDetectionInterval);
+      setFaceDetectionInterval(null);
     }
     
-    console.log('⏱️ Setting up new face detection interval (200ms)');
+    // Use interval but with requestAnimationFrame for smoother performance
+    console.log('⏱️ Setting up new interval...');
     const interval = setInterval(() => {
-      console.log('📸 Face detection tick...');
+      console.log('📸 Interval tick - calling detectFace');
       detectFace();
-    }, 200); // Check every 200ms for real-time tracking
+    }, 166); // ~60fps (1000ms/6 ≈ 166ms) for smooth video processing
     
     setFaceDetectionInterval(interval);
-    console.log('✅ Face detection started with interval ID:', interval);
-  }, [detectFace, faceDetectionInterval]);
+    console.log('✅ Face detection started with 60fps timing, interval ID:', interval);
+  }, [detectFace]);
   
   // Stop face detection
   const stopFaceDetection = useCallback(() => {

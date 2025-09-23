@@ -634,7 +634,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
         console.error('Face detection error:', error);
       }
     }); // Close requestAnimationFrame
-  }, [calculatePositionQuality, calculateLightingQuality, calculateStraightnessQuality]);
+  }, [calculatePositionQuality, calculateLightingQuality, calculateStraightnessQuality, calculateFaceQuality]);
   
   // Face position analysis with English messages based on FaceQuality
   const analyzeFacePosition = useCallback((faceQuality: FaceQuality, faceSize: number, centerX: number, centerY: number, videoWidth: number, videoHeight: number) => {
@@ -775,7 +775,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
     
     setFaceDetectionInterval(interval);
     console.log('✅ Face detection started with 60fps timing, interval ID:', interval);
-  }, [detectFace]);
+  }, [detectFace, faceDetectionInterval]);
   
   // Stop face detection
   const stopFaceDetection = useCallback(() => {
@@ -1142,7 +1142,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
       setIsCameraOpen(false);
       setCameraError('Failed to start camera. Please try again.');
     });
-  }, [startWebcam]);
+  }, [startWebcam, faceDetectionInterval]);
 
   const closeCamera = useCallback(() => {
     console.log('Closing camera...');
@@ -1592,7 +1592,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
           <li>• Position your face within the oval guide</li>
           <li>• Keep your face centered and at proper distance</li>
           <li>• For accurate skin analysis, please remove makeup</li>
-          <li>• Wait for the green "Perfect!" message before capturing</li>
+          <li>• Wait for the green &quot;Perfect!&quot; message before capturing</li>
         </ul>
         
         <div className="mt-3 p-2 bg-white rounded border border-blue-200">

@@ -17,6 +17,16 @@ interface CameraInterfaceProps {
   capturedImage: string | null;
 }
 
+// faceQualityChanged interface based on YouCam API spec
+interface FaceQuality {
+  hasFace: boolean;
+  area: "good" | "notgood" | "toosmall" | "outofboundary";
+  frontal: "good" | "notgood";
+  lighting: "good" | "ok" | "notgood";
+  nakedeye: "good" | "notgood";
+  faceangle: "good" | "upward" | "downward" | "leftward" | "rightward" | "lefttilt" | "righttilt";
+}
+
 export default function CameraInterface({ onImageCapture, capturedImage }: CameraInterfaceProps) {
   // State
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
@@ -163,6 +173,75 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
     score += Math.min(50, symmetryScore);
     
     return Math.min(100, Math.max(0, score));
+  }, []);
+
+  // Calculate FaceQuality based on YouCam API spec
+  const calculateFaceQuality = useCallback((
+    hasFace: boolean,
+    faceSize: number,
+    centerX: number,
+    centerY: number,
+    videoWidth: number,
+    videoHeight: number,
+    avgBrightness: number,
+    brightnessVariance: number,
+    edgeRatio: number
+  ): FaceQuality => {
+    // Area assessment
+    let area: FaceQuality['area'] = "outofboundary";
+    if (hasFace) {
+      if (faceSize >= 15 && faceSize <= 35) {
+        area = "good";
+      } else if (faceSize < 10) {
+        area = "toosmall";
+      } else if (faceSize > 50) {
+        area = "notgood";
+      } else {
+        area = "notgood";
+      }
+    }
+
+    // Frontal assessment (based on face symmetry and center position)
+    const horizontalDeviation = Math.abs(centerX - videoWidth / 2) / videoWidth;
+    const frontal: FaceQuality['frontal'] = 
+      hasFace && horizontalDeviation < 0.15 ? "good" : "notgood";
+
+    // Lighting assessment
+    let lighting: FaceQuality['lighting'] = "notgood";
+    if (avgBrightness >= 80 && avgBrightness <= 180 && brightnessVariance <= 60) {
+      lighting = "good";
+    } else if (avgBrightness >= 60 && avgBrightness <= 200 && brightnessVariance <= 80) {
+      lighting = "ok";
+    }
+
+    // Naked eye assessment (simplified - always good for now)
+    const nakedeye: FaceQuality['nakedeye'] = "good";
+
+    // Face angle assessment (based on position and edge detection)
+    let faceangle: FaceQuality['faceangle'] = "good";
+    if (hasFace) {
+      const verticalDeviation = Math.abs(centerY - videoHeight / 2) / videoHeight;
+      
+      if (verticalDeviation > 0.2) {
+        faceangle = centerY < videoHeight / 2 ? "upward" : "downward";
+      } else if (horizontalDeviation > 0.2) {
+        faceangle = centerX < videoWidth / 2 ? "leftward" : "rightward";
+      } else if (edgeRatio < 0.02) {
+        // Low edge ratio might indicate tilted face
+        faceangle = Math.random() > 0.5 ? "lefttilt" : "righttilt";
+      }
+    } else {
+      faceangle = "notgood" as any; // Face not properly positioned
+    }
+
+    return {
+      hasFace,
+      area,
+      frontal,
+      lighting,
+      nakedeye,
+      faceangle
+    };
   }, []);
 
   // Cleanup function
@@ -500,6 +579,19 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
         const lightingQuality = calculateLightingQuality(avgBrightness, brightnessVariance);
         const straightnessQuality = calculateStraightnessQuality(edgeRatio);
         
+        // Calculate FaceQuality based on YouCam API spec
+        const faceQuality = calculateFaceQuality(
+          hasFace,
+          skinRatio * 100,
+          centerX,
+          centerY,
+          videoWidth,
+          videoHeight,
+          avgBrightness,
+          brightnessVariance,
+          edgeRatio
+        );
+        
         // Detailed debug output
         console.log('Face Detection Results:', {
           hasFace,
@@ -536,7 +628,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
         });
         
         // Analyze face position and provide guidance
-        analyzeFacePosition(hasFace, skinRatio, centerX, centerY, videoWidth, videoHeight);
+        analyzeFacePosition(faceQuality, skinRatio, centerX, centerY, videoWidth, videoHeight);
         
       } catch (error) {
         console.error('Face detection error:', error);
@@ -544,25 +636,25 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
     }); // Close requestAnimationFrame
   }, [calculatePositionQuality, calculateLightingQuality, calculateStraightnessQuality]);
   
-  // Face position analysis with English messages
-  const analyzeFacePosition = useCallback((hasFace: boolean, faceSize: number, centerX: number, centerY: number, videoWidth: number, videoHeight: number) => {
+  // Face position analysis with English messages based on FaceQuality
+  const analyzeFacePosition = useCallback((faceQuality: FaceQuality, faceSize: number, centerX: number, centerY: number, videoWidth: number, videoHeight: number) => {
     const now = Date.now();
     
     // Throttle updates to avoid too frequent changes
     if (now - lastDetectionTime < 300) return;
     setLastDetectionTime(now);
     
-    if (!hasFace) {
+    if (!faceQuality.hasFace) {
       setFaceGuidance({
-        message: "Please show your face in the camera view 👤",
+        message: "Keep your face inside the circle",
         type: "error",
         canCapture: false
       });
       return;
     }
     
-    // Check face size (distance from camera)
-    if (faceSize < 0.1) {
+    // Check area (distance from camera) based on FaceQuality.area
+    if (faceQuality.area === "toosmall") {
       setFaceGuidance({
         message: "Please move closer to the camera 🔍",
         type: "warning",
@@ -571,7 +663,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
       return;
     }
     
-    if (faceSize > 0.4) {
+    if (faceQuality.area === "notgood" && faceSize > 40) {
       setFaceGuidance({
         message: "Please move back a little - too close ↩️",
         type: "warning",
@@ -579,35 +671,75 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
       });
       return;
     }
-    
-    // Check if face is centered
-    const horizontalDeviation = Math.abs(centerX - videoWidth / 2) / videoWidth;
-    const verticalDeviation = Math.abs(centerY - videoHeight / 2) / videoHeight;
-    
-    if (horizontalDeviation > 0.2) {
+
+    if (faceQuality.area === "outofboundary") {
       setFaceGuidance({
-        message: centerX < videoWidth / 2 ? 
-          "Please move to the right ➡️" : 
-          "Please move to the left ⬅️",
+        message: "Keep your face inside the circle",
+        type: "error",
+        canCapture: false
+      });
+      return;
+    }
+    
+    // Check face angle and frontal position based on FaceQuality
+    if (faceQuality.faceangle !== "good") {
+      let message = "";
+      switch (faceQuality.faceangle) {
+        case "upward":
+          message = "Please move down a bit ⬇️";
+          break;
+        case "downward":
+          message = "Please move up a bit ⬆️";
+          break;
+        case "leftward":
+          message = "Please move to the right ➡️";
+          break;
+        case "rightward":
+          message = "Please move to the left ⬅️";
+          break;
+        case "lefttilt":
+          message = "Please straighten your head (tilt right)";
+          break;
+        case "righttilt":
+          message = "Please straighten your head (tilt left)";
+          break;
+        default:
+          message = "Please adjust your face position";
+      }
+      
+      setFaceGuidance({
+        message,
+        type: "warning",
+        canCapture: false
+      });
+      return;
+    }
+
+    // Check frontal positioning
+    if (faceQuality.frontal !== "good") {
+      setFaceGuidance({
+        message: "Please face the camera directly",
+        type: "warning",
+        canCapture: false
+      });
+      return;
+    }
+
+    // Check lighting quality
+    if (faceQuality.lighting === "notgood") {
+      setFaceGuidance({
+        message: "Please ensure good lighting and clear face visibility 💡",
         type: "warning",
         canCapture: false
       });
       return;
     }
     
-    if (verticalDeviation > 0.15) {
-      setFaceGuidance({
-        message: centerY < videoHeight / 2 ? 
-          "Please move down a bit ⬇️" : 
-          "Please move up a bit ⬆️",
-        type: "warning",
-        canCapture: false
-      });
-      return;
-    }
-    
-    // Face is well positioned
-    if (faceSize >= 0.15 && faceSize <= 0.35 && horizontalDeviation < 0.1 && verticalDeviation < 0.1) {
+    // Face is well positioned - check all quality criteria
+    if (faceQuality.area === "good" && 
+        faceQuality.frontal === "good" && 
+        faceQuality.faceangle === "good" && 
+        (faceQuality.lighting === "good" || faceQuality.lighting === "ok")) {
       setFaceGuidance({
         message: "Perfect! You can take the photo now 📸✨",
         type: "success",
@@ -690,7 +822,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
             onFaceLost: () => {
               console.log('Face lost');
               setFaceGuidance({
-                message: "Please show your face in the camera view 👤",
+                message: "Keep your face inside the circle",
                 type: "error",
                 canCapture: false
               });
@@ -757,7 +889,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
   const handleYouCamFaceDetection = useCallback((faceData: any) => {
     if (!faceData || !faceData.faces || faceData.faces.length === 0) {
       setFaceGuidance({
-        message: "Please show your face in the camera view 👤",
+        message: "Keep your face inside the circle",
         type: "error",
         canCapture: false
       });
@@ -1396,7 +1528,9 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
                         )}
                         {faceGuidance.message.includes('back') && (
                           <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="text-white text-6xl animate-pulse">↩️</div>
+                            <div className="text-white text-lg font-semibold animate-pulse bg-black bg-opacity-50 px-4 py-2 rounded-lg">
+                              Keep your face inside the circle
+                            </div>
                           </div>
                         )}
                       </div>

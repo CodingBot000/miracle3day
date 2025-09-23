@@ -1494,7 +1494,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
                           ? 'bg-red-900/80 text-red-100'
                           : 'bg-yellow-900/80 text-yellow-100'
                       }`}>
-                        {faceGuidance.canCapture ? '✓ Perfect Position' : 'Position Your Face'}
+                        {faceMetrics.positionQuality >= 70 ? '✓ Perfect Position' : 'Position Your Face'}
                       </div>
                     </div>
                     

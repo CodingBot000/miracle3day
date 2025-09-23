@@ -336,7 +336,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
     //   isVideoReady, 
     //   timestamp: Date.now() 
     // });
-    
+       
     if (!videoRef.current || !isVideoReady) {
       console.log('detectFace: video not ready');
       return;

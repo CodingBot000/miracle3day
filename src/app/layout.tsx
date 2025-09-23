@@ -84,7 +84,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="h-full overflow-x-hidden"> {/* 가로 스크롤 차단(보조) */}
+    <html lang="en" className="h-full overflow-x-hidden">
       <body className={inter.className + " min-h-screen flex flex-col overflow-x-hidden"}>
         <ProgressBar />
         {/* <PageTransitionOverlay /> */}

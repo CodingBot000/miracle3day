@@ -331,11 +331,11 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
 
   // Real-time face detection function
   const detectFace = useCallback(async () => {
-    // console.log('detectFace called', { 
-    //   hasVideo: !!videoRef.current, 
-    //   isVideoReady, 
-    //   timestamp: Date.now() 
-    // });
+    console.log('detectFace called', { 
+      hasVideo: !!videoRef.current, 
+      isVideoReady, 
+      timestamp: Date.now() 
+    });
        
     if (!videoRef.current || !isVideoReady) {
       console.log('detectFace: video not ready');

@@ -91,14 +91,16 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
   const calculatePositionQuality = useCallback((hasFace: boolean, faceSize: number, centerX: number, centerY: number, videoWidth: number, videoHeight: number) => {
     if (!hasFace) return 0;
     
-    // Calculate size score (0-40 points)
+    // Calculate size score (0-40 points) - adjusted for new face size calculation
     let sizeScore = 0;
-    if (faceSize >= 15 && faceSize <= 35) {
-      sizeScore = 40; // Perfect size
-    } else if (faceSize >= 10 && faceSize <= 40) {
-      sizeScore = 25; // Good size
-    } else if (faceSize >= 5 && faceSize <= 50) {
-      sizeScore = 10; // Acceptable size
+    if (faceSize >= 20 && faceSize <= 50) {
+      sizeScore = 40; // Perfect size (expanded range)
+    } else if (faceSize >= 15 && faceSize <= 60) {
+      sizeScore = 30; // Good size
+    } else if (faceSize >= 10 && faceSize <= 70) {
+      sizeScore = 20; // Acceptable size
+    } else if (faceSize >= 5 && faceSize <= 80) {
+      sizeScore = 10; // Basic size
     }
     
     // Calculate horizontal position score (0-30 points)
@@ -676,27 +678,82 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
                        avgBrightness > 60 && avgBrightness < 220 && // Better lighting range
                        skinPixelCount > 1000; // Minimum absolute skin pixel count
         
+        // Even if no face detected, try to find the brightest/most active region for guidance
+        let fallbackCenterX = centerX;
+        let fallbackCenterY = centerY;
+        
+        if (!hasFace && skinPixelCount > 0) {
+          // Find the region with most skin-like pixels for directional guidance
+          let maxSkinPixels = 0;
+          let bestX = centerX;
+          let bestY = centerY;
+          
+          // Divide screen into 9 regions and find the one with most skin pixels
+          for (let regionY = 0; regionY < 3; regionY++) {
+            for (let regionX = 0; regionX < 3; regionX++) {
+              const startX = (videoWidth / 3) * regionX;
+              const endX = (videoWidth / 3) * (regionX + 1);
+              const startY = (videoHeight / 3) * regionY;
+              const endY = (videoHeight / 3) * (regionY + 1);
+              
+              let regionSkinCount = 0;
+              
+              for (let y = startY; y < endY; y += 4) {
+                for (let x = startX; x < endX; x += 4) {
+                  const i = (Math.floor(y) * videoWidth + Math.floor(x)) * 4;
+                  const r = data[i];
+                  const g = data[i + 1];
+                  const b = data[i + 2];
+                  
+                  if (r > 50 && g > 30 && b > 15 && r > b && r < 240) {
+                    regionSkinCount++;
+                  }
+                }
+              }
+              
+              if (regionSkinCount > maxSkinPixels) {
+                maxSkinPixels = regionSkinCount;
+                bestX = startX + (endX - startX) / 2;
+                bestY = startY + (endY - startY) / 2;
+              }
+            }
+          }
+          
+          if (maxSkinPixels > 10) {
+            fallbackCenterX = bestX;
+            fallbackCenterY = bestY;
+          }
+        }
+        
         console.log('Face detection criteria:', {
           skinRatioCheck: skinRatio > 0.15,
           skinPixelCountCheck: skinPixelCount > 1000,
           brightnessVarianceCheck: brightnessVariance > 25,
           edgeRatioCheck: edgeRatio > 0.03,
           brightnessCheck: avgBrightness > 60 && avgBrightness < 220,
-          finalHasFace: hasFace
+          finalHasFace: hasFace,
+          fallbackCenter: { x: fallbackCenterX, y: fallbackCenterY }
         });
         
-        // Calculate proper face bounds for position quality
+        // Calculate proper face bounds for position quality with dynamic search area
         let actualFaceSize = 0;
         let actualFaceCenterX = centerX;
         let actualFaceCenterY = centerY;
         
         if (hasFace && skinPixelCount > 0) {
-          // Find actual face bounds by analyzing skin pixel distribution
+          // Find actual face bounds by analyzing skin pixel distribution in entire frame
           let minX = videoWidth, maxX = 0, minY = videoHeight, maxY = 0;
           let totalWeightedX = 0, totalWeightedY = 0, totalWeight = 0;
+          let faceSkinPixelCount = 0;
           
-          for (let y = regionStartY; y < regionEndY; y += 2) {
-            for (let x = regionStartX; x < regionEndX; x += 2) {
+          // Expand search area to detect full face size dynamically
+          const searchStartX = Math.max(0, centerX - videoWidth * 0.4);
+          const searchEndX = Math.min(videoWidth, centerX + videoWidth * 0.4);
+          const searchStartY = Math.max(0, centerY - videoHeight * 0.4);
+          const searchEndY = Math.min(videoHeight, centerY + videoHeight * 0.4);
+          
+          for (let y = searchStartY; y < searchEndY; y += 2) {
+            for (let x = searchStartX; x < searchEndX; x += 2) {
               const i = (Math.floor(y) * videoWidth + Math.floor(x)) * 4;
               const r = data[i];
               const g = data[i + 1];
@@ -715,18 +772,26 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
                 totalWeightedX += x * weight;
                 totalWeightedY += y * weight;
                 totalWeight += weight;
+                faceSkinPixelCount++;
               }
             }
           }
           
-          if (totalWeight > 0) {
+          if (totalWeight > 0 && faceSkinPixelCount > 100) { // Minimum pixel threshold
             actualFaceCenterX = totalWeightedX / totalWeight;
             actualFaceCenterY = totalWeightedY / totalWeight;
             
-            // Calculate face size as percentage of frame
+            // Calculate actual face size as percentage of frame with better accuracy
             const faceWidth = maxX - minX;
             const faceHeight = maxY - minY;
-            actualFaceSize = Math.sqrt(faceWidth * faceHeight) / Math.sqrt(videoWidth * videoHeight) * 100;
+            
+            // Use the larger dimension for more accurate size representation
+            const faceDimension = Math.max(faceWidth, faceHeight);
+            const frameDimension = Math.min(videoWidth, videoHeight);
+            actualFaceSize = (faceDimension / frameDimension) * 100;
+            
+            // Ensure realistic face size range (5% to 80% of frame)
+            actualFaceSize = Math.min(80, Math.max(5, actualFaceSize));
           }
         }
         
@@ -785,8 +850,12 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
           faceCount: hasFace ? 1 : 0
         });
         
+        // Use fallback center when face is not detected for better directional guidance
+        const guidanceCenterX = hasFace ? actualFaceCenterX : fallbackCenterX;
+        const guidanceCenterY = hasFace ? actualFaceCenterY : fallbackCenterY;
+        
         // Analyze face position and provide guidance
-        analyzeFacePosition(faceQuality, skinRatio, centerX, centerY, videoWidth, videoHeight);
+        analyzeFacePosition(faceQuality, skinRatio, guidanceCenterX, guidanceCenterY, videoWidth, videoHeight);
         
       } catch (error) {
         console.error('Face detection error:', error);
@@ -794,7 +863,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
     }); // Close requestAnimationFrame
   }, [calculatePositionQuality, calculateLightingQuality, calculateStraightnessQuality, calculateFaceQuality]);
   
-  // Face position analysis with English messages based on FaceQuality
+  // Face position analysis with enhanced directional guidance
   const analyzeFacePosition = useCallback((faceQuality: FaceQuality, faceSize: number, centerX: number, centerY: number, videoWidth: number, videoHeight: number) => {
     const now = Date.now();
     
@@ -802,9 +871,36 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
     if (now - lastDetectionTime < 300) return;
     setLastDetectionTime(now);
     
+    // Calculate position deviations for directional guidance
+    const frameCenterX = videoWidth / 2;
+    const frameCenterY = videoHeight / 2;
+    const horizontalDeviation = Math.abs(centerX - frameCenterX) / videoWidth;
+    const verticalDeviation = Math.abs(centerY - frameCenterY) / videoHeight;
+    
+    // Enhanced directional guidance function
+    const getDirectionalMessage = (centerX: number, centerY: number, threshold: number = 0.15) => {
+      const hDev = Math.abs(centerX - frameCenterX) / videoWidth;
+      const vDev = Math.abs(centerY - frameCenterY) / videoHeight;
+      
+      // Priority: horizontal movement first, then vertical
+      if (hDev > threshold) {
+        return centerX < frameCenterX ? 
+          "Please move to the right ➡️" : 
+          "Please move to the left ⬅️";
+      } else if (vDev > threshold) {
+        return centerY < frameCenterY ? 
+          "Please move down a bit ⬇️" : 
+          "Please move up a bit ⬆️";
+      }
+      return "Keep your face inside the circle";
+    };
+    
     if (!faceQuality.hasFace) {
+      // Always provide directional guidance when face is not detected
+      const directionMessage = getDirectionalMessage(centerX, centerY, 0.1);
+      
       setFaceGuidance({
-        message: "Keep your face inside the circle",
+        message: directionMessage,
         type: "error",
         canCapture: false
       });
@@ -831,8 +927,11 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
     }
 
     if (faceQuality.area === "outofboundary") {
+      // Always provide directional guidance when face is out of boundary
+      const directionMessage = getDirectionalMessage(centerX, centerY, 0.05);
+      
       setFaceGuidance({
-        message: "Keep your face inside the circle",
+        message: directionMessage,
         type: "error",
         canCapture: false
       });
@@ -1394,69 +1493,71 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
         strategy="afterInteractive"
       />
 
-      <div className="mb-4 p-3 bg-gray-100 rounded-lg">
-        <p className="text-sm text-gray-600">
+      <div className="mb-2 p-2 bg-gray-100 rounded-lg">
+        <p className="text-xs text-gray-600">
           📷 WebCam Camera Mode
         </p>
       </div>
 
       
-      {/* Enhanced Face Guidance Display */}
+      {/* Enhanced Face Guidance Display - Fixed Height */}
       {isCameraOpen && (
-        <div className={`mb-4 p-4 rounded-lg border-2 transition-all duration-500 transform ${
-          faceGuidance.type === 'success' ? 'bg-green-50 border-green-200 shadow-green-100 scale-105' :
-          faceGuidance.type === 'warning' ? 'bg-yellow-50 border-yellow-200 shadow-yellow-100' :
-          faceGuidance.type === 'error' ? 'bg-red-50 border-red-200 shadow-red-100 animate-pulse' :
-          'bg-blue-50 border-blue-200 shadow-blue-100'
-        } shadow-lg`}>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <div className={`w-4 h-4 rounded-full mr-3 transition-all duration-300 ${
+        <div className={`mb-2 h-16 p-3 rounded-lg border-2 transition-all duration-500 transform ${
+          faceGuidance.type === 'success' ? 'border-green-200 scale-105' :
+          faceGuidance.type === 'warning' ? 'border-yellow-200' :
+          faceGuidance.type === 'error' ? 'border-red-200 animate-pulse' :
+          'border-blue-200'
+        }`}>
+          <div className="h-full flex items-center justify-between">
+            <div className="flex items-center flex-1 min-w-0">
+              <div className={`w-4 h-4 rounded-full mr-3 flex-shrink-0 transition-all duration-300 ${
                 faceGuidance.type === 'success' ? 'bg-green-500 animate-pulse' :
                 faceGuidance.type === 'warning' ? 'bg-yellow-500' :
                 faceGuidance.type === 'error' ? 'bg-red-500 animate-bounce' :
                 'bg-blue-500'
               }`}></div>
-              <p className={`font-semibold text-sm ${
+              <div className={`font-semibold text-sm leading-tight flex items-center min-h-[2.5rem] ${
                 faceGuidance.type === 'success' ? 'text-green-800' :
                 faceGuidance.type === 'warning' ? 'text-yellow-800' :
                 faceGuidance.type === 'error' ? 'text-red-800' :
                 'text-blue-800'
               }`}>
                 {faceGuidance.message}
-              </p>
+              </div>
             </div>
             
             {/* Capture Status Indicator */}
-            <div className={`px-3 py-1 rounded-full text-xs font-medium ${
+            <div className={`px-3 py-1 rounded-full text-xs font-medium flex-shrink-0 ${
               faceGuidance.canCapture ? 
                 'bg-green-100 text-green-800 border border-green-200' : 
                 'bg-gray-100 text-gray-600 border border-gray-200'
             }`}>
-              {faceGuidance.canCapture ? 'Ready' : '⏳ Adjusting'}
+              {faceGuidance.canCapture ? '📸 Ready' : '⏳ Adjusting'}
             </div>
           </div>
           
           {/* Face Detection Metrics */}
-          {faceMetrics.faceCount > 0 && (
-            <div className="mt-3 flex items-center space-x-4 text-xs text-gray-600">
-              <div className="flex items-center">
-                <span className="w-2 h-2 bg-green-400 rounded-full mr-1"></span>
-                Face detected
-              </div>
-              <div className="flex items-center">
-                <span className="w-2 h-2 bg-blue-400 rounded-full mr-1"></span>
-                Position: {faceMetrics.isFrameCentered ? 'Centered' : 'Adjusting'}
-              </div>
-              <div className="flex items-center">
-                <span className="w-2 h-2 bg-purple-400 rounded-full mr-1"></span>
-                Quality: {Math.round(faceMetrics.faceSize)}%
-              </div>
+          <div className="mt-3 flex items-center space-x-4 text-xs text-gray-600">
+            <div className="flex items-center">
+              <span className={`w-2 h-2 rounded-full mr-1 ${
+                faceMetrics.faceCount > 0 ? 'bg-green-400' : 'bg-red-400'
+              }`}></span>
+              Face detected
             </div>
-          )}
+            <div className="flex items-center">
+              <span className={`w-2 h-2 rounded-full mr-1 ${
+                faceMetrics.faceCount > 0 ? 'bg-green-400' : 'bg-red-400'
+              }`}></span>
+              Position: {faceMetrics.isFrameCentered ? 'Centered' : 'Adjusting'}
+            </div>
+            <div className="flex items-center">
+              <span className="w-2 h-2 bg-purple-400 rounded-full mr-1"></span>
+              Quality: {Math.round(faceMetrics.faceSize)}%
+            </div>
+          </div>
           
           {/* Progress Bar for Face Positioning */}
-          <div className="mt-3">
+          <div className="mt-1">
             <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
               <span>Face Position Quality</span>
               <span>{Math.round(faceMetrics.positionQuality)}%</span>
@@ -1476,8 +1577,51 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
         </div>
       )}
 
+      {/* Quality Status Indicators - Fixed position between Progress Bar and camera view */}
+      {isCameraOpen && (
+        <div className="mb-6 h-16 flex justify-center items-center gap-1 px-2">
+          {/* Lighting Status */}
+          <div className={`w-24 h-14 flex flex-col items-center justify-center rounded text-xs font-medium transition-all duration-300 ${
+            faceMetrics.lightingQuality >= 70 ? 'bg-green-100 text-green-800 border border-green-200' :
+            faceMetrics.lightingQuality >= 40 ? 'bg-yellow-100 text-yellow-800 border border-yellow-200' :
+            'bg-red-100 text-red-800 border border-red-200'
+          }`}>
+            <div className="text-center leading-none">
+              <div>Lighting</div>
+              <div>{faceMetrics.lightingQuality >= 70 ? 'Good' : 'Not Good'}</div>
+            </div>
+          </div>
+          
+          {/* Look Straight Status */}
+          <div className={`w-24 h-14 flex flex-col items-center justify-center rounded text-xs font-medium transition-all duration-300 ${
+            faceMetrics.straightnessQuality >= 70 ? 'bg-green-100 text-green-800 border border-green-200' :
+            faceMetrics.straightnessQuality >= 40 ? 'bg-yellow-100 text-yellow-800 border border-yellow-200' :
+            'bg-red-100 text-red-800 border border-red-200'
+          }`}>
+            <div className="text-center leading-none">
+              <div>Look Straight</div>
+              <div>{faceMetrics.straightnessQuality >= 70 ? 'Good' : 'Not Good'}</div>
+            </div>
+          </div>
+          
+          {/* Face Position Status */}
+          <div className={`w-24 h-14 flex flex-col items-center justify-center rounded text-xs font-medium transition-all duration-300 ${
+            faceMetrics.positionQuality >= 60 ? 'bg-green-100 text-green-800 border border-green-200' :
+            faceMetrics.positionQuality >= 30 ? 'bg-yellow-100 text-yellow-800 border border-yellow-200' :
+            'bg-red-100 text-red-800 border border-red-200'
+          }`}>
+            <div className="text-center leading-none">
+              <div>Face Position</div>
+              <div>{faceMetrics.positionQuality >= 60 ? 'Good' : 'Not Good'}</div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      
+
       {cameraError && (
-        <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+        <div className="mb-2 p-3 bg-red-50 border border-red-200 rounded-lg">
           <div className="flex items-start">
             <svg className="w-5 h-5 text-red-400 mt-0.5 mr-3" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
@@ -1499,41 +1643,9 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
         </div>
       )}
 
-{/* 중앙의 Lighting Good/Not Good과 Look Straight Good/Not Good  , Face Position Good/Not Good 상태를 표시 */}
-{/* Quality Status Indicators */}
-{isCameraOpen && (
-        <div className="mb-4 flex justify-center gap-2">
-          {/* Lighting Status */}
-          <div className={`px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-300 ${
-            faceMetrics.lightingQuality >= 70 ? 'bg-green-100 text-green-800 border border-green-200' :
-            faceMetrics.lightingQuality >= 40 ? 'bg-yellow-100 text-yellow-800 border border-yellow-200' :
-            'bg-red-100 text-red-800 border border-red-200'
-          }`}>
-             {faceMetrics.lightingQuality >= 70 ? 'Lighting Good' : 'Lighting Not Good'}
-          </div>
-          
-          {/* Look Straight Status */}
-          <div className={`px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-300 ${
-            faceMetrics.straightnessQuality >= 70 ? 'bg-green-100 text-green-800 border border-green-200' :
-            faceMetrics.straightnessQuality >= 40 ? 'bg-yellow-100 text-yellow-800 border border-yellow-200' :
-            'bg-red-100 text-red-800 border border-red-200'
-          }`}>
-            {faceMetrics.straightnessQuality >= 70 ? 'Look Straight Good' : 'Look Straight Not Good'}
-          </div>
-          
-          {/* Face Position Status */}
-          <div className={`px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-300 ${
-            faceMetrics.positionQuality >= 70 ? 'bg-green-100 text-green-800 border border-green-200' :
-            faceMetrics.positionQuality >= 40 ? 'bg-yellow-100 text-yellow-800 border border-yellow-200' :
-            'bg-red-100 text-red-800 border border-red-200'
-          }`}>
-            {faceMetrics.positionQuality >= 70 ? 'Face Position Good' : 'Face Position Not Good'}
-          </div>
-        </div>
-      )}
 
       {capturedImage ? (
-        <div className="space-y-4">
+        <div className="space-y-4 mt-6">
           <div className="relative w-full h-96 border-2 border-gray-200 rounded-lg overflow-hidden">
             <Image
               src={capturedImage}
@@ -1558,7 +1670,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
           </div>
         </div>
       ) : (
-        <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+        <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center mt-6">
           {!isSDKLoaded ? (
             <div className="space-y-4">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
@@ -1598,7 +1710,8 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
           ) : (
             <div className="space-y-4">
               {/* Status Indicator - Outside of camera view */}
-              {isVideoReady && (
+              {/* don't remove below comment  */ }
+              {/* {isVideoReady && (
                 <div className="text-center">
                   <div className={`inline-block text-sm text-color-white font-medium px-3 py-1 rounded-lg ${
                     faceGuidance.canCapture 
@@ -1610,7 +1723,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
                     {faceMetrics.positionQuality >= 70 && faceMetrics.lightingQuality >= 70 && faceMetrics.straightnessQuality >= 70 ? '✓ Perfect Position' : 'Position Your Face'}
                   </div>
                 </div>
-              )}
+              )} */}
               
               <div className="relative bg-black rounded-lg overflow-hidden mx-auto max-w-md">
                 {!isVideoReady && (

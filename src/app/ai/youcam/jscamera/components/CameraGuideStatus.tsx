@@ -132,13 +132,13 @@ export default function CameraGuideStatus({
           
           {/* Face Position Status */}
           <div className={`w-24 h-12 flex flex-col items-center justify-center rounded text-xs font-medium transition-all duration-300 ${
-            faceMetrics.positionQuality >= 60 ? 'bg-green-100 text-green-800 border border-green-200' :
-            faceMetrics.positionQuality >= 30 ? 'bg-yellow-100 text-yellow-800 border border-yellow-200' :
+            faceMetrics.positionQuality >= 50 ? 'bg-green-100 text-green-800 border border-green-200' :
+            faceMetrics.positionQuality >= 25 ? 'bg-yellow-100 text-yellow-800 border border-yellow-200' :
             'bg-red-100 text-red-800 border border-red-200'
           }`}>
             <div className="text-center leading-none">
               <div>Face Position</div>
-              <div>{faceMetrics.positionQuality >= 60 ? 'Good' : 'Not Good'}</div>
+              <div>{faceMetrics.positionQuality >= 50 ? 'Good' : 'Not Good'}</div>
             </div>
           </div>
         </div>

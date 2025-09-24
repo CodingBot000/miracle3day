@@ -89,21 +89,44 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
     return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
   }, []);
 
-  // Calculate face position quality score (0-100)
-  const calculatePositionQuality = useCallback((hasFace: boolean, faceSize: number, centerX: number, centerY: number, videoWidth: number, videoHeight: number) => {
+  // Calculate face position quality score (0-100) with corrected distance scoring
+  const calculatePositionQuality = useCallback((hasFace: boolean, faceSize: number, centerX: number, centerY: number, videoWidth: number, videoHeight: number, straightnessQuality: number = 100) => {
     if (!hasFace) return 0;
     
-    // Calculate size score (0-40 points) - adjusted for new face size calculation
+    console.log('🎯 calculatePositionQuality called with:', {
+      faceSize: faceSize.toFixed(1),
+      straightnessQuality: straightnessQuality.toFixed(1),
+      centerPos: { x: centerX.toFixed(1), y: centerY.toFixed(1) }
+    });
+    
+    // FIXED SIZE SCORING: Reward larger faces (closer to camera) with higher scores
     let sizeScore = 0;
-    if (faceSize >= 20 && faceSize <= 50) {
-      sizeScore = 40; // Perfect size (expanded range)
-    } else if (faceSize >= 15 && faceSize <= 60) {
-      sizeScore = 30; // Good size
-    } else if (faceSize >= 10 && faceSize <= 70) {
-      sizeScore = 20; // Acceptable size
-    } else if (faceSize >= 5 && faceSize <= 80) {
-      sizeScore = 10; // Basic size
+    if (faceSize >= 60 && faceSize <= 90) {
+      sizeScore = 40; // Perfect size - face fills screen well (close to camera)
+    } else if (faceSize >= 40 && faceSize <= 95) {
+      sizeScore = 35; // Very good size - good distance
+    } else if (faceSize >= 25 && faceSize <= 100) {
+      sizeScore = 30; // Good size - acceptable distance
+    } else if (faceSize >= 15 && faceSize < 25) {
+      sizeScore = 20; // Acceptable but distant
+    } else if (faceSize >= 10 && faceSize < 15) {
+      sizeScore = 10; // Too distant - low score
+    } else if (faceSize >= 5) {
+      sizeScore = 5; // Very distant - minimal score
+    } else {
+      sizeScore = 0; // Face too small/distant - no points
     }
+    
+    console.log('📏 Size scoring:', {
+      faceSize: faceSize.toFixed(1),
+      sizeScore,
+      reasoning: faceSize >= 60 && faceSize <= 90 ? 'Perfect size - close to camera' :
+                 faceSize >= 40 && faceSize <= 95 ? 'Very good size' :
+                 faceSize >= 25 && faceSize <= 100 ? 'Good size' :
+                 faceSize >= 15 && faceSize < 25 ? 'Acceptable but distant' :
+                 faceSize >= 10 && faceSize < 15 ? 'Too distant' :
+                 faceSize >= 5 ? 'Very distant' : 'Face too small/distant'
+    });
     
     // Calculate horizontal position score (0-30 points)
     const horizontalDeviation = Math.abs(centerX - videoWidth / 2) / videoWidth;
@@ -131,8 +154,33 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
       verticalScore = 5; // Acceptable
     }
     
-    const totalScore = sizeScore + horizontalScore + verticalScore;
-    return Math.min(100, Math.max(0, totalScore));
+    // ADJUSTED: Less harsh straightness penalty to allow higher position scores
+    let straightnessMultiplier = 1.0;
+    if (straightnessQuality < 50) {
+      // Strong penalty only for very poor straightness
+      straightnessMultiplier = Math.max(0.4, straightnessQuality / 100);
+    } else if (straightnessQuality < 70) {
+      // Moderate penalty for moderate straightness issues
+      straightnessMultiplier = Math.max(0.6, straightnessQuality / 100);
+    } else {
+      // Minimal penalty for good straightness
+      straightnessMultiplier = Math.max(0.85, straightnessQuality / 100);
+    }
+    
+    const baseScore = sizeScore + horizontalScore + verticalScore;
+    const finalScore = baseScore * straightnessMultiplier;
+    
+    console.log('🔢 Position Quality Calculation:', {
+      sizeScore,
+      horizontalScore,
+      verticalScore,
+      baseScore,
+      straightnessQuality: straightnessQuality.toFixed(1),
+      straightnessMultiplier: straightnessMultiplier.toFixed(3),
+      finalScore: finalScore.toFixed(1)
+    });
+    
+    return Math.min(100, Math.max(0, finalScore));
   }, []);
 
   // Calculate lighting quality score (0-100)
@@ -673,12 +721,13 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
         const skinRatio = skinPixelCount / pixelCount;
         const edgeRatio = edgeCount / pixelCount;
         
-        // Improved face detection logic with proper thresholds
-        const hasFace = skinRatio > 0.15 && // More strict minimum skin pixels 
-                       brightnessVariance > 25 && // Better texture detection
-                       edgeRatio > 0.03 && // More strict edge requirement
-                       avgBrightness > 60 && avgBrightness < 220 && // Better lighting range
-                       skinPixelCount > 1000; // Minimum absolute skin pixel count
+        // MUCH STRICTER face detection logic to prevent false positives when face leaves screen
+        const hasFace = skinRatio > 0.25 && // Much stricter minimum skin pixels (was 0.20)
+                       brightnessVariance > 40 && // Better texture detection (was 35)
+                       edgeRatio > 0.08 && // Much stricter edge requirement (was 0.05)
+                       avgBrightness > 90 && avgBrightness < 190 && // Tighter lighting range
+                       skinPixelCount > 2000 && // Much higher minimum absolute skin pixel count (was 1500)
+                       skinRatio < 0.75; // Tighter upper bound to prevent false positives
         
         // Even if no face detected, try to find the brightest/most active region for guidance
         let fallbackCenterX = centerX;
@@ -727,14 +776,20 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
           }
         }
         
-        console.log('Face detection criteria:', {
-          skinRatioCheck: skinRatio > 0.15,
-          skinPixelCountCheck: skinPixelCount > 1000,
-          brightnessVarianceCheck: brightnessVariance > 25,
-          edgeRatioCheck: edgeRatio > 0.03,
-          brightnessCheck: avgBrightness > 60 && avgBrightness < 220,
-          finalHasFace: hasFace,
-          fallbackCenter: { x: fallbackCenterX, y: fallbackCenterY }
+        console.log('🔍 REAL-TIME Face detection criteria (STRICTER):', {
+          skinRatio: skinRatio.toFixed(3),
+          skinRatioPass: skinRatio > 0.25,
+          skinPixelCount,
+          skinPixelPass: skinPixelCount > 2000,
+          brightnessVariance: brightnessVariance.toFixed(1),
+          brightnessVarPass: brightnessVariance > 40,
+          edgeRatio: edgeRatio.toFixed(3),
+          edgeRatioPass: edgeRatio > 0.08,
+          avgBrightness: avgBrightness.toFixed(1),
+          brightnessPass: avgBrightness > 90 && avgBrightness < 190,
+          skinRatioNotOver: skinRatio < 0.75,
+          FINAL_FACE_DETECTED: hasFace,
+          timestamp: new Date().toLocaleTimeString()
         });
         
         // Calculate proper face bounds for position quality with dynamic search area
@@ -792,15 +847,40 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
             const frameDimension = Math.min(videoWidth, videoHeight);
             actualFaceSize = (faceDimension / frameDimension) * 100;
             
+            console.log('🔵 FACE SIZE CALCULATION:', {
+              faceWidth: faceWidth.toFixed(1),
+              faceHeight: faceHeight.toFixed(1),
+              faceDimension: faceDimension.toFixed(1),
+              frameDimension: frameDimension.toFixed(1),
+              calculatedSize: actualFaceSize.toFixed(1),
+              faceBounds: { minX, maxX, minY, maxY },
+              videoSize: { videoWidth, videoHeight }
+            });
+            
             // Ensure realistic face size range (5% to 80% of frame)
             actualFaceSize = Math.min(80, Math.max(5, actualFaceSize));
           }
         }
         
         // Calculate quality scores with proper parameters
-        const positionQuality = calculatePositionQuality(hasFace, actualFaceSize, actualFaceCenterX, actualFaceCenterY, videoWidth, videoHeight);
-        const lightingQuality = calculateLightingQuality(avgBrightness, brightnessVariance);
-        const straightnessQuality = calculateStraightnessQuality(edgeRatio, actualFaceCenterX, actualFaceCenterY, videoWidth, videoHeight, imageData);
+        let lightingQuality = 0;
+        let straightnessQuality = 0;
+        let positionQuality = 0;
+        
+        if (hasFace) {
+          lightingQuality = calculateLightingQuality(avgBrightness, brightnessVariance);
+          straightnessQuality = calculateStraightnessQuality(edgeRatio, actualFaceCenterX, actualFaceCenterY, videoWidth, videoHeight, imageData);
+          positionQuality = calculatePositionQuality(hasFace, actualFaceSize, actualFaceCenterX, actualFaceCenterY, videoWidth, videoHeight, straightnessQuality);
+        }
+        
+        console.log('📊 QUALITY SCORES:', {
+          hasFace,
+          lightingQuality: lightingQuality.toFixed(1),
+          straightnessQuality: straightnessQuality.toFixed(1),
+          positionQuality: positionQuality.toFixed(1),
+          actualFaceSize: actualFaceSize.toFixed(1),
+          centerPos: { x: actualFaceCenterX.toFixed(1), y: actualFaceCenterY.toFixed(1) }
+        });
         
         // Calculate FaceQuality based on YouCam API spec
         const faceQuality = calculateFaceQuality(
@@ -839,7 +919,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
           faceSize: actualFaceSize,
           faceCenterX: actualFaceCenterX,
           faceCenterY: actualFaceCenterY,
-          isFrameCentered: hasFace && actualFaceSize > 15 && actualFaceSize < 35,
+          isFrameCentered: hasFace && actualFaceSize > 25 && actualFaceSize < 95,
           positionQuality,
           lightingQuality,
           straightnessQuality
@@ -869,8 +949,8 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
   const analyzeFacePosition = useCallback((faceQuality: FaceQuality, faceSize: number, centerX: number, centerY: number, videoWidth: number, videoHeight: number) => {
     const now = Date.now();
     
-    // Throttle updates to avoid too frequent changes
-    if (now - lastDetectionTime < 300) return;
+    // Reduced throttling for better real-time tracking
+    if (now - lastDetectionTime < 100) return;
     setLastDetectionTime(now);
     
     // Calculate position deviations for directional guidance
@@ -1030,7 +1110,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
     const interval = setInterval(() => {
       console.log('📸 Interval tick - calling detectFace');
       detectFace();
-    }, 166); // ~60fps (1000ms/6 ≈ 166ms) for smooth video processing
+    }, 100); // Faster detection (100ms) for better real-time tracking
     
     setFaceDetectionInterval(interval);
     console.log('✅ Face detection started with 60fps timing, interval ID:', interval);

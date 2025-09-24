@@ -156,41 +156,129 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
     return Math.min(100, Math.max(0, score));
   }, []);
 
-  // Calculate face straightness quality (0-100)
-  const calculateStraightnessQuality = useCallback((edgeRatio: number, faceCenterX: number, faceCenterY: number, videoWidth: number, videoHeight: number) => {
+  // Calculate face straightness quality (0-100) - improved with symmetry analysis
+  const calculateStraightnessQuality = useCallback((edgeRatio: number, faceCenterX: number, faceCenterY: number, videoWidth: number, videoHeight: number, imageData?: ImageData) => {
     let score = 0;
     
-    // Edge density indicates facial features visibility (0-40 points)
+    // Edge density indicates facial features visibility (0-30 points)
     if (edgeRatio >= 0.05 && edgeRatio <= 0.15) {
-      score += 40; // Good feature visibility
+      score += 30; // Good feature visibility
     } else if (edgeRatio >= 0.03 && edgeRatio <= 0.2) {
-      score += 30; // Acceptable visibility
+      score += 20; // Acceptable visibility
     } else if (edgeRatio >= 0.01) {
-      score += 15; // Some features visible
+      score += 10; // Some features visible
     }
     
-    // Face center alignment indicates straightness (0-60 points)
-    const centerX = videoWidth / 2;
-    const centerY = videoHeight / 2;
-    
-    // Horizontal alignment (face looking straight, not tilted left/right)
-    const horizontalDeviation = Math.abs(faceCenterX - centerX) / videoWidth;
-    if (horizontalDeviation < 0.05) {
-      score += 35; // Perfect horizontal alignment
-    } else if (horizontalDeviation < 0.1) {
-      score += 25; // Good alignment
-    } else if (horizontalDeviation < 0.15) {
-      score += 15; // Acceptable alignment
-    }
-    
-    // Vertical alignment (face not tilted up/down)
-    const verticalDeviation = Math.abs(faceCenterY - centerY) / videoHeight;
-    if (verticalDeviation < 0.08) {
-      score += 25; // Perfect vertical alignment
-    } else if (verticalDeviation < 0.15) {
-      score += 15; // Good alignment
-    } else if (verticalDeviation < 0.2) {
-      score += 10; // Acceptable alignment
+    // Face symmetry analysis for actual straightness detection (0-70 points)
+    if (imageData) {
+      const data = imageData.data;
+      const centerX = videoWidth / 2;
+      const centerY = videoHeight / 2;
+      const faceRegionSize = Math.min(videoWidth, videoHeight) * 0.3;
+      
+      const regionStartX = Math.max(0, centerX - faceRegionSize/2);
+      const regionEndX = Math.min(videoWidth, centerX + faceRegionSize/2);
+      const regionStartY = Math.max(0, centerY - faceRegionSize/2);
+      const regionEndY = Math.min(videoHeight, centerY + faceRegionSize/2);
+      
+      // Analyze left and right side symmetry
+      let leftSideBrightness = 0;
+      let rightSideBrightness = 0;
+      let leftPixelCount = 0;
+      let rightPixelCount = 0;
+      
+      // Analyze upper and lower face for tilt detection
+      let upperBrightness = 0;
+      let lowerBrightness = 0;
+      let upperPixelCount = 0;
+      let lowerPixelCount = 0;
+      
+      for (let y = regionStartY; y < regionEndY; y += 2) {
+        for (let x = regionStartX; x < regionEndX; x += 2) {
+          const i = (Math.floor(y) * videoWidth + Math.floor(x)) * 4;
+          const r = data[i];
+          const g = data[i + 1];
+          const b = data[i + 2];
+          
+          // Enhanced skin tone detection for face analysis
+          if (r > 60 && g > 40 && b > 20 && r > b && 
+              Math.abs(r - g) < 50 && r < 220 && g < 200 && b < 180) {
+            
+            const brightness = (r + g + b) / 3;
+            
+            // Left vs Right analysis
+            if (x < centerX - 10) { // Left side (with margin)
+              leftSideBrightness += brightness;
+              leftPixelCount++;
+            } else if (x > centerX + 10) { // Right side (with margin)
+              rightSideBrightness += brightness;
+              rightPixelCount++;
+            }
+            
+            // Upper vs Lower analysis
+            if (y < centerY - 5) { // Upper face (with margin)
+              upperBrightness += brightness;
+              upperPixelCount++;
+            } else if (y > centerY + 5) { // Lower face (with margin)
+              lowerBrightness += brightness;
+              lowerPixelCount++;
+            }
+          }
+        }
+      }
+      
+      // Calculate symmetry scores
+      if (leftPixelCount > 10 && rightPixelCount > 10) {
+        const leftAvg = leftSideBrightness / leftPixelCount;
+        const rightAvg = rightSideBrightness / rightPixelCount;
+        const horizontalSymmetry = 1 - Math.min(1, Math.abs(leftAvg - rightAvg) / Math.max(leftAvg, rightAvg));
+        
+        // Horizontal symmetry score (0-40 points)
+        if (horizontalSymmetry > 0.85) {
+          score += 40; // Very symmetric - looking straight
+        } else if (horizontalSymmetry > 0.75) {
+          score += 25; // Good symmetry
+        } else if (horizontalSymmetry > 0.6) {
+          score += 10; // Some symmetry
+        }
+        // If symmetry < 0.6, likely not looking straight - no points added
+      }
+      
+      // Vertical tilt analysis (0-30 points)
+      if (upperPixelCount > 10 && lowerPixelCount > 10) {
+        const upperAvg = upperBrightness / upperPixelCount;
+        const lowerAvg = lowerBrightness / lowerPixelCount;
+        const verticalBalance = 1 - Math.min(1, Math.abs(upperAvg - lowerAvg) / Math.max(upperAvg, lowerAvg));
+        
+        if (verticalBalance > 0.8) {
+          score += 30; // Good vertical balance
+        } else if (verticalBalance > 0.7) {
+          score += 20; // Acceptable balance
+        } else if (verticalBalance > 0.5) {
+          score += 10; // Some balance
+        }
+      }
+      
+    } else {
+      // Fallback to position-based analysis if no image data (0-40 points)
+      const centerX = videoWidth / 2;
+      const centerY = videoHeight / 2;
+      
+      const horizontalDeviation = Math.abs(faceCenterX - centerX) / videoWidth;
+      if (horizontalDeviation < 0.05) {
+        score += 25;
+      } else if (horizontalDeviation < 0.1) {
+        score += 15;
+      } else if (horizontalDeviation < 0.15) {
+        score += 5;
+      }
+      
+      const verticalDeviation = Math.abs(faceCenterY - centerY) / videoHeight;
+      if (verticalDeviation < 0.08) {
+        score += 15;
+      } else if (verticalDeviation < 0.15) {
+        score += 10;
+      }
     }
     
     return Math.min(100, Math.max(0, score));
@@ -366,7 +454,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
           console.log('🎥 Video ready but no video ref');
         }
         
-        console.log('✨ Setting isVideoReady to true');
+        console.log('Setting isVideoReady to true');
         setIsVideoReady(true);
         setFaceGuidance({
           message: "Camera is ready! Please position your face in the center",
@@ -645,7 +733,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
         // Calculate quality scores with proper parameters
         const positionQuality = calculatePositionQuality(hasFace, actualFaceSize, actualFaceCenterX, actualFaceCenterY, videoWidth, videoHeight);
         const lightingQuality = calculateLightingQuality(avgBrightness, brightnessVariance);
-        const straightnessQuality = calculateStraightnessQuality(edgeRatio, actualFaceCenterX, actualFaceCenterY, videoWidth, videoHeight);
+        const straightnessQuality = calculateStraightnessQuality(edgeRatio, actualFaceCenterX, actualFaceCenterY, videoWidth, videoHeight, imageData);
         
         // Calculate FaceQuality based on YouCam API spec
         const faceQuality = calculateFaceQuality(
@@ -811,7 +899,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
         faceQuality.faceangle === "good" && 
         (faceQuality.lighting === "good" || faceQuality.lighting === "ok")) {
       setFaceGuidance({
-        message: "Perfect! You can take the photo now 📸✨",
+        message: "Perfect! You can take the photo now 📸",
         type: "success",
         canCapture: true
       });
@@ -1059,7 +1147,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
     // Perfect positioning
     if (faceArea >= 0.12 && faceArea <= 0.4 && horizontalDev < 0.08 && verticalDev < 0.08) {
       setFaceGuidance({
-        message: "Perfect! Ready to capture 📸✨",
+        message: "Perfect! Ready to capture",
         type: "success",
         canCapture: true
       });
@@ -1329,7 +1417,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
                 faceGuidance.type === 'error' ? 'bg-red-500 animate-bounce' :
                 'bg-blue-500'
               }`}></div>
-              <p className={`font-semibold text-lg ${
+              <p className={`font-semibold text-sm ${
                 faceGuidance.type === 'success' ? 'text-green-800' :
                 faceGuidance.type === 'warning' ? 'text-yellow-800' :
                 faceGuidance.type === 'error' ? 'text-red-800' :
@@ -1345,7 +1433,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
                 'bg-green-100 text-green-800 border border-green-200' : 
                 'bg-gray-100 text-gray-600 border border-gray-200'
             }`}>
-              {faceGuidance.canCapture ? '📸 Ready' : '⏳ Adjusting'}
+              {faceGuidance.canCapture ? 'Ready' : '⏳ Adjusting'}
             </div>
           </div>
           
@@ -1511,8 +1599,8 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
             <div className="space-y-4">
               {/* Status Indicator - Outside of camera view */}
               {isVideoReady && (
-                <div className="text-center mb-2">
-                  <div className={`inline-block text-sm font-medium px-3 py-2 rounded-lg ${
+                <div className="text-center">
+                  <div className={`inline-block text-sm text-color-white font-medium px-3 py-1 rounded-lg ${
                     faceGuidance.canCapture 
                       ? 'bg-green-100 text-green-800 border border-green-200' 
                       : faceGuidance.type === 'error'
@@ -1548,19 +1636,20 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
                   <div 
                     className="absolute inset-0 pointer-events-none bg-gray-900 bg-opacity-50"
                     style={{
-                      maskImage: 'radial-gradient(ellipse 192px 256px at center, transparent 50%, black 52%)',
-                      WebkitMaskImage: 'radial-gradient(ellipse 192px 256px at center, transparent 50%, black 52%)'
+                      maskImage: 'radial-gradient(ellipse 154px 205px at center, transparent 50%, black 52%)',
+                      WebkitMaskImage: 'radial-gradient(ellipse 154px 205px at center, transparent 50%, black 52%)'
                     }}
                   >
                     {/* Center Guide Circle */}
                     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                      <div className={`w-48 h-64 border-2 rounded-full transition-all duration-300 ${
+                      <div className={`border-2 rounded-full transition-all duration-300 ${
                         faceGuidance.canCapture 
                           ? 'border-green-400 shadow-lg shadow-green-400/50' 
                           : faceGuidance.type === 'error'
                           ? 'border-red-400 shadow-lg shadow-red-400/50 animate-pulse'
                           : 'border-yellow-400 shadow-lg shadow-yellow-400/30'
-                      }`}>
+                      }`}
+                        style={{ width: '154px', height: '205px' }}>
                         {/* Corner markers */}
                         <div className={`absolute -top-1 -left-1 w-6 h-6 border-l-4 border-t-4 ${
                           faceGuidance.canCapture ? 'border-green-400' : 'border-yellow-400'

@@ -1242,38 +1242,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
         </p>
       </div>
 
-      {/* Quality Status Indicators */}
-      {isCameraOpen && (
-        <div className="mb-4 flex justify-center gap-2">
-          {/* Lighting Status */}
-          <div className={`px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-300 ${
-            faceMetrics.lightingQuality >= 70 ? 'bg-green-100 text-green-800 border border-green-200' :
-            faceMetrics.lightingQuality >= 40 ? 'bg-yellow-100 text-yellow-800 border border-yellow-200' :
-            'bg-red-100 text-red-800 border border-red-200'
-          }`}>
-            Lighting {faceMetrics.lightingQuality >= 70 ? 'Good' : 'Not Good'}
-          </div>
-          
-          {/* Look Straight Status */}
-          <div className={`px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-300 ${
-            faceMetrics.straightnessQuality >= 70 ? 'bg-green-100 text-green-800 border border-green-200' :
-            faceMetrics.straightnessQuality >= 40 ? 'bg-yellow-100 text-yellow-800 border border-yellow-200' :
-            'bg-red-100 text-red-800 border border-red-200'
-          }`}>
-            Look Straight {faceMetrics.straightnessQuality >= 70 ? 'Good' : 'Not Good'}
-          </div>
-          
-          {/* Face Position Status */}
-          <div className={`px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-300 ${
-            faceMetrics.positionQuality >= 70 ? 'bg-green-100 text-green-800 border border-green-200' :
-            faceMetrics.positionQuality >= 40 ? 'bg-yellow-100 text-yellow-800 border border-yellow-200' :
-            'bg-red-100 text-red-800 border border-red-200'
-          }`}>
-            Face Position {faceMetrics.positionQuality >= 70 ? 'Good' : 'Not Good'}
-          </div>
-        </div>
-      )}
-
+      
       {/* Enhanced Face Guidance Display */}
       {isCameraOpen && (
         <div className={`mb-4 p-4 rounded-lg border-2 transition-all duration-500 transform ${
@@ -1372,6 +1341,39 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
         </div>
       )}
 
+{/* 중앙의 Lighting Good/Not Good과 Look Straight Good/Not Good  , Face Position Good/Not Good 상태를 표시 */}
+{/* Quality Status Indicators */}
+{isCameraOpen && (
+        <div className="mb-4 flex justify-center gap-2">
+          {/* Lighting Status */}
+          <div className={`px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-300 ${
+            faceMetrics.lightingQuality >= 70 ? 'bg-green-100 text-green-800 border border-green-200' :
+            faceMetrics.lightingQuality >= 40 ? 'bg-yellow-100 text-yellow-800 border border-yellow-200' :
+            'bg-red-100 text-red-800 border border-red-200'
+          }`}>
+             {faceMetrics.lightingQuality >= 70 ? 'Lighting Good' : 'Lighting Not Good'}
+          </div>
+          
+          {/* Look Straight Status */}
+          <div className={`px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-300 ${
+            faceMetrics.straightnessQuality >= 70 ? 'bg-green-100 text-green-800 border border-green-200' :
+            faceMetrics.straightnessQuality >= 40 ? 'bg-yellow-100 text-yellow-800 border border-yellow-200' :
+            'bg-red-100 text-red-800 border border-red-200'
+          }`}>
+            {faceMetrics.straightnessQuality >= 70 ? 'Look Straight Good' : 'Look Straight Not Good'}
+          </div>
+          
+          {/* Face Position Status */}
+          <div className={`px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-300 ${
+            faceMetrics.positionQuality >= 70 ? 'bg-green-100 text-green-800 border border-green-200' :
+            faceMetrics.positionQuality >= 40 ? 'bg-yellow-100 text-yellow-800 border border-yellow-200' :
+            'bg-red-100 text-red-800 border border-red-200'
+          }`}>
+            {faceMetrics.positionQuality >= 70 ? 'Face Position Good' : 'Face Position Not Good'}
+          </div>
+        </div>
+      )}
+
       {capturedImage ? (
         <div className="space-y-4">
           <div className="relative w-full h-96 border-2 border-gray-200 rounded-lg overflow-hidden">
@@ -1447,7 +1449,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
                       ? 'bg-red-100 text-red-800 border border-red-200'
                       : 'bg-yellow-100 text-yellow-800 border border-yellow-200'
                   }`}>
-                    {faceMetrics.positionQuality >= 70 ? '✓ Perfect Position' : 'Position Your Face'}
+                    {faceMetrics.positionQuality >= 70 && faceMetrics.lightingQuality >= 70 && faceMetrics.straightnessQuality >= 70 ? '✓ Perfect Position' : 'Position Your Face'}
                   </div>
                 </div>
               )}

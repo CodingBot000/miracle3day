@@ -157,20 +157,41 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
   }, []);
 
   // Calculate face straightness quality (0-100)
-  const calculateStraightnessQuality = useCallback((edgeRatio: number, symmetryScore: number = 50) => {
+  const calculateStraightnessQuality = useCallback((edgeRatio: number, faceCenterX: number, faceCenterY: number, videoWidth: number, videoHeight: number) => {
     let score = 0;
     
-    // Edge density indicates facial features visibility
+    // Edge density indicates facial features visibility (0-40 points)
     if (edgeRatio >= 0.05 && edgeRatio <= 0.15) {
-      score += 50; // Good feature visibility
+      score += 40; // Good feature visibility
     } else if (edgeRatio >= 0.03 && edgeRatio <= 0.2) {
       score += 30; // Acceptable visibility
     } else if (edgeRatio >= 0.01) {
-      score += 10; // Some features visible
+      score += 15; // Some features visible
     }
     
-    // Symmetry score (simplified)
-    score += Math.min(50, symmetryScore);
+    // Face center alignment indicates straightness (0-60 points)
+    const centerX = videoWidth / 2;
+    const centerY = videoHeight / 2;
+    
+    // Horizontal alignment (face looking straight, not tilted left/right)
+    const horizontalDeviation = Math.abs(faceCenterX - centerX) / videoWidth;
+    if (horizontalDeviation < 0.05) {
+      score += 35; // Perfect horizontal alignment
+    } else if (horizontalDeviation < 0.1) {
+      score += 25; // Good alignment
+    } else if (horizontalDeviation < 0.15) {
+      score += 15; // Acceptable alignment
+    }
+    
+    // Vertical alignment (face not tilted up/down)
+    const verticalDeviation = Math.abs(faceCenterY - centerY) / videoHeight;
+    if (verticalDeviation < 0.08) {
+      score += 25; // Perfect vertical alignment
+    } else if (verticalDeviation < 0.15) {
+      score += 15; // Good alignment
+    } else if (verticalDeviation < 0.2) {
+      score += 10; // Acceptable alignment
+    }
     
     return Math.min(100, Math.max(0, score));
   }, []);
@@ -560,31 +581,78 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
         const skinRatio = skinPixelCount / pixelCount;
         const edgeRatio = edgeCount / pixelCount;
         
-        // Face detection based on multiple factors (more lenient for debugging)
-        const hasFace = skinRatio > 0.05 && // Minimum skin pixels (reduced)
-                       brightnessVariance > 10 && // Sufficient texture (reduced)
-                       edgeRatio > 0.01 && // Sufficient edges (reduced)
-                       avgBrightness > 20 && avgBrightness < 250; // Reasonable lighting (expanded)
+        // Improved face detection logic with proper thresholds
+        const hasFace = skinRatio > 0.15 && // More strict minimum skin pixels 
+                       brightnessVariance > 25 && // Better texture detection
+                       edgeRatio > 0.03 && // More strict edge requirement
+                       avgBrightness > 60 && avgBrightness < 220 && // Better lighting range
+                       skinPixelCount > 1000; // Minimum absolute skin pixel count
         
         console.log('Face detection criteria:', {
-          skinRatioCheck: skinRatio > 0.05,
-          brightnessVarianceCheck: brightnessVariance > 10,
-          edgeRatioCheck: edgeRatio > 0.01,
-          brightnessCheck: avgBrightness > 20 && avgBrightness < 250,
+          skinRatioCheck: skinRatio > 0.15,
+          skinPixelCountCheck: skinPixelCount > 1000,
+          brightnessVarianceCheck: brightnessVariance > 25,
+          edgeRatioCheck: edgeRatio > 0.03,
+          brightnessCheck: avgBrightness > 60 && avgBrightness < 220,
           finalHasFace: hasFace
         });
         
-        // Calculate quality scores
-        const positionQuality = calculatePositionQuality(hasFace, skinRatio * 100, centerX, centerY, videoWidth, videoHeight);
+        // Calculate proper face bounds for position quality
+        let actualFaceSize = 0;
+        let actualFaceCenterX = centerX;
+        let actualFaceCenterY = centerY;
+        
+        if (hasFace && skinPixelCount > 0) {
+          // Find actual face bounds by analyzing skin pixel distribution
+          let minX = videoWidth, maxX = 0, minY = videoHeight, maxY = 0;
+          let totalWeightedX = 0, totalWeightedY = 0, totalWeight = 0;
+          
+          for (let y = regionStartY; y < regionEndY; y += 2) {
+            for (let x = regionStartX; x < regionEndX; x += 2) {
+              const i = (Math.floor(y) * videoWidth + Math.floor(x)) * 4;
+              const r = data[i];
+              const g = data[i + 1];
+              const b = data[i + 2];
+              
+              // Enhanced skin tone detection
+              if (r > 60 && g > 40 && b > 20 && r > b && 
+                  Math.abs(r - g) < 50 && r < 220 && g < 200 && b < 180) {
+                minX = Math.min(minX, x);
+                maxX = Math.max(maxX, x);
+                minY = Math.min(minY, y);
+                maxY = Math.max(maxY, y);
+                
+                // Weight by brightness for better center calculation
+                const weight = (r + g + b) / 3;
+                totalWeightedX += x * weight;
+                totalWeightedY += y * weight;
+                totalWeight += weight;
+              }
+            }
+          }
+          
+          if (totalWeight > 0) {
+            actualFaceCenterX = totalWeightedX / totalWeight;
+            actualFaceCenterY = totalWeightedY / totalWeight;
+            
+            // Calculate face size as percentage of frame
+            const faceWidth = maxX - minX;
+            const faceHeight = maxY - minY;
+            actualFaceSize = Math.sqrt(faceWidth * faceHeight) / Math.sqrt(videoWidth * videoHeight) * 100;
+          }
+        }
+        
+        // Calculate quality scores with proper parameters
+        const positionQuality = calculatePositionQuality(hasFace, actualFaceSize, actualFaceCenterX, actualFaceCenterY, videoWidth, videoHeight);
         const lightingQuality = calculateLightingQuality(avgBrightness, brightnessVariance);
-        const straightnessQuality = calculateStraightnessQuality(edgeRatio);
+        const straightnessQuality = calculateStraightnessQuality(edgeRatio, actualFaceCenterX, actualFaceCenterY, videoWidth, videoHeight);
         
         // Calculate FaceQuality based on YouCam API spec
         const faceQuality = calculateFaceQuality(
           hasFace,
-          skinRatio * 100,
-          centerX,
-          centerY,
+          actualFaceSize,
+          actualFaceCenterX,
+          actualFaceCenterY,
           videoWidth,
           videoHeight,
           avgBrightness,
@@ -602,19 +670,21 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
           brightnessVariance: brightnessVariance.toFixed(1),
           edgeRatio: edgeRatio.toFixed(3),
           edgeCount,
+          actualFaceSize: actualFaceSize.toFixed(1),
+          actualFaceCenterX: actualFaceCenterX.toFixed(1),
+          actualFaceCenterY: actualFaceCenterY.toFixed(1),
           positionQuality: positionQuality.toFixed(1),
           lightingQuality: lightingQuality.toFixed(1),
-          straightnessQuality: straightnessQuality.toFixed(1),
-          faceSize: (skinRatio * 100).toFixed(1)
+          straightnessQuality: straightnessQuality.toFixed(1)
         });
         
         // Update face metrics with all quality scores
         setFaceMetrics({
           faceCount: hasFace ? 1 : 0,
-          faceSize: skinRatio * 100,
-          faceCenterX: centerX,
-          faceCenterY: centerY,
-          isFrameCentered: hasFace && skinRatio > 0.2,
+          faceSize: actualFaceSize,
+          faceCenterX: actualFaceCenterX,
+          faceCenterY: actualFaceCenterY,
+          isFrameCentered: hasFace && actualFaceSize > 15 && actualFaceSize < 35,
           positionQuality,
           lightingQuality,
           straightnessQuality

@@ -1,0 +1,470 @@
+{
+  "category_key": "Body_Contouring",
+  "ko": "바디 컨투어링",
+  "en": "Body Contouring",
+  "concern_copy": {
+    "ko": "여름을 위한 매끈한 바디라인, 지금부터 준비하고 싶어",
+    "en": "I want a smooth body line for summer—starting now"
+  },
+  "areas": [
+    {
+      "key": "arms",
+      "ko": "팔뚝",
+      "en": "Arms"
+    },
+    {
+      "key": "abdomen",
+      "ko": "복부",
+      "en": "Abdomen"
+    },
+    {
+      "key": "thighs",
+      "ko": "허벅지",
+      "en": "Thighs"
+    },
+    {
+      "key": "calves",
+      "ko": "종아리",
+      "en": "Calves"
+    },
+    {
+      "key": "hips",
+      "ko": "힙",
+      "en": "Hips"
+    }
+  ],
+  "treatments": [
+    {
+      "id": "contour_injection_steroid_free",
+      "name": {
+        "ko": "윤곽주사 (무(無)스테로이드)",
+        "en": "Contour Injection (Steroid-free)"
+      },
+      "summary": {
+        "ko": "부기·국소 지방 슬림",
+        "en": "Debulks puffiness/local fat"
+      },
+      "tags": [
+        {
+          "ko": "국소감량",
+          "en": "Localized slimming"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "1–2주 점진",
+            "en": "Gradual 1–2 weeks"
+          },
+          "onset_weeks_min": 1,
+          "onset_weeks_max": 2,
+          "duration_months_min": 3,
+          "duration_months_max": 6,
+          "ko": "시리즈로 누적 감량 효과",
+          "en": "Cumulative reduction with series"
+        },
+        "downtime": {
+          "ko": "붓기/압통 1–5일",
+          "en": "Swelling/tenderness 1–5 days"
+        },
+        "pain": {
+          "level": "medium",
+          "pain_score_0_10": 5
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 150000,
+          "note_ko": "앰플·부위별",
+          "note_en": "By ampoule/area"
+        },
+        "recommended": {
+          "sessions_min": 2,
+          "sessions_max": 6,
+          "interval_weeks": 2,
+          "maintenance_note": {
+            "ko": "필요 시 보강",
+            "en": "Top-up as needed"
+          }
+        }
+      }
+    },
+    {
+      "id": "cg_injection",
+      "name": {
+        "ko": "CG 주사",
+        "en": "CG Injection"
+      },
+      "summary": {
+        "ko": "부종·국소지방 개선",
+        "en": "Edema/local fat improvement"
+      },
+      "tags": [
+        {
+          "ko": "바디주사",
+          "en": "Body injection"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "1–2주",
+            "en": "1–2 weeks"
+          },
+          "onset_weeks_min": 1,
+          "onset_weeks_max": 2,
+          "duration_months_min": 2,
+          "duration_months_max": 4,
+          "ko": "시리즈 시 효과 증가",
+          "en": "Series enhances effect"
+        },
+        "downtime": {
+          "ko": "국소 통증/붓기 1–5일",
+          "en": "Local soreness/swelling 1–5 days"
+        },
+        "pain": {
+          "level": "low_medium",
+          "pain_score_0_10": 4
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 120000,
+          "note_ko": "용량·부위",
+          "note_en": "By dose/area"
+        },
+        "recommended": {
+          "sessions_min": 3,
+          "sessions_max": 6,
+          "interval_weeks": 1,
+          "maintenance_note": {
+            "ko": "월 1–2회 유지",
+            "en": "Maintain 1–2×/month"
+          }
+        }
+      }
+    },
+    {
+      "id": "gpc_injection",
+      "name": {
+        "ko": "GPC 주사",
+        "en": "GPC Injection"
+      },
+      "summary": {
+        "ko": "부종·국소지방 개선",
+        "en": "Edema/local fat improvement"
+      },
+      "tags": [
+        {
+          "ko": "바디주사",
+          "en": "Body injection"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "1–2주",
+            "en": "1–2 weeks"
+          },
+          "onset_weeks_min": 1,
+          "onset_weeks_max": 2,
+          "duration_months_min": 3,
+          "duration_months_max": 6,
+          "ko": "시리즈 시 효과 증가",
+          "en": "Series enhances effect"
+        },
+        "downtime": {
+          "ko": "국소 통증/붓기 1–5일",
+          "en": "Local soreness/swelling 1–5 days"
+        },
+        "pain": {
+          "level": "medium",
+          "pain_score_0_10": 5
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 150000,
+          "note_ko": "용량·부위",
+          "note_en": "By dose/area"
+        },
+        "recommended": {
+          "sessions_min": 3,
+          "sessions_max": 6,
+          "interval_weeks": 2,
+          "maintenance_note": {
+            "ko": "월 1–2회 유지",
+            "en": "Maintain 1–2×/month"
+          }
+        }
+      }
+    },
+    {
+      "id": "deoxycholic_acid",
+      "name": {
+        "ko": "탈산제계 지방용해(예: 턱)",
+        "en": "Deoxycholic-acid lipolysis (e.g., submental)"
+      },
+      "summary": {
+        "ko": "지방세포 용해로 볼륨 감소",
+        "en": "Adipocytolysis for volume reduction"
+      },
+      "tags": [
+        {
+          "ko": "지방용해",
+          "en": "Adipocytolysis"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "4–8주",
+            "en": "4–8 weeks"
+          },
+          "onset_weeks_min": 4,
+          "onset_weeks_max": 8,
+          "duration_months_min": 12,
+          "duration_months_max": 24,
+          "ko": "세션에 따라 영구적 감소",
+          "en": "Permanent cell loss per series"
+        },
+        "downtime": {
+          "ko": "압통/붓기 3–7일",
+          "en": "Tenderness/swelling 3–7 days"
+        },
+        "pain": {
+          "level": "medium_high",
+          "pain_score_0_10": 6
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 250000,
+          "note_ko": "앰플·부위",
+          "note_en": "By vial/area"
+        },
+        "recommended": {
+          "sessions_min": 2,
+          "sessions_max": 4,
+          "interval_weeks": 4,
+          "maintenance_note": {
+            "ko": "목표 달성 후 필요 시 보강",
+            "en": "Top-up only if needed"
+          }
+        }
+      }
+    },
+    {
+      "id": "ulfit_body",
+      "name": {
+        "ko": "울핏 바디 리프팅",
+        "en": "Ulfit Body Lifting"
+      },
+      "summary": {
+        "ko": "바디 타이트닝/지방감소",
+        "en": "Body tightening/fat reduction"
+      },
+      "tags": [
+        {
+          "ko": "바디",
+          "en": "Body"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "4–8주",
+            "en": "Gradual"
+          },
+          "onset_weeks_min": 4,
+          "onset_weeks_max": 8,
+          "duration_months_min": 6,
+          "duration_months_max": 9,
+          "ko": "윤곽·탄력/지방 개선",
+          "en": "Contour/firmness or fat loss"
+        },
+        "downtime": {
+          "ko": "경미",
+          "en": "Minimal"
+        },
+        "pain": {
+          "level": "medium",
+          "pain_score_0_10": 5
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 600000,
+          "note_ko": "프로토콜/부위별",
+          "note_en": "By protocol/area"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 3,
+          "interval_weeks": 6,
+          "maintenance_note": {
+            "ko": "6–9개월 간격",
+            "en": "Every 6–9 months"
+          }
+        }
+      }
+    },
+    {
+      "id": "inmode_body",
+      "name": {
+        "ko": "인모드 바디",
+        "en": "InMode Body"
+      },
+      "summary": {
+        "ko": "바디 타이트닝/지방감소",
+        "en": "Body tightening/fat reduction"
+      },
+      "tags": [
+        {
+          "ko": "바디",
+          "en": "Body"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "즉시",
+            "en": "Immediate"
+          },
+          "onset_weeks_min": 0,
+          "onset_weeks_max": 8,
+          "duration_months_min": 6,
+          "duration_months_max": 9,
+          "ko": "윤곽·탄력/지방 개선",
+          "en": "Contour/firmness or fat loss"
+        },
+        "downtime": {
+          "ko": "경미",
+          "en": "Minimal"
+        },
+        "pain": {
+          "level": "low_medium",
+          "pain_score_0_10": 3
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 700000,
+          "note_ko": "프로토콜/부위별",
+          "note_en": "By protocol/area"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 3,
+          "interval_weeks": 6,
+          "maintenance_note": {
+            "ko": "6–9개월 간격",
+            "en": "Every 6–9 months"
+          }
+        }
+      }
+    },
+    {
+      "id": "coolsculpting",
+      "name": {
+        "ko": "쿨스컬핑",
+        "en": "CoolSculpting"
+      },
+      "summary": {
+        "ko": "바디 타이트닝/지방감소",
+        "en": "Body tightening/fat reduction"
+      },
+      "tags": [
+        {
+          "ko": "바디",
+          "en": "Body"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "8–12주",
+            "en": "Gradual"
+          },
+          "onset_weeks_min": 8,
+          "onset_weeks_max": 12,
+          "duration_months_min": 12,
+          "duration_months_max": 24,
+          "ko": "윤곽·탄력/지방 개선",
+          "en": "Contour/firmness or fat loss"
+        },
+        "downtime": {
+          "ko": "경미",
+          "en": "Minimal"
+        },
+        "pain": {
+          "level": "medium",
+          "pain_score_0_10": 5
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 700000,
+          "note_ko": "프로토콜/부위별",
+          "note_en": "By protocol/area"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 3,
+          "interval_weeks": 6,
+          "maintenance_note": {
+            "ko": "6–9개월 간격",
+            "en": "Every 6–9 months"
+          }
+        }
+      }
+    },
+    {
+      "id": "liposuction",
+      "name": {
+        "ko": "지방흡입",
+        "en": "Liposuction"
+      },
+      "summary": {
+        "ko": "바디 타이트닝/지방감소",
+        "en": "Body tightening/fat reduction"
+      },
+      "tags": [
+        {
+          "ko": "바디",
+          "en": "Body"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "즉시",
+            "en": "Immediate"
+          },
+          "onset_weeks_min": 0,
+          "onset_weeks_max": 6,
+          "duration_months_min": 24,
+          "duration_months_max": 120,
+          "ko": "윤곽·탄력/지방 개선",
+          "en": "Contour/firmness or fat loss"
+        },
+        "downtime": {
+          "ko": "2–4주 회복(압박복)",
+          "en": "2–4 weeks recovery (garments)"
+        },
+        "pain": {
+          "level": "high",
+          "pain_score_0_10": 8
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 3000000,
+          "note_ko": "프로토콜/부위별",
+          "note_en": "By protocol/area"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 1,
+          "interval_weeks": 0,
+          "maintenance_note": {
+            "ko": "체중 관리 중요",
+            "en": "Weight management crucial"
+          }
+        }
+      }
+    }
+  ]
+}

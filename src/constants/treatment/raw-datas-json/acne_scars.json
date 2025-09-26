@@ -1,0 +1,308 @@
+{
+  "category_key": "Acne_Scars",
+  "ko": "여드름/흉터",
+  "en": "Acne & Scars",
+  "concern_copy": {
+    "ko": "시간이 지나도 남는 흉터, 매끈함을 되찾고 싶어",
+    "en": "Old scars that never seem to fade—I want smooth skin again"
+  },
+  "areas": [
+    {
+      "key": "face_cheeks",
+      "ko": "얼굴-볼",
+      "en": "Face - Cheeks"
+    },
+    {
+      "key": "face_forehead",
+      "ko": "얼굴-이마",
+      "en": "Face - Forehead"
+    },
+    {
+      "key": "face_chin",
+      "ko": "얼굴-턱",
+      "en": "Face - Chin"
+    },
+    {
+      "key": "back",
+      "ko": "등",
+      "en": "Back"
+    },
+    {
+      "key": "chest",
+      "ko": "가슴",
+      "en": "Chest"
+    }
+  ],
+  "treatments": [
+    {
+      "id": "pico_laser",
+      "name": {
+        "ko": "피코 레이저",
+        "en": "Pico Laser"
+      },
+      "summary": {
+        "ko": "흉터·색소·잔주름 동시 개선",
+        "en": "Improves scars, pigment & fine lines"
+      },
+      "tags": [
+        {
+          "ko": "정밀",
+          "en": "Precision"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "1–2주 / 회차 누적",
+            "en": "1–2 weeks; cumulative"
+          },
+          "onset_weeks_min": 1,
+          "onset_weeks_max": 2,
+          "duration_months_min": 3,
+          "duration_months_max": 6,
+          "ko": "3–5회 이상 권장",
+          "en": "3–5+ sessions recommended"
+        },
+        "downtime": {
+          "ko": "홍조 1–3일",
+          "en": "Redness 1–3 days"
+        },
+        "pain": {
+          "level": "low_medium",
+          "pain_score_0_10": 3
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 250000,
+          "note_ko": "면적·스팟별",
+          "note_en": "By area/spot"
+        },
+        "recommended": {
+          "sessions_min": 3,
+          "sessions_max": 6,
+          "interval_weeks": 2,
+          "maintenance_note": {
+            "ko": "월 1회 관리",
+            "en": "Monthly maintenance"
+          }
+        }
+      }
+    },
+    {
+      "id": "potenza",
+      "name": {
+        "ko": "포텐자 (RF 니들)",
+        "en": "Potenza (RF Microneedling)"
+      },
+      "summary": {
+        "ko": "모공·흉터·결·탄력 개선",
+        "en": "Pores, scars, texture & firmness"
+      },
+      "tags": [
+        {
+          "ko": "RF니들",
+          "en": "RF microneedling"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "2–4주 / 회차 누적",
+            "en": "2–4 weeks; cumulative"
+          },
+          "onset_weeks_min": 2,
+          "onset_weeks_max": 4,
+          "duration_months_min": 6,
+          "duration_months_max": 12,
+          "ko": "3–4회 시리즈",
+          "en": "3–4 session series"
+        },
+        "downtime": {
+          "ko": "홍조/미세딱지 2–5일",
+          "en": "Redness/micro-crusts 2–5 days"
+        },
+        "pain": {
+          "level": "medium",
+          "pain_score_0_10": 5
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 400000,
+          "note_ko": "팁·옵션별",
+          "note_en": "By tip/options"
+        },
+        "recommended": {
+          "sessions_min": 3,
+          "sessions_max": 4,
+          "interval_weeks": 4,
+          "maintenance_note": {
+            "ko": "분기별 보강",
+            "en": "Quarterly reinforcement"
+          }
+        }
+      }
+    },
+    {
+      "id": "dermapen_mts",
+      "name": {
+        "ko": "더마펜(MTS)",
+        "en": "Dermapen (MTS)"
+      },
+      "summary": {
+        "ko": "콜라겐 유도·흉터결 개선",
+        "en": "Collagen induction & scar texture"
+      },
+      "tags": [
+        {
+          "ko": "리모델링",
+          "en": "Remodeling"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "2–4주 / 누적",
+            "en": "2–4 weeks; cumulative"
+          },
+          "onset_weeks_min": 2,
+          "onset_weeks_max": 4,
+          "duration_months_min": 3,
+          "duration_months_max": 6,
+          "ko": "3–6회 시리즈",
+          "en": "3–6 session series"
+        },
+        "downtime": {
+          "ko": "홍조/각질 2–4일",
+          "en": "Redness/flaking 2–4 days"
+        },
+        "pain": {
+          "level": "medium",
+          "pain_score_0_10": 5
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 200000,
+          "note_ko": "약물 콤보에 따라",
+          "note_en": "Varies with cocktails"
+        },
+        "recommended": {
+          "sessions_min": 3,
+          "sessions_max": 6,
+          "interval_weeks": 4,
+          "maintenance_note": {
+            "ko": "분기별 관리",
+            "en": "Quarterly care"
+          }
+        }
+      }
+    },
+    {
+      "id": "agnes",
+      "name": {
+        "ko": "아그네스(여드름)",
+        "en": "Agnes (Acne)"
+      },
+      "summary": {
+        "ko": "피지선 타깃 여드름 치료",
+        "en": "Sebaceous gland-targeted acne care"
+      },
+      "tags": [
+        {
+          "ko": "피지",
+          "en": "Sebum"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "2–4주",
+            "en": "2–4 weeks"
+          },
+          "onset_weeks_min": 2,
+          "onset_weeks_max": 4,
+          "duration_months_min": 6,
+          "duration_months_max": 12,
+          "ko": "염증·재발 감소(개인차)",
+          "en": "Less inflammation/recurrence (varies)"
+        },
+        "downtime": {
+          "ko": "국소 붓기/홍조 2–5일",
+          "en": "Local swelling/redness 2–5 days"
+        },
+        "pain": {
+          "level": "medium",
+          "pain_score_0_10": 5
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 300000,
+          "note_ko": "범위별",
+          "note_en": "By extent"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 3,
+          "interval_weeks": 4,
+          "maintenance_note": {
+            "ko": "피지활동에 따라 필요 시",
+            "en": "As needed by sebum activity"
+          }
+        }
+      }
+    },
+    {
+      "id": "tca_cross",
+      "name": {
+        "ko": "TCA 크로스",
+        "en": "TCA CROSS"
+      },
+      "summary": {
+        "ko": "아이스픽 흉터 포인트 재생",
+        "en": "Ice-pick scar focal remodeling"
+      },
+      "tags": [
+        {
+          "ko": "흉터특화",
+          "en": "Scar-focused"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "4–8주 / 누적",
+            "en": "4–8 weeks; cumulative"
+          },
+          "onset_weeks_min": 4,
+          "onset_weeks_max": 8,
+          "duration_months_min": 6,
+          "duration_months_max": 12,
+          "ko": "2–4회 시리즈",
+          "en": "2–4 session series"
+        },
+        "downtime": {
+          "ko": "미세딱지/홍조 3–7일",
+          "en": "Crusts/redness 3–7 days"
+        },
+        "pain": {
+          "level": "medium",
+          "pain_score_0_10": 5
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 200000,
+          "note_ko": "개수·깊이에 따라",
+          "note_en": "By count/depth"
+        },
+        "recommended": {
+          "sessions_min": 2,
+          "sessions_max": 4,
+          "interval_weeks": 4,
+          "maintenance_note": {
+            "ko": "개선 정도에 따라",
+            "en": "Depends on response"
+          }
+        }
+      }
+    }
+  ]
+}

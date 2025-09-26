@@ -1,0 +1,205 @@
+{
+  "category_key": "Hair_Removal",
+  "ko": "제모",
+  "en": "Hair Removal",
+  "concern_copy": {
+    "ko": "자꾸 신경 쓰이는 털, 사계절 매끈하게",
+    "en": "Unwanted hair—smooth all year"
+  },
+  "areas": [
+    {
+      "key": "arms",
+      "ko": "팔",
+      "en": "Arms"
+    },
+    {
+      "key": "legs",
+      "ko": "다리",
+      "en": "Legs"
+    },
+    {
+      "key": "underarm",
+      "ko": "겨드랑이",
+      "en": "Underarms"
+    },
+    {
+      "key": "bikini",
+      "ko": "비키니라인",
+      "en": "Bikini line"
+    },
+    {
+      "key": "upperlip",
+      "ko": "인중",
+      "en": "Upper lip"
+    },
+    {
+      "key": "chin",
+      "ko": "턱",
+      "en": "Chin"
+    }
+  ],
+  "treatments": [
+    {
+      "id": "clarity_hr",
+      "name": {
+        "ko": "클라리티 제모",
+        "en": "Clarity Laser Hair Removal"
+      },
+      "summary": {
+        "ko": "제모 표준 레이저",
+        "en": "Clinic-standard laser hair removal"
+      },
+      "tags": [
+        {
+          "ko": "여/남",
+          "en": "Women/Men"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "4–8회 시리즈로 영구감소",
+            "en": "Permanent reduction in 4–8 sessions"
+          },
+          "onset_weeks_min": 4,
+          "onset_weeks_max": 24,
+          "duration_months_min": 12,
+          "duration_months_max": 60,
+          "ko": "개인별 털 주기에 따라 상이",
+          "en": "Varies by hair cycle"
+        },
+        "downtime": {
+          "ko": "홍조 1–2일",
+          "en": "Redness 1–2 days"
+        },
+        "pain": {
+          "level": "low_medium",
+          "pain_score_0_10": 3
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 60000,
+          "note_ko": "부위·세션별",
+          "note_en": "By area/session"
+        },
+        "recommended": {
+          "sessions_min": 4,
+          "sessions_max": 8,
+          "interval_weeks": 4,
+          "maintenance_note": {
+            "ko": "필요 시 보강",
+            "en": "Top-up as needed"
+          }
+        }
+      }
+    },
+    {
+      "id": "alexandrite",
+      "name": {
+        "ko": "알렉산드라이트",
+        "en": "Alexandrite Laser"
+      },
+      "summary": {
+        "ko": "밝은 피부·짙은 털에 우수",
+        "en": "Great for light skin/dark hair"
+      },
+      "tags": [
+        {
+          "ko": "표준",
+          "en": "Gold standard"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "4–8회 시리즈",
+            "en": "4–8 sessions"
+          },
+          "onset_weeks_min": 4,
+          "onset_weeks_max": 24,
+          "duration_months_min": 12,
+          "duration_months_max": 60,
+          "ko": "털 굵기·색에 영향",
+          "en": "Depends on hair thickness/color"
+        },
+        "downtime": {
+          "ko": "홍조 1–2일",
+          "en": "Redness 1–2 days"
+        },
+        "pain": {
+          "level": "medium",
+          "pain_score_0_10": 4
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 80000,
+          "note_ko": "부위·세션별",
+          "note_en": "By area/session"
+        },
+        "recommended": {
+          "sessions_min": 4,
+          "sessions_max": 8,
+          "interval_weeks": 4,
+          "maintenance_note": {
+            "ko": "연 1–2회 보강",
+            "en": "1–2 times/year top-up"
+          }
+        }
+      }
+    },
+    {
+      "id": "gentlemax",
+      "name": {
+        "ko": "젠틀맥스",
+        "en": "GentleMax"
+      },
+      "summary": {
+        "ko": "제모+색소 복합 타깃",
+        "en": "Targets hair & pigment"
+      },
+      "tags": [
+        {
+          "ko": "복합",
+          "en": "Combo"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "4–8회 시리즈",
+            "en": "4–8 sessions"
+          },
+          "onset_weeks_min": 4,
+          "onset_weeks_max": 24,
+          "duration_months_min": 12,
+          "duration_months_max": 60,
+          "ko": "피부톤·털 상태에 좌우",
+          "en": "Depends on skin/hair type"
+        },
+        "downtime": {
+          "ko": "홍조 1–2일",
+          "en": "Redness 1–2 days"
+        },
+        "pain": {
+          "level": "medium",
+          "pain_score_0_10": 4
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 90000,
+          "note_ko": "부위·세션별",
+          "note_en": "By area/session"
+        },
+        "recommended": {
+          "sessions_min": 4,
+          "sessions_max": 8,
+          "interval_weeks": 4,
+          "maintenance_note": {
+            "ko": "연 1–2회 보강",
+            "en": "1–2 times/year top-up"
+          }
+        }
+      }
+    }
+  ]
+}

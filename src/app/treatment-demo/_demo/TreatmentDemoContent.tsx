@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 "use client";
 
 import * as React from "react";
@@ -26,6 +27,8 @@ const OutlineButton = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => 
     }
   />
 );
+
+OutlineButton.displayName = 'OutlineButton';
 
 export default function TreatmentDemoContent() {
   const [locale, setLocale] = React.useState<Locale>("ko");

@@ -4,7 +4,7 @@
 import type { Category } from './types';
 
 // If your bundler supports JSON imports (Vite/Next.js/Webpack with resolve.json):
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+/* eslint-disable */
 // @ts-ignore
 import liftingFirming from './raw-datas-json/lifting_firming.json';
 // @ts-ignore
@@ -27,6 +27,7 @@ import skinCare from './raw-datas-json/skin_care.json';
 import fillerVolume from './raw-datas-json/filler_volume.json';
 // @ts-ignore
 import hairScalp from './raw-datas-json/hair_scalp.json';
+/* eslint-enable */
 
 export const categories: Category[] = [
   liftingFirming,

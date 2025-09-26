@@ -90,7 +90,7 @@ export default function RootLayout({
         {/* <PageTransitionOverlay /> */}
 
         {/* 배경/루트 래퍼: 변형/음수마진으로 넘칠 때를 대비해 clip */}
-        <div className="bg-gradient-hero flex flex-col min-h-screen w-full overflow-x-clip">
+        <div className="bg-gradient-to-br from-[#FDF5F0] via-white to-[#F8E8E0] flex flex-col min-h-screen w-full overflow-x-clip">
           <Providers>
             <ScrollTop />
             <div id="modal-root" />

@@ -1,0 +1,244 @@
+{
+  "category_key": "Hair_Scalp",
+  "ko": "헤어/두피",
+  "en": "Hair & Scalp",
+  "concern_copy": {
+    "ko": "점점 비어 보이는 헤어라인, 자신감을 되찾고 싶어",
+    "en": "Receding hairline—I want my confidence back"
+  },
+  "areas": [
+    {
+      "key": "hairline",
+      "ko": "헤어라인",
+      "en": "Hairline"
+    },
+    {
+      "key": "crown",
+      "ko": "정수리",
+      "en": "Crown"
+    },
+    {
+      "key": "full_scalp",
+      "ko": "전체 두피",
+      "en": "Full scalp"
+    }
+  ],
+  "treatments": [
+    {
+      "id": "scalp_injection",
+      "name": {
+        "ko": "두피 주사(PDRN/성장인자)",
+        "en": "Scalp Injection (PDRN/GFs)"
+      },
+      "summary": {
+        "ko": "모낭 환경 개선·탈모완화",
+        "en": "Follicle environment, shedding control"
+      },
+      "tags": [
+        {
+          "ko": "주기시술",
+          "en": "Series"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "4–8주 / 누적",
+            "en": "4–8 weeks; cumulative"
+          },
+          "onset_weeks_min": 4,
+          "onset_weeks_max": 8,
+          "duration_months_min": 3,
+          "duration_months_max": 6,
+          "ko": "두께·밀도 보조",
+          "en": "Helps thickness/density"
+        },
+        "downtime": {
+          "ko": "핀프릭 1–2일",
+          "en": "Pinpricks 1–2 days"
+        },
+        "pain": {
+          "level": "low_medium",
+          "pain_score_0_10": 4
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 250000,
+          "note_ko": "칵테일·용량별",
+          "note_en": "By cocktail/volume"
+        },
+        "recommended": {
+          "sessions_min": 4,
+          "sessions_max": 6,
+          "interval_weeks": 2,
+          "maintenance_note": {
+            "ko": "월 1회 유지",
+            "en": "Monthly maintenance"
+          }
+        }
+      }
+    },
+    {
+      "id": "prp_hair",
+      "name": {
+        "ko": "PRP 주사",
+        "en": "PRP Injection"
+      },
+      "summary": {
+        "ko": "자가혈로 성장因 자극",
+        "en": "Autologous growth factors"
+      },
+      "tags": [
+        {
+          "ko": "자가혈",
+          "en": "Autologous"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "8–12주 / 누적",
+            "en": "8–12 weeks; cumulative"
+          },
+          "onset_weeks_min": 8,
+          "onset_weeks_max": 12,
+          "duration_months_min": 6,
+          "duration_months_max": 12,
+          "ko": "굵기·모발질 개선",
+          "en": "Improves thickness/quality"
+        },
+        "downtime": {
+          "ko": "국소 압통 1–3일",
+          "en": "Local tenderness 1–3 days"
+        },
+        "pain": {
+          "level": "medium",
+          "pain_score_0_10": 5
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 350000,
+          "note_ko": "튜브 수에 따라",
+          "note_en": "By tube count"
+        },
+        "recommended": {
+          "sessions_min": 3,
+          "sessions_max": 6,
+          "interval_weeks": 4,
+          "maintenance_note": {
+            "ko": "분기/반기 유지",
+            "en": "Quarterly/biannual upkeep"
+          }
+        }
+      }
+    },
+    {
+      "id": "hair_transplant",
+      "name": {
+        "ko": "모발 이식(FUE/FUT)",
+        "en": "Hair Transplant (FUE/FUT)"
+      },
+      "summary": {
+        "ko": "영구 모근 이식으로 채움",
+        "en": "Permanent grafted follicles"
+      },
+      "tags": [
+        {
+          "ko": "수술",
+          "en": "Surgical"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "6–12개월에 가시화",
+            "en": "Visible at 6–12 months"
+          },
+          "onset_weeks_min": 24,
+          "onset_weeks_max": 52,
+          "duration_months_min": 60,
+          "duration_months_max": 240,
+          "ko": "생착 후 장기 유지",
+          "en": "Long-term after take"
+        },
+        "downtime": {
+          "ko": "2–7일 회복(세심한 케어)",
+          "en": "2–7 days recovery (careful aftercare)"
+        },
+        "pain": {
+          "level": "high",
+          "pain_score_0_10": 7
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 3000000,
+          "note_ko": "모낭수·방법",
+          "note_en": "By grafts/method"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 1,
+          "interval_weeks": 0,
+          "maintenance_note": {
+            "ko": "미녹시딜/피나스테리드 병행 권장",
+            "en": "Consider minoxidil/finasteride"
+          }
+        }
+      }
+    },
+    {
+      "id": "lllt",
+      "name": {
+        "ko": "저출력 레이저 치료(LLLT)",
+        "en": "Low-Level Laser Therapy (LLLT)"
+      },
+      "summary": {
+        "ko": "두피혈류·세포대사 보조",
+        "en": "Supports scalp blood flow & metabolism"
+      },
+      "tags": [
+        {
+          "ko": "보조요법",
+          "en": "Adjunct"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "지속 사용 시 보조적 효과",
+            "en": "Adjunctive with continuous use"
+          },
+          "onset_weeks_min": 8,
+          "onset_weeks_max": 12,
+          "duration_months_min": 3,
+          "duration_months_max": 6,
+          "ko": "탈모 치료 보조",
+          "en": "Adjunct to hair therapies"
+        },
+        "downtime": {
+          "ko": "없음",
+          "en": "None"
+        },
+        "pain": {
+          "level": "none",
+          "pain_score_0_10": 0
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 100000,
+          "note_ko": "클리닉/가정용 상이",
+          "note_en": "Clinic/home device vary"
+        },
+        "recommended": {
+          "sessions_min": 8,
+          "sessions_max": 24,
+          "interval_weeks": 1,
+          "maintenance_note": {
+            "ko": "주 1–3회 지속 사용",
+            "en": "Use 1–3×/week ongoing"
+          }
+        }
+      }
+    }
+  ]
+}

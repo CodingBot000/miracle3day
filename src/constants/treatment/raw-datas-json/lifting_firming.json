@@ -1,0 +1,857 @@
+{
+  "category_key": "Lifting_Firming",
+  "ko": "탄력/리프팅",
+  "en": "Lifting & Firming",
+  "concern_copy": {
+    "ko": "무너진 얼굴선, 5년 전의 나로 되돌리고 싶어",
+    "en": "Sagging facial lines, I want to turn back time by 5 years"
+  },
+  "areas": [
+    {
+      "key": "forehead_brow",
+      "ko": "이마/눈썹",
+      "en": "Forehead/Brow"
+    },
+    {
+      "key": "eyes_under",
+      "ko": "눈가/눈밑",
+      "en": "Eyes/Eye bags"
+    },
+    {
+      "key": "cheeks_nasolabial",
+      "ko": "볼/팔자",
+      "en": "Cheeks/Nasolabial folds"
+    },
+    {
+      "key": "jawline_doublechin",
+      "ko": "턱선/이중턱",
+      "en": "Jawline/Double chin"
+    },
+    {
+      "key": "full_face",
+      "ko": "얼굴 전체",
+      "en": "Full face"
+    },
+    {
+      "key": "neck_lines",
+      "ko": "목주름",
+      "en": "Neck wrinkles"
+    }
+  ],
+  "treatments": [
+    {
+      "id": "ulthera",
+      "name": {
+        "ko": "울쎄라",
+        "en": "Ulthera (Ultherapy)"
+      },
+      "summary": {
+        "ko": "고강도 초음파로 콜라겐 재생, 점진 리프팅",
+        "en": "HIFU boosts collagen for gradual lifting"
+      },
+      "tags": [
+        {
+          "ko": "비수술",
+          "en": "Non-surgical"
+        },
+        {
+          "ko": "리프팅",
+          "en": "Lifting"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "2–4주 후 점진 발현",
+            "en": "Gradual from 2–4 weeks"
+          },
+          "onset_weeks_min": 2,
+          "onset_weeks_max": 4,
+          "duration_months_min": 6,
+          "duration_months_max": 12,
+          "ko": "피부 속 콜라겐 재생으로 탄력·리프팅이 서서히 강화",
+          "en": "Collagen remodeling yields progressive firmness/lift"
+        },
+        "downtime": {
+          "ko": "거의 없음",
+          "en": "Minimal"
+        },
+        "pain": {
+          "level": "medium",
+          "pain_score_0_10": 5
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 1500000,
+          "note_ko": "부위·샷수별 상이",
+          "note_en": "Varies by area/shots"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 1,
+          "interval_weeks": 0,
+          "maintenance_note": {
+            "ko": "6–12개월마다 리터치 권장",
+            "en": "Touch-up every 6–12 months"
+          }
+        }
+      }
+    },
+    {
+      "id": "thermage",
+      "name": {
+        "ko": "써마지",
+        "en": "Thermage"
+      },
+      "summary": {
+        "ko": "고주파 타이트닝, 즉시 탄력+점진 개선",
+        "en": "RF tightening, instant + gradual improvement"
+      },
+      "tags": [
+        {
+          "ko": "타이트닝",
+          "en": "Tightening"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "즉시 + 4–8주 추가 개선",
+            "en": "Immediate + 4–8 weeks progressive"
+          },
+          "onset_weeks_min": 0,
+          "onset_weeks_max": 8,
+          "duration_months_min": 6,
+          "duration_months_max": 12,
+          "ko": "즉시 탄력감 후 서서히 조임 강화",
+          "en": "Immediate firmness then gradual tightening"
+        },
+        "downtime": {
+          "ko": "경미한 홍조 1–2일",
+          "en": "Mild redness 1–2 days"
+        },
+        "pain": {
+          "level": "medium",
+          "pain_score_0_10": 4
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 1800000,
+          "note_ko": "팁/샷 수에 따름",
+          "note_en": "By tip/shots"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 1,
+          "interval_weeks": 0,
+          "maintenance_note": {
+            "ko": "12개월 전후 재시술",
+            "en": "Repeat ~12 months"
+          }
+        }
+      }
+    },
+    {
+      "id": "shurink_universe",
+      "name": {
+        "ko": "슈링크/슈링크 유니버스",
+        "en": "Shurink / Shurink Universe"
+      },
+      "summary": {
+        "ko": "리프팅/타이트닝 장비",
+        "en": "Lifting/tightening device"
+      },
+      "tags": [
+        {
+          "ko": "리프팅",
+          "en": "Lifting"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "2–4주 점진",
+            "en": "Gradual"
+          },
+          "onset_weeks_min": 2,
+          "onset_weeks_max": 4,
+          "duration_months_min": 4,
+          "duration_months_max": 9,
+          "ko": "윤곽·탄력 개선",
+          "en": "Improves contour/elasticity"
+        },
+        "downtime": {
+          "ko": "경미",
+          "en": "Minimal"
+        },
+        "pain": {
+          "level": "medium",
+          "pain_score_0_10": 4
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 400000,
+          "note_ko": "프로토콜/부위별",
+          "note_en": "By protocol/area"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 3,
+          "interval_weeks": 6,
+          "maintenance_note": {
+            "ko": "6–12개월 간격",
+            "en": "Every 6–12 months"
+          }
+        }
+      }
+    },
+    {
+      "id": "liftera2",
+      "name": {
+        "ko": "리프테라 2",
+        "en": "Liftera 2"
+      },
+      "summary": {
+        "ko": "리프팅/타이트닝 장비",
+        "en": "Lifting/tightening device"
+      },
+      "tags": [
+        {
+          "ko": "리프팅",
+          "en": "Lifting"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "2–6주 점진",
+            "en": "Gradual"
+          },
+          "onset_weeks_min": 2,
+          "onset_weeks_max": 6,
+          "duration_months_min": 6,
+          "duration_months_max": 9,
+          "ko": "윤곽·탄력 개선",
+          "en": "Improves contour/elasticity"
+        },
+        "downtime": {
+          "ko": "경미",
+          "en": "Minimal"
+        },
+        "pain": {
+          "level": "low_medium",
+          "pain_score_0_10": 3
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 500000,
+          "note_ko": "프로토콜/부위별",
+          "note_en": "By protocol/area"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 3,
+          "interval_weeks": 6,
+          "maintenance_note": {
+            "ko": "6–12개월 간격",
+            "en": "Every 6–12 months"
+          }
+        }
+      }
+    },
+    {
+      "id": "oligio",
+      "name": {
+        "ko": "올리지오",
+        "en": "Oligio (RF)"
+      },
+      "summary": {
+        "ko": "리프팅/타이트닝 장비",
+        "en": "Lifting/tightening device"
+      },
+      "tags": [
+        {
+          "ko": "리프팅",
+          "en": "Lifting"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "즉시 + 2–6주",
+            "en": "Gradual"
+          },
+          "onset_weeks_min": 0,
+          "onset_weeks_max": 8,
+          "duration_months_min": 6,
+          "duration_months_max": 9,
+          "ko": "윤곽·탄력 개선",
+          "en": "Improves contour/elasticity"
+        },
+        "downtime": {
+          "ko": "경미",
+          "en": "Minimal"
+        },
+        "pain": {
+          "level": "low_medium",
+          "pain_score_0_10": 3
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 600000,
+          "note_ko": "프로토콜/부위별",
+          "note_en": "By protocol/area"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 3,
+          "interval_weeks": 6,
+          "maintenance_note": {
+            "ko": "6–12개월 간격",
+            "en": "Every 6–12 months"
+          }
+        }
+      }
+    },
+    {
+      "id": "inmode_face",
+      "name": {
+        "ko": "인모드(페이스)",
+        "en": "InMode (Face)"
+      },
+      "summary": {
+        "ko": "리프팅/타이트닝 장비",
+        "en": "Lifting/tightening device"
+      },
+      "tags": [
+        {
+          "ko": "리프팅",
+          "en": "Lifting"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "즉시 + 2–6주",
+            "en": "Gradual"
+          },
+          "onset_weeks_min": 0,
+          "onset_weeks_max": 6,
+          "duration_months_min": 6,
+          "duration_months_max": 9,
+          "ko": "윤곽·탄력 개선",
+          "en": "Improves contour/elasticity"
+        },
+        "downtime": {
+          "ko": "경미",
+          "en": "Minimal"
+        },
+        "pain": {
+          "level": "low_medium",
+          "pain_score_0_10": 3
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 700000,
+          "note_ko": "프로토콜/부위별",
+          "note_en": "By protocol/area"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 3,
+          "interval_weeks": 6,
+          "maintenance_note": {
+            "ko": "6–12개월 간격",
+            "en": "Every 6–12 months"
+          }
+        }
+      }
+    },
+    {
+      "id": "titan",
+      "name": {
+        "ko": "타이탄",
+        "en": "Titan"
+      },
+      "summary": {
+        "ko": "리프팅/타이트닝 장비",
+        "en": "Lifting/tightening device"
+      },
+      "tags": [
+        {
+          "ko": "리프팅",
+          "en": "Lifting"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "즉시 + 2–6주",
+            "en": "Gradual"
+          },
+          "onset_weeks_min": 0,
+          "onset_weeks_max": 8,
+          "duration_months_min": 6,
+          "duration_months_max": 12,
+          "ko": "윤곽·탄력 개선",
+          "en": "Improves contour/elasticity"
+        },
+        "downtime": {
+          "ko": "경미",
+          "en": "Minimal"
+        },
+        "pain": {
+          "level": "medium",
+          "pain_score_0_10": 4
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 800000,
+          "note_ko": "프로토콜/부위별",
+          "note_en": "By protocol/area"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 3,
+          "interval_weeks": 6,
+          "maintenance_note": {
+            "ko": "6–12개월 간격",
+            "en": "Every 6–12 months"
+          }
+        }
+      }
+    },
+    {
+      "id": "tune_face",
+      "name": {
+        "ko": "튠페이스",
+        "en": "Tune Face"
+      },
+      "summary": {
+        "ko": "리프팅/타이트닝 장비",
+        "en": "Lifting/tightening device"
+      },
+      "tags": [
+        {
+          "ko": "리프팅",
+          "en": "Lifting"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "즉시 + 2–6주",
+            "en": "Gradual"
+          },
+          "onset_weeks_min": 0,
+          "onset_weeks_max": 6,
+          "duration_months_min": 6,
+          "duration_months_max": 9,
+          "ko": "윤곽·탄력 개선",
+          "en": "Improves contour/elasticity"
+        },
+        "downtime": {
+          "ko": "경미",
+          "en": "Minimal"
+        },
+        "pain": {
+          "level": "low_medium",
+          "pain_score_0_10": 3
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 600000,
+          "note_ko": "프로토콜/부위별",
+          "note_en": "By protocol/area"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 3,
+          "interval_weeks": 6,
+          "maintenance_note": {
+            "ko": "6–12개월 간격",
+            "en": "Every 6–12 months"
+          }
+        }
+      }
+    },
+    {
+      "id": "vro",
+      "name": {
+        "ko": "VRO",
+        "en": "VRO"
+      },
+      "summary": {
+        "ko": "리프팅/타이트닝 장비",
+        "en": "Lifting/tightening device"
+      },
+      "tags": [
+        {
+          "ko": "리프팅",
+          "en": "Lifting"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "즉시 + 2–6주",
+            "en": "Gradual"
+          },
+          "onset_weeks_min": 0,
+          "onset_weeks_max": 4,
+          "duration_months_min": 6,
+          "duration_months_max": 12,
+          "ko": "윤곽·탄력 개선",
+          "en": "Improves contour/elasticity"
+        },
+        "downtime": {
+          "ko": "경미",
+          "en": "Minimal"
+        },
+        "pain": {
+          "level": "low_medium",
+          "pain_score_0_10": 3
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 700000,
+          "note_ko": "프로토콜/부위별",
+          "note_en": "By protocol/area"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 3,
+          "interval_weeks": 6,
+          "maintenance_note": {
+            "ko": "6–12개월 간격",
+            "en": "Every 6–12 months"
+          }
+        }
+      }
+    },
+    {
+      "id": "density",
+      "name": {
+        "ko": "Density",
+        "en": "Density"
+      },
+      "summary": {
+        "ko": "리프팅/타이트닝 장비",
+        "en": "Lifting/tightening device"
+      },
+      "tags": [
+        {
+          "ko": "리프팅",
+          "en": "Lifting"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "즉시 + 2–6주",
+            "en": "Gradual"
+          },
+          "onset_weeks_min": 0,
+          "onset_weeks_max": 6,
+          "duration_months_min": 6,
+          "duration_months_max": 9,
+          "ko": "윤곽·탄력 개선",
+          "en": "Improves contour/elasticity"
+        },
+        "downtime": {
+          "ko": "경미",
+          "en": "Minimal"
+        },
+        "pain": {
+          "level": "low_medium",
+          "pain_score_0_10": 3
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 500000,
+          "note_ko": "프로토콜/부위별",
+          "note_en": "By protocol/area"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 3,
+          "interval_weeks": 6,
+          "maintenance_note": {
+            "ko": "6–12개월 간격",
+            "en": "Every 6–12 months"
+          }
+        }
+      }
+    },
+    {
+      "id": "xerf",
+      "name": {
+        "ko": "XERF",
+        "en": "XERF"
+      },
+      "summary": {
+        "ko": "리프팅/타이트닝 장비",
+        "en": "Lifting/tightening device"
+      },
+      "tags": [
+        {
+          "ko": "리프팅",
+          "en": "Lifting"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "2–6주 점진",
+            "en": "Gradual"
+          },
+          "onset_weeks_min": 2,
+          "onset_weeks_max": 6,
+          "duration_months_min": 6,
+          "duration_months_max": 12,
+          "ko": "윤곽·탄력 개선",
+          "en": "Improves contour/elasticity"
+        },
+        "downtime": {
+          "ko": "경미",
+          "en": "Minimal"
+        },
+        "pain": {
+          "level": "low_medium",
+          "pain_score_0_10": 3
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 600000,
+          "note_ko": "프로토콜/부위별",
+          "note_en": "By protocol/area"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 3,
+          "interval_weeks": 6,
+          "maintenance_note": {
+            "ko": "6–12개월 간격",
+            "en": "Every 6–12 months"
+          }
+        }
+      }
+    },
+    {
+      "id": "thread_pdo_cog",
+      "name": {
+        "ko": "실리프팅 (PDO 코그)",
+        "en": "Thread Lifting (PDO Cog)"
+      },
+      "summary": {
+        "ko": "실 재질별 리프팅",
+        "en": "Thread-material specific lifting"
+      },
+      "tags": [
+        {
+          "ko": "실리프팅",
+          "en": "Thread lifting"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "즉시 + 4주 내 강화",
+            "en": "Immediate; strengthens ~4 weeks"
+          },
+          "onset_weeks_min": 0,
+          "onset_weeks_max": 4,
+          "duration_months_min": 12,
+          "duration_months_max": 18,
+          "ko": "즉시 당김 + 콜라겐 자극",
+          "en": "Instant lift + collagen stimulation"
+        },
+        "downtime": {
+          "ko": "붓기/멍 3–7일",
+          "en": "Swelling/bruising 3–7 days"
+        },
+        "pain": {
+          "level": "medium_high",
+          "pain_score_0_10": 7
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 2200000,
+          "note_ko": "실 개수·부위",
+          "note_en": "Thread count/area"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 1,
+          "interval_weeks": 0,
+          "maintenance_note": {
+            "ko": "12–18개월 후 보강",
+            "en": "Reinforce at 12–18 months"
+          }
+        }
+      }
+    },
+    {
+      "id": "thread_plla",
+      "name": {
+        "ko": "실리프팅 (PLLA)",
+        "en": "Thread Lifting (PLLA)"
+      },
+      "summary": {
+        "ko": "실 재질별 리프팅",
+        "en": "Thread-material specific lifting"
+      },
+      "tags": [
+        {
+          "ko": "실리프팅",
+          "en": "Thread lifting"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "즉시 + 4주 내 강화",
+            "en": "Immediate; strengthens ~4 weeks"
+          },
+          "onset_weeks_min": 0,
+          "onset_weeks_max": 4,
+          "duration_months_min": 18,
+          "duration_months_max": 24,
+          "ko": "즉시 당김 + 콜라겐 자극",
+          "en": "Instant lift + collagen stimulation"
+        },
+        "downtime": {
+          "ko": "붓기/멍 3–7일",
+          "en": "Swelling/bruising 3–7 days"
+        },
+        "pain": {
+          "level": "medium_high",
+          "pain_score_0_10": 7
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 2600000,
+          "note_ko": "실 개수·부위",
+          "note_en": "Thread count/area"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 1,
+          "interval_weeks": 0,
+          "maintenance_note": {
+            "ko": "18–24개월 후 보강",
+            "en": "Reinforce at 18–24 months"
+          }
+        }
+      }
+    },
+    {
+      "id": "thread_pcl",
+      "name": {
+        "ko": "실리프팅 (PCL)",
+        "en": "Thread Lifting (PCL)"
+      },
+      "summary": {
+        "ko": "실 재질별 리프팅",
+        "en": "Thread-material specific lifting"
+      },
+      "tags": [
+        {
+          "ko": "실리프팅",
+          "en": "Thread lifting"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "즉시 + 4주 내 강화",
+            "en": "Immediate; strengthens ~4 weeks"
+          },
+          "onset_weeks_min": 0,
+          "onset_weeks_max": 4,
+          "duration_months_min": 18,
+          "duration_months_max": 24,
+          "ko": "즉시 당김 + 콜라겐 자극",
+          "en": "Instant lift + collagen stimulation"
+        },
+        "downtime": {
+          "ko": "붓기/멍 3–7일",
+          "en": "Swelling/bruising 3–7 days"
+        },
+        "pain": {
+          "level": "medium_high",
+          "pain_score_0_10": 7
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 2600000,
+          "note_ko": "실 개수·부위",
+          "note_en": "Thread count/area"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 1,
+          "interval_weeks": 0,
+          "maintenance_note": {
+            "ko": "18–24개월 후 보강",
+            "en": "Reinforce at 18–24 months"
+          }
+        }
+      }
+    },
+    {
+      "id": "thread_pdo_mono",
+      "name": {
+        "ko": "실리프팅 (PDO 모노/스무스)",
+        "en": "Thread Lifting (PDO Mono/Smooth)"
+      },
+      "summary": {
+        "ko": "실 재질별 리프팅",
+        "en": "Thread-material specific lifting"
+      },
+      "tags": [
+        {
+          "ko": "실리프팅",
+          "en": "Thread lifting"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "즉시 + 4주 내 강화",
+            "en": "Immediate; strengthens ~4 weeks"
+          },
+          "onset_weeks_min": 0,
+          "onset_weeks_max": 4,
+          "duration_months_min": 6,
+          "duration_months_max": 12,
+          "ko": "즉시 당김 + 콜라겐 자극",
+          "en": "Instant lift + collagen stimulation"
+        },
+        "downtime": {
+          "ko": "붓기/멍 3–7일",
+          "en": "Swelling/bruising 3–7 days"
+        },
+        "pain": {
+          "level": "medium",
+          "pain_score_0_10": 5
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 800000,
+          "note_ko": "실 개수·부위",
+          "note_en": "Thread count/area"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 1,
+          "interval_weeks": 0,
+          "maintenance_note": {
+            "ko": "6–12개월 후 보강",
+            "en": "Reinforce at 6–12 months"
+          }
+        }
+      }
+    }
+  ]
+}

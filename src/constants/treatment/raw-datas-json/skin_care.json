@@ -1,0 +1,244 @@
+{
+  "category_key": "Skin_Care",
+  "ko": "스킨 케어/수분",
+  "en": "Skin Care & Hydration",
+  "concern_copy": {
+    "ko": "건조하고 예민한 피부, 편안한 보습이 필요해",
+    "en": "Dry, sensitive skin needs comfortable hydration"
+  },
+  "areas": [
+    {
+      "key": "full_face",
+      "ko": "얼굴 전체",
+      "en": "Full face"
+    },
+    {
+      "key": "neck",
+      "ko": "목",
+      "en": "Neck"
+    },
+    {
+      "key": "arms",
+      "ko": "팔",
+      "en": "Arms"
+    }
+  ],
+  "treatments": [
+    {
+      "id": "custom_care",
+      "name": {
+        "ko": "커스텀 케어 패키지",
+        "en": "Customized Care Package"
+      },
+      "summary": {
+        "ko": "피부상태에 맞춘 맞춤 관리",
+        "en": "Tailored care to your skin state"
+      },
+      "tags": [
+        {
+          "ko": "맞춤",
+          "en": "Personalized"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "즉시",
+            "en": "Immediate"
+          },
+          "onset_weeks_min": 0,
+          "onset_weeks_max": 0,
+          "duration_months_min": 0.5,
+          "duration_months_max": 2,
+          "ko": "관리 직후 촉촉·진정",
+          "en": "Immediate hydration/soothing"
+        },
+        "downtime": {
+          "ko": "없음",
+          "en": "None"
+        },
+        "pain": {
+          "level": "none",
+          "pain_score_0_10": 0
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 80000,
+          "note_ko": "프로토콜별",
+          "note_en": "By protocol"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 6,
+          "interval_weeks": 2,
+          "maintenance_note": {
+            "ko": "월 1–2회 정기 관리",
+            "en": "1–2×/month routine"
+          }
+        }
+      }
+    },
+    {
+      "id": "hydrafacial",
+      "name": {
+        "ko": "하이드라페이셜",
+        "en": "HydraFacial"
+      },
+      "summary": {
+        "ko": "클렌징·필·보습 올인원",
+        "en": "Cleanse–peel–hydrate all-in-one"
+      },
+      "tags": [
+        {
+          "ko": "올인원",
+          "en": "All-in-one"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "즉시",
+            "en": "Immediate"
+          },
+          "onset_weeks_min": 0,
+          "onset_weeks_max": 0,
+          "duration_months_min": 1,
+          "duration_months_max": 2,
+          "ko": "즉시 광채·촉촉함",
+          "en": "Instant glow & hydration"
+        },
+        "downtime": {
+          "ko": "거의 없음",
+          "en": "Minimal"
+        },
+        "pain": {
+          "level": "low",
+          "pain_score_0_10": 1
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 150000,
+          "note_ko": "부스터·팁별",
+          "note_en": "By boosters/tips"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 6,
+          "interval_weeks": 4,
+          "maintenance_note": {
+            "ko": "월 1회 관리",
+            "en": "Monthly care"
+          }
+        }
+      }
+    },
+    {
+      "id": "aqua_peel",
+      "name": {
+        "ko": "아쿠아필",
+        "en": "Aqua Peel"
+      },
+      "summary": {
+        "ko": "각질·피지 정돈+수분",
+        "en": "Exfoliate sebum + hydrate"
+      },
+      "tags": [
+        {
+          "ko": "기본케어",
+          "en": "Basic care"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "즉시",
+            "en": "Immediate"
+          },
+          "onset_weeks_min": 0,
+          "onset_weeks_max": 0,
+          "duration_months_min": 0.5,
+          "duration_months_max": 1.5,
+          "ko": "즉시 매끈·촉촉",
+          "en": "Instant smooth & moist feel"
+        },
+        "downtime": {
+          "ko": "없음",
+          "en": "None"
+        },
+        "pain": {
+          "level": "none_low",
+          "pain_score_0_10": 1
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 90000,
+          "note_ko": "옵션별",
+          "note_en": "By options"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 6,
+          "interval_weeks": 2,
+          "maintenance_note": {
+            "ko": "격주 관리",
+            "en": "Biweekly care"
+          }
+        }
+      }
+    },
+    {
+      "id": "egf_pdrn",
+      "name": {
+        "ko": "재생케어(EGF/PDRN)",
+        "en": "Regeneration Care (EGF/PDRN)"
+      },
+      "summary": {
+        "ko": "진정·재생·장벽 강화",
+        "en": "Soothing, regeneration, barrier care"
+      },
+      "tags": [
+        {
+          "ko": "재생",
+          "en": "Regeneration"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "즉시~2주",
+            "en": "Immediate–2 weeks"
+          },
+          "onset_weeks_min": 0,
+          "onset_weeks_max": 2,
+          "duration_months_min": 1,
+          "duration_months_max": 3,
+          "ko": "컨디션 회복 도움",
+          "en": "Helps recovery/conditioning"
+        },
+        "downtime": {
+          "ko": "없음",
+          "en": "None"
+        },
+        "pain": {
+          "level": "none",
+          "pain_score_0_10": 0
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 100000,
+          "note_ko": "앰플/프로그램별",
+          "note_en": "By ampoule/program"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 6,
+          "interval_weeks": 2,
+          "maintenance_note": {
+            "ko": "월 1–2회 정기",
+            "en": "1–2×/month routine"
+          }
+        }
+      }
+    }
+  ]
+}

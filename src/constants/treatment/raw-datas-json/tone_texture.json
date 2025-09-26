@@ -1,0 +1,195 @@
+{
+  "category_key": "Tone_Texture",
+  "ko": "피부톤/결",
+  "en": "Tone & Texture",
+  "concern_copy": {
+    "ko": "화장으로도 가려지지 않는 칙칙함",
+    "en": "Dullness that makeup can’t hide"
+  },
+  "areas": [
+    {
+      "key": "full_face",
+      "ko": "얼굴 전체",
+      "en": "Full face"
+    },
+    {
+      "key": "cheeks",
+      "ko": "볼",
+      "en": "Cheeks"
+    },
+    {
+      "key": "nose",
+      "ko": "코",
+      "en": "Nose"
+    },
+    {
+      "key": "chin",
+      "ko": "턱",
+      "en": "Chin"
+    }
+  ],
+  "treatments": [
+    {
+      "id": "pico_toning",
+      "name": {
+        "ko": "피코 토닝",
+        "en": "Pico Toning"
+      },
+      "summary": {
+        "ko": "미세 색소·잔주름·결",
+        "en": "Micro-pigment, fine lines, texture"
+      },
+      "tags": [
+        {
+          "ko": "정밀",
+          "en": "Precision"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "1–2주/회차 누적",
+            "en": "1–2 weeks; cumulative"
+          },
+          "onset_weeks_min": 1,
+          "onset_weeks_max": 2,
+          "duration_months_min": 3,
+          "duration_months_max": 6,
+          "ko": "시리즈로 개선",
+          "en": "Series-based improvement"
+        },
+        "downtime": {
+          "ko": "홍조 1–2일",
+          "en": "Redness 1–2 days"
+        },
+        "pain": {
+          "level": "low_medium",
+          "pain_score_0_10": 3
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 200000,
+          "note_ko": "회차제",
+          "note_en": "Per session"
+        },
+        "recommended": {
+          "sessions_min": 3,
+          "sessions_max": 5,
+          "interval_weeks": 2,
+          "maintenance_note": {
+            "ko": "월 1회 관리",
+            "en": "Monthly care"
+          }
+        }
+      }
+    },
+    {
+      "id": "laser_toning",
+      "name": {
+        "ko": "레이저 토닝",
+        "en": "Laser Toning"
+      },
+      "summary": {
+        "ko": "균일 톤·미세 색소 개선",
+        "en": "Evens tone & micro-pigmentation"
+      },
+      "tags": [
+        {
+          "ko": "저자극",
+          "en": "Gentle"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "1–2주/회차 누적",
+            "en": "1–2 weeks; cumulative"
+          },
+          "onset_weeks_min": 1,
+          "onset_weeks_max": 2,
+          "duration_months_min": 3,
+          "duration_months_max": 6,
+          "ko": "3–5회 이상 권장",
+          "en": "3–5+ sessions recommended"
+        },
+        "downtime": {
+          "ko": "거의 없음",
+          "en": "Minimal"
+        },
+        "pain": {
+          "level": "low",
+          "pain_score_0_10": 2
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 150000,
+          "note_ko": "패키지 권장",
+          "note_en": "Package recommended"
+        },
+        "recommended": {
+          "sessions_min": 3,
+          "sessions_max": 6,
+          "interval_weeks": 1,
+          "maintenance_note": {
+            "ko": "월 1회 유지",
+            "en": "Monthly maintenance"
+          }
+        }
+      }
+    },
+    {
+      "id": "potenza",
+      "name": {
+        "ko": "포텐자 (RF 니들)",
+        "en": "Potenza (RF Microneedling)"
+      },
+      "summary": {
+        "ko": "모공·흉터·결·탄력 개선",
+        "en": "Pores, scars, texture & firmness"
+      },
+      "tags": [
+        {
+          "ko": "RF니들",
+          "en": "RF microneedling"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "2–4주/회차 누적",
+            "en": "2–4 weeks; cumulative"
+          },
+          "onset_weeks_min": 2,
+          "onset_weeks_max": 4,
+          "duration_months_min": 6,
+          "duration_months_max": 12,
+          "ko": "3–4회 시리즈",
+          "en": "3–4 session series"
+        },
+        "downtime": {
+          "ko": "홍조/미세딱지 2–5일",
+          "en": "Redness/micro-crusts 2–5 days"
+        },
+        "pain": {
+          "level": "medium",
+          "pain_score_0_10": 5
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 400000,
+          "note_ko": "팁·옵션별",
+          "note_en": "By tip/options"
+        },
+        "recommended": {
+          "sessions_min": 3,
+          "sessions_max": 4,
+          "interval_weeks": 4,
+          "maintenance_note": {
+            "ko": "분기별 보강",
+            "en": "Quarterly reinforcement"
+          }
+        }
+      }
+    }
+  ]
+}

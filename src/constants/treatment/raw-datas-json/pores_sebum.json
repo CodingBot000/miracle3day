@@ -1,0 +1,185 @@
+{
+  "category_key": "Pores_Sebum",
+  "ko": "모공/피지",
+  "en": "Pores & Sebum",
+  "concern_copy": {
+    "ko": "셀카마다 보이는 모공, 가까이서도 매끈하고 싶어",
+    "en": "Visible pores in selfies—I want smooth skin up close"
+  },
+  "areas": [
+    {
+      "key": "full_face",
+      "ko": "얼굴 전체",
+      "en": "Full face"
+    },
+    {
+      "key": "t_zone",
+      "ko": "T존",
+      "en": "T-zone"
+    }
+  ],
+  "treatments": [
+    {
+      "id": "pico_pores",
+      "name": {
+        "ko": "피코 레이저(모공)",
+        "en": "Pico Laser (Pores)"
+      },
+      "summary": {
+        "ko": "미세 타깃으로 모공·결 개선",
+        "en": "Micro-targeting pores & texture"
+      },
+      "tags": [
+        {
+          "ko": "정밀",
+          "en": "Precision"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "1–2주 / 회차 누적",
+            "en": "1–2 weeks; cumulative"
+          },
+          "onset_weeks_min": 1,
+          "onset_weeks_max": 2,
+          "duration_months_min": 3,
+          "duration_months_max": 6,
+          "ko": "3–5회 이상 권장",
+          "en": "3–5+ sessions recommended"
+        },
+        "downtime": {
+          "ko": "홍조 1–2일",
+          "en": "Redness 1–2 days"
+        },
+        "pain": {
+          "level": "low_medium",
+          "pain_score_0_10": 3
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 220000,
+          "note_ko": "프로토콜별",
+          "note_en": "By protocol"
+        },
+        "recommended": {
+          "sessions_min": 3,
+          "sessions_max": 5,
+          "interval_weeks": 2,
+          "maintenance_note": {
+            "ko": "월 1회 관리",
+            "en": "Monthly care"
+          }
+        }
+      }
+    },
+    {
+      "id": "skin_botox_pores",
+      "name": {
+        "ko": "스킨보톡스(모공)",
+        "en": "Skin Botox (Pores)"
+      },
+      "summary": {
+        "ko": "피지·모공 타이트닝",
+        "en": "Sebum control & pore tightening"
+      },
+      "tags": [
+        {
+          "ko": "모공",
+          "en": "Pores"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "1–2주",
+            "en": "1–2 weeks"
+          },
+          "onset_weeks_min": 1,
+          "onset_weeks_max": 2,
+          "duration_months_min": 3,
+          "duration_months_max": 4,
+          "ko": "피지·결 개선",
+          "en": "Improves sebum/texture"
+        },
+        "downtime": {
+          "ko": "핀프릭 1–2일",
+          "en": "Pinpricks 1–2 days"
+        },
+        "pain": {
+          "level": "low_medium",
+          "pain_score_0_10": 3
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 260000,
+          "note_ko": "부위·용량별",
+          "note_en": "By area/units"
+        },
+        "recommended": {
+          "sessions_min": 3,
+          "sessions_max": 4,
+          "interval_weeks": 3,
+          "maintenance_note": {
+            "ko": "분기별 관리",
+            "en": "Quarterly care"
+          }
+        }
+      }
+    },
+    {
+      "id": "mts_gf",
+      "name": {
+        "ko": "MTS+성장인자",
+        "en": "MTS + Growth Factors"
+      },
+      "summary": {
+        "ko": "미세채널로 유효성분 전달",
+        "en": "Micro-channels deliver actives"
+      },
+      "tags": [
+        {
+          "ko": "결개선",
+          "en": "Texture"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "2–4주 / 누적",
+            "en": "2–4 weeks; cumulative"
+          },
+          "onset_weeks_min": 2,
+          "onset_weeks_max": 4,
+          "duration_months_min": 3,
+          "duration_months_max": 6,
+          "ko": "3–4회 시리즈",
+          "en": "3–4 session series"
+        },
+        "downtime": {
+          "ko": "홍조 1–3일",
+          "en": "Redness 1–3 days"
+        },
+        "pain": {
+          "level": "medium",
+          "pain_score_0_10": 5
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 250000,
+          "note_ko": "칵테일·용량별",
+          "note_en": "By cocktail/volume"
+        },
+        "recommended": {
+          "sessions_min": 3,
+          "sessions_max": 4,
+          "interval_weeks": 4,
+          "maintenance_note": {
+            "ko": "분기별 관리",
+            "en": "Quarterly care"
+          }
+        }
+      }
+    }
+  ]
+}

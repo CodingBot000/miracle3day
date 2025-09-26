@@ -1,0 +1,313 @@
+{
+  "category_key": "Filler_Volume",
+  "ko": "필러/볼륨",
+  "en": "Filler & Volume Restoration",
+  "concern_copy": {
+    "ko": "꺼져 보이는 얼굴, 어려 보이는 볼륨을 채우고 싶어",
+    "en": "Hollow, tired look—I want youthful volume"
+  },
+  "areas": [
+    {
+      "key": "nl_folds",
+      "ko": "팔자",
+      "en": "Nasolabial folds"
+    },
+    {
+      "key": "cheeks",
+      "ko": "볼",
+      "en": "Cheeks"
+    },
+    {
+      "key": "lips",
+      "ko": "입술",
+      "en": "Lips"
+    },
+    {
+      "key": "chin",
+      "ko": "턱",
+      "en": "Chin"
+    },
+    {
+      "key": "forehead",
+      "ko": "이마",
+      "en": "Forehead"
+    },
+    {
+      "key": "tear_trough",
+      "ko": "눈밑",
+      "en": "Tear troughs"
+    }
+  ],
+  "treatments": [
+    {
+      "id": "korean_filler",
+      "name": {
+        "ko": "국산 필러(HA)",
+        "en": "Korean HA Filler"
+      },
+      "summary": {
+        "ko": "볼륨·윤곽 보완(가성비)",
+        "en": "Volume/contour (value-friendly)"
+      },
+      "tags": [
+        {
+          "ko": "HA",
+          "en": "HA"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "즉시",
+            "en": "Immediate"
+          },
+          "onset_weeks_min": 0,
+          "onset_weeks_max": 0,
+          "duration_months_min": 6,
+          "duration_months_max": 12,
+          "ko": "윤곽·볼륨 보강",
+          "en": "Adds contour/volume"
+        },
+        "downtime": {
+          "ko": "붓기/멍 2–5일",
+          "en": "Swelling/bruising 2–5 days"
+        },
+        "pain": {
+          "level": "medium",
+          "pain_score_0_10": 5
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 250000,
+          "note_ko": "1cc 기준",
+          "note_en": "Per 1cc"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 1,
+          "interval_weeks": 0,
+          "maintenance_note": {
+            "ko": "6–12개월 보강",
+            "en": "Touch-up 6–12 months"
+          }
+        }
+      }
+    },
+    {
+      "id": "imported_filler",
+      "name": {
+        "ko": "수입 필러(HA)",
+        "en": "Imported HA Filler"
+      },
+      "summary": {
+        "ko": "내구성·점탄성 균일",
+        "en": "Durability & consistency"
+      },
+      "tags": [
+        {
+          "ko": "HA",
+          "en": "HA"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "즉시",
+            "en": "Immediate"
+          },
+          "onset_weeks_min": 0,
+          "onset_weeks_max": 0,
+          "duration_months_min": 9,
+          "duration_months_max": 18,
+          "ko": "볼륨·윤곽 강화",
+          "en": "Reinforces volume/contour"
+        },
+        "downtime": {
+          "ko": "붓기/멍 2–5일",
+          "en": "Swelling/bruising 2–5 days"
+        },
+        "pain": {
+          "level": "medium",
+          "pain_score_0_10": 5
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 350000,
+          "note_ko": "1cc 기준",
+          "note_en": "Per 1cc"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 1,
+          "interval_weeks": 0,
+          "maintenance_note": {
+            "ko": "9–18개월 보강",
+            "en": "Touch-up 9–18 months"
+          }
+        }
+      }
+    },
+    {
+      "id": "lip_filler",
+      "name": {
+        "ko": "입술 필러",
+        "en": "Lip Filler"
+      },
+      "summary": {
+        "ko": "볼륨·윤곽·수분감 입술",
+        "en": "Volume, contour & hydrated lips"
+      },
+      "tags": [
+        {
+          "ko": "립볼륨",
+          "en": "Lip volume"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "즉시",
+            "en": "Immediate"
+          },
+          "onset_weeks_min": 0,
+          "onset_weeks_max": 0,
+          "duration_months_min": 6,
+          "duration_months_max": 12,
+          "ko": "라인·볼륨 개선",
+          "en": "Enhances shape/volume"
+        },
+        "downtime": {
+          "ko": "붓기 2–5일",
+          "en": "Swelling 2–5 days"
+        },
+        "pain": {
+          "level": "medium",
+          "pain_score_0_10": 5
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 300000,
+          "note_ko": "1cc 기준",
+          "note_en": "Per 1cc"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 1,
+          "interval_weeks": 0,
+          "maintenance_note": {
+            "ko": "6–12개월 보강",
+            "en": "Touch-up 6–12 months"
+          }
+        }
+      }
+    },
+    {
+      "id": "tear_trough_filler",
+      "name": {
+        "ko": "눈밑 필러",
+        "en": "Tear Trough Filler"
+      },
+      "summary": {
+        "ko": "꺼짐 개선, 피곤한 인상 완화",
+        "en": "Fills hollows, refreshes look"
+      },
+      "tags": [
+        {
+          "ko": "언더아이",
+          "en": "Under-eye"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "즉시",
+            "en": "Immediate"
+          },
+          "onset_weeks_min": 0,
+          "onset_weeks_max": 0,
+          "duration_months_min": 6,
+          "duration_months_max": 12,
+          "ko": "다크·꺼짐 완화",
+          "en": "Eases darkness/hollows"
+        },
+        "downtime": {
+          "ko": "멍/붓기 3–7일",
+          "en": "Bruise/swelling 3–7 days"
+        },
+        "pain": {
+          "level": "medium",
+          "pain_score_0_10": 5
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 400000,
+          "note_ko": "난이도에 따라",
+          "note_en": "Depends on difficulty"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 1,
+          "interval_weeks": 0,
+          "maintenance_note": {
+            "ko": "6–12개월 보강",
+            "en": "Touch-up 6–12 months"
+          }
+        }
+      }
+    },
+    {
+      "id": "fat_grafting_face",
+      "name": {
+        "ko": "지방이식(안면)",
+        "en": "Autologous Fat Grafting (Face)"
+      },
+      "summary": {
+        "ko": "자체 지방으로 자연 볼륨",
+        "en": "Own fat for natural volume"
+      },
+      "tags": [
+        {
+          "ko": "자연볼륨",
+          "en": "Natural volume"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "즉시(생착 후 안정)",
+            "en": "Immediate (stabilizes after take)"
+          },
+          "onset_weeks_min": 0,
+          "onset_weeks_max": 6,
+          "duration_months_min": 24,
+          "duration_months_max": 60,
+          "ko": "생착 후 장기 유지",
+          "en": "Long-term after engraftment"
+        },
+        "downtime": {
+          "ko": "1–2주 회복",
+          "en": "1–2 weeks recovery"
+        },
+        "pain": {
+          "level": "high",
+          "pain_score_0_10": 8
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 2500000,
+          "note_ko": "채취·주입 범위",
+          "note_en": "By harvest/inject areas"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 1,
+          "interval_weeks": 0,
+          "maintenance_note": {
+            "ko": "필요 시 소량 보정",
+            "en": "Minor touch-ups as needed"
+          }
+        }
+      }
+    }
+  ]
+}

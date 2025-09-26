@@ -90,7 +90,7 @@ export default function RootLayout({
         {/* <PageTransitionOverlay /> */}
 
         {/* 배경/루트 래퍼: 변형/음수마진으로 넘칠 때를 대비해 clip */}
-        <div className="bg-gradient-hero flex flex-col flex-1 min-h-screen w-full overflow-x-clip">
+        <div className="bg-gradient-hero flex flex-col min-h-screen w-full overflow-x-clip">
           <Providers>
             <ScrollTop />
             <div id="modal-root" />
@@ -100,7 +100,7 @@ export default function RootLayout({
             </Suspense>
 
             {/* 메인은 항상 뷰포트폭에 맞춤 */}
-            <main className="pt-4 flex-1 pb-[72px] w-full">
+            <main className="pt-4 flex-grow pb-[72px] w-full">
               {/* 컨텐츠 컨테이너: 데스크탑 1200px 제한 + 모바일 꽉 채우기 */}
               <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8 min-w-0">
                 {children}

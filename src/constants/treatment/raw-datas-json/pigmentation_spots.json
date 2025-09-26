@@ -1,0 +1,200 @@
+{
+  "category_key": "Pigmentation_Spots",
+  "ko": "색소/기미/잡티",
+  "en": "Pigmentation & Spots",
+  "concern_copy": {
+    "ko": "햇볕 아래 선명해지는 기미와 잡티, 더 이상 숨기지 않을래",
+    "en": "Melasma and spots that show in sunlight—I won’t hide anymore"
+  },
+  "areas": [
+    {
+      "key": "cheeks",
+      "ko": "볼",
+      "en": "Cheeks"
+    },
+    {
+      "key": "forehead",
+      "ko": "이마",
+      "en": "Forehead"
+    },
+    {
+      "key": "nose",
+      "ko": "코",
+      "en": "Nose"
+    },
+    {
+      "key": "arms",
+      "ko": "팔",
+      "en": "Arms"
+    },
+    {
+      "key": "hands",
+      "ko": "손",
+      "en": "Hands"
+    }
+  ],
+  "treatments": [
+    {
+      "id": "laser_toning_pigment",
+      "name": {
+        "ko": "레이저 토닝(색소)",
+        "en": "Laser Toning (Pigment)"
+      },
+      "summary": {
+        "ko": "미세 색소·멜라닌 균질화",
+        "en": "Fine pigment & melanin homogenization"
+      },
+      "tags": [
+        {
+          "ko": "멜라닌",
+          "en": "Melanin"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "1–2주 / 회차 누적",
+            "en": "1–2 weeks; cumulative"
+          },
+          "onset_weeks_min": 1,
+          "onset_weeks_max": 2,
+          "duration_months_min": 3,
+          "duration_months_max": 6,
+          "ko": "5–10회 권장",
+          "en": "5–10 sessions advised"
+        },
+        "downtime": {
+          "ko": "경미",
+          "en": "Minimal"
+        },
+        "pain": {
+          "level": "low",
+          "pain_score_0_10": 2
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 150000,
+          "note_ko": "장기 패키지 적합",
+          "note_en": "Best in long packages"
+        },
+        "recommended": {
+          "sessions_min": 5,
+          "sessions_max": 10,
+          "interval_weeks": 1,
+          "maintenance_note": {
+            "ko": "월 1회 유지",
+            "en": "Monthly maintenance"
+          }
+        }
+      }
+    },
+    {
+      "id": "pico_spots",
+      "name": {
+        "ko": "피코 토닝(잡티)",
+        "en": "Pico Toning (Spots)"
+      },
+      "summary": {
+        "ko": "잡티·주근깨·기미 개선",
+        "en": "Freckles, spots & melasma care"
+      },
+      "tags": [
+        {
+          "ko": "정밀",
+          "en": "Precision"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "1–2주 / 회차 누적",
+            "en": "1–2 weeks; cumulative"
+          },
+          "onset_weeks_min": 1,
+          "onset_weeks_max": 2,
+          "duration_months_min": 3,
+          "duration_months_max": 6,
+          "ko": "3–6회 권장",
+          "en": "3–6 sessions recommended"
+        },
+        "downtime": {
+          "ko": "홍조 1–2일",
+          "en": "Redness 1–2 days"
+        },
+        "pain": {
+          "level": "low_medium",
+          "pain_score_0_10": 3
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 220000,
+          "note_ko": "스팟/플라크별",
+          "note_en": "By spot/plaque"
+        },
+        "recommended": {
+          "sessions_min": 3,
+          "sessions_max": 6,
+          "interval_weeks": 2,
+          "maintenance_note": {
+            "ko": "필요 시 보강",
+            "en": "Top-up as needed"
+          }
+        }
+      }
+    },
+    {
+      "id": "ipl",
+      "name": {
+        "ko": "IPL(광선치료)",
+        "en": "IPL (Photofacial)"
+      },
+      "summary": {
+        "ko": "홍조·색소·톤 복합 개선",
+        "en": "Redness, pigment & tone combo"
+      },
+      "tags": [
+        {
+          "ko": "광치료",
+          "en": "Light therapy"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "1–2주 / 회차 누적",
+            "en": "1–2 weeks; cumulative"
+          },
+          "onset_weeks_min": 1,
+          "onset_weeks_max": 2,
+          "duration_months_min": 3,
+          "duration_months_max": 6,
+          "ko": "3–5회 권장",
+          "en": "3–5 sessions recommended"
+        },
+        "downtime": {
+          "ko": "홍조/미세딱지 1–3일",
+          "en": "Redness/micro-crusts 1–3 days"
+        },
+        "pain": {
+          "level": "low_medium",
+          "pain_score_0_10": 3
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 180000,
+          "note_ko": "필터·에너지별",
+          "note_en": "By filter/energy"
+        },
+        "recommended": {
+          "sessions_min": 3,
+          "sessions_max": 5,
+          "interval_weeks": 3,
+          "maintenance_note": {
+            "ko": "분기별 관리",
+            "en": "Quarterly care"
+          }
+        }
+      }
+    }
+  ]
+}

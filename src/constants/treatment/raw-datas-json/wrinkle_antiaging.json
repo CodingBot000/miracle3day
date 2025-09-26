@@ -1,0 +1,136 @@
+{
+  "category_key": "Wrinkle_AntiAging",
+  "ko": "주름/안티에이징",
+  "en": "Wrinkle & Anti-aging",
+  "concern_copy": {
+    "ko": "웃을 때마다 깊어지는 주름",
+    "en": "Wrinkles deepen whenever I smile"
+  },
+  "areas": [
+    {
+      "key": "forehead",
+      "ko": "이마",
+      "en": "Forehead"
+    },
+    {
+      "key": "glabella",
+      "ko": "미간",
+      "en": "Glabella"
+    },
+    {
+      "key": "crows_feet",
+      "ko": "눈가",
+      "en": "Crow’s feet"
+    }
+  ],
+  "treatments": [
+    {
+      "id": "botox",
+      "name": {
+        "ko": "보톡스",
+        "en": "Botox"
+      },
+      "summary": {
+        "ko": "표정 주름 완화",
+        "en": "Softens expression lines"
+      },
+      "tags": [
+        {
+          "ko": "빠른효과",
+          "en": "Fast"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "3–7일",
+            "en": "3–7 days"
+          },
+          "onset_weeks_min": 0.5,
+          "onset_weeks_max": 1,
+          "duration_months_min": 3,
+          "duration_months_max": 6,
+          "ko": "미간/이마/눈가 정돈",
+          "en": "Smoothes glabella/forehead/crow’s feet"
+        },
+        "downtime": {
+          "ko": "거의 없음",
+          "en": "Minimal"
+        },
+        "pain": {
+          "level": "low",
+          "pain_score_0_10": 2
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 150000,
+          "note_ko": "부위·단위",
+          "note_en": "By area/units"
+        },
+        "recommended": {
+          "sessions_min": 1,
+          "sessions_max": 1,
+          "interval_weeks": 0,
+          "maintenance_note": {
+            "ko": "3–6개월 간격 재시술",
+            "en": "Repeat every 3–6 months"
+          }
+        }
+      }
+    },
+    {
+      "id": "rejuran",
+      "name": {
+        "ko": "리쥬란 힐러",
+        "en": "Rejuran Healer"
+      },
+      "summary": {
+        "ko": "PDRN 재생으로 탄력·결",
+        "en": "PDRN regeneration for elasticity/texture"
+      },
+      "tags": [
+        {
+          "ko": "재생",
+          "en": "Regeneration"
+        }
+      ],
+      "attributes": {
+        "effect": {
+          "onset_label": {
+            "ko": "2–4주",
+            "en": "2–4 weeks"
+          },
+          "onset_weeks_min": 2,
+          "onset_weeks_max": 4,
+          "duration_months_min": 3,
+          "duration_months_max": 6,
+          "ko": "누적 시 더 선명",
+          "en": "Cumulative improvements"
+        },
+        "downtime": {
+          "ko": "약침자국 1–3일",
+          "en": "Bumps 1–3 days"
+        },
+        "pain": {
+          "level": "medium",
+          "pain_score_0_10": 5
+        },
+        "cost": {
+          "currency": "KRW",
+          "from": 350000,
+          "note_ko": "시린지 수",
+          "note_en": "By syringes"
+        },
+        "recommended": {
+          "sessions_min": 3,
+          "sessions_max": 4,
+          "interval_weeks": 3,
+          "maintenance_note": {
+            "ko": "분기/반기 보강",
+            "en": "Quarterly/biannual top-up"
+          }
+        }
+      }
+    }
+  ]
+}

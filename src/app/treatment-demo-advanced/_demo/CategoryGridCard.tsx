@@ -152,11 +152,11 @@ const CategoryGridCard: React.FC<CategoryGridCardProps> = ({
     >
       <div className="flex h-40">
         {/* Left side - 1/4 width on desktop, 1/3 on mobile */}
-        <div className="w-1/3 md:w-1/4 p-3 md:p-4 flex flex-col justify-center bg-gradient-to-br from-neutral-50 to-neutral-100">
-          <h3 className="text-sm md:text-lg font-bold text-neutral-900 mb-1 md:mb-2 leading-tight">
+        <div className="w-1/3 md:w-1/4 p-3 md:p-4 flex flex-col justify-center bg-gradient-to-br from-[#FDF5F0] to-[#F8E8E0] group-hover:scale-110 transition-transform duration-300">
+          <h3 className="text-sm md:text-lg font-bold text-[#8B4513] mb-1 md:mb-2 leading-tight">
             {category[locale]}
           </h3>
-          <p className="text-xs md:text-sm text-neutral-600 leading-relaxed">
+          <p className="text-xs md:text-sm text-[#A0522D] opacity-80 leading-relaxed">
             {category.concern_copy[locale]}
           </p>
         </div>

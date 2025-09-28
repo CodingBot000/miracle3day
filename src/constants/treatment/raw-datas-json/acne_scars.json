@@ -9,18 +9,18 @@
   "areas": [
     {
       "key": "face_cheeks",
-      "ko": "얼굴-볼",
-      "en": "Face - Cheeks"
+      "ko": "볼",
+      "en": "Cheeks"
     },
     {
       "key": "face_forehead",
-      "ko": "얼굴-이마",
-      "en": "Face - Forehead"
+      "ko": "이마",
+      "en": "Forehead"
     },
     {
       "key": "face_chin",
-      "ko": "얼굴-턱",
-      "en": "Face - Chin"
+      "ko": "턱",
+      "en": "Chin"
     },
     {
       "key": "back",

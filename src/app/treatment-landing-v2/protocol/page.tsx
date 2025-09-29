@@ -194,7 +194,10 @@ export default function ProtocolPage() {
                   data={{
                     id: treatment.id,
                     name: { ko: treatment.ko, en: treatment.en },
-                    summary: treatment.summary,
+                    summary: {
+                      ko: treatment.summary?.ko || treatment.summary?.kr || '',
+                      en: treatment.summary?.en || treatment.summary?.eng || ''
+                    },
                     tags: Array.isArray(treatment.tags) 
                       ? treatment.tags.map((tag: any) => 
                           typeof tag === 'string' 
@@ -202,7 +205,30 @@ export default function ProtocolPage() {
                             : tag
                         )
                       : [],
-                    attributes: treatment.attributes
+                    attributes: {
+                      effect: {
+                        onset_label: { ko: '효과 발현', en: 'Effect Onset' },
+                        onset_weeks_min: treatment.attributes?.effect?.onset_weeks_min || 0,
+                        onset_weeks_max: treatment.attributes?.effect?.onset_weeks_max || 0,
+                        duration_months_min: treatment.attributes?.effect?.duration_months_min || 0,
+                        duration_months_max: treatment.attributes?.effect?.duration_months_max || 0
+                      },
+                      downtime: { ko: '회복시간', en: 'Downtime' },
+                      pain: {
+                        level: (treatment.attributes?.pain?.level as any) || 'none',
+                        pain_score_0_10: treatment.attributes?.pain?.pain_score_0_10 || 0
+                      },
+                      cost: {
+                        currency: treatment.attributes?.cost?.currency || 'KRW',
+                        from: treatment.attributes?.cost?.from || 0
+                      },
+                      recommended: {
+                        sessions_min: treatment.attributes?.recommended?.sessions_min || 1,
+                        sessions_max: treatment.attributes?.recommended?.sessions_max || 1,
+                        interval_weeks: treatment.attributes?.recommended?.interval_weeks || 0,
+                        maintenance_note: { ko: '유지관리', en: 'Maintenance' }
+                      }
+                    }
                   }}
                   locale={locale}
                   onBook={(treatment) => console.log('Book treatment:', treatment.id)}
@@ -227,7 +253,10 @@ export default function ProtocolPage() {
                   data={{
                     id: treatment.id,
                     name: { ko: treatment.ko, en: treatment.en },
-                    summary: treatment.summary,
+                    summary: {
+                      ko: treatment.summary?.ko || treatment.summary?.kr || '',
+                      en: treatment.summary?.en || treatment.summary?.eng || ''
+                    },
                     tags: Array.isArray(treatment.tags) 
                       ? treatment.tags.map((tag: any) => 
                           typeof tag === 'string' 
@@ -235,7 +264,30 @@ export default function ProtocolPage() {
                             : tag
                         )
                       : [],
-                    attributes: treatment.attributes
+                    attributes: {
+                      effect: {
+                        onset_label: { ko: '효과 발현', en: 'Effect Onset' },
+                        onset_weeks_min: treatment.attributes?.effect?.onset_weeks_min || 0,
+                        onset_weeks_max: treatment.attributes?.effect?.onset_weeks_max || 0,
+                        duration_months_min: treatment.attributes?.effect?.duration_months_min || 0,
+                        duration_months_max: treatment.attributes?.effect?.duration_months_max || 0
+                      },
+                      downtime: { ko: '회복시간', en: 'Downtime' },
+                      pain: {
+                        level: (treatment.attributes?.pain?.level as any) || 'none',
+                        pain_score_0_10: treatment.attributes?.pain?.pain_score_0_10 || 0
+                      },
+                      cost: {
+                        currency: treatment.attributes?.cost?.currency || 'KRW',
+                        from: treatment.attributes?.cost?.from || 0
+                      },
+                      recommended: {
+                        sessions_min: treatment.attributes?.recommended?.sessions_min || 1,
+                        sessions_max: treatment.attributes?.recommended?.sessions_max || 1,
+                        interval_weeks: treatment.attributes?.recommended?.interval_weeks || 0,
+                        maintenance_note: { ko: '유지관리', en: 'Maintenance' }
+                      }
+                    }
                   }}
                   locale={locale}
                   onBook={(treatment) => console.log('Book treatment:', treatment.id)}
@@ -260,7 +312,10 @@ export default function ProtocolPage() {
                   data={{
                     id: treatment.id,
                     name: { ko: treatment.ko, en: treatment.en },
-                    summary: treatment.summary,
+                    summary: {
+                      ko: treatment.summary?.ko || treatment.summary?.kr || '',
+                      en: treatment.summary?.en || treatment.summary?.eng || ''
+                    },
                     tags: Array.isArray(treatment.tags) 
                       ? treatment.tags.map((tag: any) => 
                           typeof tag === 'string' 
@@ -268,7 +323,30 @@ export default function ProtocolPage() {
                             : tag
                         )
                       : [],
-                    attributes: treatment.attributes
+                    attributes: {
+                      effect: {
+                        onset_label: { ko: '효과 발현', en: 'Effect Onset' },
+                        onset_weeks_min: treatment.attributes?.effect?.onset_weeks_min || 0,
+                        onset_weeks_max: treatment.attributes?.effect?.onset_weeks_max || 0,
+                        duration_months_min: treatment.attributes?.effect?.duration_months_min || 0,
+                        duration_months_max: treatment.attributes?.effect?.duration_months_max || 0
+                      },
+                      downtime: { ko: '회복시간', en: 'Downtime' },
+                      pain: {
+                        level: (treatment.attributes?.pain?.level as any) || 'none',
+                        pain_score_0_10: treatment.attributes?.pain?.pain_score_0_10 || 0
+                      },
+                      cost: {
+                        currency: treatment.attributes?.cost?.currency || 'KRW',
+                        from: treatment.attributes?.cost?.from || 0
+                      },
+                      recommended: {
+                        sessions_min: treatment.attributes?.recommended?.sessions_min || 1,
+                        sessions_max: treatment.attributes?.recommended?.sessions_max || 1,
+                        interval_weeks: treatment.attributes?.recommended?.interval_weeks || 0,
+                        maintenance_note: { ko: '유지관리', en: 'Maintenance' }
+                      }
+                    }
                   }}
                   locale={locale}
                   onBook={(treatment) => console.log('Book treatment:', treatment.id)}

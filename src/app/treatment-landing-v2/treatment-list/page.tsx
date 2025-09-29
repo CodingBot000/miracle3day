@@ -55,7 +55,7 @@ export default function TreatmentListPage() {
         })
       )
     }));
-  }, [treatmentCategories, locale]);
+  }, [treatmentCategories]);
 
   console.log("Database categories:", categories.map(cat => cat.category_key));
 
@@ -68,6 +68,19 @@ export default function TreatmentListPage() {
     console.log("Case-insensitive comparison - Input:", categoryKey?.toLowerCase(), "Found:", found?.category_key.toLowerCase());
     return found;
   }, [categoryKey, categories]);
+
+  // 더미 핸들러들 (현재는 콘솔 로그만) - Hook들을 early return 전에 호출
+  const handleSelect = React.useCallback((treatment: Treatment) => {
+    console.log('Treatment selected:', treatment.id);
+  }, []);
+
+  const handleBook = React.useCallback((treatment: Treatment) => {
+    console.log('Book treatment:', treatment.id);
+  }, []);
+
+  const handleContact = React.useCallback(() => {
+    console.log('Contact clicked');
+  }, []);
 
   if (isLoading) {
     return (
@@ -88,19 +101,6 @@ export default function TreatmentListPage() {
       </div>
     );
   }
-
-  // 더미 핸들러들 (현재는 콘솔 로그만)
-  const handleSelect = React.useCallback((treatment: Treatment) => {
-    console.log('Treatment selected:', treatment.id);
-  }, []);
-
-  const handleBook = React.useCallback((treatment: Treatment) => {
-    console.log('Book treatment:', treatment.id);
-  }, []);
-
-  const handleContact = React.useCallback(() => {
-    console.log('Contact clicked');
-  }, []);
 
   if (!selectedCategory) {
     console.error("=== CATEGORY NOT FOUND ===");

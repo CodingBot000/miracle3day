@@ -1,4 +1,22 @@
 {
+  "Lifting_Firming": {
+    "category_key": "Lifting_Firming",
+    "ko": "탄력/리프팅",
+    "en": "Lifting & Firming",
+    "concern_copy": {
+      "ko": "중력이 속삭일 때, 우아함으로 답하다—청춘의 건축학을 되찾다",
+      "en": "When gravity whispers, we answer with grace—restoring the architecture of youth"
+    }
+  },
+  "Wrinkle_AntiAging": {
+    "category_key": "Wrinkle_AntiAging",
+    "ko": "주름/안티에이징",
+    "en": "Wrinkle & Anti-aging",
+    "concern_copy": {
+      "ko": "기쁨은 추억으로만, 흔적은 남기지 않게—자유롭게 미소짓다",
+      "en": "Let joy leave only memories, not marks—smile freely again"
+    }
+  },
   "Acne_Scars": {
     "category_key": "Acne_Scars",
     "ko": "여드름/흉터",
@@ -17,15 +35,7 @@
       "en": "Sculpting the silhouette that mirrors the confidence within"
     }
   },
-  "Lifting_Firming": {
-    "category_key": "Lifting_Firming",
-    "ko": "탄력/리프팅",
-    "en": "Lifting & Firming",
-    "concern_copy": {
-      "ko": "중력이 속삭일 때, 우아함으로 답하다—청춘의 건축학을 되찾다",
-      "en": "When gravity whispers, we answer with grace—restoring the architecture of youth"
-    }
-  },
+ 
   "Filler_Volume": {
     "category_key": "Filler_Volume",
     "ko": "필러/볼륨",
@@ -87,15 +97,6 @@
     "concern_copy": {
       "ko": "어떤 파운데이션도 흉내낼 수 없는 진짜 광채를 깨우다",
       "en": "Unveil the radiance that no foundation can fake"
-    }
-  },
-  "Wrinkle_AntiAging": {
-    "category_key": "Wrinkle_AntiAging",
-    "ko": "주름/안티에이징",
-    "en": "Wrinkle & Anti-aging",
-    "concern_copy": {
-      "ko": "기쁨은 추억으로만, 흔적은 남기지 않게—자유롭게 미소짓다",
-      "en": "Let joy leave only memories, not marks—smile freely again"
     }
   }
 }

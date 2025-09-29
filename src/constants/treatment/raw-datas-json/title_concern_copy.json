@@ -1,0 +1,102 @@
+{
+  "Lifting_Firming": {
+    "category_key": "Lifting_Firming",
+    "ko": "탄력/리프팅",
+    "en": "Lifting & Firming",
+    "concern_copy": {
+      "ko": "중력이 속삭일 때, 우아함으로 답하다—청춘의 건축학을 되찾다",
+      "en": "When gravity whispers, we answer with grace—restoring the architecture of youth"
+    }
+  },
+  "Wrinkle_AntiAging": {
+    "category_key": "Wrinkle_AntiAging",
+    "ko": "주름/안티에이징",
+    "en": "Wrinkle & Anti-aging",
+    "concern_copy": {
+      "ko": "기쁨은 추억으로만, 흔적은 남기지 않게—자유롭게 미소짓다",
+      "en": "Let joy leave only memories, not marks—smile freely again"
+    }
+  },
+  "Acne_Scars": {
+    "category_key": "Acne_Scars",
+    "ko": "여드름/흉터",
+    "en": "Acne & Scars",
+    "concern_copy": {
+      "ko": "시간이 새긴 이야기, 이제는 새로 써내려가고 싶어",
+      "en": "Time wrote stories on my skin I never wanted to tell—let's rewrite them"
+    }
+  },
+  "Body_Contouring": {
+    "category_key": "Body_Contouring",
+    "ko": "바디 컨투어링",
+    "en": "Body Contouring",
+    "concern_copy": {
+      "ko": "내 안의 자신감을 닮은 실루엣으로 조각하다",
+      "en": "Sculpting the silhouette that mirrors the confidence within"
+    }
+  },
+ 
+  "Filler_Volume": {
+    "category_key": "Filler_Volume",
+    "ko": "필러/볼륨",
+    "en": "Filler & Volume Restoration",
+    "concern_copy": {
+      "ko": "한때 빛과 춤추던 얼굴에 다시 생기를 불어넣다",
+      "en": "Breathe life back into features that once danced with light"
+    }
+  },
+  "Hair_Removal": {
+    "category_key": "Hair_Removal",
+    "ko": "제모",
+    "en": "Hair Removal",
+    "concern_copy": {
+      "ko": "사계절이 흘러도 변함없는 우아함—실크처럼 매끄러운 피부",
+      "en": "Effortless elegance, season after season—skin as smooth as silk"
+    }
+  },
+  "Hair_Scalp": {
+    "category_key": "Hair_Scalp",
+    "ko": "헤어/두피",
+    "en": "Hair & Scalp",
+    "concern_copy": {
+      "ko": "자신감이 왕관처럼 빛나던 그곳에서, 다시 당당히 군림하다",
+      "en": "Where confidence once crowned, let it reign again"
+    }
+  },
+  "Pigmentation_Spots": {
+    "category_key": "Pigmentation_Spots",
+    "ko": "색소/기미/잡티",
+    "en": "Pigmentation & Spots",
+    "concern_copy": {
+      "ko": "그림자가 아닌 빛으로 물드는 피부와 함께 당당히 빛 속으로",
+      "en": "Step into the light with skin that glows, not shadows that show"
+    }
+  },
+  "Pores_Sebum": {
+    "category_key": "Pores_Sebum",
+    "ko": "모공/피지",
+    "en": "Pores & Sebum",
+    "concern_copy": {
+      "ko": "어떤 각도에서도, 어떤 빛에서도—모든 순간이 완벽한 피부",
+      "en": "Every angle, every light—skin that's flawless in every frame"
+    }
+  },
+  "Skin_Care": {
+    "category_key": "Skin_Care",
+    "ko": "스킨 케어/수분",
+    "en": "Skin Care & Hydration",
+    "concern_copy": {
+      "ko": "피부 깊숙한 갈증을 채우다—안에서부터 빛나는 편안함",
+      "en": "Quench your skin's deepest thirst—comfort that glows from within"
+    }
+  },
+  "Tone_Texture": {
+    "category_key": "Tone_Texture",
+    "ko": "피부톤/결",
+    "en": "Tone & Texture",
+    "concern_copy": {
+      "ko": "어떤 파운데이션도 흉내낼 수 없는 진짜 광채를 깨우다",
+      "en": "Unveil the radiance that no foundation can fake"
+    }
+  }
+}

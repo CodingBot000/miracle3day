@@ -1,0 +1,74 @@
+{
+    "Lifting_Firming": {
+      "category_key": "Lifting_Firming",
+      "ko": "처진 피부 (리프팅/탄력 개선)",
+      "en": "Lifting & Firming",
+      "concern_copy": {
+        "ko": "중력이 속삭일 때, 우아함으로 답하다—청춘의 건축학을 되찾다",
+        "en": "When gravity whispers, we answer with grace—restoring the architecture of youth"
+      }
+    },
+    "Wrinkle_Reduction": {
+      "category_key": "Wrinkle_Reduction",
+      "ko": "주름 제거",
+      "en": "Wrinkle Reduction",
+      "concern_copy": {
+        "ko": "기쁨은 추억으로만, 흔적은 남기지 않게—자유롭게 미소짓다",
+        "en": "Let joy leave only memories, not marks—smile freely again"
+      }
+    },
+    "Facial_Contouring": {
+      "category_key": "Facial_Contouring",
+      "ko": "얼굴 윤곽·라인 개선",
+      "en": "Facial Contouring",
+      "concern_copy": {
+        "ko": "내가 꿈꾸던 각도와 선, 거울 속에서 마주하다",
+        "en": "Meet the angles and lines you've always dreamed of in the mirror"
+      }
+    },
+    "Skin_Tone_Spots": {
+      "category_key": "Skin_Tone_Spots",
+      "ko": "피부톤/잡티 개선",
+      "en": "Skin Tone & Spot Improvement",
+      "concern_copy": {
+        "ko": "그림자가 아닌 빛으로 물드는 피부와 함께 당당히 빛 속으로",
+        "en": "Step into the light with skin that glows, not shadows that show"
+      }
+    },
+    "Volume_Enhancement": {
+      "category_key": "Volume_Enhancement",
+      "ko": "볼륨 개선",
+      "en": "Volume Enhancement",
+      "concern_copy": {
+        "ko": "한때 빛과 춤추던 얼굴에 다시 생기를 불어넣다",
+        "en": "Breathe life back into features that once danced with light"
+      }
+    },
+    "Anti_Aging_Regeneration": {
+      "category_key": "Anti_Aging_Regeneration",
+      "ko": "안티에이징·피부재생",
+      "en": "Anti-aging & Skin Regeneration",
+      "concern_copy": {
+        "ko": "시간을 거슬러 오르는 피부, 세월을 이기는 아름다움",
+        "en": "Skin that travels back in time, beauty that conquers age"
+      }
+    },
+    "Body_Contouring": {
+      "category_key": "Body_Contouring",
+      "ko": "바디라인/지방성형",
+      "en": "Body Contouring & Fat Sculpting",
+      "concern_copy": {
+        "ko": "내 안의 자신감을 닮은 실루엣으로 조각하다",
+        "en": "Sculpting the silhouette that mirrors the confidence within"
+      }
+    },
+    "Hair_Scalp_Care": {
+      "category_key": "Hair_Scalp_Care",
+      "ko": "모발/헤어/체형",
+      "en": "Hair & Scalp Care",
+      "concern_copy": {
+        "ko": "자신감이 왕관처럼 빛나던 그곳에서, 다시 당당히 군림하다",
+        "en": "Where confidence once crowned, let it reign again"
+      }
+    }
+  }

@@ -88,6 +88,25 @@ export default function TopicCard({ topic, locale, topicIndex, onAreaClick, onTo
   // 첫 번째 area_id 가져오기
   const firstAreaId = topic.areas.length > 0 ? topic.areas[0].area_id : '';
 
+  // 모바일 이미지 순환을 위한 state
+  const [mobileImageIndex, setMobileImageIndex] = React.useState(0);
+
+  // 4초마다 모바일 이미지 인덱스 업데이트
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setMobileImageIndex(prevIndex => (prevIndex + 1) % topicImages.length);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [topicImages.length]);
+
+  // 현재 표시할 모바일 이미지 2개 선택
+  const getCurrentMobileImages = () => {
+    const firstImage = topicImages[mobileImageIndex];
+    const secondImage = topicImages[(mobileImageIndex + 1) % topicImages.length];
+    return [firstImage, secondImage];
+  };
+
   const handleTopicClick = () => {
     if (onTopicClick && firstAreaId) {
       onTopicClick(topic.topic_id, firstAreaId);
@@ -173,15 +192,15 @@ export default function TopicCard({ topic, locale, topicIndex, onAreaClick, onTo
         {/* Right side - 2/3 width */}
         <div className="w-2/3 relative overflow-hidden">
           <div className="flex h-full">
-            {/* Mobile: show only first 2 images */}
+            {/* Mobile: show cycling 2 images */}
             <div className="flex md:hidden h-full w-full">
-              {topicImages.slice(0, 2).map((src, index) => (
-                <div key={index} className="flex-1 relative">
+              {getCurrentMobileImages().map((src, index) => (
+                <div key={`mobile-${mobileImageIndex}-${index}`} className="flex-1 relative">
                   <Image
                     src={src}
-                    alt={`${title} image ${index + 1}`}
+                    alt={`${title} image ${(mobileImageIndex + index) % topicImages.length + 1}`}
                     fill
-                    className="object-cover"
+                    className="object-cover transition-opacity duration-500"
                     sizes="33vw"
                   />
                 </div>

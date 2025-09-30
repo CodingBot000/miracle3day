@@ -1,7 +1,7 @@
 import * as React from "react";
 import Image from "next/image";
 import type { TopicWithAreas, Locale } from "@/app/models/treatmentData.dto";
-import FadeKenBurnsCarousel from "@/components/atoms/FadeKenBurnsCarousel";
+import DualImageCarousel from "@/components/atoms/DualImageCarousel";
 
 interface TopicCardProps {
   topic: TopicWithAreas;
@@ -100,7 +100,65 @@ export default function TopicCard({ topic, locale, topicIndex, onAreaClick, onTo
       className="group cursor-pointer bg-white/80 backdrop-blur-sm border-[#E8B4A0]/30 hover:shadow-xl hover:scale-105 transition-all duration-300 hover:bg-white/90 rounded-lg overflow-hidden"
       onClick={handleTopicClick}
     >
-      <div className="flex h-48">
+      {/* Mobile Layout: 세로형 */}
+      <div className="md:hidden">
+        {/* 상단: 제목, 설명, 버튼들 */}
+        <div className="p-4 bg-gradient-to-br from-[#FDF5F0] to-[#F8E8E0]">
+          {/* Topic Header */}
+          <div className="mb-4">
+            <h2 className="text-xl font-bold text-[#8B4513] mb-3 leading-tight">
+              {title}
+            </h2>
+            {concernCopy && (
+              <p className="text-sm text-[#A0522D] opacity-80 leading-relaxed mb-4">
+                {concernCopy}
+              </p>
+            )}
+          </div>
+
+          {/* Area Buttons */}
+          <div className="space-y-2">
+            <div className="flex flex-wrap gap-2">
+              {topic.areas.slice(0, 4).map((area) => (
+                <button
+                  key={area.area_id}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onAreaClick(topic.topic_id, area.area_id);
+                  }}
+                  className="
+                    px-3 py-2 text-sm font-medium rounded-full 
+                    bg-gradient-to-r from-[#8B4513] to-[#A0522D] 
+                    text-white hover:from-[#7A3F12] hover:to-[#8B4513] 
+                    transform hover:scale-105 transition-all duration-200
+                    shadow-sm hover:shadow-md
+                  "
+                >
+                  {locale === 'ko' ? area.area_name_ko : area.area_name_en}
+                </button>
+              ))}
+              {topic.areas.length > 4 && (
+                <span className="px-3 py-2 text-sm text-[#A0522D] opacity-60">
+                  +{topic.areas.length - 4}
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* 하단: 2개 이미지 캐러셀 */}
+        <div className="h-48 relative overflow-hidden">
+          <DualImageCarousel
+            images={topicImages}
+            intervalMs={3500}
+            className="h-full w-full"
+            rounded=""
+          />
+        </div>
+      </div>
+
+      {/* Desktop Layout: 가로형 (기존 유지) */}
+      <div className="hidden md:flex h-48">
         {/* Left side - 1/3 width */}
         <div className="w-1/3 p-4 flex flex-col justify-between bg-gradient-to-br from-[#FDF5F0] to-[#F8E8E0]">
           {/* Topic Header */}
@@ -117,38 +175,7 @@ export default function TopicCard({ topic, locale, topicIndex, onAreaClick, onTo
 
           {/* Area Buttons */}
           <div className="space-y-2">
-            {/* <h3 className="text-xs font-medium text-[#8B4513] mb-2">
-              {locale === 'ko' ? '치료 부위' : 'Areas'}
-            </h3> */}
-            {/* Mobile: 최대 3개 + +N 표시 */}
-            <div className="flex flex-wrap gap-1 md:hidden">
-              {topic.areas.slice(0, 3).map((area) => (
-                <button
-                  key={area.area_id}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onAreaClick(topic.topic_id, area.area_id);
-                  }}
-                  className="
-                    px-2 py-1 text-xs font-medium rounded-full 
-                    bg-gradient-to-r from-[#8B4513] to-[#A0522D] 
-                    text-white hover:from-[#7A3F12] hover:to-[#8B4513] 
-                    transform hover:scale-105 transition-all duration-200
-                    shadow-sm hover:shadow-md
-                  "
-                >
-                  {locale === 'ko' ? area.area_name_ko : area.area_name_en}
-                </button>
-              ))}
-              {topic.areas.length > 3 && (
-                <span className="px-2 py-1 text-xs text-[#A0522D] opacity-60">
-                  +{topic.areas.length - 3}
-                </span>
-              )}
-            </div>
-
-            {/* Desktop: 모든 버튼 표시 */}
-            <div className="hidden md:flex flex-wrap gap-1">
+            <div className="flex flex-wrap gap-1">
               {topic.areas.map((area) => (
                 <button
                   key={area.area_id}
@@ -173,18 +200,8 @@ export default function TopicCard({ topic, locale, topicIndex, onAreaClick, onTo
 
         {/* Right side - 2/3 width */}
         <div className="w-2/3 relative overflow-hidden">
-          {/* Mobile: FadeKenBurnsCarousel */}
-          <div className="md:hidden h-full">
-            <FadeKenBurnsCarousel
-              images={topicImages}
-              intervalMs={3500}
-              className="h-full w-full"
-              rounded=""
-            />
-          </div>
-          
           {/* Desktop: show all 5 images */}
-          <div className="hidden md:flex h-full w-full">
+          <div className="flex h-full w-full">
             {topicImages.map((src, index) => (
               <div key={index} className="flex-1 relative">
                 <Image

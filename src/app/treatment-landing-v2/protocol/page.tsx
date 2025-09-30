@@ -226,7 +226,10 @@ export default function ProtocolPage() {
                         sessions_min: treatment.attributes?.recommended?.sessions_min || 1,
                         sessions_max: treatment.attributes?.recommended?.sessions_max || 1,
                         interval_weeks: treatment.attributes?.recommended?.interval_weeks || 0,
-                        maintenance_note: { ko: '유지관리', en: 'Maintenance' }
+                        maintenance_note: {
+                          ko: treatment.attributes?.recommended?.maintenance_note?.ko || '유지관리',
+                          en: treatment.attributes?.recommended?.maintenance_note?.en || 'Maintenance'
+                        }
                       }
                     }
                   }}
@@ -285,7 +288,10 @@ export default function ProtocolPage() {
                         sessions_min: treatment.attributes?.recommended?.sessions_min || 1,
                         sessions_max: treatment.attributes?.recommended?.sessions_max || 1,
                         interval_weeks: treatment.attributes?.recommended?.interval_weeks || 0,
-                        maintenance_note: { ko: '유지관리', en: 'Maintenance' }
+                        maintenance_note: {
+                          ko: treatment.attributes?.recommended?.maintenance_note?.ko || '유지관리',
+                          en: treatment.attributes?.recommended?.maintenance_note?.en || 'Maintenance'
+                        }
                       }
                     }
                   }}
@@ -344,7 +350,10 @@ export default function ProtocolPage() {
                         sessions_min: treatment.attributes?.recommended?.sessions_min || 1,
                         sessions_max: treatment.attributes?.recommended?.sessions_max || 1,
                         interval_weeks: treatment.attributes?.recommended?.interval_weeks || 0,
-                        maintenance_note: { ko: '유지관리', en: 'Maintenance' }
+                        maintenance_note: {
+                          ko: treatment.attributes?.recommended?.maintenance_note?.ko || '유지관리',
+                          en: treatment.attributes?.recommended?.maintenance_note?.en || 'Maintenance'
+                        }
                       }
                     }
                   }}

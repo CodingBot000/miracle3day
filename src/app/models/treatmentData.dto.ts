@@ -40,6 +40,10 @@ export interface TreatmentAttributes {
     sessions_min?: number;
     sessions_max?: number;
     interval_weeks?: number;
+    maintenance_note?: {
+      ko?: string;
+      en?: string;
+    };
   };
   downtime?: {
     days_min?: number;

@@ -1,0 +1,347 @@
+[
+  {
+    "id": "uuid-20s-en",
+    "age_group": "20s",
+    "lang": "en",
+    "title": "The Golden Age of Youth, a Wise Investment for the Future",
+    "subtitle": "Glowing skin doesn’t maintain itself. Small choices today will change your face in your 30s.",
+    "intro": "Skin at twenty is like a freshly blossomed petal—dewy and elastic. But don’t be deceived into thinking this golden time will last forever. Even now, invisible seeds of time are quietly taking root beneath the surface.",
+    "concerns_title": "Hidden Skin Concerns in Your 20s",
+    "concerns": [
+      {
+        "name": "Uprising of Pores and Acne Marks",
+        "desc": "Irregular routines and stress from exams and job hunting trigger hormonal swings. Late-night snacks bring breakouts that create tiny quakes on your smooth skin. You can cover them with concealer now, but over time they may become irreversible marks."
+      },
+      {
+        "name": "Hyperpigmentation, the Invisible Enemy",
+        "desc": "\"But I apply sunscreen well!\" Even so, the skin’s memory of melanin under the sun is more persistent than you think. It’s dangerous because it’s hard to see right now—like a letter written in invisible ink that appears when heat is applied later."
+      },
+      {
+        "name": "Uneven Skin Tone",
+        "desc": "Traces of alcohol, late-night meals, and all-nighters linger on your face. One area is red, another sallow, and the under-eyes dark—like a palette of mixed paints, the muddled tone hides your natural beauty."
+      }
+    ],
+    "treatments_title": "Tailored Treatments in Your 20s: A Wise Choice for the Future",
+    "treatments": [
+      {
+        "id": "skin_booster_rejuran",
+        "name": "Skin Booster (Rejuran, hydrating booster)",
+        "effect": "Build a water reservoir in the skin. A dense hyaluronic acid mesh sits deep in the skin to protect against dryness and stress; the healthy moisture barrier creates a natural glow even without makeup.",
+        "cycle": "3–5 sessions, every 2–3 weeks",
+        "duration": "6–8 months",
+        "cost": "₩150,000–250,000 per session"
+      },
+      {
+        "id": "laser_toning_pico",
+        "name": "Laser Toning / Pico Toning",
+        "effect": "The secret to clarity. Erases the ‘tiny shadows’ left by daily sun, like polishing an old window. Even one session can yield a noticeably clearer, more transparent tone—especially effective in the 20s thanks to quick recovery.",
+        "cycle": "5–8 sessions, every 2–4 weeks",
+        "duration": "12+ months",
+        "cost": "₩80,000–150,000 per session"
+      },
+      {
+        "id": "fraxel_pico_fraxel",
+        "name": "Fraxel / Pico-Fraxel",
+        "effect": "The reset button for skin. Regenerative treatment to refine acne marks and enlarged pores; micro-beams stimulate new collagen—like replacing old book pages with new ones to regain smooth, glassy texture.",
+        "cycle": "3–5 sessions, every 4–6 weeks",
+        "downtime": "3–7 days",
+        "cost": "₩200,000–350,000 per session"
+      }
+    ],
+    "skin_types_title": "Detailed Care by Skin Type",
+    "skin_types": {
+      "dry": "Dry: “Water first on parched land.” Create deep reservoirs with skin boosters and gently strengthen the barrier with toning.",
+      "oily": "Oily: “The truth behind shine.” Tighten pores with Fraxel and prevent post-inflammatory hyperpigmentation with Pico Toning.",
+      "sensitive": "Sensitive: “Handle with care.” Use low-energy lasers and gentle regenerative therapy to gradually build resilience."
+    },
+    "special_tips_title": "Special Care Tips for Your 20s",
+    "special_tips": {
+      "subsections": [
+        {
+          "title": "Synergy Between Lifestyle and Procedures",
+          "tips": [
+            "Golden-time sleep: Deep sleep from 11 p.m.–2 a.m. boosts growth hormone and enhances results.",
+            "Antioxidants: Blueberries, tomatoes, and green tea help recovery after laser.",
+            "Stress management: Yoga and meditation lower stress hormones and improve regeneration."
+          ]
+        },
+        {
+          "title": "Seasonal Tailored Care",
+          "tips": [
+            "Spring/Summer: Focus on Pico Toning under strong UV.",
+            "Fall/Winter: Prioritize skin boosters and regenerative treatments in dry seasons."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "uuid-30s-en",
+    "age_group": "30s",
+    "lang": "en",
+    "title": "The Last Line of Youth’s Defense—A Time for Wise Choices",
+    "subtitle": "When smile lines no longer look cute and your face looks tired, that’s when to begin.",
+    "intro": "Your 30s feel peculiar. You still think you’re young, yet the mirror says otherwise. Morning firmness isn’t what it used to be, and lines linger after you smile—these are signals of your 30s.",
+    "concerns_title": "Subtle Changes in Your 30s",
+    "concerns": [
+      {
+        "name": "Fine Lines Around Eyes and Forehead",
+        "desc": "Faint lines remain even at rest and grow more defined, like tiny letters time has left behind."
+      },
+      {
+        "name": "Duller Skin Tone",
+        "desc": "The clear, luminous tone of your 20s clouds over. Slower turnover and melanin clearance dull radiance despite makeup."
+      },
+      {
+        "name": "Onset of Volume Loss",
+        "desc": "Cheeks feel less plump; the nasolabial fold starts to show as cheek fat subtly descends."
+      }
+    ],
+    "treatments_title": "30s Treatment Balance: Prevention + Correction",
+    "treatments": [
+      {
+        "id": "botox_expression_lines",
+        "name": "Botox",
+        "effect": "Prevents expression lines from deepening—smart prophylaxis rather than erasing lines outright.",
+        "duration": "4–6 months",
+        "time": "10–15 minutes",
+        "cost": "₩80,000–150,000 per area",
+        "onset": "Starts in 3–7 days"
+      },
+      {
+        "id": "ulthera_shurink_hifu",
+        "name": "Ulthera / Shurink (HIFU Lifting)",
+        "effect": "Awakens collagen by targeting the SMAS layer; dramatic when laxity is still mild.",
+        "duration": "1–2 years",
+        "time": "30–60 minutes",
+        "cost": "₩800,000–1,500,000 full face",
+        "onset": "Kicks in around 2–3 months"
+      },
+      {
+        "id": "thermage_oligio_rf",
+        "name": "Thermage / Oligio (RF Lifting)",
+        "effect": "Deep dermal heating boosts new collagen for firmer bounce from within.",
+        "duration": "6–12 months",
+        "time": "45–90 minutes",
+        "cost": "₩600,000–1,200,000"
+      },
+      {
+        "id": "filler_volume_restore",
+        "name": "Filler",
+        "effect": "Restores early cheek and nasolabial volume for a brighter, less-tired look.",
+        "duration": "12–18 months",
+        "time": "20–30 minutes",
+        "cost": "₩400,000–600,000 per cc"
+      }
+    ],
+    "skin_types_title": "30s by Skin Type",
+    "skin_types": {
+      "dry": "Dual strategy: Botox for expression lines + skin boosters for deep hydration.",
+      "oily": "Secure lift first with HIFU/RF, then refine tone with gentle toning.",
+      "sensitive": "Go slow and sure: combine low-intensity lifting with conservative filler."
+    },
+    "special_tips_title": "Lifestyle–Procedure Harmony in Your 30s",
+    "special_tips": {
+      "subsections": [
+        {
+          "title": "Scheduling for Busy Professionals",
+          "tips": [
+            "Friday afternoon treatments → recover over the weekend.",
+            "Lunchtime Botox → back to meetings right away.",
+            "Use vacation periods for procedures needing downtime."
+          ]
+        },
+        {
+          "title": "For Dating and Weddings",
+          "tips": [
+            "Begin structured plan 6 months pre-wedding.",
+            "Refine neck/shoulder lines for dress silhouettes.",
+            "Boost skin tone to enhance bridal makeup."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "uuid-40s-en",
+    "age_group": "40s",
+    "lang": "en",
+    "title": "It’s Not Your Skin Collapsing—It’s Your Confidence",
+    "subtitle": "Nasolabial folds and double chins shift a face from ‘tired’ to ‘aged.’",
+    "intro": "Your 40s are a peak and a turning point. Signs of aging accelerate—but this decade is also a golden window for visible transformation.",
+    "concerns_title": "Challenging Changes in Your 40s",
+    "concerns": [
+      { "name": "Deepening Nasolabial Folds", "desc": "Visible even without smiling, they weigh down your expression." },
+      { "name": "Double Chin & Blurred Jawline", "desc": "The boundary between face and neck fades as contours soften." },
+      { "name": "Enlarged Pores & Spread of Fine Lines", "desc": "Texture looks coarse and makeup can’t fully conceal it." },
+      { "name": "Faster Volume Loss", "desc": "Temple and cheek hollowing sharpen and fatigue the overall look." }
+    ],
+    "treatments_title": "Total 40s Solution: Assertive, Systematic Approach",
+    "treatments": [
+      {
+        "id": "hifu_ulthera_shurink",
+        "name": "Deep Lifting (Ulthera / Shurink)",
+        "effect": "Repositions the structure by targeting the SMAS layer.",
+        "interval": "Every 6–12 months",
+        "duration": "1–2 years",
+        "cost": "₩1,500,000–3,000,000"
+      },
+      {
+        "id": "rf_thermage_oligio",
+        "name": "Surface Elasticity (Thermage / Oligio)",
+        "effect": "Stimulates collagen and elastin remodeling.",
+        "interval": "Every 6–12 months",
+        "duration": "6–12 months",
+        "cost": "₩1,000,000–2,000,000"
+      },
+      {
+        "id": "thread_lift",
+        "name": "Thread Lift",
+        "effect": "Physically elevates sagging cheeks and jawline.",
+        "duration": "1–2 years",
+        "time": "1–2 hours",
+        "cost": "₩1,000,000–2,500,000"
+      },
+      {
+        "id": "filler_fat_graft",
+        "name": "Volume Restoration (Filler / Fat Grafting)",
+        "effect": "Replenishes temples, cheeks, and jawline hollows.",
+        "duration": "Filler 12–18 months; fat graft semi-permanent",
+        "cost": "Filler ₩1,000,000–2,000,000; fat graft ₩2,000,000–4,000,000"
+      },
+      {
+        "id": "skin_booster_regen",
+        "name": "Skin Boosters / Regenerative Injections",
+        "effect": "Restores glow and regenerative power.",
+        "cycle": "Monthly × 3–5",
+        "cost": "₩200,000–400,000"
+      },
+      {
+        "id": "fraxel_pico",
+        "name": "Fraxel / Pico-Fraxel",
+        "effect": "Refines pores and fine lines.",
+        "cycle": "Monthly × 3–5",
+        "downtime": "3–7 days",
+        "cost": "₩250,000–450,000"
+      }
+    ],
+    "skin_types_title": "40s by Skin Type",
+    "skin_types": {
+      "dry": "Hydration is lifeline: combine Ulthera + filler + boosters.",
+      "oily": "Elasticity is key: thread lift + Thermage + Fraxel.",
+      "combination": "Zone-specific: lift T-zone; hydrate/volumize U-zone.",
+      "sensitive": "Slow and sure: low-intensity lifting + regenerative shots + LED."
+    },
+    "special_tips_title": "Lifestyle-Integrated Care in Your 40s",
+    "special_tips": {
+      "subsections": [
+        { "title": "Efficient Care for Working Moms", "tips": ["Lunchtime Botox/filler", "Weekend lifting blocks"] },
+        { "title": "Event-Heavy Schedules", "tips": ["Lifting 2–3 months pre-event", "Final touch 1 month prior"] }
+      ]
+    }
+  },
+  {
+    "id": "uuid-50s-en",
+    "age_group": "50s",
+    "lang": "en",
+    "title": "When the Waves of Aging Grow Rough—Management Before Reversal",
+    "subtitle": "It’s not just aging—the structure itself starts to fail.",
+    "intro": "In your 50s, the aging tide surges. Skin thins, wrinkles deepen, and elasticity drops sharply. Still, active care can slow the ‘speed of aging.’",
+    "concerns_title": "Definitive Aging Signals in the 50s",
+    "concerns": [
+      { "name": "Deep-Set Wrinkles", "desc": "Forehead, crow’s feet, and nasolabial folds become fixed rather than expression-based." },
+      { "name": "Loss of Elasticity", "desc": "Cheek descent and jawline collapse blur facial contours." },
+      { "name": "Thinning & Dryness", "desc": "Collagen and fat loss thin the skin, accelerating fine lines." }
+    ],
+    "treatments_title": "50s Formula: Lifting + Volume + Regeneration",
+    "treatments": [
+      { "id": "deep_hifu_lift", "name": "Ulthera / Shurink", "effect": "Deep structural lift for sagging tissues", "duration": "1–2 years", "cost": "₩2,000,000–4,000,000" },
+      { "id": "rf_strong", "name": "High-Power RF (e.g., Thermage FLX)", "effect": "Improves deep wrinkles and laxity", "duration": "≈1 year", "cost": "₩1,500,000–3,000,000" },
+      { "id": "thread_strong", "name": "Reinforced Thread Lift", "effect": "Addresses pronounced jowls and cheek ptosis", "duration": "1–2 years", "cost": "₩2,000,000–4,000,000" },
+      { "id": "filler_fat_graft_combo", "name": "Filler + Fat Graft Combo", "effect": "Restores volume-loss zones", "duration": "Filler 12–18 months / Fat semi-permanent", "cost": "₩3,000,000–6,000,000" },
+      { "id": "skin_regen_booster", "name": "Regenerative Therapy (Rejuran / PRP / Stem Cell)", "effect": "Reinforces thin skin, boosts renewal", "cycle": "Monthly × 3–5", "cost": "₩300,000–800,000" },
+      { "id": "laser_resurfacing", "name": "Laser Resurfacing", "effect": "Improves fine lines & pigment together", "cycle": "Every 4–6 weeks × 3–5", "downtime": "5–10 days", "cost": "₩300,000–600,000" }
+    ],
+    "skin_types_title": "50s by Skin Type",
+    "skin_types": {
+      "dry": "Deep hydration + regeneration (boosters/PRP).",
+      "oily": "Combined approach with thread lift + filler.",
+      "sensitive": "Low-energy lasers + regenerative focus."
+    },
+    "special_tips_title": "Everyday Management in the 50s",
+    "special_tips": {
+      "subsections": [
+        { "title": "Scheduling for Midlife", "tips": ["1–2 major liftings per year", "Intermittent Botox/filler top-ups"] },
+        { "title": "For Active Social Lives", "tips": ["Intensive lifting 2–3 months pre-events", "Make regeneration a routine"] }
+      ]
+    }
+  },
+  {
+    "id": "uuid-60s-en",
+    "age_group": "60s",
+    "lang": "en",
+    "title": "When the Results of Aging Are Plain to See",
+    "subtitle": "Your 60s often call for correction more than simple maintenance.",
+    "intro": "In your 60s, facial structural aging is evident: deeper wrinkles, thinner skin, and minimal elasticity. With the right combinations, overall impression can still change dramatically.",
+    "concerns_title": "Distinct Changes in the 60s",
+    "concerns": [
+      { "name": "Generalized Sagging", "desc": "Forehead, eyes, cheeks, and neck show diffuse laxity." },
+      { "name": "Deep Wrinkles & Skeletal Show", "desc": "Loss of cheek fat exposes bony contours, worsening aged appearance." },
+      { "name": "Thin, Dry Skin", "desc": "Barrier fragility increases sensitivity and pigment issues." }
+    ],
+    "treatments_title": "60s Plan: Focused Correction & Volume Restoration",
+    "treatments": [
+      { "id": "deep_ulthera_combo", "name": "HIFU + RF Combo", "effect": "Lifting while improving elasticity", "duration": "1–2 years", "cost": "₩2,000,000–5,000,000" },
+      { "id": "thread_fill_combo", "name": "Thread Lift + Filler/Fat", "effect": "Corrects sagging and volume loss together", "duration": "1–2 years", "cost": "₩3,000,000–7,000,000" },
+      { "id": "regen_stemcell", "name": "Stem Cell / PRP / Rejuran", "effect": "Thickens and regenerates thin skin", "cycle": "Monthly × 3–5", "cost": "₩500,000–1,000,000" },
+      { "id": "laser_resurfacing_heavy", "name": "Aggressive Laser Resurfacing", "effect": "Refines lines, pigment, and texture", "downtime": "7–14 days", "cost": "₩500,000–1,000,000" }
+    ],
+    "skin_types_title": "60s by Skin Type",
+    "skin_types": {
+      "dry": "Reinforce thin skin with boosters/regenerative injections.",
+      "oily": "Combine lifting with volume to re-tension the skin.",
+      "sensitive": "Favor LED/low-intensity regeneration; minimize irritation."
+    },
+    "special_tips_title": "Lifestyle-Matched Care in the 60s",
+    "special_tips": {
+      "subsections": [
+        { "title": "For Active Social Lives", "tips": ["Intensify lifting 3 months pre-events", "Maintain continuous regeneration"] },
+        { "title": "Post-Retirement, With Time to Care", "tips": ["One major lift per year + periodic minor top-ups", "Emphasize non-irritating habits"] }
+      ]
+    }
+  },
+  {
+    "id": "uuid-70s-en",
+    "age_group": "70s+",
+    "lang": "en",
+    "title": "A Time to Honor Natural Grace and Dignity",
+    "subtitle": "Aim not for forced youth, but for healthy, dignified beauty.",
+    "intro": "In your 70s and beyond, skeletal and cutaneous aging is pronounced. Prioritize natural, safe correction and recovery rather than aggressive reversal.",
+    "concerns_title": "Primary Concerns in the 70s",
+    "concerns": [
+      { "name": "Advanced Sagging & Wrinkling", "desc": "Skin laxity and deep lines across the face." },
+      { "name": "Skin Fragility", "desc": "Thinner skin is easily damaged and heals more slowly." },
+      { "name": "Severe Volume Loss", "desc": "Marked hollowing of cheeks, jawline, and temples intensifies aged look." }
+    ],
+    "treatments_title": "70s Approach: Natural, Recovery-Centered Care",
+    "treatments": [
+      { "id": "soft_thread", "name": "Soft Thread Lift", "effect": "Gentle contour correction over aggressive elevation", "duration": "≈1 year", "cost": "₩1,000,000–2,000,000" },
+      { "id": "light_filler_fat", "name": "Conservative Filler / Small-Volume Fat Graft", "effect": "Minimal volume restoration to hollow areas", "duration": "12+ months", "cost": "₩2,000,000–4,000,000" },
+      { "id": "regen_soft", "name": "Rejuran / PRP / Stem Cell", "effect": "Revives regenerative power and strengthens thin skin", "cycle": "Monthly × 3–5", "cost": "₩300,000–700,000" },
+      { "id": "noninvasive_led", "name": "Non-invasive LED / Low-Energy Laser", "effect": "Safe for sensitive, fragile skin", "cycle": "Regular sessions", "cost": "₩100,000–300,000" }
+    ],
+    "skin_types_title": "70s by Skin Type",
+    "skin_types": {
+      "dry": "Boost hydration and regeneration with boosters/Rejuran.",
+      "oily": "Focus more on texture refinement than strong lifting.",
+      "sensitive": "Use low-irritation LED/regenerative care to minimize side effects."
+    },
+    "special_tips_title": "Lifestyle-Tailored Care in the 70s",
+    "special_tips": {
+      "subsections": [
+        { "title": "For a Dignified Senior Life", "tips": ["Favor natural improvements over aggressive lifting", "Regular skin-health checkups"] },
+        { "title": "Safety-First Strategy", "tips": ["Lifestyle and nutrition before procedures", "Emphasize non-invasive options"] }
+      ]
+    }
+  }
+]

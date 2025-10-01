@@ -3,6 +3,7 @@
         "id": "uuid-20s-ko",
         "age_group": "20s",
         "lang": "ko",
+        "heroImage": "https://images.unsplash.com/photo-1679517354322-20fe85050b9d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx5b3VuZyUyMHdvbWFuJTIwc2tpbmNhcmUlMjAyMHN8ZW58MXx8fHwxNzU5MjUyMzY5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
         "title": "젊음의 황금기, 미래를 위한 현명한 투자",
         "subtitle": "빛나던 피부는 저절로 유지되지 않습니다. 지금의 작은 선택이 30대의 얼굴을 바꿉니다.",
         "intro": "스무 살의 피부는 마치 갓 피어난 꽃잎처럼 촉촉하고 탄력이 넘칩니다. 하지만 이 황금 같은 시간이 영원할 것이라고 착각하지 마세요. 지금 이 순간, 보이지 않는 곳에서 시간의 씨앗들이 조용히 자라고 있으니까요.",
@@ -31,7 +32,8 @@
             "effect": "피부 속 수분 저수지 만들기. 피부에 작은 수분 댐을 설치하는 것과 같습니다. 히알루론산의 촘촘한 그물망이 피부 깊숙이 자리잡아, 외부의 건조함과 스트레스로부터 피부를 보호해줍니다.",
             "cycle": "2-3주 간격으로 3-5회",
             "duration": "6-8개월",
-            "cost": "회당 15-25만원"
+            "cost": "회당 15-25만원",
+            "imageUrl": "https://images.unsplash.com/photo-1629380108567-a0b544204f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxza2luY2FyZSUyMHByb2R1Y3RzJTIwc3BhfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
             },
             {
             "id": "laser_toning_pico",
@@ -39,7 +41,8 @@
             "effect": "투명함의 비밀. 햇볕이 남긴 작은 그림자들을 지워내는 시술입니다. 마치 오래된 유리창을 닦아내듯, 한 번의 시술로도 맑고 투명한 피부 톤을 경험할 수 있습니다.",
             "cycle": "2-4주 간격으로 5-8회",
             "duration": "1년 이상",
-            "cost": "회당 8-15만원"
+            "cost": "회당 8-15만원",
+            "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
             },
             {
             "id": "fraxel_pico_fraxel",
@@ -47,15 +50,16 @@
             "effect": "피부의 리셋 버튼. 여드름 자국과 모공을 정리하고 콜라겐을 재생시켜 매끈한 피부결을 되찾습니다.",
             "cycle": "4-6주 간격으로 3-5회",
             "downtime": "3-7일",
-            "cost": "회당 20-35만원"
+            "cost": "회당 20-35만원",
+            "imageUrl": "https://images.unsplash.com/photo-1629380108567-a0b544204f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxza2luY2FyZSUyMHByb2R1Y3RzJTIwc3BhfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
             }
         ],
         
         "skin_types_title": "피부 타입별 세심한 케어",
         "skin_types": {
-            "dry": "건성 피부: '마른 땅에는 물이 먼저'...",
-            "oily": "지성 피부: '번들거림 뒤의 진실'...",
-            "sensitive": "민감성 피부: '예민한 마음, 섬세한 케어'..."
+            "dry": "건성 피부: '마른 땅에는 물이 먼저'\n건조는 주름을 앞당기는 무서운 초대장입니다. 20대의 건성 피부는 겉으로는 괜찮아 보이지만, 속은 이미 갈증으로 목마를 수 있어요. 스킨부스터로 깊은 수분 저장고를 만들고, 부드러운 레이저 토닝으로 피부 장벽을 강화하세요. 지금 심어놓은 수분의 씨앗이 30대에는 빛나는 물광 피부로 자라날 거예요.",
+            "oily": "지성 피부: '번들거림 뒤의 진실'\n기름진 피부라고 수분이 충분하다고 생각하면 큰 오산입니다. 과도한 피지 분비 뒤에는 넓어진 모공과 염증성 트러블 이 숨어 있어요. 프락셀로 모공을 타이트하게 만들고, 피코토닝으로 염증 후 색소침착을 예방하세요. 번들거리는 피부 가 아닌, 건강하게 윤기 나는 피부로 변화시킬 수 있습니다.",
+            "sensitive": "민감성 피부: '예민한 마음, 섬세한 케어'\n조금만 자극해도 화를 내는 민감한 피부. 하지만 그렇다고 아무것도 하지 않으면 더 약해질 수 있어요. 저강도 레이저 와 부드러운 재생 치료로 피부의 면역력을 천천히 키워주세요. 마치 연약한 새싹을 키우듯, 인내심을 갖고 관리하면 결국 강하고 건강한 피부로 거듭날 수 있습니다. "
         },
         
         "special_tips_title": "20대만의 특별한 관리 팁",
@@ -83,6 +87,7 @@
         "id": "uuid-30s-ko",
         "age_group": "30s",
         "lang": "ko",
+        "heroImage": "https://images.unsplash.com/photo-1683188280831-2fc41e918478?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b21hbiUyMDMwcyUyMGhlYWx0aHklMjBsaWZlc3R5bGV8ZW58MXx8fHwxNzU5MjUyMzcwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
         "title": "청춘의 마지막 방어선, 지혜로운 선택의 시기",
         "subtitle": "눈가의 웃음선이 더 이상 예쁘지 않고, 표정이 피곤해 보일 때 시작해야 합니다.",
         "intro": "서른이라는 나이는 참 묘합니다. 아직은 젊다고 생각하지만, 거울 속 내 얼굴은 조금씩 달라지고 있어요. 아침에 일어나도 피부가 예전만큼 탱탱하지 않고, 웃고 난 후에도 주름이 완전히 사라지지 않습니다. 이것이 바로 30대의 신호예요.",
@@ -96,10 +101,10 @@
       
         "treatments_title": "30대 맞춤 시술: 예방과 교정의 황금 밸런스",
         "treatments": [
-          {"id": "botox_expression_lines", "name": "보톡스", "effect": "표정주름 예방 및 얕은 주름 차단", "duration": "4-6개월", "time": "10-15분", "cost": "부위당 8-15만원", "onset": "시술 후 3-7일"},
-          {"id": "ulthera_shurink_hifu", "name": "울쎄라·슈링크 (HIFU 리프팅)", "effect": "근막층까지 초음파 에너지 전달로 콜라겐 각성", "duration": "1-2년", "time": "30-60분", "cost": "80-150만원", "onset": "2-3개월 후 본격"},
-          {"id": "thermage_oligio_rf", "name": "써마지·올리지오 (고주파 리프팅)", "effect": "피부 속을 뜨겁게 자극해 탄탄한 탄력 생성", "duration": "6개월-1년", "time": "45-90분", "cost": "60-120만원"},
-          {"id": "filler_volume_restore", "name": "필러", "effect": "볼·팔자 부위 볼륨 복원", "duration": "12-18개월", "time": "20-30분", "cost": "1cc당 40-60만원"}
+          {"id": "botox_expression_lines", "name": "보톡스", "effect": "표정주름 예방 및 얕은 주름 차단", "duration": "4-6개월", "time": "10-15분", "cost": "부위당 8-15만원", "onset": "시술 후 3-7일", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "ulthera_shurink_hifu", "name": "울쎄라·슈링크 (HIFU 리프팅)", "effect": "근막층까지 초음파 에너지 전달로 콜라겐 각성", "duration": "1-2년", "time": "30-60분", "cost": "80-150만원", "onset": "2-3개월 후 본격", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "thermage_oligio_rf", "name": "써마지·올리지오 (고주파 리프팅)", "effect": "피부 속을 뜨겁게 자극해 탄탄한 탄력 생성", "duration": "6개월-1년", "time": "45-90분", "cost": "60-120만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "filler_volume_restore", "name": "필러", "effect": "볼·팔자 부위 볼륨 복원", "duration": "12-18개월", "time": "20-30분", "cost": "1cc당 40-60만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"}
         ],
       
         "skin_types_title": "피부 타입별 30대 전략",
@@ -127,6 +132,7 @@
         "id": "uuid-40s-ko",
         "age_group": "40s",
         "lang": "ko",
+        "heroImage": "https://images.unsplash.com/photo-1619906518073-33f896295295?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b21hbiUyMDQwcyUyMGNvbmZpZGVudCUyMHBvcnRyYWl0fGVufDF8fHx8MTc1OTI1MjM3MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
         "title": "무너지는 건 피부가 아니라, 당신의 자신감",
         "subtitle": "팔자주름과 이중턱은 '피곤한 얼굴'을 넘어, '나이 들어 보이는 얼굴'을 만듭니다.",
         "intro": "마흔이라는 나이는 인생의 정점이자 전환점입니다. 피부는 본격적인 노화의 신호를 보내기 시작하지만, 40대는 오히려 극적인 변화를 만들어낼 수 있는 황금 시기이기도 합니다.",
@@ -141,20 +147,20 @@
       
         "treatments_title": "40대 토털 솔루션: 공격적이고 체계적인 접근",
         "treatments": [
-          {"id": "hifu_ulthera_shurink", "name": "깊은 리프팅 (울쎄라·슈링크)", "effect": "근막층 깊숙이 끌어올려 구조 회복", "interval": "6개월-1년", "duration": "1-2년", "cost": "150-300만원"},
-          {"id": "rf_thermage_oligio", "name": "표면 탄력 강화 (써마지·올리지오)", "effect": "콜라겐·엘라스틴 생성 촉진", "interval": "6개월-1년", "duration": "6개월-1년", "cost": "100-200만원"},
-          {"id": "thread_lift", "name": "실리프팅", "effect": "처진 볼살·턱선 물리적 리프팅", "duration": "1-2년", "time": "1-2시간", "cost": "100-250만원"},
-          {"id": "filler_fat_graft", "name": "볼륨 복원 (필러·지방이식)", "effect": "꺼진 관자놀이·볼·턱선 회복", "duration": "필러 12-18개월, 지방이식 반영구", "cost": "필러 100-200만원, 지방이식 200-400만원"},
-          {"id": "skin_booster_regen", "name": "스킨부스터·재생주사", "effect": "피부 재생력·광채 회복", "cycle": "월 1회, 3-5회", "cost": "20-40만원"},
-          {"id": "fraxel_pico", "name": "프락셀·피코프락셀", "effect": "모공·잔주름 정리", "cycle": "월 1회, 3-5회", "downtime": "3-7일", "cost": "25-45만원"}
+          {"id": "hifu_ulthera_shurink", "name": "깊은 리프팅 (울쎄라·슈링크)", "effect": "근막층 깊숙이 끌어올려 구조 회복", "interval": "6개월-1년", "duration": "1-2년", "cost": "150-300만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "rf_thermage_oligio", "name": "표면 탄력 강화 (써마지·올리지오)", "effect": "콜라겐·엘라스틴 생성 촉진", "interval": "6개월-1년", "duration": "6개월-1년", "cost": "100-200만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "thread_lift", "name": "실리프팅", "effect": "처진 볼살·턱선 물리적 리프팅", "duration": "1-2년", "time": "1-2시간", "cost": "100-250만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "filler_fat_graft", "name": "볼륨 복원 (필러·지방이식)", "effect": "꺼진 관자놀이·볼·턱선 회복", "duration": "필러 12-18개월, 지방이식 반영구", "cost": "필러 100-200만원, 지방이식 200-400만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "skin_booster_regen", "name": "스킨부스터·재생주사", "effect": "피부 재생력·광채 회복", "cycle": "월 1회, 3-5회", "cost": "20-40만원", "imageUrl": "https://images.unsplash.com/photo-1629380108567-a0b544204f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxza2luY2FyZSUyMHByb2R1Y3RzJTIwc3BhfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "fraxel_pico", "name": "프락셀·피코프락셀", "effect": "모공·잔주름 정리", "cycle": "월 1회, 3-5회", "downtime": "3-7일", "cost": "25-45만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"}
         ],
       
         "skin_types_title": "피부 타입별 40대 맞춤 전략",
         "skin_types": {
-          "dry": "수분이 생명선: 울쎄라+필러+스킨부스터 병행",
-          "oily": "탄력이 관건: 실리프팅+써마지+프락셀 조합",
-          "combination": "부위별 맞춤 솔루션: T존 리프팅, U존 수분·볼륨 보충",
-          "sensitive": "서서히, 확실하게: 저강도 리프팅+재생주사+LED"
+          "dry": "수분이 생명선: 40대 건성 피부는 주름이 더 빨리, 더 깊게 새겨집니다. 수분 부족으로 인한 잔주름이 방사형으로 퍼져나가기 전에 적 극적인 수분 공급과 함께 필러로 구조적 개선을 해야 해요. 리프팅 시술 후에는 반드시 스킨부스터를 병행해서 건조함 을 막아주세요. \n추천 조합: 울쎄라 + 필러 + 스킨부스터", 
+          "oily": "탄력이 관건:  기름기가 많다고 해서 처짐이 없는 것은 아닙니다. 오히려 무거운 피지막 때문에 중력의 영향을 더 많이 받을 수 있어 요. 처진 턱선과 늘어난 모공을 잡는 강력한 리프팅이 우선되어야 하고, 이후 모공 관리를 위한 레이저 시술이 필요합니다. \n추천조합: 실리프팅+써마지+프락셀 조합",
+          "combination": "부위별 맞춤 솔루션: T존은 번들거리고 U존은 건조한 복합성 피부는 부위별로 다른 접근이 필요해요. 기름진 부위는 리프팅과 모공 관리 에 집중하고, 건조한 부위는 수분 공급과 필러를 통한 볼륨 보충에 집중하세요. \n추천 조합: 부위별 맞춤 리프팅 + 선택적 필러 + 스킨부스터 ",
+          "sensitive": "서서히, 확실하게: 민감한 피부는 한 번에 많은 시술을 받기 어려워요. 2-3개월 간격으로 단계적으로 접근하되, 각 시술 후 충분한 진정 과 회복 기간을 갖는 것이 중요합니다. 저강도 레이저와 재생 주사 중심으로 피부 장벽부터 회복시켜야 해요. \n추천 조합: 저강도 리프팅+재생주사+LED치료"
         },
       
         "special_tips_title": "40대 라이프스타일 밀착 관리",
@@ -175,6 +181,7 @@
         "id": "uuid-50s-ko",
         "age_group": "50s",
         "lang": "ko",
+        "heroImage": "https://images.unsplash.com/photo-1733940056690-8c86eac6bc73?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtYXR1cmUlMjB3b21hbiUyMDUwcyUyMHdlbGxuZXNzfGVufDF8fHx8MTc1OTI1MjM3MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
         "title": "노화의 파도가 거세지는 시기, 되돌림보다 관리가 우선",
         "subtitle": "피부가 단순히 늙는 것이 아니라, 구조 자체가 무너집니다.",
         "intro": "50대는 본격적인 노화의 파도가 몰려오는 시기입니다. 피부는 얇아지고, 주름은 깊어지며, 탄력은 현저히 떨어집니다. 그러나 이 시기야말로 적극적인 시술과 관리로 '노화의 속도'를 늦출 수 있습니다.",
@@ -188,19 +195,19 @@
       
         "treatments_title": "50대 맞춤 시술: 리프팅+볼륨+재생의 3박자",
         "treatments": [
-          {"id": "deep_hifu_lift", "name": "울쎄라·슈링크", "effect": "심층 리프팅으로 쳐진 피부 구조 회복", "duration": "1-2년", "cost": "200-400만원"},
-          {"id": "rf_strong", "name": "강력 고주파 리프팅 (써마지FLX 등)", "effect": "깊은 주름과 탄력 저하 개선", "duration": "1년", "cost": "150-300만원"},
-          {"id": "thread_strong", "name": "실리프팅(강화형)", "effect": "심하게 처진 턱선·볼살 물리적 리프팅", "duration": "1-2년", "cost": "200-400만원"},
-          {"id": "filler_fat_graft_combo", "name": "필러·지방이식 병행", "effect": "볼륨 소실 부위 복원", "duration": "필러 12-18개월 / 지방이식 반영구", "cost": "300-600만원"},
-          {"id": "skin_regen_booster", "name": "재생치료 (리쥬란·PRP·줄기세포)", "effect": "피부 재생력 회복, 얇아진 피부 보강", "cycle": "월 1회, 3-5회", "cost": "30-80만원"},
-          {"id": "laser_resurfacing", "name": "레이저 리서페이싱", "effect": "잔주름·색소 동반 개선", "cycle": "4-6주 간격 3-5회", "downtime": "5-10일", "cost": "30-60만원"}
+          {"id": "deep_hifu_lift", "name": "울쎄라·슈링크", "effect": "심층 리프팅으로 쳐진 피부 구조 회복", "duration": "1-2년", "cost": "200-400만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "rf_strong", "name": "강력 고주파 리프팅 (써마지FLX 등)", "effect": "깊은 주름과 탄력 저하 개선", "duration": "1년", "cost": "150-300만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "thread_strong", "name": "실리프팅(강화형)", "effect": "심하게 처진 턱선·볼살 물리적 리프팅", "duration": "1-2년", "cost": "200-400만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "filler_fat_graft_combo", "name": "필러·지방이식 병행", "effect": "볼륨 소실 부위 복원", "duration": "필러 12-18개월 / 지방이식 반영구", "cost": "300-600만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "skin_regen_booster", "name": "재생치료 (리쥬란·PRP·줄기세포)", "effect": "피부 재생력 회복, 얇아진 피부 보강", "cycle": "월 1회, 3-5회", "cost": "30-80만원", "imageUrl": "https://images.unsplash.com/photo-1629380108567-a0b544204f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxza2luY2FyZSUyMHByb2R1Y3RzJTIwc3BhfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "laser_resurfacing", "name": "레이저 리서페이싱", "effect": "잔주름·색소 동반 개선", "cycle": "4-6주 간격 3-5회", "downtime": "5-10일", "cost": "30-60만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"}
         ],
       
-        "skin_types_title": "피부 타입별 50대 전략",
+        "skin_types_title": "50대 피부 타입별 집중 관리",
         "skin_types": {
-          "dry": "심층 보습 + 재생 병행. 스킨부스터·PRP로 피부 장벽 회복",
-          "oily": "리프팅+볼륨 복합 접근. 실리프팅+필러 조합",
-          "sensitive": "저강도 레이저·재생치료 중심. 피부 보호막 우선"
+          "dry": "재생이 우선: 50대 건성 피부는 더 이상 미룰 수 없는 상태입니다. 주름이 더 깊고 피부는 더 얇아져서 재생 치료 없이는 다른 시술 의 효과도 제한적이에요. 스킨부스터와 재생 주사를 먼저 충분히 받아서 피부 컨디션을 올린 후에 리프팅과 필러를 시행해야 합니다. \n권장 순서: 재생치료 3개월 → 리프팅 → 필러 → 유지관리, 심층 보습 + 재생 병행. 스킨부스터·PRP로 피부 장벽 회복",
+          "oily": "구조 재건이 관건: 지성 피부는 아직 어느 정도 탄력을 버티고 있지만, 무거운 피지막 때문에 처짐이 가속화될 수 있어요. 실리프팅과 강 력한 리프팅으로 얼굴 구조를 먼저 잡은 후, 모공과 피지 관리를 위한 레이저 치료를 병행해야 합니다. \n권장 조합: 실리프팅 + 울쎄라 + 지방이식 + 모공관리 , 리프팅+볼륨 복합 접근. 실리프팅+필러 조합",
+          "sensitive": "단계적 접근의 미학: \n민감한 피부는 한 번에 많은 시술을 받을 수 없어서 장기적인 플랜이 필요해요. 6개월-1년에 걸쳐 단계적으로 접근하 되, 각 단계마다 충분한 회복과 진정 기간을 가져야 합니다. 하지만 꾸준히 관리하면 다른 피부 타입보다 더 자연스럽 고 오래가는 결과를 얻을 수 있어요. \n단계별 플랜: 3개월마다 한 가지씩 추가, 총 12-18개월 계획 , 저강도 레이저·재생치료 중심. 피부 보호막 우선"
         },
       
         "special_tips_title": "50대 생활 밀착 관리",
@@ -221,6 +228,7 @@
         "id": "uuid-60s-ko",
         "age_group": "60s",
         "lang": "ko",
+        "heroImage": "https://images.unsplash.com/photo-1658314755911-c9b6ae54459c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b21hbiUyMDYwcyUyMGFjdGl2ZSUyMGxpZmVzdHlsZXxlbnwxfHx8fDE3NTkyNTIzNzB8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
         "title": "노화의 결과가 얼굴에 드러나는 시기",
         "subtitle": "60대는 '관리'가 아니라 '교정'이 필요한 단계입니다.",
         "intro": "60대는 피부와 얼굴 구조의 노화가 뚜렷이 드러나는 시기입니다. 주름은 깊어지고, 피부는 얇아지며, 탄력은 거의 사라집니다. 하지만 적절한 시술 조합을 통해 인상을 크게 바꿀 수 있습니다.",
@@ -234,10 +242,10 @@
       
         "treatments_title": "60대 맞춤 시술: 집중 교정과 볼륨 복원",
         "treatments": [
-          {"id": "deep_ulthera_combo", "name": "HIFU+고주파 복합", "effect": "리프팅+탄력 개선 동시 달성", "duration": "1-2년", "cost": "200-500만원"},
-          {"id": "thread_fill_combo", "name": "실리프팅+필러·지방이식", "effect": "처짐과 볼륨 감소 동시 교정", "duration": "1-2년", "cost": "300-700만원"},
-          {"id": "regen_stemcell", "name": "줄기세포/PRP/리쥬란", "effect": "얇아진 피부 보강과 재생 촉진", "cycle": "월 1회, 3-5회", "cost": "50-100만원"},
-          {"id": "laser_resurfacing_heavy", "name": "강력 레이저 리서페이싱", "effect": "잔주름·색소 개선, 피부 질감 회복", "downtime": "7-14일", "cost": "50-100만원"}
+          {"id": "deep_ulthera_combo", "name": "HIFU+고주파 복합", "effect": "리프팅+탄력 개선 동시 달성", "duration": "1-2년", "cost": "200-500만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "thread_fill_combo", "name": "실리프팅+필러·지방이식", "effect": "처짐과 볼륨 감소 동시 교정", "duration": "1-2년", "cost": "300-700만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "regen_stemcell", "name": "줄기세포/PRP/리쥬란", "effect": "얇아진 피부 보강과 재생 촉진", "cycle": "월 1회, 3-5회", "cost": "50-100만원", "imageUrl": "https://images.unsplash.com/photo-1629380108567-a0b544204f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxza2luY2FyZSUyMHByb2R1Y3RzJTIwc3BhfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "laser_resurfacing_heavy", "name": "강력 레이저 리서페이싱", "effect": "잔주름·색소 개선, 피부 질감 회복", "downtime": "7-14일", "cost": "50-100만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"}
         ],
       
         "skin_types_title": "피부 타입별 60대 전략",
@@ -265,6 +273,7 @@
         "id": "uuid-70s-ko",
         "age_group": "70s+",
         "lang": "ko",
+        "heroImage": "https://images.unsplash.com/photo-1590905707155-17c680dd7867?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlbGRlcmx5JTIwd29tYW4lMjA3MHMlMjBzbWlsaW5nfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
         "title": "자연스러움과 품격을 지키는 시기",
         "subtitle": "무리한 젊음 되찾기가 아니라, 건강하고 품격 있는 아름다움 유지가 핵심입니다.",
         "intro": "70대 이상에서는 얼굴의 골격과 피부 노화가 극대화됩니다. 이 시기에는 과도한 시술보다는 자연스럽고 안전한 교정과 회복 중심의 전략이 필요합니다.",
@@ -278,10 +287,10 @@
       
         "treatments_title": "70대 맞춤 시술: 자연스러운 회복 중심",
         "treatments": [
-          {"id": "soft_thread", "name": "소프트 실리프팅", "effect": "강한 리프팅 대신 자연스러운 얼굴선 보정", "duration": "1년", "cost": "100-200만원"},
-          {"id": "light_filler_fat", "name": "필러·소량 지방이식", "effect": "꺼진 부위에 최소한의 볼륨 회복", "duration": "12개월~", "cost": "200-400만원"},
-          {"id": "regen_soft", "name": "리쥬란·PRP·줄기세포", "effect": "피부 재생력 회복, 얇은 피부 보강", "cycle": "월 1회, 3-5회", "cost": "30-70만원"},
-          {"id": "noninvasive_led", "name": "비침습적 LED·저강도 레이저", "effect": "민감해진 피부에 안전한 관리", "cycle": "정기적", "cost": "10-30만원"}
+          {"id": "soft_thread", "name": "소프트 실리프팅", "effect": "강한 리프팅 대신 자연스러운 얼굴선 보정", "duration": "1년", "cost": "100-200만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "light_filler_fat", "name": "필러·소량 지방이식", "effect": "꺼진 부위에 최소한의 볼륨 회복", "duration": "12개월~", "cost": "200-400만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "regen_soft", "name": "리쥬란·PRP·줄기세포", "effect": "피부 재생력 회복, 얇은 피부 보강", "cycle": "월 1회, 3-5회", "cost": "30-70만원", "imageUrl": "https://images.unsplash.com/photo-1629380108567-a0b544204f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxza2luY2FyZSUyMHByb2R1Y3RzJTIwc3BhfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "noninvasive_led", "name": "비침습적 LED·저강도 레이저", "effect": "민감해진 피부에 안전한 관리", "cycle": "정기적", "cost": "10-30만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"}
         ],
       
         "skin_types_title": "피부 타입별 70대 전략",

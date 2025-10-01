@@ -1,0 +1,11 @@
+<svg width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="title-dry" xmlns="http://www.w3.org/2000/svg">
+  <title id="title-dry">Dry Skin</title>
+  <g stroke="#D97706" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <!-- droplet -->
+    <path d="M32 12c8 10 14 16 14 24a14 14 0 1 1 -28 0c0-8 6-14 14-24z"/>
+    <!-- crack lines -->
+    <path d="M28 34l3-3-1.5-3"/><path d="M36 30l2 3-3 3 2 3"/>
+    <!-- dryness arcs -->
+    <path d="M22 44c3-2 5-2 8 0"/><path d="M34 44c3-2 5-2 8 0"/>
+  </g>
+</svg>

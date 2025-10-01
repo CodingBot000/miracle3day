@@ -1,0 +1,12 @@
+<svg width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="title-oily" xmlns="http://www.w3.org/2000/svg">
+  <title id="title-oily">Oily Skin</title>
+  <g stroke="#059669" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <!-- droplet -->
+    <path d="M32 12c8 10 14 16 14 24a14 14 0 1 1 -28 0c0-8 6-14 14-24z"/>
+    <!-- glossy highlight -->
+    <path d="M27 23c2-2 5-2 7 0" opacity=".7"/>
+    <!-- sebum waves -->
+    <path d="M18 46c4 3 10 3 14 0s10-3 14 0"/>
+    <path d="M22 50c4 3 10 3 14 0" opacity=".85"/>
+  </g>
+</svg>

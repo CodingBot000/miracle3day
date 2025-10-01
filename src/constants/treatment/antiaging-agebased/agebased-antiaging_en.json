@@ -3,6 +3,7 @@
     "id": "uuid-20s-en",
     "age_group": "20s",
     "lang": "en",
+    "heroImage": "https://images.unsplash.com/photo-1679517354322-20fe85050b9d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx5b3VuZyUyMHdvbWFuJTIwc2tpbmNhcmUlMjAyMHN8ZW58MXx8fHwxNzU5MjUyMzY5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
     "title": "The Golden Age of Youth, a Wise Investment for the Future",
     "subtitle": "Glowing skin doesn’t maintain itself. Small choices today will change your face in your 30s.",
     "intro": "Skin at twenty is like a freshly blossomed petal—dewy and elastic. But don’t be deceived into thinking this golden time will last forever. Even now, invisible seeds of time are quietly taking root beneath the surface.",
@@ -29,7 +30,8 @@
         "effect": "Build a water reservoir in the skin. A dense hyaluronic acid mesh sits deep in the skin to protect against dryness and stress; the healthy moisture barrier creates a natural glow even without makeup.",
         "cycle": "3–5 sessions, every 2–3 weeks",
         "duration": "6–8 months",
-        "cost": "₩150,000–250,000 per session"
+        "cost": "₩150,000–250,000 per session",
+        "imageUrl": "https://images.unsplash.com/photo-1629380108567-a0b544204f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxza2luY2FyZSUyMHByb2R1Y3RzJTIwc3BhfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
       },
       {
         "id": "laser_toning_pico",
@@ -37,7 +39,8 @@
         "effect": "The secret to clarity. Erases the ‘tiny shadows’ left by daily sun, like polishing an old window. Even one session can yield a noticeably clearer, more transparent tone—especially effective in the 20s thanks to quick recovery.",
         "cycle": "5–8 sessions, every 2–4 weeks",
         "duration": "12+ months",
-        "cost": "₩80,000–150,000 per session"
+        "cost": "₩80,000–150,000 per session",
+        "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
       },
       {
         "id": "fraxel_pico_fraxel",
@@ -45,7 +48,8 @@
         "effect": "The reset button for skin. Regenerative treatment to refine acne marks and enlarged pores; micro-beams stimulate new collagen—like replacing old book pages with new ones to regain smooth, glassy texture.",
         "cycle": "3–5 sessions, every 4–6 weeks",
         "downtime": "3–7 days",
-        "cost": "₩200,000–350,000 per session"
+        "cost": "₩200,000–350,000 per session",
+        "imageUrl": "https://images.unsplash.com/photo-1629380108567-a0b544204f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxza2luY2FyZSUyMHByb2R1Y3JzJTIwc3BhfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
       }
     ],
     "skin_types_title": "Detailed Care by Skin Type",
@@ -78,6 +82,7 @@
   {
     "id": "uuid-30s-en",
     "age_group": "30s",
+    "heroImage": "https://images.unsplash.com/photo-1683188280831-2fc41e918478?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b21hbiUyMDMwcyUyMGhlYWx0aHklMjBsaWZlc3R5bGV8ZW58MXx8fHwxNzU5MjUyMzcwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
     "lang": "en",
     "title": "The Last Line of Youth’s Defense—A Time for Wise Choices",
     "subtitle": "When smile lines no longer look cute and your face looks tired, that’s when to begin.",
@@ -106,7 +111,8 @@
         "duration": "4–6 months",
         "time": "10–15 minutes",
         "cost": "₩80,000–150,000 per area",
-        "onset": "Starts in 3–7 days"
+        "onset": "Starts in 3–7 days",
+        "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
       },
       {
         "id": "ulthera_shurink_hifu",
@@ -115,7 +121,8 @@
         "duration": "1–2 years",
         "time": "30–60 minutes",
         "cost": "₩800,000–1,500,000 full face",
-        "onset": "Kicks in around 2–3 months"
+        "onset": "Kicks in around 2–3 months",
+        "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
       },
       {
         "id": "thermage_oligio_rf",
@@ -123,7 +130,8 @@
         "effect": "Deep dermal heating boosts new collagen for firmer bounce from within.",
         "duration": "6–12 months",
         "time": "45–90 minutes",
-        "cost": "₩600,000–1,200,000"
+        "cost": "₩600,000–1,200,000",
+        "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
       },
       {
         "id": "filler_volume_restore",
@@ -131,7 +139,8 @@
         "effect": "Restores early cheek and nasolabial volume for a brighter, less-tired look.",
         "duration": "12–18 months",
         "time": "20–30 minutes",
-        "cost": "₩400,000–600,000 per cc"
+        "cost": "₩400,000–600,000 per cc",
+        "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
       }
     ],
     "skin_types_title": "30s by Skin Type",
@@ -166,6 +175,7 @@
     "id": "uuid-40s-en",
     "age_group": "40s",
     "lang": "en",
+    "heroImage": "https://images.unsplash.com/photo-1619906518073-33f896295295?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b21hbiUyMDQwcyUyMGNvbmZpZGVudCUyIHBvcnRyYWl0fGVufDF8fHx8MTc1OTI1MjM3MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
     "title": "It’s Not Your Skin Collapsing—It’s Your Confidence",
     "subtitle": "Nasolabial folds and double chins shift a face from ‘tired’ to ‘aged.’",
     "intro": "Your 40s are a peak and a turning point. Signs of aging accelerate—but this decade is also a golden window for visible transformation.",
@@ -184,7 +194,8 @@
         "effect": "Repositions the structure by targeting the SMAS layer.",
         "interval": "Every 6–12 months",
         "duration": "1–2 years",
-        "cost": "₩1,500,000–3,000,000"
+        "cost": "₩1,500,000–3,000,000",
+        "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
       },
       {
         "id": "rf_thermage_oligio",
@@ -192,7 +203,8 @@
         "effect": "Stimulates collagen and elastin remodeling.",
         "interval": "Every 6–12 months",
         "duration": "6–12 months",
-        "cost": "₩1,000,000–2,000,000"
+        "cost": "₩1,000,000–2,000,000",
+        "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
       },
       {
         "id": "thread_lift",
@@ -200,21 +212,24 @@
         "effect": "Physically elevates sagging cheeks and jawline.",
         "duration": "1–2 years",
         "time": "1–2 hours",
-        "cost": "₩1,000,000–2,500,000"
+        "cost": "₩1,000,000–2,500,000",
+        "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
       },
       {
         "id": "filler_fat_graft",
         "name": "Volume Restoration (Filler / Fat Grafting)",
         "effect": "Replenishes temples, cheeks, and jawline hollows.",
         "duration": "Filler 12–18 months; fat graft semi-permanent",
-        "cost": "Filler ₩1,000,000–2,000,000; fat graft ₩2,000,000–4,000,000"
+        "cost": "Filler ₩1,000,000–2,000,000; fat graft ₩2,000,000–4,000,000",
+        "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
       },
       {
         "id": "skin_booster_regen",
         "name": "Skin Boosters / Regenerative Injections",
         "effect": "Restores glow and regenerative power.",
         "cycle": "Monthly × 3–5",
-        "cost": "₩200,000–400,000"
+        "cost": "₩200,000–400,000",
+        "imageUrl": "https://images.unsplash.com/photo-1629380108567-a0b544204f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxza2luY2FyZSUyMHByb2R1Y3RzJTIwc3BhfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
       },
       {
         "id": "fraxel_pico",
@@ -222,7 +237,8 @@
         "effect": "Refines pores and fine lines.",
         "cycle": "Monthly × 3–5",
         "downtime": "3–7 days",
-        "cost": "₩250,000–450,000"
+        "cost": "₩250,000–450,000",
+        "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
       }
     ],
     "skin_types_title": "40s by Skin Type",
@@ -244,6 +260,7 @@
     "id": "uuid-50s-en",
     "age_group": "50s",
     "lang": "en",
+    "heroImage": "https://images.unsplash.com/photo-1733940056690-8c86eac6bc73?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtYXR1cmUlMjB3b21hbiUyMDUwcyUyMHdlbGxuZXNzfGVufDF8fHx8MTc1OTI1MjM3MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
     "title": "When the Waves of Aging Grow Rough—Management Before Reversal",
     "subtitle": "It’s not just aging—the structure itself starts to fail.",
     "intro": "In your 50s, the aging tide surges. Skin thins, wrinkles deepen, and elasticity drops sharply. Still, active care can slow the ‘speed of aging.’",
@@ -255,12 +272,18 @@
     ],
     "treatments_title": "50s Formula: Lifting + Volume + Regeneration",
     "treatments": [
-      { "id": "deep_hifu_lift", "name": "Ulthera / Shurink", "effect": "Deep structural lift for sagging tissues", "duration": "1–2 years", "cost": "₩2,000,000–4,000,000" },
-      { "id": "rf_strong", "name": "High-Power RF (e.g., Thermage FLX)", "effect": "Improves deep wrinkles and laxity", "duration": "≈1 year", "cost": "₩1,500,000–3,000,000" },
-      { "id": "thread_strong", "name": "Reinforced Thread Lift", "effect": "Addresses pronounced jowls and cheek ptosis", "duration": "1–2 years", "cost": "₩2,000,000–4,000,000" },
-      { "id": "filler_fat_graft_combo", "name": "Filler + Fat Graft Combo", "effect": "Restores volume-loss zones", "duration": "Filler 12–18 months / Fat semi-permanent", "cost": "₩3,000,000–6,000,000" },
-      { "id": "skin_regen_booster", "name": "Regenerative Therapy (Rejuran / PRP / Stem Cell)", "effect": "Reinforces thin skin, boosts renewal", "cycle": "Monthly × 3–5", "cost": "₩300,000–800,000" },
-      { "id": "laser_resurfacing", "name": "Laser Resurfacing", "effect": "Improves fine lines & pigment together", "cycle": "Every 4–6 weeks × 3–5", "downtime": "5–10 days", "cost": "₩300,000–600,000" }
+      { "id": "deep_hifu_lift", "name": "Ulthera / Shurink", "effect": "Deep structural lift for sagging tissues", "duration": "1–2 years", "cost": "₩2,000,000–4,000,000",
+     "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" },
+      { "id": "rf_strong", "name": "High-Power RF (e.g., Thermage FLX)", "effect": "Improves deep wrinkles and laxity", "duration": "≈1 year", "cost": "₩1,500,000–3,000,000",
+     "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" },
+      { "id": "thread_strong", "name": "Reinforced Thread Lift", "effect": "Addresses pronounced jowls and cheek ptosis", "duration": "1–2 years", "cost": "₩2,000,000–4,000,000",
+    "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" },
+      { "id": "filler_fat_graft_combo", "name": "Filler + Fat Graft Combo", "effect": "Restores volume-loss zones", "duration": "Filler 12–18 months / Fat semi-permanent", "cost": "₩3,000,000–6,000,000",
+     "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" },
+      { "id": "skin_regen_booster", "name": "Regenerative Therapy (Rejuran / PRP / Stem Cell)", "effect": "Reinforces thin skin, boosts renewal", "cycle": "Monthly × 3–5", "cost": "₩300,000–800,000",
+     "imageUrl": "https://images.unsplash.com/photo-1629380108567-a0b544204f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxza2luY2FyZSUyMHByb2R1Y3RzJTIwc3BhfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" },
+      { "id": "laser_resurfacing", "name": "Laser Resurfacing", "effect": "Improves fine lines & pigment together", "cycle": "Every 4–6 weeks × 3–5", "downtime": "5–10 days", "cost": "₩300,000–600,000",
+     "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" }
     ],
     "skin_types_title": "50s by Skin Type",
     "skin_types": {
@@ -280,6 +303,7 @@
     "id": "uuid-60s-en",
     "age_group": "60s",
     "lang": "en",
+    "heroImage": "https://images.unsplash.com/photo-1658314755911-c9b6ae54459c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b21hbiUyMDYwcyUyMGFjdGl2ZSUyMGxpZmVzdHlsZXxlbnwxfHx8fDE3NTkyNTIzNzB8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
     "title": "When the Results of Aging Are Plain to See",
     "subtitle": "Your 60s often call for correction more than simple maintenance.",
     "intro": "In your 60s, facial structural aging is evident: deeper wrinkles, thinner skin, and minimal elasticity. With the right combinations, overall impression can still change dramatically.",
@@ -291,10 +315,14 @@
     ],
     "treatments_title": "60s Plan: Focused Correction & Volume Restoration",
     "treatments": [
-      { "id": "deep_ulthera_combo", "name": "HIFU + RF Combo", "effect": "Lifting while improving elasticity", "duration": "1–2 years", "cost": "₩2,000,000–5,000,000" },
-      { "id": "thread_fill_combo", "name": "Thread Lift + Filler/Fat", "effect": "Corrects sagging and volume loss together", "duration": "1–2 years", "cost": "₩3,000,000–7,000,000" },
-      { "id": "regen_stemcell", "name": "Stem Cell / PRP / Rejuran", "effect": "Thickens and regenerates thin skin", "cycle": "Monthly × 3–5", "cost": "₩500,000–1,000,000" },
-      { "id": "laser_resurfacing_heavy", "name": "Aggressive Laser Resurfacing", "effect": "Refines lines, pigment, and texture", "downtime": "7–14 days", "cost": "₩500,000–1,000,000" }
+      { "id": "deep_ulthera_combo", "name": "HIFU + RF Combo", "effect": "Lifting while improving elasticity", "duration": "1–2 years", "cost": "₩2,000,000–5,000,000",
+      "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" },
+      { "id": "thread_fill_combo", "name": "Thread Lift + Filler/Fat", "effect": "Corrects sagging and volume loss together", "duration": "1–2 years", "cost": "₩3,000,000–7,000,000",
+     "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" },
+      { "id": "regen_stemcell", "name": "Stem Cell / PRP / Rejuran", "effect": "Thickens and regenerates thin skin", "cycle": "Monthly × 3–5", "cost": "₩500,000–1,000,000",
+     "imageUrl": "https://images.unsplash.com/photo-1629380108567-a0b544204f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxza2luY2FyZSUyMHByb2R1Y3RzJTIwc3BhfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" },
+      { "id": "laser_resurfacing_heavy", "name": "Aggressive Laser Resurfacing", "effect": "Refines lines, pigment, and texture", "downtime": "7–14 days", "cost": "₩500,000–1,000,000",
+     "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" }
     ],
     "skin_types_title": "60s by Skin Type",
     "skin_types": {
@@ -314,6 +342,7 @@
     "id": "uuid-70s-en",
     "age_group": "70s+",
     "lang": "en",
+    "heroImage": "https://images.unsplash.com/photo-1590905707155-17c680dd7867?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlbGRlcmx5JTIwd29tYW4lMjA3MHMlMjBzbWlsaW5nfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
     "title": "A Time to Honor Natural Grace and Dignity",
     "subtitle": "Aim not for forced youth, but for healthy, dignified beauty.",
     "intro": "In your 70s and beyond, skeletal and cutaneous aging is pronounced. Prioritize natural, safe correction and recovery rather than aggressive reversal.",
@@ -325,10 +354,14 @@
     ],
     "treatments_title": "70s Approach: Natural, Recovery-Centered Care",
     "treatments": [
-      { "id": "soft_thread", "name": "Soft Thread Lift", "effect": "Gentle contour correction over aggressive elevation", "duration": "≈1 year", "cost": "₩1,000,000–2,000,000" },
-      { "id": "light_filler_fat", "name": "Conservative Filler / Small-Volume Fat Graft", "effect": "Minimal volume restoration to hollow areas", "duration": "12+ months", "cost": "₩2,000,000–4,000,000" },
-      { "id": "regen_soft", "name": "Rejuran / PRP / Stem Cell", "effect": "Revives regenerative power and strengthens thin skin", "cycle": "Monthly × 3–5", "cost": "₩300,000–700,000" },
-      { "id": "noninvasive_led", "name": "Non-invasive LED / Low-Energy Laser", "effect": "Safe for sensitive, fragile skin", "cycle": "Regular sessions", "cost": "₩100,000–300,000" }
+      { "id": "soft_thread", "name": "Soft Thread Lift", "effect": "Gentle contour correction over aggressive elevation", "duration": "≈1 year", "cost": "₩1,000,000–2,000,000",
+     "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" },
+      { "id": "light_filler_fat", "name": "Conservative Filler / Small-Volume Fat Graft", "effect": "Minimal volume restoration to hollow areas", "duration": "12+ months", "cost": "₩2,000,000–4,000,000",
+     "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" },
+      { "id": "regen_soft", "name": "Rejuran / PRP / Stem Cell", "effect": "Revives regenerative power and strengthens thin skin", "cycle": "Monthly × 3–5", "cost": "₩300,000–700,000",
+     "imageUrl": "https://images.unsplash.com/photo-1629380108567-a0b544204f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxza2luY2FyZSUyMHByb2R1Y3RzJTIwc3BhfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" },
+      { "id": "noninvasive_led", "name": "Non-invasive LED / Low-Energy Laser", "effect": "Safe for sensitive, fragile skin", "cycle": "Regular sessions", "cost": "₩100,000–300,000",
+     "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" }
     ],
     "skin_types_title": "70s by Skin Type",
     "skin_types": {

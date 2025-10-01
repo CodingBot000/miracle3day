@@ -1,0 +1,319 @@
+[
+    {
+        "id": "uuid-20s-ko",
+        "age_group": "20s",
+        "lang": "ko",
+        "heroImage": "https://images.unsplash.com/photo-1679517354322-20fe85050b9d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx5b3VuZyUyMHdvbWFuJTIwc2tpbmNhcmUlMjAyMHN8ZW58MXx8fHwxNzU5MjUyMzY5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+        "title": "젊음의 황금기, 미래를 위한 현명한 투자",
+        "subtitle": "빛나던 피부는 저절로 유지되지 않습니다. 지금의 작은 선택이 30대의 얼굴을 바꿉니다.",
+        "intro": "스무 살의 피부는 마치 갓 피어난 꽃잎처럼 촉촉하고 탄력이 넘칩니다. 하지만 이 황금 같은 시간이 영원할 것이라고 착각하지 마세요. 지금 이 순간, 보이지 않는 곳에서 시간의 씨앗들이 조용히 자라고 있으니까요.",
+        
+        "concerns_title": "20대의 숨겨진 피부 고민들",
+        "concerns": [
+            {
+            "name": "모공과 여드름 자국의 반란",
+            "desc": "불규칙한 생활, 시험과 취업 스트레스로 인한 호르몬의 춤. 밤늦은 야식과 함께 찾아오는 트러블들이 당신의 매끄러운 피부에 작은 지진을 일으킵니다. 지금은 컨실러로 가릴 수 있지만, 시간이 지나면 돌이킬 수 없는 흔적이 될 수 있어요."
+            },
+            {
+            "name": "색소 침착, 보이지 않는 적",
+            "desc": "\"나는 선크림을 잘 바르는데?\" 하지만 햇볕 아래에서 쌓이는 멜라닌의 기억은 생각보다 집요합니다. 지금은 눈에 잘 안 보여서 더 위험해요. 마치 투명한 잉크로 쓴 편지처럼, 나중에 열을 가하면 글씨가 나타나듯이 말이죠."
+            },
+            {
+            "name": "피부 톤의 불균형",
+            "desc": "술과 야식, 밤샘 작업의 흔적이 얼굴에 고스란히 남습니다. 한쪽은 붉고, 한쪽은 누렇고, 눈 밑은 어둡고... 마치 팔레트에 물감이 섞인 것처럼 복잡해진 피부 톤이 당신의 자연스러운 아름다움을 가립니다."
+            }
+        ],
+        
+        "treatments_title": "20대 맞춤 시술: 미래를 위한 현명한 선택",
+        "treatments": [
+            {
+            "id": "skin_booster_rejuran",
+            "name": "스킨부스터 (리쥬란, 물광주사)",
+            "effect": "피부 속 수분 저수지 만들기. 피부에 작은 수분 댐을 설치하는 것과 같습니다. 히알루론산의 촘촘한 그물망이 피부 깊숙이 자리잡아, 외부의 건조함과 스트레스로부터 피부를 보호해줍니다.",
+            "cycle": "2-3주 간격으로 3-5회",
+            "duration": "6-8개월",
+            "cost": "회당 15-25만원",
+            "imageUrl": "https://images.unsplash.com/photo-1629380108567-a0b544204f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxza2luY2FyZSUyMHByb2R1Y3RzJTIwc3BhfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+            "id": "laser_toning_pico",
+            "name": "레이저 토닝 / 피코토닝",
+            "effect": "투명함의 비밀. 햇볕이 남긴 작은 그림자들을 지워내는 시술입니다. 마치 오래된 유리창을 닦아내듯, 한 번의 시술로도 맑고 투명한 피부 톤을 경험할 수 있습니다.",
+            "cycle": "2-4주 간격으로 5-8회",
+            "duration": "1년 이상",
+            "cost": "회당 8-15만원",
+            "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+            "id": "fraxel_pico_fraxel",
+            "name": "프락셀 / 피코프락셀",
+            "effect": "피부의 리셋 버튼. 여드름 자국과 모공을 정리하고 콜라겐을 재생시켜 매끈한 피부결을 되찾습니다.",
+            "cycle": "4-6주 간격으로 3-5회",
+            "downtime": "3-7일",
+            "cost": "회당 20-35만원",
+            "imageUrl": "https://images.unsplash.com/photo-1629380108567-a0b544204f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxza2luY2FyZSUyMHByb2R1Y3RzJTIwc3BhfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            }
+        ],
+        
+        "skin_types_title": "피부 타입별 세심한 케어",
+        "skin_types": {
+            "dry": "건성 피부: '마른 땅에는 물이 먼저'\n건조는 주름을 앞당기는 무서운 초대장입니다. 20대의 건성 피부는 겉으로는 괜찮아 보이지만, 속은 이미 갈증으로 목마를 수 있어요. 스킨부스터로 깊은 수분 저장고를 만들고, 부드러운 레이저 토닝으로 피부 장벽을 강화하세요. 지금 심어놓은 수분의 씨앗이 30대에는 빛나는 물광 피부로 자라날 거예요.",
+            "oily": "지성 피부: '번들거림 뒤의 진실'\n기름진 피부라고 수분이 충분하다고 생각하면 큰 오산입니다. 과도한 피지 분비 뒤에는 넓어진 모공과 염증성 트러블 이 숨어 있어요. 프락셀로 모공을 타이트하게 만들고, 피코토닝으로 염증 후 색소침착을 예방하세요. 번들거리는 피부 가 아닌, 건강하게 윤기 나는 피부로 변화시킬 수 있습니다.",
+            "sensitive": "민감성 피부: '예민한 마음, 섬세한 케어'\n조금만 자극해도 화를 내는 민감한 피부. 하지만 그렇다고 아무것도 하지 않으면 더 약해질 수 있어요. 저강도 레이저 와 부드러운 재생 치료로 피부의 면역력을 천천히 키워주세요. 마치 연약한 새싹을 키우듯, 인내심을 갖고 관리하면 결국 강하고 건강한 피부로 거듭날 수 있습니다. "
+        },
+        
+        "special_tips_title": "20대만의 특별한 관리 팁",
+        "special_tips": {
+            "subsections": [
+            {
+                "title": "생활 습관과 시술의 시너지",
+                "tips": [
+                "골든타임 수면: 밤 11시-새벽 2시 깊은 잠",
+                "항산화 식품: 블루베리, 토마토, 녹차",
+                "스트레스 관리: 요가·명상"
+                ]
+            },
+            {
+                "title": "계절별 맞춤 관리",
+                "tips": [
+                "봄/여름: 자외선이 강한 시기에는 피코토닝 중심",
+                "가을/겨울: 건조한 시기에는 스킨부스터와 재생치료 중심"
+                ]
+            }
+            ]
+        }
+    },
+    {
+        "id": "uuid-30s-ko",
+        "age_group": "30s",
+        "lang": "ko",
+        "heroImage": "https://images.unsplash.com/photo-1683188280831-2fc41e918478?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b21hbiUyMDMwcyUyMGhlYWx0aHklMjBsaWZlc3R5bGV8ZW58MXx8fHwxNzU5MjUyMzcwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+        "title": "청춘의 마지막 방어선, 지혜로운 선택의 시기",
+        "subtitle": "눈가의 웃음선이 더 이상 예쁘지 않고, 표정이 피곤해 보일 때 시작해야 합니다.",
+        "intro": "서른이라는 나이는 참 묘합니다. 아직은 젊다고 생각하지만, 거울 속 내 얼굴은 조금씩 달라지고 있어요. 아침에 일어나도 피부가 예전만큼 탱탱하지 않고, 웃고 난 후에도 주름이 완전히 사라지지 않습니다. 이것이 바로 30대의 신호예요.",
+        
+        "concerns_title": "30대의 미묘한 변화들",
+        "concerns": [
+          {"name": "눈가와 이마의 잔주름", "desc": "표정을 짓지 않을 때도 희미하게 남아있는 선들. 특히 웃을 때 깊어지는 눈가 주름은 마치 시간이 남긴 작은 편지 같아요."},
+          {"name": "칙칙해진 피부 톤", "desc": "20대의 맑고 투명했던 피부 톤이 뿌옇게 변해 화장으로도 생기를 회복하기 어렵습니다."},
+          {"name": "볼륨 감소의 시작", "desc": "볼이 예전만큼 통통하지 않고 팔자주름이 자리잡기 시작합니다."}
+        ],
+      
+        "treatments_title": "30대 맞춤 시술: 예방과 교정의 황금 밸런스",
+        "treatments": [
+          {"id": "botox_expression_lines", "name": "보톡스", "effect": "표정주름 예방 및 얕은 주름 차단", "duration": "4-6개월", "time": "10-15분", "cost": "부위당 8-15만원", "onset": "시술 후 3-7일", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "ulthera_shurink_hifu", "name": "울쎄라·슈링크 (HIFU 리프팅)", "effect": "근막층까지 초음파 에너지 전달로 콜라겐 각성", "duration": "1-2년", "time": "30-60분", "cost": "80-150만원", "onset": "2-3개월 후 본격", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "thermage_oligio_rf", "name": "써마지·올리지오 (고주파 리프팅)", "effect": "피부 속을 뜨겁게 자극해 탄탄한 탄력 생성", "duration": "6개월-1년", "time": "45-90분", "cost": "60-120만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "filler_volume_restore", "name": "필러", "effect": "볼·팔자 부위 볼륨 복원", "duration": "12-18개월", "time": "20-30분", "cost": "1cc당 40-60만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"}
+        ],
+      
+        "skin_types_title": "피부 타입별 30대 전략",
+        "skin_types": {
+          "dry": "수분과 탄력의 이중 전략: 보톡스로 주름 예방 + 스킨부스터 수분 공급",
+          "oily": "탄력 확보 우선: HIFU/고주파로 리프팅 후 토닝으로 피부 톤 정리",
+          "sensitive": "천천히, 확실하게: 저강도 리프팅과 필러를 조합해 점진적 개선"
+        },
+      
+        "special_tips_title": "30대 라이프스타일과 시술의 조화",
+        "special_tips": {
+          "subsections": [
+            {
+              "title": "커리어 우먼을 위한 시술 스케줄링",
+              "tips": ["금요일 오후 시술 → 주말 회복", "점심시간 보톡스 → 바로 업무 복귀 가능", "휴가철 집중 관리 → 연차 활용"]
+            },
+            {
+              "title": "연애와 결혼을 앞둔 30대를 위한 특별 관리",
+              "tips": ["결혼식 6개월 전 관리 시작", "목·어깨 라인 정리", "피부 톤 개선 플랜"]
+            }
+          ]
+        }
+      },
+      {
+        "id": "uuid-40s-ko",
+        "age_group": "40s",
+        "lang": "ko",
+        "heroImage": "https://images.unsplash.com/photo-1619906518073-33f896295295?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b21hbiUyMDQwcyUyMGNvbmZpZGVudCUyMHBvcnRyYWl0fGVufDF8fHx8MTc1OTI1MjM3MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+        "title": "무너지는 건 피부가 아니라, 당신의 자신감",
+        "subtitle": "팔자주름과 이중턱은 '피곤한 얼굴'을 넘어, '나이 들어 보이는 얼굴'을 만듭니다.",
+        "intro": "마흔이라는 나이는 인생의 정점이자 전환점입니다. 피부는 본격적인 노화의 신호를 보내기 시작하지만, 40대는 오히려 극적인 변화를 만들어낼 수 있는 황금 시기이기도 합니다.",
+        
+        "concerns_title": "40대의 도전적인 변화들",
+        "concerns": [
+          {"name": "깊어진 팔자주름", "desc": "웃지 않을 때도 선명히 보이며 미소조차 피곤하게 만듭니다."},
+          {"name": "이중턱과 흐려진 턱선", "desc": "목과 얼굴 경계가 무너져 윤곽이 사라집니다."},
+          {"name": "넓어진 모공과 잔주름 확산", "desc": "화장으로도 가려지지 않고 피부 세밀함이 상실됩니다."},
+          {"name": "볼륨 소실 가속화", "desc": "관자놀이와 볼 꺼짐으로 날카롭고 지친 인상"}
+        ],
+      
+        "treatments_title": "40대 토털 솔루션: 공격적이고 체계적인 접근",
+        "treatments": [
+          {"id": "hifu_ulthera_shurink", "name": "깊은 리프팅 (울쎄라·슈링크)", "effect": "근막층 깊숙이 끌어올려 구조 회복", "interval": "6개월-1년", "duration": "1-2년", "cost": "150-300만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "rf_thermage_oligio", "name": "표면 탄력 강화 (써마지·올리지오)", "effect": "콜라겐·엘라스틴 생성 촉진", "interval": "6개월-1년", "duration": "6개월-1년", "cost": "100-200만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "thread_lift", "name": "실리프팅", "effect": "처진 볼살·턱선 물리적 리프팅", "duration": "1-2년", "time": "1-2시간", "cost": "100-250만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "filler_fat_graft", "name": "볼륨 복원 (필러·지방이식)", "effect": "꺼진 관자놀이·볼·턱선 회복", "duration": "필러 12-18개월, 지방이식 반영구", "cost": "필러 100-200만원, 지방이식 200-400만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "skin_booster_regen", "name": "스킨부스터·재생주사", "effect": "피부 재생력·광채 회복", "cycle": "월 1회, 3-5회", "cost": "20-40만원", "imageUrl": "https://images.unsplash.com/photo-1629380108567-a0b544204f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxza2luY2FyZSUyMHByb2R1Y3RzJTIwc3BhfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "fraxel_pico", "name": "프락셀·피코프락셀", "effect": "모공·잔주름 정리", "cycle": "월 1회, 3-5회", "downtime": "3-7일", "cost": "25-45만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"}
+        ],
+      
+        "skin_types_title": "피부 타입별 40대 맞춤 전략",
+        "skin_types": {
+          "dry": "수분이 생명선: 40대 건성 피부는 주름이 더 빨리, 더 깊게 새겨집니다. 수분 부족으로 인한 잔주름이 방사형으로 퍼져나가기 전에 적 극적인 수분 공급과 함께 필러로 구조적 개선을 해야 해요. 리프팅 시술 후에는 반드시 스킨부스터를 병행해서 건조함 을 막아주세요. \n추천 조합: 울쎄라 + 필러 + 스킨부스터", 
+          "oily": "탄력이 관건:  기름기가 많다고 해서 처짐이 없는 것은 아닙니다. 오히려 무거운 피지막 때문에 중력의 영향을 더 많이 받을 수 있어 요. 처진 턱선과 늘어난 모공을 잡는 강력한 리프팅이 우선되어야 하고, 이후 모공 관리를 위한 레이저 시술이 필요합니다. \n추천조합: 실리프팅+써마지+프락셀 조합",
+          "combination": "부위별 맞춤 솔루션: T존은 번들거리고 U존은 건조한 복합성 피부는 부위별로 다른 접근이 필요해요. 기름진 부위는 리프팅과 모공 관리 에 집중하고, 건조한 부위는 수분 공급과 필러를 통한 볼륨 보충에 집중하세요. \n추천 조합: 부위별 맞춤 리프팅 + 선택적 필러 + 스킨부스터 ",
+          "sensitive": "서서히, 확실하게: 민감한 피부는 한 번에 많은 시술을 받기 어려워요. 2-3개월 간격으로 단계적으로 접근하되, 각 시술 후 충분한 진정 과 회복 기간을 갖는 것이 중요합니다. 저강도 레이저와 재생 주사 중심으로 피부 장벽부터 회복시켜야 해요. \n추천 조합: 저강도 리프팅+재생주사+LED치료"
+        },
+      
+        "special_tips_title": "40대 라이프스타일 밀착 관리",
+        "special_tips": {
+          "subsections": [
+            {
+              "title": "워킹맘을 위한 효율적 관리법",
+              "tips": ["짧은 점심시간 보톡스·필러", "주말 리프팅 집중 배치"]
+            },
+            {
+              "title": "사회적 활동이 많은 40대를 위한 스케줄링",
+              "tips": ["행사 2-3개월 전 리프팅", "1개월 전 마무리 시술"]
+            }
+          ]
+        }
+      },
+      {
+        "id": "uuid-50s-ko",
+        "age_group": "50s",
+        "lang": "ko",
+        "heroImage": "https://images.unsplash.com/photo-1733940056690-8c86eac6bc73?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtYXR1cmUlMjB3b21hbiUyMDUwcyUyMHdlbGxuZXNzfGVufDF8fHx8MTc1OTI1MjM3MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+        "title": "노화의 파도가 거세지는 시기, 되돌림보다 관리가 우선",
+        "subtitle": "피부가 단순히 늙는 것이 아니라, 구조 자체가 무너집니다.",
+        "intro": "50대는 본격적인 노화의 파도가 몰려오는 시기입니다. 피부는 얇아지고, 주름은 깊어지며, 탄력은 현저히 떨어집니다. 그러나 이 시기야말로 적극적인 시술과 관리로 '노화의 속도'를 늦출 수 있습니다.",
+        
+        "concerns_title": "50대의 본격적인 노화 신호",
+        "concerns": [
+          {"name": "깊어진 주름", "desc": "이마·눈가·팔자주름이 더 이상 표정 주름이 아니라 고정 주름이 됩니다."},
+          {"name": "피부 탄력 소실", "desc": "볼살이 아래로 쳐지고 턱선이 무너져 얼굴 윤곽이 흐려집니다."},
+          {"name": "피부 얇아짐과 건조", "desc": "콜라겐과 지방이 줄어들면서 피부가 얇고 건조해져 잔주름이 급격히 늘어납니다."}
+        ],
+      
+        "treatments_title": "50대 맞춤 시술: 리프팅+볼륨+재생의 3박자",
+        "treatments": [
+          {"id": "deep_hifu_lift", "name": "울쎄라·슈링크", "effect": "심층 리프팅으로 쳐진 피부 구조 회복", "duration": "1-2년", "cost": "200-400만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "rf_strong", "name": "강력 고주파 리프팅 (써마지FLX 등)", "effect": "깊은 주름과 탄력 저하 개선", "duration": "1년", "cost": "150-300만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "thread_strong", "name": "실리프팅(강화형)", "effect": "심하게 처진 턱선·볼살 물리적 리프팅", "duration": "1-2년", "cost": "200-400만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "filler_fat_graft_combo", "name": "필러·지방이식 병행", "effect": "볼륨 소실 부위 복원", "duration": "필러 12-18개월 / 지방이식 반영구", "cost": "300-600만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "skin_regen_booster", "name": "재생치료 (리쥬란·PRP·줄기세포)", "effect": "피부 재생력 회복, 얇아진 피부 보강", "cycle": "월 1회, 3-5회", "cost": "30-80만원", "imageUrl": "https://images.unsplash.com/photo-1629380108567-a0b544204f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxza2luY2FyZSUyMHByb2R1Y3RzJTIwc3BhfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "laser_resurfacing", "name": "레이저 리서페이싱", "effect": "잔주름·색소 동반 개선", "cycle": "4-6주 간격 3-5회", "downtime": "5-10일", "cost": "30-60만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"}
+        ],
+      
+        "skin_types_title": "50대 피부 타입별 집중 관리",
+        "skin_types": {
+          "dry": "재생이 우선: 50대 건성 피부는 더 이상 미룰 수 없는 상태입니다. 주름이 더 깊고 피부는 더 얇아져서 재생 치료 없이는 다른 시술 의 효과도 제한적이에요. 스킨부스터와 재생 주사를 먼저 충분히 받아서 피부 컨디션을 올린 후에 리프팅과 필러를 시행해야 합니다. \n권장 순서: 재생치료 3개월 → 리프팅 → 필러 → 유지관리, 심층 보습 + 재생 병행. 스킨부스터·PRP로 피부 장벽 회복",
+          "oily": "구조 재건이 관건: 지성 피부는 아직 어느 정도 탄력을 버티고 있지만, 무거운 피지막 때문에 처짐이 가속화될 수 있어요. 실리프팅과 강 력한 리프팅으로 얼굴 구조를 먼저 잡은 후, 모공과 피지 관리를 위한 레이저 치료를 병행해야 합니다. \n권장 조합: 실리프팅 + 울쎄라 + 지방이식 + 모공관리 , 리프팅+볼륨 복합 접근. 실리프팅+필러 조합",
+          "sensitive": "단계적 접근의 미학: \n민감한 피부는 한 번에 많은 시술을 받을 수 없어서 장기적인 플랜이 필요해요. 6개월-1년에 걸쳐 단계적으로 접근하 되, 각 단계마다 충분한 회복과 진정 기간을 가져야 합니다. 하지만 꾸준히 관리하면 다른 피부 타입보다 더 자연스럽 고 오래가는 결과를 얻을 수 있어요. \n단계별 플랜: 3개월마다 한 가지씩 추가, 총 12-18개월 계획 , 저강도 레이저·재생치료 중심. 피부 보호막 우선"
+        },
+      
+        "special_tips_title": "50대 생활 밀착 관리",
+        "special_tips": {
+          "subsections": [
+            {
+              "title": "중년 여성의 시술 스케줄링",
+              "tips": ["연 1-2회 대규모 리프팅", "중간중간 보톡스·필러로 보완"]
+            },
+            {
+              "title": "사회활동이 많은 50대의 관리",
+              "tips": ["대외활동 2-3개월 전 집중 리프팅", "피부 재생 치료는 정기 루틴화"]
+            }
+          ]
+        }
+      },
+      {
+        "id": "uuid-60s-ko",
+        "age_group": "60s",
+        "lang": "ko",
+        "heroImage": "https://images.unsplash.com/photo-1658314755911-c9b6ae54459c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b21hbiUyMDYwcyUyMGFjdGl2ZSUyMGxpZmVzdHlsZXxlbnwxfHx8fDE3NTkyNTIzNzB8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+        "title": "노화의 결과가 얼굴에 드러나는 시기",
+        "subtitle": "60대는 '관리'가 아니라 '교정'이 필요한 단계입니다.",
+        "intro": "60대는 피부와 얼굴 구조의 노화가 뚜렷이 드러나는 시기입니다. 주름은 깊어지고, 피부는 얇아지며, 탄력은 거의 사라집니다. 하지만 적절한 시술 조합을 통해 인상을 크게 바꿀 수 있습니다.",
+        
+        "concerns_title": "60대의 뚜렷한 변화",
+        "concerns": [
+          {"name": "전반적인 처짐", "desc": "이마·눈가·볼·목까지 전면적으로 늘어집니다."},
+          {"name": "깊은 주름과 골격 노출", "desc": "볼살 소실로 뼈 윤곽이 도드라지고 노안이 심화됩니다."},
+          {"name": "피부 얇아짐+건조", "desc": "보호막이 무너져 민감성과 색소 문제가 동반됩니다."}
+        ],
+      
+        "treatments_title": "60대 맞춤 시술: 집중 교정과 볼륨 복원",
+        "treatments": [
+          {"id": "deep_ulthera_combo", "name": "HIFU+고주파 복합", "effect": "리프팅+탄력 개선 동시 달성", "duration": "1-2년", "cost": "200-500만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "thread_fill_combo", "name": "실리프팅+필러·지방이식", "effect": "처짐과 볼륨 감소 동시 교정", "duration": "1-2년", "cost": "300-700만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "regen_stemcell", "name": "줄기세포/PRP/리쥬란", "effect": "얇아진 피부 보강과 재생 촉진", "cycle": "월 1회, 3-5회", "cost": "50-100만원", "imageUrl": "https://images.unsplash.com/photo-1629380108567-a0b544204f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxza2luY2FyZSUyMHByb2R1Y3RzJTIwc3BhfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "laser_resurfacing_heavy", "name": "강력 레이저 리서페이싱", "effect": "잔주름·색소 개선, 피부 질감 회복", "downtime": "7-14일", "cost": "50-100만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"}
+        ],
+      
+        "skin_types_title": "피부 타입별 60대 전략",
+        "skin_types": {
+          "dry": "재생주사·스킨부스터로 얇아진 피부 강화",
+          "oily": "리프팅+볼륨 병행, 피부 장력 확보",
+          "sensitive": "LED·저강도 재생치료 위주, 자극 최소화"
+        },
+      
+        "special_tips_title": "60대 라이프스타일 맞춤 관리",
+        "special_tips": {
+          "subsections": [
+            {
+              "title": "활발한 사회생활을 유지하는 60대",
+              "tips": ["행사 3개월 전 리프팅 집중", "지속적인 피부 재생 관리"]
+            },
+            {
+              "title": "은퇴 이후 여유 있는 관리",
+              "tips": ["연 1회 대규모 리프팅+정기적 소규모 보완", "자극 없는 생활습관 강조"]
+            }
+          ]
+        }
+      },
+      {
+        "id": "uuid-70s-ko",
+        "age_group": "70s+",
+        "lang": "ko",
+        "heroImage": "https://images.unsplash.com/photo-1590905707155-17c680dd7867?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlbGRlcmx5JTIwd29tYW4lMjA3MHMlMjBzbWlsaW5nfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+        "title": "자연스러움과 품격을 지키는 시기",
+        "subtitle": "무리한 젊음 되찾기가 아니라, 건강하고 품격 있는 아름다움 유지가 핵심입니다.",
+        "intro": "70대 이상에서는 얼굴의 골격과 피부 노화가 극대화됩니다. 이 시기에는 과도한 시술보다는 자연스럽고 안전한 교정과 회복 중심의 전략이 필요합니다.",
+        
+        "concerns_title": "70대의 주요 고민",
+        "concerns": [
+          {"name": "심화된 처짐과 주름", "desc": "얼굴 전반적으로 피부가 늘어지고 주름이 깊어집니다."},
+          {"name": "피부 약화", "desc": "얇아진 피부가 쉽게 손상되고 회복력이 느려집니다."},
+          {"name": "볼륨 소실 심화", "desc": "볼살·턱선·관자놀이가 심하게 꺼지며 노화 인상이 강화됩니다."}
+        ],
+      
+        "treatments_title": "70대 맞춤 시술: 자연스러운 회복 중심",
+        "treatments": [
+          {"id": "soft_thread", "name": "소프트 실리프팅", "effect": "강한 리프팅 대신 자연스러운 얼굴선 보정", "duration": "1년", "cost": "100-200만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "light_filler_fat", "name": "필러·소량 지방이식", "effect": "꺼진 부위에 최소한의 볼륨 회복", "duration": "12개월~", "cost": "200-400만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "regen_soft", "name": "리쥬란·PRP·줄기세포", "effect": "피부 재생력 회복, 얇은 피부 보강", "cycle": "월 1회, 3-5회", "cost": "30-70만원", "imageUrl": "https://images.unsplash.com/photo-1629380108567-a0b544204f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxza2luY2FyZSUyMHByb2R1Y3RzJTIwc3BhfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"},
+          {"id": "noninvasive_led", "name": "비침습적 LED·저강도 레이저", "effect": "민감해진 피부에 안전한 관리", "cycle": "정기적", "cost": "10-30만원", "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"}
+        ],
+      
+        "skin_types_title": "피부 타입별 70대 전략",
+        "skin_types": {
+          "dry": "스킨부스터·리쥬란으로 수분·재생 강화",
+          "oily": "리프팅보다는 피부결 정돈 위주",
+          "sensitive": "저자극 LED·재생치료, 부작용 최소화"
+        },
+      
+        "special_tips_title": "70대 라이프스타일 맞춤 관리",
+        "special_tips": {
+          "subsections": [
+            {
+              "title": "품격 있는 노년을 위한 관리",
+              "tips": ["무리한 리프팅보다는 자연스러운 개선", "정기적 피부 건강 검진 병행"]
+            },
+            {
+              "title": "안전 최우선 접근",
+              "tips": ["시술보다는 생활습관·영양 보충 우선", "비침습적 관리 중점"]
+            }
+          ]
+        }
+      }
+      
+  
+]

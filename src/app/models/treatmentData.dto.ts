@@ -27,6 +27,10 @@ export interface TreatmentAttributes {
     pain_score_0_10?: number;
   };
   effect?: {
+    onset_label?: {
+      ko?: string;
+      en?: string;
+    };
     onset_weeks_min?: number;
     onset_weeks_max?: number;
     duration_months_min?: number;
@@ -40,11 +44,14 @@ export interface TreatmentAttributes {
     sessions_min?: number;
     sessions_max?: number;
     interval_weeks?: number;
+    maintenance_note?: {
+      ko?: string;
+      en?: string;
+    };
   };
   downtime?: {
-    days_min?: number;
-    days_max?: number;
-    level?: string;
+    ko?: string;
+    en?: string;
   };
 }
 

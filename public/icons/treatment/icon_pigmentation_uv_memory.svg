@@ -1,0 +1,17 @@
+<svg width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="icon-pigment" xmlns="http://www.w3.org/2000/svg">
+  <title id="icon-pigment">Pigmentation / UV Memory</title>
+  <!-- sun -->
+  <g stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <circle cx="44" cy="20" r="5"/>
+    <path d="M44 12v3M44 25v3M36 20h3M49 20h3M39.5 15.5l2.1 2.1M47.9 22.4l2.1 2.1M47.9 17.6l2.1-2.1M39.5 24.5l2.1-2.1"/>
+  </g>
+  <!-- spot cluster -->
+  <g fill="currentColor">
+    <circle cx="36" cy="38" r="2.2"/>
+    <circle cx="31.5" cy="36.5" r="1.5" opacity="0.7"/>
+    <circle cx="41" cy="34.5" r="1.4" opacity="0.7"/>
+    <circle cx="34" cy="33" r="1.2" opacity="0.6"/>
+  </g>
+  <!-- cheek guideline -->
+  <path d="M22 25c2-4 6-7 10-7s8 3 10 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity=".6"/>
+</svg>

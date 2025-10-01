@@ -24,7 +24,10 @@
       "Bash(node:*)",
       "Bash(kill:*)",
       "Bash(PORT=3000 npm run dev)",
-      "Bash(timeout 5 curl -s \"http://localhost:3000/hospital\")"
+      "Bash(timeout 5 curl -s \"http://localhost:3000/hospital\")",
+      "Bash(npm run lint:*)",
+      "Bash(timeout 10 curl -s \"http://localhost:3001/treatment-landing-v2/protocol?topic_id=lifting_firming&area_id=face_all&locale=ko\")",
+      "WebFetch(domain:web.dev)"
     ],
     "deny": []
   }

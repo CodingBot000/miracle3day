@@ -1,0 +1,10 @@
+<svg width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="t7" xmlns="http://www.w3.org/2000/svg">
+  <title id="t7">Lifting &amp; Firming</title>
+  <g stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- face profile / jawline -->
+    <path d="M40 18c-8 2-12 8-12 14 0 6 4 10 10 12"/>
+    <path d="M38 44c4-2 8-6 10-12"/>
+    <!-- upward arrow along jaw -->
+    <path d="M28 40l6-2-2 6"/>
+  </g>
+</svg>

@@ -1,0 +1,13 @@
+<svg width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="t8" xmlns="http://www.w3.org/2000/svg">
+  <title id="t8">Wrinkle Reduction &amp; Botox</title>
+  <g stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- forehead lines -->
+    <path d="M18 22h10M18 26h12M18 30h9"/>
+    <!-- syringe -->
+    <path d="M44 26l-12 12"/>
+    <path d="M44 26l4 4-2 2-4-4 2-2z"/>
+    <path d="M30 38l-2 6 6-2"/>
+    <!-- check -->
+    <path d="M22 44l4 4 8-8"/>
+  </g>
+</svg>

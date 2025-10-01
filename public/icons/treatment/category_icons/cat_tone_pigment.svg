@@ -1,0 +1,19 @@
+<svg width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="t2" xmlns="http://www.w3.org/2000/svg">
+  <title id="t2">Pigmentation &amp; Tone Correction</title>
+  <g stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- correction wand -->
+    <path d="M18 46l18-18"/>
+    <path d="M34 22l4 4"/>
+    <!-- star/spark -->
+    <path d="M42 16v3M42 24v3M38 20h3M45 20h3"/>
+    <!-- tone circle with wavy divide -->
+    <circle cx="40" cy="40" r="12"/>
+    <path d="M36 28c3 4 3 8 0 12s-3 8 0 12" />
+  </g>
+  <!-- pigment dots -->
+  <g fill="currentColor">
+    <circle cx="44" cy="36" r="1.6"/>
+    <circle cx="38" cy="42" r="1.2" opacity=".8"/>
+    <circle cx="46.5" cy="44.5" r="1.1" opacity=".7"/>
+  </g>
+</svg>

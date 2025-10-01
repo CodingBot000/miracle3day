@@ -1,0 +1,11 @@
+<svg width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="t5" xmlns="http://www.w3.org/2000/svg">
+  <title id="t5">Scalp &amp; Hair</title>
+  <g stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- skin surface -->
+    <path d="M14 44h36"/>
+    <!-- follicles -->
+    <path d="M22 44c6-2 6-10 8-16"/>
+    <path d="M32 44c4-3 4-12 6-18"/>
+    <path d="M42 44c3-2 3-8 4-12"/>
+  </g>
+</svg>

@@ -1,0 +1,10 @@
+<svg width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="t1" xmlns="http://www.w3.org/2000/svg">
+  <title id="t1">Skin Regeneration &amp; Boosters</title>
+  <g stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- booster droplet -->
+    <path d="M32 12c8 10 14 16 14 24a14 14 0 1 1 -28 0c0-8 6-14 14-24z"/>
+    <!-- tiny plus / spark -->
+    <path d="M44 16v4M42 18h4"/>
+    <path d="M20 20h3M21.5 18.5v3"/>
+  </g>
+</svg>

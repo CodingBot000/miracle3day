@@ -1,0 +1,13 @@
+<svg width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="t9" xmlns="http://www.w3.org/2000/svg">
+  <title id="t9">Fillers &amp; Volume Restoration</title>
+  <g stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- plump circle (cheek) -->
+    <circle cx="38" cy="34" r="8"/>
+    <!-- outward tiny arrows -->
+    <path d="M38 22v-4M38 20l2 2M38 20l-2 2"/>
+    <path d="M26 34h-4M24 34l2-2M24 34l2 2"/>
+    <!-- syringe to indicate filler -->
+    <path d="M20 20l8 8"/>
+    <path d="M20 20l3-3 8 8-3 3-8-8z"/>
+  </g>
+</svg>

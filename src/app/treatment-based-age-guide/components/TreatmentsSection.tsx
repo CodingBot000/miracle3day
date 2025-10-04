@@ -79,7 +79,7 @@ export function TreatmentsSection({ title, treatments }: TreatmentsSectionProps)
               
               {treatment.downtime && (
                 <div className="text-xs text-orange-600 bg-orange-50 px-2 py-1 rounded">
-                  다운타임: {treatment.downtime}
+                  downtime: {treatment.downtime}
                 </div>
               )}
               </div>

@@ -21,5 +21,6 @@ export const languages = [
     { label: "繁體中文(台灣)", code: "zh-TW" },
     { label: "繁體中文(香港)", code: "zh-HK" },
     { label: "ภาษาไทย", code: "th-TH" },
-    { label: "Tiếng Việt", code: "vi-VN" }
+    { label: "Tiếng Việt", code: "vi-VN" },
+    { label: "한국어", code: "ko-KR" }
   ]

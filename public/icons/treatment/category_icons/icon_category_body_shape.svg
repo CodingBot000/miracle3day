@@ -1,0 +1,11 @@
+<svg width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="t4" xmlns="http://www.w3.org/2000/svg">
+  <title id="t4">Body Shaping &amp; Volume</title>
+  <g stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- torso outline -->
+    <path d="M24 18c4 4 6 8 6 14s-2 10-6 14"/>
+    <path d="M40 18c-4 4-6 8-6 14s2 10 6 14"/>
+    <!-- outward arrows (volume) -->
+    <path d="M18 34l6-2-2 6"/>
+    <path d="M46 34l-6-2 2 6"/>
+  </g>
+</svg>

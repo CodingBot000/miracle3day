@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,9 +10,30 @@ import { Check } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { translateLanguage } from "@/constants";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const LanguageSelector = () => {
-  const [selectedLanguage, setSelectedLanguage] = useState(translateLanguage[0]);
+  const { language, setLanguage } = useLanguage();
+
+  // Map language codes to simplified format
+  const languageCodeMap: Record<string, 'ko' | 'en'> = {
+    'ko-KR': 'ko',
+    'en-US': 'en',
+  };
+
+  const reverseLanguageMap: Record<string, string> = {
+    'ko': 'ko-KR',
+    'en': 'en-US',
+  };
+
+  const selectedCode = reverseLanguageMap[language] || 'en-US';
+
+  const handleLanguageChange = (code: string) => {
+    const simplifiedCode = languageCodeMap[code];
+    if (simplifiedCode) {
+      setLanguage(simplifiedCode);
+    }
+  };
 
   return (
     <DropdownMenu>
@@ -30,14 +50,14 @@ export const LanguageSelector = () => {
         {translateLanguage.map((option) => (
           <DropdownMenuItem
             key={option.code}
-            onClick={() => setSelectedLanguage(option)}
+            onClick={() => handleLanguageChange(option.code)}
             className={cn(
               "flex items-center gap-2 cursor-pointer",
-              option.code === selectedLanguage.code &&
+              option.code === selectedCode &&
                 "bg-muted text-primary font-semibold"
             )}
           >
-            {option.code === selectedLanguage.code && (
+            {option.code === selectedCode && (
               <Check className="w-4 h-4" />
             )}
             {option.label}

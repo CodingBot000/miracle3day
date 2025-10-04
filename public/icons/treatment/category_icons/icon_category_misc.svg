@@ -1,0 +1,9 @@
+<svg width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="t6" xmlns="http://www.w3.org/2000/svg">
+  <title id="t6">Misc (Hair Removal &amp; Hands)</title>
+  <g stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- hand outline -->
+    <path d="M22 46c0-6 0-14 4-14s4 8 4 8V24c0-2 4-2 4 2v10c0-4 4-4 4 0v6c0-3 4-3 4 1 0 7-6 11-12 11-4 0-8-2-8-6z"/>
+    <!-- sparkle (hair removal) -->
+    <path d="M16 20v3M16 26v3M12 24h3M19 24h3"/>
+  </g>
+</svg>

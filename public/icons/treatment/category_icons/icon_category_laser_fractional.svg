@@ -1,0 +1,12 @@
+<svg width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="t10" xmlns="http://www.w3.org/2000/svg">
+  <title id="t10">Laser &amp; Fractional Energy</title>
+  <g stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- grid (fractional) -->
+    <rect x="18" y="18" width="20" height="20" rx="2"/>
+    <path d="M28 18v20M38 28H18"/>
+    <!-- laser beam -->
+    <path d="M50 14l-8 8"/>
+    <path d="M50 14l2 2-10 10-2-2 10-10z"/>
+    <path d="M44 24l-4 4"/>
+  </g>
+</svg>

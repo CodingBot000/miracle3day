@@ -4,17 +4,19 @@ import * as React from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useTopicDetail } from "@/hooks/useTreatmentData";
 import type { Locale } from "@/app/models/treatmentData.dto";
-import LanguageToggle from "../_demo/LanguageToggle";
+import { useLanguage } from "@/contexts/LanguageContext";
 import TreatmentDetailCard from "../_demo/TreatmentDetailCard";
 import { buildInfoLine } from "../../../constants/treatment/types";
+import { ArrowLeft } from "lucide-react";
 
 export default function ProtocolPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  
+  const { language } = useLanguage();
+
   const topic_id = searchParams.get("topic_id");
   const area_id = searchParams.get("area_id");
-  const locale = (searchParams.get("locale") || "ko") as Locale;
+  const locale = language as Locale;
 
   // Always call hooks first - fetch topic detail data
   const { data: topicDetail, isLoading, error } = useTopicDetail(
@@ -35,11 +37,10 @@ export default function ProtocolPage() {
     if (!topic_id) return;
     const params = new URLSearchParams({
       topic_id: topic_id,
-      area_id: newAreaId,
-      locale: locale
+      area_id: newAreaId
     });
     router.push(`/treatment-landing-v2/protocol?${params.toString()}`);
-  }, [topic_id, locale, router]);
+  }, [topic_id, router]);
 
   // Now do conditional returns after all hooks are called
   if (!topic_id || !area_id) {
@@ -97,30 +98,20 @@ export default function ProtocolPage() {
             onClick={() => router.push('/treatment-landing-v2')}
             className="text-blue-600 hover:text-blue-800 mb-2 flex items-center gap-1"
           >
-            ← Back to Topics
+            <ArrowLeft className="w-4 h-4" />
           </button>
           <h1 className="text-2xl font-extrabold">
             {locale === 'ko' ? content.topic_title_ko : content.topic_title_en}
           </h1>
-          <p className="text-neutral-600">
+          {/* <p className="text-neutral-600">
             {locale === 'ko' ? content.area_name_ko : content.area_name_en}
-          </p>
+          </p> */}
         </div>
-        <LanguageToggle value={locale} onChange={(newLocale) => {
-          const params = new URLSearchParams({
-            topic_id: topic_id!,
-            area_id: area_id!,
-            locale: newLocale
-          });
-          router.push(`/treatment-landing-v2/protocol?${params.toString()}`);
-        }} />
       </header>
 
       {/* Area Tabs */}
       <div className="bg-white rounded-lg p-4 shadow-sm">
-        <h3 className="text-sm font-medium text-gray-700 mb-3">
-          {locale === 'ko' ? '치료 부위' : 'Treatment Areas'}
-        </h3>
+
         <div className="flex flex-wrap gap-2">
           {areas.map((area) => (
             <button
@@ -128,8 +119,7 @@ export default function ProtocolPage() {
               onClick={() => {
                 const params = new URLSearchParams({
                   topic_id: topic_id!,
-                  area_id: area.area_id,
-                  locale: locale
+                  area_id: area.area_id
                 });
                 router.push(`/treatment-landing-v2/protocol?${params.toString()}`);
               }}
@@ -152,6 +142,15 @@ export default function ProtocolPage() {
         {/* Benefits & Sequence & Cautions */}
         <div className="bg-white rounded-lg p-6 shadow-sm">
           <div className="space-y-4">
+                     
+          <div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                {locale === 'ko' ? '시술 순서' : 'Treatment Sequence'}
+              </h3>
+              <p className="text-gray-700">
+                {locale === 'ko' ? content.sequence_ko : content.sequence_en}
+              </p>
+            </div>
             <div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
                 {locale === 'ko' ? '효과' : 'Benefits'}
@@ -160,15 +159,7 @@ export default function ProtocolPage() {
                 {locale === 'ko' ? content.benefits_ko : content.benefits_en}
               </p>
             </div>
-            
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                {locale === 'ko' ? '시술 순서' : 'Treatment Sequence'}
-              </h3>
-              <p className="text-gray-700">
-                {locale === 'ko' ? content.sequence_ko : content.sequence_en}
-              </p>
-            </div>
+   
             
             <div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">

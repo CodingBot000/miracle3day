@@ -9,16 +9,15 @@ import { ConcernsSection } from './components/ConcernsSection';
 import { TreatmentsSection } from './components/TreatmentsSection';
 import { SkinTypesSection } from './components/SkinTypesSection';
 import { SpecialTipsSection } from './components/SpecialTipsSection';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const ageGroups = ['20s', '30s', '40s', '50s', '60s', '70s+'];
 
-type Language = 'ko' | 'en';
-
 export default function TreatmentBasedAgeGuide() {
   const [activeTab, setActiveTab] = useState('20s');
-  const [language, setLanguage] = useState<Language>('ko');
+  const { language, setLanguage } = useLanguage();
   const router = useRouter();
-  
+
   const currentData = ageBasedData[language].find(item => item.age_group === activeTab);
 
   return (
@@ -26,12 +25,12 @@ export default function TreatmentBasedAgeGuide() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex justify-between items-center mb-4">
-            <h1 className="text-4xl md:text-6xl bg-gradient-to-r from-rose-600 via-pink-600 to-purple-700 bg-clip-text text-transparent flex-1 font-bold">
+            <h1 className="text-2xl md:text-4xl bg-gradient-to-r from-rose-600 via-pink-600 to-purple-700 bg-clip-text text-transparent flex-1 font-bold">
               {language === 'ko' ? '연령대별\n안티에이징 가이드' : 'Age-Based Anti-Aging Guide'}
             </h1>
             
             {/* Language Toggle */}
-            <div className="flex bg-white/70 backdrop-blur-sm rounded-lg p-1 shadow-md">
+            {/* <div className="flex bg-white/70 backdrop-blur-sm rounded-lg p-1 shadow-md">
               <button
                 onClick={() => setLanguage('ko')}
                 className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 ${
@@ -52,8 +51,8 @@ export default function TreatmentBasedAgeGuide() {
               >
                 English
               </button>
-            </div>
-          </div>
+            </div>*/}
+          </div> 
           
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
             {language === 'ko' 

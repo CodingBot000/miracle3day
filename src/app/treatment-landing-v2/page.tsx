@@ -4,7 +4,7 @@ import * as React from "react";
 import dynamic from "next/dynamic";
 
 // Fix hydration issue by using dynamic import with ssr: false
-const TreatmentDemoContent = dynamic(() => import('./TreatmentDemoContent'), {
+const TreatmentProtocol = dynamic(() => import('./TreatmentProtocol'), {
   ssr: false,
   loading: () => (
     <div className="container mx-auto px-4 py-6 space-y-5">
@@ -22,5 +22,5 @@ const TreatmentDemoContent = dynamic(() => import('./TreatmentDemoContent'), {
 });
 
 export default function Page() {
-  return <TreatmentDemoContent />;
+  return <TreatmentProtocol />;
 }

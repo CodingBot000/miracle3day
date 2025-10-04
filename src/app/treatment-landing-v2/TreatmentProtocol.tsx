@@ -5,8 +5,8 @@ import * as React from "react";
 import { useRouter } from "next/navigation";
 import { useTopicList } from "@/hooks/useTreatmentData";
 import type { TopicWithAreas, Locale } from "@/app/models/treatmentData.dto";
+import { useLanguage } from "@/contexts/LanguageContext";
 
-import LanguageToggle from "./_demo/LanguageToggle";
 import TopicCard from "./_demo/TopicCard";
 
 const OutlineButton = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
@@ -22,9 +22,10 @@ const OutlineButton = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => 
 
 OutlineButton.displayName = 'OutlineButton';
 
-export default function TreatmentDemoContent() {
+export default function TreatmentProtocol() {
   const router = useRouter();
-  const [locale, setLocale] = React.useState<Locale>("ko");
+  const { language } = useLanguage();
+  const locale = language as Locale;
 
   // Fetch topic list from database using the new API
   const { data: topicListResponse, isLoading, error } = useTopicList();
@@ -37,11 +38,10 @@ export default function TreatmentDemoContent() {
   const navigateToProtocol = React.useCallback((topic_id: string, area_id: string) => {
     const params = new URLSearchParams({
       topic_id,
-      area_id,
-      locale: locale
+      area_id
     });
     router.push(`/treatment-landing-v2/protocol?${params.toString()}`);
-  }, [locale, router]);
+  }, [router]);
 
   if (isLoading) {
     return (
@@ -66,23 +66,23 @@ export default function TreatmentDemoContent() {
   return (
     <div className="py-6 space-y-5 min-h-screen bg-gradient-to-br from-[#FDF5F0] via-white to-[#F8E8E0]">
           {/* Hero */}
-          <section className="pt-10 pb-6">
+          <section className="pt-10 pb-2">
         <div className="text-center">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900">
+          <h1 className="text-2xl md:text-4xl font-bold font-bold tracking-tight text-gray-900">
+          
             Premium Beauty Care
           </h1>
-          <p className="mt-3 text-base sm:text-lg text-gray-600">
+          {/* <p className="mt-3 text-base sm:text-lg text-gray-600">
             Find your perfect Korean beauty treatment in 1 minute.
-          </p>
+          </p> */}
         </div>
       </section>
-      <header className="flex flex-col sm:flex-row sm:items-center gap-3 justify-between">
+      {/* <header className="flex flex-col sm:flex-row sm:items-center gap-3 justify-between">
         <div>
-          <h1 className="text-2xl font-extrabold">Treatment Catalog </h1>
+          <h1 className="text-2xl font-extrabold">Treatment Catalog </h1> 
           <p className="text-neutral-600">Search · Sort · Compare · Booking/Contact Stubs</p>
         </div>
-        <LanguageToggle value={locale} onChange={setLocale} />
-      </header>
+      </header> */}
 
       {/* <SearchSortBar
         query={query}

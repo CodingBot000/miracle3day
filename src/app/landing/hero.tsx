@@ -54,19 +54,19 @@ export default function Hero() {
           >
             Get My Recommendation
           </Link>
-          <Link
+          {/* <Link
                 href="/hospital"
 
-  className="inline-flex items-center justify-center
-             h-12 px-8 rounded-[14px]
-             border border-solid border-[#ff6c86]
-             bg-white text-[#ff6c86] text-lg font-medium
-             transition-colors
-             hover:bg-[#ff6c86]/5
-             focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff6c86]/40"
->
-  Go to Korean Clinic
-</Link>
+            className="inline-flex items-center justify-center
+                      h-12 px-8 rounded-[14px]
+                      border border-solid border-[#ff6c86]
+                      bg-white text-[#ff6c86] text-lg font-medium
+                      transition-colors
+                      hover:bg-[#ff6c86]/5
+                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff6c86]/40"
+          >
+            Go to Korean Clinic
+          </Link> */}
 
           <Link 
           href={ROUTE.AI_ANALYSIS_CAMERA_PAGE}

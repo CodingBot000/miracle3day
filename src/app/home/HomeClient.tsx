@@ -37,7 +37,15 @@ export default function HomeClient({ bannerItem, selectedLocation }: Props) {
 
     return (
       <main>
-        <HeroVideos />
+        <HeroVideos>
+          <div className="absolute inset-0 bg-black/40 z-10"></div>
+          <div className="absolute inset-0 flex items-center justify-center text-white text-right pr-4 z-30">
+            <div>
+              <h1 className="text-3xl md:text-5xl font-bold drop-shadow-lg">Reveal Your Beauty</h1>
+              <p className="mt-4 text-lg drop-shadow-md">Discover premium skincare & wellness experiences</p>
+            </div>
+          </div>
+        </HeroVideos>
         {/* <Hero /> */}
         {/* <Banner bannerItem={bannerItem.data} /> */}
         {/* <SurgeryBannerGrid /> */}

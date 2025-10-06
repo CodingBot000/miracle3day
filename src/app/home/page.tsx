@@ -46,7 +46,15 @@ export default async function HomePage() {
   return (
     <>
       {/* <HomeClient bannerItem={bannerItem} selectedLocation={selectedLocation} /> */}
-      {/* <HeroVideos /> */}
+      <HeroVideos>
+        <div className="absolute inset-0 bg-black/40 z-10"></div>
+        <div className="absolute inset-0 flex items-center justify-center text-white text-right pr-4 z-30">
+          <div>
+            <h1 className="text-3xl md:text-5xl font-bold drop-shadow-lg">Reveal Your Beauty</h1>
+            <p className="mt-4 text-lg drop-shadow-md">Discover premium skincare & wellness experiences</p>
+          </div>
+        </div>
+      </HeroVideos>
       {/* <section className="max-w-container mx-auto">
           <DiagnosticIntro />
         <div className="my-8 px-4 md:px-6 lg:px-8">

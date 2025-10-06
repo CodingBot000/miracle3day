@@ -19,24 +19,24 @@ const CATEGORY_IMAGES = [
   [
     "/landing_model/model_1.png",
     "/landing_model/model_2.jpeg", 
-    "/landing_model/img1.jpg",
-    "/landing_model/img2.jpg",
-    "/landing_model/img3.jpg"
+    "/landing_model/img1.png",
+    "/landing_model/img2.png",
+    "/landing_model/img3.png"
   ],
   // 카테고리 1: Body_Contouring
   [
     "/landing_model/model_3.jpeg",
     "/landing_model/model_4.jpeg",
-    "/landing_model/img4.jpg",
-    "/landing_model/img5.jpg",
+    "/landing_model/img4.png",
+    "/landing_model/img5.png",
     "/landing_model/img6.jpg"
   ],
   // 카테고리 2: Wrinkle_AntiAging
   [
     "/landing_model/model_5.png",
-    "/landing_model/img7.jpg",
-    "/landing_model/img8.jpg",
-    "/landing_model/img9.jpg",
+    "/landing_model/img7.png",
+    "/landing_model/img8.png",
+    "/landing_model/img9.png",
     "/landing_model/img10.jpg"
   ],
   // 카테고리 3: Tone_Texture
@@ -83,8 +83,8 @@ const CATEGORY_IMAGES = [
   [
     "/landing_model/model_2.jpeg",
     "/landing_model/model_3.jpeg",
-    "/landing_model/img1.jpg",
-    "/landing_model/img5.jpg",
+    "/landing_model/img1.png",
+    "/landing_model/img5.png",
     "/landing_model/img9.jpg"
   ],
   // 카테고리 9: Filler_Volume

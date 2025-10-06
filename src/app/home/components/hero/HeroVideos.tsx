@@ -8,7 +8,7 @@ interface HeroVideosProps {
 
 export default function HeroVideos({ children }: HeroVideosProps) {
   return (
-    <div className="relative w-full h-[60vh] md:h-[540px]">
+    <div className="relative w-full h-[30vh] md:h-[50vh] lg:h-[540px]">
       <video
         className="absolute inset-0 w-full h-full object-cover"
         autoPlay

@@ -1,0 +1,1091 @@
+{
+  "quiz_metadata": {
+    "total_questions": 120,
+    "categories": 8,
+    "difficulty_levels": ["Beginner", "Intermediate", "Advanced"],
+    "version": "1.0",
+    "language": "English"
+  },
+  "quizzes": [
+    {
+      "id": 1,
+      "category": "Skin Types and Identification",
+      "difficulty": "Beginner",
+      "question": "What is the normal pH range of the skin's acid mantle?",
+      "options": ["pH 3.0-4.0", "pH 4.5-5.5", "pH 6.0-7.0", "pH 7.5-8.5"],
+      "correct_answer": "pH 4.5-5.5",
+      "explanation": "Healthy skin maintains an acid mantle with a pH range of 4.5-5.5, which protects the skin barrier and inhibits harmful bacterial growth."
+    },
+    {
+      "id": 2,
+      "category": "Skin Types and Identification",
+      "difficulty": "Beginner",
+      "question": "Which is NOT a characteristic of oily skin?",
+      "options": ["Excess oil in T-zone", "Enlarged pores", "Prone to acne", "Flaky skin"],
+      "correct_answer": "Flaky skin",
+      "explanation": "Flaky skin is a characteristic of dry skin. Oily skin has excess sebum production, resulting in shine in the T-zone and enlarged pores."
+    },
+    {
+      "id": 3,
+      "category": "Skin Types and Identification",
+      "difficulty": "Beginner",
+      "question": "What is the correct description of combination skin?",
+      "options": ["Uniformly dry all over", "Oily T-zone, dry cheeks", "Uniformly oily all over", "Very sensitive skin"],
+      "correct_answer": "Oily T-zone, dry cheeks",
+      "explanation": "Combination skin has an oily T-zone (forehead, nose, chin) and normal or dry cheeks."
+    },
+    {
+      "id": 4,
+      "category": "Skin Types and Identification",
+      "difficulty": "Intermediate",
+      "question": "What type of cleanser is most suitable for dry skin?",
+      "options": ["Foaming cleanser", "Cream cleanser", "Gel cleanser", "Bar soap"],
+      "correct_answer": "Cream cleanser",
+      "explanation": "Dry skin benefits from cream or oil-based cleansers. Foaming cleansers have stronger cleansing power that can worsen dryness."
+    },
+    {
+      "id": 5,
+      "category": "Skin Types and Identification",
+      "difficulty": "Beginner",
+      "question": "Which is NOT a characteristic of sensitive skin?",
+      "options": ["Stinging or itching after product use", "Easily becomes red", "Excessive sebum production", "Easily reacts to irritation"],
+      "correct_answer": "Excessive sebum production",
+      "explanation": "Excessive sebum production is characteristic of oily skin. Sensitive skin easily reacts to irritation and becomes red or stings."
+    },
+    {
+      "id": 6,
+      "category": "Skin Types and Identification",
+      "difficulty": "Intermediate",
+      "question": "When using the blotting test to identify skin type, if oil only appears on the T-zone, what is your skin type?",
+      "options": ["Dry skin", "Oily skin", "Combination skin", "Normal skin"],
+      "correct_answer": "Combination skin",
+      "explanation": "If oil only appears on the T-zone of blotting paper, it's combination skin. If oil appears all over, it's oily; if barely any appears, it's dry."
+    },
+    {
+      "id": 7,
+      "category": "Skin Types and Identification",
+      "difficulty": "Intermediate",
+      "question": "Why can skin type change with seasons?",
+      "options": ["Temperature and humidity changes", "Diet changes", "Exercise changes", "Sleep pattern changes"],
+      "correct_answer": "Temperature and humidity changes",
+      "explanation": "Seasonal temperature and humidity changes affect the skin's moisture and oil balance, causing temporary skin type changes."
+    },
+    {
+      "id": 8,
+      "category": "Skin Types and Identification",
+      "difficulty": "Beginner",
+      "question": "What is a characteristic of normal skin?",
+      "options": ["Very oily T-zone", "Excessive flaking", "Balanced moisture and oil", "Always red and irritated"],
+      "correct_answer": "Balanced moisture and oil",
+      "explanation": "Normal skin has a well-balanced moisture and oil content, with few breakouts and smooth texture."
+    },
+    {
+      "id": 9,
+      "category": "Skin Types and Identification",
+      "difficulty": "Advanced",
+      "question": "What is the cause when oily skin experiences excessive flaking?",
+      "options": ["The skin is actually dry", "Damaged protective barrier from over-exfoliation", "Oil causes flaking", "Aging in progress"],
+      "correct_answer": "Damaged protective barrier from over-exfoliation",
+      "explanation": "Flaking in oily skin is likely 'dehydrated oily skin' due to damaged skin barrier from excessive cleansing or exfoliation."
+    },
+    {
+      "id": 10,
+      "category": "Skin Types and Identification",
+      "difficulty": "Intermediate",
+      "question": "How to check skin type after waking up in the morning?",
+      "options": ["Check immediately after cleansing", "Check 30 minutes after cleansing without applying anything", "Check after immediately applying skincare", "Check in the evening"],
+      "correct_answer": "Check 30 minutes after cleansing without applying anything",
+      "explanation": "Checking skin condition 30 minutes after cleansing without applying any products is the most accurate method."
+    },
+    {
+      "id": 11,
+      "category": "Functional Cosmetic Ingredients",
+      "difficulty": "Intermediate",
+      "question": "How long does it take to see results when using retinol (Vitamin A) products?",
+      "options": ["1-2 weeks", "4-6 weeks", "4-6 months", "Over 1 year"],
+      "correct_answer": "4-6 months",
+      "explanation": "Retinol promotes skin cell turnover and requires at least 4-6 months of consistent use to see noticeable results."
+    },
+    {
+      "id": 12,
+      "category": "Functional Cosmetic Ingredients",
+      "difficulty": "Beginner",
+      "question": "What product must be used when using retinol?",
+      "options": ["Toner", "Essence", "Sunscreen", "Mist"],
+      "correct_answer": "Sunscreen",
+      "explanation": "Retinol increases photosensitivity, making skin more sensitive to UV rays, so sunscreen must be used."
+    },
+    {
+      "id": 13,
+      "category": "Functional Cosmetic Ingredients",
+      "difficulty": "Intermediate",
+      "question": "What concentration is recommended for retinol beginners?",
+      "options": ["0.01-0.03%", "0.25-0.5%", "1-2%", "3-5%"],
+      "correct_answer": "0.25-0.5%",
+      "explanation": "Retinol beginners should start with a low concentration of 0.25-0.5% and gradually increase as skin adapts."
+    },
+    {
+      "id": 14,
+      "category": "Functional Cosmetic Ingredients",
+      "difficulty": "Advanced",
+      "question": "Which is NOT a symptom of retinoid response when using retinol?",
+      "options": ["Temporary dryness", "Flaking", "Redness", "Permanent hyperpigmentation"],
+      "correct_answer": "Permanent hyperpigmentation",
+      "explanation": "Initial retinol use may cause temporary dryness, flaking, and redness, which disappear after skin adaptation. Permanent hyperpigmentation does not occur."
+    },
+    {
+      "id": 15,
+      "category": "Functional Cosmetic Ingredients",
+      "difficulty": "Intermediate",
+      "question": "What is the effective concentration range for Vitamin C serum?",
+      "options": ["1-5%", "10-20%", "25-30%", "35-40%"],
+      "correct_answer": "10-20%",
+      "explanation": "Vitamin C is most effective at 10-20% concentration, with no significant additional benefits beyond 20%."
+    },
+    {
+      "id": 16,
+      "category": "Functional Cosmetic Ingredients",
+      "difficulty": "Advanced",
+      "question": "What is the optimal pH for Vitamin C serum?",
+      "options": ["pH 2.5-3.5", "pH 4.5-5.5", "pH 6.0-7.0", "pH 7.5-8.5"],
+      "correct_answer": "pH 2.5-3.5",
+      "explanation": "Vitamin C (L-ascorbic acid) is best absorbed and most stable at pH 2.5-3.5."
+    },
+    {
+      "id": 17,
+      "category": "Functional Cosmetic Ingredients",
+      "difficulty": "Intermediate",
+      "question": "What is the sign that Vitamin C serum has oxidized?",
+      "options": ["Clear", "Light yellow", "Dark brown", "White"],
+      "correct_answer": "Dark brown",
+      "explanation": "When Vitamin C oxidizes, it turns dark brown or orange. In this case, it's ineffective and should be discontinued."
+    },
+    {
+      "id": 18,
+      "category": "Functional Cosmetic Ingredients",
+      "difficulty": "Beginner",
+      "question": "What is the most stable form of Vitamin C derivative?",
+      "options": ["L-ascorbic acid", "Ascorbyl Palmitate", "Magnesium Ascorbyl Phosphate", "Sodium Ascorbyl Phosphate"],
+      "correct_answer": "Magnesium Ascorbyl Phosphate",
+      "explanation": "Magnesium Ascorbyl Phosphate (MAP) is a water-soluble and stable Vitamin C derivative suitable for sensitive skin."
+    },
+    {
+      "id": 19,
+      "category": "Functional Cosmetic Ingredients",
+      "difficulty": "Intermediate",
+      "question": "What is the effective concentration of niacinamide?",
+      "options": ["0.5-1%", "2-5%", "10-15%", "Over 20%"],
+      "correct_answer": "2-5%",
+      "explanation": "Niacinamide shows effects like sebum control, brightening, and pore improvement at 2-5% concentration."
+    },
+    {
+      "id": 20,
+      "category": "Functional Cosmetic Ingredients",
+      "difficulty": "Beginner",
+      "question": "Which is NOT an effect of niacinamide?",
+      "options": ["Sebum control", "Brightening", "Pore improvement", "Immediate wrinkle removal"],
+      "correct_answer": "Immediate wrinkle removal",
+      "explanation": "Niacinamide is a multi-functional ingredient but doesn't immediately remove wrinkles. Long-term use helps improve skin."
+    },
+    {
+      "id": 21,
+      "category": "Functional Cosmetic Ingredients",
+      "difficulty": "Advanced",
+      "question": "Which ingredient is safe to use with niacinamide?",
+      "options": ["Retinol", "Vitamin C (stabilized form)", "AHA", "All of the above"],
+      "correct_answer": "All of the above",
+      "explanation": "While it was said not to use with Vitamin C in the past, modern formulations are stabilized and safe to use together."
+    },
+    {
+      "id": 22,
+      "category": "Functional Cosmetic Ingredients",
+      "difficulty": "Intermediate",
+      "question": "What is a characteristic of AHA (Alpha Hydroxy Acid)?",
+      "options": ["Oil-soluble, good for pore cleaning", "Water-soluble, good for exfoliation", "Lipid-soluble, good for acne treatment", "Water-soluble, good for moisturizing"],
+      "correct_answer": "Water-soluble, good for exfoliation",
+      "explanation": "AHA is water-soluble and effective at removing dead skin cells on the surface and improving skin texture."
+    },
+    {
+      "id": 23,
+      "category": "Functional Cosmetic Ingredients",
+      "difficulty": "Intermediate",
+      "question": "What is the representative ingredient of BHA (Beta Hydroxy Acid)?",
+      "options": ["Glycolic acid", "Lactic acid", "Salicylic acid", "Mandelic acid"],
+      "correct_answer": "Salicylic acid",
+      "explanation": "Salicylic Acid is the representative BHA, oil-soluble and effective at dissolving sebum in pores."
+    },
+    {
+      "id": 24,
+      "category": "Functional Cosmetic Ingredients",
+      "difficulty": "Advanced",
+      "question": "Which acid ingredient is more suitable for oily skin?",
+      "options": ["AHA (Glycolic acid)", "BHA (Salicylic acid)", "Both the same", "Both unsuitable"],
+      "correct_answer": "BHA (Salicylic acid)",
+      "explanation": "BHA is oil-soluble, so it penetrates into pores of oily skin more effectively, improving acne and blackheads."
+    },
+    {
+      "id": 25,
+      "category": "Functional Cosmetic Ingredients",
+      "difficulty": "Intermediate",
+      "question": "What must be done after using AHA/BHA?",
+      "options": ["Use toner", "Massage", "Use sunscreen", "Cold water cleansing"],
+      "correct_answer": "Use sunscreen",
+      "explanation": "AHA/BHA removes dead skin cells, making skin more sensitive to UV rays, so sunscreen is essential."
+    },
+    {
+      "id": 26,
+      "category": "Functional Cosmetic Ingredients",
+      "difficulty": "Beginner",
+      "question": "What is the biggest characteristic of hyaluronic acid?",
+      "options": ["Exfoliation", "Holds 1000x its weight in water", "Sebum control", "Brightening"],
+      "correct_answer": "Holds 1000x its weight in water",
+      "explanation": "Hyaluronic acid is a powerful moisturizing ingredient that can attract and hold up to 1000 times its own weight in water."
+    },
+    {
+      "id": 27,
+      "category": "Functional Cosmetic Ingredients",
+      "difficulty": "Intermediate",
+      "question": "What should you be careful about when using hyaluronic acid?",
+      "options": ["Use only at night", "In dry environments, it can draw moisture from skin", "Use only once a day", "Don't mix with other products"],
+      "correct_answer": "In dry environments, it can draw moisture from skin",
+      "explanation": "In extremely dry environments, hyaluronic acid can draw moisture from skin instead of from the air, so apply a moisturizer on top."
+    },
+    {
+      "id": 28,
+      "category": "Functional Cosmetic Ingredients",
+      "difficulty": "Advanced",
+      "question": "What is the main function of peptides?",
+      "options": ["Immediate moisturizing", "Signal collagen production", "UV protection", "Sebum removal"],
+      "correct_answer": "Signal collagen production",
+      "explanation": "Peptides are amino acid chains that send signals to the skin to promote collagen and elastin production, helping improve elasticity."
+    },
+    {
+      "id": 29,
+      "category": "Functional Cosmetic Ingredients",
+      "difficulty": "Intermediate",
+      "question": "What percentage of the skin barrier do ceramides comprise?",
+      "options": ["About 10%", "About 30%", "About 50%", "About 70%"],
+      "correct_answer": "About 50%",
+      "explanation": "Ceramides comprise about 50% of skin barrier lipids, preventing moisture loss and protecting skin from external irritants."
+    },
+    {
+      "id": 30,
+      "category": "Functional Cosmetic Ingredients",
+      "difficulty": "Intermediate",
+      "question": "Which ingredient combination should not be used with retinol at the same time?",
+      "options": ["Niacinamide", "Hyaluronic acid", "Vitamin C + AHA/BHA (at same time)", "Ceramides"],
+      "correct_answer": "Vitamin C + AHA/BHA (at same time)",
+      "explanation": "Retinol is irritating, so using it with Vitamin C or AHA/BHA at the same time can increase skin irritation. Better to use at different times."
+    },
+    {
+      "id": 31,
+      "category": "General Cosmetic Usage",
+      "difficulty": "Beginner",
+      "question": "What is the correct order of a basic skincare routine?",
+      "options": ["Moisturizer → Serum → Toner → Cleanser", "Cleanser → Moisturizer → Toner → Serum", "Cleanser → Toner → Serum → Moisturizer", "Toner → Cleanser → Serum → Moisturizer"],
+      "correct_answer": "Cleanser → Toner → Serum → Moisturizer",
+      "explanation": "Skincare follows the principle of applying from lightest to heaviest texture. After cleansing: toner, serum, then moisturizer."
+    },
+    {
+      "id": 32,
+      "category": "General Cosmetic Usage",
+      "difficulty": "Beginner",
+      "question": "What is the correct order for double cleansing?",
+      "options": ["Foam cleanser → Oil cleanser", "Oil cleanser → Water-based cleanser", "Toner → Cleanser", "Cleanser → Scrub"],
+      "correct_answer": "Oil cleanser → Water-based cleanser",
+      "explanation": "Double cleansing removes makeup and sebum with an oil-based cleanser first, then removes remaining residue with a water-based cleanser."
+    },
+    {
+      "id": 33,
+      "category": "General Cosmetic Usage",
+      "difficulty": "Intermediate",
+      "question": "In what order are cosmetic ingredients listed (INCI)?",
+      "options": ["Alphabetical", "By price", "By concentration (highest first)", "By importance"],
+      "correct_answer": "By concentration (highest first)",
+      "explanation": "Cosmetic ingredients at 1% or more are listed in order of concentration, while those under 1% can be listed in any order."
+    },
+    {
+      "id": 34,
+      "category": "General Cosmetic Usage",
+      "difficulty": "Intermediate",
+      "question": "What is the correct way to apply eye cream?",
+      "options": ["From inner to outer corner", "From outer to inner corner", "Rubbing up and down", "In circles"],
+      "correct_answer": "From inner to outer corner",
+      "explanation": "Apply eye cream by gently patting from inner to outer corner, following lymphatic flow to help reduce puffiness."
+    },
+    {
+      "id": 35,
+      "category": "General Cosmetic Usage",
+      "difficulty": "Advanced",
+      "question": "What does '12M' mean in PAO (Period After Opening) marking on cosmetics?",
+      "options": ["12 months after manufacture", "12 months after opening", "Expires in December", "Can be stored for 12 months"],
+      "correct_answer": "12 months after opening",
+      "explanation": "PAO stands for 'Period After Opening' and indicates the period the product can be safely used after opening."
+    },
+    {
+      "id": 36,
+      "category": "General Cosmetic Usage",
+      "difficulty": "Beginner",
+      "question": "How often should sunscreen be reapplied?",
+      "options": ["Every 30 minutes", "Every 1 hour", "Every 2 hours", "Every 4 hours"],
+      "correct_answer": "Every 2 hours",
+      "explanation": "Sunscreen effectiveness decreases due to sweat, sebum, and friction, so reapplication every 2 hours is recommended."
+    },
+    {
+      "id": 37,
+      "category": "General Cosmetic Usage",
+      "difficulty": "Intermediate",
+      "question": "What is the proper amount of sunscreen (for face)?",
+      "options": ["Coin size", "One finger length", "Two finger lengths", "500 won coin size"],
+      "correct_answer": "Two finger lengths",
+      "explanation": "To properly apply sunscreen to the face, about 0.9g (500 won coin size, two finger lengths) is needed."
+    },
+    {
+      "id": 38,
+      "category": "General Cosmetic Usage",
+      "difficulty": "Advanced",
+      "question": "What is the difference in protection rates between SPF 30 and SPF 50?",
+      "options": ["SPF 30 is 90%, SPF 50 is 95%", "SPF 30 is 96.7%, SPF 50 is 98%", "SPF 30 is 80%, SPF 50 is 90%", "SPF 30 is 70%, SPF 50 is 85%"],
+      "correct_answer": "SPF 30 is 96.7%, SPF 50 is 98%",
+      "explanation": "SPF 30 blocks 96.7% of UVB rays, SPF 50 blocks 98%. The difference isn't huge but meaningful for sensitive skin."
+    },
+    {
+      "id": 39,
+      "category": "General Cosmetic Usage",
+      "difficulty": "Intermediate",
+      "question": "What is the difference between serum and ampoule?",
+      "options": ["Serum is more watery", "Ampoule is more concentrated", "Serum is more expensive", "No difference"],
+      "correct_answer": "Ampoule is more concentrated",
+      "explanation": "Ampoule contains more concentrated active ingredients than serum and is used short-term for intensive care when needed."
+    },
+    {
+      "id": 40,
+      "category": "General Cosmetic Usage",
+      "difficulty": "Beginner",
+      "question": "Which is NOT a good reason to refrigerate cosmetics?",
+      "options": ["Maintain ingredient stability", "Cooling effect", "Doubles shelf life", "Prevent oxidation"],
+      "correct_answer": "Doubles shelf life",
+      "explanation": "Refrigeration helps with ingredient stability and cooling effect, but doesn't double the shelf life."
+    },
+    {
+      "id": 41,
+      "category": "General Cosmetic Usage",
+      "difficulty": "Intermediate",
+      "question": "Which is NOT a main function of toner?",
+      "options": ["Adjust skin pH", "Promote next step absorption", "Provide moisture", "Complete exfoliation"],
+      "correct_answer": "Complete exfoliation",
+      "explanation": "Toner prepares skin after cleansing for the next steps. Exfoliation is handled by separate exfoliating products."
+    },
+    {
+      "id": 42,
+      "category": "General Cosmetic Usage",
+      "difficulty": "Advanced",
+      "question": "Which is NOT included in the Korean 10-step skincare routine?",
+      "options": ["Oil cleanser", "Water cleanser", "Essence", "Face oil", "Surgery"],
+      "correct_answer": "Surgery",
+      "explanation": "The 10-step routine consists of: oil cleanser, water cleanser, exfoliation, toner, essence, serum, sheet mask, eye cream, moisturizer, sunscreen."
+    },
+    {
+      "id": 43,
+      "category": "General Cosmetic Usage",
+      "difficulty": "Beginner",
+      "question": "What is the recommended time to wear a sheet mask?",
+      "options": ["5-10 minutes", "15-20 minutes", "30-40 minutes", "1 hour"],
+      "correct_answer": "15-20 minutes",
+      "explanation": "Sheet masks should be used for 15-20 minutes. Wearing them too long can actually draw moisture from skin."
+    },
+    {
+      "id": 44,
+      "category": "General Cosmetic Usage",
+      "difficulty": "Intermediate",
+      "question": "What is the most effective way to apply essence?",
+      "options": ["Pat with hands", "Wipe with cotton pad", "Spray on", "Use massage tool"],
+      "correct_answer": "Pat with hands",
+      "explanation": "Essence is most effective when warmed in palms and gently patted onto face for absorption."
+    },
+    {
+      "id": 45,
+      "category": "General Cosmetic Usage",
+      "difficulty": "Advanced",
+      "question": "How to adjust skincare routine in summer's humid environment?",
+      "options": ["Use heavier creams", "Reduce steps and use lighter textures", "Use lots of oil products", "Sheet masks all day"],
+      "correct_answer": "Reduce steps and use lighter textures",
+      "explanation": "In summer's high humidity, reduce steps and use light gel or lotion types to avoid excess oil."
+    },
+    {
+      "id": 46,
+      "category": "Beauty Treatments",
+      "difficulty": "Beginner",
+      "question": "How long do Botox treatment effects last?",
+      "options": ["1-2 weeks", "1-2 months", "3-4 months", "6-12 months"],
+      "correct_answer": "3-4 months",
+      "explanation": "Botox effects generally last 3-4 months, with individual variations possible."
+    },
+    {
+      "id": 47,
+      "category": "Beauty Treatments",
+      "difficulty": "Intermediate",
+      "question": "When do Botox effects start to appear?",
+      "options": ["Immediately", "2-5 days", "2 weeks", "1 month"],
+      "correct_answer": "2-5 days",
+      "explanation": "Botox effects begin appearing 2-5 days after treatment, with maximum effects around 2 weeks."
+    },
+    {
+      "id": 48,
+      "category": "Beauty Treatments",
+      "difficulty": "Intermediate",
+      "question": "What should be avoided on the day of Botox treatment?",
+      "options": ["Light cleansing", "Lying down to rest", "Light walking", "Reading"],
+      "correct_answer": "Lying down to rest",
+      "explanation": "Don't lie down for 4 hours after Botox treatment. Avoid touching the treatment area, exercise, and sauna."
+    },
+    {
+      "id": 49,
+      "category": "Beauty Treatments",
+      "difficulty": "Advanced",
+      "question": "Which Botox product lasts the longest?",
+      "options": ["Botox", "Dysport", "Xeomin", "Daxxify"],
+      "correct_answer": "Daxxify",
+      "explanation": "Daxxify is the latest FDA-approved botulinum toxin that lasts 6-9 months, longer than other products."
+    },
+    {
+      "id": 50,
+      "category": "Beauty Treatments",
+      "difficulty": "Beginner",
+      "question": "What is the biggest advantage of hyaluronic acid (HA) fillers?",
+      "options": ["Permanent", "Reversible (dissolvable)", "Immediate lifting", "No side effects"],
+      "correct_answer": "Reversible (dissolvable)",
+      "explanation": "HA fillers can be dissolved with hyaluronidase enzyme, allowing removal in case of unwanted results or side effects."
+    },
+    {
+      "id": 51,
+      "category": "Beauty Treatments",
+      "difficulty": "Intermediate",
+      "question": "What is the average duration of filler injected in cheeks?",
+      "options": ["3-6 months", "6-12 months", "12-18 months", "Over 2 years"],
+      "correct_answer": "12-18 months",
+      "explanation": "Cheek filler lasts 12-18 months as it's in an area with less movement, longer than lips (6-9 months)."
+    },
+    {
+      "id": 52,
+      "category": "Beauty Treatments",
+      "difficulty": "Advanced",
+      "question": "What is the characteristic of Sculptra?",
+      "options": ["Immediate volume", "Gradual collagen production stimulation", "6-month duration", "Hyaluronic acid ingredient"],
+      "correct_answer": "Gradual collagen production stimulation",
+      "explanation": "Sculptra is a PLLA ingredient that stimulates own collagen production, with gradual effects lasting over 2 years."
+    },
+    {
+      "id": 53,
+      "category": "Beauty Treatments",
+      "difficulty": "Intermediate",
+      "question": "What is the recommended protocol for Profhilo skin booster?",
+      "options": ["1 treatment only", "2 treatments 2 weeks apart", "2 treatments 4 weeks apart", "4 treatments weekly"],
+      "correct_answer": "2 treatments 4 weeks apart",
+      "explanation": "Profhilo requires 2 treatments 4 weeks apart, with effects lasting 3-6 months. Maintenance is 1 treatment every 6 months."
+    },
+    {
+      "id": 54,
+      "category": "Beauty Treatments",
+      "difficulty": "Advanced",
+      "question": "What is the main difference between Profhilo and Seventy Hyal?",
+      "options": ["Different ingredients", "Profhilo has more concentrated HA", "Seventy Hyal is cheaper", "No difference"],
+      "correct_answer": "Profhilo has more concentrated HA",
+      "explanation": "Profhilo contains high-concentration hyaluronic acid (64mg), while Seventy Hyal is medium concentration. Profhilo also has lifting effects."
+    },
+    {
+      "id": 55,
+      "category": "Beauty Treatments",
+      "difficulty": "Intermediate",
+      "question": "What is the average downtime for CO2 fractional laser?",
+      "options": ["1-3 days", "7-14 days", "3 weeks", "1 month"],
+      "correct_answer": "7-14 days",
+      "explanation": "CO2 fractional laser provides powerful effects but requires 7-14 days recovery time with redness and peeling."
+    },
+    {
+      "id": 56,
+      "category": "Beauty Treatments",
+      "difficulty": "Beginner",
+      "question": "What are the main indications for IPL (Intense Pulsed Light)?",
+      "options": ["Deep wrinkles", "Pigmentation and vascular lesions", "Skin lifting", "Cellulite"],
+      "correct_answer": "Pigmentation and vascular lesions",
+      "explanation": "IPL is effective for treating pigmentation like melasma, freckles, and vascular lesions like redness and spider veins."
+    },
+    {
+      "id": 57,
+      "category": "Beauty Treatments",
+      "difficulty": "Intermediate",
+      "question": "What is the technology principle of Ultherapy?",
+      "options": ["Laser", "High-Intensity Focused Ultrasound (HIFU)", "Radiofrequency (RF)", "Cooling"],
+      "correct_answer": "High-Intensity Focused Ultrasound (HIFU)",
+      "explanation": "Ultherapy uses HIFU technology to deliver heat deep into the dermis, stimulating collagen production and creating lifting effects."
+    },
+    {
+      "id": 58,
+      "category": "Beauty Treatments",
+      "difficulty": "Advanced",
+      "question": "When do Ultherapy's final effects appear?",
+      "options": ["Immediately", "1 week", "2-3 months", "6 months"],
+      "correct_answer": "2-3 months",
+      "explanation": "Ultherapy stimulates collagen regeneration, so final effects appear in 2-3 months and last 9-12 months."
+    },
+    {
+      "id": 59,
+      "category": "Beauty Treatments",
+      "difficulty": "Advanced",
+      "question": "How long should HIFU treatment be avoided after thread lifting?",
+      "options": ["1 week", "2 weeks", "1 month", "Over 3 months"],
+      "correct_answer": "Over 3 months",
+      "explanation": "HIFU's high heat can melt threads, so at least 3 months should pass after thread lifting, with 6-12 months being safest."
+    },
+    {
+      "id": 60,
+      "category": "Beauty Treatments",
+      "difficulty": "Intermediate",
+      "question": "What technology combination does Morpheus8 use?",
+      "options": ["Laser + Cooling", "RF + Microneedling", "HIFU + Laser", "IPL + RF"],
+      "correct_answer": "RF + Microneedling",
+      "explanation": "Morpheus8 uses microneedles to deliver RF energy deep into the dermis, promoting collagen remodeling and skin regeneration."
+    },
+    {
+      "id": 61,
+      "category": "Beauty Treatments",
+      "difficulty": "Intermediate",
+      "question": "What is the recommended number of Morpheus8 treatments?",
+      "options": ["1 treatment only", "1-3 treatments", "5-7 treatments", "10+ treatments"],
+      "correct_answer": "1-3 treatments",
+      "explanation": "Morpheus8 typically requires 1-3 treatments at 4-6 week intervals, adjusted based on individual skin condition."
+    },
+    {
+      "id": 62,
+      "category": "Beauty Treatments",
+      "difficulty": "Beginner",
+      "question": "Which is NOT a type of chemical peel?",
+      "options": ["Superficial", "Medium", "Deep", "Ultra-deep"],
+      "correct_answer": "Ultra-deep",
+      "explanation": "Chemical peels are classified into 3 levels: superficial, medium, and deep, with different acids and concentrations based on depth."
+    },
+    {
+      "id": 63,
+      "category": "Beauty Treatments",
+      "difficulty": "Advanced",
+      "question": "What is the main risk of deep peels (TCA 35% or higher)?",
+      "options": ["Temporary redness", "Possible permanent pigment changes", "Light flaking", "Immediate effects"],
+      "correct_answer": "Possible permanent pigment changes",
+      "explanation": "Deep peels have powerful effects but risk permanent hyperpigmentation or hypopigmentation, requiring expert judgment."
+    },
+    {
+      "id": 64,
+      "category": "Beauty Treatments",
+      "difficulty": "Intermediate",
+      "question": "What category does glycolic acid peel belong to?",
+      "options": ["Superficial peel", "Medium peel", "Deep peel", "Laser"],
+      "correct_answer": "Superficial peel",
+      "explanation": "Glycolic acid (20-30%) is used in superficial peels, effective for exfoliation and texture improvement with short downtime."
+    },
+    {
+      "id": 65,
+      "category": "Beauty Treatments",
+      "difficulty": "Advanced",
+      "question": "Which ingredient should be avoided before treatments (at least 1 week)?",
+      "options": ["Hyaluronic acid", "Ceramides", "Retinol, AHA/BHA", "Niacinamide"],
+      "correct_answer": "Retinol, AHA/BHA",
+      "explanation": "Retinol and AHA/BHA make skin sensitive, so they should be stopped at least 1 week before treatments to reduce side effect risks."
+    },
+    {
+      "id": 66,
+      "category": "Treatment Recommended Intervals",
+      "difficulty": "Beginner",
+      "question": "What is the recommended re-treatment interval for Botox?",
+      "options": ["1-2 months", "3-4 months", "6-8 months", "1 year"],
+      "correct_answer": "3-4 months",
+      "explanation": "Botox re-treatment is recommended every 3-4 months, and treating before effects completely fade can make them last longer."
+    },
+    {
+      "id": 67,
+      "category": "Treatment Recommended Intervals",
+      "difficulty": "Intermediate",
+      "question": "What is the recommended re-injection interval for lip filler?",
+      "options": ["3-6 months", "6-9 months", "12-18 months", "2 years"],
+      "correct_answer": "6-9 months",
+      "explanation": "Lips have lots of movement, so filler absorbs faster, requiring re-injection every 6-9 months."
+    },
+    {
+      "id": 68,
+      "category": "Treatment Recommended Intervals",
+      "difficulty": "Intermediate",
+      "question": "What is the recommended interval for superficial chemical peels?",
+      "options": ["Weekly", "2-5 weeks", "2-3 months", "6 months"],
+      "correct_answer": "2-5 weeks",
+      "explanation": "Superficial peels are gentle and can be done in series at 2-5 week intervals, typically recommending 4-6 treatments."
+    },
+    {
+      "id": 69,
+      "category": "Treatment Recommended Intervals",
+      "difficulty": "Advanced",
+      "question": "What is the recommended interval for medium-depth peels (TCA 20-35%)?",
+      "options": ["2 weeks", "1 month", "3-6 months", "1 year"],
+      "correct_answer": "1 year",
+      "explanation": "Medium-depth peels are strong irritants to skin, so at least 1 year interval is needed for adequate recovery."
+    },
+    {
+      "id": 70,
+      "category": "Treatment Recommended Intervals",
+      "difficulty": "Intermediate",
+      "question": "What is the recommended interval for CO2 fractional laser?",
+      "options": ["2 weeks", "1 month", "4-8 weeks", "6 months"],
+      "correct_answer": "4-8 weeks",
+      "explanation": "CO2 laser is a powerful treatment requiring 4-8 week intervals for 3-5 sessions, allowing adequate skin recovery time."
+    },
+    {
+      "id": 71,
+      "category": "Treatment Recommended Intervals",
+      "difficulty": "Beginner",
+      "question": "What is the recommended interval for IPL treatments?",
+      "options": ["Weekly", "2 weeks", "3-4 weeks", "3 months"],
+      "correct_answer": "3-4 weeks",
+      "explanation": "IPL is effective at 3-4 week intervals for 4-6 sessions, gradually improving pigmentation and vascular lesions."
+    },
+    {
+      "id": 72,
+      "category": "Treatment Recommended Intervals",
+      "difficulty": "Intermediate",
+      "question": "What is the recommended interval for RF microneedling (Morpheus8)?",
+      "options": ["Weekly", "2 weeks", "4-6 weeks", "3 months"],
+      "correct_answer": "4-6 weeks",
+      "explanation": "RF microneedling requires 4-6 week intervals for 1-3 sessions for collagen regeneration."
+    },
+    {
+      "id": 73,
+      "category": "Treatment Recommended Intervals",
+      "difficulty": "Advanced",
+      "question": "What is the maintenance interval after Ultherapy?",
+      "options": ["3 months", "6 months", "9-12 months", "2 years"],
+      "correct_answer": "9-12 months",
+      "explanation": "Ultherapy effects last 9-12 months, so annual re-treatment is recommended for maintenance."
+    },
+    {
+      "id": 74,
+      "category": "Treatment Recommended Intervals",
+      "difficulty": "Intermediate",
+      "question": "What is the Profhilo maintenance interval?",
+      "options": ["Monthly", "3 months", "6 months", "1 year"],
+      "correct_answer": "6 months",
+      "explanation": "Profhilo effects last 3-6 months after initial 2 treatments, with maintenance recommended every 6 months."
+    },
+    {
+      "id": 75,
+      "category": "Treatment Recommended Intervals",
+      "difficulty": "Advanced",
+      "question": "What is the average effect duration of thread lifting?",
+      "options": ["3-6 months", "6-9 months", "12-18 months", "2-3 years"],
+      "correct_answer": "12-18 months",
+      "explanation": "PDO/PLLA threads maintain effects for 12-18 months, stimulating collagen production as threads dissolve."
+    },
+    {
+      "id": 76,
+      "category": "Treatment Recommended Intervals",
+      "difficulty": "Intermediate",
+      "question": "How long should exercise be avoided after Botox treatment?",
+      "options": ["6 hours", "24 hours", "3 days", "1 week"],
+      "correct_answer": "24 hours",
+      "explanation": "Avoid vigorous exercise, sauna, and excessive heat for 24 hours after Botox to prevent it from spreading to other areas."
+    },
+    {
+      "id": 77,
+      "category": "Treatment Recommended Intervals",
+      "difficulty": "Intermediate",
+      "question": "How long should massage be avoided after filler treatment?",
+      "options": ["6 hours", "24 hours", "1 week", "1 month"],
+      "correct_answer": "1 week",
+      "explanation": "Avoid massage or pressure on treatment area for at least 1 week after filler to allow it to settle in desired position."
+    },
+    {
+      "id": 78,
+      "category": "Treatment Recommended Intervals",
+      "difficulty": "Advanced",
+      "question": "When should sunscreen application start after laser treatment?",
+      "options": ["Immediately (right after treatment)", "24 hours later", "1 week later", "Don't use until wound completely heals"],
+      "correct_answer": "Immediately (right after treatment)",
+      "explanation": "Sunscreen must be used immediately after laser treatment to prevent pigmentation, with SPF 50+ products recommended."
+    },
+    {
+      "id": 79,
+      "category": "Treatment Recommended Intervals",
+      "difficulty": "Intermediate",
+      "question": "Can Botox and fillers be done on the same day?",
+      "options": ["Absolutely impossible", "Possible but not recommended", "Possible and commonly done together", "Must be 3 months apart"],
+      "correct_answer": "Possible and commonly done together",
+      "explanation": "Botox and fillers have different mechanisms and don't interfere with each other, so same-day treatment is possible and often done for comprehensive improvement."
+    },
+    {
+      "id": 80,
+      "category": "Treatment Recommended Intervals",
+      "difficulty": "Advanced",
+      "question": "What is the total number of sessions needed for effective laser hair removal?",
+      "options": ["1-2 sessions", "3-4 sessions", "6-8 sessions", "12+ sessions"],
+      "correct_answer": "6-8 sessions",
+      "explanation": "Considering hair growth cycles, 6-8 sessions at 4-8 week intervals are needed for effective permanent hair removal."
+    },
+    {
+      "id": 81,
+      "category": "Solutions by Skin Concern",
+      "difficulty": "Beginner",
+      "question": "Which is NOT one of the 4 main causes of acne?",
+      "options": ["Excess sebum production", "Pore blockage", "Bacterial proliferation", "UV exposure"],
+      "correct_answer": "UV exposure",
+      "explanation": "The 4 main causes of acne are: excess sebum production, pore blockage, P.acnes bacterial proliferation, and inflammation. UV is an aggravating factor but not a main cause."
+    },
+    {
+      "id": 82,
+      "category": "Solutions by Skin Concern",
+      "difficulty": "Intermediate",
+      "question": "What is the most effective ingredient for acne-prone skin?",
+      "options": ["Hyaluronic acid", "Salicylic acid (BHA)", "Ceramides", "Peptides"],
+      "correct_answer": "Salicylic acid (BHA)",
+      "explanation": "Salicylic acid is oil-soluble, removing sebum and dead skin cells inside pores with anti-inflammatory effects, most effective for acne treatment."
+    },
+    {
+      "id": 83,
+      "category": "Solutions by Skin Concern",
+      "difficulty": "Advanced",
+      "question": "What is the Triple Therapy for acne treatment?",
+      "options": ["Retinoid + Benzoyl Peroxide + Antibiotic", "AHA + BHA + Vitamin C", "Niacinamide + Retinol + Sunscreen", "Hyaluronic acid + Ceramides + Peptides"],
+      "correct_answer": "Retinoid + Benzoyl Peroxide + Antibiotic",
+      "explanation": "Moderate to severe acne is most effectively treated with a combination of retinoid (cell turnover), benzoyl peroxide (antibacterial), and topical or oral antibiotics."
+    },
+    {
+      "id": 84,
+      "category": "Solutions by Skin Concern",
+      "difficulty": "Intermediate",
+      "question": "What is the difference between Melasma and PIH (Post-Inflammatory Hyperpigmentation)?",
+      "options": ["Completely different treatments", "Melasma is hormone-related, PIH occurs after inflammation", "Melasma is temporary, PIH is permanent", "No difference"],
+      "correct_answer": "Melasma is hormone-related, PIH occurs after inflammation",
+      "explanation": "Melasma is caused by hormones, UV, and genetics with frequent recurrence, while PIH is temporary pigmentation from inflammation after acne or injury."
+    },
+    {
+      "id": 85,
+      "category": "Solutions by Skin Concern",
+      "difficulty": "Intermediate",
+      "question": "What is the most effective ingredient for treating hyperpigmentation?",
+      "options": ["Peptides", "Hydroquinone", "Ceramides", "Hyaluronic acid"],
+      "correct_answer": "Hydroquinone",
+      "explanation": "Hydroquinone is the most powerful brightening ingredient that inhibits melanin production, with prescription-strength 2-4% concentration being most effective."
+    },
+    {
+      "id": 86,
+      "category": "Solutions by Skin Concern",
+      "difficulty": "Advanced",
+      "question": "What is an appropriate home care combination for PIH improvement?",
+      "options": ["Retinol + Oil only", "Vitamin C + Niacinamide + Sunscreen", "AHA only", "Scrub + Hot water cleansing"],
+      "correct_answer": "Vitamin C + Niacinamide + Sunscreen",
+      "explanation": "Vitamin C provides antioxidant and melanin production inhibition, niacinamide blocks pigment transfer, and sunscreen prevents worsening."
+    },
+    {
+      "id": 87,
+      "category": "Solutions by Skin Concern",
+      "difficulty": "Beginner",
+      "question": "What is most important for wrinkle prevention and improvement?",
+      "options": ["Expensive cream", "UV protection", "10 hours sleep daily", "Drink 5L water"],
+      "correct_answer": "UV protection",
+      "explanation": "About 90% of skin aging is caused by UV photoaging, so sunscreen use is key to wrinkle prevention and improvement."
+    },
+    {
+      "id": 88,
+      "category": "Solutions by Skin Concern",
+      "difficulty": "Intermediate",
+      "question": "Which ingredient has clinically proven wrinkle improvement effects?",
+      "options": ["Herbal extracts", "Retinoids", "Fragrance", "Alcohol"],
+      "correct_answer": "Retinoids",
+      "explanation": "Retinoids (retinol, tretinoin) are the only ingredients with clinically proven wrinkle improvement through collagen production promotion and cell turnover improvement."
+    },
+    {
+      "id": 89,
+      "category": "Solutions by Skin Concern",
+      "difficulty": "Advanced",
+      "question": "What are effective treatments for Dynamic Wrinkles and Static Wrinkles respectively?",
+      "options": ["Both Botox", "Dynamic-Botox, Static-Filler/Laser", "Both Filler", "Both Cream"],
+      "correct_answer": "Dynamic-Botox, Static-Filler/Laser",
+      "explanation": "Dynamic wrinkles from muscle contraction respond to Botox, while existing static wrinkles improve with filler or laser."
+    },
+    {
+      "id": 90,
+      "category": "Solutions by Skin Concern",
+      "difficulty": "Intermediate",
+      "question": "What is an effective ingredient combination for pore reduction?",
+      "options": ["Oil + Heavy cream", "Salicylic acid + Niacinamide", "Alcohol + Fragrance", "Scrub + Hot water"],
+      "correct_answer": "Salicylic acid + Niacinamide",
+      "explanation": "Salicylic acid removes debris inside pores, and niacinamide controls sebum production, visually reducing pore appearance."
+    },
+    {
+      "id": 91,
+      "category": "Solutions by Skin Concern",
+      "difficulty": "Beginner",
+      "question": "Can pores be permanently eliminated?",
+      "options": ["Possible with creams", "Complete removal possible with laser", "Impossible, only visual reduction possible", "Possible with ice"],
+      "correct_answer": "Impossible, only visual reduction possible",
+      "explanation": "Pores are normal skin structures that cannot be completely eliminated, only visually reduced through exfoliation and sebum control."
+    },
+    {
+      "id": 92,
+      "category": "Solutions by Skin Concern",
+      "difficulty": "Intermediate",
+      "question": "Which is NOT a main cause of enlarged pores?",
+      "options": ["Excess sebum production", "Loss of elasticity from aging", "UV damage", "Water deficiency"],
+      "correct_answer": "Water deficiency",
+      "explanation": "Main causes of pore enlargement are excess sebum, aging, UV damage, and genetics. Water deficiency is an indirect factor but not a direct cause."
+    },
+    {
+      "id": 93,
+      "category": "Solutions by Skin Concern",
+      "difficulty": "Advanced",
+      "question": "What is the main cause of skin elasticity loss?",
+      "options": ["Water deficiency", "Collagen and elastin decrease", "Vitamin deficiency", "Sleep deprivation"],
+      "correct_answer": "Collagen and elastin decrease",
+      "explanation": "As we age, collagen production decreases and elastin breaks down, reducing skin elasticity. It decreases 1% annually after age 25."
+    },
+    {
+      "id": 94,
+      "category": "Solutions by Skin Concern",
+      "difficulty": "Intermediate",
+      "question": "What are appropriate treatments for skin elasticity improvement?",
+      "options": ["Botox", "Ultherapy/RF/Thread Lifting", "IPL", "Peeling only"],
+      "correct_answer": "Ultherapy/RF/Thread Lifting",
+      "explanation": "Ultherapy, RF, and thread lifting provide heat or physical stimulation to the dermis, promoting collagen regeneration and improving elasticity."
+    },
+    {
+      "id": 95,
+      "category": "Solutions by Skin Concern",
+      "difficulty": "Intermediate",
+      "question": "Which is NOT a cause of dark circles?",
+      "options": ["Pigmentation", "Visible blood vessels through thin skin", "Under-eye fat protrusion", "Enlarged pores"],
+      "correct_answer": "Enlarged pores",
+      "explanation": "Dark circle causes include pigmentation, blood vessel visibility, under-eye fat/shadows, with treatments varying by cause."
+    },
+    {
+      "id": 96,
+      "category": "Solutions by Skin Concern",
+      "difficulty": "Advanced",
+      "question": "What is an effective treatment for vascular dark circles?",
+      "options": ["Laser toning", "Vascular laser (IPL/YAG)", "Filler", "Chemical peel"],
+      "correct_answer": "Vascular laser (IPL/YAG)",
+      "explanation": "Dark circles from visible blood vessels are effectively treated with vascular targeting lasers that constrict blood vessels."
+    },
+    {
+      "id": 97,
+      "category": "Solutions by Skin Concern",
+      "difficulty": "Intermediate",
+      "question": "What is the most effective treatment for acne scar improvement?",
+      "options": ["Botox", "Fractional laser", "IPL", "Peeling only"],
+      "correct_answer": "Fractional laser",
+      "explanation": "Fractional laser creates microscopic thermal damage to promote collagen regeneration, effectively improving depressed acne scars."
+    },
+    {
+      "id": 98,
+      "category": "Solutions by Skin Concern",
+      "difficulty": "Advanced",
+      "question": "Which acne scar type is most difficult to treat?",
+      "options": ["Ice pick", "Rolling", "Boxcar", "Keloid"],
+      "correct_answer": "Ice pick",
+      "explanation": "Ice pick scars are deep and narrow, difficult to improve with laser alone, requiring additional procedures like punch excision or TCA CROSS."
+    },
+    {
+      "id": 99,
+      "category": "Solutions by Skin Concern",
+      "difficulty": "Intermediate",
+      "question": "What ingredients should sensitive skin avoid?",
+      "options": ["Ceramides", "Fragrance and alcohol", "Niacinamide", "Hyaluronic acid"],
+      "correct_answer": "Fragrance and alcohol",
+      "explanation": "Sensitive skin should avoid fragrance, alcohol, strong surfactants, and high-concentration active ingredients, using calming and barrier-strengthening ingredients instead."
+    },
+    {
+      "id": 100,
+      "category": "Solutions by Skin Concern",
+      "difficulty": "Advanced",
+      "question": "What should rosacea-prone skin avoid?",
+      "options": ["Sunscreen", "Hot food and sauna", "Moisturizer", "Calming ingredients"],
+      "correct_answer": "Hot food and sauna",
+      "explanation": "Rosacea involves dilated blood vessels causing redness, so avoid hot food, alcohol, sauna, and spicy food that raise body temperature."
+    },
+    {
+      "id": 101,
+      "category": "Seasonal Skincare",
+      "difficulty": "Beginner",
+      "question": "What is most important in summer skincare?",
+      "options": ["Heavy cream", "UV protection", "Lots of oil", "Hot water cleansing"],
+      "correct_answer": "UV protection",
+      "explanation": "In summer, SPF 50+ PA++++ sunscreen is essential to prevent photoaging and hyperpigmentation from strong UV rays."
+    },
+    {
+      "id": 102,
+      "category": "Seasonal Skincare",
+      "difficulty": "Intermediate",
+      "question": "What texture is suitable for summer skincare?",
+      "options": ["Thick cream", "Light gel or lotion", "Oil only", "Nothing at all"],
+      "correct_answer": "Light gel or lotion",
+      "explanation": "Considering summer's high humidity and temperature, light gel or water lotion types are suitable, avoiding excessive oil."
+    },
+    {
+      "id": 103,
+      "category": "Seasonal Skincare",
+      "difficulty": "Intermediate",
+      "question": "What is important in winter skincare?",
+      "options": ["Frequent exfoliation", "Moisturizing and oil reinforcement", "Using light products", "Frequent cleansing"],
+      "correct_answer": "Moisturizing and oil reinforcement",
+      "explanation": "In winter's low humidity, skin becomes dry, requiring rich moisturizers with ceramides or oils to replenish moisture and oil."
+    },
+    {
+      "id": 104,
+      "category": "Seasonal Skincare",
+      "difficulty": "Advanced",
+      "question": "What is the most effective way to prevent dryness from winter indoor heating?",
+      "options": ["Only apply lots of cream", "Use humidifier + moisturize", "Only drink lots of water", "Only reduce cleansing"],
+      "correct_answer": "Use humidifier + moisturize",
+      "explanation": "Maintaining indoor humidity at 40-60% plus using moisturizers is most effective. Cream alone without humidifier has limitations."
+    },
+    {
+      "id": 105,
+      "category": "Seasonal Skincare",
+      "difficulty": "Intermediate",
+      "question": "What should be careful about in spring skincare?",
+      "options": ["UV is weak", "Yellow dust and fine dust", "No need for moisturizing", "Exfoliation prohibited"],
+      "correct_answer": "Yellow dust and fine dust",
+      "explanation": "Spring has lots of yellow dust and fine dust causing skin troubles, so thorough cleansing and antioxidant care are important."
+    },
+    {
+      "id": 106,
+      "category": "Seasonal Skincare",
+      "difficulty": "Beginner",
+      "question": "What is the key to fall skincare?",
+      "options": ["UV protection unnecessary", "Summer damage recovery", "Use only oil", "Reduce cleansing"],
+      "correct_answer": "Summer damage recovery",
+      "explanation": "Fall is time to recover skin damaged by summer UV, good for starting brightening and regeneration care."
+    },
+    {
+      "id": 107,
+      "category": "Seasonal Skincare",
+      "difficulty": "Advanced",
+      "question": "What is the best way to change skincare routine with seasons?",
+      "options": ["Replace all products at once", "Gradually replace 1-2 items", "Don't change", "Complete new brand every season"],
+      "correct_answer": "Gradually replace 1-2 items",
+      "explanation": "Change products gradually to give skin adaptation time, maintaining consistency in cleanser and sunscreen year-round."
+    },
+    {
+      "id": 108,
+      "category": "Seasonal Skincare",
+      "difficulty": "Intermediate",
+      "question": "Why does skin become sensitive during seasonal transitions?",
+      "options": ["Products went bad", "Rapid temperature and humidity changes", "Getting older", "Water doesn't suit"],
+      "correct_answer": "Rapid temperature and humidity changes",
+      "explanation": "During seasonal transitions, rapid temperature and humidity changes weaken skin barrier and increase moisture loss, causing sensitivity."
+    },
+    {
+      "id": 109,
+      "category": "Seasonal Skincare",
+      "difficulty": "Intermediate",
+      "question": "What skincare principles should be maintained all year?",
+      "options": ["Use only oil", "Cleansing + UV protection", "Use only expensive products", "Apply nothing"],
+      "correct_answer": "Cleansing + UV protection",
+      "explanation": "Regardless of season, thorough cleansing and daily sunscreen use are the basics for healthy skin."
+    },
+    {
+      "id": 110,
+      "category": "Seasonal Skincare",
+      "difficulty": "Advanced",
+      "question": "What ingredients are good to add when transitioning from summer to fall?",
+      "options": ["Stronger exfoliants", "Retinol and Vitamin C", "Alcohol", "Scrubs"],
+      "correct_answer": "Retinol and Vitamin C",
+      "explanation": "Fall's weaker UV makes it a good time to start or increase concentration of powerful anti-aging ingredients like retinol and Vitamin C."
+    },
+    {
+      "id": 111,
+      "category": "Latest Trends",
+      "difficulty": "Intermediate",
+      "question": "What is the source of PDRN (Polydeoxyribonucleotide)?",
+      "options": ["Bovine placenta", "Salmon DNA", "Human stem cells", "Plant extracts"],
+      "correct_answer": "Salmon DNA",
+      "explanation": "PDRN is DNA fragments extracted from salmon, promoting cell regeneration and wound healing, used in skin boosters like Rejuran."
+    },
+    {
+      "id": 112,
+      "category": "Latest Trends",
+      "difficulty": "Intermediate",
+      "question": "What is the main effect of Rejuran?",
+      "options": ["Immediate volume", "Cell regeneration and skin quality improvement", "Permanent lifting", "Pigment removal"],
+      "correct_answer": "Cell regeneration and skin quality improvement",
+      "explanation": "Rejuran promotes skin regeneration rather than immediate volume, gradually improving overall skin quality including elasticity, wrinkles, pores, and scars."
+    },
+    {
+      "id": 113,
+      "category": "Latest Trends",
+      "difficulty": "Advanced",
+      "question": "What does the 2024-2025 beauty trend 'Quiet Luxury' mean?",
+      "options": ["Exaggerated volume", "Natural and healthy-looking results", "Flashy makeup", "Extreme changes"],
+      "correct_answer": "Natural and healthy-looking results",
+      "explanation": "Quiet Luxury is a trend pursuing natural yet sophisticated results without excess, also connected to 'skin minimalism.'"
+    },
+    {
+      "id": 114,
+      "category": "Latest Trends",
+      "difficulty": "Intermediate",
+      "question": "What is Preventative Aesthetics?",
+      "options": ["Only for 50+", "Early treatments in 20-30s", "Complete treatment prohibition", "Using only natural remedies"],
+      "correct_answer": "Early treatments in 20-30s",
+      "explanation": "Preventative aesthetics is a growing trend of preventing aging with baby Botox or light treatments before wrinkles deepen in 20-30s."
+    },
+    {
+      "id": 115,
+      "category": "Latest Trends",
+      "difficulty": "Advanced",
+      "question": "What is the characteristic of Exosome therapy?",
+      "options": ["Immediate volume", "Promotes regeneration through cell-to-cell signaling", "Permanent effects", "Low price"],
+      "correct_answer": "Promotes regeneration through cell-to-cell signaling",
+      "explanation": "Exosomes are nano-sized vesicles secreted from stem cells, next-generation regenerative therapy helping skin regeneration and recovery through cell-to-cell signaling."
+    },
+    {
+      "id": 116,
+      "category": "Latest Trends",
+      "difficulty": "Intermediate",
+      "question": "What is the principle of PRP (Platelet-Rich Plasma)?",
+      "options": ["Using others' blood", "Using growth factors extracted from own blood", "Chemical ingredients", "Animal-derived ingredients"],
+      "correct_answer": "Using growth factors extracted from own blood",
+      "explanation": "PRP is a natural therapy drawing own blood, concentrating platelets through centrifugation, then injecting to promote skin regeneration with growth factors."
+    },
+    {
+      "id": 117,
+      "category": "Latest Trends",
+      "difficulty": "Advanced",
+      "question": "What is the advantage of Combination Therapy?",
+      "options": ["Cost reduction", "Better results through synergy effects", "Zero downtime", "Permanent effects"],
+      "correct_answer": "Better results through synergy effects",
+      "explanation": "Combining treatments like Botox + Filler, Laser + Skin booster creates synergy effects, improving results and making effects last 30%+ longer."
+    },
+    {
+      "id": 118,
+      "category": "Latest Trends",
+      "difficulty": "Beginner",
+      "question": "What is K-beauty's representative skin ideal?",
+      "options": ["Tanned skin", "Glass Skin", "Full of freckles", "Matte skin"],
+      "correct_answer": "Glass Skin",
+      "explanation": "K-beauty idealizes glass-like transparent, smooth, and dewy glowing skin, featuring multi-step skincare for this goal."
+    },
+    {
+      "id": 119,
+      "category": "Latest Trends",
+      "difficulty": "Intermediate",
+      "question": "What is the core philosophy of K-beauty's 10-step routine?",
+      "options": ["To sell more products", "Layering and gradual absorption", "Waste of time", "Copying Western practices"],
+      "correct_answer": "Layering and gradual absorption",
+      "explanation": "The 10-step routine assigns specific functions to each step, building layers of nutrition on skin, a core K-beauty philosophy."
+    },
+    {
+      "id": 120,
+      "category": "Latest Trends",
+      "difficulty": "Advanced",
+      "question": "Which is NOT an emerging beauty trend in 2025?",
+      "options": ["Regenerative medicine (Exosomes, PRP)", "AI skin diagnosis", "Extreme overfilling", "Personalized skincare"],
+      "correct_answer": "Extreme overfilling",
+      "explanation": "2025 trends are naturalness, regeneration, personalization, and prevention. Excessive filler is actually declining, with 'quiet luxury' being mainstream."
+    }
+  ]
+}

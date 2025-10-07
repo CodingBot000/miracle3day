@@ -27,6 +27,7 @@ import TreatmentProtocol from "../treatment-landing-v2/TreatmentProtocol";
 import ScrollDevicesIntroduce from "../landing/ScrollDevicesIntroduce";
 import LanguageText from "./LanguageText";
 import TreatmentBasedAgeGuide from "../treatment-based-age-guide/page";
+import QuizPage from "../gamification/quize/page";
 
 
 export default async function HomePage() {
@@ -67,6 +68,7 @@ export default async function HomePage() {
               {/* <div className="my-8 px-4 md:px-6 lg:px-8">
           <CategoryMenu />
         </div> */}
+        
           <Hero />
      
           {/* <MiddleSection1 /> */}

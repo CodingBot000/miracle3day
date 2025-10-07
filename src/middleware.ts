@@ -35,6 +35,12 @@ export async function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL("/", req.url));
     }
 
+    // 퀴즈 페이지는 로그인 필수
+    if (req.nextUrl.pathname.startsWith("/gamification/quize")) {
+      console.log('middleware.ts redirect to login from quiz page');
+      return NextResponse.redirect(new URL("/auth/login", req.url));
+    }
+
     // if (req.nextUrl.pathname.startsWith("/admin")) {
     //   return NextResponse.redirect(new URL("/", req.url));
     // }

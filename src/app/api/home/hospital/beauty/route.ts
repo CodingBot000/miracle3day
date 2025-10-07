@@ -30,19 +30,19 @@ export async function GET() {
 
       
        
-      console.log(`src/app/api/home/hospital/beauty/route data ===>  ${data}`);
-      console.log("=== Hospital Beauty TABLE_HOSPITAL datas ===");
-      data?.forEach((item, index) => {
-        console.log(`\n[Item ${index + 1}]`);
-        console.log("id_uuid:", item.id_uuid);
-        console.log("Name:", item.name);
-        console.log("Name_en:", item.name_en);
-        console.log("Image URLs:", item.imageurls);
-        console.log("show:", item.show);
-        console.log("location:", item.location);
-        console.log("------------------------");
-      });
-      console.log("=== End of Hospital Beauty Data ===");
+      // console.log(`src/app/api/home/hospital/beauty/route data ===>  ${data}`);
+      // console.log("=== Hospital Beauty TABLE_HOSPITAL datas ===");
+      // data?.forEach((item, index) => {
+      //   console.log(`\n[Item ${index + 1}]`);
+      //   console.log("id_uuid:", item.id_uuid);
+      //   console.log("Name:", item.name);
+      //   console.log("Name_en:", item.name_en);
+      //   console.log("Image URLs:", item.imageurls);
+      //   console.log("show:", item.show);
+      //   console.log("location:", item.location);
+      //   console.log("------------------------");
+      // });
+      // console.log("=== End of Hospital Beauty Data ===");
       
     return Response.json({ data }, { status: 200, statusText: "success" });
   } catch (error) {

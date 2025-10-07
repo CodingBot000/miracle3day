@@ -50,7 +50,7 @@ export async function GET(request: Request) {
 
         if (!alreadyJoinedUser) {
           // 사용자 정보 DB에 upsert 소셜로그인에서는 생일, 성별 국가 등 정보가 이 타이밍에 가져올수없음
-          await supabase.from(TABLE_MEMBERS).upsert({
+          const { error: memberInsertError } = await supabase.from(TABLE_MEMBERS).upsert({
             uuid: user.id, // auth.users.id → foreign key
             email: user.email ?? "",
             name: user.user_metadata?.full_name ?? "",         // 이름 (Google/Apple 등에서 옴)
@@ -64,6 +64,18 @@ export async function GET(request: Request) {
             // gender: genderInput,         // 예: "male" | "female" | "other"
             // secondary_email: secondaryEmailInput ?? null,
           });
+
+          // TABLE_MEMBERS 삽입 성공 시 badges_user_profile도 초기화
+          if (!memberInsertError) {
+            await supabase.from('badges_user_profile').upsert({
+              user_id: user.id,
+              exp: 0,
+              level: 1,
+              title: { ko: "뉴비", en: "Newbie" },
+              updated_at: new Date().toISOString(),
+            });
+            console.log('[Auth] badges_user_profile created for user:', user.id);
+          }
           
 // 아래는 별도로
 // user_no

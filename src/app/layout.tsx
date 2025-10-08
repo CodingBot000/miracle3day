@@ -19,7 +19,7 @@ import { Toaster } from "sonner";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://miracle3day.vercel.app"),
+  metadataBase: new URL("https://mimotok.cloud"),
 title: "MimoTok - Your Beauty Journey",
   description:
     "Find the best beauty clinics and treatments in Korea. Book appointments, read reviews, and get expert advice.",
@@ -89,30 +89,29 @@ export default function RootLayout({
         <ProgressBar />
         {/* <PageTransitionOverlay /> */}
 
-        {/* 배경/루트 래퍼: 변형/음수마진으로 넘칠 때를 대비해 clip */}
-        <div className="bg-gradient-to-br from-[#FDF5F0] via-white to-[#F8E8E0] flex flex-col min-h-screen w-full overflow-x-clip">
-          <Providers>
-            <ScrollTop />
-            <div id="modal-root" />
+        <Providers>
+          <ScrollTop />
+          <div id="modal-root" />
 
-            <Suspense fallback={<div>Loading header...</div>}>
-              <LayoutHeader />
-            </Suspense>
+          <Suspense fallback={<div>Loading header...</div>}>
+            <LayoutHeader />
+          </Suspense>
 
-            {/* 메인은 항상 뷰포트폭에 맞춤 */}
-            <main className="pt-4 flex-grow pb-[72px] w-full">
-              {/* 컨텐츠 컨테이너: 데스크탑 1200px 제한 + 모바일 꽉 채우기 */}
-              <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8 min-w-0">
-                {children}
-              </div>
+          {/* 배경/루트 래퍼: 변형/음수마진으로 넘칠 때를 대비해 clip */}
+          <div className="bg-gradient-to-br from-[#FDF5F0] via-white to-[#F8E8E0] flex flex-col min-h-screen w-full overflow-x-clip">
+            {/* 메인: 헤더 고정으로 인한 여백 없음 */}
+            <main className="flex-grow pb-[72px] w-full relative">
+              {/* HeroVideo는 이 안에서 full-width로 표시되고,
+                  나머지 컨텐츠는 max-w-[1200px] 제한 */}
+              {children}
             </main>
 
             <CookieConsent />
             {/* <MenuMobile /> */}
             <Footer />
             <Toaster richColors position="top-center" duration={1500}/>
-          </Providers>
-        </div>
+          </div>
+        </Providers>
       </body>
     </html>
   );

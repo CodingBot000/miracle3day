@@ -18,6 +18,7 @@ import { createClient } from "@/utils/supabase/client";
 const LayoutHeader = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const supabase = createClient();
 
   useEffect(() => {
@@ -43,9 +44,25 @@ const LayoutHeader = () => {
     return () => subscription.unsubscribe();
   }, [supabase.auth]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      // LayoutHeader의 높이(88px) 이상 스크롤되면 불투명해지도록
+      setIsScrolled(scrollPosition >= 88);
+    };
+
+    // Check initial scroll position
+    handleScroll();
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <>
-    <header className="sticky top-0 z-10 bg-background flex items-center px-4 py-2 min-h-[88px]">
+    <header className={`fixed top-0 left-0 right-0 z-[200] flex items-center px-4 py-2 min-h-[88px] transition-all duration-500 ease-in-out ${
+      isScrolled ? 'bg-white/95 backdrop-blur-md shadow-md' : 'bg-transparent'
+    }`}>
       <div className="w-full flex justify-between items-center max-w-[1280px] mx-auto">
         <Logo />
         <div className="flex items-center gap-2">
@@ -69,11 +86,11 @@ const LayoutHeader = () => {
           </div>
           <div className="relative">
             <AuthClient />
-            {/* {isLoggedIn && (
+            {isLoggedIn && (
               <Link href="/gamification/quize">
                 <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full animate-pulse shadow-lg shadow-yellow-400/50" />
               </Link>
-            )} */}
+            )}
           </div>
         </div>
       </div>

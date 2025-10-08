@@ -47,8 +47,8 @@ const LayoutHeader = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
-      // LayoutHeader의 높이(88px) 이상 스크롤되면 불투명해지도록
-      setIsScrolled(scrollPosition >= 88);
+      // LayoutHeader의 높이(108px) 이상 스크롤되면 불투명해지도록
+      setIsScrolled(scrollPosition >= 158);
     };
 
     // Check initial scroll position
@@ -60,9 +60,16 @@ const LayoutHeader = () => {
 
   return (
     <>
-    <header className={`fixed top-0 left-0 right-0 z-[200] flex items-center px-4 py-2 min-h-[88px] transition-all duration-500 ease-in-out ${
-      isScrolled ? 'bg-white/95 backdrop-blur-md shadow-md' : 'bg-transparent'
-    }`}>
+    <header
+      className={`fixed top-0 left-0 right-0 z-[200] flex items-center px-4 py-2 min-h-[88px] ease-in-out ${
+        isScrolled ? 'bg-white/95 backdrop-blur-md shadow-md' : 'bg-transparent'
+      }`}
+      style={{
+        transition: isScrolled
+          ? 'all 2000ms ease-in-out'  // 투명→불투명: 2초
+          : 'all 500ms ease-in-out'   // 불투명→투명: 0.5초
+      }}
+    >
       <div className="w-full flex justify-between items-center max-w-[1280px] mx-auto">
         <Logo />
         <div className="flex items-center gap-2">

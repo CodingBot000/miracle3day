@@ -27,8 +27,8 @@ const CATEGORY_IMAGES = [
   [
     "/landing_model/model_3.jpeg",
     "/landing_model/model_4.jpeg",
-    "/landing_model/img4.jpg",
-    "/landing_model/img5.jpg",
+    "/landing_model/img4.png",
+    "/landing_model/img5.png",
     "/landing_model/img6.jpg"
   ],
   // 카테고리 2: Wrinkle_AntiAging

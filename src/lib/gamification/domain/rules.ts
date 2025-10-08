@@ -18,6 +18,9 @@ export function calcAttemptExp(params: {
   const isFull = todaySolvedCount < rules.daily_full_reward_quota;
   const mult = isFull ? 1 : rules.overflow_multiplier;
   const streakMult = 1 + Math.min(streakDays * rules.streak_bonus_per_day, rules.streak_bonus_cap);
-  const base = rules.base_attempt_exp + (isCorrect ? rules.correct_bonus_exp : 0);
+
+  // 정답: 5 EXP, 오답: 3 EXP
+  const base = isCorrect ? 5 : 3;
+
   return Math.round(base * mult * streakMult);
 }

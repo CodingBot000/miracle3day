@@ -68,14 +68,14 @@ export default function AuthClient() {
           <span>{text(user) || user.email}</span>
         </Button>
       </Link>
-
+{/* 
       {isAdmin && (
         <Link href={ROUTE.UPLOAD_HOSPITAL}>
           <Button variant="ghost" className="text-blue-600 hover:text-blue-700">
             업로드 바로가기
           </Button>
         </Link>
-      )}
+      )} */}
     </div>
   );
 }

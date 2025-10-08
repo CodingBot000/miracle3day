@@ -144,7 +144,18 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
             {/* <ModalAttendanceButton /> */}
             {/* <AttendanceSection /> */}
             {/* checked In */ }
-            <AttendanceModalButton /> point: {point}
+            <div className="flex items-center gap-4">
+              <div className="flex-1">
+                <AttendanceModalButton /> point: {point}
+              </div>
+              <Link href="/gamification/quize">
+                <button className="px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-800 text-white font-semibold rounded-full hover:from-amber-600 hover:to-yellow-600 transition-all shadow-sm hover:shadow-md flex items-center gap-2">
+                  <span>🏆</span>
+                  <span>Quiz</span>
+                </button>
+              </Link>
+            </div>
+
             <div className="bg-white rounded-lg">
               {renderProfileField("Gender", user?.userInfo?.gender ? (user.userInfo.gender === "M" ? "Male" : "Female") : null, !user?.userInfo?.gender)}
               {renderProfileField("Nationality", findCountry(user?.userInfo?.id_country)?.country_name, !findCountry(user?.userInfo?.id_country)?.country_name)}

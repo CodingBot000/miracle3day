@@ -2,23 +2,25 @@
 import { useEffect, useState } from 'react';
 import ProgressBar from './ProgressBar';
 
-export default function DailyStats() {
+export default function DailyStats({ refreshTrigger }: { refreshTrigger?: number }) {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
+  const loadStats = async () => {
+    try {
+      const res = await fetch('/api/gamification/quize/state', { cache: 'no-store' });
+      const result = await res.json();
+      setData(result);
+    } catch (error) {
+      console.error('Failed to load stats:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    (async () => {
-      try {
-        const res = await fetch('/api/gamification/quize/state', { cache: 'no-store' });
-        const result = await res.json();
-        setData(result);
-      } catch (error) {
-        console.error('Failed to load stats:', error);
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, []);
+    loadStats();
+  }, [refreshTrigger]); // refreshTrigger가 변경될 때마다 다시 로드
 
   if (loading) {
     return <div className="h-24 rounded-2xl animate-pulse bg-gray-100" />;
@@ -31,6 +33,7 @@ export default function DailyStats() {
   const used = data.today?.count ?? 0;
   const quota = data.today?.quota ?? 5;
   const streakDays = data.streakDays ?? 0;
+  const remaining = Math.max(0, quota - used);
 
   return (
     <div className="p-6 border rounded-2xl bg-white shadow-sm">
@@ -41,9 +44,9 @@ export default function DailyStats() {
           <span className="text-gray-600">스트릭 {streakDays}일</span>
         </div>
       </div>
-      <ProgressBar value={(used / quota) * 100} />
+      <ProgressBar value={(Math.min(used, quota) / quota) * 100} />
       <div className="mt-2 text-xs text-gray-500">
-        {used >= quota ? '오늘 할당량 초과 시 20% 보상' : `${quota - used}번 더 풀면 일일 목표 달성!`}
+        {used >= quota ? '일일 목표 달성 완료!' : `${remaining}번 더 풀면 일일 목표 달성!`}
       </div>
     </div>
   );

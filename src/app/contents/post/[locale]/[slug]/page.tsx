@@ -46,19 +46,27 @@ export async function generateMetadata({ params }: Props) {
     };
   }
 
-  const sectionKey = `section${Object.keys(content.sections).find(
-    key => (content.sections[key] as any).slug === slug
-  )?.match(/\d+/)?.[0] || '1'}`;
+  const sectionEntry = Object.entries(content.sections).find(
+    ([_, section]) => (section as any).slug === slug
+  );
 
-  const section = content.sections[sectionKey] as any as KBeautySection;
+  if (!sectionEntry) {
+    return {
+      title: 'Not Found',
+    };
+  }
+
+  const [sectionKey, section] = sectionEntry;
+
+  const typedSection = section as any as KBeautySection;
 
   return {
-    title: `${section.title || ''} | K-Beauty Guide`,
-    description: section.tagline || '',
+    title: `${typedSection.title || ''} | K-Beauty Guide`,
+    description: typedSection.tagline || '',
     openGraph: {
-      title: section.title || '',
-      description: section.tagline || '',
-      images: [section.intro ? `/images/k-beauty/${sectionKey}/hero.jpg` : ''],
+      title: typedSection.title || '',
+      description: typedSection.tagline || '',
+      images: [typedSection.intro ? `/images/k-beauty/${sectionKey}/hero.jpg` : ''],
     },
   };
 }

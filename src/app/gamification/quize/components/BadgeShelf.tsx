@@ -27,7 +27,7 @@ export default function BadgeShelf() {
     return <div className="p-6 border rounded-2xl bg-white">배지 정보를 불러올 수 없습니다.</div>;
   }
 
-  const mineMap = new Map(badges.mine.map((b: any) => [b.code, b.level]));
+  const mineMap = new Map<string, number>(badges.mine.map((b: any) => [b.code, b.level]));
 
   return (
     <div className="p-6 border rounded-2xl bg-white shadow-sm">

@@ -105,7 +105,7 @@ export function supabaseStore(): BadgeStore {
     async bumpQuizMasterProgress(userId: string, deltaCorrect: number) {
       const { data: current, error: fetchError } = await supabase
         .from('badges_user_state')
-        .select('progress, current_level')
+        .select('progress, current_level, first_earned_at, last_level_up_at')
         .eq('user_id', userId)
         .eq('badge_code', 'quiz_master')
         .maybeSingle();

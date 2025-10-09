@@ -43,7 +43,7 @@ export default function Hero() {
           variants={fadeUp}
           className="text-center text-sm md:text-base text-gray-500 mt-2"
         >
-          Tap into the expertise of Seoul&apos;s top doctors. Take our simple quiz to build your perfect treatment
+          Consult with Korea&apos;s top doctors. Take our simple quiz to build your perfect treatment
         </motion.p>
 
         {/* CTA buttons */}

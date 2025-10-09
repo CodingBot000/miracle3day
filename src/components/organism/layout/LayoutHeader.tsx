@@ -75,6 +75,15 @@ const LayoutHeader = () => {
     return isScrolled ? 'bg-white/95 backdrop-blur-md shadow-md' : 'bg-transparent';
   };
 
+  const getIconColor = () => {
+    if (!isTransparentMode) {
+      // 투명 모드가 아닌 경우: 항상 검정색
+      return 'text-black';
+    }
+    // 투명 모드인 경우: 스크롤에 따라 변경
+    return isScrolled ? 'text-black' : 'text-white';
+  };
+
   const getTransitionStyle = () => {
     if (!isTransparentMode) {
       return 'all 300ms ease-in-out'; // 일반 모드는 빠른 전환
@@ -95,25 +104,27 @@ const LayoutHeader = () => {
       <div className="w-full flex justify-between items-center max-w-[1280px] mx-auto">
         <Logo />
         <div className="flex items-center gap-2">
-          {/* <div className="flex items-center">
-            <Menu />
-          </div> */}
-          {/* community */}
-          
-            <Link href="/community">
-              <MessageSquareText size={20} />
-            </Link>
-      
-          <div>
+          <div className={`flex items-center gap-2 transition-colors duration-300 ${getIconColor()}`}>
+            {/* <div className="flex items-center">
+              <Menu />
+            </div> */}
+            {/* community */}
 
-            <button onClick={() => setShowSearch(true)}>
-              <Search size={20} />
-            </button>
+              <Link href="/community">
+                <MessageSquareText size={20} />
+              </Link>
+
+            <div>
+
+              <button onClick={() => setShowSearch(true)}>
+                <Search size={20} />
+              </button>
+            </div>
+            <div>
+              <LanguageSelector iconColor={isTransparentMode && !isScrolled ? 'white' : 'black'} />
+            </div>
           </div>
-          <div>
-            <LanguageSelector />
-          </div>
-          <div className="relative">
+          <div className="relative text-black">
             <AuthClient />
             {isLoggedIn && (
               <Link href="/gamification/quize">

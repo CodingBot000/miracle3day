@@ -12,7 +12,11 @@ import { cn } from "@/lib/utils";
 import { translateLanguage } from "@/constants";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-export const LanguageSelector = () => {
+interface LanguageSelectorProps {
+  iconColor?: 'white' | 'black';
+}
+
+export const LanguageSelector = ({ iconColor = 'black' }: LanguageSelectorProps) => {
   const { language, setLanguage } = useLanguage();
 
   // Map language codes to simplified format
@@ -43,7 +47,10 @@ export const LanguageSelector = () => {
           alt="Select Language"
           width={24}
           height={24}
-          className="cursor-pointer transition-opacity duration-200 ease-in-out hover:opacity-70"
+          className={cn(
+            "cursor-pointer transition-all duration-300 ease-in-out hover:opacity-70",
+            iconColor === 'white' ? 'brightness-0 invert' : ''
+          )}
         />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[150px] z-[250]">

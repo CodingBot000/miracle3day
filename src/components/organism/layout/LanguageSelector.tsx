@@ -46,7 +46,7 @@ export const LanguageSelector = () => {
           className="cursor-pointer transition-opacity duration-200 ease-in-out hover:opacity-70"
         />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-[150px]">
+      <DropdownMenuContent className="w-[150px] z-[250]">
         {translateLanguage.map((option) => (
           <DropdownMenuItem
             key={option.code}

@@ -81,9 +81,9 @@ Cookies are widely used in order to make websites work, or work more efficiently
 \n
 YOUR RIGHTS
 \n
-You may at all times access, correct or erase your Personal Information through BeautyWell Platform via the user portal, under “My Account”. Alternatively, you may make your data access, correction or erasure request by sending your request by email at 3daymiracle0@gmail.com
+You may at all times access, correct or erase your Personal Information through BeautyWell Platform via the user portal, under “My Account”. Alternatively, you may make your data access, correction or erasure request by sending your request by email at mimotok.official0@gmail.com
 \n
-Where mandatory under applicable legislation, you may also request restriction of processing of your Personal Information or object to processing by sending your request or objection by email at help@BeautyWell.com. You may also request a copy of the information that we hold about you by sending your request by email at 3daymiracle0@gmail.com
+Where mandatory under applicable legislation, you may also request restriction of processing of your Personal Information or object to processing by sending your request or objection by email at help@BeautyWell.com. You may also request a copy of the information that we hold about you by sending your request by email at mimotok.official0@gmail.com
 \n
 Please contact us via the contact details mentioned below if you have a complaint regarding the processing of your Personal Information.
 \n
@@ -91,7 +91,7 @@ When handling any of these requests described above, we have the right to check 
 \n\n
 INQUIRIES
 \n
-If you have any questions about this Privacy Policy, please contact us by email at 3daymiracle0@gmail.com
+If you have any questions about this Privacy Policy, please contact us by email at mimotok.official0@gmail.com
 \n
 Last updated on: 4th August, 2024
 `

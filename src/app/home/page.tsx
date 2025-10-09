@@ -27,6 +27,9 @@ import TreatmentProtocol from "../treatment-landing-v2/TreatmentProtocol";
 import ScrollDevicesIntroduce from "../landing/ScrollDevicesIntroduce";
 import LanguageText from "./LanguageText";
 import TreatmentBasedAgeGuide from "../treatment-based-age-guide/page";
+import TransparentHeaderWrapper from "@/components/layout/TransparentHeaderWrapper";
+import QuizPage from "../gamification/quize/page";
+import WhyKoreaButton from "./components/WhyKoreaButton";
 
 
 export default async function HomePage() {
@@ -44,21 +47,27 @@ export default async function HomePage() {
   );
 
   return (
-    <>
-      {/* <HomeClient bannerItem={bannerItem} selectedLocation={selectedLocation} /> */}
-      <HeroVideos>
-        <div className="absolute inset-0 bg-black/40 z-10"></div>
-        <div className="absolute inset-0 flex items-end justify-end text-white z-30 pb-6 pr-6 md:pb-12 md:pr-12">
-          <div className="text-right">
-            <h1 className="text-xl md:text-3xl lg:text-5xl font-bold drop-shadow-lg">Reveal Your Beauty</h1>
-            <p className="mt-2 md:mt-4 text-sm md:text-base lg:text-lg drop-shadow-md">
-              Discover premium skincare <br className="md:hidden" />
-              & wellness experiences
-            </p>
+    <TransparentHeaderWrapper>
+      {/* HeroVideos: 모바일은 full-width, 데스크탑은 max-w-[1200px] */}
+      <div className="w-full md:max-w-[1200px] md:mx-auto relative z-10">
+        <HeroVideos>
+          <div className="absolute inset-0 bg-black/40 z-10"></div>
+          <div className="absolute inset-0 flex items-end justify-end text-white z-30 pb-6 pr-6 md:pb-12 md:pr-12">
+            <div className="text-right">
+              <WhyKoreaButton />
+              <h1 className="text-xl md:text-3xl lg:text-5xl font-bold drop-shadow-lg">Reveal Your Beauty</h1>
+              <p className="mt-2 md:mt-4 text-sm md:text-base lg:text-lg drop-shadow-md">
+                Discover premium skincare <br className="md:hidden" />
+                & wellness experiences
+              </p>
+            </div>
           </div>
-        </div>
-      </HeroVideos>
-      {/* <section className="max-w-container mx-auto">
+        </HeroVideos>
+      </div>
+
+      {/* 본문 컨텐츠: max-w-[1200px]로 제한 */}
+      <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8 min-w-0">
+        {/* <section className="max-w-container mx-auto">
           <DiagnosticIntro />
         <div className="my-8 px-4 md:px-6 lg:px-8">
           <CategoryMenu />
@@ -67,13 +76,14 @@ export default async function HomePage() {
               {/* <div className="my-8 px-4 md:px-6 lg:px-8">
           <CategoryMenu />
         </div> */}
+
           <Hero />
-     
+
           {/* <MiddleSection1 /> */}
-          
+
           <TreatmentProtocol />
 
-          <div className="text-right mt-8 px-4">
+          <div className="text-right mt-18 px-4">
               <Link
                 href="/treatments_info"
                 className="inline-flex items-center gap-1 text-gray-400 hover:text-gray-900 transition-colors text-xl font-medium mb-4"
@@ -103,14 +113,14 @@ export default async function HomePage() {
             </h2>
           </div>
             {/* <div className="my-8 leading-6 pl-4 md:pl-6 lg:pl-8">
-              
+
               <p className="font-bold text-[1.5rem] mb-[5px]">New Beauty</p>
-    
+
               <p className="text-[1.0rem]">Make Attraction</p>
             </div> */}
             {/* See All Clinics Link */}
             <div className="text-right mt-8 px-4">
-              <Link 
+              <Link
                 href="/hospital"
                 className="inline-flex items-center gap-1 text-gray-400 hover:text-gray-900 transition-colors text-xl font-medium mb-4"
               >
@@ -120,10 +130,10 @@ export default async function HomePage() {
                 </svg>
               </Link>
             </div>
-  
+
             <Beauty />
-            
-         
+
+
         </section>
         <TreatmentBasedAgeGuide />
           {/* <MiddleSection2 /> */}
@@ -131,11 +141,11 @@ export default async function HomePage() {
 
       {/* <section className="max-w-container mx-auto mt-20">
             <div className="my-8 px-4 md:px-6 lg:px-8">
-  
+
         <div className="flex items-center justify-between mb-4">
-  
+
           <p className="font-bold text-[1.5rem]">Recommend</p>
- 
+
           <Link
             href={ROUTE.EVENT}
             className="inline-flex items-center gap-1 text-[1.1rem] text-gray-800 font-bold hover:text-primary transition-colors"
@@ -150,7 +160,7 @@ export default async function HomePage() {
 
       {/* <section className="max-w-container mx-auto mt-20">
         <div className="my-8 leading-6 pl-4 md:pl-6 lg:pl-8">
-         
+
           <p className="font-bold text-[1.5rem] mb-[5px]">New Beauty</p>
           <p className="text-[1.0rem]">Make Attraction</p>
         </div>
@@ -166,10 +176,11 @@ export default async function HomePage() {
           <p className="text-[1.0rem]">Choose the location u want</p>
         </div>
         <LocationChipSelector />
-        <SeeAllLink location={selectedLocation ?? LocationEnum.Apgujung} />    
+        <SeeAllLink location={selectedLocation ?? LocationEnum.Apgujung} />
 
         <LocationHospitalClient />
       </section> */}
-    </>
+      </div>
+    </TransparentHeaderWrapper>
   );
 }

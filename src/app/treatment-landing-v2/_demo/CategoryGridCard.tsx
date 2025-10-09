@@ -81,8 +81,8 @@ const CATEGORY_IMAGES = [
   ],
   // 카테고리 8: Skin_Care
   [
-    "/landing_model/model_2.jpeg",
-    "/landing_model/model_3.jpeg",
+    "/landing_model/img17.jpg",
+    "/landing_model/img18.jpg",
     "/landing_model/img1.png",
     "/landing_model/img5.png",
     "/landing_model/img9.jpg"

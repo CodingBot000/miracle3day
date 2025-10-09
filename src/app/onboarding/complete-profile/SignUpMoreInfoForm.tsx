@@ -78,8 +78,7 @@ export default function SignUpMoreInfoForm() {
   // console.log("SignUpMoreInfoForm searchParams:", searchParams);
   const uuid = searchParams.get('code');
   const returnUrl = searchParams.get('returnUrl') || "/";
-
-  console.log("SignUpMoreInfoFormmm uuid", uuid);
+  
   const router = useRouter();
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [nation, setNation] = useState<CountryCode | null>(null);
@@ -194,8 +193,8 @@ export default function SignUpMoreInfoForm() {
                 You must be at least 14 years old.
                 If you provide your exact date of birth, we can offer more personalized recommendations and consultations.</p>
               <div className="relative">
-                <div 
-                  className={`border rounded-md ${
+                <div
+                  className={`flex h-9 w-full rounded-md border shadow-sm transition-colors ${
                     errors.birthDate ? "border-red-500" : "border-input"
                   }`}
                 >
@@ -209,7 +208,7 @@ export default function SignUpMoreInfoForm() {
                     showYearDropdown
                     dropdownMode="select"
                     placeholderText="Select your birth date"
-                    className="w-full p-2 outline-none bg-transparent"
+                    className="w-full px-3 py-1 outline-none bg-transparent text-base md:text-sm placeholder:text-muted-foreground"
                     customInput={<CustomInput />}
                   />
                 </div>

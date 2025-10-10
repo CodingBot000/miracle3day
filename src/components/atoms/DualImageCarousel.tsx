@@ -83,7 +83,7 @@ export default function DualImageCarousel({
       )}
       aria-roledescription="image carousel"
     >
-      <div className="flex h-full">
+      <div className="flex h-full gap-4">
         {/* 왼쪽 이미지 */}
         <div className="flex-1 relative overflow-hidden">
           <AnimatePresence mode="wait">
@@ -92,6 +92,7 @@ export default function DualImageCarousel({
               src={currentPair[0]}
               alt=""
               className="absolute inset-0 h-full w-full object-cover"
+              style={{ transform: 'scale(0.7)' }}
               initial="enter"
               animate="center"
               exit="exit"
@@ -109,6 +110,7 @@ export default function DualImageCarousel({
               src={currentPair[1]}
               alt=""
               className="absolute inset-0 h-full w-full object-cover"
+              style={{ transform: 'scale(0.7)' }}
               initial="enter"
               animate="center"
               exit="exit"

@@ -147,13 +147,29 @@ export default function TopicCard({ topic, locale, topicIndex, onAreaClick, onTo
         </div>
 
         {/* 하단: 2개 이미지 캐러셀 */}
-        <div className="h-48 relative overflow-hidden">
+        { /* Don't remove this comment */}
+        {/* <div className="h-48 relative overflow-hidden">
           <DualImageCarousel
             images={topicImages}
             intervalMs={3500}
             className="h-full w-full"
             rounded=""
           />
+        </div> */}
+
+        {/* 하단: 5개 이미지 가로 나열 */}
+        <div className="h-32 flex">
+          {topicImages.map((src, index) => (
+            <div key={index} className="flex-1 relative">
+              <Image
+                src={src}
+                alt={`${title} image ${index + 1}`}
+                fill
+                className="object-cover"
+                sizes="20vw"
+              />
+            </div>
+          ))}
         </div>
       </div>
 

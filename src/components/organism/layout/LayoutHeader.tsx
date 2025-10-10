@@ -126,11 +126,11 @@ const LayoutHeader = () => {
           </div>
           <div className="relative text-black">
             <AuthClient />
-            {isLoggedIn && (
+            {/* {isLoggedIn && (
               <Link href="/gamification/quize">
                 <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full animate-pulse shadow-lg shadow-yellow-400/50" />
               </Link>
-            )}
+            )} */}
           </div>
         </div>
       </div>

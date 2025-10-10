@@ -10,7 +10,7 @@ export function HeroSection({ title, subtitle, heroImage }: HeroSectionProps) {
   return (
     <div className="bg-gradient-to-r from-purple-600/10 to-blue-600/10 rounded-2xl overflow-hidden backdrop-blur-sm border border-white/20">
       {heroImage && (
-        <div className="relative h-64 md:h-80 w-full">
+        <div className="relative h-64 md:h-[30rem] w-full">
           <Image
             src={heroImage}
             alt={title}
@@ -20,7 +20,7 @@ export function HeroSection({ title, subtitle, heroImage }: HeroSectionProps) {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4 text-white">
+            <h2 className="text-2xl md:text-4xl font-bold mb-4 text-white">
               {title}
             </h2>
             <p className="text-white/90 text-lg md:text-xl max-w-3xl">

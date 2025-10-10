@@ -8,6 +8,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import TreatmentDetailCard from "../_demo/TreatmentDetailCard";
 import { buildInfoLine } from "../../../constants/treatment/types";
 import { ArrowLeft } from "lucide-react";
+import { InfoIcon } from "@/components/icons/InfoIcon";
 
 export default function ProtocolPage() {
   const router = useRouter();
@@ -176,7 +177,7 @@ export default function ProtocolPage() {
         {content.primary_treatments.length > 0 && (
           <div>
             <h2 className="text-xl font-bold text-[#8B4513] mb-4">
-              {locale === 'ko' ? '대표 시술' : 'Primary Treatments'}
+              {locale === 'ko' ? '대표 시술' : 'Primary Treatments'} <InfoIcon locale={locale} kind="primary" />
             </h2>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {content.primary_treatments.map((treatment, index) => (
@@ -244,7 +245,7 @@ export default function ProtocolPage() {
         {content.alt_treatments.length > 0 && (
           <div>
             <h2 className="text-xl font-bold text-[#8B4513] mb-4">
-              {locale === 'ko' ? '대체/보완 시술' : 'Alternative Treatments'}
+              {locale === 'ko' ? '대체/보완 시술' : 'Alternative Treatments'} <InfoIcon locale={locale} kind="alternative" />
             </h2>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {content.alt_treatments.map((treatment, index) => (
@@ -312,7 +313,7 @@ export default function ProtocolPage() {
         {content.combo_treatments.length > 0 && (
           <div>
             <h2 className="text-xl font-bold text-[#8B4513] mb-4">
-              {locale === 'ko' ? '병합 권장 시술' : 'Combination Treatments'}
+              {locale === 'ko' ? '병합 권장 시술' : 'Combination Treatments'} <InfoIcon locale={locale} kind="combo" />
             </h2>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {content.combo_treatments.map((treatment, index) => (

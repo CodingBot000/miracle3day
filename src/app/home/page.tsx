@@ -30,6 +30,7 @@ import TreatmentBasedAgeGuide from "../treatment-based-age-guide/page";
 import TransparentHeaderWrapper from "@/components/layout/TransparentHeaderWrapper";
 import QuizPage from "../gamification/quize/page";
 import WhyKoreaButton from "./components/WhyKoreaButton";
+import AgeGuideCTA from "../treatment-based-age-guide/components/AgeGuideCTA";
 
 
 export default async function HomePage() {
@@ -135,7 +136,8 @@ export default async function HomePage() {
 
 
         </section>
-        <TreatmentBasedAgeGuide />
+        {/* <TreatmentBasedAgeGuide /> */}
+        <AgeGuideCTA />
           {/* <MiddleSection2 /> */}
           {/* <MiddleSection3 /> */}
 

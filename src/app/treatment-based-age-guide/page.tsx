@@ -21,11 +21,13 @@ export default function TreatmentBasedAgeGuide() {
   const currentData = ageBasedData[language].find(item => item.age_group === activeTab);
 
   return (
-    <div className="space-y-5 bg-gradient-to-br from-purple-50 via-white to-blue-50 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-6">
+    <div className="bg-gradient-to-br from-purple-50 via-white to-blue-50 w-full">
+      <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8 py-6 space-y-5">
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex justify-between items-center mb-4">
-            <h1 className="text-2xl md:text-4xl bg-gradient-to-r from-rose-600 via-pink-600 to-purple-700 bg-clip-text text-transparent flex-1 font-bold">
+            {/* <h1 className="text-2xl md:text-4xl bg-gradient-to-r from-rose-600 via-pink-600 to-purple-700 bg-clip-text text-transparent flex-1 font-bold"> */}
+            <h1 className="text-2xl md:text-4xl text-rose-600  flex-1 font-bold">
               {language === 'ko' ? '연령대별\n안티에이징 가이드' : 'Age-Based Anti-Aging Guide'}
             </h1>
             
@@ -71,7 +73,7 @@ export default function TreatmentBasedAgeGuide() {
                 onClick={() => setActiveTab(age)}
                 className={`py-3 px-4 text-sm md:text-base rounded-lg font-medium transition-all duration-300 ${
                   activeTab === age
-                    ? 'bg-gradient-to-r from-blue-100 to-blue-700 text-white shadow-md'
+                    ? 'bg-gradient-to-r from-pink-500 to-rose-300 text-white shadow-md'
                     : 'text-red-600 hover:text-gray-800 hover:bg-white/50'
                 }`}
               >
@@ -137,6 +139,7 @@ export default function TreatmentBasedAgeGuide() {
             </button>
           </div>
         </div>
+      </div>
     </div>
   );
 }

@@ -1,15 +1,19 @@
-import { CircleLoader } from "react-spinners";
+'use client';
+
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 interface LoadingSpinnerProps {
   show?: boolean;
   backdrop?: boolean;
   pageLoading?: boolean;
+  size?: number;
 }
 
 const LoadingSpinner = ({
   show = true,
   backdrop = false,
   pageLoading = false,
+  size = 200,
 }: LoadingSpinnerProps) => {
   if (!show) return null;
 
@@ -25,9 +29,15 @@ const LoadingSpinner = ({
 
   return (
     <div className={extraClass}>
-      <CircleLoader color="#e09ddf" />
+      <DotLottieReact
+        src="/logo/loading_logo.lottie"
+        loop
+        autoplay
+        style={{ width: size, height: size }}
+      />
     </div>
   );
+
 };
 
 export default LoadingSpinner;

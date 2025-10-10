@@ -9,6 +9,7 @@ import TreatmentDetailCard from "../_demo/TreatmentDetailCard";
 import { buildInfoLine } from "../../../constants/treatment/types";
 import { ArrowLeft } from "lucide-react";
 import { InfoIcon } from "@/components/icons/InfoIcon";
+import LottieLoading from '@/components/atoms/LottieLoading';
 
 export default function ProtocolPage() {
   const router = useRouter();
@@ -64,9 +65,7 @@ export default function ProtocolPage() {
   if (isLoading) {
     return (
       <div className="py-6 space-y-5 min-h-screen bg-gradient-to-br from-[#FDF5F0] via-white to-[#F8E8E0]">
-        <div className="flex justify-center items-center min-h-[400px]">
-          <div className="text-lg text-gray-600">Loading treatment details...</div>
-        </div>
+        <LottieLoading size={200} className="min-h-[400px]" />
       </div>
     );
   }

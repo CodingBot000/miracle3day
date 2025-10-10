@@ -234,7 +234,7 @@ const HospitalContactInfo = ({ hospitalDetails }: HospitalContactInfoProps) => {
                 handleCopy(item.value, index);
               }}
               className="ml-2 p-1 rounded hover:bg-gray-100 transition-colors"
-              title="복사하기"
+              title="copy"
             >
               {copiedIndex === index ? (
                 // 복사 완료 아이콘

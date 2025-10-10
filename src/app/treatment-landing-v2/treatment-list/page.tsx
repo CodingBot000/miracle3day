@@ -7,6 +7,7 @@ import type { TreatmentCategoryResponse, Locale } from "@/app/models/treatmentDa
 import { buildInfoLine } from "../../../constants/treatment/types";
 import type { Treatment } from "../../../constants/treatment/types";
 import CategorySection from "../_demo/CategorySection";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 export default function TreatmentListPage() {
   const searchParams = useSearchParams();
@@ -86,7 +87,12 @@ export default function TreatmentListPage() {
     return (
       <div className="py-6 space-y-5 min-h-screen bg-gradient-to-br from-[#FDF5F0] via-white to-[#F8E8E0]">
         <div className="flex justify-center items-center min-h-[400px]">
-          <div className="text-lg text-gray-600">Loading treatment categories...</div>
+          <DotLottieReact
+            src="/logo/loading_logo.lottie"
+            loop
+            autoplay
+            style={{ width: 200, height: 200 }}
+          />
         </div>
       </div>
     );

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { createClient } from '@/utils/supabase/client'
 import type { CommunityCategory } from '@/app/models/communityData.dto'
 import { isAnonymousCategoryName } from '@/app/community/utils'
+import { TABLE_MEMBERS } from '@/constants/tables'
 
 interface WriteFormProps {
   authorUuid: string
@@ -49,7 +50,7 @@ export default function WriteForm({
 
       if (!anonymousCategory) {
         const { data: memberRow, error: memberError } = await supabase
-          .from('members')
+          .from(TABLE_MEMBERS)
           .select('nickname, avatar')
           .eq('uuid', authorUuid)
           .maybeSingle()

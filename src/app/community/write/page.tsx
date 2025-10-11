@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
 import WriteForm from '@/components/molecules/WriteForm'
 import type { Member, CommunityCategory } from '@/app/models/communityData.dto'
+import { TABLE_MEMBERS } from '@/constants/tables'
 
 async function getCurrentUser(): Promise<Member | null> {
   const supabase = createClient()
@@ -10,7 +11,7 @@ async function getCurrentUser(): Promise<Member | null> {
   if (!user) return null
   
   const { data: memberData } = await supabase
-    .from('members')
+    .from(TABLE_MEMBERS)
     .select('*')
     .eq('uuid', user.id)
     .single()

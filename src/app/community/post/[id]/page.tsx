@@ -8,6 +8,7 @@ import { Member, CommunityPost, CommunityComment } from '@/app/models/communityD
 import PostNotFoundFallback from './PostNotFoundFallback'
 import SetCommunityHeader from '../../SetCommunityHeader'
 import { ANONYMOUS_FALLBACK, isAnonymousCategoryName } from '../../utils'
+import { TABLE_MEMBERS } from '@/constants/tables'
 
 function buildCommentTree(comments: CommunityComment[]): CommunityComment[] {
   const commentMap = new Map<number, CommunityComment & { replies: CommunityComment[] }>()
@@ -53,7 +54,7 @@ async function getCurrentUser(): Promise<Member | null> {
   if (!user) return null
   
   const { data: memberData } = await supabase
-    .from('members')
+    .from(TABLE_MEMBERS)
     .select('*')
     .eq('uuid', user.id)
     .single()

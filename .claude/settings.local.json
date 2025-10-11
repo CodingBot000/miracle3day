@@ -28,7 +28,8 @@
       "Bash(npm run lint:*)",
       "Bash(timeout 10 curl -s \"http://localhost:3001/treatment-landing-v2/protocol?topic_id=lifting_firming&area_id=face_all&locale=ko\")",
       "WebFetch(domain:web.dev)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(psql:*)"
     ],
     "deny": []
   }

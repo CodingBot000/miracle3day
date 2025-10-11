@@ -63,8 +63,8 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
             <path d="M15.0711 5L8 12.0711L15.0711 19.1421" stroke="#1C1C1C" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>
-        <p className="text-sm md:text-base text-gray-700 font-bold">
-          Introuduce Korean Premium Clinic
+        <p className="text-xl md:text-2xl text-gray-700 font-bold">
+          Introduce Korean Premium Clinic
         </p>
       </div>
 

@@ -1,5 +1,5 @@
 import { HospitalDetailInfo } from "@/app/models/hospitalData.dto";
-import { useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 
 type ContactType = 'tel' | 'email' | 'link';
@@ -142,49 +142,60 @@ const HospitalContactInfo = ({ hospitalDetails }: HospitalContactInfoProps) => {
     },
   ];
 
+  const filteredItems = contactItems.filter(
+    item => (item.value && item.value.trim() !== '') && !(item.label === 'email' && item.value.includes('notexist'))
+  );
+
+  const needsCopyButton = (item: ContactItem) => item.type === 'tel' || item.type === 'email';
+
   return (
-    <div className="space-y-3">
-      {contactItems
-        .filter(item => (item.value && item.value.trim() !== '') && !(item.label === 'email' && item.value.includes('notexist')))
-        .map((item, index) => (
-          <div key={index} className="flex items-center gap-1 group">
-            <div className="flex-shrink-0">
-              {item.icon}
-            </div>
-            <span className="text-sm font-semibold text-gray-800 min-w-[60px]">
-              {item.label}
-            </span>
-            <span 
-              className="text-sm text-gray-800 cursor-pointer hover:text-blue-600 flex-1"
-              onClick={() => handleClick(item)}
-            >
-              {item.value}
-            </span>
-            
-            {/* 복사 버튼 */}
+    <div>
+      {/* 데스크탑: 좌측정렬 가로 나열, 모바일: 5개 초과시 5열 그리드 */}
+      <div className={`
+        flex flex-wrap gap-6
+        ${filteredItems.length > 5 ? 'grid grid-cols-5 md:flex' : ''}
+      `}>
+        {filteredItems.map((item, index) => (
+          <div key={index} className="relative flex flex-col items-center">
+            {/* 복사 버튼 (tel/email만) */}
+            {needsCopyButton(item) && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleCopy(item.value, index);
+                }}
+                className="absolute -top-2 -right-2 p-1 rounded-full bg-white shadow-md hover:bg-gray-100 transition-colors z-10"
+                title="copy"
+              >
+                {copiedIndex === index ? (
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#22c55e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                ) : (
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 2H12C13.1046 2 14 2.89543 14 4V12C14 13.1046 13.1046 14 12 14H4C2.89543 14 2 13.1046 2 12V4C2 2.89543 2.89543 2 4 2Z" stroke="#6b7280" strokeWidth="1.5"/>
+                    <path d="M10 6H14V10" stroke="#6b7280" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                )}
+              </button>
+            )}
+
+            {/* 아이콘 버튼 */}
             <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleCopy(item.value, index);
-              }}
-              className="ml-2 p-1 rounded hover:bg-gray-100 transition-colors"
-              title="copy"
+              onClick={() => handleClick(item)}
+              className="w-16 h-16 flex items-center justify-center rounded-lg hover:bg-gray-50 transition-colors"
             >
-              {copiedIndex === index ? (
-                // 복사 완료 아이콘
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#22c55e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              ) : (
-                // 복사 아이콘
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M4 2H12C13.1046 2 14 2.89543 14 4V12C14 13.1046 13.1046 14 12 14H4C2.89543 14 2 13.1046 2 12V4C2 2.89543 2.89543 2 4 2Z" stroke="#6b7280" strokeWidth="1.5"/>
-                  <path d="M10 6H14V10" stroke="#6b7280" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              )}
+              <div className="w-12 h-12 relative">
+                {React.cloneElement(item.icon as React.ReactElement, {
+                  width: 48,
+                  height: 48,
+                  className: "w-full h-full object-contain"
+                })}
+              </div>
             </button>
           </div>
         ))}
+      </div>
     </div>
   );
 };

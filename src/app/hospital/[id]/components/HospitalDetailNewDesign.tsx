@@ -78,7 +78,7 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
           priority
         />
       </div> */}
-      <div className="w-full h-[300px] md:h-[400px] relative">
+      <div className="w-full relative mb-6">
         <ResponsiveImageMosaic
           images ={hospital_info.imageurls}
           onOpen={handleImageClicked}
@@ -86,7 +86,7 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
       </div>
 
       {/* Hospital Info Section */}
-      <div className="px-4 py-2 border-b-8 border-gray-50">
+      <div className="px-4 py-6 border-b-8 border-gray-50">
         <div className="space-y-6">
           {/* Hospital Name and Description */}
           <div className="space-y-2">

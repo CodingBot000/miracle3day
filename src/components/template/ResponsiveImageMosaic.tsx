@@ -69,13 +69,14 @@ export default function ResponsiveImageMosaic({ images, onOpen, className }: Pro
         ref={sliderRef}
         onScroll={handleScroll}
         className="flex gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-none scroll-smooth"
+        style={{ height: '300px' }}
       >
         {safeImages.map((src, idx) => (
           <button
             key={idx}
             type="button"
             onClick={onOpen}
-            className="relative min-w-full aspect-[16/9] snap-center overflow-hidden rounded-xl bg-gray-100"
+            className="relative min-w-full h-full snap-center overflow-hidden rounded-xl bg-gray-100"
           >
             <img
               src={src}
@@ -130,11 +131,10 @@ const DesktopMosaic = (
   <div
     className={[
       "hidden md:grid gap-3",
-      // 전체 세로 높이 고정(원하시면 값만 조정)
-      "md:h-[18rem] lg:h-[22rem]",
       "grid-cols-[55%_45%]",
       className ?? ""
     ].join(" ")}
+    style={{ height: '350px' }}
   >
     {/* 왼쪽 대표 이미지: 가운데 정렬 */}
     <button

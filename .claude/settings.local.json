@@ -29,7 +29,8 @@
       "Bash(timeout 10 curl -s \"http://localhost:3001/treatment-landing-v2/protocol?topic_id=lifting_firming&area_id=face_all&locale=ko\")",
       "WebFetch(domain:web.dev)",
       "Bash(cat:*)",
-      "Bash(psql:*)"
+      "Bash(psql:*)",
+      "Bash(git -C /Users/switch/Development/WebBeauty/beauty_proejcts/complete/beauty-main log --oneline -20)"
     ],
     "deny": []
   }

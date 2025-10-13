@@ -2,6 +2,7 @@
 
 import { HospitalInfo } from "@/app/models/hospitalData.dto";
 import { MapComponent } from "@/components/common/MapComponent";
+import ZoomableImageMap from "@/components/common/ZoomableImageMap";
 import { useState } from "react";
 import Image from "next/image";
 import { buildMapLinks, openMapWithFallback, type MapPlatform } from "@/utils/mapLinkUtils";
@@ -143,7 +144,13 @@ const HospitalLocation = ({ hospitalInfo }: HospitalLocationProps) => {
         </button>
       </div>
 
-      <div className="w-full h-[328px] rounded-lg overflow-hidden">
+      {/* Static map image with zoom/pan controls */}
+      <ZoomableImageMap
+        imageSrc={`/map_img/${hospitalInfo.id_uuid}.png`}
+        alt={`Map to ${hospitalInfo.name}`}
+      />
+
+      {/* <div className="w-full h-[328px] rounded-lg overflow-hidden">
         <MapComponent
           coordinates={[
             {
@@ -152,7 +159,7 @@ const HospitalLocation = ({ hospitalInfo }: HospitalLocationProps) => {
             },
           ]}
         />
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -13,6 +13,7 @@ import HospitalBusinessHours from "./HospitalBusinessHours";
 import ResponsiveImageMosaic from "@/components/template/ResponsiveImageMosaic";
 import ImageGalleryModal from "@/components/template/modal/ImageGalleryModal";
 import HospitalLanguageSupport from "./HospitalLanguageSupport";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface HospitalDetailNewDesignProps {
   hospitalData: HospitalDetailMainOutput;
@@ -20,6 +21,7 @@ interface HospitalDetailNewDesignProps {
 
 const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps) => {
   const router = useRouter();
+  const { language } = useLanguage();
   const [isModalOpen, setIsModalOpen] = useState(false);
   
   console.log('HospitalDetailNewDesign hospitalData:', hospitalData);
@@ -38,7 +40,7 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
   };
   console.log('HospitalDetailNewDesign hospitalData:' ,hospitalData);
   return (
-    <div className="max-w-container mx-auto bg-white min-h-screen relative">
+    <div className="max-w-container mx-auto min-h-screen relative">
       {/* Header with back button */}
       {/* <div className="flex items-center h-14 px-4 border-b border-gray-100 relative"> */}
         {/* <button 
@@ -61,8 +63,8 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
             <path d="M15.0711 5L8 12.0711L15.0711 19.1421" stroke="#1C1C1C" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>
-        <p className="text-sm md:text-base text-gray-700 font-bold">
-          Introuduce Korean Premium Clinic
+        <p className="text-xl md:text-2xl text-gray-700 font-bold">
+          Introduce Korean Premium Clinic
         </p>
       </div>
 
@@ -76,27 +78,28 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
           priority
         />
       </div> */}
-      <div className="w-full h-[400px] relative">
+      <div className="w-full relative mb-6">
         <ResponsiveImageMosaic
           images ={hospital_info.imageurls}
           onOpen={handleImageClicked}
           />
-
       </div>
-      <div>
 
-      </div>
       {/* Hospital Info Section */}
-      <div className="px-4 py-8 border-b-8 border-gray-50">
+      <div className="px-4 py-6 border-b-8 border-gray-50">
         <div className="space-y-6">
           {/* Hospital Name and Description */}
           <div className="space-y-2">
             <h1 className="text-2xl font-medium text-gray-900 leading-[33.6px]">
-              {hospital_info.name_en}
+            {/* const doctorName = language === 'ko' ? doctor.name : doctor.name_en;
+          const doctorBio = language === 'ko' ? doctor.bio : doctor.bio_en;
+          const hasBio = doctorBio && doctorBio.trim() !== ''; */}
+
+              {language === 'ko' ? hospital_info.name : hospital_info.name_en}
             </h1>
             {hospital_details.introduction_en && (
                 <div className="text-base text-gray-500 leading-[22.4px] whitespace-pre-line">
-                  {hospital_details.introduction_en}
+                  {language === 'ko' ? hospital_details.introduction : hospital_details.introduction_en}
                 </div>
               )}
           

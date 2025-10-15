@@ -1,13 +1,36 @@
 import { Clock, DollarSign, Calendar, Timer } from 'lucide-react';
 import Image from 'next/image';
 import { Treatment } from '@/constants/treatment/antiaging-agebased';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface TreatmentsSectionProps {
   title: string;
   treatments: Treatment[];
 }
 
+const labels = {
+  ko: {
+    cycle: '주기',
+    interval: '간격',
+    duration: '지속기간',
+    time: '소요시간',
+    cost: '비용',
+    onset: '효과발현',
+    downtime: '회복시간'
+  },
+  en: {
+    cycle: 'Cycle',
+    interval: 'Interval',
+    duration: 'Duration',
+    time: 'Time',
+    cost: 'Cost',
+    onset: 'Onset',
+    downtime: 'Downtime'
+  }
+};
+
 export function TreatmentsSection({ title, treatments }: TreatmentsSectionProps) {
+  const { language } = useLanguage();
   return (
     <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 md:p-8 shadow-sm border border-white/30">
       <h3 className="text-2xl md:text-3xl font-bold mb-6 text-gray-800">
@@ -38,48 +61,55 @@ export function TreatmentsSection({ title, treatments }: TreatmentsSectionProps)
               <div className="space-y-2">
               {treatment.cycle && (
                 <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <Calendar className="w-4 h-4" />
+                  <Calendar className="w-4 h-4 flex-shrink-0" />
+                  <span className="font-medium">{labels[language].cycle}:</span>
                   <span>{treatment.cycle}</span>
                 </div>
               )}
-              
+
               {treatment.interval && (
                 <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <Calendar className="w-4 h-4" />
+                  <Calendar className="w-4 h-4 flex-shrink-0" />
+                  <span className="font-medium">{labels[language].interval}:</span>
                   <span>{treatment.interval}</span>
                 </div>
               )}
-              
+
               {treatment.duration && (
                 <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <Clock className="w-4 h-4" />
+                  <Clock className="w-4 h-4 flex-shrink-0" />
+                  <span className="font-medium">{labels[language].duration}:</span>
                   <span>{treatment.duration}</span>
                 </div>
               )}
-              
+
               {treatment.time && (
                 <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <Timer className="w-4 h-4" />
+                  <Timer className="w-4 h-4 flex-shrink-0" />
+                  <span className="font-medium">{labels[language].time}:</span>
                   <span>{treatment.time}</span>
                 </div>
               )}
-              
+
               {treatment.cost && (
                 <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <DollarSign className="w-4 h-4" />
+                  <DollarSign className="w-4 h-4 flex-shrink-0" />
+                  <span className="font-medium">{labels[language].cost}:</span>
                   <span>{treatment.cost}</span>
                 </div>
               )}
-              
+
               {treatment.onset && (
-                <div className="text-xs text-purple-600 bg-purple-50 px-2 py-1 rounded">
-                  {treatment.onset}
+                <div className="flex items-center gap-2 text-xs text-purple-600 bg-purple-50 px-2 py-1 rounded">
+                  <span className="font-medium">{labels[language].onset}:</span>
+                  <span>{treatment.onset}</span>
                 </div>
               )}
-              
+
               {treatment.downtime && (
-                <div className="text-xs text-orange-600 bg-orange-50 px-2 py-1 rounded">
-                  downtime: {treatment.downtime}
+                <div className="flex items-center gap-2 text-xs text-orange-600 bg-orange-50 px-2 py-1 rounded">
+                  <span className="font-medium">{labels[language].downtime}:</span>
+                  <span>{treatment.downtime}</span>
                 </div>
               )}
               </div>

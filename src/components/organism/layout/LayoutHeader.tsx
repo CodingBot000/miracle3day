@@ -6,7 +6,7 @@ import Logo from "@/components/molecules/Logo";
 import LanguageSelector from "./LanguageSelector";
 
 import { useState, useEffect } from "react";
-import { Search, MessageSquareText } from "lucide-react";
+import { Search, MessageSquareText, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import SearchPanel from "./SearchPanel";
 import AuthClient from "@/components/molecules/auth/AuthClient";
@@ -108,11 +108,15 @@ const LayoutHeader = () => {
             {/* <div className="flex items-center">
               <Menu />
             </div> */}
-            {/* community */}
+            {/* chat */}
+            <Link href="/chat">
+              <MessageCircle size={20} />
+            </Link>
 
-              <Link href="/community">
-                <MessageSquareText size={20} />
-              </Link>
+            {/* community */}
+            <Link href="/community">
+              <MessageSquareText size={20} />
+            </Link>
 
             <div>
 
@@ -126,11 +130,11 @@ const LayoutHeader = () => {
           </div>
           <div className="relative text-black">
             <AuthClient />
-            {isLoggedIn && (
+            {/* {isLoggedIn && (
               <Link href="/gamification/quize">
                 <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full animate-pulse shadow-lg shadow-yellow-400/50" />
               </Link>
-            )}
+            )} */}
           </div>
         </div>
       </div>

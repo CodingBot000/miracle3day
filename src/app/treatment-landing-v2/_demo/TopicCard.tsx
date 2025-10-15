@@ -31,51 +31,51 @@ const TOPIC_IMAGES = [
   ],
   // 토픽 2: contour_line
   [
-    "/landing_model/model_3.jpeg",
-    "/landing_model/model_4.jpeg",
-    "/landing_model/img4.png",
-    "/landing_model/img5.png",
-    "/landing_model/img6.jpg"
+    "/landing_model/img7.png",
+    "/landing_model/img8.png",
+    "/landing_model/img9.png",
+    "/landing_model/img10.jpg",
+    "/landing_model/img11.jpg"
   ],
   // 토픽 3: tone_spots
   [
-    "/landing_model/img11.jpg",
     "/landing_model/img12.jpg",
     "/landing_model/img13.jpg",
     "/landing_model/img14.jpg",
-    "/landing_model/img15.jpg"
+    "/landing_model/img15.jpg",
+    "/landing_model/img16.jpg"
   ],
   // 토픽 4: volume_enhancement
   [
-    "/landing_model/model_4.jpeg",
-    "/landing_model/model_5.png",
-    "/landing_model/img13.jpg",
     "/landing_model/img17.jpg",
+    "/landing_model/img18.jpg",
+    "/landing_model/img19.jpg",
+    "/landing_model/img20.png",
     "/landing_model/img21.jpg"
   ],
   // 토픽 5: antiaging_regeneration
   [
-    "/landing_model/img16.jpg",
-    "/landing_model/img17.jpg",
-    "/landing_model/img18.jpg",
-    "/landing_model/img19.jpg",
-    "/landing_model/img20.png"
-  ],
-  // 토픽 6: body_contouring_fat
-  [
-    "/landing_model/img21.jpg",
     "/landing_model/img22.jpg",
     "/landing_model/img23.jpg",
     "/landing_model/img24.jpg",
-    "/landing_model/img25.jpg"
+    "/landing_model/img25.jpg",
+    "/landing_model/img26.jpg"
+  ],
+  // 토픽 6: body_contouring_fat
+  [
+    "/landing_model/body_contuoring_fat_5.jpg",
+    "/landing_model/body_contuoring_fat_2.jpg",
+    "/landing_model/body_contuoring_fat_3.jpg",
+    "/landing_model/body_contuoring_fat_4.jpg",
+    "/landing_model/body_contuoring_fat_1.jpg",
   ],
   // 토픽 7: misc_hair_body
   [
-    "/landing_model/img26.jpg",
     "/landing_model/img27.jpg",
     "/landing_model/img28.jpg",
     "/landing_model/img29.jpg",
-    "/landing_model/img30.jpg"
+    "/landing_model/img30.jpg",
+    "/landing_model/img31.jpg"
   ]
 ];
 
@@ -147,13 +147,29 @@ export default function TopicCard({ topic, locale, topicIndex, onAreaClick, onTo
         </div>
 
         {/* 하단: 2개 이미지 캐러셀 */}
-        <div className="h-48 relative overflow-hidden">
+        { /* Don't remove this comment */}
+        {/* <div className="h-48 relative overflow-hidden">
           <DualImageCarousel
             images={topicImages}
             intervalMs={3500}
             className="h-full w-full"
             rounded=""
           />
+        </div> */}
+
+        {/* 하단: 5개 이미지 가로 나열 */}
+        <div className="h-32 flex">
+          {topicImages.map((src, index) => (
+            <div key={index} className="flex-1 relative">
+              <Image
+                src={src}
+                alt={`${title} image ${index + 1}`}
+                fill
+                className="object-cover"
+                sizes="20vw"
+              />
+            </div>
+          ))}
         </div>
       </div>
 

@@ -8,7 +8,7 @@ import { ROUTE } from "@/router";
 
 interface HospitalListNewDesignProps {
   initialData: HospitalData[];
-  initialLocation: LocationEnum;
+
 }
 
 const HospitalListNewDesign = ({ initialData }: HospitalListNewDesignProps) => {
@@ -20,6 +20,14 @@ const HospitalListNewDesign = ({ initialData }: HospitalListNewDesignProps) => {
     router.back();
   };
 
+  // initialData.forEach((hospital, index) => {
+  //   if (hospital.id_uuid === "b2ae476e-00a0-49cd-898d-770880992d85") {
+  //     console.log("HospitalListNewDesign target hospital:", { name: hospital.name, thumbnail_url: hospital.thumbnail_url });
+  //   } else {
+  //     console.log("HospitalListNewDesign other hospital:", { name: hospital.name, thumbnail_url: hospital.thumbnail_url });
+  //   }
+  // });
+  // b2ae476e-00a0-49cd-898d-770880992d85
   return (
     <div className="w-full max-w-7xl mx-auto bg-white min-h-screen">
       {/* Header with back button */}

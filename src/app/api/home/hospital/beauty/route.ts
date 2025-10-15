@@ -5,7 +5,8 @@ export async function GET() {
   const supabase = createClient();
 
   try {
-    const { data } = await supabase
+    // 먼저 show=true인 데이터 조회 시도
+    let { data } = await supabase
       .from(TABLE_HOSPITAL)
       .select(`
     created_at,
@@ -27,6 +28,31 @@ export async function GET() {
       .eq('show', true)
       // .order("created_at", { ascending: false })
       .limit(4);
+
+    // show=true 데이터가 없으면 show 조건 없이 조회
+    if (!data || data.length === 0) {
+      const fallbackResult = await supabase
+        .from(TABLE_HOSPITAL)
+        .select(`
+      created_at,
+      name,
+      name_en,
+      searchkey,
+      latitude,
+      longitude,
+      thumbnail_url,
+      imageurls,
+      id_surgeries,
+      id_unique,
+      id_uuid,
+      location,
+      address_full_road_en,
+      address_full_jibun_en,
+      show
+    `)
+        .limit(4);
+      data = fallbackResult.data;
+    }
 
       
        

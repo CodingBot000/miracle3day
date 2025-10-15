@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useTopicList } from "@/hooks/useTreatmentData";
 import type { TopicWithAreas, Locale } from "@/app/models/treatmentData.dto";
 import { useLanguage } from "@/contexts/LanguageContext";
+import LottieLoading from "@/components/atoms/LottieLoading";
 
 import TopicCard from "./_demo/TopicCard";
 
@@ -47,7 +48,7 @@ export default function TreatmentProtocol() {
     return (
       <div className="py-6 space-y-5 min-h-screen bg-gradient-to-br from-[#FDF5F0] via-white to-[#F8E8E0]">
         <div className="flex justify-center items-center min-h-[400px]">
-          <div className="text-lg text-gray-600">Loading treatment categories...</div>
+          <LottieLoading size={200} />
         </div>
       </div>
     );

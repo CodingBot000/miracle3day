@@ -3,7 +3,7 @@
 import { UserOutputDto } from "@/app/api/auth/getUser/getUser.dto";
 import LogoutAction from "@/components/molecules/LogoutAction";
 import { User } from "@supabase/supabase-js";
-import { ArrowLeft, Camera, ChevronRight } from "lucide-react";
+import { ArrowLeft, Camera, ChevronRight, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { findCountry } from "@/constants/country";
@@ -163,6 +163,14 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
               {renderProfileField("Email", user?.userInfo?.email, false)}
               {renderProfileField("Secondary Email", user?.userInfo?.secondary_email, false)}
               {/*   {renderProfileField("Treatment Experience", "Public", false)} */}
+
+              <div className="flex justify-between items-center p-4 border-t">
+                <span className="text-gray-600">My Chatting List</span>
+                <Link href="/user/my-page/chat-list" className="flex items-center text-gray-400 hover:text-gray-600">
+                  <MessageCircle className="w-5 h-5 mr-2" />
+                  <ChevronRight className="w-5 h-5" />
+                </Link>
+              </div>
 
               <div className="flex justify-between items-center p-4">
                 <span className="text-gray-600"></span>

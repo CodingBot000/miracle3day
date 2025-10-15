@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 export interface TreatmentData {
   id_uuid_treatment: string;
   option_value: string;
@@ -53,6 +55,71 @@ export interface TreatmentAttributes {
     ko?: string;
     en?: string;
   };
+}
+
+// sequence step types
+export type SequenceStepType =
+  | 'step'
+  | 'treatment'
+  | 'booster'
+  | 'filler'
+  | 'maintenance'
+  | 'check'
+  | 'note';
+
+export interface LocalizedText {
+  ko?: string | null;
+  en?: string | null;
+  // 확장 여지: ja/zh 등 추가 가능
+  [lang: string]: string | null | undefined;
+}
+
+export interface SequenceTitle extends LocalizedText {
+  // 여유 확장: 필요 시 ja/zh 등도 추가 가능
+}
+
+export interface SequenceTiming {
+  /** 시작 기준으로부터의 상대 오프셋(일). 없으면 null */
+  offsetDays?: number | null;
+  /** 다음 단계까지 최소/최대 대기(일) */
+  waitMinDays?: number | null;
+  waitMaxDays?: number | null;
+  /** 텍스트 파싱 시 생기는 범위 표현(예: "1–2") */
+  afterWeeks?: string | null;
+}
+
+export interface RepeatRule {
+  intervalDaysMin?: number | null;
+  intervalDaysMax?: number | null;
+  count?: number | null;      // 반복 횟수(미정이면 null)
+  until?: string | null;      // 관찰 조건 등 자유 텍스트
+  energy?: 'low' | 'medium' | 'high' | string | null;
+}
+
+export interface SequenceStep {
+  order: number;                  // 1부터 시작하는 표시 순서
+  type: SequenceStepType;         // step/treatment/booster/filler/note...
+  title: SequenceTitle;           // ko/en 병기
+  timing?: SequenceTiming | null; // 없으면 null
+  note?: string | null;           // 보조 설명
+  repeat?: RepeatRule | null;     // 반복 규칙
+}
+
+export type LocalizedTitle = LocalizedText;
+
+export interface BenefitInput {
+  title: LocalizedTitle;
+  meta?: Record<string, any>;
+}
+
+export interface BenefitResult {
+  title: LocalizedTitle;
+  meta?: Record<string, any>;
+}
+
+export interface Benefits {
+  inputs: BenefitInput[];
+  result: BenefitResult;
 }
 
 export interface TreatmentRoot {
@@ -112,16 +179,16 @@ export interface TreatmentCareProtocol {
   combo_treatment_ids: string[];
   
   // Text descriptions (multilingual)
-  benefits_ko: string;
-  benefits_en: string;
-  sequence_ko: string;
-  sequence_en: string;
-  cautions_ko: string;
-  cautions_en: string;
-  
+  benefits: Benefits;
+  sequence: SequenceStep[];
+  cautions: LocalizedText;
+
   // Extension field
   meta?: Record<string, any>;
-  
+
+  // (선택) DB의 generated 컬럼을 반영했다면
+  step_count?: number;
+
   created_at?: string;
   updated_at?: string;
 }
@@ -151,13 +218,11 @@ export interface TreatmentAreaResponse {
   primary_treatments: TreatmentRoot[];
   alt_treatments: TreatmentRoot[];
   combo_treatments: TreatmentRoot[];
-  benefits_ko: string;
-  benefits_en: string;
-  sequence_ko: string;
-  sequence_en: string;
-  cautions_ko: string;
-  cautions_en: string;
+  benefits: Benefits;
+  sequence: SequenceStep[];
+  cautions: LocalizedText;
   meta?: Record<string, any>;
+  step_count?: number;
 }
 
 // API request/response types
@@ -225,3 +290,78 @@ export interface LegacyCategory {
   category_name: Record<Locale, string>;
   treatments: LegacyTreatment[];
 }
+
+export const LocalizedTextSchema = z
+  .object({
+    ko: z.string().nullable().optional(),
+    en: z.string().nullable().optional(),
+  })
+  .catchall(z.string().nullable().optional());
+
+export const SequenceTitleSchema = LocalizedTextSchema;
+export const LocalizedTitleSchema = LocalizedTextSchema;
+
+export const SequenceTimingSchema = z.object({
+  offsetDays: z.number().int().nullable().optional(),
+  waitMinDays: z.number().int().nullable().optional(),
+  waitMaxDays: z.number().int().nullable().optional(),
+  afterWeeks: z.string().nullable().optional(),
+});
+
+export const RepeatRuleSchema = z.object({
+  intervalDaysMin: z.number().int().nullable().optional(),
+  intervalDaysMax: z.number().int().nullable().optional(),
+  count: z.number().int().nullable().optional(),
+  until: z.string().nullable().optional(),
+  energy: z.string().nullable().optional(),
+});
+
+export const SequenceStepSchema = z.object({
+  order: z.number().int().min(1),
+  type: z.enum(['step','treatment','booster','filler','maintenance','check','note']),
+  title: SequenceTitleSchema,
+  timing: SequenceTimingSchema.nullable().optional(),
+  note: z.string().nullable().optional(),
+  repeat: RepeatRuleSchema.nullable().optional(),
+});
+
+export const BenefitInputSchema = z.object({
+  title: LocalizedTitleSchema,
+  meta: z.record(z.any()).optional(),
+});
+
+export const BenefitResultSchema = z.object({
+  title: LocalizedTitleSchema,
+  meta: z.record(z.any()).optional(),
+});
+
+export const BenefitsSchema = z.object({
+  inputs: z.array(BenefitInputSchema),
+  result: BenefitResultSchema,
+});
+
+export const TreatmentCareProtocolSchema = z
+  .object({
+    id: z.string(),
+    topic_id: z.string(),
+    topic_title_ko: z.string(),
+    topic_title_en: z.string(),
+    topic_sort_order: z.number().int().optional(),
+    concern_copy_ko: z.string().optional(),
+    concern_copy_en: z.string().optional(),
+    area_id: z.string(),
+    area_name_ko: z.string(),
+    area_name_en: z.string(),
+    area_sort_order: z.number().int().optional(),
+    primary_treatment_ids: z.array(z.string()),
+    alt_treatment_ids: z.array(z.string()),
+    combo_treatment_ids: z.array(z.string()),
+    benefits: BenefitsSchema,
+    sequence: z.array(SequenceStepSchema),
+    cautions: LocalizedTextSchema,
+    meta: z.record(z.any()).optional(),
+    step_count: z.number().int().optional(),
+    created_at: z.string().optional(),
+    updated_at: z.string().optional(),
+  })
+  .passthrough();

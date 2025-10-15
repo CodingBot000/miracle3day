@@ -1,5 +1,6 @@
 "use client"
 
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { Spinner } from "./spinner"
 
 interface LoadingProps {
@@ -13,5 +14,5 @@ export function Loading({ text = "Loading...", size = "lg" }: LoadingProps) {
       <Spinner size={size} />
       <p className="text-sm text-muted-foreground">{text}</p>
     </div>
-  )
-} 
+  );
+}  

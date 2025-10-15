@@ -100,6 +100,7 @@ export default function TreatmentDetailCard({
   onContact,
   buildInfoLine,
 }: TreatmentDetailCardProps) {
+  const [isExpanded, setIsExpanded] = React.useState(false);
   const name = t(data.name, locale);
   const summary = t(data.summary, locale);
   const attr = data.attributes;
@@ -146,15 +147,61 @@ export default function TreatmentDetailCard({
           )}
         </div>
         {summary && <p className="mt-1 text-sm text-gray-600">{summary}</p>}
-      </header>
-
-      {/* Body: line-by-line, icon + label */}
-      <div className="space-y-3">
+        <div className="mt-3">
         {effectStr && (
           <InfoRow icon="✨" label={locale === "ko" ? "효과" : "Effect"}>
             {effectStr}
           </InfoRow>
         )}
+        </div>
+
+      {(onBook || onContact) && (
+        <div className="mt-5 flex gap-2">
+          {onBook && (
+            <button
+              type="button"
+              onClick={() => onBook?.(data)}
+              className="rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-900 shadow-sm hover:bg-gray-50"
+            >
+              {locale === "ko" ? "예약요청" : "Book"}
+            </button>
+          )}
+          {onContact && (
+            <button
+              type="button"
+              onClick={() => onContact?.(data)}
+              className="rounded-xl bg-gray-900 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-800"
+            >
+              {locale === "ko" ? "문의" : "Contact"}
+            </button>
+          )}
+        </div>
+      )}
+      </header>
+
+      {/* Toggle button for mobile */}
+      <button
+        onClick={() => setIsExpanded(!isExpanded)}
+        className="md:hidden w-full flex items-center justify-between py-2 text-sm font-medium text-gray-700 hover:text-gray-900"
+      >
+        <span>{isExpanded ? (locale === "ko" ? "상세 정보 접기" : "Hide Details") : (locale === "ko" ? "상세 정보 보기" : "Show Details")}</span>
+        <svg
+          className={`w-5 h-5 transition-transform ${isExpanded ? "rotate-180" : ""}`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+
+      {/* Body: line-by-line, icon + label */}
+      <div className={`space-y-3 ${isExpanded ? "block" : "hidden"} md:block`}>
+        {/* {effectStr && (
+          <InfoRow icon="✨" label={locale === "ko" ? "효과" : "Effect"}>
+            {effectStr}
+          </InfoRow>
+        )} */}
 
         {(sessionsStr || intervalStr || maintenanceStr) && (
           <InfoRow icon="📅" label={locale === "ko" ? "시술 계획" : "Plan"}>
@@ -179,7 +226,7 @@ export default function TreatmentDetailCard({
         )}
 
         {(attr?.cost?.from != null || costNote) && (
-          <InfoRow icon="💰" label={locale === "ko" ? "비용" : "Cost"}>
+          <InfoRow icon="💰" label={locale === "ko" ? "비용 (※ 본 안내 비용은 참고용이며, 실제 비용은 상담 후 확정됩니다.) " : "Cost (※ The listed price is for reference only; the actual cost will be confirmed after consultation.)"}>
             <div className="flex flex-wrap items-center gap-2">
               {attr?.cost?.from != null && (
                 <span className="font-medium text-gray-900">
@@ -193,7 +240,7 @@ export default function TreatmentDetailCard({
         )}
       </div>
 
-      {/* Actions */}
+{/* 
       {(onBook || onContact) && (
         <footer className="mt-5 flex gap-2">
           {onBook && (
@@ -215,7 +262,7 @@ export default function TreatmentDetailCard({
             </button>
           )}
         </footer>
-      )}
+      )} */}
     </section>
   );
 }

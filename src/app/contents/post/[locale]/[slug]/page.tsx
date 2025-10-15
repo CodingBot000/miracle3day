@@ -104,14 +104,14 @@ export default function KBeautySectionPage({ params }: Props) {
   const backgroundImagePath = `/images/k-beauty/${sectionKey}-${section.id}/${fallbackImageMap[sectionKey] || 'gangnam-skyline.jpg'}`;
 
   // Debug: Log the image path
-  console.log('=== K-Beauty Image Debug ===');
-  console.log('Section id:', section.id);
-  console.log('Section Key:', sectionKey);
-  console.log('Section Number:', sectionNumber);
-  console.log('Background Image Path:', backgroundImagePath);
-  console.log('Section Title:', section.title);
+  // console.log('=== K-Beauty Image Debug ===');
+  // console.log('Section id:', section.id);
+  // console.log('Section Key:', sectionKey);
+  // console.log('Section Number:', sectionNumber);
+  // console.log('Background Image Path:', backgroundImagePath);
+  // console.log('Section Title:', section.title);
   
-  console.log('===========================');
+  // console.log('===========================');
 
   return (
     <>

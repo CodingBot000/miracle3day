@@ -28,29 +28,27 @@ export default function Beauty() {
 
   if (loading) return <div className="text-center py-10">Loading New Beaties...</div>;
 
+  // 데이터가 없으면 아무것도 렌더링하지 않음
+  if (!datas || datas.length === 0) {
+    console.warn('Beauty component: No hospital data available');
+    return null;
+  }
+
   return (
     <div className="w-full px-4">
       {/* Desktop: 4 columns, Mobile: 2x2 grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {datas ? (
-          datas.slice(0, 4).map(({ imageurls, name_en, id_uuid, location }) => (
-            <article key={id_uuid} className="w-full">
-              <HospitalCard
-                alt={name_en}
-                name={name_en}
-                href={ROUTE.HOSPITAL_DETAIL("") + id_uuid}
-                src={imageurls[0]}
-                locationNum={location}
-              />
-            </article>
-          ))
-        ) : (
-          Array.from({ length: 4 }).map((_, index) => (
-            <article key={index} className="w-full">
-              <Skeleton className="w-full h-[280px] rounded-xl" />
-            </article>
-          ))
-        )}
+        {datas.slice(0, 4).map(({ imageurls, name_en, id_uuid, location }) => (
+          <article key={id_uuid} className="w-full">
+            <HospitalCard
+              alt={name_en}
+              name={name_en}
+              href={ROUTE.HOSPITAL_DETAIL("") + id_uuid}
+              src={imageurls[0]}
+              locationNum={location}
+            />
+          </article>
+        ))}
       </div>
     </div>
   );

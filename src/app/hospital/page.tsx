@@ -1,3 +1,6 @@
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 import { getHospitalLocationAPI } from "../api/home/hospital/location";
 import { LocationEnum } from "@/constants";
 import { Metadata } from "next";

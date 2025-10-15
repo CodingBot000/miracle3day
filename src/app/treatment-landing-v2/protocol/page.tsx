@@ -3,13 +3,247 @@
 import * as React from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useTopicDetail } from "@/hooks/useTreatmentData";
-import type { Locale } from "@/app/models/treatmentData.dto";
+import type { Benefits, Locale, SequenceStep, SequenceTitle, LocalizedText } from "@/app/models/treatmentData.dto";
 import { useLanguage } from "@/contexts/LanguageContext";
 import TreatmentDetailCard from "../_demo/TreatmentDetailCard";
 import { buildInfoLine } from "../../../constants/treatment/types";
 import { ArrowLeft } from "lucide-react";
 import { InfoIcon } from "@/components/icons/InfoIcon";
 import LottieLoading from '@/components/atoms/LottieLoading';
+
+function getTitleByLocale(title: SequenceTitle, locale: Locale): string {
+  if (locale === "ko") return title.ko ?? title.en ?? "";
+  return title.en ?? title.ko ?? "";
+}
+
+function pickLocale<T extends { ko?: string | null; en?: string | null }>(
+  value: T | undefined,
+  locale: Locale
+): string {
+  if (!value) {
+    return "";
+  }
+
+  return locale === "ko"
+    ? value.ko ?? value.en ?? ""
+    : value.en ?? value.ko ?? "";
+}
+
+type SequenceTimelineProps = {
+  steps: SequenceStep[];
+  locale: Locale;
+  stepCount?: number;
+};
+
+function SequenceTimeline({ steps, locale, stepCount }: SequenceTimelineProps) {
+  const sortedSteps = [...steps].sort((a, b) => a.order - b.order);
+  const showStepNumber = sortedSteps.length > 1;
+
+  if (!sortedSteps.length) {
+    return null;
+  }
+
+  return (
+    <div className="rounded-3xl border border-white/60 bg-gradient-to-br from-white/75 via-white/65 to-white/55 p-6 shadow-[0_18px_40px_rgba(212,165,154,0.18)] backdrop-blur-xl md:p-8">
+      <div className="border-l-4 border-[#d4a59a] pl-4">
+
+        <h3 className="mt-1 text-2xl font-semibold text-[#6b4e44]">
+          {locale === "ko" ? "시술 순서" : "Treatment Plan"}
+        </h3>
+ 
+      </div>
+
+      <ol className="mt-8 space-y-6">
+        {sortedSteps.map((step, index) => {
+          const waitMin = step.timing?.waitMinDays ?? null;
+          const waitMax = step.timing?.waitMaxDays ?? null;
+          const hasWaitInfo = waitMin !== null || waitMax !== null;
+
+          return (
+            <li key={step.order}>
+              <div className="flex gap-4 rounded-2xl border border-white/60 bg-white/70 p-5 shadow-[0_16px_30px_rgba(212,165,154,0.16)] backdrop-blur-xl md:gap-6 md:p-6">
+                {showStepNumber && (
+                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border-4 border-white/70 bg-[#d4a59a] text-xl font-semibold text-white shadow-[0_8px_16px_rgba(212,165,154,0.35)]">
+                    {index + 1}
+                  </div>
+                )}
+                <div className="flex-1 space-y-2">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <p className="text-lg font-semibold text-[#6b4e44]">
+                      {getTitleByLocale(step.title, locale)}
+                    </p>
+                    {step.timing?.afterWeeks && (
+                      <span className="rounded-full bg-white/70 px-3 py-1 text-xs font-medium text-[#a88f84] shadow-inner">
+                        {locale === "ko"
+                          ? `${step.timing.afterWeeks}주 후`
+                          : `~${step.timing.afterWeeks} weeks later`}
+                      </span>
+                    )}
+                  </div>
+
+                  {hasWaitInfo && (
+                    <p className="text-xs text-[#a88f84]">
+                      {locale === "ko"
+                        ? `다음 단계까지 ${waitMin ?? ""}${
+                            waitMax !== null ? `~${waitMax}` : ""
+                          }일`
+                        : `Wait ${waitMin ?? ""}${
+                            waitMax !== null ? `~${waitMax}` : ""
+                          } days`}
+                    </p>
+                  )}
+
+                  {step.note && (
+                    <p className="text-sm leading-relaxed text-[#8b7266]">
+                      {step.note}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </li>
+          );
+        })}
+      </ol>
+    </div>
+  );
+}
+
+type BenefitsProps = {
+  benefits: Benefits | null | undefined;
+  locale: Locale;
+};
+
+const defaultEmojis = ["✨", "💫", "🌟", "💎", "🌸", "🌼"];
+
+function BenefitsBlock({ benefits, locale }: BenefitsProps) {
+  if (!benefits) {
+    return null;
+  }
+
+  const inputs = Array.isArray(benefits.inputs) ? benefits.inputs : [];
+  const result = benefits.result;
+  const resultText = pickLocale(result?.title, locale);
+  const hasInputs = inputs.length > 0;
+
+  if (!hasInputs && !resultText) {
+    return (
+      <div className="rounded-3xl border border-white/60 bg-gradient-to-br from-white/75 via-white/65 to-white/55 p-6 text-[#8b7266] shadow-[0_18px_40px_rgba(212,165,154,0.18)] backdrop-blur-xl md:p-8">
+        {locale === "ko"
+          ? "등록된 효과 정보가 없습니다."
+          : "No benefits available."}
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-3xl border border-white/60 bg-gradient-to-br from-white/75 via-white/65 to-white/55 p-6 shadow-[0_18px_40px_rgba(212,165,154,0.18)] backdrop-blur-xl md:p-8">
+      <div className="border-l-4 border-[#d4a59a] pl-4">
+
+        <h3 className="mt-1 text-2xl font-semibold text-[#6b4e44]">
+          {locale === "ko" ? "효과 & 결과" : "Benefits & Result"}
+        </h3>
+        <p className="mt-1 text-sm text-[#8b7266]">
+          {locale === "ko"
+            ? "어떤 변화를 기대할 수 있을까요?"
+            : "What positive changes to expect"}
+        </p>
+      </div>
+
+      <div className="mt-8 space-y-6">
+        {hasInputs && (
+          <div className="grid gap-4 md:grid-cols-2">
+            {inputs.map((input, index) => {
+              const emoji =
+                (input.meta && typeof input.meta.emoji === "string"
+                  ? input.meta.emoji
+                  : undefined) ?? defaultEmojis[index % defaultEmojis.length];
+
+              return (
+                <div
+                  key={index}
+                  className="group relative overflow-hidden rounded-2xl border border-white/60 bg-white/70 p-5 shadow-[0_14px_30px_rgba(212,165,154,0.16)] backdrop-blur-xl transition-transform duration-300 hover:-translate-y-1 md:p-6"
+                >
+                  <div className="absolute -top-6 -right-6 h-20 w-20 rounded-full bg-[#d4a59a]/20 blur-2xl" />
+                  <div className="flex items-center gap-3">
+                    <span className="text-3xl drop-shadow-sm">{emoji}</span>
+                    <div>
+                      
+                      <p className="mt-1 text-base font-semibold text-[#6b4e44]">
+                        {pickLocale(input.title, locale)}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        <div className="flex justify-center text-4xl text-[#d4a59a] drop-shadow-sm md:text-5xl">
+          ↓
+        </div>
+
+        <div className="rounded-3xl border border-white/60 bg-white/70 p-6 text-center shadow-[0_18px_36px_rgba(212,165,154,0.2)] backdrop-blur-xl md:p-8">
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#a88f84]">
+            {locale === "ko" ? "결과" : "Result"}
+          </p>
+          <p className="mt-3 text-2xl font-semibold text-[#6b4e44] md:text-3xl">
+            {resultText}
+          </p>
+          {result?.meta?.description && (
+            <p className="mt-2 text-sm text-[#8b7266]">
+              {String(result.meta.description)}
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+type CautionsProps = {
+  cautions: LocalizedText | null | undefined;
+  locale: Locale;
+};
+
+function CautionsBlock({ cautions, locale }: CautionsProps) {
+  const text = pickLocale(cautions ?? undefined, locale).trim();
+
+  if (!text) {
+    return (
+      <div className="rounded-3xl border border-white/60 bg-gradient-to-br from-white/75 via-white/65 to-white/55 p-6 text-[#8b7266] shadow-[0_18px_40px_rgba(212,165,154,0.18)] backdrop-blur-xl md:p-8">
+        {locale === "ko"
+          ? "등록된 주의사항이 없습니다."
+          : "No cautions available."}
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-3xl border border-white/60 bg-gradient-to-br from-white/75 via-white/65 to-white/55 p-6 shadow-[0_18px_40px_rgba(212,165,154,0.18)] backdrop-blur-xl md:p-8">
+      <div className="border-l-4 border-[#d4a59a] pl-4">
+        <p className="text-xs uppercase tracking-[0.3em] text-[#a88f84]">
+          {locale === "ko" ? "Important Notes" : "Important Notes"}
+        </p>
+        <h3 className="mt-1 text-2xl font-semibold text-[#6b4e44]">
+          {locale === "ko" ? "주의사항" : "Cautions"}
+        </h3>
+        <p className="mt-1 text-sm text-[#8b7266]">
+          {locale === "ko"
+            ? "시술 전 꼭 확인해주세요"
+            : "Please review before the treatment"}
+        </p>
+      </div>
+
+      <div className="mt-6 flex gap-4">
+        <span className="mt-1 text-3xl drop-shadow-sm">⚠️</span>
+        <p className="text-sm leading-relaxed text-[#8b7266] md:text-base">
+          {text}
+        </p>
+      </div>
+    </div>
+  );
+}
 
 export default function ProtocolPage() {
   const router = useRouter();
@@ -52,7 +286,7 @@ export default function ProtocolPage() {
           <h1 className="text-2xl font-bold text-gray-900">Invalid Parameters</h1>
           <p className="text-gray-600 mt-2">Please provide both topic_id and area_id.</p>
           <button
-            onClick={() => router.push('/treatment-landing-v2')}
+            onClick={() => router.back()}
             className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
           >
             Back to Topics
@@ -138,37 +372,25 @@ export default function ProtocolPage() {
       </div>
 
       {/* Treatment Content */}
-      <div className="space-y-8">
-        {/* Benefits & Sequence & Cautions */}
-        <div className="bg-white rounded-lg p-6 shadow-sm">
-          <div className="space-y-4">
-                     
-          <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                {locale === 'ko' ? '시술 순서' : 'Treatment Sequence'}
-              </h3>
-              <p className="text-gray-700">
-                {locale === 'ko' ? content.sequence_ko : content.sequence_en}
-              </p>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                {locale === 'ko' ? '효과' : 'Benefits'}
-              </h3>
-              <p className="text-gray-700">
-                {locale === 'ko' ? content.benefits_ko : content.benefits_en}
-              </p>
-            </div>
-   
-            
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                {locale === 'ko' ? '주의사항' : 'Cautions'}
-              </h3>
-              <p className="text-gray-700">
-                {locale === 'ko' ? content.cautions_ko : content.cautions_en}
-              </p>
-            </div>
+      <div className="space-y-10">
+        <div className="rounded-3xl border border-white/40 bg-gradient-to-br from-[#fff5f0] via-[#fff9f5] to-[#fde6dc] p-6 shadow-[0_25px_55px_rgba(212,165,154,0.18)] backdrop-blur-xl md:p-10">
+          <div className="space-y-10">
+            {content.sequence?.length ? (
+              <SequenceTimeline
+                steps={content.sequence}
+                locale={locale}
+                stepCount={content.step_count}
+              />
+            ) : (
+              <div className="rounded-3xl border border-white/60 bg-white/70 p-6 text-center text-[#8b7266] shadow-[0_18px_40px_rgba(212,165,154,0.18)] backdrop-blur-xl md:p-8">
+                {locale === 'ko'
+                  ? '등록된 시술 순서가 없습니다.'
+                  : 'No treatment sequence available.'}
+              </div>
+            )}
+
+            <BenefitsBlock benefits={content.benefits} locale={locale} />
+            <CautionsBlock cautions={content.cautions} locale={locale} />
           </div>
         </div>
 

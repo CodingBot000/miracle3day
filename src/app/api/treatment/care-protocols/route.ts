@@ -6,8 +6,118 @@ import {
   TopicWithAreas,
   AreaBasicInfo,
   AreaDetailContent,
-  TreatmentRoot
+  TreatmentRoot,
+  TreatmentCareProtocolSchema,
+  Benefits,
+  BenefitInput,
+  LocalizedText,
 } from '@/app/models/treatmentData.dto';
+
+const isRecord = (value: unknown): value is Record<string, any> =>
+  typeof value === 'object' && value !== null && !Array.isArray(value);
+
+const normalizeLocalizedText = (
+  value: unknown,
+  fallback?: Partial<Record<string, unknown>>
+): LocalizedText => {
+  const normalized: LocalizedText = {};
+
+  if (isRecord(value)) {
+    Object.entries(value).forEach(([lang, raw]) => {
+      if (raw === undefined) {
+        return;
+      }
+
+      if (raw === null) {
+        normalized[lang] = null;
+        return;
+      }
+
+      if (typeof raw === 'string') {
+        normalized[lang] = raw;
+        return;
+      }
+
+      normalized[lang] = String(raw);
+    });
+  } else if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
+    normalized.ko = String(value);
+  }
+
+  if (fallback) {
+    Object.entries(fallback).forEach(([lang, raw]) => {
+      if (normalized[lang] !== undefined || raw === undefined) {
+        return;
+      }
+
+      if (raw === null) {
+        normalized[lang] = null;
+        return;
+      }
+
+      if (typeof raw === 'string') {
+        normalized[lang] = raw;
+        return;
+      }
+
+      normalized[lang] = String(raw);
+    });
+  }
+
+  return normalized;
+};
+
+const normalizeBenefitInput = (value: unknown): BenefitInput | null => {
+  if (!isRecord(value)) {
+    return null;
+  }
+
+  const title = normalizeLocalizedText(value.title);
+  const meta = isRecord(value.meta) ? value.meta : undefined;
+
+  return {
+    title,
+    ...(meta ? { meta } : {}),
+  };
+};
+
+const normalizeBenefits = (
+  raw: unknown,
+  fallbackKo?: string | null,
+  fallbackEn?: string | null
+): Benefits => {
+  if (isRecord(raw)) {
+    const inputs = Array.isArray(raw.inputs)
+      ? raw.inputs
+          .map(normalizeBenefitInput)
+          .filter((item): item is NonNullable<ReturnType<typeof normalizeBenefitInput>> => !!item)
+      : [];
+
+    const resultSource = isRecord(raw.result) ? raw.result : {};
+    const resultTitle = normalizeLocalizedText(resultSource.title, {
+      ...(fallbackKo !== undefined ? { ko: fallbackKo } : {}),
+      ...(fallbackEn !== undefined ? { en: fallbackEn } : {}),
+    });
+
+    return {
+      inputs,
+      result: {
+        title: resultTitle,
+        ...(isRecord(resultSource.meta) ? { meta: resultSource.meta } : {}),
+      },
+    };
+  }
+
+  return {
+    inputs: [],
+    result: {
+      title: normalizeLocalizedText(undefined, {
+        ...(fallbackKo !== undefined ? { ko: fallbackKo } : {}),
+        ...(fallbackEn !== undefined ? { en: fallbackEn } : {}),
+      }),
+    },
+  };
+};
 
 export async function GET(request: NextRequest) {
   try {
@@ -121,11 +231,42 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ error: 'Area not found' }, { status: 404 });
       }
 
+      const normalizedArea = {
+        ...currentArea,
+        primary_treatment_ids: Array.isArray(currentArea.primary_treatment_ids) ? currentArea.primary_treatment_ids : [],
+        alt_treatment_ids: Array.isArray(currentArea.alt_treatment_ids) ? currentArea.alt_treatment_ids : [],
+        combo_treatment_ids: Array.isArray(currentArea.combo_treatment_ids) ? currentArea.combo_treatment_ids : [],
+        benefits: normalizeBenefits(
+          currentArea.benefits,
+          currentArea.benefits_ko,
+          currentArea.benefits_en
+        ),
+        cautions: normalizeLocalizedText(currentArea.cautions, {
+          ...(currentArea.cautions_ko !== undefined ? { ko: currentArea.cautions_ko } : {}),
+          ...(currentArea.cautions_en !== undefined ? { en: currentArea.cautions_en } : {}),
+        }),
+        sequence: Array.isArray(currentArea.sequence) ? currentArea.sequence : [],
+        step_count: typeof currentArea.step_count === 'number'
+          ? currentArea.step_count
+          : Array.isArray(currentArea.sequence)
+            ? currentArea.sequence.length
+            : undefined,
+      };
+
+      const parsedProtocolResult = TreatmentCareProtocolSchema.safeParse(normalizedArea);
+
+      if (!parsedProtocolResult.success) {
+        console.error('Invalid protocol data:', parsedProtocolResult.error.flatten());
+        return NextResponse.json({ error: 'Invalid protocol data' }, { status: 500 });
+      }
+
+      const protocol = parsedProtocolResult.data;
+
       // Resolve treatment IDs to full treatment objects with alias support (문서 5절)
       const allTreatmentIds = [
-        ...currentArea.primary_treatment_ids,
-        ...currentArea.alt_treatment_ids,
-        ...currentArea.combo_treatment_ids
+        ...protocol.primary_treatment_ids,
+        ...protocol.alt_treatment_ids,
+        ...protocol.combo_treatment_ids
       ];
       
       const uniqueTreatmentIds = Array.from(new Set(allTreatmentIds));
@@ -171,13 +312,13 @@ export async function GET(request: NextRequest) {
 
       // Resolve all treatments
       const [primaryTreatments, altTreatments, comboTreatments] = await Promise.all([
-        resolveTreatmentIds(currentArea.primary_treatment_ids),
-        resolveTreatmentIds(currentArea.alt_treatment_ids),
-        resolveTreatmentIds(currentArea.combo_treatment_ids)
+        resolveTreatmentIds(protocol.primary_treatment_ids),
+        resolveTreatmentIds(protocol.alt_treatment_ids),
+        resolveTreatmentIds(protocol.combo_treatment_ids)
       ]);
 
       const content: AreaDetailContent = {
-        ...currentArea,
+        ...protocol,
         primary_treatments: primaryTreatments,
         alt_treatments: altTreatments,
         combo_treatments: comboTreatments

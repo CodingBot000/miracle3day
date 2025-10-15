@@ -23,8 +23,14 @@ export const HospitalCard = ({
   locationNum,
   onSelect,
 }: HospitalCardProps) => {
-  const locationKey = parseInt(locationNum!, 10);
-  const region = findRegionByKey(REGIONS, locationKey);
+  const locationKey =
+    typeof locationNum === "string" && locationNum.length > 0
+      ? Number.parseInt(locationNum, 10)
+      : undefined;
+  const region =
+    typeof locationKey === "number" && Number.isFinite(locationKey)
+      ? findRegionByKey(REGIONS, locationKey)
+      : undefined;
         
 
   return (
@@ -42,9 +48,9 @@ export const HospitalCard = ({
               <h3 className="font-semibold text-gray-900 text-sm md:text-lg mb-1 line-clamp-2">
                 {name}
               </h3>
-              {locationNum && (
+              {region?.label?.en && (
                 <p className="text-gray-500 text-xs md:text-sm">
-                  {region?.label.en}
+                  {region.label.en}
                   
                 </p>
               )}
@@ -55,5 +61,3 @@ export const HospitalCard = ({
     </article>
   );
 };
-
-

@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ROUTE } from "@/router";
 import { getHospitalBeautyAPI } from "@/app/api/home/hospital";
 import { HospitalOutputDto } from "@/app/models/hospitalData.dto";
 import { HospitalCard } from "@/components/molecules/card/HospitalCard";
-import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Beauty() {
   const [datas, setDatas] = useState<HospitalOutputDto["data"]>([]);
@@ -15,9 +14,13 @@ export default function Beauty() {
     const fetchData = async () => {
       try {
         const data = await getHospitalBeautyAPI();
-        setDatas(data.data);
+        const sanitized = (data?.data ?? []).filter(
+          (item) => item && typeof item.id_uuid === "string"
+        );
+        setDatas(sanitized);
+        console.log("landing clinics count", sanitized.length);
       } catch (error) {
-        console.error("Failed to fetch events:", error);
+        console.error("Failed to fetch featured clinics:", error);
       } finally {
         setLoading(false);
       }
@@ -26,29 +29,59 @@ export default function Beauty() {
     fetchData();
   }, []);
 
-  if (loading) return <div className="text-center py-10">Loading New Beaties...</div>;
+  const clinics = useMemo(() => (datas ?? []).slice(0, 4), [datas]);
 
-  // 데이터가 없으면 아무것도 렌더링하지 않음
-  if (!datas || datas.length === 0) {
-    console.warn('Beauty component: No hospital data available');
+  if (loading) {
+    return (
+      <div className="grid grid-cols-2 gap-4 px-4 py-10 lg:grid-cols-4">
+        {Array.from({ length: 4 }).map((_, index) => (
+          <div
+            key={index}
+            className="h-48 animate-pulse rounded-xl border border-white/40 bg-white/40 backdrop-blur-sm"
+          />
+        ))}
+      </div>
+    );
+  }
+
+  if (!clinics || clinics.length === 0) {
+    console.warn("Beauty component: No hospital data available");
     return null;
   }
 
   return (
     <div className="w-full px-4">
       {/* Desktop: 4 columns, Mobile: 2x2 grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {datas.slice(0, 4).map(({ imageurls, name_en, id_uuid, location }) => (
-          <article key={id_uuid} className="w-full">
-            <HospitalCard
-              alt={name_en}
-              name={name_en}
-              href={ROUTE.HOSPITAL_DETAIL("") + id_uuid}
-              src={imageurls[0]}
-              locationNum={location}
-            />
-          </article>
-        ))}
+      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+        {clinics.map(({ imageurls, name_en, id_uuid, location }) => {
+          const hasValidImage =
+            Array.isArray(imageurls) &&
+            imageurls.length > 0 &&
+            typeof imageurls[0] === "string" &&
+            imageurls[0].length > 0;
+
+          const imageSrc = hasValidImage
+            ? imageurls[0]
+            : "/default/hospital_default.png";
+
+          return (
+            <article key={id_uuid} className="w-full">
+              <HospitalCard
+                alt={name_en}
+                name={name_en}
+                href={ROUTE.HOSPITAL_DETAIL("") + id_uuid}
+                src={imageSrc}
+                locationNum={
+                  typeof location === "string"
+                    ? location
+                    : typeof location === "number"
+                      ? String(location)
+                      : undefined
+                }
+              />
+            </article>
+          );
+        })}
       </div>
     </div>
   );

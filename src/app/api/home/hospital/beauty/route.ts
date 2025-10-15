@@ -1,3 +1,6 @@
+export const revalidate = 0;
+export const runtime = 'nodejs';
+
 import { TABLE_HOSPITAL } from "@/constants/tables";
 import { createClient } from "@/utils/supabase/server";
 

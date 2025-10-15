@@ -86,7 +86,7 @@ export default async function HomePage() {
 
 
        {/* See All Clinics Link */}
-       <div className="text-right mt-8 px-4">
+       <div className="text-right mt-10 px-4">
           <Link
             href="/hospital"
             className="inline-flex items-center gap-1 text-gray-400 hover:text-gray-900 transition-colors text-xl font-medium mb-4"
@@ -101,7 +101,7 @@ export default async function HomePage() {
         <Beauty />
 
 
-          <div className="text-right mt-18 px-4">
+          <div className="text-right mt-24 px-4">
               <Link
                 href="/treatments_info"
                 className="inline-flex items-center gap-1 text-gray-400 hover:text-gray-900 transition-colors text-xl font-medium mb-4"

@@ -1,28 +1,69 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
+import type { TSnsType } from '../login/actions';
+import { snsLoginActions } from '../login/actions';
+import { useLanguage } from '@/contexts/LanguageContext';
+import TermsHtmlModal from '@/components/template/modal/TermsHtmlModal';
 
 interface TermItem {
   id: string;
   label: string;
   required: boolean;
+  url?: { ko?: string; en: string };
 }
 
 const terms: TermItem[] = [
   { id: 'age', label: 'Age 14 or older', required: true },
-  { id: 'service', label: 'Terms of Service', required: true },
-  { id: 'location', label: 'Terms and Conditions of Location-based Services', required: true },
-  { id: 'privacy', label: 'Collection and Use of Personal Information', required: true },
-  { id: 'marketing', label: 'Leverage marketing and advertising', required: false },
+  { id: 'service', label: 'Terms of Service', required: true, url: { ko: '/contents/signup_terms/terms_of_use_ko.html', en: '/contents/signup_terms/terms_of_use_en.html' } },
+  { id: 'location', label: 'Terms and Conditions of Location-based Services', required: true, url: { ko: '/contents/signup_terms/terms_and_conditions_of_LBS_BeautyWell_MimoTok_ko.html', en: '/contents/signup_terms/terms_and_conditions_of_LBS_BeautyWell_Mimotok_en.html' } },
+  { id: 'privacy', label: 'Collection and Use of Personal Information', required: true, url: { ko: '/contents/signup_terms/privacy_collection_and_use_MimoTok_ko.html', en: '/contents/signup_terms/privacy_collection_and_use_MimoTok_en.html' } },
+  { id: 'marketing', label: 'Leverage marketing and advertising', required: false, url: { ko: '/contents/signup_terms/leverage_marketing_and_advertising_ko.html', en: '/contents/signup_terms/leverage_marketing_and_advertising_en.html' } },
 ];
 
-export default function TermsClient() {
+type TermsClientProps = {
+  initialProvider?: TSnsType;
+};
+
+export default function TermsClient({ initialProvider }: TermsClientProps) {
   const router = useRouter();
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
+  const [isPending, startTransition] = useTransition();
+  const [submissionError, setSubmissionError] = useState<string | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalSrc, setModalSrc] = useState<string | undefined>(undefined);
+  const [modalTitle, setModalTitle] = useState<string>('View');
+  
+
+  const { language } = useLanguage();
+  const locale = language === 'ko' ? 'ko' : 'en';
+
+  const provider = useMemo(() => initialProvider, [initialProvider]);
+
+  const providerLabel = useMemo(() => {
+    switch (provider) {
+      case "google":
+        return "Google";
+      case "facebook":
+        return "Facebook";
+      case "apple":
+        return "Apple";
+      default:
+        return null;
+    }
+  }, [provider]);
+
+  // View 클릭 시 모달 열기
+  const openModal = (src: string | undefined, title: string) => {
+    if (!src) return;
+    setModalSrc(src);
+    setModalTitle(title);
+    setModalOpen(true);
+  };
 
   const isAllRequiredChecked = terms
     .filter(term => term.required)
@@ -52,6 +93,11 @@ export default function TermsClient() {
         <p className="text-gray-600 mt-2">
           In order to use BeautyWell, you need to agree to terms and conditions below.
         </p>
+        {providerLabel ? (
+          <p className="mt-4 rounded-lg border border-blue-100 bg-blue-50 px-3 py-2 text-sm text-blue-600">
+            Social login selected: <span className="font-semibold">{providerLabel}</span>
+          </p>
+        ) : null}
       </div>
 
       <div className="space-y-6">
@@ -67,36 +113,67 @@ export default function TermsClient() {
         </div>
 
         <div className="space-y-4">
-          {terms.map((term) => (
-            <div key={term.id} className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id={term.id}
-                  checked={checkedItems[term.id] || false}
-                  onCheckedChange={(checked) => handleSingleCheck(term.id, checked as boolean)}
+          {terms.map((term) => {
+            const termHref = term.url?.[locale] ?? term.url?.en;
+            return (
+              <div key={term.id} className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id={term.id}
+                    checked={checkedItems[term.id] || false}
+                    onCheckedChange={(checked) => handleSingleCheck(term.id, checked as boolean)}
                 />
                 <label htmlFor={term.id} className="text-sm">
                   {term.required && '[Required] '}{term.label}
                 </label>
               </div>
-              <Link
-                href="/legal/privacy"
-                className="text-sm text-blue-600 hover:underline"
-              >
-                View
-              </Link>
+              {termHref && term.id !== 'age' ? (
+                <button
+                  type="button"
+                  onClick={() => openModal(termHref, term.label)}
+                  className="text-sm text-blue-600 hover:underline"
+                >
+                  View
+                </button>
+              ) : null}
             </div>
-          ))}
+            );
+          })}
         </div>
+
+        {submissionError ? (
+          <p className="text-sm text-red-500">{submissionError}</p>
+        ) : null}
 
         <Button
           className="w-full"
-          disabled={!isAllRequiredChecked}
-          onClick={() => router.push('/auth/sign-up')}
+          disabled={!isAllRequiredChecked || isPending}
+          onClick={() => {
+            if (!isAllRequiredChecked || isPending) return;
+
+            if (provider) {
+              setSubmissionError(null);
+              startTransition(() => {
+                snsLoginActions(null, provider).catch(() => {
+                  setSubmissionError('Failed to initiate social login. Please try again.');
+                });
+              });
+              return;
+            }
+
+            router.push('/auth/sign-up');
+          }}
         >
-          Next
+          {isPending ? 'Processing…' : 'Next'}
         </Button>
       </div>
+
+      <TermsHtmlModal
+        open={modalOpen}
+        src={modalSrc}
+        title={modalTitle}
+        onClose={() => setModalOpen(false)}
+      />
     </div>
   )
 } 

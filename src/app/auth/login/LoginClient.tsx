@@ -96,11 +96,7 @@ const LoginPage = () => {
   };
 
   const handleSnsLogin = async (sns: TSnsType) => {
-    try {
-      await snsLoginActions(null, sns);
-    } catch (error) {
-      setErrorMessage("Error Occured in SNS Login");
-    }
+    router.push(`/auth/terms?provider=${sns}`);
   };
 
   return (

@@ -5,7 +5,7 @@ import TreatmentsViewer from "./TreatmentsViewer";
 export const dynamic = "force-dynamic"; // 동적 페이지로 변경
 
 function TreatmentsViewerWrapper() {
-  return <TreatmentsViewer lang="en" />;
+  return <TreatmentsViewer />;
 }
 
 export default function Page() {

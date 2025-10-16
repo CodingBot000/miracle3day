@@ -4,6 +4,8 @@
 import { useMemo, useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import data from "@/constants/treatments_info.json"
+import { useCookieLanguage } from "@/hooks/useCookieLanguage";
+import BackButton from "@/components/common/BackButton";
 
 type LocalizedText = { ko?: string; en?: string };
 type Treatment = {
@@ -22,10 +24,6 @@ type Treatment = {
   providerNotes?: LocalizedText;
 };
 
-type Props = {
-  lang: "ko" | "en";
-};
-
 function pickLang(lang: "ko" | "en", val?: LocalizedText) {
   if (!val) return "";
   return (val[lang] ?? val.ko ?? val.en ?? "").trim();
@@ -36,8 +34,10 @@ function normalizeKey(key: string): string {
   return key.replace(/\s+/g, "").toLowerCase();
 }
 
-export default function TreatmentsViewer({ lang }: Props) {
+export default function TreatmentsViewer() {
   const searchParams = useSearchParams();
+  const { language } = useCookieLanguage();
+  const lang = (language === "ko" ? "ko" : "en") as "ko" | "en";
   
   // 루트 키가 treatments 또는 오타(treatemtns) 모두 지원
 type RawJson = { treatments?: unknown; treatemtns?: unknown };
@@ -139,9 +139,17 @@ const treatments: Treatment[] = useMemo(() => {
     <div className="mx-auto max-w-5xl px-4 py-1 mb-[-40px]">
       {/* Mobile: Select Dropdown - Show on screens smaller than 768px */}
       <div className="block md:hidden mb-6">
-        <h2 className="text-xl font-semibold mb-4">
+      
+         <div className="mt-6 mb-6 flex items-center gap-2">
+   
+            <BackButton size="lg" strokeWidth={2.5} />
+           <h2 className="text-2xl font-semibold mb-3 flex-shrink-0">
+            {lang === "ko" ? "시술 선택" : "Select Treatment"}
+            </h2>
+        </div>
+        {/* <h2 className="text-xl font-semibold mb-4">
           {lang === "ko" ? "시술 선택" : "Select Treatment"}
-        </h2>
+        </h2> */}
         <div className="relative">
           <select
             value={activeKey || ""}
@@ -173,9 +181,14 @@ const treatments: Treatment[] = useMemo(() => {
       <div className="flex flex-col md:grid md:grid-cols-12 md:gap-6">
         {/* Desktop: Left Sidebar - Show on screens 768px and larger */}
         <aside className="hidden md:flex md:flex-col md:col-span-4">
-          <h2 className="text-xl font-semibold mb-3 flex-shrink-0">
-            {lang === "ko" ? "시술 리스트" : "Treatments"}
-          </h2>
+         <div className="mt-6 mb-6 flex items-center gap-2">
+   
+            <BackButton size="lg" strokeWidth={2.5} />
+           <h2 className="text-xl md:text-2xl font-semibold mb-3 flex-shrink-0">
+              {lang === "ko" ? "시술 리스트" : "Treatments"}
+            </h2>
+        </div>
+            
           <div className="rounded-2xl border p-2 md:max-h-[600px]">
             <div className="md:max-h-[550px] overflow-y-auto">
               <ul className="flex flex-col">
@@ -205,7 +218,7 @@ const treatments: Treatment[] = useMemo(() => {
         </aside>
 
         {/* Content: Treatment Details */}
-        <section className="w-full md:col-span-8 mt-0" key={activeKey}>
+        <section className="w-full md:col-span-8 mt-3 md:mt-20" key={activeKey}>
           <div className="md:max-h-[600px] md:overflow-y-auto">
             {active ? (
               <div className="space-y-6 md:pr-2">

@@ -101,7 +101,7 @@ const LayoutHeader = () => {
         transition: getTransitionStyle()
       }}
     >
-      <div className="w-full flex justify-between items-center max-w-[1280px] mx-auto">
+      <div className="w-full flex justify-between items-center max-w-[1080px] mx-auto">
         <Logo />
         <div className="flex items-center gap-2">
           <div className={`flex items-center gap-2 transition-colors duration-300 ${getIconColor()}`}>

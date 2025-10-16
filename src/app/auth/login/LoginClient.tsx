@@ -4,24 +4,22 @@ import { ROUTE } from "@/router";
 import Link from "next/link";
 
 import { clsx } from "clsx";
-import { useFormAction } from "@/hooks/useFormAction";
 import { signInActions, snsLoginActions, TSnsType } from "./actions";
 import { AlertModal } from "@/components/template/modal/Modal";
 import { useRouter } from "next/navigation";
-import { YoutubeIcon } from "@/components/icons/youtube";
-import { TikTokIcon } from "@/components/icons/tiktok";
-import { BlogIcon } from "@/components/icons/blog";
 import { GoogleIcon } from "@/components/icons/google";
 import { AppleIcon } from "@/components/icons/apple";
 import { FaceBookIcon } from "@/components/icons/facebook";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Mail, Lock, LogIn, UserPlus } from "lucide-react";
+import { Mail, Lock, LogIn } from "lucide-react";
 import { useState } from "react";
 
 import SignUpButton from "./components/button/signUp";
 import { SNS_FACEBOOK, SNS_GOOGLE, SNS_APPLE } from "@/constants/key";
+import { useCookieLanguage } from "@/hooks/useCookieLanguage";
+import Image from "next/image";
 
 const snsLoginList: TSnsType[] = [SNS_GOOGLE, SNS_FACEBOOK, SNS_APPLE];
 
@@ -36,6 +34,53 @@ const LoginPage = () => {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [formError, setFormError] = useState<{ email?: string[]; password?: string[] } | null>(null);
+  const { language } = useCookieLanguage();
+  const locale = language === "ko" ? "ko" : "en";
+
+  const copy = {
+    heading: {
+      ko: "다시 만나 반가워요",
+      en: "Welcome Back",
+    },
+    subtitle: {
+      ko: "소셜 계정으로 함께 해요",
+      en: "Continue with a social account",
+    },
+    socialIntro: {
+      ko: "한 번의 클릭으로 시작하세요",
+      en: "One click to get started",
+    },
+
+    socialButton: {
+      google: {
+        ko: "Google로 계속하기",
+        en: "Continue with Google",
+      },
+      facebook: {
+        ko: "Facebook으로 계속하기",
+        en: "Continue with Facebook",
+      },
+      apple: {
+        ko: "Apple로 계속하기",
+        en: "Continue with Apple",
+      },
+    },
+  };
+
+  const socialButtonStyles: Record<TSnsType, string> = {
+    google:
+      "bg-white/90 text-slate-700 border border-slate-200 hover:bg-white shadow-sm hover:shadow-md",
+    facebook:
+      "bg-[#1877f2] text-white border border-[#1877f2] hover:bg-[#165fbe] shadow-md hover:shadow-lg",
+    apple:
+      "bg-black text-white border border-black hover:bg-neutral-900 shadow-md hover:shadow-lg",
+  };
+
+  const socialIconStyles: Record<TSnsType, string> = {
+    google: "bg-white text-slate-700 shadow",
+    facebook: "bg-white/20 text-white",
+    apple: "bg-white/20 text-white",
+  };
 
   const handleSubmit = async (formData: FormData) => {
     try {
@@ -51,124 +96,65 @@ const LoginPage = () => {
   };
 
   const handleSnsLogin = async (sns: TSnsType) => {
-    try {
-      await snsLoginActions(null, sns);
-    } catch (error) {
-      setErrorMessage("Error Occured in SNS Login");
-    }
+    router.push(`/auth/terms?provider=${sns}`);
   };
 
   return (
-    <main className="container">
+    <main className="relative flex min-h-screen items-center justify-center bg-gradient-to-br from-[#667eea] via-[#6f60c8] to-[#764ba2] px-4 py-12">
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-32 -left-24 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
+        <div className="absolute bottom-[-80px] right-[-40px] h-72 w-72 rounded-full bg-white/10 blur-3xl" />
+      </div>
+
       <form
         action={handleSubmit}
-        className="max-w-[380px] mx-auto flex flex-col items-center justify-center gap-2 h-full"
+        className="relative z-10 w-full max-w-md overflow-hidden rounded-3xl border border-white/30 bg-white/80 p-8 shadow-2xl backdrop-blur-2xl sm:p-10"
       >
-        {/* <div className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <div className="relative">
-              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                placeholder="Enter your email"
-                className={clsx("pl-10", { "border-red-500": !!formError?.email?.length })}
-              />
-            </div>
-            {formError?.email?.length && (
-              <p className="text-sm text-red-500">{formError.email[0]}</p>
-            )}
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
-            <div className="relative">
-              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <Input
-                id="password"
-                name="password"
-                type="password"
-                placeholder="Enter your password"
-                className={clsx("pl-10", { "border-red-500": !!formError?.password?.length })}
-              />
-            </div>
-            {formError?.password?.length && (
-              <p className="text-sm text-red-500">{formError.password[0]}</p>
-            )}
-          </div>
+        <div className="flex flex-col items-center text-center">
+          {/* <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#667eea] to-[#764ba2] text-3xl text-white shadow-lg">
+            🚀
+          </div> */}
+         <Image
+              src="/logo/logo_icon.png"
+              alt="Logo"
+              width={80}
+              height={80}
+      
+            />
+          <h1 className="mt-6 text-3xl font-bold tracking-tight text-slate-900">
+            {copy.heading[locale]}
+          </h1>
+          <p className="mt-2 text-sm text-slate-500 sm:text-base">
+            {copy.subtitle[locale]}
+          </p>
         </div>
 
-        <div className="space-y-4 mt-6">
-          <Button
-            type="submit"
-            className="w-full flex items-center justify-center gap-2"
-          >
-            <LogIn className="h-4 w-4" />
-            Login
-          </Button>
-          
-          <SignUpButton />
-     
-        </div>
+      
+        <p className="text-center text-sm font-semibold text-slate-500">
+          {copy.socialIntro[locale]}
+        </p>
 
-        <div className="text-center mt-4">
-          <Link 
-            href={ROUTE.FORGET_PASSWORD} 
-            className="text-sm text-blue-600 hover:text-blue-700 hover:underline"
-          >
-            Forget your password?
-          </Link>
-        </div>
-
-        <div className="relative my-6">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t" />
-          </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-background px-2 text-muted-foreground">
-              Or continue with
-            </span>
-          </div>
-        </div> */}
-{/* 
-        <div className="flex justify-center gap-4">
-          {snsLoginList.map((sns) => (
-            <Button
-              key={sns}
-              type="button" // form 제출을 트리거 하지않도록 하기 위해 추가
-              variant="outline"
-              size="icon"
-              className="h-10 w-10"
-              onClick={() => handleSnsLogin(sns)}
-            >
-              {iconList[sns]}
-            </Button>
-          ))}
-        </div> */}
-
-
-        <div className="space-y-3">
-          <p className="text-center text-xl text-gray-500">Start with just one Click</p>
+        <div className="mt-4 space-y-3">
           {snsLoginList.map((sns) => (
             <Button
               key={sns}
               type="button"
               variant="outline"
-              className={`w-full h-12 flex items-center justify-start gap-3 px-4 ${
-                sns === 'facebook' 
-                  ? 'bg-blue-600 text-white border-blue-600 hover:bg-blue-700' 
-                  : sns === 'google'
-                  ? 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
-                  : 'bg-black text-white border-black hover:bg-gray-900'
-              }`}
+              className={clsx(
+                "group flex h-12 w-full items-center gap-3 rounded-xl px-4 text-sm font-medium transition-all",
+                socialButtonStyles[sns]
+              )}
               onClick={() => handleSnsLogin(sns)}
             >
-              {iconList[sns]}
-              <span className="font-medium">
-                Continue with {sns.charAt(0).toUpperCase() + sns.slice(1)}
+              <span
+                className={clsx(
+                  "flex h-9 w-9 items-center justify-center rounded-full text-xl transition",
+                  socialIconStyles[sns]
+                )}
+              >
+                {iconList[sns]}
               </span>
+              <span>{copy.socialButton[sns][locale]}</span>
             </Button>
           ))}
         </div>

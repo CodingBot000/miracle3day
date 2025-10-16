@@ -163,7 +163,14 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
               {renderProfileField("Email", user?.userInfo?.email, false)}
               {renderProfileField("Secondary Email", user?.userInfo?.secondary_email, false)}
               {/*   {renderProfileField("Treatment Experience", "Public", false)} */}
-
+              <div className="flex justify-between items-center p-4 border-t">
+              <Link
+                href="/legal/cookie-policy"
+                className="text-blue-600 underline hover:text-blue-800"
+              >
+                Cookie Policy
+              </Link>
+              </div>
               <div className="flex justify-between items-center p-4 border-t">
                 <span className="text-gray-600">My Chatting List</span>
                 <Link href="/user/my-page/chat-list" className="flex items-center text-gray-400 hover:text-gray-600">

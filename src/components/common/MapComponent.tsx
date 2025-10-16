@@ -21,18 +21,18 @@ interface MapComponentProps {
     const ref = useRef<HTMLDivElement>(null);
 
     
-    return (
-      <div className="w-full">
-            <p className="mb-2 text-center text-sm text-gray-500">block map rendering temporarily. I have no money. This is dummy image.</p>
-            <Image
-              src="/default/map-temp.png"
-              alt="map"
-              width={800}
-              height={300}
-              className="w-full h-auto object-cover"
-            />
-          </div>
-        );
+    // return (
+    //   <div className="w-full">
+    //         <p className="mb-2 text-center text-sm text-gray-500">block map rendering temporarily. I have no money. This is dummy image.</p>
+    //         <Image
+    //           src="/default/map-temp.png"
+    //           alt="map"
+    //           width={800}
+    //           height={300}
+    //           className="w-full h-auto object-cover"
+    //         />
+    //       </div>
+    //     );
 
 
 

@@ -5,7 +5,7 @@ import * as React from "react";
 import { useRouter } from "next/navigation";
 import { useTopicList } from "@/hooks/useTreatmentData";
 import type { TopicWithAreas, Locale } from "@/app/models/treatmentData.dto";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useCookieLanguage } from "@/hooks/useCookieLanguage";
 import LottieLoading from "@/components/atoms/LottieLoading";
 
 import TopicCard from "./_demo/TopicCard";
@@ -25,7 +25,7 @@ OutlineButton.displayName = 'OutlineButton';
 
 export default function TreatmentProtocol() {
   const router = useRouter();
-  const { language } = useLanguage();
+  const { language } = useCookieLanguage();
   const locale = language as Locale;
 
   // Fetch topic list from database using the new API
@@ -46,7 +46,7 @@ export default function TreatmentProtocol() {
 
   if (isLoading) {
     return (
-      <div className="py-6 space-y-5 min-h-screen bg-gradient-to-br from-[#FDF5F0] via-white to-[#F8E8E0]">
+      <div className="py-6 space-y-5 min-h-screen">
         <div className="flex justify-center items-center min-h-[400px]">
           <LottieLoading size={200} />
         </div>

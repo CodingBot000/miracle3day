@@ -83,7 +83,7 @@ YOUR RIGHTS
 \n
 You may at all times access, correct or erase your Personal Information through BeautyWell Platform via the user portal, under “My Account”. Alternatively, you may make your data access, correction or erasure request by sending your request by email at mimotok.official0@gmail.com
 \n
-Where mandatory under applicable legislation, you may also request restriction of processing of your Personal Information or object to processing by sending your request or objection by email at help@BeautyWell.com. You may also request a copy of the information that we hold about you by sending your request by email at mimotok.official0@gmail.com
+Where mandatory under applicable legislation, you may also request restriction of processing of your Personal Information or object to processing by sending your request or objection by email at mimotok.official@gmail.com. You may also request a copy of the information that we hold about you by sending your request by email at mimotok.official0@gmail.com
 \n
 Please contact us via the contact details mentioned below if you have a complaint regarding the processing of your Personal Information.
 \n

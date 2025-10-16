@@ -4,7 +4,7 @@ import * as React from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useTopicDetail } from "@/hooks/useTreatmentData";
 import type { Benefits, Locale, SequenceStep, SequenceTitle, LocalizedText } from "@/app/models/treatmentData.dto";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useCookieLanguage } from "@/hooks/useCookieLanguage";
 import TreatmentDetailCard from "../_demo/TreatmentDetailCard";
 import { buildInfoLine } from "../../../constants/treatment/types";
 import { ArrowLeft } from "lucide-react";
@@ -248,7 +248,7 @@ function CautionsBlock({ cautions, locale }: CautionsProps) {
 export default function ProtocolPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { language } = useLanguage();
+  const { language } = useCookieLanguage();
 
   const topic_id = searchParams.get("topic_id");
   const area_id = searchParams.get("area_id");

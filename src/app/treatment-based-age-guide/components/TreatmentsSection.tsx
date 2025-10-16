@@ -1,7 +1,7 @@
 import { Clock, DollarSign, Calendar, Timer } from 'lucide-react';
 import Image from 'next/image';
 import { Treatment } from '@/constants/treatment/antiaging-agebased';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 
 interface TreatmentsSectionProps {
   title: string;
@@ -30,7 +30,7 @@ const labels = {
 };
 
 export function TreatmentsSection({ title, treatments }: TreatmentsSectionProps) {
-  const { language } = useLanguage();
+  const { language } = useCookieLanguage();
   return (
     <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 md:p-8 shadow-sm border border-white/30">
       <h3 className="text-2xl md:text-3xl font-bold mb-6 text-gray-800">

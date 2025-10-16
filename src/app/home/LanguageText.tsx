@@ -1,13 +1,13 @@
 "use client";
 
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useCookieLanguage } from "@/hooks/useCookieLanguage";
 
 interface LanguageTextProps {
   className?: string;
 }
 
 export default function LanguageText({ className = "" }: LanguageTextProps) {
-  const { language } = useLanguage();
+  const { language } = useCookieLanguage();
 
   return (
     <span className={className}>

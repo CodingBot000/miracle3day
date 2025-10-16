@@ -3,13 +3,13 @@
 import { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 
 const COOKIE_NAME = 'cookie_consent';
 
 export default function CookieConsent() {
   const [show, setShow] = useState(false);
-  const { language } = useLanguage();
+  const { language } = useCookieLanguage();
   const locale = language === 'ko' ? 'ko' : 'en';
 
   useEffect(() => {

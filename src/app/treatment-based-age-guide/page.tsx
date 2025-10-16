@@ -9,13 +9,13 @@ import { ConcernsSection } from './components/ConcernsSection';
 import { TreatmentsSection } from './components/TreatmentsSection';
 import { SkinTypesSection } from './components/SkinTypesSection';
 import { SpecialTipsSection } from './components/SpecialTipsSection';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 
 const ageGroups = ['20s', '30s', '40s', '50s', '60s', '70s+'];
 
 export default function TreatmentBasedAgeGuide() {
   const [activeTab, setActiveTab] = useState('20s');
-  const { language, setLanguage } = useLanguage();
+  const { language, setLanguage } = useCookieLanguage();
   const router = useRouter();
 
   const currentData = ageBasedData[language].find(item => item.age_group === activeTab);

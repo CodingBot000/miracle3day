@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { ROUTE } from "@/router";
 import { useState } from "react";
 import { MessageCircle } from "lucide-react";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useCookieLanguage } from "@/hooks/useCookieLanguage";
 
 interface HospitalConsultationButtonProps {
   hospitalId: string;
@@ -12,7 +12,7 @@ interface HospitalConsultationButtonProps {
 
 const HospitalConsultationButton = ({ hospitalId }: HospitalConsultationButtonProps) => {
   const router = useRouter();
-  const { language } = useLanguage();
+  const { language } = useCookieLanguage();
   const [isCreatingChat, setIsCreatingChat] = useState(false);
   const [error, setError] = useState<string>("");
 

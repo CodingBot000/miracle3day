@@ -18,7 +18,7 @@ import { useState } from "react";
 
 import SignUpButton from "./components/button/signUp";
 import { SNS_FACEBOOK, SNS_GOOGLE, SNS_APPLE } from "@/constants/key";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useCookieLanguage } from "@/hooks/useCookieLanguage";
 import Image from "next/image";
 
 const snsLoginList: TSnsType[] = [SNS_GOOGLE, SNS_FACEBOOK, SNS_APPLE];
@@ -34,7 +34,7 @@ const LoginPage = () => {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [formError, setFormError] = useState<{ email?: string[]; password?: string[] } | null>(null);
-  const { language } = useLanguage();
+  const { language } = useCookieLanguage();
   const locale = language === "ko" ? "ko" : "en";
 
   const copy = {

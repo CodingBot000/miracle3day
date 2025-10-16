@@ -4,7 +4,7 @@
 import { useMemo, useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import data from "@/constants/treatments_info.json"
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useCookieLanguage } from "@/hooks/useCookieLanguage";
 import BackButton from "@/components/common/BackButton";
 
 type LocalizedText = { ko?: string; en?: string };
@@ -36,7 +36,7 @@ function normalizeKey(key: string): string {
 
 export default function TreatmentsViewer() {
   const searchParams = useSearchParams();
-  const { language } = useLanguage();
+  const { language } = useCookieLanguage();
   const lang = (language === "ko" ? "ko" : "en") as "ko" | "en";
   
   // 루트 키가 treatments 또는 오타(treatemtns) 모두 지원

@@ -13,7 +13,7 @@ import HospitalBusinessHours from "./HospitalBusinessHours";
 import ResponsiveImageMosaic from "@/components/template/ResponsiveImageMosaic";
 import ImageGalleryModal from "@/components/template/modal/ImageGalleryModal";
 import HospitalLanguageSupport from "./HospitalLanguageSupport";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useCookieLanguage } from "@/hooks/useCookieLanguage";
 
 interface HospitalDetailNewDesignProps {
   hospitalData: HospitalDetailMainOutput;
@@ -21,7 +21,7 @@ interface HospitalDetailNewDesignProps {
 
 const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps) => {
   const router = useRouter();
-  const { language } = useLanguage();
+  const { language } = useCookieLanguage();
   const [isModalOpen, setIsModalOpen] = useState(false);
   
   console.log('HospitalDetailNewDesign hospitalData:', hospitalData);

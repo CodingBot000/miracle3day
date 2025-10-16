@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import type { TSnsType } from '../login/actions';
 import { snsLoginActions } from '../login/actions';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 import TermsHtmlModal from '@/components/template/modal/TermsHtmlModal';
 
 interface TermItem {
@@ -39,7 +39,7 @@ export default function TermsClient({ initialProvider }: TermsClientProps) {
   const [modalTitle, setModalTitle] = useState<string>('View');
   
 
-  const { language } = useLanguage();
+  const { language } = useCookieLanguage();
   const locale = language === 'ko' ? 'ko' : 'en';
 
   const provider = useMemo(() => initialProvider, [initialProvider]);

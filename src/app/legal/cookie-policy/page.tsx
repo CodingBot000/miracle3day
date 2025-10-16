@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Cookies from 'js-cookie';
 import { useEffect, useMemo, useState } from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 
 const CONSENT_COOKIE = 'cookie_consent';
 type ConsentValue = 'accepted' | 'rejected';
@@ -41,7 +41,7 @@ function updateGtagConsent(allowed: boolean) {
 
 export default function CookiePolicyPage() {
   const [consent, setConsent] = useState<ConsentValue | null>(null);
-  const { language } = useLanguage();
+  const { language } = useCookieLanguage();
   const locale = language === 'ko' ? 'ko' : 'en';
 
   useEffect(() => {

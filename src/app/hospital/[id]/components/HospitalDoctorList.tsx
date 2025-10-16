@@ -3,14 +3,14 @@
 import { DoctorData } from "@/app/models/hospitalData.dto";
 import Image from "next/image";
 import { useState } from "react";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useCookieLanguage } from "@/hooks/useCookieLanguage";
 
 interface HospitalDoctorListProps {
   doctors: DoctorData[];
 }
 
 const HospitalDoctorList = ({ doctors }: HospitalDoctorListProps) => {
-  const { language } = useLanguage();
+  const { language } = useCookieLanguage();
   const [expandedDoctors, setExpandedDoctors] = useState<Set<number>>(new Set());
 
   const toggleBio = (index: number) => {

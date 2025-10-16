@@ -1,10 +1,10 @@
 "use client";
 
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useCookieLanguage } from "@/hooks/useCookieLanguage";
 import Link from "next/link";
 
 export default function AgeGuideCTA() {
-  const { language } = useLanguage();
+  const { language } = useCookieLanguage();
   const isKorean = language === 'ko';
 
   return (

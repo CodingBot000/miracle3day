@@ -3,7 +3,7 @@
 import { HospitalInfo } from "@/app/models/hospitalData.dto";
 import { MapComponent } from "@/components/common/MapComponent";
 import ZoomableImageMap from "@/components/common/ZoomableImageMap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { buildMapLinks, openMapWithFallback, type MapPlatform } from "@/utils/mapLinkUtils";
 
@@ -13,7 +13,23 @@ interface HospitalLocationProps {
 
 const HospitalLocation = ({ hospitalInfo }: HospitalLocationProps) => {
   const [copiedAddress, setCopiedAddress] = useState<string | null>(null);
+  const [imageExists, setImageExists] = useState<boolean | null>(null);
 
+  useEffect(() => {
+    const checkImage = async () => {
+      try {
+        const res = await fetch(`/map_img/${hospitalInfo.id_uuid}.png`, { method: "HEAD" });
+        setImageExists(res.ok);
+      } catch {
+        setImageExists(false);
+      }
+    };
+    checkImage();
+  }, [hospitalInfo.id_uuid]);
+
+  if (imageExists === null) {
+    return <div className="w-full h-[328px] bg-gray-100 animate-pulse rounded-lg" />;
+  }
   const handleCopy = async (text: string, type: string) => {
     try {
       await navigator.clipboard.writeText(text);
@@ -145,21 +161,23 @@ const HospitalLocation = ({ hospitalInfo }: HospitalLocationProps) => {
       </div>
 
       {/* Static map image with zoom/pan controls */}
-      <ZoomableImageMap
-        imageSrc={`/map_img/${hospitalInfo.id_uuid}.png`}
-        alt={`Map to ${hospitalInfo.name}`}
+      {imageExists ? (
+    <ZoomableImageMap
+      imageSrc={`/map_img/${hospitalInfo.id_uuid}.png`}
+      alt={`Map to ${hospitalInfo.name}`}
+    />
+  ) : (
+    <div className="w-full h-[328px] rounded-lg overflow-hidden">
+      <MapComponent
+        coordinates={[
+          {
+            latitude: hospitalInfo.latitude,
+            longitude: hospitalInfo.longitude,
+          },
+        ]}
       />
-
-      {/* <div className="w-full h-[328px] rounded-lg overflow-hidden">
-        <MapComponent
-          coordinates={[
-            {
-              latitude: hospitalInfo.latitude,
-              longitude: hospitalInfo.longitude,
-            },
-          ]}
-        />
-      </div> */}
+    </div>
+  )}
     </div>
   );
 };

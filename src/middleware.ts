@@ -49,7 +49,7 @@ export async function middleware(req: NextRequest) {
     //   return NextResponse.redirect(new URL("/", req.url));
     // }
   }
-
+  console.log('middleware.ts all path:', req.nextUrl.pathname);
   const res = await updateSession(req);
   return ensureLangCookie(req, res);
 }

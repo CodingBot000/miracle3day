@@ -36,13 +36,7 @@ export async function GET(req: Request) {
       data,
       total: count,
     };
-    response.data?.forEach((hospital, index) => {
-      if (hospital.id_uuid === "b2ae476e-00a0-49cd-898d-770880992d85") {
-        console.log("HospitalListNewDesign target hospital:", { name: hospital.name, thumbnail_url: hospital.thumbnail_url });
-      } else {
-        console.log("HospitalListNewDesign other hospital:", { name: hospital.name, thumbnail_url: hospital.thumbnail_url });
-      }
-    });
+
     return Response.json(response, { status: 200, statusText: "success" });
   } catch (error) {
     if (error instanceof Error) {

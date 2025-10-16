@@ -10,7 +10,11 @@ export default function HeroVideos({ children }: HeroVideosProps) {
   return (
     <div className="relative w-full h-[45vh] md:h-[60vh] lg:h-[700px] md:rounded-lg overflow-hidden">
       <video
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 h-full w-full object-cover object-center"
+        style={{
+          minWidth: "100%",
+          minHeight: "100%",
+        }}
         autoPlay
         loop
         muted

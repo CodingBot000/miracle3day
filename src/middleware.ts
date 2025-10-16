@@ -4,6 +4,7 @@ import { createClient } from "./utils/supabase/server";
 import { updateSession } from "./utils/supabase/middleware";
 
 export async function middleware(req: NextRequest) {
+  
   const supabase = createClient();
 
   const auth = await supabase.auth.getUser();
@@ -25,20 +26,23 @@ export async function middleware(req: NextRequest) {
     
      {
       console.log('middleware.ts auth.data.user redirect /');
-      return NextResponse.redirect(new URL("/", req.url));
+      const res = NextResponse.redirect(new URL("/", req.url));
+      return ensureLangCookie(req, res);
     }
     console.log('middleware.ts auth.data.user redirect / no');
   } else {
     console.log('middleware.ts not  login user');
     // not login user
     if (req.nextUrl.pathname.startsWith("/user")) {
-      return NextResponse.redirect(new URL("/", req.url));
+      const res = NextResponse.redirect(new URL("/", req.url));
+      return ensureLangCookie(req, res);
     }
 
     // 퀴즈 페이지는 로그인 필수
     if (req.nextUrl.pathname.startsWith("/gamification/quize")) {
       console.log('middleware.ts redirect to login from quiz page');
-      return NextResponse.redirect(new URL("/auth/login", req.url));
+      const res = NextResponse.redirect(new URL("/auth/login", req.url));
+      return ensureLangCookie(req, res);
     }
 
     // if (req.nextUrl.pathname.startsWith("/admin")) {
@@ -46,7 +50,8 @@ export async function middleware(req: NextRequest) {
     // }
   }
 
-  return await updateSession(req);
+  const res = await updateSession(req);
+  return ensureLangCookie(req, res);
 }
 
 export const config = {
@@ -62,3 +67,20 @@ export const config = {
     "/((?!_next/static|api|_next/image|favicon.png|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|lottie)$).*)",
   ],
 };
+
+
+function ensureLangCookie(req: NextRequest, res: NextResponse) {
+  // 이미 lang 쿠키가 있으면 그대로 반환 (절대 덮어쓰지 않음)
+  if (req.cookies.get("lang")) return res;
+
+  const al = (req.headers.get("accept-language") || "").toLowerCase();
+  const lang = al.startsWith("ko") ? "ko" : "en";
+
+  res.cookies.set("lang", lang, {
+    path: "/",
+    maxAge: 60 * 60 * 24 * 365, // 1 year
+    sameSite: "lax",
+  });
+
+  return res;
+}

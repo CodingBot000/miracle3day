@@ -31,6 +31,7 @@ import TransparentHeaderWrapper from "@/components/layout/TransparentHeaderWrapp
 import QuizPage from "../gamification/quize/page";
 import WhyKoreaButton from "./components/WhyKoreaButton";
 import AgeGuideCTA from "../treatment-based-age-guide/components/AgeGuideCTA";
+import { getLangFromCookies, Lang, t } from "@/i18n/i18n";
 
 
 export default async function HomePage() {
@@ -42,7 +43,8 @@ export default async function HomePage() {
 
   const params = new URLSearchParams(search);
   const locationParam = params.get("locationNum");
-  console.log('qq qq HomePage locationParam: ', locationParam);
+  const lang: Lang = getLangFromCookies();
+  // console.log('qq qq HomePage locationParam: ', locationParam);
   const selectedLocation: LocationType | undefined = LOCATIONS.find(
     (loc) => loc === locationParam
   );
@@ -58,8 +60,8 @@ export default async function HomePage() {
               <WhyKoreaButton />
               <h1 className="text-xl md:text-3xl lg:text-5xl font-bold drop-shadow-lg">Reveal Your Beauty</h1>
               <p className="mt-2 md:mt-4 text-sm md:text-base lg:text-lg drop-shadow-md">
-                Discover premium skincare <br className="md:hidden" />
-                & wellness experiences
+                  Discover premium skincare <br className="md:hidden" />
+                  & wellness experiences
               </p>
             </div>
           </div>
@@ -106,7 +108,9 @@ export default async function HomePage() {
                 href="/treatments_info"
                 className="inline-flex items-center gap-1 text-gray-400 hover:text-gray-900 transition-colors text-xl font-medium mb-4"
               >
-                <LanguageText />
+                {/* <LanguageText /> */}
+                {t(lang, "아름다움의 파트너들", "Your Beauty Partners")}
+
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>

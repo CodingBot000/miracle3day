@@ -3,10 +3,9 @@
 import Link from "next/link";
 import { ROUTE } from "@/router";
 import { User as UserIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
-import { TABLE_MEMBERS } from "@/constants/tables";
 import { useHeader } from "@/contexts/HeaderContext";
 import { User } from "@supabase/supabase-js";
 
@@ -17,56 +16,52 @@ export default function AuthClient() {
   const { isTransparentMode } = useHeader();
   const supabase = createClient();
 
+  const fetchAndSetUser = useCallback(async () => {
+    try {
+      const sessionRes = await fetch("/api/auth/getUser/session");
+      if (!sessionRes.ok) {
+        throw new Error(`Failed to fetch session: ${sessionRes.statusText}`);
+      }
+
+      const sessionData = await sessionRes.json();
+      const currentUser = sessionData.user ?? null;
+      setUser(currentUser);
+
+      if (!currentUser?.id) {
+        setAvatarUrl("");
+        return;
+      }
+
+      const avatarRes = await fetch(`/api/auth/member/avatar?userId=${encodeURIComponent(currentUser.id)}`);
+      if (!avatarRes.ok) {
+        throw new Error(`Failed to fetch avatar: ${avatarRes.statusText}`);
+      }
+
+      const avatarData: { avatarUrl: string | null } = await avatarRes.json();
+      setAvatarUrl(avatarData.avatarUrl ?? "");
+    } catch (error) {
+      console.error("Error fetching user or avatar:", error);
+      setUser(null);
+      setAvatarUrl("");
+    }
+  }, []);
+
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const res = await fetch("/api/auth/getUser/session");
-        const data = await res.json();
-        setUser(data.user);
+    fetchAndSetUser();
 
-        // Fetch avatar if user exists
-        if (data.user) {
-          const { data: memberData } = await supabase
-            .from(TABLE_MEMBERS)
-            .select('avatar')
-            .eq('uuid', data.user.id)
-            .single();
-
-          if (memberData?.avatar) {
-            // Check if avatar is a URL or storage path
-            if (memberData.avatar.startsWith('http://') || memberData.avatar.startsWith('https://')) {
-              setAvatarUrl(memberData.avatar);
-            } else {
-              // It's a storage path
-              const { data: publicUrlData } = supabase.storage
-                .from('users')
-                .getPublicUrl(memberData.avatar);
-              setAvatarUrl(publicUrlData.publicUrl);
-            }
-          }
-        }
-      } catch (error) {
-        console.error('Error fetching user:', error);
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_OUT" || !session) {
+        setUser(null);
+        setAvatarUrl("");
+      } else if (event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
+        fetchAndSetUser();
       }
-    };
-
-    fetchUser();
-
-    // Listen for auth state changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        if (event === 'SIGNED_OUT' || !session) {
-          setUser(null);
-          setAvatarUrl("");
-        } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
-          setUser(session.user);
-          fetchUser(); // Refetch to get avatar
-        }
-      }
-    );
+    });
 
     return () => subscription.unsubscribe();
-  }, [supabase.auth]);
+  }, [fetchAndSetUser, supabase.auth]);
 
   useEffect(() => {
     if (!isTransparentMode) {

@@ -32,6 +32,8 @@ import QuizPage from "../gamification/quize/page";
 import WhyKoreaButton from "./components/WhyKoreaButton";
 import AgeGuideCTA from "../treatment-based-age-guide/components/AgeGuideCTA";
 import { getLangFromCookies, Lang, t } from "@/i18n/i18n";
+import UploadTest from "../upload-test/UploadTest";
+import UploadTestViaServer from "../upload-test/UploadTestViaServer";
 
 
 export default async function HomePage() {
@@ -81,7 +83,7 @@ export default async function HomePage() {
         </div> */}
 
           <Hero />
-
+{/* <UploadTestViaServer /> */}
           {/* <MiddleSection1 /> */}
 
           <TreatmentProtocol />

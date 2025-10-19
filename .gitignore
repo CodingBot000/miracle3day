@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# 인증서 / 보안 파일
+certs/
+*.pem
+*.key
+*.crt

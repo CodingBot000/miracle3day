@@ -83,7 +83,7 @@ export default async function HomePage() {
         </div> */}
 
           <Hero />
-<UploadTestViaServer />
+{/* <UploadTestViaServer /> */}
           {/* <MiddleSection1 /> */}
 
           <TreatmentProtocol />

@@ -10,11 +10,8 @@ import { useRouter } from "next/navigation";
 import { GoogleIcon } from "@/components/icons/google";
 import { AppleIcon } from "@/components/icons/apple";
 import { FaceBookIcon } from "@/components/icons/facebook";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Mail, Lock, LogIn } from "lucide-react";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 
 import SignUpButton from "./components/button/signUp";
 import { SNS_FACEBOOK, SNS_GOOGLE, SNS_APPLE } from "@/constants/key";
@@ -34,6 +31,7 @@ const LoginPage = () => {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [formError, setFormError] = useState<{ email?: string[]; password?: string[] } | null>(null);
+  const [isPending, startTransition] = useTransition();
   const { language } = useCookieLanguage();
   const locale = language === "ko" ? "ko" : "en";
 
@@ -96,7 +94,20 @@ const LoginPage = () => {
   };
 
   const handleSnsLogin = async (sns: TSnsType) => {
-    router.push(`/auth/terms?provider=${sns}`);
+    if (isPending) return;
+
+    startTransition(() => {
+      snsLoginActions(null, sns).catch((error) => {
+        console.error("SNS login failed", error);
+        setErrorMessage(
+          locale === "ko"
+            ? "SNS 로그인 중 오류가 발생했습니다. 다시 시도해주세요."
+            : "SNS login failed. Please try again."
+        );
+      });
+    });
+
+    // router.push(`/auth/terms?provider=${sns}`);
   };
 
   return (

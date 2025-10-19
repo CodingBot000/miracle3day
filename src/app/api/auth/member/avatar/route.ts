@@ -40,14 +40,14 @@ export async function GET(request: Request) {
       return NextResponse.json({ avatarUrl: avatar }, { status: 200 });
     }
 
-    const { data: publicUrlData, error: storageError } = supabase.storage
+    const { data: publicUrlData } = supabase.storage
       .from(BUCKET_USERS)
       .getPublicUrl(avatar);
 
-    if (storageError) {
-      console.error("avatar storage public url error", storageError);
+    if (!publicUrlData) {
+      console.error("avatar storage public url error !publicUrlData");
       return NextResponse.json(
-        { error: storageError.message },
+        { error: 'user avatar public url not found' },
         { status: 500, statusText: "avatar_public_url_failed" }
       );
     }

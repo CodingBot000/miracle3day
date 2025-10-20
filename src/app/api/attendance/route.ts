@@ -1,19 +1,19 @@
 // app/api/attendance/route.ts
 import { NextResponse } from "next/server";
-import { createClient } from "@/utils/supabase/server"; 
+import { createClient } from "@/utils/session/server"; 
 import { TABLE_ATTENDANCE_MONTHLY, TABLE_MEMBERS, TABLE_POINT_TRANSACTIONS } from "@/constants/tables";
 
 /** GET /api/attendance?ym=2025-09 또는 ym=2025-09-01
  *  반환: { ym: 'YYYY-MM-01', attendedDays: number[] }
  */
 export async function GET(req: Request) {
-  const supabase = createClient();
+  const backendClient = createClient();
 
   // 로그인 확인
   const {
     data: { user },
     error: userErr,
-  } = await supabase.auth.getUser();
+  } = await backendClient.auth.getUser();
   if (userErr || !user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -32,7 +32,7 @@ export async function GET(req: Request) {
   const ym = ymDate.toISOString().slice(0, 10); // YYYY-MM-DD 형태
   
   // 해당 월의 출석 데이터 조회
-  const { data, error } = await supabase
+  const { data, error } = await backendClient
     .from(TABLE_ATTENDANCE_MONTHLY)
     .select("days")
     .eq("user_id", user.id)
@@ -60,17 +60,17 @@ export async function GET(req: Request) {
   });
 }
 
-/** POST /api/attendance/check-in
+/** POST /api/attendance/check_in
  *  body: { tz?: "Asia/Seoul" }
  *  반환: { ym, day, was_already, points_awarded, attended_today }
  */
 export async function POST(req: Request) {
-  const supabase = createClient();
+  const backendClient = createClient();
 
   const {
     data: { user },
     error: userErr,
-  } = await supabase.auth.getUser();
+  } = await backendClient.auth.getUser();
   if (userErr || !user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -96,7 +96,7 @@ export async function POST(req: Request) {
   const ym = `${year}-${String(month).padStart(2, "0")}-01`;
   
   // 기존 출석 데이터 조회
-  const { data: existing, error: selectError } = await supabase
+  const { data: existing, error: selectError } = await backendClient
     .from(TABLE_ATTENDANCE_MONTHLY)
     .select("days")
     .eq("user_id", user.id)
@@ -125,7 +125,7 @@ export async function POST(req: Request) {
   // 출석 처리
   days[day - 1] = true;
   
-  const { error: upsertError } = await supabase
+  const { error: upsertError } = await backendClient
     .from(TABLE_ATTENDANCE_MONTHLY)
     .upsert({
       user_id: user.id,
@@ -145,7 +145,7 @@ export async function POST(req: Request) {
   const idempotencyKey = `attendance:${user.id}:${ym}:${day}`;
   const pointsAwarded = 10;
   
-  const { error: pointError } = await supabase
+  const { error: pointError } = await backendClient
     .from(TABLE_POINT_TRANSACTIONS)
     .insert({
       user_id: user.id,
@@ -158,7 +158,7 @@ export async function POST(req: Request) {
   // 포인트 삽입 에러는 무시 (이미 존재하는 경우)
   if (!pointError) {
     // TABLE_MEMBERS.point_balance 누적 업데이트
-    const { data: memberRow, error: memberSelectError } = await supabase
+    const { data: memberRow, error: memberSelectError } = await backendClient
       .from(TABLE_MEMBERS)
       .select("point_balance")
       .eq("user_id", user.id)
@@ -166,7 +166,7 @@ export async function POST(req: Request) {
 
     if (!memberSelectError) {
       const currentBalance = (memberRow?.point_balance as number | null) ?? 0;
-      const { error: memberUpdateError } = await supabase
+      const { error: memberUpdateError } = await backendClient
         .from(TABLE_MEMBERS)
         .update({ point_balance: currentBalance + pointsAwarded })
         .eq("user_id", user.id);

@@ -94,7 +94,7 @@ export default function TopicCard({ topic, locale, topicIndex, onAreaClick, onTo
       onTopicClick(topic.topic_id, firstAreaId);
     }
   };
-
+ 
   return (
     <div 
       className="group cursor-pointer bg-white/80 backdrop-blur-sm border-[#E8B4A0]/30 hover:shadow-xl hover:scale-105 transition-all duration-300 hover:bg-white/90 rounded-lg overflow-hidden"

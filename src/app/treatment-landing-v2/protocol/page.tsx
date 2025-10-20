@@ -260,6 +260,18 @@ export default function ProtocolPage() {
     area_id || ""
   );
 
+  React.useEffect(() => {
+    if (topicDetail) {
+      console.log("[ProtocolPage] topic detail:", topicDetail);
+    }
+  }, [topicDetail]);
+
+  React.useEffect(() => {
+    if (error) {
+      console.error("[ProtocolPage] failed to load detail:", error);
+    }
+  }, [error]);
+
   // Callback functions (hooks must be called before any conditional returns)
   const handleBook = React.useCallback((treatment: any) => {
     console.log('Book treatment:', treatment.id);

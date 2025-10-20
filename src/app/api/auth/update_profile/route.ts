@@ -1,9 +1,9 @@
 import { TABLE_MEMBERS } from "@/constants/tables";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/session/server";
 import { country } from "@/constants/country";
 
 export async function PUT(req: Request) {
-  const supabase = createClient();
+  const backendClient = createClient();
 
   try {
     const body = await req.json();
@@ -49,7 +49,7 @@ export async function PUT(req: Request) {
 
     console.log('Update Data:', updateData);
 
-    const { data, error } = await supabase
+    const { data, error } = await backendClient
       .from(TABLE_MEMBERS)
       .update(updateData)
       .eq('uuid', uuid)

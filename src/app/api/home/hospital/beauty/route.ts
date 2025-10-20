@@ -2,84 +2,74 @@ export const revalidate = 0;
 export const runtime = 'nodejs';
 
 import { TABLE_HOSPITAL } from "@/constants/tables";
-import { createClient } from "@/utils/supabase/server";
+import { query } from "@/lib/db";
+import type { HospitalData } from "@/app/models/hospitalData.dto";
 
 export async function GET() {
-  const supabase = createClient();
-
   try {
-    // 먼저 show=true인 데이터 조회 시도
-    let { data } = await supabase
-      .from(TABLE_HOSPITAL)
-      .select(`
-    created_at,
-    name,
-    name_en,
-    searchkey,
-    latitude,
-    longitude,
-    thumbnail_url,
-    imageurls,
-    id_surgeries,
-    id_unique,
-    id_uuid,
-    location,
-    address_full_road_en,
-    address_full_jibun_en,
-    show
-  `)
-      .eq('show', true)
-      // .order("created_at", { ascending: false })
-      .limit(4);
+    const sql = `
+      SELECT
 
-    // show=true 데이터가 없으면 show 조건 없이 조회
-    if (!data || data.length === 0) {
-      const fallbackResult = await supabase
-        .from(TABLE_HOSPITAL)
-        .select(`
-      created_at,
-      name,
-      name_en,
-      searchkey,
-      latitude,
-      longitude,
-      thumbnail_url,
-      imageurls,
-      id_surgeries,
-      id_unique,
-      id_uuid,
-      location,
-      address_full_road_en,
-      address_full_jibun_en,
-      show
-    `)
-        .limit(4);
-      data = fallbackResult.data;
+        created_at,
+        name,
+        name_en,
+        searchkey,
+        latitude,
+        longitude,
+        thumbnail_url,
+        imageurls,
+        id_surgeries,
+        id_unique,
+        id_uuid,
+        location,
+        address_full_road_en,
+        address_full_jibun_en,
+        show
+      FROM ${TABLE_HOSPITAL}
+      WHERE show = true
+      ORDER BY created_at DESC
+      LIMIT 4
+    `;
+
+    const firstResult = await query<HospitalData>(sql);
+    let rows = firstResult.rows;
+
+    if (!rows.length) {
+      const fallbackSql = `
+        SELECT
+
+        created_at,
+        name,
+        name_en,
+        searchkey,
+        latitude,
+        longitude,
+        thumbnail_url,
+        imageurls,
+        id_surgeries,
+        id_unique,
+        id_uuid,
+        location,
+        address_full_road_en,
+        address_full_jibun_en,
+        show
+        FROM ${TABLE_HOSPITAL}
+        ORDER BY created_at DESC
+        LIMIT 4
+      `;
+      rows = (await query<HospitalData>(fallbackSql)).rows;
     }
 
-      
-       
-      // console.log(`src/app/api/home/hospital/beauty/route data ===>  ${data}`);
-      // console.log("=== Hospital Beauty TABLE_HOSPITAL datas ===");
-      // data?.forEach((item, index) => {
-      //   console.log(`\n[Item ${index + 1}]`);
-      //   console.log("id_uuid:", item.id_uuid);
-      //   console.log("Name:", item.name);
-      //   console.log("Name_en:", item.name_en);
-      //   console.log("Image URLs:", item.imageurls);
-      //   console.log("show:", item.show);
-      //   console.log("location:", item.location);
-      //   console.log("------------------------");
-      // });
-      // console.log("=== End of Hospital Beauty Data ===");
-      
-    return Response.json({ data }, { status: 200, statusText: "success" });
+    return Response.json(
+      { data: rows },
+      { status: 200, statusText: "success", headers: { "Cache-Control": "no-store" } }
+    );
   } catch (error) {
-    if (error instanceof Error) {
-      return Response.json(
-        { data: null },
-        { status: 500, statusText: error.message }
-      );
-    }
+    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("GET /api/home/hospital/beauty error:", error);
+    return Response.json(
+      { data: [], error: message },
+      { status: 500, statusText: message, headers: { "Cache-Control": "no-store" } }
+    );
   }
 }

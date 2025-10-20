@@ -1,7 +1,7 @@
 "use server";
 
 import { deleteFavoriteAPI, postFavoriteAPI } from "@/app/api/auth/favorite";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/session/server";
 
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -15,12 +15,12 @@ export const favoriteActions = async ({
   isFavorite,
   id_hospital,
 }: FavoriteActions) => {
-  const supabase = createClient();
+  const backendClient = createClient();
   const referer = headers().get("referer") as string;
 
   const {
     data: { user },
-  } = await supabase.auth.getUser();
+  } = await backendClient.auth.getUser();
 
   if (!user) {
     return;

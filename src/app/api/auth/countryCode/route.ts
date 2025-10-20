@@ -1,11 +1,11 @@
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/session/server";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
-  const supabase = createClient();
+  const backendClient = createClient();
 
   try {
-    const { data, error, status, statusText } = await supabase
+    const { data, error, status, statusText } = await backendClient
       .from("country_codes")
       .select("*");
 

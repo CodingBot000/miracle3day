@@ -2,7 +2,7 @@ import { getCommunityCategories, getCommunityPostsDTO } from '@/app/api/communit
 import type { CommunityCategory } from '@/app/models/communityData.dto'
 import PostList from './PostList'
 import WritePostButton from './WritePostButton'
-import { createClient } from '@/utils/supabase/server'
+import { createClient } from '@/utils/session/server'
 
 interface CommunityPageProps {
   searchParams?: {
@@ -11,8 +11,8 @@ interface CommunityPageProps {
 }
 
 export default async function HomePage({ searchParams }: CommunityPageProps) {
-  const supabase = createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const backendClient = createClient()
+  const { data: { user } } = await backendClient.auth.getUser()
   const isAuthenticated = !!user
 
   const categories = await getCommunityCategories()

@@ -1,13 +1,13 @@
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/session/server";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function POST() {
   try {
-    const supabase = createClient();
+    const backendClient = createClient();
     
     // 로그아웃 처리
-    await supabase.auth.signOut();
+    await backendClient.auth.signOut();
     
     // 쿠키 삭제
     const cookieStore = cookies();

@@ -19,7 +19,7 @@ interface UpdateProfileResponse {
 
 export const updateProfileAPI = async (params: UpdateProfileParams): Promise<UpdateProfileResponse> => {
   const res = await fetchUtils<UpdateProfileResponse>({
-    url: `${process.env.NEXT_PUBLIC_API_ROUTE}/api/auth/update-profile`,
+    url: `${process.env.NEXT_PUBLIC_API_ROUTE}/api/auth/update_profile`,
     fetchOptions: {
       method: "PUT",
       body: JSON.stringify(params),

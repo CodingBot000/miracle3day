@@ -1,4 +1,4 @@
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/session/server";
 import { LIMIT } from "./constant";
 import { LOCATIONS as locationList } from "@/constants";
 import { TABLE_HOSPITAL } from "@/constants/tables";
@@ -7,7 +7,7 @@ export async function GET(
   req: Request,
   { params }: { params: { id: string } }
 ) {
-  const supabase = createClient();
+  const backendClient = createClient();
 
   const location = locationList.map((loc) => {
     console.log('qq qq location route loc: ', loc);
@@ -22,7 +22,7 @@ export async function GET(
   const limit = offset + LIMIT - 1;
 
   try {
-    const baseListQuery = supabase
+    const baseListQuery = backendClient
       .from(TABLE_HOSPITAL)
       .select(
         `id_unique,

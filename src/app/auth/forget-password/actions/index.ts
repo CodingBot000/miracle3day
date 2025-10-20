@@ -2,17 +2,17 @@
 
 import { TABLE_MEMBERS } from "@/constants/tables";
 import { ROUTE } from "@/router";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/session/server";
 
 const resetPasswordActions = async (
   prev: { message: string },
   formData: FormData
 ) => {
-  const supabase = createClient();
+  const backendClient = createClient();
 
   const email = formData.get("email") as string;
 
-  const findUser = await supabase.from(TABLE_MEMBERS).select("email").match({ email });
+  const findUser = await backendClient.from(TABLE_MEMBERS).select("email").match({ email });
 
   if (!findUser.data?.length) {
     return {
@@ -21,7 +21,7 @@ const resetPasswordActions = async (
     };
   }
 
-  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+  const { error } = await backendClient.auth.resetPasswordForEmail(email, {
     redirectTo: `${process.env.NEXT_PUBLIC_API_ROUTE}${ROUTE.UPDATE_PASSWORD}`,
   });
 

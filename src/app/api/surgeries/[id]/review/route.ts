@@ -1,4 +1,4 @@
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/session/server";
 import { LIMIT } from "./constant";
 import { TABLE_REVIEW } from "@/constants/tables";
 
@@ -6,7 +6,7 @@ export async function GET(
   req: Request,
   { params }: { params: { id: string } }
 ) {
-  const supabase = createClient();
+  const backendClient = createClient();
 
   const id = params.id;
 
@@ -17,7 +17,7 @@ export async function GET(
   const limit = offset + LIMIT - 1;
 
   try {
-    const surgeriesId = await supabase
+    const surgeriesId = await backendClient
       .from("banner_item")
       .select(`id_surgeries`)
       .match({ id });
@@ -37,7 +37,7 @@ export async function GET(
       return Response.json({ data: [], nextCursor: 0 });
     }
 
-    const { data, error, status, statusText, count } = await supabase
+    const { data, error, status, statusText, count } = await backendClient
       .from(TABLE_REVIEW)
       .select("*", { count: "exact" })
       .overlaps("id_surgeries", surgeriesIds)

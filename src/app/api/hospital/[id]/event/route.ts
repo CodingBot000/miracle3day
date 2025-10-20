@@ -1,4 +1,4 @@
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/session/server";
 import { LIMIT } from "./constnat";
 import { TABLE_EVENT } from "@/constants/tables";
 
@@ -6,7 +6,7 @@ export async function GET(
   req: Request,
   { params }: { params: { id: string } }
 ) {
-  const supabase = createClient();
+  const backendClient = createClient();
 
   const id_hospital = params.id;
 
@@ -17,7 +17,7 @@ export async function GET(
   const limit = offset + LIMIT - 1;
 
   try {
-    const { data, error, count, status, statusText } = await supabase
+    const { data, error, count, status, statusText } = await backendClient
       .from(TABLE_EVENT)
       .select("*", { count: "exact" })
       .eq( "id_uuid_hospital", id_hospital )

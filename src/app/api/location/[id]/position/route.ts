@@ -1,19 +1,19 @@
 import { LOCATIONS as locationList } from "@/constants";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/session/server";
 import { TABLE_HOSPITAL } from "@/constants/tables";
 
 export async function GET(
   req: Request,
   { params }: { params: { id: string } }
 ) {
-  const supabase = createClient();
+  const backendClient = createClient();
 
   const location = locationList.map((loc) => {
     return loc.toLowerCase() === params.id.toLowerCase();
   });
 
   try {
-    let query = supabase
+    let query = backendClient
       .from(TABLE_HOSPITAL)
       .select(`id_unique,name,location,latitude,longitude`)
       .eq('show', true);

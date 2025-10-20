@@ -1,14 +1,14 @@
 "use server";
 
 import { ROUTE } from "@/router";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/session/server";
 import { redirect } from "next/navigation";
 
 const updatePasswordActions = async (
   prev: { status: string; message: string },
   formData: FormData
 ) => {
-  const supabase = createClient();
+  const backendClient = createClient();
 
   const password = formData.get("password") as string;
 
@@ -20,7 +20,7 @@ const updatePasswordActions = async (
     };
   }
 
-  const { error } = await supabase.auth.updateUser({
+  const { error } = await backendClient.auth.updateUser({
     password,
   });
 

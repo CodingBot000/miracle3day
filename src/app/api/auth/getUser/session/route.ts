@@ -1,11 +1,11 @@
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/session/server";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const supabase = createClient();
+  const backendClient = createClient();
   const {
     data: { user },
-  } = await supabase.auth.getUser();
+  } = await backendClient.auth.getUser();
 
   return NextResponse.json({ user });
 }

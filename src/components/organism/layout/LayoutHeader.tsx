@@ -10,7 +10,7 @@ import { Search, MessageSquareText, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import SearchPanel from "./SearchPanel";
 import AuthClient from "@/components/molecules/auth/AuthClient";
-import { createClient } from "@/utils/supabase/client";
+import { createClient } from "@/utils/session/client";
 import { useHeader } from "@/contexts/HeaderContext";
 
 // const Auth = dynamic(() => import("@/components/molecules/auth/AuthServer"), {
@@ -21,7 +21,7 @@ const LayoutHeader = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { isTransparentMode } = useHeader();
-  const supabase = createClient();
+  const backendClient = createClient();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -38,13 +38,13 @@ const LayoutHeader = () => {
 
     fetchUser();
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = backendClient.auth.onAuthStateChange((event, session) => {
       console.log('[LayoutHeader] Auth state changed:', event, !!session?.user);
       setIsLoggedIn(!!session?.user);
     });
 
     return () => subscription.unsubscribe();
-  }, [supabase.auth]);
+  }, [backendClient.auth]);
 
   useEffect(() => {
     if (!isTransparentMode) {

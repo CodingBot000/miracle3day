@@ -1,17 +1,17 @@
 import { TABLE_HOSPITAL, TABLE_EVENT } from "@/constants/tables";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/session/server";
 
 export async function GET(
   req: Request,
   { params }: { params: { id: string } }
 ) {
-  const supabase = createClient();
+  const backendClient = createClient();
 
   const id_unique = params.id;
   console.log(`qq qq event/[id]/route.ts id_unique = id:${id_unique}`);
   
   try {
-    const { data: eventData, error, status, statusText } = await supabase
+    const { data: eventData, error, status, statusText } = await backendClient
       .from(TABLE_EVENT)
       .select("*", { count: "exact" })
       .match({ id_unique: id_unique })
@@ -23,14 +23,14 @@ export async function GET(
       return Response.json({ eventData: null }, { status, statusText });
     }
 
-    // const getSurgery = await supabase
+    // const getSurgery = await backendClient
     //   .from("surgery_info")
     //   .select("*")
     //   .in("id_unique", data[0].id_surgeries);
 
     // event 테이블의 id_uuid_hospital(어떤 병원의 이벤트인지 구분) 와 hospital 테이블의 id_uuid 를 매칭하여 hospital 테이블의 데이터를 가져옴
     // 이 hospital 데이터는 이벤트 아래 병원정보를 표기하기 위함
-    const getHospital = await supabase
+    const getHospital = await backendClient
       .from(TABLE_HOSPITAL)
       .select("*")
       .eq('show', true)

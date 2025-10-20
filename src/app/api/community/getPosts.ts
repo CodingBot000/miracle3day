@@ -1,5 +1,5 @@
 // api/community.ts
-import { createClient } from '@/utils/supabase/server'
+import { createClient } from '@/utils/session/server'
 import type {
   CommunityCategory,
   CommunityPost,
@@ -8,9 +8,9 @@ import type {
 } from '@/app/models/communityData.dto'
 
 export async function getCommunityPostsDTO(categoryId?: string): Promise<CommunityPostsDTO> {
-  const supabase = createClient()
+  const backendClient = createClient()
 
-  let query = supabase
+  let query = backendClient
     .from('community_posts')
     .select(
       'id, uuid_author, title, content, id_category, view_count, is_deleted, created_at, updated_at, author_name_snapshot, author_avatar_snapshot'
@@ -60,8 +60,8 @@ export async function getCommunityPostsDTO(categoryId?: string): Promise<Communi
 }
 
 export async function getCommunityCategories(): Promise<CommunityCategory[]> {
-  const supabase = createClient()
-  const { data, error } = await supabase
+  const backendClient = createClient()
+  const { data, error } = await backendClient
     .from('community_categories')
     .select('id, name, description, order_index, is_active')
     .eq('is_active', true)

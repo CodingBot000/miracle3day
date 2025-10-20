@@ -1,9 +1,9 @@
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/session/server";
 
 export async function GET() {
-  const supabase = createClient();
+  const backendClient = createClient();
 
-  const bannerShow = await supabase
+  const bannerShow = await backendClient
     .from("banner_show")
     .select("id_banneritems");
 
@@ -16,7 +16,7 @@ export async function GET() {
 
   const id_banneritems = bannerShow.data.flatMap((bs) => bs.id_banneritems);
 
-  const { data, error, status, statusText } = await supabase
+  const { data, error, status, statusText } = await backendClient
     .from("banner_item")
     .select("*")
     .in("id_unique", id_banneritems);

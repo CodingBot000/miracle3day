@@ -1,13 +1,13 @@
 
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/session/server";
 import { ReservationInputDto } from "./reservation.dto"; // 또는 상대 경로
 import { TABLE_RESERVATIONS } from "@/constants/tables";
 
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
   try {
     console.log('🔍 API Route: POST reservation started');
-    const supabase = createClient();
+    const backendClient = createClient();
     const body = await req.json();
     console.log('🔍 API Route: Request body:', body);
 
@@ -41,7 +41,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     
     console.log('🔍 API Route: Prepared reservation data:', reservationData);
 
-    const { data, error } = await supabase
+    const { data, error } = await backendClient
       .from(TABLE_RESERVATIONS)
       .insert(reservationData)
       .select()

@@ -45,5 +45,5 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'API call failed' }, { status: 500 });
   }
 }
-//https://tqyarvckzieoraneohvv.supabase.co/storage/v1/object/public/images/images/doctors/95cc2bb6-c42c-42e0-a625-b5ef60025054/doctor_fffff_3e01f3f3_1753445190187.png
+//https://tqyarvckzieoraneohvv.backendClient.co/storage/v1/object/public/images/images/doctors/95cc2bb6-c42c-42e0-a625-b5ef60025054/doctor_fffff_3e01f3f3_1753445190187.png
  

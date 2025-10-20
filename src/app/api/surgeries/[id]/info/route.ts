@@ -1,15 +1,15 @@
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/session/server";
 
 export async function GET(
   req: Request,
   { params }: { params: { id: number } }
 ) {
-  const supabase = createClient();
+  const backendClient = createClient();
 
   const id = params.id;
 
   try {
-    const { data, error, status, statusText, count } = await supabase
+    const { data, error, status, statusText, count } = await backendClient
     .from("surgery_info")
     .select()
     .match({ id_unique: id })

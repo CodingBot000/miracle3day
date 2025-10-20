@@ -4,7 +4,7 @@ import { MouseEvent, useMemo } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
-import { createClient } from '@/utils/supabase/client'
+import { createClient } from '@/utils/session/client'
 import type { CommunityPost } from '@/app/models/communityData.dto'
 import { ANONYMOUS_FALLBACK, isAnonymousCategoryName } from './utils'
 import { useLoginGuard } from '@/hooks/useLoginGuard'
@@ -44,10 +44,10 @@ export default function PostList({ posts, isAuthenticated }: PostListProps) {
       return
     }
 
-    const supabase = createClient()
+    const backendClient = createClient()
 
     try {
-      const { data, error } = await supabase
+      const { data, error } = await backendClient
         .from('community_posts')
         .select('id')
         .eq('id', postId)

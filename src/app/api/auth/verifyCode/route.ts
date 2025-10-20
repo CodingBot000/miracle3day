@@ -1,15 +1,15 @@
 import { TABLE_MEMBERS } from "@/constants/tables";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/session/server";
 
 export async function POST(req: Request) {
   const body = await req.json();
 
   const { email, token } = body;
 
-  const supabase = createClient();
+  const backendClient = createClient();
 
   try {
-    const { data, error } = await supabase.auth.verifyOtp({
+    const { data, error } = await backendClient.auth.verifyOtp({
       email,
       token,
       type: "signup",
@@ -22,7 +22,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const findUser = await supabase
+    const findUser = await backendClient
       .from(TABLE_MEMBERS)
       .select("uuid,email,email_verify")
       .match({ email });
@@ -35,7 +35,7 @@ export async function POST(req: Request) {
       throw Error("Not Found User");
     }
 
-    const createEmailVerify = await supabase
+    const createEmailVerify = await backendClient
       .from(TABLE_MEMBERS)
       .update({ email_verify: true })
       .match({ uuid: findUser.data[0]!.uuid });

@@ -1,13 +1,13 @@
 import { TABLE_MEMBERS } from "@/constants/tables";
 import { UserOutputDto } from "./getUser.dto";
-import { createClient } from "@/utils/supabase/client";
+import { createClient } from "@/utils/session/client";
 import { useUserStore } from "@/stores/useUserStore";
 
 export const getUserAPI = async (): Promise<UserOutputDto | null> => {
-  const supabase = createClient();
+  const backendClient = createClient();
   
   // 먼저 세션을 확인하고 새로고침
-  const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+  const { data: { session }, error: sessionError } = await backendClient.auth.getSession();
   console.log("getUserAPI client session:", session);
   console.log("getUserAPI client sessionError:", sessionError);
   
@@ -20,7 +20,7 @@ export const getUserAPI = async (): Promise<UserOutputDto | null> => {
   const {
     data: { user: authUser },
     error: userError
-  } = await supabase.auth.getUser();
+  } = await backendClient.auth.getUser();
   
   console.log("getUserAPI clientauthUser 1:", authUser);
   console.log("getUserAPI clientauthUser 2:", JSON.stringify(authUser, null, 2));
@@ -32,7 +32,7 @@ export const getUserAPI = async (): Promise<UserOutputDto | null> => {
   }
   
   console.log("getUserAPI client authUser valid");
-  const { data: member, error } = await supabase
+  const { data: member, error } = await backendClient
   .from(TABLE_MEMBERS)
   .select("*")
   .eq("uuid", authUser.id)

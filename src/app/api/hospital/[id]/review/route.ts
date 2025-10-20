@@ -1,4 +1,4 @@
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/session/server";
 import { LIMIT } from "./constant";
 import { TABLE_HOSPITAL, TABLE_REVIEW, TABLE_MEMBERS } from "@/constants/tables";
 
@@ -14,13 +14,13 @@ export async function GET(
   const offset = pageParam * LIMIT;
   const limit = offset + LIMIT - 1;
 
-  const supabase = createClient();
+  const backendClient = createClient();
   console.log("api/hospital/[id]/review/route.ts id_uuid_hospital:", id_uuid_hospital);
 
 
   try {
     // 1. 병원 정보 단일 조회
-    const { data: hospitalData, error: hospitalError } = await supabase
+    const { data: hospitalData, error: hospitalError } = await backendClient
       .from(TABLE_HOSPITAL)
       .select("*")
       .eq('show', true)
@@ -30,7 +30,7 @@ export async function GET(
     if (hospitalError) throw new Error(hospitalError.message);
 
     // 2. 해당 병원의 리뷰들 조회
-    const { data: reviewDatas, count } = await supabase
+    const { data: reviewDatas, count } = await backendClient
       .from(TABLE_REVIEW)
       .select("*", { count: "exact" })
       .eq("id_uuid_hospital", id_uuid_hospital)
@@ -55,7 +55,7 @@ export async function GET(
     const userNos = Array.from(new Set(reviewDatas.map((r) => r.user_no)))
 
     // 4. user_no 기준 member 정보 조회
-    const { data: memberDatas, error: memberError } = await supabase
+    const { data: memberDatas, error: memberError } = await backendClient
       .from(TABLE_MEMBERS)
       .select("*")
       .in("user_no", userNos);

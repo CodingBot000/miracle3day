@@ -14,7 +14,7 @@ export default function DeleteUserButton({ uid }: DeleteUserButtonProps) {
     setLoading(true);
     setResult(null);
 
-    const res = await fetch("/api/delete-user", {
+    const res = await fetch("/api/delete_user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

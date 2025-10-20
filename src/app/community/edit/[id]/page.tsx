@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import WriteForm from '@/components/molecules/WriteForm'
-import { createClient } from '@/utils/supabase/server'
+import { createClient } from '@/utils/session/server'
 import type { Member, CommunityCategory } from '@/app/models/communityData.dto'
 import { TABLE_MEMBERS } from '@/constants/tables'
 
@@ -16,12 +16,12 @@ type CommunityPost = {
 }
 
 async function getCurrentUser(): Promise<Member | null> {
-  const supabase = createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const backendClient = createClient()
+  const { data: { user } } = await backendClient.auth.getUser()
   
   if (!user) return null
   
-  const { data: memberData } = await supabase
+  const { data: memberData } = await backendClient
     .from(TABLE_MEMBERS)
     .select('*')
     .eq('uuid', user.id)
@@ -42,8 +42,8 @@ function getLoginUrl() {
 }
 
 async function getPost(id: string) {
-  const supabase = createClient()
-  const { data, error } = await supabase
+  const backendClient = createClient()
+  const { data, error } = await backendClient
     .from('community_posts')
     .select('*')
     .eq('id', id)
@@ -58,8 +58,8 @@ async function getPost(id: string) {
 }
 
 async function getCategories() {
-  const supabase = createClient()
-  const { data, error } = await supabase
+  const backendClient = createClient()
+  const { data, error } = await backendClient
     .from('community_categories')
     .select('*')
     .eq('is_active', true)

@@ -1,5 +1,5 @@
 import { TABLE_MEMBERS } from "@/constants/tables";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/session/server";
 
 type SignUpParams = {
   email: string;
@@ -17,9 +17,9 @@ export async function signUp({
   nation,
 }: SignUpParams) {
   console.log('auth signUp params:', { email, password, name, nickname, nation });
-  const supabase = createClient();
+  const backendClient = createClient();
 
-  const { data: existingUser } = await supabase
+  const { data: existingUser } = await backendClient
     .from(TABLE_MEMBERS)
     .select("email")
     .match({ email })
@@ -29,7 +29,7 @@ export async function signUp({
     throw new Error("already exists email");
   }
 
-  const { data: countryCode } = await supabase
+  const { data: countryCode } = await backendClient
     .from("country_codes")
     .select("*")
     .match({ country_name: nation })
@@ -39,7 +39,7 @@ export async function signUp({
     throw new Error("country code not found");
   }
 
-  const { error } = await supabase.auth.signUp({
+  const { error } = await backendClient.auth.signUp({
     email,
     password,
     options: {

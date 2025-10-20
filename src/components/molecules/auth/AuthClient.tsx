@@ -4,17 +4,17 @@ import Link from "next/link";
 import { ROUTE } from "@/router";
 import { User as UserIcon } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
-import { createClient } from "@/utils/supabase/client";
+import { createClient } from "@/utils/session/client";
 import Image from "next/image";
 import { useHeader } from "@/contexts/HeaderContext";
-import { User } from "@supabase/supabase-js";
+import type { SessionUser } from "@/lib/data_client";
 
 export default function AuthClient() {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<SessionUser | null>(null);
   const [avatarUrl, setAvatarUrl] = useState<string>("");
   const [isScrolled, setIsScrolled] = useState(false);
   const { isTransparentMode } = useHeader();
-  const supabase = createClient();
+  const sessionClient = createClient();
 
   const fetchAndSetUser = useCallback(async () => {
     try {
@@ -51,7 +51,7 @@ export default function AuthClient() {
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
+    } = sessionClient.auth.onAuthStateChange((event, session) => {
       if (event === "SIGNED_OUT" || !session) {
         setUser(null);
         setAvatarUrl("");
@@ -61,7 +61,7 @@ export default function AuthClient() {
     });
 
     return () => subscription.unsubscribe();
-  }, [fetchAndSetUser, supabase.auth]);
+  }, [fetchAndSetUser, sessionClient.auth]);
 
   useEffect(() => {
     if (!isTransparentMode) {

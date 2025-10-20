@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { createClient } from "./utils/supabase/server";
-import { updateSession } from "./utils/supabase/middleware";
+import { createClient } from "./utils/session/server";
+import { updateSession } from "./utils/session/middleware";
 
 export async function middleware(req: NextRequest) {
   
-  const supabase = createClient();
+  const backendClient = createClient();
 
-  const auth = await supabase.auth.getUser();
+  const auth = await backendClient.auth.getUser();
 
   if (auth.data.user) {
     const allowedAuthPaths = ["/auth/withdrawal"];

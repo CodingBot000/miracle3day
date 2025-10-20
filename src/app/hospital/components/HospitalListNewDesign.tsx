@@ -12,6 +12,7 @@ interface HospitalListNewDesignProps {
 }
 
 const HospitalListNewDesign = ({ initialData }: HospitalListNewDesignProps) => {
+  const hospitals = Array.isArray(initialData) ? initialData : [];
   const router = useRouter();
 
   // Hospital data received successfully with show field
@@ -58,7 +59,7 @@ const HospitalListNewDesign = ({ initialData }: HospitalListNewDesignProps) => {
 
           {/* Clinic List */}
           <div className="space-y-8 md:space-y-12">
-            {initialData.map((hospital, index) => (
+            {hospitals.map((hospital, index) => (
               <HospitalListCard 
                 key={hospital.id_uuid} 
                 hospital={hospital}

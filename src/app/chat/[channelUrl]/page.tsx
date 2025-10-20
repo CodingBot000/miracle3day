@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { createClient } from "@/utils/supabase/client";
+import { createClient } from "@/utils/session/client";
 import { useRouter } from "next/navigation";
 import ChatClient from "@/components/ChatClient";
 import LottieLoading from "@/components/atoms/LottieLoading";
@@ -13,7 +13,7 @@ export default function ChatChannelPage({ params }: { params: { channelUrl: stri
   const [isLoading, setIsLoading] = useState(true);
   const [userId, setUserId] = useState<string>("");
   const router = useRouter();
-  const supabase = createClient();
+  const backendClient = createClient();
   const channelUrl = decodeURIComponent(params.channelUrl);
 
   useEffect(() => {

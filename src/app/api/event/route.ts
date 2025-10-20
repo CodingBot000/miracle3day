@@ -1,15 +1,15 @@
 import { TABLE_EVENT } from "@/constants/tables";
 import { infinityParams } from "@/utils/inifinityQuery";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/session/server";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
-  const supabase = createClient();
+  const backendClient = createClient();
 
   try {
     const { limit, nextCursor, offset } = infinityParams({ req, limits: 6 });
 
-    const { data, error, status, statusText, count } = await supabase
+    const { data, error, status, statusText, count } = await backendClient
       .from(TABLE_EVENT)
       .select("*", { count: "exact" })
       .range(offset, limit)

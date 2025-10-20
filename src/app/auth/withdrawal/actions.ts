@@ -1,15 +1,15 @@
 'use server';
 
 import { useUserStore } from '@/stores/useUserStore';
-import { adminsAuthClient } from '@/utils/supabase/admins';
-import { createClient } from '@/utils/supabase/server';
+import { adminsAuthClient } from '@/utils/session/admins';
+import { createClient } from '@/utils/session/server';
 import { redirect } from 'next/navigation';
 
 export async function withdrawAction() {
-  const supabase = createClient();
+  const backendClient = createClient();
   const {
     data: { user },
-  } = await supabase.auth.getUser();
+  } = await backendClient.auth.getUser();
 
   console.log("withdrawAction user: ", user);
   if (!user) {
@@ -19,7 +19,7 @@ export async function withdrawAction() {
   const uuid = user.id;
 
   // 1. 사용자 정보 삭제
-  await supabase.from("members").delete().eq("uuid", uuid);
+  await backendClient.from("members").delete().eq("uuid", uuid);
 
   // 2. 사용자 인증 계정 삭제 (serviceRole 키 필요 시 변경)
   // const adminClient = createClient(
@@ -30,7 +30,7 @@ export async function withdrawAction() {
   await adminsAuthClient.deleteUser(uuid);
 
   // 3. 세션 종료
-  await supabase.auth.signOut();
+  await backendClient.auth.signOut();
 
   // 4. 홈으로 이동
   redirect('/');

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { createClient } from '@/utils/supabase/client'
+import { createClient } from '@/utils/session/client'
 import { CommunityComment, Member } from '@/app/models/communityData.dto'
 import CommentItem from './CommentItem'
 
@@ -19,7 +19,7 @@ export default function CommentSection({
   const [comments, setComments] = useState(initialComments)
   const [newComment, setNewComment] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const supabase = createClient()
+  const backendClient = createClient()
 
   const countComments = (items: CommunityComment[]): number => {
     return items.reduce((total, item) => {
@@ -31,7 +31,7 @@ export default function CommentSection({
   const syncCommentCount = async (nextComments: CommunityComment[]) => {
     const total = countComments(nextComments)
 
-    const { error } = await supabase
+    const { error } = await backendClient
       .from('community_posts')
       .update({ comment_count: total, updated_at: new Date().toISOString() })
       .eq('id', postId)
@@ -47,7 +47,7 @@ export default function CommentSection({
     setIsSubmitting(true)
 
     try {
-      const { data, error } = await supabase
+      const { data, error } = await backendClient
         .from('community_comments')
         .insert({
           id_post: postId,
@@ -82,7 +82,7 @@ export default function CommentSection({
 
   const handleDeleteComment = async (commentId: number) => {
     try {
-      const { error } = await supabase
+      const { error } = await backendClient
         .from('community_comments')
         .update({ is_deleted: true })
         .eq('id', commentId)
@@ -109,7 +109,7 @@ export default function CommentSection({
 
   const handleReplySubmit = async (parentId: number, content: string) => {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await backendClient
         .from('community_comments')
         .insert({
           id_post: postId,

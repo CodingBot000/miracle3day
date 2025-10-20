@@ -1,14 +1,14 @@
 import { TABLE_MEMBERS } from "@/constants/tables";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/session/server";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const email = searchParams.get("email") as string;
 
-  const supabase = createClient();
+  const backendClient = createClient();
 
   try {
-    const { data: users, error: userError } = await supabase
+    const { data: users, error: userError } = await backendClient
       .from(TABLE_MEMBERS)
       .select("uuid,email,email_verify")
       .match({ email });
@@ -27,7 +27,7 @@ export async function GET(req: Request) {
       );
     }
 
-    const { data, error } = await supabase.auth.signInWithOtp({ email });
+    const { data, error } = await backendClient.auth.signInWithOtp({ email });
 
     if (error) {
       return Response.json({ status: error.status, statusText: error.code });

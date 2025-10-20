@@ -1,8 +1,8 @@
 import { TABLE_MEMBERS } from "@/constants/tables";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/session/server";
 
 export async function POST(req: Request) {
-  const supabase = createClient();
+  const backendClient = createClient();
 
   try {
     const body = await req.json();
@@ -11,7 +11,7 @@ export async function POST(req: Request) {
       throw Error("not Found Email");
     }
 
-    const { data, error, status, statusText } = await supabase
+    const { data, error, status, statusText } = await backendClient
       .from(TABLE_MEMBERS)
       .select("*")
       .match({ email: body.email });

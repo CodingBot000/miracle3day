@@ -1,24 +1,24 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@/utils/supabase/server"; 
+import { createClient } from "@/utils/session/server"; 
 import { TABLE_POINT_TRANSACTIONS } from "@/constants/tables";
 
 /** GET /api/point
  *  반환: { point: number }
  */
 export async function GET(req: Request) {
-  const supabase = createClient();
+  const backendClient = createClient();
 
   // 로그인 확인
   const {
     data: { user },
     error: userErr,
-  } = await supabase.auth.getUser();
+  } = await backendClient.auth.getUser();
   if (userErr || !user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   
 
-  const { data: pointTransaction, error: pointTransactionError } = await supabase
+  const { data: pointTransaction, error: pointTransactionError } = await backendClient
     .from(TABLE_POINT_TRANSACTIONS)
     .select("point_balance")
     .eq("user_id", user.id)

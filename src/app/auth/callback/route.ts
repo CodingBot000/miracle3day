@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 // The client you created from the Server-Side Auth instructions
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/session/server";
 import { ROUTE } from "@/router";
 import { TABLE_MEMBERS } from "@/constants/tables";
 
@@ -14,8 +14,8 @@ export async function GET(request: Request) {
 
   if (code) {
     //이 code로 Supabase의 session(로그인 상태)을 교환. 이걸 해야 로그인 완료 상태가됨
-    const supabase = createClient();
-    const { error: sessionError } = await supabase.auth.exchangeCodeForSession(code);
+    const backendClient = createClient();
+    const { error: sessionError } = await backendClient.auth.exchangeCodeForSession(code);
     
     if (sessionError) {
       console.error("Session exchange error:", sessionError);
@@ -23,15 +23,15 @@ export async function GET(request: Request) {
     }
     
     if (!sessionError) {
-      const { data: { user }, error: userError } = await supabase.auth.getUser();
-      const { data: userInfo } = await supabase.auth.getUserIdentities(); // 더 자세한 정보
+      const { data: { user }, error: userError } = await backendClient.auth.getUser();
+      const { data: userInfo } = await backendClient.auth.getUserIdentities(); // 더 자세한 정보
       console.log(`auth callback route.ts userInfo: ${userInfo}`);
       console.log(`auth callback route.ts userInfo: ${user}`);
       console.log(`auth callback route.ts userError: ${userError}`);
       if (!userError && user) {
         const { id } = user;
         
-        const { data: userRowExist, error: userRowExistError, count } = await supabase
+        const { data: userRowExist, error: userRowExistError, count } = await backendClient
         .from(TABLE_MEMBERS)
         .select("uuid", { count: "exact", head: true }) // head: true → data 없이 count만
         .eq("uuid", id);
@@ -50,7 +50,7 @@ export async function GET(request: Request) {
 
         if (!alreadyJoinedUser) {
           // 사용자 정보 DB에 upsert 소셜로그인에서는 생일, 성별 국가 등 정보가 이 타이밍에 가져올수없음
-          const { error: memberInsertError } = await supabase.from(TABLE_MEMBERS).upsert({
+          const { error: memberInsertError } = await backendClient.from(TABLE_MEMBERS).upsert({
             uuid: user.id, // auth.users.id → foreign key
             email: user.email ?? "",
             name: user.user_metadata?.full_name ?? "",         // 이름 (Google/Apple 등에서 옴)
@@ -67,7 +67,7 @@ export async function GET(request: Request) {
 
           // TABLE_MEMBERS 삽입 성공 시 badges_user_profile도 초기화
           if (!memberInsertError) {
-            await supabase.from('badges_user_profile').upsert({
+            await backendClient.from('badges_user_profile').upsert({
               user_id: user.id,
               exp: 0,
               level: 1,
@@ -84,7 +84,7 @@ export async function GET(request: Request) {
         // const { id } = user;
 
           //  user 테이블에서 추가정보 입력 여부 확인 소셜로그인에서는 생일, 성별 국가 등 정보가 가입하는 순간에는 갖고올수없어서 이미 입력했는지 여부를 확인해야함
-          const { data: userRow } = await supabase
+          const { data: userRow } = await backendClient
           .from(TABLE_MEMBERS)
           .select("id_country, birth_date, gender, secondary_email") // 생년월일, 성별 등도 추가 가능
           .eq("uuid", id)

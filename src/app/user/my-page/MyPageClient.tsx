@@ -2,7 +2,6 @@
 
 import { UserOutputDto } from "@/app/api/auth/getUser/getUser.dto";
 import LogoutAction from "@/components/molecules/LogoutAction";
-import { User } from "@supabase/supabase-js";
 
 interface MyPageClientProps {
   user: UserOutputDto;

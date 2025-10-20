@@ -1,7 +1,7 @@
-import { createClient } from "@/utils/supabase/client";
+import { createClient } from "@/utils/session/client";
 import { BUCKET_USERS, STORAGE_MEMBER, TABLE_MEMBERS } from "@/constants/tables";
 
-const supabase = createClient();
+const backendClient = createClient();
 
 export interface UploadProfileImageParams {
   file: File;
@@ -25,18 +25,18 @@ export const uploadProfileImage = async ({
     const folderPath = `${STORAGE_MEMBER}/${userUuid}`;
 
     // Delete existing files in the user's folder
-    const { data: existingFiles } = await supabase.storage
+    const { data: existingFiles } = await backendClient.storage
       .from(BUCKET_USERS)
       .list(folderPath);
 
     if (existingFiles && existingFiles.length > 0) {
       const filesToDelete = existingFiles.map(file => `${folderPath}/${file.name}`);
-      await supabase.storage
+      await backendClient.storage
         .from(BUCKET_USERS)
         .remove(filesToDelete);
     }
 
-    const { error: uploadError } = await supabase.storage
+    const { error: uploadError } = await backendClient.storage
       .from(BUCKET_USERS)
       .upload(filePath, file, {
         upsert: true,
@@ -50,13 +50,13 @@ export const uploadProfileImage = async ({
       };
     }
 
-    const { data: publicData } = supabase.storage
+    const { data: publicData } = backendClient.storage
       .from(BUCKET_USERS)
       .getPublicUrl(filePath);
 
     const avatarPath = publicData.publicUrl;
 
-    const { error: updateError } = await supabase
+    const { error: updateError } = await backendClient
       .from(TABLE_MEMBERS)
       .update({ avatar: avatarPath })
       .eq('uuid', userUuid);

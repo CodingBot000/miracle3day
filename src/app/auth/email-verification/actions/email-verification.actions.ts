@@ -4,13 +4,12 @@ import { country } from "@/constants/country";
 import { TABLE_MEMBERS } from "@/constants/tables";
 import { ROUTE } from "@/router";
 
-import { createClient } from "@/utils/supabase/server";
-import { AuthError, PostgrestError } from "@supabase/supabase-js";
+import { createClient } from "@/utils/session/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 const verifyActions = async (prevState: any, formData: FormData) => {
-  const supabase = createClient();
+  const sessionClient = createClient();
 
   const requestHeaders = headers();
   const fullUrl = requestHeaders.get("referer") || "";
@@ -26,7 +25,7 @@ const verifyActions = async (prevState: any, formData: FormData) => {
     throw new Error("userInfo.email is required");
   }
 
-  const verifyCode = await supabase.auth.verifyOtp({
+  const verifyCode = await sessionClient.auth.verifyOtp({
     email: userInfo.email,
     token: code,
     type: "email",
@@ -58,7 +57,7 @@ const verifyActions = async (prevState: any, formData: FormData) => {
     throw new Error("insertDb is required");
   }
 
-  const getUser = await supabase
+  const getUser = await sessionClient
     .from(TABLE_MEMBERS)
     .select("user_no")
     .limit(1)
@@ -76,7 +75,7 @@ const verifyActions = async (prevState: any, formData: FormData) => {
   const user_no = getUser.data[0]?.user_no + 1;
 
   // user 테이블 insert
-  const saveUserProfile = await supabase
+  const saveUserProfile = await sessionClient
     .from(TABLE_MEMBERS)
     .insert([{ ...insertDb, id_country, uuid, user_no }]);
 

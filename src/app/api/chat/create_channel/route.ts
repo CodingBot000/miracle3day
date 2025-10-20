@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { upsertUser, createDistinct1to1Channel } from "@/lib/sendbird";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/session/server";
 import { TABLE_MEMBERS } from "@/constants/tables";
 
 const Body = z.object({
@@ -26,8 +26,8 @@ export async function POST(req: NextRequest) {
     console.log('[create-channel] Request:', { member_uuid, hospital_id_uuid });
 
     // DB에서 member 정보 조회
-    const supabase = createClient();
-    const { data: member, error: memberError } = await supabase
+    const backendClient = createClient();
+    const { data: member, error: memberError } = await backendClient
       .from(TABLE_MEMBERS)
       .select('nickname')
       .eq('uuid', member_uuid)

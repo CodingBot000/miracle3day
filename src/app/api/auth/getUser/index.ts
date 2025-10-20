@@ -1,20 +1,20 @@
 import { TABLE_MEMBERS } from "@/constants/tables";
 import { UserOutputDto } from "./getUser.dto";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/session/server";
 
 export const getUserAPI = async (): Promise<UserOutputDto | null> => {
-  const supabase = createClient();
+  const backendClient = createClient();
 
   const {
     data: { user: authUser },
-  } = await supabase.auth.getUser();
+  } = await backendClient.auth.getUser();
 
   if (!authUser) {
     return null;
   }
   console.log("getUserAPI authUser.id:", authUser.id);
 
-  const { data: member, error } = await supabase
+  const { data: member, error } = await backendClient
   .from(TABLE_MEMBERS)
   .select("*")
   .eq("uuid", authUser.id)

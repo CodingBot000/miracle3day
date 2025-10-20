@@ -1,4 +1,4 @@
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/session/server";
 
 import { LIMIT } from "./constant";
 import { infinityParams } from "@/utils/inifinityQuery";
@@ -6,12 +6,12 @@ import { infinityParams } from "@/utils/inifinityQuery";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: Request) {
-  const supabase = createClient();
+  const backendClient = createClient();
 
   try {
     const {
       data: { user },
-    } = await supabase.auth.getUser();
+    } = await backendClient.auth.getUser();
 
     const { limit, offset, nextCursor } = infinityParams({
       req,
@@ -19,7 +19,7 @@ export async function GET(req: Request) {
     });
 
     // 전체 리스트
-    const { data, error, count, status, statusText } = await supabase
+    const { data, error, count, status, statusText } = await backendClient
       .from("favorite")
       .select(`*,hospital: id_hospital (name,imageurls,id_unique)`, {
         count: "exact",
@@ -48,7 +48,7 @@ export async function GET(req: Request) {
 }
 
 export async function POST(req: NextRequest) {
-  const supabase = createClient();
+  const backendClient = createClient();
   const body = await req.json();
 
   try {
@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
 
     if (!uuid) throw Error("not Found User");
 
-    const { data, error, statusText } = await supabase
+    const { data, error, statusText } = await backendClient
       .from("favorite")
       .select("*")
       .eq("uuid", uuid)
@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
       throw Error("already has favorite item");
     }
 
-    const createFavorite = await supabase
+    const createFavorite = await backendClient
       .from("favorite")
       .insert([{ uuid, id_hospital }]);
 
@@ -93,7 +93,7 @@ export async function POST(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
-  const supabase = createClient();
+  const backendClient = createClient();
   const body = await req.json();
 
   try {
@@ -103,7 +103,7 @@ export async function DELETE(req: NextRequest) {
 
     if (!uuid) throw Error("not Found User");
 
-    let query = supabase.from("favorite").delete().eq("uuid", uuid);
+    let query = backendClient.from("favorite").delete().eq("uuid", uuid);
 
     if (Array.isArray(parseId)) {
       query.in("id_hospital", parseId);

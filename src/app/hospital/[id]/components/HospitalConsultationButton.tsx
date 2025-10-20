@@ -32,7 +32,7 @@ const HospitalConsultationButton = ({ hospitalId }: HospitalConsultationButtonPr
       }
 
       // Create chat channel
-      const res = await fetch("/api/chat/create-channel", {
+      const res = await fetch("/api/chat/create_channel", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

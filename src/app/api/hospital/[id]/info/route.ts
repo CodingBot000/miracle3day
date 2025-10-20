@@ -1,69 +1,83 @@
 import { TABLE_DOCTOR, TABLE_HOSPITAL, TABLE_HOSPITAL_BUSINESS_HOUR, TABLE_HOSPITAL_DETAIL, TABLE_HOSPITAL_TREATMENT } from "@/constants/tables";
-import { createClient } from "@/utils/supabase/server";
+import { query } from "@/lib/db";
 
-export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
+export async function GET(req: Request, { params }: { params: { id: string } }) {
   const id_uuid = params.id;
-  const supabase = createClient();
-  console.log("qq api/hospital/[id]/info/route.ts", req);
+
   try {
-    const { data: infoData, error: infoError, status, statusText } = await supabase
-      .from(TABLE_HOSPITAL)
-      .select(`*`)
-      .match({ id_uuid: id_uuid, show: true });
+    const hospitalSql = `
+      SELECT
 
-    const { data: detailData, error: detailError } = await supabase
-      .from(TABLE_HOSPITAL_DETAIL)
-      .select(`*`)
-      .match({ id_uuid_hospital: id_uuid });
-      
-
-      
-      const { data: businessHourData, error: businessHourError } = await supabase
-      .from(TABLE_HOSPITAL_BUSINESS_HOUR)
-      .select(`*`)
-      .match({ id_uuid_hospital: id_uuid });
-
-      const { data: treatmentData, error: treatmentError } = await supabase
-      .from(TABLE_HOSPITAL_TREATMENT)
-      .select(`*`)
-      .match({ id_uuid_hospital: id_uuid });
-    
-      const { data: doctorsData, error: doctorsError } = await supabase
-      .from(TABLE_DOCTOR)
-      .select(`*`)
-  
-      .match({ id_uuid_hospital: id_uuid });
-    
-
-    if (infoError || detailError || businessHourError || treatmentError || doctorsError) {
-      return Response.json({ data: null }, { status, statusText });
+        id,
+        id_uuid,
+        name,
+        name_en,
+        address_full_road,
+        address_full_road_en,
+        address_full_jibun,
+        address_full_jibun_en,
+        address_si,
+        address_si_en,
+        address_gu,
+        address_gu_en,
+        address_dong,
+        address_dong_en,
+        zipcode,
+        latitude,
+        longitude,
+        address_detail,
+        address_detail_en,
+        directions_to_clinic,
+        directions_to_clinic_en,
+        location,
+        imageurls,
+        thumbnail_url,
+        created_at,
+        searchkey,
+        id_unique,
+        id_surgeries,
+        show,
+        favorite_count
+      FROM ${TABLE_HOSPITAL}
+      WHERE id_uuid = $1
+      LIMIT 1
+    `;
+    const hospitalResult = await query(hospitalSql, [id_uuid]);
+    const hospital = hospitalResult.rows[0];
+    if (!hospital) {
+      return Response.json({ data: null }, { status: 404, statusText: "Not Found" });
     }
+
+    const detailSql = `SELECT * FROM ${TABLE_HOSPITAL_DETAIL} WHERE id_uuid_hospital = $1 LIMIT 1`;
+    const businessSql = `SELECT * FROM ${TABLE_HOSPITAL_BUSINESS_HOUR} WHERE id_uuid_hospital = $1 ORDER BY day_of_week`;
+    const treatmentSql = `SELECT * FROM ${TABLE_HOSPITAL_TREATMENT} WHERE id_uuid_hospital = $1`;
+    const doctorSql = `SELECT * FROM ${TABLE_DOCTOR} WHERE id_uuid_hospital = $1`;
+
+    const [detailRes, businessRes, treatmentRes, doctorRes] = await Promise.all([
+      query(detailSql, [id_uuid]),
+      query(businessSql, [id_uuid]),
+      query(treatmentSql, [id_uuid]),
+      query(doctorSql, [id_uuid]),
+    ]);
 
     return Response.json(
       {
         data: {
-          // ...infoData[0],
-          hospital_info: infoData[0],
-          hospital_details: detailData[0],
-          business_hours: businessHourData,
-          treatments: treatmentData,
-          
-          doctors: doctorsData,
-          // favorite: favoriteData,
-      
+          hospital_info: hospital,
+          hospital_details: detailRes.rows[0] ?? null,
+          business_hours: businessRes.rows,
+          treatments: treatmentRes.rows,
+          doctors: doctorRes.rows,
         },
       },
-      { status: 200, statusText: "success" }
+      { status: 200, statusText: "success", headers: { "Cache-Control": "no-store" } }
     );
   } catch (error) {
-    if (error instanceof Error) {
-      return Response.json(
-        { data: null },
-        { status: 500, statusText: error.message }
-      );
-    }
+    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("GET /api/hospital/[id]/info error:", error);
+    return Response.json(
+      { data: null, error: message },
+      { status: 500, statusText: message, headers: { "Cache-Control": "no-store" } }
+    );
   }
 }

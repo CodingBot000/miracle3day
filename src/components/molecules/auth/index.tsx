@@ -3,7 +3,7 @@
 // import Link from "next/link";
 // import { Button } from "@/components/ui/button";
 // import { getUserAPI } from "@/app/api/auth/getUser";
-// import { User } from "@supabase/supabase-js";
+// import { User } from "@backendClient/backendClient-js";
 // import { LogIn, User as UserIcon } from "lucide-react";
 
 // const Auth = async () => {

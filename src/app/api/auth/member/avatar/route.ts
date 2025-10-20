@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { BUCKET_USERS, TABLE_MEMBERS } from "@/constants/tables";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/session/server";
 
 export async function GET(request: Request) {
-  const supabase = createClient();
+  const backendClient = createClient();
 
   try {
     const { searchParams } = new URL(request.url);
@@ -16,7 +16,7 @@ export async function GET(request: Request) {
       );
     }
 
-    const { data: memberData, error: memberError } = await supabase
+    const { data: memberData, error: memberError } = await backendClient
       .from(TABLE_MEMBERS)
       .select("avatar")
       .eq("uuid", userId)
@@ -40,7 +40,7 @@ export async function GET(request: Request) {
       return NextResponse.json({ avatarUrl: avatar }, { status: 200 });
     }
 
-    const { data: publicUrlData } = supabase.storage
+    const { data: publicUrlData } = backendClient.storage
       .from(BUCKET_USERS)
       .getPublicUrl(avatar);
 

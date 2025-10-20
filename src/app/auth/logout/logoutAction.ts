@@ -2,17 +2,17 @@
 
 import { ROUTE } from "@/router";
 import { useUserStore } from "@/stores/useUserStore";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/session/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export async function logoutAction() {
   console.log('[LogoutAction] Starting logout process...');
   
-  const supabase = createClient();
-  console.log('[LogoutAction] Calling supabase.auth.signOut()...');
+  const backendClient = createClient();
+  console.log('[LogoutAction] Calling backendClient.auth.signOut()...');
   
-  const { error } = await supabase.auth.signOut();
+  const { error } = await backendClient.auth.signOut();
   if (error) {
     console.error('[LogoutAction] Supabase signOut error:', error);
   } else {

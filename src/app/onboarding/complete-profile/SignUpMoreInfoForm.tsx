@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { NationModal } from "@/app/auth/sign-up/components/modal/nations";
 import { useRouter, useSearchParams } from "next/navigation";
-import { updateProfileAPI } from "@/app/api/auth/update-profile";
+import { updateProfileAPI } from "@/app/api/auth/update_profile";
 import { CountryCode } from "@/app/models/country-code.dto";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";

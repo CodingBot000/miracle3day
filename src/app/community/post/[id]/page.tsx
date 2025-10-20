@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { createClient } from '@/utils/supabase/server'
+import { createClient } from '@/utils/session/server'
 import CommentSection from '@/components/molecules/CommentSection'
 import LikeButton from '@/components/atoms/button/LikeButton'
 import ReportButton from '@/components/atoms/button/ReportButton'
@@ -48,12 +48,12 @@ function countComments(comments: CommunityComment[]): number {
 }
 
 async function getCurrentUser(): Promise<Member | null> {
-  const supabase = createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const backendClient = createClient()
+  const { data: { user } } = await backendClient.auth.getUser()
   
   if (!user) return null
   
-  const { data: memberData } = await supabase
+  const { data: memberData } = await backendClient
     .from(TABLE_MEMBERS)
     .select('*')
     .eq('uuid', user.id)
@@ -74,8 +74,8 @@ function getLoginUrl() {
 }
 
 async function getPost(id: string): Promise<CommunityPost | null> {
-  const supabase = createClient()
-  const { data, error } = await supabase
+  const backendClient = createClient()
+  const { data, error } = await backendClient
     .from('community_posts')
     .select(
       'id, uuid_author, title, content, id_category, view_count, is_deleted, created_at, updated_at, author_name_snapshot, author_avatar_snapshot'
@@ -92,8 +92,8 @@ async function getPost(id: string): Promise<CommunityPost | null> {
 }
 
 async function getComments(postId: string) {
-  const supabase = createClient()
-  const { data, error } = await supabase
+  const backendClient = createClient()
+  const { data, error } = await backendClient
     .from('community_comments')
     .select(`
       *,
@@ -131,12 +131,12 @@ export default async function PostDetailPage({
   const totalComments = countComments(commentTree)
   const isAuthor = currentUser.uuid === post.uuid_author
 
-  const supabase = createClient()
+  const backendClient = createClient()
 
   let categoryName: string | null = null
 
   if (post.id_category) {
-    const { data: categoryRow } = await supabase
+    const { data: categoryRow } = await backendClient
       .from('community_categories')
       .select('name')
       .eq('id', post.id_category)
@@ -161,12 +161,12 @@ export default async function PostDetailPage({
     timeZone: 'Asia/Seoul',
   }).format(new Date(post.created_at))
 
-  const { count: likesCount } = await supabase
+  const { count: likesCount } = await backendClient
     .from('community_likes')
     .select('id', { count: 'exact' })
     .eq('id_post', post.id)
 
-  const { data: userLike } = await supabase
+  const { data: userLike } = await backendClient
     .from('community_likes')
     .select('id')
     .eq('id_post', post.id)
@@ -176,7 +176,7 @@ export default async function PostDetailPage({
   const likeCountValue = likesCount ?? post.like_count ?? 0
   const nextViewCount = (post.view_count ?? 0) + 1
 
-  await supabase
+  await backendClient
     .from('community_posts')
     .update({
       view_count: nextViewCount,

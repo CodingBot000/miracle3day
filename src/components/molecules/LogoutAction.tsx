@@ -1,18 +1,18 @@
 "use client";
 
 import Button from "@/components/atoms/button/Button";
-import { createClient } from "@/utils/supabase/client";
+import { createClient } from "@/utils/session/client";
 import { useRouter } from "next/navigation";
 import { ROUTE } from "@/router";
 
 export default function LogoutAction() {
-  const supabase = createClient();
+  const backendClient = createClient();
   const router = useRouter();
 
   const handleLogout = async () => {
     try {
       // Use signOut with scope: 'global' to ensure server-side logout
-      const { error } = await supabase.auth.signOut({ scope: 'global' });
+      const { error } = await backendClient.auth.signOut({ scope: 'global' });
       
       if (error) {
         console.error('Logout error:', error);

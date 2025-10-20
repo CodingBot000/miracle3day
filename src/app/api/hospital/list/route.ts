@@ -1,49 +1,62 @@
 import { TABLE_HOSPITAL } from "@/constants/tables";
-import { createClient } from "@/utils/supabase/server";
+import { query } from "@/lib/db";
+import type { HospitalData } from "@/app/models/hospitalData.dto";
 
 export async function GET(req: Request) {
-  const supabase = createClient();
-
-  // const { searchParams } = new URL(req.url);
-  // const locationNum = searchParams.get("locationNum");
-
   try {
-    const { data = [], count, error } = await supabase
-      .from(TABLE_HOSPITAL)
-       .select(`
-      created_at,
-      name,
-      name_en,
-      searchkey,
-      latitude,
-      longitude,
-      thumbnail_url,
-      imageurls,
-      id_surgeries,
-      id_unique,
-      id_uuid,
-      location,
-      address_full_road_en,
-      address_full_jibun_en,
-      show
-    `,
-        { count: "exact" })
-      .eq('show', true)
-      // .match({ location: locationNum })
-      // .limit(9);
+    const url = new URL(req.url);
+    const locationNum = url.searchParams.get("locationNum");
 
-    const response = {
-      data,
-      total: count,
-    };
+    const values: any[] = [];
+    let whereClauses = ["show = true"];
 
-    return Response.json(response, { status: 200, statusText: "success" });
-  } catch (error) {
-    if (error instanceof Error) {
-      return Response.json(
-        { data: [], total: 0 },
-        { status: 500, statusText: error.message }
-      );
+    if (locationNum) {
+      values.push(locationNum);
+      whereClauses.push(`location = $${values.length}`);
     }
+
+    const sql = `
+      SELECT 
+        created_at,
+        name,
+        name_en,
+        searchkey,
+        latitude,
+        longitude,
+        thumbnail_url,
+        imageurls,
+        id_surgeries,
+        id_unique,
+        id_uuid,
+        location,
+        address_full_road_en,
+        address_full_jibun_en,
+        show
+      FROM ${TABLE_HOSPITAL}
+      ${whereClauses.length ? `WHERE ${whereClauses.join(" AND ")}` : ""}
+      ORDER BY created_at DESC
+    `;
+
+    const { rows, rowCount } = await query<HospitalData>(sql, values);
+
+    return Response.json(
+      { data: rows, total: rowCount ?? rows.length },
+      {
+        status: 200,
+        statusText: "success",
+        headers: { "Cache-Control": "no-store" },
+      }
+    );
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("GET /api/hospital/list error:", error);
+    return Response.json(
+      { data: [], total: 0, error: message },
+      {
+        status: 500,
+        statusText: message,
+        headers: { "Cache-Control": "no-store" },
+      }
+    );
   }
 }

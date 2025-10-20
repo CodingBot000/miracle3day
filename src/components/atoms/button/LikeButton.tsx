@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { createClient } from "@/utils/supabase/client";
+import { createClient } from "@/utils/session/client";
 
 interface LikeButtonProps {
   postId: number
@@ -19,10 +19,10 @@ export default function LikeButton({
   const [isLiked, setIsLiked] = useState(initialLiked)
   const [likesCount, setLikesCount] = useState(initialCount)
   const [isLoading, setIsLoading] = useState(false)
-  const supabase = createClient()
+  const backendClient = createClient()
 
   const syncLikeCount = async (nextCount: number) => {
-    const { error } = await supabase
+    const { error } = await backendClient
       .from('community_posts')
       .update({ like_count: nextCount, updated_at: new Date().toISOString() })
       .eq('id', postId)
@@ -39,7 +39,7 @@ export default function LikeButton({
     
     try {
       if (isLiked) {
-        const { error } = await supabase
+        const { error } = await backendClient
           .from('community_likes')
           .delete()
           .eq('id_post', postId)
@@ -54,7 +54,7 @@ export default function LikeButton({
           })
         }
       } else {
-        const { error } = await supabase
+        const { error } = await backendClient
           .from('community_likes')
           .insert({
             id_post: postId,

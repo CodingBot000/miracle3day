@@ -29,8 +29,6 @@
     "@sendbird/chat": "^4.20.1",
     "@sendbird/uikit-react": "^3.17.3",
     "@sendbird/uikit-utils": "^3.11.0",
-    "@supabase/ssr": "^0.4.0",
-    "@supabase/supabase-js": "^2.44.2",
     "@tailwindcss/line-clamp": "^0.4.4",
     "@tanstack/react-query": "^5.51.1",
     "@tanstack/react-query-devtools": "^5.51.1",

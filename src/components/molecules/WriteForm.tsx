@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { createClient } from '@/utils/supabase/client'
+import { createClient } from '@/utils/session/client'
 import type { CommunityCategory } from '@/app/models/communityData.dto'
 import { isAnonymousCategoryName } from '@/app/community/utils'
 import { TABLE_MEMBERS } from '@/constants/tables'
@@ -38,7 +38,7 @@ export default function WriteForm({
     setIsSubmitting(true)
 
     try {
-      const supabase = createClient()
+      const backendClient = createClient()
       const resolvedCategoryId = categoryId === '' ? null : categoryId
       const selectedCategory = resolvedCategoryId
         ? categories.find((category) => String(category.id) === resolvedCategoryId)
@@ -49,7 +49,7 @@ export default function WriteForm({
       let authorAvatarSnapshot: string | null = null
 
       if (!anonymousCategory) {
-        const { data: memberRow, error: memberError } = await supabase
+        const { data: memberRow, error: memberError } = await backendClient
           .from(TABLE_MEMBERS)
           .select('nickname, avatar')
           .eq('uuid', authorUuid)
@@ -73,7 +73,7 @@ export default function WriteForm({
       }
 
       if (postId) {
-        const { error } = await supabase
+        const { error } = await backendClient
           .from('community_posts')
           .update({
             ...postData,
@@ -87,7 +87,7 @@ export default function WriteForm({
           alert('An error occurred while editing the post.')
         }
       } else {
-        const { data, error } = await supabase
+        const { data, error } = await backendClient
           .from('community_posts')
           .insert(postData)
           .select()

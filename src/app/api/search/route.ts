@@ -1,11 +1,11 @@
 import { TABLE_EVENT, TABLE_HOSPITAL, TABLE_REVIEW } from "@/constants/tables";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/session/server";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const q = searchParams.get("q");
 
-  const supabase = createClient();
+  const backendClient = createClient();
 
   try {
     const rawQ = q ?? "";
@@ -13,18 +13,18 @@ export async function GET(req: Request) {
 
     // 병렬 검색 실행
     const [hospitalRes, eventRes, reviewsRes] = await Promise.all([
-      supabase
+      backendClient
         .from(TABLE_HOSPITAL)
         .select("*")
         .eq('show', true)
         .ilike("search_key", `%${normalizedQ}%`),
 
-      supabase
+      backendClient
         .from(TABLE_EVENT)
         .select("*")
         .ilike("search_key", `%${normalizedQ}%`),
 
-      supabase
+      backendClient
         .from(TABLE_REVIEW)
         .select("*")
         .ilike("search_key", `%${normalizedQ}%`),

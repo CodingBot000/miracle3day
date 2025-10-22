@@ -10,6 +10,7 @@ const TABLE_EVENT = "event";
 const TABLE_REVIEW = "reviews";
 const TABLE_FAVORITE = "favorite";
 const TABLE_MEMBERS = "members";
+const TABLE_MEMBER_SOCIAL_ACCOUNTS = "member_social_accounts";
 const TABLE_SURGERY_INFO = "surgery_info";
 const TABLE_RESERVATIONS = "reservations";
 const TABLE_POINT_TRANSACTIONS = "point_transactions";
@@ -28,6 +29,7 @@ const STORAGE_MEMBER = "member";
 const BUCKET_USERS = "users";
 
 export {
+  TABLE_MEMBER_SOCIAL_ACCOUNTS,
   TABLE_HOSPITAL,
   TABLE_DOCTOR,
   TABLE_HOSPITAL_DETAIL,

@@ -1,12 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
+import { clerkMiddleware } from "@clerk/nextjs/server";
 
 import { createClient } from "./utils/session/server";
 import { updateSession } from "./utils/session/middleware";
 
-export async function middleware(req: NextRequest) {
-  
-  const backendClient = createClient();
+const handler = clerkMiddleware(async (_auth, req: NextRequest) => {
+  if (req.nextUrl.pathname.startsWith("/api/")) {
+    return NextResponse.next();
+  }
 
+  const backendClient = createClient();
   const auth = await backendClient.auth.getUser();
 
   if (auth.data.user) {
@@ -52,7 +55,9 @@ export async function middleware(req: NextRequest) {
   console.log('middleware.ts all path:', req.nextUrl.pathname);
   const res = await updateSession(req);
   return ensureLangCookie(req, res);
-}
+});
+
+export default handler;
 
 export const config = {
   matcher: [
@@ -60,11 +65,13 @@ export const config = {
      * Match all request paths except for the ones starting with:
      * - _next/static (static files)
      * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
+     * - favicon.(png|ico) (favicon files)
      * - lottie files
      * Feel free to modify this pattern to include more paths.
      */
-    "/((?!_next/static|api|_next/image|favicon.png|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|lottie)$).*)",
+    "/((?!_next/static|_next/image|favicon.png|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|lottie)$).*)",
+    "/api/auth/terms/agree",
+    "/api/onboarding/complete",
   ],
 };
 

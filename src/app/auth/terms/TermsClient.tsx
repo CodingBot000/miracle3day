@@ -1,14 +1,13 @@
 'use client';
 
-import { useMemo, useState, useTransition } from 'react';
-import Link from 'next/link';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import type { TSnsType } from '../login/actions';
-import { snsLoginActions } from '../login/actions';
 import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 import TermsHtmlModal from '@/components/template/modal/TermsHtmlModal';
+import { useUser } from '@clerk/nextjs';
 
 interface TermItem {
   id: string;
@@ -32,7 +31,7 @@ type TermsClientProps = {
 export default function TermsClient({ initialProvider }: TermsClientProps) {
   const router = useRouter();
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
-  const [isPending, startTransition] = useTransition();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionError, setSubmissionError] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalSrc, setModalSrc] = useState<string | undefined>(undefined);
@@ -41,6 +40,7 @@ export default function TermsClient({ initialProvider }: TermsClientProps) {
 
   const { language } = useCookieLanguage();
   const locale = language === 'ko' ? 'ko' : 'en';
+  const { user, isLoaded, isSignedIn } = useUser();
 
   const provider = useMemo(() => initialProvider, [initialProvider]);
 
@@ -76,14 +76,65 @@ export default function TermsClient({ initialProvider }: TermsClientProps) {
       }
       return acc;
     }, {} as Record<string, boolean>);
+
     setCheckedItems(newCheckedItems);
   };
 
   const handleSingleCheck = (id: string, checked: boolean) => {
-    setCheckedItems(prev => ({
+    setCheckedItems((prev) => ({
       ...prev,
-      [id]: checked
+      [id]: checked,
     }));
+  };
+
+  useEffect(() => {
+    if (!isLoaded) return;
+
+    if (!isSignedIn) {
+      router.replace('/auth/login');
+      return;
+    }
+
+    const metadata = (user?.publicMetadata ?? {}) as Record<string, unknown>;
+    if (metadata?.terms_agreed === true) {
+      router.replace('/onboarding/complete-profile');
+    }
+  }, [isLoaded, isSignedIn, user, router]);
+
+  const handleNext = async () => {
+    if (!isAllRequiredChecked || isSubmitting) return;
+
+    if (!isSignedIn || !user) {
+      setSubmissionError('세션이 만료되었습니다. 다시 로그인해 주세요.');
+      router.replace('/auth/login');
+      return;
+    }
+
+    setSubmissionError(null);
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('/api/auth/terms/agree', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          marketingOptIn: checkedItems['marketing'] === true,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Request failed with status ${response.status}`);
+      }
+
+      router.replace('/onboarding/complete-profile');
+    } catch (error) {
+      console.error('Failed to save terms agreement', error);
+      setSubmissionError('동의 내용을 저장하지 못했습니다. 다시 시도해 주세요.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -122,21 +173,22 @@ export default function TermsClient({ initialProvider }: TermsClientProps) {
                     id={term.id}
                     checked={checkedItems[term.id] || false}
                     onCheckedChange={(checked) => handleSingleCheck(term.id, checked as boolean)}
-                />
-                <label htmlFor={term.id} className="text-sm">
-                  {term.required && '[Required] '}{term.label}
-                </label>
+                  />
+                  <label htmlFor={term.id} className="text-sm">
+                    {term.required && '[Required] '}
+                    {term.label}
+                  </label>
+                </div>
+                {termHref && term.id !== 'age' ? (
+                  <button
+                    type="button"
+                    onClick={() => openModal(termHref, term.label)}
+                    className="text-sm text-blue-600 hover:underline"
+                  >
+                    View
+                  </button>
+                ) : null}
               </div>
-              {termHref && term.id !== 'age' ? (
-                <button
-                  type="button"
-                  onClick={() => openModal(termHref, term.label)}
-                  className="text-sm text-blue-600 hover:underline"
-                >
-                  View
-                </button>
-              ) : null}
-            </div>
             );
           })}
         </div>
@@ -147,24 +199,10 @@ export default function TermsClient({ initialProvider }: TermsClientProps) {
 
         <Button
           className="w-full"
-          disabled={!isAllRequiredChecked || isPending}
-          onClick={() => {
-            if (!isAllRequiredChecked || isPending) return;
-
-            if (provider) {
-              setSubmissionError(null);
-              startTransition(() => {
-                snsLoginActions(null, provider).catch(() => {
-                  setSubmissionError('Failed to initiate social login. Please try again.');
-                });
-              });
-              return;
-            }
-
-            router.push('/auth/sign-up');
-          }}
+          disabled={!isAllRequiredChecked || isSubmitting}
+          onClick={handleNext}
         >
-          {isPending ? 'Processing…' : 'Next'}
+          {isSubmitting ? 'Processing…' : 'Next'}
         </Button>
       </div>
 
@@ -175,5 +213,5 @@ export default function TermsClient({ initialProvider }: TermsClientProps) {
         onClose={() => setModalOpen(false)}
       />
     </div>
-  )
-} 
+  );
+}

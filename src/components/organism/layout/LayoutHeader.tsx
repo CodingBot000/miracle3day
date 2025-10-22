@@ -1,6 +1,4 @@
 "use client"
-import  Menu from "./MenuDeskTop";
-import dynamic from "next/dynamic";
 // import Auth from "@/components/molecules/auth";
 import Logo from "@/components/molecules/Logo";
 import LanguageSelector from "./LanguageSelector";
@@ -10,41 +8,17 @@ import { Search, MessageSquareText, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import SearchPanel from "./SearchPanel";
 import AuthClient from "@/components/molecules/auth/AuthClient";
-import { createClient } from "@/utils/session/client";
 import { useHeader } from "@/contexts/HeaderContext";
+import { useUser } from "@clerk/nextjs";
 
 // const Auth = dynamic(() => import("@/components/molecules/auth/AuthServer"), {
 //   ssr: false,
 // });
 const LayoutHeader = () => {
   const [showSearch, setShowSearch] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { isTransparentMode } = useHeader();
-  const backendClient = createClient();
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const res = await fetch("/api/auth/getUser/session");
-        const data = await res.json();
-        console.log('[LayoutHeader] Fetched user:', data.user);
-        setIsLoggedIn(!!data.user);
-      } catch (error) {
-        console.error('[LayoutHeader] Error fetching user:', error);
-        setIsLoggedIn(false);
-      }
-    };
-
-    fetchUser();
-
-    const { data: { subscription } } = backendClient.auth.onAuthStateChange((event, session) => {
-      console.log('[LayoutHeader] Auth state changed:', event, !!session?.user);
-      setIsLoggedIn(!!session?.user);
-    });
-
-    return () => subscription.unsubscribe();
-  }, [backendClient.auth]);
+  const { isSignedIn, user, isLoaded } = useUser();
 
   useEffect(() => {
     if (!isTransparentMode) {
@@ -129,13 +103,20 @@ const LayoutHeader = () => {
             </div>
           </div>
           <div className="relative text-black">
-            <AuthClient />
-            {/* {isLoggedIn && (
-              <Link href="/gamification/quize">
-                <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full animate-pulse shadow-lg shadow-yellow-400/50" />
-              </Link>
-            )} */}
-          </div>
+            {isLoaded && isSignedIn && user ? (
+              <div className="hidden items-center gap-2 text-sm text-slate-700 md:flex">
+                <span>{user.fullName ?? user.username ?? user.primaryEmailAddress?.emailAddress ?? 'User'}</span>
+                {user.imageUrl ? (
+                  <img
+                    src={user.imageUrl}
+                    alt={user.fullName ?? 'User'}
+                    className="h-6 w-6 rounded-full object-cover"
+                  />
+                ) : null}
+              </div>
+            ) : null}
+            <AuthClient iconColor={isTransparentMode && !isScrolled ? 'white' : 'black'} />
+            </div>
         </div>
       </div>
     </header>

@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
-import { getAuthSession } from "@/lib/auth-helper";
+import { cookies } from "next/headers";
 import WriteForm from '@/components/molecules/WriteForm';
 import type { CommunityCategory } from '@/app/models/communityData.dto';
 import {
@@ -8,6 +8,7 @@ import {
 } from '@/constants/tables';
 import { q } from '@/lib/db';
 import { findMemberByUserId } from '@/app/api/auth/getUser/member.helper';
+import { requireUserId } from '@/lib/auth/require-user';
 
 async function getCategories(): Promise<CommunityCategory[]> {
   const rows = await q(
@@ -24,17 +25,14 @@ export default async function EditPage({
 }: {
   params: { id: string };
 }) {
-  const authSession = await getAuthSession(req); if (!authSession) return NextResponse.json({ error: "Unauthorized" }, { status: 401 }); const { userId } = authSession;
-
-  if (!userId) {
-    redirect('/auth/login');
-  }
-
-  const member = await findMemberByUserId(userId!);
+  const userId = await requireUserId();                 // ✅ 세션에서 보안적으로 추출
+  const member = await findMemberByUserId(userId);      // (원하면 생략 가능)
 
   if (!member) {
-    redirect('/auth/login');
+    redirect("/auth/login");
   }
+
+ 
 
   const memberUuid =
     (member['uuid'] as string | undefined) ??

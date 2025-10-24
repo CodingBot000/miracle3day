@@ -2,24 +2,32 @@
 
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
-import { getIronSession } from 'iron-session';
-import { sessionOptions } from '@/lib/session';
 import { q } from '@/lib/db';
 import { TABLE_MEMBERS } from '@/constants/tables';
+import { getIronSession } from 'iron-session';
+import { sessionOptions } from '@/lib/session';
 
 export async function withdrawAction() {
-  const cookieStore = await cookies();
-  const session = await getIronSession(cookieStore, {}, sessionOptions) as any;
-  
-  if (!session.auth || !session.auth.id_uuid) {
+  // 1) 세션 복원
+  const session = await getIronSession(cookies(), sessionOptions);
+  const auth = (session as any).auth;
+
+  // 2) 로그인 체크
+  if (!auth || auth.status !== 'active' || !auth.id_uuid) {
     throw new Error('Not authenticated');
   }
 
+
   await q(
     `DELETE FROM ${TABLE_MEMBERS} WHERE id_uuid = $1`,
-    [session.auth.id_uuid]
+    [auth.id_uuid]
   );
 
-  session.destroy();
+  // 세션 쿠키 삭제
+  // cookieStore.delete('app_session');
+  // 4) 세션 파기 (쿠키 제거 포함)
+  await session.destroy();
+
+
   redirect('/');
 }

@@ -1,4 +1,4 @@
-import { getAuthSession } from "@/lib/auth-helper";
+import { cookies } from "next/headers";
 import { getCommunityCategories, getCommunityPostsDTO } from '@/app/api/community/getPosts';
 import type { CommunityCategory } from '@/app/models/communityData.dto';
 import PostList from './PostList';
@@ -11,8 +11,9 @@ interface CommunityPageProps {
 }
 
 export default async function HomePage({ searchParams }: CommunityPageProps) {
-  const authSession = await getAuthSession(req); if (!authSession) return NextResponse.json({ error: "Unauthorized" }, { status: 401 }); const { userId } = authSession;
-  const isAuthenticated = !!userId;
+  const cookieStore = cookies();
+  const sessionCookie = cookieStore.get("app_session");
+  const isAuthenticated = !!sessionCookie;
 
   const categories = await getCommunityCategories();
   const categoryMap = new Map<string, CommunityCategory>(

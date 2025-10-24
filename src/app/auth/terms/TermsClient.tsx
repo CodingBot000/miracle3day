@@ -194,7 +194,7 @@ export default function TermsClient({ initialProvider }: TermsClientProps) {
       router.replace('/onboarding/complete-profile');
     } catch (error) {
       console.error('Failed to save terms agreement', error);
-      setSubmissionError('동의 내용을 저장하지 못했습니다. 다시 시도해 주세요.');
+      setSubmissionError('can not save terms agreement. try again please.');
     } finally {
       setIsSubmitting(false);
     }
@@ -222,7 +222,7 @@ export default function TermsClient({ initialProvider }: TermsClientProps) {
             onCheckedChange={(checked) => handleAgreeAll(checked as boolean)}
           />
           <label htmlFor="all" className="font-medium">
-            Agree with all (excluding optional)
+            Agree with all
           </label>
         </div>
 

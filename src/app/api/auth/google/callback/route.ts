@@ -6,6 +6,13 @@ import { sessionOptions } from "@/lib/session";
 import { q } from "@/lib/db";
 import { TABLE_MEMBERS, TABLE_MEMBER_SOCIAL_ACCOUNTS } from "@/constants/tables";
 
+type TermsAgreements = {
+  [key: string]: {
+    agreed: boolean;
+    required: boolean;
+  };
+};
+
 async function exchangeToken(code: string, verifier: string) {
   const body = new URLSearchParams({
     client_id: process.env.GOOGLE_CLIENT_ID!,
@@ -75,8 +82,47 @@ export async function GET(req: Request) {
     }
     
     if (memberId) {
+      // 기존회원인데 약관에 동의를 모두 한상태인지 체크. 원래는 동의를 해야 통과되지만 네트워크 이슈로 동의가 제대로 되지않았을 경우 다시 동의화면으로 이동시켜야함
+      const termsAgreements = await q(
+        `SELECT terms_agreements FROM ${TABLE_MEMBERS} WHERE id_uuid = $1`,
+        [memberId]
+      );
+      const termsAgreementsData = termsAgreements[0]?.terms_agreements as TermsAgreements | null;
+      
+      if (!termsAgreementsData) {
+        const res = NextResponse.redirect(new URL("/auth/terms", req.url));
+        const session = await getIronSession(req, res, sessionOptions) as any;
+        session.auth = {
+          provider,
+          provider_user_id: providerUserId,
+          email,
+          avatar: payload.picture as string,
+          status: "pending",
+        };
+        await session.save();
+        return res;
+      }
+      
+      // required가 true인 항목 중 agreed가 false인 것이 있는지 확인
+      const hasUnagreeRequired = Object.values(termsAgreementsData).some(
+        (term) => term.required === true && term.agreed !== true
+      );
+      
+      if (hasUnagreeRequired) {
+        const res = NextResponse.redirect(new URL("/auth/terms", req.url));
+        const session = await getIronSession(req, res, sessionOptions) as any;
+        session.auth = {
+          provider,
+          provider_user_id: providerUserId,
+          email,
+          avatar: payload.picture as string,
+          status: "pending",
+        };
+        await session.save();
+        return res;
+      }
       // 기존 회원 - 바로 active 상태로 설정
-      const res = NextResponse.redirect(new URL("/", req.url));
+      const res = NextResponse.redirect(new URL("/user/my-page", req.url));
       const session = await getIronSession(req, res, sessionOptions) as any;
       
       session.auth = {

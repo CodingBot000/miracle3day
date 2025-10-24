@@ -15,34 +15,7 @@ function normalizeDays(source?: boolean[] | null) {
   return Array.from({ length: DAYS_IN_MONTH }, (_, idx) => source?.[idx] ?? false);
 }
 
-async function resolveMemberUuid(clerkUserId: string) {
-  const attempts = [
-    `SELECT * FROM ${TABLE_MEMBERS} WHERE clerk_user_id = $1 LIMIT 1`,
-    `SELECT * FROM ${TABLE_MEMBERS} WHERE id_uuid::text = $1 LIMIT 1`,
-    `SELECT * FROM ${TABLE_MEMBERS} WHERE uuid::text = $1 LIMIT 1`,
-    `SELECT * FROM ${TABLE_MEMBERS} WHERE user_id::text = $1 LIMIT 1`,
-  ];
 
-  for (const sql of attempts) {
-    try {
-      const rows = await q<Record<string, unknown>>(sql, [clerkUserId]);
-      const record = rows[0];
-      if (record) {
-        const candidate =
-          (record["id_uuid"] as string | undefined) ??
-          (record["uuid"] as string | undefined) ??
-          (record["user_id"] as string | undefined);
-        if (candidate) {
-          return candidate;
-        }
-      }
-    } catch {
-      // column mismatch or other error; try next variant
-    }
-  }
-
-  return null;
-}
 
 /** GET /api/attendance?ym=2025-09 또는 ym=2025-09-01
  *  반환: { ym: 'YYYY-MM-01', attendedDays: number[] }
@@ -53,11 +26,7 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   const { userId } = authSession;
-
-  const memberUuid = await resolveMemberUuid(userId);
-  if (!memberUuid) {
-    return NextResponse.json({ error: "Member not found" }, { status: 403 });
-  }
+  const memberUuid = userId;
 
   const { searchParams } = new URL(req.url);
   const ymRaw = searchParams.get("ym");
@@ -115,11 +84,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   const { userId } = authSession;
-
-  const memberUuid = await resolveMemberUuid(userId);
-  if (!memberUuid) {
-    return NextResponse.json({ error: "Member not found" }, { status: 403 });
-  }
+  const memberUuid = userId;
 
   let tz: string | null = null;
   try {
@@ -225,12 +190,6 @@ export async function POST(req: Request) {
                 SET point_balance = COALESCE(point_balance, 0) + $1
                 WHERE uuid = $2`,
           value: memberUuid,
-        },
-        {
-          sql: `UPDATE ${TABLE_MEMBERS}
-                SET point_balance = COALESCE(point_balance, 0) + $1
-                WHERE clerk_user_id = $2`,
-          value: userId,
         },
       ];
 

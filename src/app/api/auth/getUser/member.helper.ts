@@ -4,7 +4,6 @@ import { TABLE_MEMBERS } from '@/constants/tables';
 type MemberRow = Record<string, any> | null;
 
 const LOOKUP_QUERIES = [
-  `SELECT * FROM ${TABLE_MEMBERS} WHERE clerk_user_id = $1 LIMIT 1`,
   `SELECT * FROM ${TABLE_MEMBERS} WHERE id_uuid::text = $1 LIMIT 1`,
 ];
 

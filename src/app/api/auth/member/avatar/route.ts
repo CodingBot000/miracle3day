@@ -17,7 +17,7 @@ export async function GET(request: Request) {
     }
 
     const rows = await q<{ avatar: string | null }>(
-      `SELECT avatar FROM ${TABLE_MEMBERS} WHERE id_uuid::text = $1 OR clerk_user_id = $1 LIMIT 1`,
+      `SELECT avatar FROM ${TABLE_MEMBERS} WHERE id_uuid::text = $1 LIMIT 1`,
       [userId]
     );
 
@@ -104,8 +104,7 @@ export async function PATCH(req: NextRequest) {
     const updates = await q(
       `UPDATE ${TABLE_MEMBERS}
        SET avatar = $1, updated_at = now()
-       WHERE clerk_user_id = $2
-          OR id_uuid::text = $2
+       WHERE id_uuid::text = $2
        RETURNING avatar`,
       [publicUrl, targetUuid]
     );

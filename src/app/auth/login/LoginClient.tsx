@@ -1,16 +1,8 @@
 "use client";
 
-import { useSignIn } from "@clerk/nextjs";
-
 export default function LoginClient() {
-  const { signIn, isLoaded } = useSignIn();
-
-  const handleGoogleLogin = async () => {
-    await signIn?.authenticateWithRedirect({
-      strategy: "oauth_google",
-      redirectUrl: "/auth/continue",
-      redirectUrlComplete: "/",
-    });
+  const handleGoogleLogin = () => {
+    window.location.href = '/api/auth/google/start';
   };
 
   return (
@@ -23,9 +15,8 @@ export default function LoginClient() {
       </p>
       <button
         type="button"
-        disabled={!isLoaded}
         onClick={handleGoogleLogin}
-        className="mt-8 flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-3 text-sm font-medium text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-400"
+        className="mt-8 flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
       >
         Continue with Google
       </button>

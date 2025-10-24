@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { auth } from '@clerk/nextjs/server';
+import { getAuthSession } from '@/lib/auth-helper';
 import { q } from '@/lib/db';
 import { TABLE_MEMBERS } from '@/constants/tables';
 
@@ -25,19 +25,19 @@ function evalAgreementStatus(ta: unknown) {
   return { satisfied, missing };
 }
 
-export async function GET() {
-  const { userId } = auth();
-
-  if (!userId) {
+export async function GET(req: Request) {
+  const authSession = await getAuthSession(req);
+  if (!authSession) {
     return new NextResponse('Unauthorized', { status: 401 });
   }
+  const { userId } = authSession;
 
   try {
     const rows = await q<{ terms_agreements: unknown }>(
       `
         SELECT terms_agreements
         FROM ${TABLE_MEMBERS}
-        WHERE clerk_user_id = $1
+        WHERE id_uuid = $1
         LIMIT 1
       `,
       [userId]

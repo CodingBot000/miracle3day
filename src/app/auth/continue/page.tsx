@@ -1,37 +1,45 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useUser } from '@clerk/nextjs';
 
 export default function AuthContinuePage() {
-  const { isSignedIn, user, isLoaded } = useUser();
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    if (!isLoaded) return;
+    const checkAuthAndRedirect = async () => {
+      try {
+        const res = await fetch('/api/auth/session');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.auth && data.auth.status === 'active') {
+            // 이미 인증된 사용자는 마이페이지로
+            router.replace('/user/my-page');
+          } else if (data.auth && data.auth.status === 'pending') {
+            // 약관 동의 필요
+            router.replace('/auth/terms');
+          } else {
+            // 로그인 필요
+            router.replace('/api/auth/google/start');
+          }
+        } else {
+          router.replace('/api/auth/google/start');
+        }
+      } catch (error) {
+        console.error('Auth check error:', error);
+        router.replace('/api/auth/google/start');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    if (!isSignedIn) {
-      router.replace('/auth/login');
-      return;
-    }
+    checkAuthAndRedirect();
+  }, [router]);
 
-    const metadata = (user?.publicMetadata ?? {}) as Record<string, unknown>;
-    const onboardingCompleted = metadata?.onboarding_completed === true;
-    const termsAgreed = metadata?.terms_agreed === true;
-
-    if (onboardingCompleted) {
-      router.replace('/');
-      return;
-    }
-
-    if (!termsAgreed) {
-      router.replace('/auth/terms');
-      return;
-    }
-
-    router.replace('/onboarding/complete-profile');
-  }, [isLoaded, isSignedIn, user, router]);
+  if (loading) {
+    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
+  }
 
   return null;
 }

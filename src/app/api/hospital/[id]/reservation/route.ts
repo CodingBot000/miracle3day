@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
+import { getAuthSession } from "@/lib/auth-helper";
 import { z } from "zod";
 import { q } from "@/lib/db";
 import { TABLE_RESERVATIONS } from "@/constants/tables";
@@ -28,7 +28,7 @@ const reservationSchema = z.object({
 
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const { userId } = auth();
+    const authSession = await getAuthSession(req); if (!authSession) return NextResponse.json({ error: "Unauthorized" }, { status: 401 }); const { userId } = authSession;
     const body = await req.json();
     const parsed = reservationSchema.parse(body);
 

@@ -2,11 +2,11 @@ export const runtime = 'edge';
 import { NextResponse } from 'next/server';
 import { createBadgeStore } from '@/lib/gamification/adapters/badgeStore';
 import { applyQuizAttempt } from '@/lib/gamification/handlers/applyQuizAttempt';
-import { auth } from '@clerk/nextjs/server';
+import { getAuthSession } from "@/lib/auth-helper";
 
 export async function POST(req: Request) {
   try {
-    const { userId } = auth();
+    const authSession = await getAuthSession(req); if (!authSession) return NextResponse.json({ error: "Unauthorized" }, { status: 401 }); const { userId } = authSession;
 
     if (!userId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

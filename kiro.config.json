@@ -1,0 +1,66 @@
+{
+  "autoRunShell": true,
+  "autoApplyEdits": true,
+  "requireConfirmation": false,
+  "protectedGlobs": ["**/*.env", ".git/**", "node_modules/**"],
+  "name": "Beauty Main Project",
+  "description": "Next.js beauty clinic platform with Google OAuth authentication",
+  "version": "1.0.0",
+  "framework": "nextjs",
+  "language": "typescript",
+  "authentication": "google-oauth",
+  "database": "postgresql",
+  "session": "iron-session",
+  "deployment": "vercel",
+  "features": [
+    "google-oauth",
+    "session-management", 
+    "user-profiles",
+    "clinic-booking",
+    "community-posts",
+    "attendance-system",
+    "point-system",
+    "multilingual"
+  ],
+  "directories": {
+    "components": "src/components",
+    "pages": "src/app",
+    "api": "src/app/api",
+    "lib": "src/lib",
+    "styles": "src/styles",
+    "constants": "src/constants",
+    "models": "src/app/models"
+  },
+  "key_files": {
+    "auth_session": "src/lib/session.ts",
+    "auth_helper": "src/lib/auth-helper.ts",
+    "oauth_config": "src/lib/oauth.ts",
+    "middleware": "src/middleware.ts",
+    "main_layout": "src/app/layout.tsx"
+  },
+  "api_endpoints": {
+    "auth": {
+      "google_start": "/api/auth/google/start",
+      "google_callback": "/api/auth/google/callback", 
+      "session": "/api/auth/session",
+      "consent": "/api/auth/consent/accept",
+      "logout": "/api/auth/logout"
+    },
+    "user": {
+      "get_user": "/api/auth/getUser",
+      "avatar": "/api/auth/member/avatar",
+      "favorite": "/api/auth/favorite"
+    }
+  },
+  "environment_variables": [
+    "GOOGLE_CLIENT_ID",
+    "GOOGLE_CLIENT_SECRET", 
+    "GOOGLE_REDIRECT_URI",
+    "SESSION_PASSWORD",
+    "PGHOST",
+    "PGPORT", 
+    "PGDATABASE",
+    "PGUSER",
+    "PGPASSWORD"
+  ]
+}

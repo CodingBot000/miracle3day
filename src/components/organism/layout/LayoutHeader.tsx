@@ -9,7 +9,7 @@ import Link from "next/link";
 import SearchPanel from "./SearchPanel";
 import AuthClient from "@/components/molecules/auth/AuthClient";
 import { useHeader } from "@/contexts/HeaderContext";
-import { useUser } from "@clerk/nextjs";
+
 
 // const Auth = dynamic(() => import("@/components/molecules/auth/AuthServer"), {
 //   ssr: false,
@@ -18,7 +18,7 @@ const LayoutHeader = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { isTransparentMode } = useHeader();
-  const { isSignedIn, user, isLoaded } = useUser();
+
 
   useEffect(() => {
     if (!isTransparentMode) {
@@ -103,20 +103,8 @@ const LayoutHeader = () => {
             </div>
           </div>
           <div className="relative text-black">
-            {isLoaded && isSignedIn && user ? (
-              <div className="hidden items-center gap-2 text-sm text-slate-700 md:flex">
-                {/* <span>{user.fullName ?? user.username ?? user.primaryEmailAddress?.emailAddress ?? 'User'}</span> */}
-                {/* {user.imageUrl ? (
-                  <img
-                    src={user.imageUrl}
-                    alt={user.fullName ?? 'User'}
-                    className="h-6 w-6 rounded-full object-cover"
-                  />
-                ) : null} */}
-              </div>
-            ) : null}
             <AuthClient iconColor={isTransparentMode && !isScrolled ? 'white' : 'black'} />
-            </div>
+          </div>
         </div>
       </div>
     </header>

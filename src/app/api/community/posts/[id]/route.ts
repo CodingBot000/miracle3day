@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@clerk/nextjs/server';
+import { getAuthSession } from "@/lib/auth-helper";
 import { z } from 'zod';
 import { q } from '@/lib/db';
 import {
@@ -69,7 +69,7 @@ export async function PATCH(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const { userId } = auth();
+  const authSession = await getAuthSession(req); if (!authSession) return NextResponse.json({ error: "Unauthorized" }, { status: 401 }); const { userId } = authSession;
 
   if (!userId) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

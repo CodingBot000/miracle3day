@@ -1,35 +1,25 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { auth, clerkClient } from '@clerk/nextjs/server';
+import { cookies } from 'next/headers';
+import { getIronSession } from 'iron-session';
+import { sessionOptions } from '@/lib/session';
 import { q } from '@/lib/db';
 import { TABLE_MEMBERS } from '@/constants/tables';
 
 export async function withdrawAction() {
-  const { userId, sessionId } = auth();
-
-  if (!userId) {
+  const cookieStore = await cookies();
+  const session = await getIronSession(cookieStore, {}, sessionOptions) as any;
+  
+  if (!session.auth || !session.auth.id_uuid) {
     throw new Error('Not authenticated');
   }
 
   await q(
-    `DELETE FROM ${TABLE_MEMBERS} WHERE clerk_user_id = $1 OR id_uuid::text = $1`,
-    [userId]
+    `DELETE FROM ${TABLE_MEMBERS} WHERE id_uuid = $1`,
+    [session.auth.id_uuid]
   );
 
-  try {
-    await clerkClient.users.deleteUser(userId);
-  } catch (error) {
-    console.error('Failed to delete Clerk user:', error);
-  }
-
-  if (sessionId) {
-    try {
-      await clerkClient.sessions.revokeSession(sessionId);
-    } catch (error) {
-      console.error('Failed to revoke session during withdrawal:', error);
-    }
-  }
-
+  session.destroy();
   redirect('/');
 }

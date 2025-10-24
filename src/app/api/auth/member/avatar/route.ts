@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { auth } from "@clerk/nextjs/server";
+import { getAuthSession } from "@/lib/auth-helper";
 import { BUCKET_USERS, TABLE_MEMBERS } from "@/constants/tables";
 import { q } from "@/lib/db";
 import { findMemberByUserId } from "../../getUser/member.helper";
@@ -68,11 +68,11 @@ export async function GET(request: Request) {
 }
 
 export async function PATCH(req: NextRequest) {
-  const { userId } = auth();
-
-  if (!userId) {
+  const authSession = await getAuthSession(req);
+  if (!authSession) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
+  const { userId } = authSession;
 
   try {
     const body = await req.json();

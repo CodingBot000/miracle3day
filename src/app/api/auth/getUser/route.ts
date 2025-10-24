@@ -1,17 +1,36 @@
 import { NextResponse } from "next/server";
-import { getUserInfo } from "./user.service";
-import { TABLE_MEMBERS } from "@/constants/tables";
+import { getIronSession } from "iron-session";
+import { sessionOptions } from "@/lib/session";
 import { q } from "@/lib/db";
+import { TABLE_MEMBERS } from "@/constants/tables";
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
-    const result = await getUserInfo();
+    const session = await getIronSession(req, new NextResponse(), sessionOptions) as any;
     
-    if (!result) {
+    if (!session.auth || session.auth.status !== 'active' || !session.auth.id_uuid) {
       return NextResponse.json({ userInfo: null }, { status: 401 });
     }
 
-    return NextResponse.json(result);
+    const member = await q(
+      `SELECT * FROM ${TABLE_MEMBERS} WHERE id_uuid = $1 LIMIT 1`,
+      [session.auth.id_uuid]
+    );
+
+    if (!member.length) {
+      return NextResponse.json({ userInfo: null }, { status: 404 });
+    }
+
+    const userInfo = {
+      auth_user: {
+        id: session.auth.id_uuid,
+        email: session.auth.email,
+        imageUrl: session.auth.avatar,
+      },
+      ...member[0]
+    };
+
+    return NextResponse.json({ userInfo });
   } catch (error) {
     console.error('GET /api/auth/getUser error:', error);
     return NextResponse.json(

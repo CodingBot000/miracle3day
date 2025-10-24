@@ -19,7 +19,6 @@ export const getUserAPI = async (): Promise<UserOutputDto | null> => {
   }
 };
 
-// import { auth, currentUser } from '@clerk/nextjs/server';
 // import { UserInfoDto, UserOutputDto } from './getUser.dto';
 // import { findMemberByUserId } from './member.helper';
 
@@ -39,7 +38,7 @@ export const getUserAPI = async (): Promise<UserOutputDto | null> => {
 // }
 
 // export const getUserAPI = async (): Promise<UserOutputDto | null> => {
-//   const { userId } = auth();
+//   const authSession = await getAuthSession(req); if (!authSession) return NextResponse.json({ error: "Unauthorized" }, { status: 401 }); const { userId } = authSession;
 
 //   if (!userId) {
 //     return null;

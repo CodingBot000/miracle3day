@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@clerk/nextjs/server';
+import { getAuthSession } from '@/lib/auth-helper';
 import { LIMIT } from './constant';
 import { q } from '@/lib/db';
 import { TABLE_FAVORITE, TABLE_HOSPITAL } from '@/constants/tables';
@@ -15,10 +15,11 @@ function resolveMemberUuid(member: Record<string, any> | null, fallback: string)
 }
 
 export async function GET(req: Request) {
-  const { userId } = auth();
-  if (!userId) {
+  const authSession = await getAuthSession(req);
+  if (!authSession) {
     return NextResponse.json({ favorite: [], nextCursor: false }, { status: 401 });
   }
+  const { userId } = authSession;
 
   const member = await findMemberByUserId(userId);
   const memberUuid = resolveMemberUuid(member, userId);
@@ -60,10 +61,11 @@ export async function GET(req: Request) {
 }
 
 export async function POST(req: NextRequest) {
-  const { userId } = auth();
-  if (!userId) {
+  const authSession = await getAuthSession(req);
+  if (!authSession) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+  const { userId } = authSession;
 
   const body = await req.json();
   const idHospital = body?.id_hospital;
@@ -105,10 +107,11 @@ export async function POST(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
-  const { userId } = auth();
-  if (!userId) {
+  const authSession = await getAuthSession(req);
+  if (!authSession) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+  const { userId } = authSession;
 
   const member = await findMemberByUserId(userId);
   const memberUuid = resolveMemberUuid(member, userId);

@@ -1,13 +1,13 @@
 export const runtime = 'edge';
 import { NextResponse } from 'next/server';
 import { createBadgeStore } from '@/lib/gamification/adapters/badgeStore';
-import { auth } from '@clerk/nextjs/server';
+import { getAuthSession } from "@/lib/auth-helper";
 
 export async function GET(req: Request) {
   try {
     console.log('[QuizState] Starting GET request');
 
-    const { userId } = auth();
+    const authSession = await getAuthSession(req); if (!authSession) return NextResponse.json({ error: "Unauthorized" }, { status: 401 }); const { userId } = authSession;
 
     if (!userId) {
       console.error('[QuizState] Unauthorized');

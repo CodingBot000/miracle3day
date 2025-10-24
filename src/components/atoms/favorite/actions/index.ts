@@ -2,7 +2,7 @@
 
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { auth } from "@clerk/nextjs/server";
+import { getAuthSession } from "@/lib/auth-helper";
 import { q } from "@/lib/db";
 import { TABLE_FAVORITE } from "@/constants/tables";
 import { findMemberByUserId } from "@/app/api/auth/getUser/member.helper";
@@ -17,7 +17,7 @@ export const favoriteActions = async ({
   id_hospital,
 }: FavoriteActions) => {
   const referer = headers().get("referer") as string;
-  const { userId } = auth();
+  const authSession = await getAuthSession(req); if (!authSession) return NextResponse.json({ error: "Unauthorized" }, { status: 401 }); const { userId } = authSession;
 
   if (!userId) {
     redirect(referer ?? "/auth/login");

@@ -1,6 +1,6 @@
 // app/api/attendance/route.ts
 import { NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
+import { getAuthSession } from "@/lib/auth-helper";
 import { q, query } from "@/lib/db";
 import {
   TABLE_ATTENDANCE_MONTHLY,
@@ -48,10 +48,11 @@ async function resolveMemberUuid(clerkUserId: string) {
  *  반환: { ym: 'YYYY-MM-01', attendedDays: number[] }
  */
 export async function GET(req: Request) {
-  const { userId } = auth();
-  if (!userId) {
+  const authSession = await getAuthSession(req);
+  if (!authSession) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
+  const { userId } = authSession;
 
   const memberUuid = await resolveMemberUuid(userId);
   if (!memberUuid) {
@@ -109,10 +110,11 @@ export async function GET(req: Request) {
  *  반환: { ym, day, was_already, points_awarded, attended_today }
  */
 export async function POST(req: Request) {
-  const { userId } = auth();
-  if (!userId) {
+  const authSession = await getAuthSession(req);
+  if (!authSession) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
+  const { userId } = authSession;
 
   const memberUuid = await resolveMemberUuid(userId);
   if (!memberUuid) {

@@ -1,4 +1,4 @@
-import { auth } from '@clerk/nextjs/server';
+import { getAuthSession } from "@/lib/auth-helper";
 import { getCommunityCategories, getCommunityPostsDTO } from '@/app/api/community/getPosts';
 import type { CommunityCategory } from '@/app/models/communityData.dto';
 import PostList from './PostList';
@@ -11,7 +11,7 @@ interface CommunityPageProps {
 }
 
 export default async function HomePage({ searchParams }: CommunityPageProps) {
-  const { userId } = auth();
+  const authSession = await getAuthSession(req); if (!authSession) return NextResponse.json({ error: "Unauthorized" }, { status: 401 }); const { userId } = authSession;
   const isAuthenticated = !!userId;
 
   const categories = await getCommunityCategories();

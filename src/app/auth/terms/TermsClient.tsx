@@ -7,7 +7,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 // import type { TSnsType } from '../login/actions';
 import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 import TermsHtmlModal from '@/components/template/modal/TermsHtmlModal';
-import { useUser } from '@clerk/nextjs';
+
 import { SNS_APPLE, SNS_GOOGLE, SNS_FACEBOOK } from '@/constants/key';
 
 interface TermItem {
@@ -45,7 +45,38 @@ export default function TermsClient({ initialProvider }: TermsClientProps) {
 
   const { language } = useCookieLanguage();
   const locale = language === 'ko' ? 'ko' : 'en';
-  const { user, isLoaded, isSignedIn } = useUser();
+  const [user, setUser] = useState<any>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [isSignedIn, setIsSignedIn] = useState(false);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const res = await fetch('/api/auth/session');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.auth && (data.auth.status === 'active' || data.auth.status === 'pending')) {
+            setUser(data.auth);
+            setIsSignedIn(true);
+          } else {
+            setUser(null);
+            setIsSignedIn(false);
+          }
+        } else {
+          setUser(null);
+          setIsSignedIn(false);
+        }
+      } catch (error) {
+        console.error('Auth check error:', error);
+        setUser(null);
+        setIsSignedIn(false);
+      } finally {
+        setIsLoaded(true);
+      }
+    };
+
+    checkAuth();
+  }, []);
 
   const provider = useMemo(() => initialProvider, [initialProvider]);
 
@@ -96,15 +127,36 @@ export default function TermsClient({ initialProvider }: TermsClientProps) {
     if (!isLoaded) return;
 
     if (!isSignedIn) {
-      router.replace('/auth/login');
+      router.replace('/api/auth/google/start');
       return;
     }
 
-    const metadata = (user?.publicMetadata ?? {}) as Record<string, unknown>;
-    if (metadata?.terms_agreed === true) {
-      router.replace('/onboarding/complete-profile');
+    // 이미 active 상태라면 마이페이지로 이동
+    if (user?.status === 'active') {
+      router.replace('/user/my-page');
+      return;
     }
   }, [isLoaded, isSignedIn, user, router]);
+
+  const checkSessionStatus = async (maxAttempts = 10, delay = 500) => {
+    for (let i = 0; i < maxAttempts; i++) {
+      try {
+        const res = await fetch('/api/auth/session');
+        if (res.ok) {
+          const data = await res.json();
+          console.log(`Session check ${i+1}:`, data); // 디버그 로그 추가
+          if (data.auth?.status === 'active') {
+            return true;
+          }
+        }
+        await new Promise(resolve => setTimeout(resolve, delay));
+      } catch (error) {
+        console.error('Session check error:', error);
+      }
+    }
+    return false;
+  };
+  
 
   const handleNext = async () => {
     if (!isAllRequiredChecked || isSubmitting) return;
@@ -119,7 +171,7 @@ export default function TermsClient({ initialProvider }: TermsClientProps) {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('/api/auth/terms/agree', {
+      const response = await fetch('/api/auth/consent/accept', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -131,6 +183,12 @@ export default function TermsClient({ initialProvider }: TermsClientProps) {
 
       if (!response.ok) {
         throw new Error(`Request failed with status ${response.status}`);
+      }
+
+      // 세션 저장 완료 확인
+      const sessionSaved = await checkSessionStatus();
+      if (!sessionSaved) {
+        throw new Error('세션 저장이 완료되지 않았습니다.');
       }
 
       router.replace('/onboarding/complete-profile');

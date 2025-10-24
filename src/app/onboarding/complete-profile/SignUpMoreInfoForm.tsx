@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useUser } from '@clerk/nextjs';
+
 import { useCallback, useEffect, useState } from 'react';
 import type { ChangeEvent } from 'react';
 
@@ -18,61 +18,52 @@ const initialForm = {
 
 export default function SignUpMoreInfoForm() {
   const router = useRouter();
-  const { user, isSignedIn } = useUser();
+  const [user, setUser] = useState<any>(null);
+  const [isSignedIn, setIsSignedIn] = useState(false);
   const [form, setForm] = useState({
     ...initialForm,
-    nickname: user?.fullName ?? '',
+    nickname: '',
   });
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [checkingAgreement, setCheckingAgreement] = useState(true);
   const [statusError, setStatusError] = useState<string | null>(null);
 
-  const checkAgreementStatus = useCallback(async () => {
+  const checkAuth = useCallback(async () => {
     setCheckingAgreement(true);
     setStatusError(null);
 
-    let redirecting = false;
-
     try {
-      const res = await fetch('/api/auth/getUser/agreement_status', { cache: 'no-store' });
-
-      if (res.status === 401) {
-        redirecting = true;
-        router.replace('/auth/login');
-        return;
-      }
-
-      if (!res.ok) {
-        throw new Error(`Request failed with status ${res.status}`);
-      }
-
-      const data: { satisfied: boolean; missing: string[] } = await res.json();
-
-      if (!data.satisfied) {
-        redirecting = true;
-        router.replace('/auth/terms');
+      const res = await fetch('/api/auth/session');
+      if (res.ok) {
+        const data = await res.json();
+        // 정보처리방침 동의한 순간에도 pending 상태로 떨어질수있어서 조건추가 
+        if (data.auth && (data.auth.status === 'active' || data.auth.status === 'pending')) {
+          setUser(data.auth);
+          setIsSignedIn(true);
+          setForm(prev => ({ ...prev, nickname: data.auth.email?.split('@')[0] || '' }));
+        } else {
+          console.log('Auth check failed, redirecting to login. Auth data:', data.auth);
+          router.replace('/api/auth/google/start');
+          return;
+        }
+      } else {
+        router.replace('/api/auth/google/start');
         return;
       }
     } catch (err) {
-      console.error('Failed to verify agreement status', err);
-      setStatusError('약관 동의 상태를 확인하지 못했습니다. 다시 시도해 주세요.');
+      console.error('Auth check error:', err);
+      setStatusError('인증 상태를 확인하지 못했습니다. 다시 시도해 주세요.');
     } finally {
-      if (!redirecting) {
-        setCheckingAgreement(false);
-      }
+      setCheckingAgreement(false);
     }
   }, [router]);
 
   useEffect(() => {
-    if (!isSignedIn) return;
-    checkAgreementStatus();
-  }, [isSignedIn, checkAgreementStatus]);
+    checkAuth();
+  }, [checkAuth]);
 
-  if (!isSignedIn) {
-    router.replace('/auth/login');
-    return null;
-  }
+
 
   if (checkingAgreement) {
     return (
@@ -88,7 +79,7 @@ export default function SignUpMoreInfoForm() {
         <p className="text-sm text-red-500">{statusError}</p>
         <button
           type="button"
-          onClick={checkAgreementStatus}
+          onClick={checkAuth}
           className="w-full rounded-xl bg-slate-900 px-4 py-3 text-sm font-medium text-white hover:bg-slate-800"
         >
           다시 시도

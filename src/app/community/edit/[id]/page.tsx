@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
-import { auth } from '@clerk/nextjs/server';
+import { getAuthSession } from "@/lib/auth-helper";
 import WriteForm from '@/components/molecules/WriteForm';
 import type { CommunityCategory } from '@/app/models/communityData.dto';
 import {
@@ -24,7 +24,7 @@ export default async function EditPage({
 }: {
   params: { id: string };
 }) {
-  const { userId } = auth();
+  const authSession = await getAuthSession(req); if (!authSession) return NextResponse.json({ error: "Unauthorized" }, { status: 401 }); const { userId } = authSession;
 
   if (!userId) {
     redirect('/auth/login');

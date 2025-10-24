@@ -1,25 +1,56 @@
-export const dynamic = "force-dynamic";
+"use client";
 
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import SuspenseWrapper from "@/components/atoms/SuspenseWrapper";
 import dynamicImport from "next/dynamic";
-import { notFound } from "next/navigation";
 import MyPageSkeleton from "./MyPageSkeleton";
-import { getUserInfo } from "@/app/api/auth/getUser/user.service";
 
 const MyPageMyInfo = dynamicImport(() => import("./MyPageMyInfo"), {
   ssr: false,
 });
 
-export default async function MyPage() {
-  const users = await getUserInfo();
+export default function MyPage() {
+  const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
-  if (!users?.userInfo?.auth_user) {
-    notFound();
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await fetch('/api/auth/getUser');
+        if (res.ok) {
+          const userData = await res.json();
+          if (userData.userInfo) {
+            setUser(userData);
+          } else {
+            router.push('/api/auth/google/start');
+          }
+        } else {
+          router.push('/api/auth/google/start');
+        }
+      } catch (error) {
+        console.error('Failed to fetch user:', error);
+        router.push('/api/auth/google/start');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, [router]);
+
+  if (loading) {
+    return <MyPageSkeleton />;
+  }
+
+  if (!user) {
+    return null;
   }
 
   return (
     <SuspenseWrapper fallback={<MyPageSkeleton />}>
-      <MyPageMyInfo user={users}/>
+      <MyPageMyInfo user={user}/>
     </SuspenseWrapper>
   );
 }

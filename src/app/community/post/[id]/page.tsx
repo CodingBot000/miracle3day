@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { auth } from '@clerk/nextjs/server';
+import { getAuthSession } from "@/lib/auth-helper";
 import CommentSection from '@/components/molecules/CommentSection';
 import LikeButton from '@/components/atoms/button/LikeButton';
 import ReportButton from '@/components/atoms/button/ReportButton';
@@ -66,7 +66,7 @@ export default async function PostDetailPage({
     redirect('/community');
   }
 
-  const { userId } = auth();
+  const authSession = await getAuthSession(req); if (!authSession) return NextResponse.json({ error: "Unauthorized" }, { status: 401 }); const { userId } = authSession;
 
   if (!userId) {
     redirect('/auth/login');

@@ -42,7 +42,7 @@ export default function AttendanceSection() {
 
   async function handleCheckIn(date: Date) {
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const res = await fetch("/api/attendance/check-in", {
+    const res = await fetch("/api/attendance/check_in", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ tz }),

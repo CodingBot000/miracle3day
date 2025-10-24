@@ -1,37 +1,33 @@
 'use server';
 
-import { useUserStore } from '@/stores/useUserStore';
-import { adminsAuthClient } from '@/utils/supabase/admins';
-import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
+import { cookies } from 'next/headers';
+import { q } from '@/lib/db';
+import { TABLE_MEMBERS } from '@/constants/tables';
+import { getIronSession } from 'iron-session';
+import { sessionOptions } from '@/lib/session';
 
 export async function withdrawAction() {
-  const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  // 1) 세션 복원
+  const session = await getIronSession(cookies(), sessionOptions);
+  const auth = (session as any).auth;
 
-  console.log("withdrawAction user: ", user);
-  if (!user) {
-    throw new Error("Not authenticated");
+  // 2) 로그인 체크
+  if (!auth || auth.status !== 'active' || !auth.id_uuid) {
+    throw new Error('Not authenticated');
   }
 
-  const uuid = user.id;
 
-  // 1. 사용자 정보 삭제
-  await supabase.from("members").delete().eq("uuid", uuid);
+  await q(
+    `DELETE FROM ${TABLE_MEMBERS} WHERE id_uuid = $1`,
+    [auth.id_uuid]
+  );
 
-  // 2. 사용자 인증 계정 삭제 (serviceRole 키 필요 시 변경)
-  // const adminClient = createClient(
-  //   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  //   process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY!
-  // );
-  useUserStore.getState().clearUser();
-  await adminsAuthClient.deleteUser(uuid);
+  // 세션 쿠키 삭제
+  // cookieStore.delete('app_session');
+  // 4) 세션 파기 (쿠키 제거 포함)
+  await session.destroy();
 
-  // 3. 세션 종료
-  await supabase.auth.signOut();
 
-  // 4. 홈으로 이동
   redirect('/');
 }

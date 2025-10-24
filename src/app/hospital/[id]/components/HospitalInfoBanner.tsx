@@ -1,7 +1,7 @@
 "use client";
 
 import SlideImg from "@/components/molecules/SlideImg";
-import Image from "next/image";
+import Image from "next/image";;
 
 interface SlideImgProps {
   imageurls: string[];

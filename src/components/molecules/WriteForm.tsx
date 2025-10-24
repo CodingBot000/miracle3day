@@ -1,111 +1,105 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { createClient } from '@/utils/supabase/client'
-import type { CommunityCategory } from '@/app/models/communityData.dto'
-import { isAnonymousCategoryName } from '@/app/community/utils'
-import { TABLE_MEMBERS } from '@/constants/tables'
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import type { CommunityCategory } from '@/app/models/communityData.dto';
+import { isAnonymousCategoryName } from '@/app/community/utils';
 
 interface WriteFormProps {
-  authorUuid: string
-  categories: CommunityCategory[]
+  authorNameSnapshot?: string | null;
+  authorAvatarSnapshot?: string | null;
+  categories: CommunityCategory[];
   initialData?: {
-    title: string
-    content: string
-    id_category?: string
-  }
-  postId?: number
+    title: string;
+    content: string;
+    id_category?: string;
+  };
+  postId?: number;
 }
 
 export default function WriteForm({
-  authorUuid,
+  authorNameSnapshot,
+  authorAvatarSnapshot,
   categories,
   initialData,
-  postId
+  postId,
 }: WriteFormProps) {
-  const router = useRouter()
-  const [title, setTitle] = useState(initialData?.title || '')
-  const [content, setContent] = useState(initialData?.content || '')
-  const [categoryId, setCategoryId] = useState<string>(initialData?.id_category || '')
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const router = useRouter();
+  const [title, setTitle] = useState(initialData?.title || '');
+  const [content, setContent] = useState(initialData?.content || '');
+  const [categoryId, setCategoryId] = useState<string>(initialData?.id_category || '');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    if (!title.trim() || !content.trim() || isSubmitting) return
+    e.preventDefault();
 
-    setIsSubmitting(true)
+    if (!title.trim() || !content.trim() || isSubmitting) return;
+
+    setIsSubmitting(true);
 
     try {
-      const supabase = createClient()
-      const resolvedCategoryId = categoryId === '' ? null : categoryId
+      const resolvedCategoryId = categoryId === '' ? null : categoryId;
       const selectedCategory = resolvedCategoryId
         ? categories.find((category) => String(category.id) === resolvedCategoryId)
-        : undefined
-      const anonymousCategory = isAnonymousCategoryName(selectedCategory?.name)
-
-      let authorNameSnapshot: string | null = null
-      let authorAvatarSnapshot: string | null = null
-
-      if (!anonymousCategory) {
-        const { data: memberRow, error: memberError } = await supabase
-          .from(TABLE_MEMBERS)
-          .select('nickname, avatar')
-          .eq('uuid', authorUuid)
-          .maybeSingle()
-
-        if (memberError) {
-          console.error('Failed to load author snapshot info:', memberError)
-        }
-
-        authorNameSnapshot = memberRow?.nickname?.trim() ? memberRow.nickname.trim() : null
-        authorAvatarSnapshot = memberRow?.avatar?.trim() ? memberRow.avatar.trim() : null
-      }
+        : undefined;
+      const anonymousCategory = isAnonymousCategoryName(selectedCategory?.name);
 
       const postData = {
         title: title.trim(),
         content: content.trim(),
         id_category: resolvedCategoryId,
-        uuid_author: authorUuid,
-        author_name_snapshot: anonymousCategory ? null : authorNameSnapshot,
-        author_avatar_snapshot: anonymousCategory ? null : authorAvatarSnapshot,
-      }
+        author_name_snapshot: anonymousCategory
+          ? null
+          : (authorNameSnapshot ?? null),
+        author_avatar_snapshot: anonymousCategory
+          ? null
+          : (authorAvatarSnapshot ?? null),
+      };
 
       if (postId) {
-        const { error } = await supabase
-          .from('community_posts')
-          .update({
-            ...postData,
-            updated_at: new Date().toISOString()
-          })
-          .eq('id', postId)
+        const response = await fetch(`/api/community/posts/${postId}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(postData),
+        });
 
-        if (!error) {
-          router.push(`/community/post/${postId}`)
+        if (!response.ok) {
+          const message = await response.text();
+          throw new Error(message || 'Failed to update post');
+        }
+
+        const data = await response.json();
+        if (data?.post?.id) {
+          router.push(`/community/post/${data.post.id}`);
         } else {
-          alert('An error occurred while editing the post.')
+          router.push(`/community/post/${postId}`);
         }
       } else {
-        const { data, error } = await supabase
-          .from('community_posts')
-          .insert(postData)
-          .select()
-          .single()
+        const response = await fetch('/api/community/posts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(postData),
+        });
 
-        if (!error && data) {
-          router.push(`/community/post/${data.id}`)
+        if (!response.ok) {
+          const message = await response.text();
+          throw new Error(message || 'Failed to create post');
+        }
+
+        const data = await response.json();
+        if (data?.post?.id) {
+          router.push(`/community/post/${data.post.id}`);
         } else {
-          alert('An error occurred while creating the post.')
+          router.push('/community');
         }
       }
     } catch (error) {
-      console.error('Error submitting post:', error)
-      alert('글 작성 중 오류가 발생했습니다.')
+      console.error('Error submitting post:', error);
+      alert('글 작성 중 오류가 발생했습니다.');
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">

@@ -1,23 +1,18 @@
-import { createClient } from "@/utils/supabase/server";
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import { getIronSession } from "iron-session";
+import { sessionOptions } from "@/lib/session";
 
-export async function POST() {
+export async function POST(req: Request) {
   try {
-    const supabase = createClient();
+    const res = new NextResponse();
+    const session = await getIronSession(req, res, sessionOptions) as any;
     
-    // 로그아웃 처리
-    await supabase.auth.signOut();
+    // 세션 데이터 삭제
+    session.destroy();
     
-    // 쿠키 삭제
-    const cookieStore = cookies();
-    cookieStore.getAll().forEach(cookie => {
-      cookieStore.delete(cookie.name);
-    });
-
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true }, { headers: res.headers });
   } catch (error) {
     console.error("Logout error:", error);
     return NextResponse.json({ error: "Logout failed" }, { status: 500 });
   }
-} 
+}

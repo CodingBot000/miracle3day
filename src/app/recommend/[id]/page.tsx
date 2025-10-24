@@ -22,7 +22,7 @@ interface Props {
 //   });
 
 //   const defaultImg =
-//     "https://tqyarvckzieoraneohvv.supabase.co/storage/v1/object/public/images/hospitalimg/hospital1.png";
+//     "https://tqyarvckzieoraneohvv.backendClient.co/storage/v1/object/public/images/hospitalimg/hospital1.png";
 
 //   const ogImage: Record<string, Metadata> = {
 //     event: {

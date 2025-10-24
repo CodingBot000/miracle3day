@@ -1,45 +1,27 @@
 "use client";
 
-import Button from "@/components/atoms/button/Button";
-import { createClient } from "@/utils/supabase/client";
-import { useRouter } from "next/navigation";
-import { ROUTE } from "@/router";
+type LogoutActionProps = {
+  label?: string;
+};
 
-export default function LogoutAction() {
-  const supabase = createClient();
-  const router = useRouter();
-
+export default function LogoutAction({ label = "Logout" }: LogoutActionProps) {
   const handleLogout = async () => {
     try {
-      // Use signOut with scope: 'global' to ensure server-side logout
-      const { error } = await supabase.auth.signOut({ scope: 'global' });
-      
-      if (error) {
-        console.error('Logout error:', error);
-        return;
-      }
-
-      // Force clear all cookies by calling server logout API
-      await fetch('/api/auth/logout', {
-        method: 'POST',
-        credentials: 'include',
-      });
-      
-      // Force page reload to ensure fresh server-side state
-      window.location.href = ROUTE.HOME;
+      await fetch('/api/auth/logout', { method: 'POST' });
+      window.location.href = '/';
     } catch (error) {
       console.error('Logout error:', error);
+      window.location.href = '/';
     }
   };
 
   return (
-    <Button 
-      color="red" 
-      variant="outline" 
-      onClick={handleLogout}
+    <button
       type="button"
+      onClick={handleLogout}
+      className="rounded-md border border-transparent bg-red-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-600"
     >
-      LOGOUT
-    </Button>
+      {label}
+    </button>
   );
 }

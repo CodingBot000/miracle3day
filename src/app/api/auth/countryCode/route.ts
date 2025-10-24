@@ -1,22 +1,22 @@
-import { createClient } from "@/utils/supabase/server";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import { q } from "@/lib/db";
+import { TABLE_COUNTRY_CODES } from "@/constants/tables";
 
-export async function GET(req: NextRequest) {
-  const supabase = createClient();
+export const runtime = "nodejs";
 
+export async function GET() {
   try {
-    const { data, error, status, statusText } = await supabase
-      .from("country_codes")
-      .select("*");
-
-    if (error) {
-      return NextResponse.json({ data: null }, { status, statusText });
-    }
-
-    return NextResponse.json({ countryCode: data }, { status, statusText });
+    const rows = await q(`SELECT * FROM ${TABLE_COUNTRY_CODES}`);
+    return NextResponse.json(
+      { countryCode: rows },
+      { headers: { "Cache-Control": "no-store" } }
+    );
   } catch (error) {
-    if (error instanceof Error) {
-      return NextResponse.json({ status: 500, statusText: error.message });
-    }
+    const message = error instanceof Error ? error.message : "Failed to load country codes";
+    console.error("GET /api/auth/countryCode error:", error);
+    return NextResponse.json(
+      { countryCode: null, error: message },
+      { status: 500, headers: { "Cache-Control": "no-store" } }
+    );
   }
 }

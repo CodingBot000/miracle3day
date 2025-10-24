@@ -1,26 +1,51 @@
 import { fetchUtils } from "@/utils/fetch";
 import { LocationEnum } from "@/constants";
-import { HospitalByLocationInputDto, HospitalOutputDto,  } from "@/app/models/hospitalData.dto";
+import { HospitalOutputDto } from "@/app/models/hospitalData.dto";
 
+const buildApiUrl = (path: string) => {
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  const envBase =
+    process.env.NEXT_PUBLIC_API_ROUTE &&
+    process.env.NEXT_PUBLIC_API_ROUTE.trim().length > 0
+      ? process.env.NEXT_PUBLIC_API_ROUTE.replace(/\/$/, "")
+      : undefined;
+
+  if (typeof window !== "undefined") {
+    if (envBase && !envBase.includes("localhost")) {
+      return `${envBase}${normalizedPath}`;
+    }
+    return `${window.location.origin}${normalizedPath}`;
+  }
+
+  if (envBase) {
+    return `${envBase}${normalizedPath}`;
+  }
+
+  const vercelUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : undefined;
+
+  if (vercelUrl) {
+    return `${vercelUrl}${normalizedPath}`;
+  }
+
+  return `http://localhost:3000${normalizedPath}`;
+};
 
 export const getHospitalListAPI = async () => {
-// export const getHospitalListAPI = async  HospitalByLocationInputDto => {
-  const url = `${process.env.NEXT_PUBLIC_API_ROUTE}/api/hospital/list`;
+  const url = buildApiUrl("/api/hospital/list");
 
-  // 개발/프로덕션 환경별 캐시 정책
-  const isDevelopment = process.env.NODE_ENV === 'development';
-  const cacheControl = isDevelopment 
-    ? 'no-cache' // 개발: 즉시 반영
-    : 'public, max-age=300, stale-while-revalidate=600'; // 프로덕션: 5분 캐시
+  try {
+    const data = await fetchUtils<HospitalOutputDto>({
+      url,
+      fetchOptions: {
+        cache: "no-store",
+      },
+    });
 
-  const data = await fetchUtils<HospitalOutputDto>({
-    url,
-    fetchOptions: {
-      cache: 'no-store',
-      headers: {
-        'Cache-Control': cacheControl,
-      }
-    }
-  });
-  return data ?? { data: [], total: 0 };
+    return data ?? { data: [], total: 0 };
+  } catch (error) {
+    console.error("[getHospitalListAPI] failed:", error);
+    return { data: [], total: 0 };
+  }
 };

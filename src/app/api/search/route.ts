@@ -1,11 +1,10 @@
+import { NextResponse } from "next/server";
 import { TABLE_EVENT, TABLE_HOSPITAL, TABLE_REVIEW } from "@/constants/tables";
-import { createClient } from "@/utils/supabase/server";
+import { q } from "@/lib/db";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const q = searchParams.get("q");
-
-  const supabase = createClient();
 
   try {
     const rawQ = q ?? "";
@@ -13,21 +12,21 @@ export async function GET(req: Request) {
 
     // 병렬 검색 실행
     const [hospitalRes, eventRes, reviewsRes] = await Promise.all([
-      supabase
-        .from(TABLE_HOSPITAL)
-        .select("*")
-        .eq('show', true)
-        .ilike("search_key", `%${normalizedQ}%`),
-
-      supabase
-        .from(TABLE_EVENT)
-        .select("*")
-        .ilike("search_key", `%${normalizedQ}%`),
-
-      supabase
-        .from(TABLE_REVIEW)
-        .select("*")
-        .ilike("search_key", `%${normalizedQ}%`),
+      qQuery(
+        `SELECT * FROM ${TABLE_HOSPITAL}
+         WHERE show = true AND search_key ILIKE $1`,
+        [`%${normalizedQ}%`]
+      ),
+      qQuery(
+        `SELECT * FROM ${TABLE_EVENT}
+         WHERE search_key ILIKE $1`,
+        [`%${normalizedQ}%`]
+      ),
+      qQuery(
+        `SELECT * FROM ${TABLE_REVIEW}
+         WHERE search_key ILIKE $1`,
+        [`%${normalizedQ}%`]
+      ),
     ]);
 
     // 각각에 source 태그 붙이기
@@ -61,10 +60,19 @@ export async function GET(req: Request) {
 
     console.log("Search data:", combinedData);
     // return Response.json({ data: combined }, { status: 200 });
-    return Response.json({ data: combinedData }, { status: 200 });
+    return NextResponse.json({ data: combinedData }, { status: 200 });
   } catch (error) {
     if (error instanceof Error) {
-      return Response.json({ data: null }, { status: 500, statusText: error.message });
+      return NextResponse.json({ data: null }, { status: 500, statusText: error.message });
     }
+  }
+}
+
+async function qQuery(sql: string, params: any[]) {
+  try {
+    const rows = await q(sql, params);
+    return { data: rows, error: null };
+  } catch (error) {
+    return { data: null, error: error instanceof Error ? error : new Error(String(error)) };
   }
 }

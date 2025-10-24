@@ -18,14 +18,16 @@ export default function ChatPage() {
         const data = await res.json();
         console.log('[ChatPage] User data:', data);
 
-        if (!data.user) {
+        const userInfo = data?.userInfo;
+
+        if (!userInfo?.auth_user) {
           console.log('[ChatPage] No user, redirecting to login');
           router.push("/auth/login?redirect=/chat");
           return;
         }
 
         console.log('[ChatPage] User logged in, showing chat page');
-        setUser(data.user);
+        setUser(userInfo);
         setIsLoading(false);
       } catch (err) {
         console.error('[ChatPage] Error checking auth:', err);
@@ -81,7 +83,7 @@ export default function ChatPage() {
                 채팅 기능을 사용하려면 병원 상세 페이지에서 상담 요청을 먼저 보내주세요.
               </p>
               <p className="text-sm text-gray-600">
-                환영합니다, {user?.email}
+                환영합니다, {user?.email ?? user?.auth_user?.email}
               </p>
             </div>
 

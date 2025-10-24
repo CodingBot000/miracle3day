@@ -1,18 +1,14 @@
-export const dynamic = "force-dynamic";
+import dynamic from 'next/dynamic';
 
-import SuspenseWrapper from "@/components/atoms/SuspenseWrapper";
-import dynamicImport from "next/dynamic";
-
-
-const SignUpMoreInfoForm = dynamicImport(() => import("./SignUpMoreInfoForm"), {
+const SignUpMoreInfoForm = dynamic(() => import('./SignUpMoreInfoForm'), {
   ssr: false,
 });
 
-// export default function SignUpMoreInfoFormPage({ onSubmit }: { onSubmit: (data: any) => void }) {
-  export default function SignUpMoreInfoFormPage() {
+
+export default function CompleteProfilePage() {
   return (
-    <SuspenseWrapper>
+    <div className="mx-auto w-full max-w-2xl px-4 py-10">
       <SignUpMoreInfoForm />
-    </SuspenseWrapper>
+    </div>
   );
 }

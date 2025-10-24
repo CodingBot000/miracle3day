@@ -1,285 +1,211 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { NationModal } from "@/app/auth/sign-up/components/modal/nations";
-import { useRouter, useSearchParams } from "next/navigation";
-import { updateProfileAPI } from "@/app/api/auth/update-profile";
-import { CountryCode } from "@/app/models/country-code.dto";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { Calendar } from "lucide-react";
+import { useRouter } from 'next/navigation';
 
-interface FormData {
-  displayName: string;
-  fullName: string;
-  birthDate: Date | null;
-  gender: string;
-  email: string;
-}
+import { useCallback, useEffect, useState } from 'react';
+import type { ChangeEvent } from 'react';
 
-const initialFormData: FormData = {
-  displayName: "",
-  fullName: "",
-  birthDate: null,
-  gender: "",
-  email: "",
+
+const initialForm = {
+  id_country: '',
+  birth_date: '',
+  gender: '',
+  secondary_email: '',
+  phone_country_code: '',
+  phone_number: '',
+  nickname: '',
 };
 
-// 14세 이상 제한을 위한 날짜 계산
-const getMaxDate = () => {
-  const date = new Date();
-  date.setFullYear(date.getFullYear() - 14);
-  return date;
-};
-
-// 100세 제한을 위한 날짜 계산
-const getMinDate = () => {
-  const date = new Date();
-  date.setFullYear(date.getFullYear() - 100);
-  return date;
-};
-
-// const CustomInput = ({ value, onClick, placeholder, className }: any) => (
-const CustomInput = React.forwardRef<HTMLInputElement, any>(
-  ({ value, onClick, placeholder, className }, ref) =>
-     (
-  <div className="flex items-center cursor-pointer" onClick={onClick}>
-    <svg 
-      xmlns="http://www.w3.org/2000/svg" 
-      className="h-5 w-5 text-gray-400 mr-2"
-      fill="none" 
-      viewBox="0 0 24 24" 
-      stroke="currentColor"
-    >
-      <path 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
-        strokeWidth={2} 
-        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" 
-      />
-    </svg>
-    <input 
-      value={value || ''} 
-      className={`${className} cursor-pointer`}
-      placeholder={placeholder}
-      readOnly
-    />
-  </div>
-     )
-);
-
-CustomInput.displayName = "CustomInput";
 export default function SignUpMoreInfoForm() {
-  const searchParams = useSearchParams();
-  // console.log("SignUpMoreInfoForm searchParams:", searchParams);
-  const uuid = searchParams.get('code');
-  const returnUrl = searchParams.get('returnUrl') || "/";
-  
   const router = useRouter();
-  const [formData, setFormData] = useState<FormData>(initialFormData);
-  const [nation, setNation] = useState<CountryCode | null>(null);
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [form, setForm] = useState({
+    ...initialForm,
+    nickname: '',
+  });
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [checkingAgreement, setCheckingAgreement] = useState(true);
+  const [statusError, setStatusError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setErrors({});
+  const checkAuth = useCallback(async () => {
+    setCheckingAgreement(true);
+    setStatusError(null);
 
     try {
-      if (!uuid) {
-        setErrors(prev => ({ ...prev, uuid: "UUID is required" }));
+      const res = await fetch('/api/auth/session');
+      if (res.ok) {
+        const data = await res.json();
+        // 정보처리방침 동의한 순간에도 pending 상태로 떨어질수있어서 조건추가 
+        if (data.auth && (data.auth.status === 'active' || data.auth.status === 'pending')) {
+          setUser(data.auth);
+          setIsSignedIn(true);
+          setForm(prev => ({ ...prev, nickname: data.auth.email?.split('@')[0] || '' }));
+        } else {
+          console.log('Auth check failed, redirecting to login. Auth data:', data.auth);
+          router.replace('/api/auth/google/start');
+          return;
+        }
+      } else {
+        router.replace('/api/auth/google/start');
         return;
       }
+    } catch (err) {
+      console.error('Auth check error:', err);
+      setStatusError('인증 상태를 확인하지 못했습니다. 다시 시도해 주세요.');
+    } finally {
+      setCheckingAgreement(false);
+    }
+  }, [router]);
 
-      if (!formData.displayName.trim()) {
-        setErrors(prev => ({ ...prev, displayName: "Display name is required" }));
-        return;
-      }
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
 
-      if (!formData.birthDate) {
-        setErrors(prev => ({ ...prev, birthDate: "Birth date is required" }));
-        return;
-      }
 
-      if (!formData.gender) {
-        setErrors(prev => ({ ...prev, gender: "Gender is required" }));
-        return;
-      }
 
-      if (!nation?.country_code) {
-        setErrors(prev => ({ ...prev, nation: "Please select your nationality" }));
-        return;
-      }
+  if (checkingAgreement) {
+    return (
+      <div className="space-y-6 rounded-2xl border border-white/40 bg-white/80 p-8 shadow-xl backdrop-blur">
+        <p className="text-sm text-slate-500">약관 동의 상태를 확인하는 중입니다…</p>
+      </div>
+    );
+  }
 
-      if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-        setErrors(prev => ({ ...prev, email: "Please enter a valid email address" }));
-        return;
-      }
+  if (statusError) {
+    return (
+      <div className="space-y-6 rounded-2xl border border-white/40 bg-white/80 p-8 shadow-xl backdrop-blur">
+        <p className="text-sm text-red-500">{statusError}</p>
+        <button
+          type="button"
+          onClick={checkAuth}
+          className="w-full rounded-xl bg-slate-900 px-4 py-3 text-sm font-medium text-white hover:bg-slate-800"
+        >
+          다시 시도
+        </button>
+      </div>
+    );
+  }
 
-      const response = await updateProfileAPI({
-        uuid: uuid,
-        displayName: formData.displayName,
-        fullName: formData.fullName,
-        nation: nation.country_code,
-        birthYear: formData.birthDate.getFullYear().toString(),
-        birthMonth: (formData.birthDate.getMonth() + 1).toString().padStart(2, '0'),
-        birthDay: formData.birthDate.getDate().toString().padStart(2, '0'),
-        gender: formData.gender,
-        email: formData.email
+  const handleChange = (field: keyof typeof form) =>
+    (event: ChangeEvent<HTMLInputElement>) => {
+      setForm((prev) => ({ ...prev, [field]: event.target.value }));
+    };
+
+  const handleSubmit = async () => {
+    setSubmitting(true);
+    setError(null);
+
+    try {
+      const res = await fetch('/api/onboarding/complete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
       });
 
-      if (response.error) {
-        throw new Error(response.error);
+      if (!res.ok) {
+        const msg = await res.text();
+        throw new Error(msg || 'Failed to complete onboarding');
       }
 
-      // router.push("/");
-      router.push(returnUrl);
-    } catch (error) {
-      if (error instanceof Error) {
-        setErrors(prev => ({ ...prev, submit: error.message }));
-      }
+      router.replace('/');
+    } catch (err) {
+      console.error('Onboarding error:', err);
+      setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
-      setIsSubmitting(false);
+      setSubmitting(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow">
-        <h1 className="text-3xl font-bold text-center text-gray-900">
-          Additional Information
-        </h1>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-4">
-            <div>
-              <Label>Display Name</Label>
-              <p className="text-sm text-gray-500 mb-2">
-                This name will be shown to other users.
-              </p>
-              <Input
-                type="text"
-                value={formData.displayName}
-                onChange={(e) => setFormData(prev => ({ ...prev, displayName: e.target.value }))}
-                required
-                placeholder="Enter your display name"
-                autoComplete="nickname"
-              />
-            </div>
-
-            <div>
-              <Label>Full Name (Optional)</Label>
-              <p className="text-sm text-gray-500 mb-2">
-                Please enter your legal name. 
-                Only used for personalized medical consultations or appointment records.
-                This information never be shown to other users.
-              </p>
-              <Input
-                type="text"
-                value={formData.fullName}
-                onChange={(e) => setFormData(prev => ({ ...prev, fullName: e.target.value }))}
-                placeholder="Enter your full name"
-                autoComplete="name"
-              />
-            </div>
-
-            <div>
-              <Label>Birth Date</Label>
-              <p className="text-sm text-gray-500 mb-2">
-                You must be at least 14 years old.
-                If you provide your exact date of birth, we can offer more personalized recommendations and consultations.</p>
-              <div className="relative">
-                <div
-                  className={`flex h-9 w-full rounded-md border shadow-sm transition-colors ${
-                    errors.birthDate ? "border-red-500" : "border-input"
-                  }`}
-                >
-                  <DatePicker
-                    selected={formData.birthDate}
-                    onChange={(date: Date | null) => setFormData(prev => ({ ...prev, birthDate: date }))}
-                    dateFormat="yyyy-MM-dd"
-                    maxDate={getMaxDate()}
-                    minDate={getMinDate()}
-                    showMonthDropdown
-                    showYearDropdown
-                    dropdownMode="select"
-                    placeholderText="Select your birth date"
-                    className="w-full px-3 py-1 outline-none bg-transparent text-base md:text-sm placeholder:text-muted-foreground"
-                    customInput={<CustomInput />}
-                  />
-                </div>
-              </div>
-              {errors.birthDate && (
-                <p className="text-sm text-red-500 mt-1">{errors.birthDate}</p>
-              )}
-            </div>
-
-            <div>
-              <Label>Gender</Label>
-              <p className="text-sm text-gray-500 mb-2">
-                Select your gender.
-                Optimized treatment recommendations vary depending on your gender.
-              </p>
-              <RadioGroup
-                value={formData.gender}
-                onValueChange={(value) => setFormData(prev => ({ ...prev, gender: value }))}
-                className="flex space-x-4"
-              >
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="M" id="male" className={errors.gender ? "border-red-500" : ""} />
-                  <Label htmlFor="male">Male</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="F" id="female" className={errors.gender ? "border-red-500" : ""} />
-                  <Label htmlFor="female">Female</Label>
-                </div>
-              </RadioGroup>
-              {errors.gender && (
-                <p className="text-sm text-red-500 mt-1">{errors.gender}</p>
-              )}
-            </div>
-
-            <div>
-              <NationModal
-                nation={nation?.country_name || ""}
-                onSelect={(value: CountryCode) => setNation(value)}
-              />
-              {errors.nation && (
-                <p className="text-sm text-red-500 mt-1">{errors.nation}</p>
-              )}
-            </div>
-
-            <div>
-              <Label>Email (Optional)</Label>
-              <p className="text-sm text-gray-500 mb-2">
-                If you signed up using social login, you can optionally provide a secondary email if you&apos;d like to receive additional information.
-              </p>
-              <Input
-                type="email"
-                value={formData.email}
-                onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                placeholder="Enter your email"
-              />
-            </div>
-          </div>
-
-          {errors.submit && (
-            <p className="text-sm text-red-500 mt-2">{errors.submit}</p>
-          )}
-
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? "Saving..." : "Save Profile"}
-          </Button>
-        </form>
+    <div className="space-y-6 rounded-2xl border border-white/40 bg-white/80 p-8 shadow-xl backdrop-blur">
+      <div>
+        <h1 className="text-2xl font-semibold text-slate-900">Complete your profile</h1>
+        <p className="mt-2 text-sm text-slate-500">
+          Tell us a bit more so we can personalize your experience.
+        </p>
       </div>
+
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="space-y-1">
+          <label className="text-sm font-medium text-slate-600">Nickname</label>
+          <input
+            type="text"
+            value={form.nickname}
+            onChange={handleChange('nickname')}
+            className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2 text-sm"
+          />
+        </div>
+        <div className="space-y-1">
+          <label className="text-sm font-medium text-slate-600">Country</label>
+          <input
+            type="text"
+            value={form.id_country}
+            onChange={handleChange('id_country')}
+            placeholder="e.g. KR"
+            className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2 text-sm"
+          />
+        </div>
+        <div className="space-y-1">
+          <label className="text-sm font-medium text-slate-600">Birth date</label>
+          <input
+            type="date"
+            value={form.birth_date}
+            onChange={handleChange('birth_date')}
+            className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2 text-sm"
+          />
+        </div>
+        <div className="space-y-1">
+          <label className="text-sm font-medium text-slate-600">Gender</label>
+          <input
+            type="text"
+            value={form.gender}
+            onChange={handleChange('gender')}
+            placeholder="female / male / other"
+            className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2 text-sm"
+          />
+        </div>
+        <div className="space-y-1">
+          <label className="text-sm font-medium text-slate-600">Secondary email</label>
+          <input
+            type="email"
+            value={form.secondary_email}
+            onChange={handleChange('secondary_email')}
+            className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2 text-sm"
+          />
+        </div>
+        <div className="space-y-1">
+          <label className="text-sm font-medium text-slate-600">Phone country code</label>
+          <input
+            type="text"
+            value={form.phone_country_code}
+            onChange={handleChange('phone_country_code')}
+            placeholder="e.g. +82"
+            className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2 text-sm"
+          />
+        </div>
+        <div className="space-y-1">
+          <label className="text-sm font-medium text-slate-600">Phone number</label>
+          <input
+            type="text"
+            value={form.phone_number}
+            onChange={handleChange('phone_number')}
+            className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2 text-sm"
+          />
+        </div>
+      </div>
+
+      {error ? <p className="text-sm text-red-500">{error}</p> : null}
+
+      <button
+        type="button"
+        disabled={submitting}
+        onClick={handleSubmit}
+        className="w-full rounded-xl bg-slate-900 px-4 py-3 text-sm font-medium text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-400"
+      >
+        {submitting ? 'Saving...' : 'Finish'}
+      </button>
     </div>
   );
 }

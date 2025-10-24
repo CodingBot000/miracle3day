@@ -4,7 +4,7 @@ import { HospitalInfo } from "@/app/models/hospitalData.dto";
 import { MapComponent } from "@/components/common/MapComponent";
 import ZoomableImageMap from "@/components/common/ZoomableImageMap";
 import { useEffect, useState } from "react";
-import Image from "next/image";
+import Image from "next/image";;
 import { buildMapLinks, openMapWithFallback, type MapPlatform } from "@/utils/mapLinkUtils";
 
 interface HospitalLocationProps {

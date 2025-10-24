@@ -1,7 +1,9 @@
-import { createClient } from "@/utils/supabase/client";
-import { BUCKET_USERS, STORAGE_MEMBER, TABLE_MEMBERS } from "@/constants/tables";
+import { BUCKET_USERS, STORAGE_MEMBER } from "@/constants/tables";
 
-const supabase = createClient();
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_ROUTE ||
+  process.env.INTERNAL_API_BASE_URL ||
+  "";
 
 export interface UploadProfileImageParams {
   file: File;
@@ -25,53 +27,96 @@ export const uploadProfileImage = async ({
     const folderPath = `${STORAGE_MEMBER}/${userUuid}`;
 
     // Delete existing files in the user's folder
-    const { data: existingFiles } = await supabase.storage
-      .from(BUCKET_USERS)
-      .list(folderPath);
+    const listRes = await fetch(
+      `${API_BASE}/api/storage/s3/list?bucket=${encodeURIComponent(
+        BUCKET_USERS
+      )}&prefix=${encodeURIComponent(folderPath)}`,
+      { cache: 'no-store' }
+    );
 
-    if (existingFiles && existingFiles.length > 0) {
-      const filesToDelete = existingFiles.map(file => `${folderPath}/${file.name}`);
-      await supabase.storage
-        .from(BUCKET_USERS)
-        .remove(filesToDelete);
+    if (!listRes.ok) {
+      throw new Error(`Failed to list existing files (${listRes.status})`);
     }
 
-    const { error: uploadError } = await supabase.storage
-      .from(BUCKET_USERS)
-      .upload(filePath, file, {
+    const listJson = await listRes.json();
+    const existingFiles: Array<{ name?: string | null }> = listJson?.data ?? [];
+
+    if (existingFiles.length > 0) {
+      const filesToDelete = existingFiles
+        .map((item) => item.name?.trim())
+        .filter(Boolean)
+        .map((name) => `${folderPath}/${name}`);
+
+      if (filesToDelete.length > 0) {
+        const removeRes = await fetch(`${API_BASE}/api/storage/s3/remove`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ bucket: BUCKET_USERS, paths: filesToDelete }),
+        });
+
+        if (!removeRes.ok) {
+          throw new Error(`Failed to remove old images (${removeRes.status})`);
+        }
+      }
+    }
+
+    const signRes = await fetch(`${API_BASE}/api/storage/s3/sign-upload`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        bucket: BUCKET_USERS,
+        key: filePath,
+        contentType: file.type || 'application/octet-stream',
         upsert: true,
-      });
+      }),
+    });
 
-    if (uploadError) {
-      console.error('Upload error:', uploadError);
-      return {
-        success: false,
-        error: uploadError.message,
-      };
+    if (!signRes.ok) {
+      const message = await signRes.text();
+      throw new Error(message || `Failed to sign upload (${signRes.status})`);
     }
 
-    const { data: publicData } = supabase.storage
-      .from(BUCKET_USERS)
-      .getPublicUrl(filePath);
+    const { url } = await signRes.json();
 
-    const avatarPath = publicData.publicUrl;
+    const putRes = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': file.type || 'application/octet-stream',
+      },
+      body: file,
+    });
 
-    const { error: updateError } = await supabase
-      .from(TABLE_MEMBERS)
-      .update({ avatar: avatarPath })
-      .eq('uuid', userUuid);
+    if (!putRes.ok) {
+      const message = await putRes.text();
+      throw new Error(message || `Failed to upload file (${putRes.status})`);
+    }
 
-    if (updateError) {
-      console.error('Database update error:', updateError);
+    const storagePath = `${BUCKET_USERS}/${filePath}`;
+
+    const patchRes = await fetch(`${API_BASE}/api/auth/member/avatar`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ path: storagePath }),
+    });
+
+    if (!patchRes.ok) {
+      const message = await patchRes.text();
+      throw new Error(message || `Failed to update avatar (${patchRes.status})`);
+    }
+
+    const patchJson = await patchRes.json();
+    const avatarUrl = patchJson?.avatarUrl;
+
+    if (!avatarUrl) {
       return {
         success: false,
-        error: updateError.message,
+        error: 'Avatar URL update failed',
       };
     }
 
     return {
       success: true,
-      imagePath: avatarPath,
+      imagePath: avatarUrl,
     };
   } catch (error) {
     console.error('Unexpected error:', error);

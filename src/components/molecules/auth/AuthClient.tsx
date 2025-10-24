@@ -1,113 +1,75 @@
 "use client";
 
-import Link from "next/link";
+import { getUserAPI } from "@/app/api/auth/getUser";
+import { UserOutputDto } from "@/app/api/auth/getUser/getUser.dto";
 import { ROUTE } from "@/router";
 import { User as UserIcon } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
-import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
-import { useHeader } from "@/contexts/HeaderContext";
-import { User } from "@supabase/supabase-js";
+import Link from "next/link";
+import { useCallback, useEffect, useState } from "react";
 
-export default function AuthClient() {
-  const [user, setUser] = useState<User | null>(null);
-  const [avatarUrl, setAvatarUrl] = useState<string>("");
-  const [isScrolled, setIsScrolled] = useState(false);
-  const { isTransparentMode } = useHeader();
-  const supabase = createClient();
+type AuthClientProps = {
+  iconColor?: string;
+};
 
-  const fetchAndSetUser = useCallback(async () => {
+export default function AuthClient({ iconColor = "#000" }: AuthClientProps) {
+  const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  const checkAuth = useCallback(async () => {
     try {
-      const sessionRes = await fetch("/api/auth/getUser/session");
-      if (!sessionRes.ok) {
-        throw new Error(`Failed to fetch session: ${sessionRes.statusText}`);
+      const res = await fetch('/api/auth/session');
+      if (res.ok) {
+        const data = await res.json();
+        setUser(data.auth);
+      } else {
+        setUser(null);
       }
-
-      const sessionData = await sessionRes.json();
-      const currentUser = sessionData.user ?? null;
-      setUser(currentUser);
-
-      if (!currentUser?.id) {
-        setAvatarUrl("");
-        return;
-      }
-
-      const avatarRes = await fetch(`/api/auth/member/avatar?userId=${encodeURIComponent(currentUser.id)}`);
-      if (!avatarRes.ok) {
-        throw new Error(`Failed to fetch avatar: ${avatarRes.statusText}`);
-      }
-
-      const avatarData: { avatarUrl: string | null } = await avatarRes.json();
-      setAvatarUrl(avatarData.avatarUrl ?? "");
     } catch (error) {
-      console.error("Error fetching user or avatar:", error);
+      console.error('Auth check error:', error);
       setUser(null);
-      setAvatarUrl("");
+    } finally {
+      setLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    fetchAndSetUser();
+    checkAuth();
+  }, [checkAuth]);
 
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === "SIGNED_OUT" || !session) {
-        setUser(null);
-        setAvatarUrl("");
-      } else if (event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
-        fetchAndSetUser();
-      }
-    });
+  if (loading) return null;
 
-    return () => subscription.unsubscribe();
-  }, [fetchAndSetUser, supabase.auth]);
-
-  useEffect(() => {
-    if (!isTransparentMode) {
-      setIsScrolled(false);
-      return;
-    }
-
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      setIsScrolled(scrollPosition >= 158);
-    };
-
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [isTransparentMode]);
-
-  const iconColor = isTransparentMode && !isScrolled ? 'white' : 'black';
-
-  if (!user) {
+  if (!user || user.status !== 'active') {
     return (
-      <Link href={ROUTE.LOGIN}>
-        <UserIcon
-          size={24}
-          style={{ color: iconColor }}
-          className="cursor-pointer hover:opacity-80 transition-opacity"
-        />
+      <Link href="/api/auth/google/start">
+        <button
+          type="button"
+          aria-label="Sign in with Google"
+          className="flex items-center justify-center transition-opacity hover:opacity-80"
+        >
+          <UserIcon size={24} style={{ color: iconColor }} />
+        </button>
       </Link>
     );
   }
 
   return (
-    <Link href={ROUTE.MY_PAGE}>
-      <div className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden cursor-pointer hover:opacity-80 transition-opacity">
-        {avatarUrl ? (
-          <Image
-            src={avatarUrl}
-            alt="Profile"
-            width={25}
-            height={25}
-            className="object-cover"
-          />
-        ) : (
-          <UserIcon size={24} style={{ color: iconColor }} />
-        )}
-      </div>
-    </Link>
+    <div className="flex items-center gap-2">
+      <Link href={ROUTE.MY_PAGE}>
+        <div className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden cursor-pointer hover:opacity-80 transition-opacity">
+          {user.avatar ? (
+            <Image
+              src={user.avatar}
+              alt="Profile"
+              width={25}
+              height={25}
+              className="object-cover"
+            />
+          ) : (
+            <UserIcon size={24} style={{ color: iconColor }} />
+          )}
+        </div>
+      </Link>
+    </div>
   );
 }

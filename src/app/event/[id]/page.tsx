@@ -11,7 +11,7 @@ import { daysYMDFormat } from "@/utils/days";
 import { ResolvingMetadata, Metadata } from "next";
 import { DiscountPriceDisplay } from "@/components/common/DiscountPriceDisplay";
 import { formatDate } from "@/app/utils/date/formatDate";
-import Image from "next/image";
+import Image from "next/image";;
 import ImageAutoRatioComp from "@/components/common/ImageAutoRatioComp";
 
 export async function generateMetadata(

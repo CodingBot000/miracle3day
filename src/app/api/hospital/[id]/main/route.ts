@@ -1,115 +1,82 @@
 import { TABLE_DOCTOR, TABLE_HOSPITAL, TABLE_HOSPITAL_BUSINESS_HOUR, TABLE_HOSPITAL_DETAIL, TABLE_HOSPITAL_TREATMENT } from "@/constants/tables";
-import { createClient } from "@/utils/supabase/server";
-import { NextRequest } from "next/server";
+import { query } from "@/lib/db";
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(req: Request, { params }: { params: { id: string } }) {
   const id_uuid = params.id;
-  const supabase = createClient();
-  
-  const { searchParams } = new URL(req.url);
-  console.log("hospital/[id]/main/route.ts id_uuid:", id_uuid);
-  console.log("hospital/[id]/main/route.ts params:", params);
-  console.log("hospital/[id]/main/route.ts req:", req);
-  console.log("hospital/[id]/main/route.ts searchParams:", searchParams);
-  const userId = searchParams.get("uuid") as string;
-  console.log("hospital/[id]/main/route.ts userId:", userId);
+
   try {
-    const {
-      data: hospitalData,
-      error,
-      status,
-      statusText,
-    } = await supabase
-      .from(TABLE_HOSPITAL)
-      .select(`*`)
-      .match({ id_uuid: id_uuid, show: true });
-      // console.log("hospitalData select table ", hospitalData);
-    const { data: detailData, error: detailError } = await supabase
-      .from(TABLE_HOSPITAL_DETAIL)
-      .select(`*`)
+    const hospitalSql = `
+      SELECT
 
-      .match({ id_uuid_hospital: id_uuid });
-// console.log("hospital detailData select table ", detailData);
-
-
-const { data: businessHourData, error: businessHourError } = await supabase
-.from(TABLE_HOSPITAL_BUSINESS_HOUR)
-.select(`*`)
-.match({ id_uuid_hospital: id_uuid });
-
-// console.log("hospital businessHourData select table ", businessHourData);
-
-const { data: treatmentData, error: treatmentError } = await supabase
-.from(TABLE_HOSPITAL_TREATMENT)
-.select(`*`)
-.match({ id_uuid_hospital: id_uuid });
-
-// console.log("hospital treatmentData select table ", treatmentData);
-
-const { data: doctorsData, error: doctorsError } = await supabase
-.from(TABLE_DOCTOR)
-.select(`*`)
-
-.match({ id_uuid_hospital: id_uuid });
-
-// console.log("hospital doctorsData select table ", doctorsData);
-
-
-
-    // if (error || detailError) {
-    if (error || detailError || businessHourError || treatmentError || doctorsError) {
-      return Response.json({ data: null }, { status, statusText });
+        id,
+        id_uuid,
+        name,
+        name_en,
+        address_full_road,
+        address_full_road_en,
+        address_full_jibun,
+        address_full_jibun_en,
+        address_si,
+        address_si_en,
+        address_gu,
+        address_gu_en,
+        address_dong,
+        address_dong_en,
+        zipcode,
+        latitude,
+        longitude,
+        address_detail,
+        address_detail_en,
+        directions_to_clinic,
+        directions_to_clinic_en,
+        location,
+        imageurls,
+        thumbnail_url,
+        created_at,
+        searchkey,
+        id_unique,
+        id_surgeries,
+        show,
+        favorite_count
+      FROM ${TABLE_HOSPITAL}
+      WHERE id_uuid = $1
+      LIMIT 1
+    `;
+    const hospitalResult = await query(hospitalSql, [id_uuid]);
+    const hospital = hospitalResult.rows[0];
+    if (!hospital) {
+      return Response.json({ data: null }, { status: 404, statusText: "Not Found" });
     }
 
-    // uuid 없다는건 user가 login을 안했다는 의미 
-    if (!userId || userId === "undefined") {
-      console.log("hospital data select userId is undefined user not login or not set userId. This is not Error  / userId -> ", userId);
-      const data = {
-        // ...hospitalData[0],
-        hospital_info: hospitalData[0],
-        favorite: [],
-        hospital_details: detailData[0],
-        business_hours: businessHourData,
-        treatments: treatmentData,
-        doctors: doctorsData,
-      };
+    const detailSql = `SELECT * FROM ${TABLE_HOSPITAL_DETAIL} WHERE id_uuid_hospital = $1 LIMIT 1`;
+    const businessSql = `SELECT * FROM ${TABLE_HOSPITAL_BUSINESS_HOUR} WHERE id_uuid_hospital = $1 ORDER BY day_of_week`;
+    const treatmentSql = `SELECT * FROM ${TABLE_HOSPITAL_TREATMENT} WHERE id_uuid_hospital = $1`;
+    const doctorSql = `SELECT * FROM ${TABLE_DOCTOR} WHERE id_uuid_hospital = $1`;
 
-      return Response.json(data, { status: 200, statusText: "success" });
-    }
-
-    const { data: favoriteData, error: favoriteError } = await supabase
-      .from("favorite")
-      .select("*")
-      .eq("uuid", userId)
-      .eq("id_uuid_hospital", id_uuid);
-
-    if (favoriteError) {
-      return Response.json({ data: null }, { status, statusText });
-    }
+    const [detailRes, businessRes, treatmentRes, doctorRes] = await Promise.all([
+      query(detailSql, [id_uuid]),
+      query(businessSql, [id_uuid]),
+      query(treatmentSql, [id_uuid]),
+      query(doctorSql, [id_uuid]),
+    ]);
 
     const data = {
-      // ...hospitalData[0],
-      // hospital_info: hospitalData[0],
-      favorite: favoriteData,
-      // hospital_details: detailData[0],
-      hospital_info: hospitalData[0],
-      hospital_details: detailData[0],
-      business_hours: businessHourData,
-      treatments: treatmentData,
-      
-      doctors: doctorsData,
+      hospital_info: hospital,
+      hospital_details: detailRes.rows[0] ?? null,
+      business_hours: businessRes.rows,
+      treatments: treatmentRes.rows,
+      doctors: doctorRes.rows,
+      favorite: [],
+      favorite_count: hospital.favorite_count ?? 0,
     };
 
-    return Response.json(data, { status: 200, statusText: "success" });
+    return Response.json(data, { status: 200, statusText: "success", headers: { "Cache-Control": "no-store" } });
   } catch (error) {
-    if (error instanceof Error) {
-      return Response.json(
-        { data: null },
-        { status: 500, statusText: error.message }
-      );
-    }
+    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("GET /api/hospital/[id]/main error:", error);
+    return Response.json(
+      { data: null, error: message },
+      { status: 500, statusText: message, headers: { "Cache-Control": "no-store" } }
+    );
   }
 }

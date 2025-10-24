@@ -35,6 +35,18 @@ export default function TreatmentProtocol() {
     return topicListResponse?.data || [];
   }, [topicListResponse]);
 
+  React.useEffect(() => {
+    if (topicListResponse) {
+      console.log("[TreatmentProtocol] loaded topics:", topicListResponse.data.length, topicListResponse.data);
+    }
+  }, [topicListResponse]);
+
+  React.useEffect(() => {
+    if (error) {
+      console.error("[TreatmentProtocol] topic list error:", error);
+    }
+  }, [error]);
+
   // 공통 네비게이션 함수
   const navigateToProtocol = React.useCallback((topic_id: string, area_id: string) => {
     const params = new URLSearchParams({

@@ -1,20 +1,21 @@
 export const runtime = 'edge';
 import { NextResponse } from 'next/server';
-import { supabaseStore } from '@/lib/gamification/adapters/supabaseStore';
-import { createClient } from '@/utils/supabase/server';
+import { createBadgeStore } from '@/lib/gamification/adapters/badgeStore';
+import { getAuthSession } from "@/lib/auth-helper";
+import { requireUserId } from '@/lib/auth/require-user';
+import { findMemberByUserId } from '@/app/api/auth/getUser/member.helper';
 
 export async function GET() {
   try {
-    // 로그인한 사용자 확인
-    const supabase = createClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-
-    if (authError || !user) {
+    
+    const userId = await requireUserId();                 // ✅ 세션에서 보안적으로 추출
+    // const member = await findMemberByUserId(userId);      // (원하면 생략 가능)
+  
+    if (!userId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const userId = user.id;
-    const store = supabaseStore();
+    const store = createBadgeStore();
 
     const [master, mine] = await Promise.all([
       store.getBadgesMaster(),

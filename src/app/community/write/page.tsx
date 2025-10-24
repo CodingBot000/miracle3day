@@ -1,66 +1,48 @@
-import { redirect } from 'next/navigation'
-import { createClient } from '@/utils/supabase/server'
-import WriteForm from '@/components/molecules/WriteForm'
-import type { Member, CommunityCategory } from '@/app/models/communityData.dto'
-import { TABLE_MEMBERS } from '@/constants/tables'
+import { redirect } from 'next/navigation';
+import { cookies } from "next/headers";
+import WriteForm from '@/components/molecules/WriteForm';
+import type { CommunityCategory } from '@/app/models/communityData.dto';
+import {
+  TABLE_COMMUNITY_CATEGORIES,
+} from '@/constants/tables';
+import { q } from '@/lib/db';
+import { findMemberByUserId } from '@/app/api/auth/getUser/member.helper';
+import { requireUserId } from '@/lib/auth/require-user';
 
-async function getCurrentUser(): Promise<Member | null> {
-  const supabase = createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  
-  if (!user) return null
-  
-  const { data: memberData } = await supabase
-    .from(TABLE_MEMBERS)
-    .select('*')
-    .eq('uuid', user.id)
-    .single()
-  
-  return memberData || {
-    uuid: user.id,
-    nickname: user.user_metadata?.nickname || 'Anonymous',
-    name: user.user_metadata?.name || '',
-    email: user.email || '',
-    created_at: user.created_at,
-    updated_at: user.updated_at
-  }
-}
-
-function getLoginUrl() {
-  return '/auth/login'
-}
-
-async function getCategories() {
-  const supabase = createClient()
-  const { data, error } = await supabase
-    .from('community_categories')
-    .select('*')
-    .eq('is_active', true)
-    .order('order_index', { ascending: true })
-
-  if (error) {
-    console.error('Error fetching categories:', error)
-    return []
-  }
-
-  return data as CommunityCategory[]
+async function getCategories(): Promise<CommunityCategory[]> {
+  const rows = await q(
+    `SELECT id, name, description, order_index, is_active
+     FROM ${TABLE_COMMUNITY_CATEGORIES}
+     WHERE is_active = true
+     ORDER BY order_index ASC`
+  );
+  return rows as CommunityCategory[];
 }
 
 export default async function WritePage() {
-  const currentUser = await getCurrentUser()
-  console.log('WritePage: ' , currentUser);
-  if (!currentUser) {
-    redirect(getLoginUrl())
-  }
 
-  const categories = await getCategories()
+  
+  const userId = await requireUserId();                 // ✅ 세션에서 보안적으로 추출
+  const member = await findMemberByUserId(userId);      // (원하면 생략 가능)
+
+  if (!member) {
+    redirect("/auth/login");
+  }
+  const categories = await getCategories();
+  const authorNameSnapshot =
+    (member['nickname'] as string | undefined)?.trim() ??
+    (member['name'] as string | undefined)?.trim() ??
+    null;
+  const authorAvatarSnapshot =
+    (member['avatar'] as string | undefined)?.trim() ?? null;
 
   return (
     <div className="max-w-4xl mx-auto">
       <div className="bg-white rounded-lg shadow-lg p-8">
         <h1 className="text-2xl font-bold mb-6">Write New Post</h1>
-        <WriteForm 
-          authorUuid={currentUser.uuid}
+        <WriteForm
+          authorNameSnapshot={authorNameSnapshot}
+          authorAvatarSnapshot={authorAvatarSnapshot}
           categories={categories}
         />
       </div>

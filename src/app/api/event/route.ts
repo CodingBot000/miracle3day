@@ -1,34 +1,39 @@
+import { NextRequest, NextResponse } from "next/server";
 import { TABLE_EVENT } from "@/constants/tables";
 import { infinityParams } from "@/utils/inifinityQuery";
-import { createClient } from "@/utils/supabase/server";
-import { NextRequest, NextResponse } from "next/server";
+import { q } from "@/lib/db";
 
 export async function GET(req: NextRequest) {
-  const supabase = createClient();
-
   try {
-    const { limit, nextCursor, offset } = infinityParams({ req, limits: 6 });
+    const PAGE_SIZE = 6;
+    const { offset } = infinityParams({ req, limits: PAGE_SIZE });
+    const limitRows = PAGE_SIZE;
 
-    const { data, error, status, statusText, count } = await supabase
-      .from(TABLE_EVENT)
-      .select("*", { count: "exact" })
-      .range(offset, limit)
-      .order("date_to", { ascending: true });
+    const events = await q(
+      `SELECT * FROM ${TABLE_EVENT} ORDER BY date_to ASC LIMIT $1 OFFSET $2`,
+      [limitRows, offset]
+    );
 
-    if (!data || error) {
-      return NextResponse.json({ data: null }, { status, statusText });
-    }
+    const countRows = await q<{ count: number }>(
+      `SELECT COUNT(*)::int AS count FROM ${TABLE_EVENT}`
+    );
+    const total = countRows[0]?.count ?? 0;
+
+    const hasMore = total > offset + events.length;
 
     return NextResponse.json(
-      { data, nextCursor: nextCursor(count) },
-      { status, statusText }
+      {
+        data: events,
+        nextCursor: hasMore,
+      },
+      { headers: { "Cache-Control": "no-store" } }
     );
   } catch (error) {
-    if (error instanceof Error) {
-      return NextResponse.json(
-        { data: null },
-        { status: 500, statusText: error.message }
-      );
-    }
+    const message = error instanceof Error ? error.message : "Failed to fetch events";
+    console.error("GET /api/event error:", error);
+    return NextResponse.json(
+      { data: null, error: message },
+      { status: 500, headers: { "Cache-Control": "no-store" } }
+    );
   }
 }

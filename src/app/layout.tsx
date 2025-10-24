@@ -16,6 +16,7 @@ import { Toaster } from "sonner";
 import { HeaderProvider, useHeader } from "@/contexts/HeaderContext";
 import MainContent from "@/components/layout/MainContent";
 import Script from "next/script";
+
 // import { ProgressBar } from "@/components/atoms/loading/progress-bar";
 // import { PageTransitionOverlay } from "@/components/atoms/loading/page-transition-overlay";
 
@@ -88,43 +89,43 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className="overflow-x-hidden">
-      <head>
-      <Script id="runtime-env" strategy="beforeInteractive">
+        <head>
+        <Script id="runtime-env" strategy="beforeInteractive">
 {`(function(){function d(){if(window.APP_ENV?.inWebView){return{inWebView:true,platform:window.APP_ENV.platform}}const u=navigator.userAgent;if(u.includes('MyAppWebView/1.0 (Android)'))return{inWebView:true,platform:'android'};if(u.includes('MyAppWebView/1.0 (iOS)'))return{inWebView:true,platform:'ios'};return{inWebView:false,platform:/Android/i.test(u)?'android':/iPhone|iPad|iPod/i.test(u)?'ios':'web'}}window.RUNTIME_ENV=d();document.documentElement.dataset.inWebview=String(window.RUNTIME_ENV.inWebView);document.documentElement.dataset.platform=window.RUNTIME_ENV.platform;})();`}
         </Script>
-      </head>
-      <body className={inter.className + " min-h-screen flex flex-col overflow-x-hidden"}>
-        <ProgressBar />
-        {/* <PageTransitionOverlay /> */}
+        </head>
+        <body className={inter.className + " min-h-screen flex flex-col overflow-x-hidden"}>
+          <ProgressBar />
+          {/* <PageTransitionOverlay /> */}
 
-        <Providers>
-          <HeaderProvider>
-            <ScrollTop />
-            <div id="modal-root" />
+          <Providers>
+            <HeaderProvider>
+              <ScrollTop />
+              <div id="modal-root" />
 
-            <Suspense fallback={<div>Loading header...</div>}>
-              <LayoutHeader />
-            </Suspense>
+              <Suspense fallback={<div>Loading header...</div>}>
+                <LayoutHeader />
+              </Suspense>
 
-            {/* 배경/루트 래퍼: 변형/음수마진으로 넘칠 때를 대비해 clip */}
-            <div className="bg-gradient-to-br from-[#FDF5F0] via-white to-[#F8E8E0] flex flex-col min-h-screen w-full overflow-x-clip">
-              {/* 메인: 헤더 고정으로 인한 여백 없음 */}
-              <main className="flex-grow pb-[72px] w-full relative">
-                {/* HeroVideo는 이 안에서 full-width로 표시되고,
-                    나머지 컨텐츠는 max-w-[1200px] 제한 */}
-                <MainContent>
-                  {children}
-                </MainContent>
-              </main>
+              {/* 배경/루트 래퍼: 변형/음수마진으로 넘칠 때를 대비해 clip */}
+              <div className="bg-gradient-to-br from-[#FDF5F0] via-white to-[#F8E8E0] flex flex-col min-h-screen w-full overflow-x-clip">
+                {/* 메인: 헤더 고정으로 인한 여백 없음 */}
+                <main className="flex-grow pb-[72px] w-full relative">
+                  {/* HeroVideo는 이 안에서 full-width로 표시되고,
+                      나머지 컨텐츠는 max-w-[1200px] 제한 */}
+                  <MainContent>
+                    {children}
+                  </MainContent>
+                </main>
 
-              <CookieConsent />
-              {/* <MenuMobile /> */}
-              <Footer />
-              <Toaster richColors position="top-center" duration={1500}/>
-            </div>
-          </HeaderProvider>
-        </Providers>
-      </body>
-    </html>
+                <CookieConsent />
+                {/* <MenuMobile /> */}
+                <Footer />
+                <Toaster richColors position="top-center" duration={1500}/>
+              </div>
+            </HeaderProvider>
+          </Providers>
+        </body>
+      </html>
   );
 }

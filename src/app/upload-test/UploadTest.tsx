@@ -15,7 +15,7 @@ export default function UploadTest() {
       fileName: file.name,
       contentType: file.type,
     });
-    const r1 = await fetch(`/api/storage/presign-upload?${q}`);
+    const r1 = await fetch(`/api/storage/presign_upload?${q}`);
     if (!r1.ok) {
       const e = await r1.json();
       setLog(`presign 실패: ${e.error ?? r1.status}`);
@@ -34,7 +34,7 @@ export default function UploadTest() {
       return;
     }
 
-    setLog(`✅ 업로드 성공!\n키: ${key}\n(읽기 필요 시 /api/storage/presign-read?key=${encodeURIComponent(key)})\n직접 URL(서명제거): ${publicUrl}`);
+    setLog(`✅ 업로드 성공!\n키: ${key}\n(읽기 필요 시 /api/storage/presign_read?key=${encodeURIComponent(key)})\n직접 URL(서명제거): ${publicUrl}`);
   }
 
   return (

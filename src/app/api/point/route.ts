@@ -1,34 +1,31 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@/utils/supabase/server"; 
-import { TABLE_POINT_TRANSACTIONS } from "@/constants/tables";
+import { getAuthSession } from "@/lib/auth-helper";
+import { q } from "@/lib/db";
+import { TABLE_MEMBERS } from "@/constants/tables";
 
-/** GET /api/point
- *  반환: { point: number }
- */
 export async function GET(req: Request) {
-  const supabase = createClient();
-
-  // 로그인 확인
-  const {
-    data: { user },
-    error: userErr,
-  } = await supabase.auth.getUser();
-  if (userErr || !user) {
+  const authSession = await getAuthSession(req);
+  if (!authSession) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  
+  const { userId } = authSession;
 
-  const { data: pointTransaction, error: pointTransactionError } = await supabase
-    .from(TABLE_POINT_TRANSACTIONS)
-    .select("point_balance")
-    .eq("user_id", user.id)
-    .single();
+  try {
+    const rows = await q<{ point_balance: number | null }>(
+      `
+        SELECT point_balance
+        FROM ${TABLE_MEMBERS}
+        WHERE id_uuid = $1
+        LIMIT 1
+      `,
+      [userId]
+    );
 
-
-  if (pointTransactionError && pointTransactionError.code !== 'PGRST116') { // PGRST116 is "not found"
-    return NextResponse.json({ error: pointTransactionError.message }, { status: 500 });
+    const balance = rows[0]?.point_balance ?? 0;
+    return NextResponse.json({ point_balance: balance });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Failed to fetch point balance";
+    console.error("GET /api/point error:", error);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
-  return NextResponse.json({
-    point_balance: pointTransaction?.point_balance,
-  });
 }

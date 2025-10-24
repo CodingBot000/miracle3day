@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import ChatClient from "@/components/ChatClient";
 import LottieLoading from "@/components/atoms/LottieLoading";
@@ -13,7 +12,6 @@ export default function ChatChannelPage({ params }: { params: { channelUrl: stri
   const [isLoading, setIsLoading] = useState(true);
   const [userId, setUserId] = useState<string>("");
   const router = useRouter();
-  const supabase = createClient();
   const channelUrl = decodeURIComponent(params.channelUrl);
 
   useEffect(() => {
@@ -24,15 +22,21 @@ export default function ChatChannelPage({ params }: { params: { channelUrl: stri
         const data = await res.json();
         console.log('[ChatChannelPage] User data:', data);
 
-        if (!data.user) {
+        const userInfo = data?.userInfo;
+
+        if (!userInfo?.auth_user) {
           console.log('[ChatChannelPage] No user, redirecting to login');
           router.push(`/auth/login?redirect=/chat/${encodeURIComponent(channelUrl)}`);
           return;
         }
 
-        console.log('[ChatChannelPage] User logged in, user ID:', data.user.id);
-        // members.uuid를 userId로 사용
-        setUserId(data.user.id);
+        const resolvedUserId =
+          userInfo.uuid ??
+          userInfo.id_uuid ??
+          userInfo.auth_user.id;
+
+        console.log('[ChatChannelPage] User logged in, user ID:', resolvedUserId);
+        setUserId(resolvedUserId);
         setIsLoading(false);
       } catch (err) {
         console.error('[ChatChannelPage] Error checking auth:', err);

@@ -1,25 +1,22 @@
 export const runtime = 'edge';
 import { NextResponse } from 'next/server';
-import { supabaseStore } from '@/lib/gamification/adapters/supabaseStore';
-import { createClient } from '@/utils/supabase/server';
+import { createBadgeStore } from '@/lib/gamification/adapters/badgeStore';
+import { getAuthSession } from "@/lib/auth-helper";
 
 export async function GET(req: Request) {
   try {
     console.log('[QuizState] Starting GET request');
 
-    // 로그인한 사용자 확인
-    const supabase = createClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const authSession = await getAuthSession(req); if (!authSession) return NextResponse.json({ error: "Unauthorized" }, { status: 401 }); const { userId } = authSession;
 
-    if (authError || !user) {
-      console.error('[QuizState] Auth error:', authError);
+    if (!userId) {
+      console.error('[QuizState] Unauthorized');
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const userId = user.id;
     console.log('[QuizState] User ID:', userId);
 
-    const store = supabaseStore();
+    const store = createBadgeStore();
     console.log('[QuizState] Store created');
 
     const { quiz_rules } = await store.getConfig();

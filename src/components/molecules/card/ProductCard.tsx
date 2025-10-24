@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
+import Image from "next/image";;
 import { useState } from "react";
 import { Heart, HeartIcon, Star, StarIcon } from "lucide-react";
 import { daysYMDFormat } from "@/utils/days";

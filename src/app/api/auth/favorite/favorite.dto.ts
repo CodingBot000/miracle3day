@@ -7,12 +7,10 @@ export interface GetFavoriteInputDto {
 
 export interface PostFavoriteInputDto {
   id_hospital: string;
-  uuid: string;
 }
 
 export interface DeleteFavoriteInputDto {
   id_hospital: string;
-  uuid: string;
 }
 
 export interface FavoriteItem {

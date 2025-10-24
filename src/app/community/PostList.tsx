@@ -1,13 +1,12 @@
 'use client'
 
-import { MouseEvent, useMemo } from 'react'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { toast } from 'sonner'
-import { createClient } from '@/utils/supabase/client'
-import type { CommunityPost } from '@/app/models/communityData.dto'
-import { ANONYMOUS_FALLBACK, isAnonymousCategoryName } from './utils'
-import { useLoginGuard } from '@/hooks/useLoginGuard'
+import { MouseEvent, useMemo } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import type { CommunityPost } from '@/app/models/communityData.dto';
+import { ANONYMOUS_FALLBACK, isAnonymousCategoryName } from './utils';
+import { useLoginGuard } from '@/hooks/useLoginGuard';
+import { getImageUrl } from '@/lib/images';
 
 interface PostListProps {
   posts: CommunityPost[]
@@ -15,59 +14,41 @@ interface PostListProps {
 }
 
 export default function PostList({ posts, isAuthenticated }: PostListProps) {
-  const router = useRouter()
-  const dateFormatter = useMemo(() => new Intl.DateTimeFormat('ko-KR', {
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
-    timeZone: 'Asia/Seoul',
-  }), [])
+  const router = useRouter();
+  const dateFormatter = useMemo(
+    () =>
+      new Intl.DateTimeFormat('ko-KR', {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        timeZone: 'Asia/Seoul',
+      }),
+    []
+  );
 
-  const { requireLogin, loginModal } = useLoginGuard(isAuthenticated)
+  const { requireLogin, loginModal } = useLoginGuard(isAuthenticated);
 
   const formatDate = (value: string) => {
-    const parsed = new Date(value)
+    const parsed = new Date(value);
     if (Number.isNaN(parsed.getTime())) {
-      return ''
+      return '';
     }
-    return dateFormatter.format(parsed)
-  }
+    return dateFormatter.format(parsed);
+  };
 
   const handleClick = async (event: MouseEvent<HTMLAnchorElement>, postId: number) => {
     if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) {
-      return
+      return;
     }
 
-    event.preventDefault()
+    event.preventDefault();
 
-     if (!requireLogin()) {
-      return
+    if (!requireLogin()) {
+      return;
     }
 
-    const supabase = createClient()
-
-    try {
-      const { data, error } = await supabase
-        .from('community_posts')
-        .select('id')
-        .eq('id', postId)
-        .eq('is_deleted', false)
-        .maybeSingle()
-      console.log('PostList handleClick getPost result', {
-        postId,
-        data,
-        error,
-      })
-      if (error || !data) {
-        toast.error('Post not found')
-        return
-      }
-
-      router.push(`/community/post/${postId}`)
-    } catch (err) {
-      toast.error('Failed to open the post')
-    }
-  }
+    router.push(`/community/post/${postId}`);
+  };
 
   const getAuthorPresentation = (post: CommunityPost) => {
     const anonymous = isAnonymousCategoryName(post.category?.name)

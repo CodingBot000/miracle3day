@@ -2,7 +2,7 @@
 
 import { useRef, useState, useCallback, useEffect } from 'react';
 import Script from 'next/script';
-import Image from 'next/image';
+
 import CameraGuideStatus from './CameraGuideStatus';
 import CameraView from './CameraView';
 

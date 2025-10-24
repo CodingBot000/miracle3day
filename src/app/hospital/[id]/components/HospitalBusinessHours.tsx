@@ -1,5 +1,5 @@
 import { BusinessHourData, DoctorData } from "@/app/models/hospitalData.dto";
-import Image from "next/image";
+import Image from "next/image";;
 
 interface HospitalBusinessHoursProps {
   business_hours: BusinessHourData[];

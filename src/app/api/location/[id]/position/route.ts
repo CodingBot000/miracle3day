@@ -1,64 +1,56 @@
-import { LOCATIONS as locationList } from "@/constants";
-import { createClient } from "@/utils/supabase/server";
+import { NextResponse } from "next/server";
+import { LOCATIONS } from "@/constants";
 import { TABLE_HOSPITAL } from "@/constants/tables";
+import { q } from "@/lib/db";
+
+type LocationRow = {
+  latitude: number | null;
+  longitude: number | null;
+  name: string;
+};
 
 export async function GET(
-  req: Request,
+  _req: Request,
   { params }: { params: { id: string } }
 ) {
-  const supabase = createClient();
-
-  const location = locationList.map((loc) => {
-    return loc.toLowerCase() === params.id.toLowerCase();
-  });
-
   try {
-    let query = supabase
-      .from(TABLE_HOSPITAL)
-      .select(`id_unique,name,location,latitude,longitude`)
-      .eq('show', true);
+    const isAll = params.id.toUpperCase() === "ALL";
+    const locationKey = isAll
+      ? null
+      : LOCATIONS.find((loc) => loc.toLowerCase() === params.id.toLowerCase());
 
-    // 지역전체
-    // if (params.id === "ALL" || location === -1) {
-      if (params.id === "ALL") {
-      const { data, error, status, statusText } = await query;
-
-      if (error) {
-        return Response.json({ data: null }, { status, statusText });
-      }
-
-      const position = data?.map(({ latitude, longitude, name }) => {
-        return {
-          lat: latitude,
-          lng: longitude,
-          title: name,
-        };
-      });
-
-      return Response.json({ position }, { status, statusText });
+    if (!isAll && !locationKey) {
+      return NextResponse.json({ position: [] }, { status: 404 });
     }
 
-    const { data, error, status, statusText } = await query.match({ location });
+    const rows = await q<LocationRow>(
+      `
+        SELECT latitude, longitude, name
+        FROM ${TABLE_HOSPITAL}
+        WHERE show = true
+        ${locationKey ? "AND location = $1" : ""}
+      `,
+      locationKey ? [locationKey] : []
+    );
 
-    if (error) {
-      return Response.json({ data: null }, { status, statusText });
-    }
+    const position = rows
+      .filter((row) => row.latitude !== null && row.longitude !== null)
+      .map((row) => ({
+        lat: row.latitude!,
+        lng: row.longitude!,
+        title: row.name,
+      }));
 
-    const position = data?.map(({ latitude, longitude, name }) => {
-      return {
-        lat: latitude,
-        lng: longitude,
-        title: name,
-      };
-    });
-
-    return Response.json({ position }, { status, statusText });
+    return NextResponse.json(
+      { position },
+      { headers: { "Cache-Control": "no-store" } }
+    );
   } catch (error) {
-    if (error instanceof Error) {
-      return Response.json(
-        { data: null },
-        { status: 500, statusText: error.message }
-      );
-    }
+    const message = error instanceof Error ? error.message : "Failed to fetch positions";
+    console.error("GET /api/location/[id]/position error:", error);
+    return NextResponse.json(
+      { position: [], error: message },
+      { status: 500, headers: { "Cache-Control": "no-store" } }
+    );
   }
 }

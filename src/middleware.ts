@@ -1,76 +1,46 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { createClient } from "./utils/supabase/server";
-import { updateSession } from "./utils/supabase/middleware";
+const AUTH_REQUIRED_PATHS = [
+  "/user",
+  "/gamification/quize",
+  "/auth/withdrawal",
+];
+
+function isAuthRequiredPath(pathname: string) {
+  return AUTH_REQUIRED_PATHS.some((p) => pathname.startsWith(p));
+}
 
 export async function middleware(req: NextRequest) {
-  
-  const supabase = createClient();
+  const path = req.nextUrl.pathname;
+  console.log('[middleware] path:', path);
 
-  const auth = await supabase.auth.getUser();
-
-  if (auth.data.user) {
-    const allowedAuthPaths = ["/auth/withdrawal"];
-    // login user
-    // if (auth.data.user.email !== process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
-    //   if (req.nextUrl.pathname.startsWith("/admin")) {
-    //     return NextResponse.redirect(new URL("/", req.url));
-    //   }
-    // }
-    // const allowedAuthPaths = ["/auth/sign-up/complete-profile", "/auth/logout"];
-    console.log('middleware.ts auth.data.user req.nextUrl.pathname:' , req.nextUrl.pathname);
-    
-    
-    if (req.nextUrl.pathname.startsWith("/auth")
-    &&  !allowedAuthPaths.some((path) => req.nextUrl.pathname.startsWith(path))) 
-    
-     {
-      console.log('middleware.ts auth.data.user redirect /');
-      const res = NextResponse.redirect(new URL("/", req.url));
-      return ensureLangCookie(req, res);
+  if (isAuthRequiredPath(path)) {
+    console.log('[middleware] auth required path detected:', path);
+    const sessionCookie = req.cookies.get('app_session');
+    console.log('[middleware] session cookie exists:', !!sessionCookie);
+    if (!sessionCookie) {
+      console.log("middleware: redirect unauthenticated user to login");
+      const redirectRes = NextResponse.redirect(new URL("/api/auth/google/start", req.url));
+      return ensureLangCookie(req, redirectRes);
     }
-    console.log('middleware.ts auth.data.user redirect / no');
+    console.log('[middleware] auth check passed, continuing');
   } else {
-    console.log('middleware.ts not  login user');
-    // not login user
-    if (req.nextUrl.pathname.startsWith("/user")) {
-      const res = NextResponse.redirect(new URL("/", req.url));
-      return ensureLangCookie(req, res);
-    }
-
-    // 퀴즈 페이지는 로그인 필수
-    if (req.nextUrl.pathname.startsWith("/gamification/quize")) {
-      console.log('middleware.ts redirect to login from quiz page');
-      const res = NextResponse.redirect(new URL("/auth/login", req.url));
-      return ensureLangCookie(req, res);
-    }
-
-    // if (req.nextUrl.pathname.startsWith("/admin")) {
-    //   return NextResponse.redirect(new URL("/", req.url));
-    // }
+    console.log('[middleware] public path, passing through:', path);
   }
-  console.log('middleware.ts all path:', req.nextUrl.pathname);
-  const res = await updateSession(req);
-  return ensureLangCookie(req, res);
+
+  return ensureLangCookie(req, NextResponse.next());
 }
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - lottie files
-     * Feel free to modify this pattern to include more paths.
-     */
-    "/((?!_next/static|api|_next/image|favicon.png|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|lottie)$).*)",
+    "/((?!_next/static|_next/image|favicon.png|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|lottie)$).*)",
   ],
 };
 
-
+/**
+ * 다국어 쿠키(lang) 세팅 헬퍼
+ */
 function ensureLangCookie(req: NextRequest, res: NextResponse) {
-  // 이미 lang 쿠키가 있으면 그대로 반환 (절대 덮어쓰지 않음)
   if (req.cookies.get("lang")) return res;
 
   const al = (req.headers.get("accept-language") || "").toLowerCase();
@@ -78,7 +48,7 @@ function ensureLangCookie(req: NextRequest, res: NextResponse) {
 
   res.cookies.set("lang", lang, {
     path: "/",
-    maxAge: 60 * 60 * 24 * 365, // 1 year
+    maxAge: 60 * 60 * 24 * 365,
     sameSite: "lax",
   });
 

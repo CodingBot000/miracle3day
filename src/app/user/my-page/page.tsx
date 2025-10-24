@@ -1,36 +1,56 @@
-export const dynamic = "force-dynamic";
+"use client";
 
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import SuspenseWrapper from "@/components/atoms/SuspenseWrapper";
 import dynamicImport from "next/dynamic";
-import { getUserAPI } from "@/app/api/auth/getUser";
-import { notFound } from "next/navigation";
 import MyPageSkeleton from "./MyPageSkeleton";
-import MyPageMyIntroOther from "./MyPageMyIntroOther";
-
-// const MyPageClient = dynamicImport(() => import("./MyPageClient"), {
-//   ssr: false,
-// });
-
-const MyPageIntro = dynamicImport(() => import("./MyPageIntro"), {
-  ssr: false,
-});
 
 const MyPageMyInfo = dynamicImport(() => import("./MyPageMyInfo"), {
   ssr: false,
 });
 
+export default function MyPage() {
+  const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
-export default async function MyPage() {
-  const users = await getUserAPI();
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await fetch('/api/auth/getUser');
+        if (res.ok) {
+          const userData = await res.json();
+          if (userData.userInfo) {
+            setUser(userData);
+          } else {
+            router.push('/api/auth/google/start');
+          }
+        } else {
+          router.push('/api/auth/google/start');
+        }
+      } catch (error) {
+        console.error('Failed to fetch user:', error);
+        router.push('/api/auth/google/start');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  if (!users?.userInfo.auth_user) notFound();
+    fetchUser();
+  }, [router]);
+
+  if (loading) {
+    return <MyPageSkeleton />;
+  }
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <SuspenseWrapper fallback={<MyPageSkeleton />}>
-      {/* <MyPageClient user={users} /> */}
-      {/* <MyPageIntro user={users}/> */}
-      <MyPageMyInfo user={users}/>
-      {/* <MyPageMyIntroOther user={users}/> */}
+      <MyPageMyInfo user={user}/>
     </SuspenseWrapper>
   );
 }

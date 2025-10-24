@@ -27,16 +27,22 @@ export default function ChatListPage() {
         // 1. 사용자 인증 확인
         const authRes = await fetch("/api/auth/getUser/session");
         const authData = await authRes.json();
+        const userInfo = authData?.userInfo;
 
-        if (!authData.user) {
+        if (!userInfo?.auth_user) {
           router.push("/auth/login?redirect=/user/my-page/chat-list");
           return;
         }
 
-        setUserId(authData.user.id);
+        const memberUuid =
+          userInfo.uuid ??
+          userInfo.id_uuid ??
+          userInfo.auth_user.id;
+
+        setUserId(memberUuid);
 
         // 2. 채널 리스트 가져오기
-        const channelRes = await fetch(`/api/chat/channels?userId=${authData.user.id}`);
+        const channelRes = await fetch(`/api/chat/channels?userId=${memberUuid}`);
         const channelData = await channelRes.json();
 
         if (channelData.ok) {

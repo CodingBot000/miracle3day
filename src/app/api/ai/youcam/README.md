@@ -32,7 +32,7 @@ All SD concerns with HD_ prefix for more detailed analysis
 
 ## API Endpoints
 
-### POST /api/ai/youcam/skin-analysis
+### POST /api/ai/youcam/skin_analysis
 Analyzes skin from an uploaded image.
 
 **Request:**

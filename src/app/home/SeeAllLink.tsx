@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
+import Image from "next/image";;
 import { ROUTE } from "@/router";
 import { LocationEnum, LocationType } from "@/constants";
 

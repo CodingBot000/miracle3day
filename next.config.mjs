@@ -6,7 +6,12 @@ const __dirname = path.dirname(__filename);
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  trailingSlash: true,
+//   Supabase 시절 배경)
+
+// 당시 정적 라우트 기반의 페이지가 많았기 때문이에요.
+// Supabase + Next.js 조합에서는 보통 “디렉토리 구조 = URL 구조” 식으로 동작해서
+// 디렉토리 경로처럼 끝에 / 붙이는 게 자연스러웠어
+  trailingSlash: false,
   // Skip static optimization for pages using useSearchParams
   experimental: {
     missingSuspenseWithCSRBailout: false,
@@ -35,10 +40,20 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: "tqyarvckzieoraneohvv.supabase.co",
+        hostname: "beauty-bucket-public.s3.us-west-2.amazonaws.com",
+        protocol: "https",
+      },
+      {
+        hostname: "img.clerk.com",
+        protocol: "https",
+      },
+      {
+        hostname: "images.clerk.dev",
         protocol: "https",
       },
     ],
+    domains: ['beauty-bucket-public.s3.us-west-2.amazonaws.com', 'img.clerk.com', 'images.clerk.dev'],
+
     unoptimized: true,
   },
   sassOptions: {

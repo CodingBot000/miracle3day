@@ -1,60 +1,124 @@
-
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/utils/supabase/server";
-import { ReservationInputDto } from "./reservation.dto"; // 또는 상대 경로
+import { getAuthSession } from "@/lib/auth-helper";
+import { z } from "zod";
+import { q } from "@/lib/db";
 import { TABLE_RESERVATIONS } from "@/constants/tables";
+
+const reservationSchema = z.object({
+  id_user: z.string().optional(),
+  name: z.string().min(1),
+  english_name: z.string().optional().nullable(),
+  passport_name: z.string().optional().nullable(),
+  nationality: z.string().min(1),
+  gender: z.string().optional().nullable(),
+  birth_date: z.string().optional().nullable(),
+  email: z.string().email(),
+  phone: z.string().optional().nullable(),
+  phone_korea: z.string().optional().nullable(),
+  preferred_date: z.string().optional().nullable(),
+  preferred_time: z.string().optional().nullable(),
+  visitor_count: z.string().optional().nullable(),
+  reservation_headcount: z.string().optional().nullable(),
+  treatment_experience: z.string().optional().nullable(),
+  area_to_improve: z.string().optional().nullable(),
+  consultation_request: z.string().optional().nullable(),
+  additional_info: z.string().optional().nullable(),
+  preferred_languages: z.array(z.string()).optional().nullable(),
+});
 
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    console.log('🔍 API Route: POST reservation started');
-    const supabase = createClient();
+    const authSession = await getAuthSession(req); if (!authSession) return NextResponse.json({ error: "Unauthorized" }, { status: 401 }); const { userId } = authSession;
     const body = await req.json();
-    console.log('🔍 API Route: Request body:', body);
+    const parsed = reservationSchema.parse(body);
 
-    const hospitalId = params.id;
-    console.log('🔍 API Route: Hospital ID:', hospitalId);
-
-    const reservationData: ReservationInputDto = {
-      id_user: body.id_user,
-      id_uuid_hospital: hospitalId,
-      name: body.name,
-      english_name: body.english_name,
-      passport_name: body.passport_name,
-      nationality: body.nationality,
-      gender: body.gender,
-      birth_date: body.birth_date,
-      email: body.email,
-      phone: body.phone,
-      phone_korea: body.phone_korea,
-      preferred_date: body.preferred_date,
-      preferred_time: body.preferred_time,
-      visitor_count: body.visitor_count,
-      reservation_headcount: body.reservation_headcount,
-      treatment_experience: body.treatment_experience,
-      area_to_improve: body.area_to_improve,
-      consultation_request: body.consultation_request,
-      additional_info: body.additional_info,
-      preferred_languages: body.preferred_languages ?? [],
-      status_code: 1, // PENDING 상태 코드
+    const reservationData = {
+      id_user: parsed.id_user ?? userId ?? null,
+      id_uuid_hospital: params.id,
+      name: parsed.name,
+      english_name: parsed.english_name ?? null,
+      passport_name: parsed.passport_name ?? null,
+      nationality: parsed.nationality,
+      gender: parsed.gender ?? null,
+      birth_date: parsed.birth_date ?? null,
+      email: parsed.email,
+      phone: parsed.phone ?? null,
+      phone_korea: parsed.phone_korea ?? null,
+      preferred_date: parsed.preferred_date ?? null,
+      preferred_time: parsed.preferred_time ?? null,
+      visitor_count: parsed.visitor_count ?? null,
+      reservation_headcount: parsed.reservation_headcount ?? null,
+      treatment_experience: parsed.treatment_experience ?? null,
+      area_to_improve: parsed.area_to_improve ?? null,
+      consultation_request: parsed.consultation_request ?? null,
+      additional_info: parsed.additional_info ?? null,
+      preferred_languages: parsed.preferred_languages ?? [],
+      status_code: 1,
       created_at: new Date().toISOString(),
     };
-    
-    console.log('🔍 API Route: Prepared reservation data:', reservationData);
 
-    const { data, error } = await supabase
-      .from(TABLE_RESERVATIONS)
-      .insert(reservationData)
-      .select()
-      .single();
+    const rows = await q(
+      `INSERT INTO ${TABLE_RESERVATIONS} (
+         id_user,
+         id_uuid_hospital,
+         name,
+         english_name,
+         passport_name,
+         nationality,
+         gender,
+         birth_date,
+         email,
+         phone,
+         phone_korea,
+         preferred_date,
+         preferred_time,
+         visitor_count,
+         reservation_headcount,
+         treatment_experience,
+         area_to_improve,
+         consultation_request,
+         additional_info,
+         preferred_languages,
+         status_code,
+         created_at
+       ) VALUES (
+         $1, $2, $3, $4, $5, $6, $7, $8, $9, $10,
+         $11, $12, $13, $14, $15, $16, $17, $18, $19, $20,
+         $21::jsonb, $22
+       )
+       RETURNING *`,
+      [
+        reservationData.id_user,
+        reservationData.id_uuid_hospital,
+        reservationData.name,
+        reservationData.english_name,
+        reservationData.passport_name,
+        reservationData.nationality,
+        reservationData.gender,
+        reservationData.birth_date,
+        reservationData.email,
+        reservationData.phone,
+        reservationData.phone_korea,
+        reservationData.preferred_date,
+        reservationData.preferred_time,
+        reservationData.visitor_count,
+        reservationData.reservation_headcount,
+        reservationData.treatment_experience,
+        reservationData.area_to_improve,
+        reservationData.consultation_request,
+        reservationData.additional_info,
+        JSON.stringify(reservationData.preferred_languages ?? []),
+        reservationData.status_code,
+        reservationData.created_at,
+      ]
+    );
 
-    if (error) {
-      console.error("Insert error:", error);
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
-
-    return NextResponse.json({ success: true, data });
+    return NextResponse.json({ success: true, data: rows[0] ?? null });
   } catch (error) {
-    console.error("Unhandled error:", error);
+    console.error("Unhandled reservation error:", error);
+    if (error instanceof z.ZodError) {
+      return NextResponse.json({ error: error.flatten() }, { status: 400 });
+    }
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }

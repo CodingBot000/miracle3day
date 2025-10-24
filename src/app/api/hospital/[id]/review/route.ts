@@ -1,6 +1,7 @@
-import { createClient } from "@/utils/supabase/server";
+import { NextResponse } from "next/server";
 import { LIMIT } from "./constant";
 import { TABLE_HOSPITAL, TABLE_REVIEW, TABLE_MEMBERS } from "@/constants/tables";
+import { q } from "@/lib/db";
 
 export async function GET(
   req: Request,
@@ -14,31 +15,40 @@ export async function GET(
   const offset = pageParam * LIMIT;
   const limit = offset + LIMIT - 1;
 
-  const supabase = createClient();
-  console.log("api/hospital/[id]/review/route.ts id_uuid_hospital:", id_uuid_hospital);
-
-
   try {
-    // 1. 병원 정보 단일 조회
-    const { data: hospitalData, error: hospitalError } = await supabase
-      .from(TABLE_HOSPITAL)
-      .select("*")
-      .eq('show', true)
-      .eq("id_uuid", id_uuid_hospital)
-      .single();
-    console.log("api/hospital/[id]/review/route.ts hospitalData:", hospitalData);
-    if (hospitalError) throw new Error(hospitalError.message);
+    const hospitalRows = await q(
+      `SELECT * FROM ${TABLE_HOSPITAL}
+       WHERE show = true AND id_uuid = $1
+       LIMIT 1`,
+      [id_uuid_hospital]
+    );
 
-    // 2. 해당 병원의 리뷰들 조회
-    const { data: reviewDatas, count } = await supabase
-      .from(TABLE_REVIEW)
-      .select("*", { count: "exact" })
-      .eq("id_uuid_hospital", id_uuid_hospital)
-      .range(offset, limit)
-      .order("created_at", { ascending: true });
-      console.log("api/hospital/[id]/review/route.ts reviewDatas:", reviewDatas);
-    if (!reviewDatas || reviewDatas.length === 0) {
-      return Response.json(
+    const hospitalData = hospitalRows[0];
+
+    if (!hospitalData) {
+      return NextResponse.json(
+        { data: { hospitalData: null, reviewsWithMember: [] }, nextCursor: false },
+        { status: 404, statusText: "Not Found" }
+      );
+    }
+
+    const reviewRows = await q(
+      `SELECT * FROM ${TABLE_REVIEW}
+       WHERE id_uuid_hospital = $1
+       ORDER BY created_at ASC
+       LIMIT $2 OFFSET $3`,
+      [id_uuid_hospital, LIMIT, offset]
+    );
+
+    const countRows = await q<{ count: number }>(
+      `SELECT COUNT(*)::int AS count
+       FROM ${TABLE_REVIEW}
+       WHERE id_uuid_hospital = $1`,
+      [id_uuid_hospital]
+    );
+
+    if (!reviewRows.length) {
+      return NextResponse.json(
         {
           data: {
             hospitalData,
@@ -50,44 +60,31 @@ export async function GET(
       );
     }
 
-    // 3. 리뷰의 user_no 들만 뽑기
-    // const userNos = [...new Set(reviewDatas.map((r) => r.user_no))]; // 중복 제거
-    const userNos = Array.from(new Set(reviewDatas.map((r) => r.user_no)))
+    const userNos = Array.from(new Set(reviewRows.map((r: any) => r.user_no)));
+    let memberDatas: any[] = [];
 
-    // 4. user_no 기준 member 정보 조회
-    const { data: memberDatas, error: memberError } = await supabase
-      .from(TABLE_MEMBERS)
-      .select("*")
-      .in("user_no", userNos);
-console.log("api/hospital/[id]/review/route.ts memberDatas:", memberDatas);
-    
-    const isTestPassDespiteOfMemberError = true;
-    if (memberError && !isTestPassDespiteOfMemberError) throw new Error(memberError.message);
-    console.log("api/hospital/[id]/review/route.ts memberError:", memberError);
-    // 5. 리뷰와 멤버 매칭
-    const memberMap = new Map(memberDatas?.map((m) => [m.user_no, m]) || []);
-    // 정상코드 
-    // const reviewsWithMember = reviewDatas.map((r) => ({
-    //   review: r,
-    //   member: memberMap.get(r.user_no) || null,
-    // }));
+    if (userNos.length > 0) {
+      const members = await q(
+        `SELECT * FROM ${TABLE_MEMBERS}
+         WHERE user_no = ANY($1::int[])`,
+        [userNos]
+      );
+      memberDatas = members;
+    }
 
-    // 테스트를 위하 일치 멤버 없어도  리뷰를 무조건 나오게 하는 임시코드 
-    const reviewsWithMember = reviewDatas.map((r) => ({
+    const memberMap = new Map(
+      memberDatas.map((m) => [m.user_no, m])
+    );
+
+    const reviewsWithMember = reviewRows.map((r: any) => ({
       review: r,
-      member: null, // member 매핑은 임시로 생략
+      member: memberMap.get(r.user_no) ?? null,
     }));
 
-    const nextCursor = count ? limit < count : false;
+    const total = countRows[0]?.count ?? 0;
+    const nextCursor = limit < total;
 
-    console.log("============================================================================");
-    console.log("api/hospital/[id]/review/route.ts final res ");
-    console.log("api/hospital/[id]/review/route.ts final res  hospitalData :", hospitalData);
-    console.log("api/hospital/[id]/review/route.ts final res reviewsWithMember :", reviewsWithMember);
-    console.log("api/hospital/[id]/review/route.ts final res nextCursor :", nextCursor);
-    console.log("============================================================================");
-
-    return Response.json(
+    return NextResponse.json(
       {
         data: {
           hospitalData,
@@ -99,7 +96,7 @@ console.log("api/hospital/[id]/review/route.ts memberDatas:", memberDatas);
     );
   } catch (error) {
     if (error instanceof Error) {
-      return Response.json(
+      return NextResponse.json(
         { status: 500, message: error.message },
         { status: 500 }
       );

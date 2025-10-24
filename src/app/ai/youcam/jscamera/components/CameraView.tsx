@@ -1,7 +1,7 @@
 'use client';
 
-import { RefObject } from 'react';
 import Image from 'next/image';
+import { RefObject } from 'react';
 
 interface FaceGuidance {
   message: string;

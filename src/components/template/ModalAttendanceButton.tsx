@@ -50,7 +50,7 @@ export default function ModalAttendanceButton() {
   async function handleCheckIn(date: Date) {
     // 클라이언트 타임존 전달 → 로컬 자정 기준 처리
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const res = await fetch("/api/attendance/check-in", {
+    const res = await fetch("/api/attendance/check_in", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ tz }),

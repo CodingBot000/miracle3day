@@ -1,15 +1,19 @@
-import { AuthUser } from "@supabase/supabase-js";
+export interface AuthUserLike {
+  id: string;
+  email?: string | null;
+  [key: string]: unknown;
+}
 
 export interface UserInputDto {
   email: string;
 }
 
 export interface UserOutputDto {
-  userInfo: UserInfoDto;
+  userInfo: UserInfoDto | null;
 }
 
 export interface UserInfoDto {
-  auth_user: AuthUser;
+  auth_user: AuthUserLike | null;
   created_at: string;
   nickname: string;
   name: string;

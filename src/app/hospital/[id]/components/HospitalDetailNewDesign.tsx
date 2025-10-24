@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { HospitalDetailMainOutput } from "@/app/api/hospital/[id]/main/main.dto";
-import Image from "next/image";
+// import Image from "next/image";;
 import { useRouter } from "next/navigation";
 import HospitalContactInfo from "./HospitalContactInfo";
 import HospitalLocation from "./HospitalLocation";
@@ -68,16 +68,7 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
         </p>
       </div>
 
-      {/* Hero Image */}
-      {/* <div className="w-full h-[400px] relative">
-        <Image
-          src={hospital_info.imageurls?.[0] || "/placeholder-hospital.jpg"}
-          alt={hospital_info.name}
-          fill
-          className="object-cover"
-          priority
-        />
-      </div> */}
+
       <div className="w-full relative mb-6">
         <ResponsiveImageMosaic
           images ={hospital_info.imageurls}

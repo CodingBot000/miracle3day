@@ -56,7 +56,7 @@ export default function JSCameraPage() {
       formData.append('concerns', JSON.stringify(selectedConcerns));
       formData.append('mode', analysisMode);
 
-      const response = await fetch('/api/ai/youcam/skin-analysis', {
+      const response = await fetch('/api/ai/youcam/skin_analysis', {
         method: 'POST',
         body: formData,
       });

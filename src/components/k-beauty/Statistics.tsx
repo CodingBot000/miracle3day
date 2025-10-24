@@ -1,4 +1,5 @@
-import Image from 'next/image';
+import Image from "next/image";
+
 
 interface StatItem {
   value: string;
@@ -7,7 +8,7 @@ interface StatItem {
 
 interface Props {
   title: string;
-  data: Record<string, StatItem>;
+data: Record<string, StatItem>;
   image?: string;
 }
 

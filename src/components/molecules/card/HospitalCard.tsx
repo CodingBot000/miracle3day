@@ -1,8 +1,10 @@
 "use client";
 
 import { findRegionByKey, REGIONS } from "@/constants";
-import Image from "next/image";
+// import Image from "next/image";;
 import Link from "next/link";
+// import { SmartImage } from "@/components/template/SmartImage";
+import Image from "next/image";
 
 interface HospitalCardProps {
   src: string;
@@ -32,7 +34,7 @@ export const HospitalCard = ({
       ? findRegionByKey(REGIONS, locationKey)
       : undefined;
         
-
+  // console.log('HospitalCard src:', src);
   return (
     <article onClick={() => onSelect && onSelect(name)}>
       <Link href={href}>
@@ -41,6 +43,7 @@ export const HospitalCard = ({
             {/* Hospital Image */}
             <div className="relative h-40 md:h-48 rounded-t-xl overflow-hidden">
               <Image src={src} alt={alt} fill className="object-cover" />
+              
             </div>
             
             {/* Hospital Info */}

@@ -105,14 +105,14 @@ const LayoutHeader = () => {
           <div className="relative text-black">
             {isLoaded && isSignedIn && user ? (
               <div className="hidden items-center gap-2 text-sm text-slate-700 md:flex">
-                <span>{user.fullName ?? user.username ?? user.primaryEmailAddress?.emailAddress ?? 'User'}</span>
-                {user.imageUrl ? (
+                {/* <span>{user.fullName ?? user.username ?? user.primaryEmailAddress?.emailAddress ?? 'User'}</span> */}
+                {/* {user.imageUrl ? (
                   <img
                     src={user.imageUrl}
                     alt={user.fullName ?? 'User'}
                     className="h-6 w-6 rounded-full object-cover"
                   />
-                ) : null}
+                ) : null} */}
               </div>
             ) : null}
             <AuthClient iconColor={isTransparentMode && !isScrolled ? 'white' : 'black'} />

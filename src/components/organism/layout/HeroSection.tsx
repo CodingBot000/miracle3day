@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
+import Image from "next/image";;
 
 // 이미지 파일 경로 배열
 const heroImages = [

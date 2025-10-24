@@ -9,7 +9,7 @@ import { cookies } from "next/headers";
 import LocationChipSelector from "./LocationChipSelector";
 import Link from "next/link";
 import { ROUTE } from "@/router";
-import Image from "next/image";
+import Image from "next/image";;
 import SeeAllLink from "./SeeAllLink";
 import LocationHospitalClient from "./components/LocationHospitalClient";
 import DiagnosticIntro from "./components/DiagnosticIntro";

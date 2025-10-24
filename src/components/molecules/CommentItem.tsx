@@ -57,7 +57,6 @@ export default function CommentItem({
             <ReportButton
               targetType="comment"
               targetId={comment.id}
-              reporterUuid={currentUser.uuid}
             />
           </div>
         </div>

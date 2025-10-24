@@ -11,7 +11,7 @@ import { ROUTE } from "@/router";
 import { LocationEnum, LOCATIONS, LocationType } from "@/constants";
 import clsx from "clsx";
 import Link from "next/link";
-import Image from "next/image";
+import Image from "next/image";;
 import { useSearchParams } from "next/navigation";
 import HeroVideos from "./components/hero/HeroVideos";
 

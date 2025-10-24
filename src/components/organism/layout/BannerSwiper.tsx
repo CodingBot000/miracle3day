@@ -9,7 +9,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-import Image from "next/image";
+import Image from "next/image";;
 import Link from "next/link";
 import { ROUTE } from "@/router";
 import { BannerItem } from "@/app/api/home/banner/banner.dto";

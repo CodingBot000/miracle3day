@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { upsertUser, createDistinct1to1Channel } from "@/lib/sendbird";
-import { createClient } from "@/utils/session/server";
 import { TABLE_MEMBERS } from "@/constants/tables";
+import { q } from "@/lib/db";
 
 const Body = z.object({
   member_uuid: z.string().uuid(),   // 로그인한 사용자 UUID (members.uuid)
@@ -26,19 +26,16 @@ export async function POST(req: NextRequest) {
     console.log('[create-channel] Request:', { member_uuid, hospital_id_uuid });
 
     // DB에서 member 정보 조회
-    const backendClient = createClient();
-    const { data: member, error: memberError } = await backendClient
-      .from(TABLE_MEMBERS)
-      .select('nickname')
-      .eq('uuid', member_uuid)
-      .single();
+    const memberRows = await q<{ nickname: string | null }>(
+      `SELECT nickname FROM ${TABLE_MEMBERS} WHERE uuid = $1 LIMIT 1`,
+      [member_uuid]
+    );
 
-    if (memberError) {
-      console.error('[create-channel] Failed to fetch member:', memberError);
+    if (!memberRows.length) {
       throw new Error('Failed to fetch member information');
     }
 
-    const memberNickname = member?.nickname || 'Guest';
+    const memberNickname = memberRows[0]?.nickname || 'Guest';
     console.log('[create-channel] Member nickname:', memberNickname);
 
     // 1) Sendbird에 유저 등록(없으면 생성) - 순차적으로 처리

@@ -55,9 +55,15 @@ const ensureArray = <T = unknown>(value: unknown): T[] => {
 };
 
 class TreatmentService {
-  private baseUrl = "/api/treatment_care_protocols";
+  // 기존 상대경로 → 절대경로로 변경
+  private baseUrl =
+    (typeof window === "undefined"
+      ? process.env.NEXT_PUBLIC_API_ROUTE
+      : window.location.origin) + "/api/treatment_care_protocols";
 
-  async getTreatmentCareProtocols(params?: GetTreatmentCareProtocolsParams): Promise<GetTreatmentCareProtocolsResponse> {
+  async getTreatmentCareProtocols(
+    params?: GetTreatmentCareProtocolsParams
+  ): Promise<GetTreatmentCareProtocolsResponse> {
     const searchParams = new URLSearchParams();
 
     if (params?.topic_id) searchParams.set("eq.topic_id", params.topic_id);
@@ -65,17 +71,23 @@ class TreatmentService {
     if (params?.limit) searchParams.set("limit", params.limit.toString());
     if (params?.offset) searchParams.set("offset", params.offset.toString());
 
-    const url = `${this.baseUrl}${searchParams.toString() ? `?${searchParams.toString()}` : ""}`;
+    const url = `${this.baseUrl}${
+      searchParams.toString() ? `?${searchParams.toString()}` : ""
+    }`;
 
+    // ✅ Redirect loop 방지: 절대 URL + cache: no-store + redirect: follow
     const response = await fetch(url, {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
+      cache: "no-store",
+      redirect: "follow",
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch treatment care protocols: ${response.statusText}`);
+      console.error("[TreatmentService] fetch failed:", response.status, url);
+      throw new Error(
+        `Failed to fetch treatment care protocols: ${response.statusText}`
+      );
     }
 
     const rows: RawProtocolRow[] = await response.json();
@@ -95,12 +107,16 @@ class TreatmentService {
       topic.areas.push(area);
     }
 
-    const categories = Array.from(topicMap.values()).map(category => ({
+    const categories = Array.from(topicMap.values()).map((category) => ({
       ...category,
-      areas: [...category.areas].sort((a, b) => (a.area_sort_order ?? 0) - (b.area_sort_order ?? 0)),
+      areas: [...category.areas].sort(
+        (a, b) => (a.area_sort_order ?? 0) - (b.area_sort_order ?? 0)
+      ),
     }));
 
-    categories.sort((a, b) => (a.topic_sort_order ?? 0) - (b.topic_sort_order ?? 0));
+    categories.sort(
+      (a, b) => (a.topic_sort_order ?? 0) - (b.topic_sort_order ?? 0)
+    );
 
     const limit = params?.limit ?? DEFAULT_LIMIT;
 
@@ -230,23 +246,34 @@ class TreatmentService {
     const map = new Map<string, TreatmentRoot>();
     if (!ids.length) return map;
 
-    const url = `/api/treatments_root?ids=${encodeURIComponent(ids.join(","))}`;
+    // ✅ 절대경로 자동 처리 (서버 vs 브라우저 구분)
+    const base =
+      typeof window === "undefined"
+        ? process.env.NEXT_PUBLIC_API_ROUTE
+        : window.location.origin;
+
+    const url = `${base}/api/treatments_root?ids=${encodeURIComponent(ids.join(","))}`;
     try {
       const res = await fetch(url, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
+        cache: "no-store",      // ✅ 캐시 방지
+        redirect: "follow",     // ✅ 308/307 루프 방지
       });
 
       if (!res.ok) {
-        console.error("Failed to fetch treatments root:", res.status, res.statusText);
+        console.error("[TreatmentService] Failed to fetch treatments_root:", res.status, url);
         return map;
       }
 
       const payload = await res.json();
       const data: TreatmentRootApiRow[] = Array.isArray(payload?.data) ? payload.data : [];
 
-      data.forEach(item => {
-        const attributes = (isRecord(item.attributes) ? (item.attributes as TreatmentAttributes) : {}) as TreatmentAttributes;
+      data.forEach((item) => {
+        const attributes = (isRecord(item.attributes)
+          ? (item.attributes as TreatmentAttributes)
+          : {}) as TreatmentAttributes;
+
         const treatment: TreatmentRoot = {
           id: item.id,
           ko: item.ko,
@@ -273,12 +300,13 @@ class TreatmentService {
         if (item.alias_id) map.set(item.alias_id, treatment);
       });
     } catch (error) {
-      console.error("fetchTreatmentRoots error:", error);
+      console.error("[TreatmentService] fetchTreatmentRoots error:", error);
     }
 
     return map;
   }
 
+  
   private ensureTopic(topicMap: Map<string, TreatmentCategoryResponse>, row: RawProtocolRow): TreatmentCategoryResponse {
     let topic = topicMap.get(row.topic_id);
     if (!topic) {

@@ -1,19 +1,16 @@
 export const runtime = 'edge';
 import { NextResponse } from 'next/server';
 import { createBadgeStore } from '@/lib/gamification/adapters/badgeStore';
-import { createClient } from '@/utils/session/server';
+import { auth } from '@clerk/nextjs/server';
 
 export async function GET() {
   try {
-    // 로그인한 사용자 확인
-    const backendClient = createClient();
-    const { data: { user }, error: authError } = await backendClient.auth.getUser();
+    const { userId } = auth();
 
-    if (authError || !user) {
+    if (!userId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const userId = user.id;
     const store = createBadgeStore();
 
     const [master, mine] = await Promise.all([

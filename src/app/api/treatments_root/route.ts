@@ -1,4 +1,5 @@
-import { query } from "@/lib/db";
+import { q } from "@/lib/db";
+import { TABLE_TREATMENTS_ROOT, TABLE_TREATMENTS_ALIAS } from "@/constants/tables";
 
 export const dynamic = "force-dynamic";
 
@@ -77,7 +78,7 @@ export async function GET(req: Request) {
           NULL::text AS alias_id,
           0 AS priority
         FROM requested req
-        JOIN treatments_root r ON r.id = req.requested_id
+        JOIN ${TABLE_TREATMENTS_ROOT} r ON r.id = req.requested_id
 
         UNION ALL
 
@@ -104,8 +105,8 @@ export async function GET(req: Request) {
           req.requested_id AS alias_id,
           1 AS priority
         FROM requested req
-        JOIN treatments_alias a ON a.alias_id = req.requested_id
-        JOIN treatments_root r ON r.id = a.root_id
+        JOIN ${TABLE_TREATMENTS_ALIAS} a ON a.alias_id = req.requested_id
+        JOIN ${TABLE_TREATMENTS_ROOT} r ON r.id = a.root_id
       )
       SELECT
         requested_id,
@@ -136,7 +137,7 @@ export async function GET(req: Request) {
       WHERE dedupe_rank = 1;
     `;
 
-    const { rows } = await query<TreatmentRootRow>(sql, [ids]);
+    const rows = await q<TreatmentRootRow>(sql, [ids]);
 
     return Response.json(
       { data: rows },

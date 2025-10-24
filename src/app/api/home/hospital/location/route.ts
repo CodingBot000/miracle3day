@@ -1,5 +1,5 @@
 import { TABLE_HOSPITAL } from "@/constants/tables";
-import { query } from "@/lib/db";
+import { q } from "@/lib/db";
 import type { HospitalData } from "@/app/models/hospitalData.dto";
 
 export async function GET(req: Request) {
@@ -37,10 +37,10 @@ export async function GET(req: Request) {
       ORDER BY created_at DESC
     `;
 
-    const { rows, rowCount } = await query<HospitalData>(sql, values);
+    const rows = await q<HospitalData>(sql, values);
 
     return Response.json(
-      { data: rows, total: rowCount ?? rows.length },
+      { data: rows, total: rows.length },
       { status: 200, statusText: "success", headers: { "Cache-Control": "no-store" } }
     );
   } catch (error) {

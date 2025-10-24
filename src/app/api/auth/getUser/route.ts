@@ -1,32 +1,44 @@
+import { NextResponse } from "next/server";
+import { getUserInfo } from "./user.service";
 import { TABLE_MEMBERS } from "@/constants/tables";
-import { createClient } from "@/utils/session/server";
+import { q } from "@/lib/db";
+
+export async function GET() {
+  try {
+    const result = await getUserInfo();
+    
+    if (!result) {
+      return NextResponse.json({ userInfo: null }, { status: 401 });
+    }
+
+    return NextResponse.json(result);
+  } catch (error) {
+    console.error('GET /api/auth/getUser error:', error);
+    return NextResponse.json(
+      { userInfo: null, error: error instanceof Error ? error.message : 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}
 
 export async function POST(req: Request) {
-  const backendClient = createClient();
-
   try {
     const body = await req.json();
+    const email = typeof body?.email === "string" ? body.email.trim() : "";
 
-    if (!body.email) {
-      throw Error("not Found Email");
+    if (!email) {
+      return NextResponse.json({ user: null, error: "Email required" }, { status: 400 });
     }
 
-    const { data, error, status, statusText } = await backendClient
-      .from(TABLE_MEMBERS)
-      .select("*")
-      .match({ email: body.email });
+    const rows = await q(
+      `SELECT * FROM ${TABLE_MEMBERS} WHERE email = $1 LIMIT 1`,
+      [email]
+    );
 
-    if (error) {
-      return Response.json({ status, statusText });
-    }
-
-    return Response.json({ user: data[0] }, { status, statusText });
+    return NextResponse.json({ user: rows[0] ?? null });
   } catch (error) {
-    if (error instanceof Error) {
-      return Response.json(
-        { user: null },
-        { status: 500, statusText: error.message }
-      );
-    }
+    const message = error instanceof Error ? error.message : "Failed to fetch user";
+    console.error("POST /api/auth/getUser error:", error);
+    return NextResponse.json({ user: null, error: message }, { status: 500 });
   }
 }

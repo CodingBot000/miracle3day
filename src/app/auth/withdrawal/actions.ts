@@ -1,37 +1,35 @@
 'use server';
 
-import { useUserStore } from '@/stores/useUserStore';
-import { adminsAuthClient } from '@/utils/session/admins';
-import { createClient } from '@/utils/session/server';
 import { redirect } from 'next/navigation';
+import { auth, clerkClient } from '@clerk/nextjs/server';
+import { q } from '@/lib/db';
+import { TABLE_MEMBERS } from '@/constants/tables';
 
 export async function withdrawAction() {
-  const backendClient = createClient();
-  const {
-    data: { user },
-  } = await backendClient.auth.getUser();
+  const { userId, sessionId } = auth();
 
-  console.log("withdrawAction user: ", user);
-  if (!user) {
-    throw new Error("Not authenticated");
+  if (!userId) {
+    throw new Error('Not authenticated');
   }
 
-  const uuid = user.id;
+  await q(
+    `DELETE FROM ${TABLE_MEMBERS} WHERE clerk_user_id = $1 OR id_uuid::text = $1`,
+    [userId]
+  );
 
-  // 1. 사용자 정보 삭제
-  await backendClient.from("members").delete().eq("uuid", uuid);
+  try {
+    await clerkClient.users.deleteUser(userId);
+  } catch (error) {
+    console.error('Failed to delete Clerk user:', error);
+  }
 
-  // 2. 사용자 인증 계정 삭제 (serviceRole 키 필요 시 변경)
-  // const adminClient = createClient(
-  //   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  //   process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY!
-  // );
-  useUserStore.getState().clearUser();
-  await adminsAuthClient.deleteUser(uuid);
+  if (sessionId) {
+    try {
+      await clerkClient.sessions.revokeSession(sessionId);
+    } catch (error) {
+      console.error('Failed to revoke session during withdrawal:', error);
+    }
+  }
 
-  // 3. 세션 종료
-  await backendClient.auth.signOut();
-
-  // 4. 홈으로 이동
   redirect('/');
 }

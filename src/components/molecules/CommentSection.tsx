@@ -1,9 +1,8 @@
 'use client'
 
-import { useState } from 'react'
-import { createClient } from '@/utils/session/client'
-import { CommunityComment, Member } from '@/app/models/communityData.dto'
-import CommentItem from './CommentItem'
+import { useState } from 'react';
+import { CommunityComment, Member } from '@/app/models/communityData.dto';
+import CommentItem from './CommentItem';
 
 interface CommentSectionProps {
   postId: number
@@ -14,149 +13,128 @@ interface CommentSectionProps {
 export default function CommentSection({
   postId,
   comments: initialComments,
-  currentUser
+  currentUser,
 }: CommentSectionProps) {
-  const [comments, setComments] = useState(initialComments)
-  const [newComment, setNewComment] = useState('')
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const backendClient = createClient()
+  const [comments, setComments] = useState(initialComments);
+  const [newComment, setNewComment] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const countComments = (items: CommunityComment[]): number => {
     return items.reduce((total, item) => {
-      const replies = item.replies ?? []
-      return total + 1 + countComments(replies)
-    }, 0)
-  }
-
-  const syncCommentCount = async (nextComments: CommunityComment[]) => {
-    const total = countComments(nextComments)
-
-    const { error } = await backendClient
-      .from('community_posts')
-      .update({ comment_count: total, updated_at: new Date().toISOString() })
-      .eq('id', postId)
-
-    if (error) {
-      console.error('Failed to sync comment count:', error)
-    }
-  }
+      const replies = item.replies ?? [];
+      return total + 1 + countComments(replies);
+    }, 0);
+  };
 
   const handleSubmitComment = async () => {
     if (!newComment.trim() || isSubmitting) return
 
-    setIsSubmitting(true)
+    setIsSubmitting(true);
 
     try {
-      const { data, error } = await backendClient
-        .from('community_comments')
-        .insert({
-          id_post: postId,
-          uuid_author: currentUser.uuid,
-          content: newComment
-        })
-        .select('*')
-        .single()
+      const res = await fetch(`/api/community/posts/${postId}/comments`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content: newComment }),
+      });
 
-      if (!error && data) {
+      if (!res.ok) {
+        const message = await res.text();
+        throw new Error(message || 'Failed to submit comment');
+      }
+
+      const data = await res.json();
+      if (data?.comment) {
         const newCommentWithReplies = {
-          ...data,
-          replies: [],
-          author: {
-            uuid: currentUser.uuid,
-            nickname: currentUser.nickname,
-            avatar: currentUser.avatar
-          }
-        }
-        const nextComments = [...comments, newCommentWithReplies]
-        setComments(nextComments)
-        await syncCommentCount(nextComments)
-        setNewComment('')
+          ...data.comment,
+          replies: data.comment.replies ?? [],
+        } as CommunityComment;
+
+        const nextComments = [...comments, newCommentWithReplies];
+        setComments(nextComments);
+        setNewComment('');
       }
     } catch (error) {
-      console.error('Error posting comment:', error)
-      alert('An error occurred while posting the comment.')
+      console.error('Error posting comment:', error);
+      alert('An error occurred while posting the comment.');
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   const handleDeleteComment = async (commentId: number) => {
     try {
-      const { error } = await backendClient
-        .from('community_comments')
-        .update({ is_deleted: true })
-        .eq('id', commentId)
+      const res = await fetch(`/api/community/comments/${commentId}`, {
+        method: 'DELETE',
+      });
 
-      if (!error) {
-        const removeComment = (items: CommunityComment[]): CommunityComment[] => {
-          return items
-            .filter(c => c.id !== commentId)
-            .map(c => ({
-              ...c,
-              replies: c.replies ? removeComment(c.replies) : []
-            }))
-        }
-
-        const nextComments = removeComment(comments)
-        setComments(nextComments)
-        await syncCommentCount(nextComments)
+      if (!res.ok) {
+        const message = await res.text();
+        throw new Error(message || 'Failed to delete comment');
       }
+
+      const removeComment = (items: CommunityComment[]): CommunityComment[] => {
+        return items
+          .filter((c) => c.id !== commentId)
+          .map((c) => ({
+            ...c,
+            replies: c.replies ? removeComment(c.replies) : [],
+          }));
+      };
+
+      const nextComments = removeComment(comments);
+      setComments(nextComments);
     } catch (error) {
-      console.error('Error deleting comment:', error)
-      alert('An error occurred while deleting the comment.')
+      console.error('Error deleting comment:', error);
+      alert('An error occurred while deleting the comment.');
     }
-  }
+  };
 
   const handleReplySubmit = async (parentId: number, content: string) => {
     try {
-      const { data, error } = await backendClient
-        .from('community_comments')
-        .insert({
-          id_post: postId,
-          uuid_author: currentUser.uuid,
-          content: content,
-          id_parent: parentId
-        })
-        .select('*')
-        .single()
+      const res = await fetch(`/api/community/posts/${postId}/comments`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content, parentId }),
+      });
 
-      if (!error && data) {
+      if (!res.ok) {
+        const message = await res.text();
+        throw new Error(message || 'Failed to submit reply');
+      }
+
+      const data = await res.json();
+      if (data?.comment) {
         const replyWithAuthor = {
-          ...data,
-          replies: [],
-          author: {
-            uuid: currentUser.uuid,
-            nickname: currentUser.nickname,
-            avatar: currentUser.avatar
-          }
-        }
+          ...data.comment,
+          replies: data.comment.replies ?? [],
+        } as CommunityComment;
 
         const addReply = (items: CommunityComment[]): CommunityComment[] => {
-          return items.map(c => {
+          return items.map((c) => {
             if (c.id === parentId) {
               return {
                 ...c,
-                replies: [...(c.replies || []), replyWithAuthor]
-              }
+                replies: [...(c.replies || []), replyWithAuthor],
+              };
             }
             return {
               ...c,
-              replies: c.replies ? addReply(c.replies) : []
-            }
-          })
-        }
+              replies: c.replies ? addReply(c.replies) : [],
+            };
+          });
+        };
 
-        const nextComments = addReply(comments)
-        setComments(nextComments)
-        await syncCommentCount(nextComments)
+        const nextComments = addReply(comments);
+        setComments(nextComments);
       }
     } catch (error) {
-      console.error('Error posting reply:', error)
-      alert('An error occurred while posting the reply.')
+      console.error('Error posting reply:', error);
+      alert('An error occurred while posting the reply.');
     }
-  }
+  };
 
-  const totalComments = countComments(comments)
+  const totalComments = countComments(comments);
 
   return (
     <div className="mt-8 pt-8 border-t">

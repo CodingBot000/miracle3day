@@ -24,19 +24,25 @@ const HospitalConsultationButton = ({ hospitalId }: HospitalConsultationButtonPr
       // Check if user is logged in
       const userRes = await fetch("/api/auth/getUser/session");
       const userData = await userRes.json();
+      const userInfo = userData?.userInfo;
 
-      if (!userData.user) {
+      if (!userInfo?.auth_user) {
         // Redirect to login with return URL
         router.push(`/auth/login?redirect=/hospital/${hospitalId}`);
         return;
       }
+
+      const memberUuid =
+        userInfo.uuid ??
+        userInfo.id_uuid ??
+        userInfo.auth_user.id;
 
       // Create chat channel
       const res = await fetch("/api/chat/create_channel", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          member_uuid: userData.user.id,
+          member_uuid: memberUuid,
           hospital_id_uuid: hospitalId,
           payload: {
             message: "I would like to schedule a consultation",

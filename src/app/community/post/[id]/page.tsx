@@ -1,14 +1,22 @@
-import { redirect } from 'next/navigation'
-import Link from 'next/link'
-import { createClient } from '@/utils/session/server'
-import CommentSection from '@/components/molecules/CommentSection'
-import LikeButton from '@/components/atoms/button/LikeButton'
-import ReportButton from '@/components/atoms/button/ReportButton'
-import { Member, CommunityPost, CommunityComment } from '@/app/models/communityData.dto'
-import PostNotFoundFallback from './PostNotFoundFallback'
-import SetCommunityHeader from '../../SetCommunityHeader'
-import { ANONYMOUS_FALLBACK, isAnonymousCategoryName } from '../../utils'
-import { TABLE_MEMBERS } from '@/constants/tables'
+import { redirect } from 'next/navigation';
+import Link from 'next/link';
+import { auth } from '@clerk/nextjs/server';
+import CommentSection from '@/components/molecules/CommentSection';
+import LikeButton from '@/components/atoms/button/LikeButton';
+import ReportButton from '@/components/atoms/button/ReportButton';
+import { Member, CommunityPost, CommunityComment } from '@/app/models/communityData.dto';
+import PostNotFoundFallback from './PostNotFoundFallback';
+import SetCommunityHeader from '../../SetCommunityHeader';
+import { ANONYMOUS_FALLBACK, isAnonymousCategoryName } from '../../utils';
+import { getImageUrl } from '@/lib/images';
+import {
+  TABLE_COMMUNITY_POSTS,
+  TABLE_COMMUNITY_COMMENTS,
+  TABLE_COMMUNITY_LIKES,
+  TABLE_COMMUNITY_CATEGORIES,
+} from '@/constants/tables';
+import { q } from '@/lib/db';
+import { findMemberByUserId } from '@/app/api/auth/getUser/member.helper';
 
 function buildCommentTree(comments: CommunityComment[]): CommunityComment[] {
   const commentMap = new Map<number, CommunityComment & { replies: CommunityComment[] }>()
@@ -47,144 +55,134 @@ function countComments(comments: CommunityComment[]): number {
   }, 0)
 }
 
-async function getCurrentUser(): Promise<Member | null> {
-  const backendClient = createClient()
-  const { data: { user } } = await backendClient.auth.getUser()
-  
-  if (!user) return null
-  
-  const { data: memberData } = await backendClient
-    .from(TABLE_MEMBERS)
-    .select('*')
-    .eq('uuid', user.id)
-    .single()
-  
-  return memberData || {
-    uuid: user.id,
-    nickname: user.user_metadata?.nickname || 'Anonymous',
-    name: user.user_metadata?.name || '',
-    email: user.email || '',
-    created_at: user.created_at,
-    updated_at: user.updated_at
-  }
-}
-
-function getLoginUrl() {
-  return '/auth/login'
-}
-
-async function getPost(id: string): Promise<CommunityPost | null> {
-  const backendClient = createClient()
-  const { data, error } = await backendClient
-    .from('community_posts')
-    .select(
-      'id, uuid_author, title, content, id_category, view_count, is_deleted, created_at, updated_at, author_name_snapshot, author_avatar_snapshot'
-    )
-    .eq('id', id)
-    .eq('is_deleted', false)
-    .maybeSingle()
-
-  if (error || !data) {
-    return null
-  }
-
-  return data as CommunityPost
-}
-
-async function getComments(postId: string) {
-  const backendClient = createClient()
-  const { data, error } = await backendClient
-    .from('community_comments')
-    .select(`
-      *,
-      author:members(nickname)
-    `)
-    .eq('id_post', postId)
-    .eq('is_deleted', false)
-    .order('created_at', { ascending: true })
-  
-  if (error) {
-    console.error('Error fetching comments:', error)
-    return []
-  }
-  
-  return data || []
-}
-
 export default async function PostDetailPage({
   params
 }: {
   params: { id: string }
 }) {
-  const currentUser = await getCurrentUser()
-  if (!currentUser) {
-    redirect(getLoginUrl())
+  const postId = Number(params.id);
+
+  if (!Number.isFinite(postId)) {
+    redirect('/community');
   }
 
-  const post = await getPost(params.id)
+  const { userId } = auth();
+
+  if (!userId) {
+    redirect('/auth/login');
+  }
+
+  const member = await findMemberByUserId(userId!);
+
+  if (!member) {
+    redirect('/auth/login');
+  }
+
+  const memberUuid =
+    (member['uuid'] as string | undefined) ??
+    (member['id_uuid'] as string | undefined) ??
+    userId!;
+
+  const posts = await q(
+    `SELECT p.*, 
+            c.name AS category_name, 
+            c.description AS category_description,
+            c.is_active AS category_is_active
+     FROM ${TABLE_COMMUNITY_POSTS} p
+     LEFT JOIN ${TABLE_COMMUNITY_CATEGORIES} c ON c.id = p.id_category
+     WHERE p.id = $1 AND p.is_deleted = false
+     LIMIT 1`,
+    [postId]
+  );
+
+  const post = posts[0] as CommunityPost & {
+    category_name?: string | null;
+    category_description?: string | null;
+    category_is_active?: boolean | null;
+  };
+
   if (!post) {
-    return <PostNotFoundFallback />
+    return <PostNotFoundFallback />;
   }
 
-  const rawComments = await getComments(params.id)
-  const commentTree = buildCommentTree(rawComments)
-  const totalComments = countComments(commentTree)
-  const isAuthor = currentUser.uuid === post.uuid_author
+  const comments = await q(
+    `SELECT c.*, m.nickname, m.avatar
+     FROM ${TABLE_COMMUNITY_COMMENTS} c
+     LEFT JOIN members m ON m.uuid = c.uuid_author
+     WHERE c.id_post = $1 AND c.is_deleted = false
+     ORDER BY c.created_at ASC`,
+    [postId]
+  );
 
-  const backendClient = createClient()
+  const formattedComments = (comments as any[]).map((comment) => ({
+    ...comment,
+    author: comment.nickname
+      ? {
+          uuid: comment.uuid_author,
+          nickname: comment.nickname,
+          avatar: comment.avatar,
+        }
+      : undefined,
+  })) as CommunityComment[];
 
-  let categoryName: string | null = null
+  const commentTree = buildCommentTree(formattedComments);
+  const totalComments = countComments(commentTree);
+  const isAuthor = memberUuid === post.uuid_author;
 
-  if (post.id_category) {
-    const { data: categoryRow } = await backendClient
-      .from('community_categories')
-      .select('name')
-      .eq('id', post.id_category)
-      .eq('is_active', true)
-      .maybeSingle()
+  const likeCountRows = await q<{ count: number }>(
+    `SELECT COUNT(*)::int AS count FROM ${TABLE_COMMUNITY_LIKES} WHERE id_post = $1`,
+    [postId]
+  );
+  const likeCountValue = likeCountRows[0]?.count ?? post.like_count ?? 0;
 
-    categoryName = categoryRow?.name ?? null
-  }
+  const userLikeRows = await q(
+    `SELECT 1 FROM ${TABLE_COMMUNITY_LIKES} WHERE id_post = $1 AND uuid_member = $2 LIMIT 1`,
+    [postId, memberUuid]
+  );
+  const hasUserLiked = userLikeRows.length > 0;
 
-  const anonymousCategory = isAnonymousCategoryName(categoryName)
+  const viewRows = await q(
+    `UPDATE ${TABLE_COMMUNITY_POSTS}
+     SET view_count = COALESCE(view_count, 0) + 1,
+         comment_count = $1,
+         like_count = $2,
+         updated_at = now()
+     WHERE id = $3
+     RETURNING view_count`,
+    [totalComments, likeCountValue, postId]
+  );
+  const nextViewCount =
+    viewRows[0]?.view_count ?? (post.view_count ?? 0) + 1;
+
+  const categoryName =
+    post.category_is_active === false ? null : post.category_name ?? null;
+  const anonymousCategory = isAnonymousCategoryName(categoryName);
   const authorName = anonymousCategory
     ? ANONYMOUS_FALLBACK.name
-    : post.author_name_snapshot?.trim() || ANONYMOUS_FALLBACK.name
+    : post.author_name_snapshot?.trim() || ANONYMOUS_FALLBACK.name;
   const authorAvatar = anonymousCategory
     ? ANONYMOUS_FALLBACK.avatar
-    : post.author_avatar_snapshot?.trim() || ANONYMOUS_FALLBACK.avatar
+    : post.author_avatar_snapshot?.trim() || ANONYMOUS_FALLBACK.avatar;
 
   const formattedCreatedAt = new Intl.DateTimeFormat('ko-KR', {
     year: 'numeric',
     month: 'numeric',
     day: 'numeric',
     timeZone: 'Asia/Seoul',
-  }).format(new Date(post.created_at))
+  }).format(new Date(post.created_at));
 
-  const { count: likesCount } = await backendClient
-    .from('community_likes')
-    .select('id', { count: 'exact' })
-    .eq('id_post', post.id)
-
-  const { data: userLike } = await backendClient
-    .from('community_likes')
-    .select('id')
-    .eq('id_post', post.id)
-    .eq('uuid_member', currentUser.uuid)
-    .single()
-
-  const likeCountValue = likesCount ?? post.like_count ?? 0
-  const nextViewCount = (post.view_count ?? 0) + 1
-
-  await backendClient
-    .from('community_posts')
-    .update({
-      view_count: nextViewCount,
-      comment_count: totalComments,
-      like_count: likeCountValue,
-      updated_at: new Date().toISOString(),
-    })
-    .eq('id', post.id)
+  const currentUser: Member = {
+    uuid: memberUuid,
+    nickname:
+      (member['nickname'] as string | undefined) ??
+      (member['name'] as string | undefined) ??
+      'Anonymous',
+    name: (member['name'] as string | undefined) ?? '',
+    email: (member['email'] as string | undefined) ?? '',
+    avatar: member['avatar'] as string | undefined,
+    created_at: (member['created_at'] as string | undefined) ?? new Date().toISOString(),
+    updated_at: (member['updated_at'] as string | undefined) ?? new Date().toISOString(),
+  };
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -237,9 +235,8 @@ export default async function PostDetailPage({
             <div className="flex items-center gap-4">
               <LikeButton
                 postId={post.id}
-                initialLiked={!!userLike}
+                initialLiked={hasUserLiked}
                 initialCount={likeCountValue}
-                userId={currentUser.uuid}
               />
               <div className="flex items-center gap-1 text-gray-500">
                 <span>👁</span>
@@ -253,7 +250,6 @@ export default async function PostDetailPage({
             <ReportButton
               targetType="post"
               targetId={post.id}
-              reporterUuid={currentUser.uuid}
             />
           </div>
         </div>

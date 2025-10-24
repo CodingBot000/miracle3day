@@ -3,7 +3,7 @@
 import Script from "next/script";
 import { useRef } from "react";
 import { createNonce } from "@/utils/security";
-import Image from "next/image";
+import Image from "next/image";;
 
 export type TCoordinatesType = {
   title?: string;

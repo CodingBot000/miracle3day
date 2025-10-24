@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import Image from "next/image";
+import Image from "next/image";;
 import type { Category } from "../../../constants/treatment/types";
 
 type Locale = "ko" | "en";

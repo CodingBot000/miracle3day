@@ -9,7 +9,7 @@ export interface UserInputDto {
 }
 
 export interface UserOutputDto {
-  userInfo: UserInfoDto;
+  userInfo: UserInfoDto | null;
 }
 
 export interface UserInfoDto {

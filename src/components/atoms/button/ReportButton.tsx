@@ -1,52 +1,51 @@
 'use client'
 
-import { useState } from 'react'
-import { createClient } from "@/utils/session/client";
+import { useState } from 'react';
 
 interface ReportButtonProps {
   targetType: 'post' | 'comment'
   targetId: number
-  reporterUuid: string
 }
 
 export default function ReportButton({
   targetType,
   targetId,
-  reporterUuid
 }: ReportButtonProps) {
-  const [isReportModalOpen, setIsReportModalOpen] = useState(false)
-  const [reportReason, setReportReason] = useState('')
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const [reportReason, setReportReason] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleReport = async () => {
-    if (!reportReason.trim() || isSubmitting) return
+    if (!reportReason.trim() || isSubmitting) return;
 
-    setIsSubmitting(true)
-    
+    setIsSubmitting(true);
+
     try {
-      const { error } = await createClient()
-        .from('community_reports')
-        .insert({
-          type_target: targetType,
-          id_target: targetId,
-          uuid_reporter: reporterUuid,
-          reason: reportReason
-        })
+      const res = await fetch('/api/community/reports', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          targetType,
+          targetId,
+          reason: reportReason,
+        }),
+      });
 
-      if (!error) {
-        alert('Your report has been submitted.')
-        setIsReportModalOpen(false)
-        setReportReason('')
-      } else {
-        alert('An error occurred while processing the report.')
+      if (!res.ok) {
+        const message = await res.text();
+        throw new Error(message || 'Failed to submit report');
       }
+
+      alert('Your report has been submitted.');
+      setIsReportModalOpen(false);
+      setReportReason('');
     } catch (error) {
-      console.error('Error reporting:', error)
-      alert('신고 처리 중 오류가 발생했습니다.')
+      console.error('Error reporting:', error);
+      alert('신고 처리 중 오류가 발생했습니다.');
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   return (
     <>
@@ -64,16 +63,16 @@ export default function ReportButton({
               Report {targetType === 'post' ? 'Post' : 'Comment'}
             </h3>
             <textarea
-              value={reportReason}
-              onChange={(e) => setReportReason(e.target.value)}
-              placeholder="Please enter the reason for reporting."
-              className="w-full p-3 border rounded-lg resize-none h-32 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+            value={reportReason}
+            onChange={(e) => setReportReason(e.target.value)}
+            placeholder="Please enter the reason for reporting."
+            className="w-full p-3 border rounded-lg resize-none h-32 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
             <div className="flex justify-end gap-2 mt-4">
               <button
                 onClick={() => {
-                  setIsReportModalOpen(false)
-                  setReportReason('')
+                  setIsReportModalOpen(false);
+                  setReportReason('');
                 }}
                 className="px-4 py-2 text-gray-600 hover:text-gray-800"
               >

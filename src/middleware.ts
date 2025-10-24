@@ -1,83 +1,86 @@
 import { NextRequest, NextResponse } from "next/server";
 import { clerkMiddleware } from "@clerk/nextjs/server";
 
-import { createClient } from "./utils/session/server";
-import { updateSession } from "./utils/session/middleware";
+/**
+ * 완전 공개 경로 (로그인 여부 관계없이 접근 가능)
+ */
+const PUBLIC_PATHS = [
+  "/",                         // 홈
+  "/api/storage/read",          // Lightsail presigned proxy
+  "/api/health",                // 헬스체크
+  "/api/auth/terms/agree",      // 약관동의
+  "/api/onboarding/complete",   // 온보딩 완료
+];
 
-const handler = clerkMiddleware(async (_auth, req: NextRequest) => {
-  if (req.nextUrl.pathname.startsWith("/api/")) {
-    return NextResponse.next();
+/**
+ * 로그인 사용자 전용 경로 (비로그인 시 접근 불가)
+ */
+const AUTH_REQUIRED_PATHS = [
+  "/user",                      // 마이페이지 계열
+  "/gamification/quize",        // 퀴즈 페이지
+  "/auth/withdrawal",           // ✅ 회원탈퇴 (로그인 필요)
+];
+
+/**
+ * 로그인 상태에서 접근 제한 경로 (비로그인 상태에서만 접근 가능)
+ */
+const AUTH_BLOCKED_PATHS = [
+  "/auth/login",
+  "/auth/sign-up",
+];
+
+function isPublicPath(pathname: string) {
+  return PUBLIC_PATHS.some((p) => pathname.startsWith(p));
+}
+
+function isAuthRequiredPath(pathname: string) {
+  return AUTH_REQUIRED_PATHS.some((p) => pathname.startsWith(p));
+}
+
+function isAuthBlockedPath(pathname: string) {
+  return AUTH_BLOCKED_PATHS.some((p) => pathname.startsWith(p));
+}
+
+const handler = clerkMiddleware(async (auth, req: NextRequest) => {
+  const { userId } = auth();
+  const path = req.nextUrl.pathname;
+  console.log('[middleware] path:', path);
+
+  // ✅ 1️⃣ 완전 공개 경로 → 통과
+  if (isPublicPath(path)) {
+    return ensureLangCookie(req, NextResponse.next());
   }
 
-  const backendClient = createClient();
-  const auth = await backendClient.auth.getUser();
-
-  if (auth.data.user) {
-    const allowedAuthPaths = ["/auth/withdrawal"];
-    // login user
-    // if (auth.data.user.email !== process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
-    //   if (req.nextUrl.pathname.startsWith("/admin")) {
-    //     return NextResponse.redirect(new URL("/", req.url));
-    //   }
-    // }
-    // const allowedAuthPaths = ["/auth/sign-up/complete-profile", "/auth/logout"];
-    console.log('middleware.ts auth.data.user req.nextUrl.pathname:' , req.nextUrl.pathname);
-    
-    
-    if (req.nextUrl.pathname.startsWith("/auth")
-    &&  !allowedAuthPaths.some((path) => req.nextUrl.pathname.startsWith(path))) 
-    
-     {
-      console.log('middleware.ts auth.data.user redirect /');
-      const res = NextResponse.redirect(new URL("/", req.url));
-      return ensureLangCookie(req, res);
-    }
-    console.log('middleware.ts auth.data.user redirect / no');
-  } else {
-    console.log('middleware.ts not  login user');
-    // not login user
-    if (req.nextUrl.pathname.startsWith("/user")) {
-      const res = NextResponse.redirect(new URL("/", req.url));
-      return ensureLangCookie(req, res);
-    }
-
-    // 퀴즈 페이지는 로그인 필수
-    if (req.nextUrl.pathname.startsWith("/gamification/quize")) {
-      console.log('middleware.ts redirect to login from quiz page');
-      const res = NextResponse.redirect(new URL("/auth/login", req.url));
-      return ensureLangCookie(req, res);
-    }
-
-    // if (req.nextUrl.pathname.startsWith("/admin")) {
-    //   return NextResponse.redirect(new URL("/", req.url));
-    // }
+  // ✅ 2️⃣ 로그인 필수 경로 → 로그인 안 되어 있으면 로그인 페이지로
+  if (isAuthRequiredPath(path) && !userId) {
+    console.log("middleware: redirect unauthenticated user to login");
+    const res = NextResponse.redirect(new URL("/auth/login", req.url));
+    return ensureLangCookie(req, res);
   }
-  console.log('middleware.ts all path:', req.nextUrl.pathname);
-  const res = await updateSession(req);
-  return ensureLangCookie(req, res);
+
+  // ✅ 3️⃣ 로그인 상태에서 접근 제한 경로 → 홈으로 리다이렉트
+  if (userId && isAuthBlockedPath(path)) {
+    const res = NextResponse.redirect(new URL("/", req.url));
+    return ensureLangCookie(req, res);
+  }
+
+  // ✅ 4️⃣ 나머지 → 통과
+  return ensureLangCookie(req, NextResponse.next());
 });
 
 export default handler;
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.(png|ico) (favicon files)
-     * - lottie files
-     * Feel free to modify this pattern to include more paths.
-     */
-    "/((?!_next/static|_next/image|favicon.png|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|lottie)$).*)",
-    "/api/auth/terms/agree",
-    "/api/onboarding/complete",
+    // Clerk 인증 감지 대상 (정적파일, 이미지 제외, /api/auth는 포함)
+    "/((?!_next/static|_next/image|favicon.png|favicon.ico|api/(?!auth).*|.*\\.(?:svg|png|jpg|jpeg|gif|webp|lottie)$).*)",
   ],
 };
 
-
+/**
+ * 다국어 쿠키(lang) 세팅 헬퍼
+ */
 function ensureLangCookie(req: NextRequest, res: NextResponse) {
-  // 이미 lang 쿠키가 있으면 그대로 반환 (절대 덮어쓰지 않음)
   if (req.cookies.get("lang")) return res;
 
   const al = (req.headers.get("accept-language") || "").toLowerCase();
@@ -85,7 +88,7 @@ function ensureLangCookie(req: NextRequest, res: NextResponse) {
 
   res.cookies.set("lang", lang, {
     path: "/",
-    maxAge: 60 * 60 * 24 * 365, // 1 year
+    maxAge: 60 * 60 * 24 * 365,
     sameSite: "lax",
   });
 

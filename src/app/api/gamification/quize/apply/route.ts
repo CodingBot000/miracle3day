@@ -2,19 +2,15 @@ export const runtime = 'edge';
 import { NextResponse } from 'next/server';
 import { createBadgeStore } from '@/lib/gamification/adapters/badgeStore';
 import { applyQuizAttempt } from '@/lib/gamification/handlers/applyQuizAttempt';
-import { createClient } from '@/utils/session/server';
+import { auth } from '@clerk/nextjs/server';
 
 export async function POST(req: Request) {
   try {
-    // 로그인한 사용자 확인
-    const backendClient = createClient();
-    const { data: { user }, error: authError } = await backendClient.auth.getUser();
+    const { userId } = auth();
 
-    if (authError || !user) {
+    if (!userId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
-
-    const userId = user.id;
 
     const body = await req.json();
     const { questionId, optionIndex } = body;

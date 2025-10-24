@@ -2,7 +2,7 @@ export const revalidate = 0;
 export const runtime = 'nodejs';
 
 import { TABLE_HOSPITAL } from "@/constants/tables";
-import { query } from "@/lib/db";
+import { q } from "@/lib/db";
 import type { HospitalData } from "@/app/models/hospitalData.dto";
 
 export async function GET() {
@@ -31,8 +31,7 @@ export async function GET() {
       LIMIT 4
     `;
 
-    const firstResult = await query<HospitalData>(sql);
-    let rows = firstResult.rows;
+    let rows = await q<HospitalData>(sql);
 
     if (!rows.length) {
       const fallbackSql = `
@@ -57,7 +56,7 @@ export async function GET() {
         ORDER BY created_at DESC
         LIMIT 4
       `;
-      rows = (await query<HospitalData>(fallbackSql)).rows;
+      rows = await q<HospitalData>(fallbackSql);
     }
 
     return Response.json(

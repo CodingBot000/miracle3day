@@ -1,116 +1,87 @@
-import { redirect } from 'next/navigation'
-import WriteForm from '@/components/molecules/WriteForm'
-import { createClient } from '@/utils/session/server'
-import type { Member, CommunityCategory } from '@/app/models/communityData.dto'
-import { TABLE_MEMBERS } from '@/constants/tables'
+import { redirect } from 'next/navigation';
+import { auth } from '@clerk/nextjs/server';
+import WriteForm from '@/components/molecules/WriteForm';
+import type { CommunityCategory } from '@/app/models/communityData.dto';
+import {
+  TABLE_COMMUNITY_POSTS,
+  TABLE_COMMUNITY_CATEGORIES,
+} from '@/constants/tables';
+import { q } from '@/lib/db';
+import { findMemberByUserId } from '@/app/api/auth/getUser/member.helper';
 
-type CommunityPost = {
-  id: number
-  title: string
-  content: string
-  uuid_author: string
-  id_category: string | null
-  is_deleted: boolean
-  created_at: string
-  updated_at: string
-}
-
-async function getCurrentUser(): Promise<Member | null> {
-  const backendClient = createClient()
-  const { data: { user } } = await backendClient.auth.getUser()
-  
-  if (!user) return null
-  
-  const { data: memberData } = await backendClient
-    .from(TABLE_MEMBERS)
-    .select('*')
-    .eq('uuid', user.id)
-    .single()
-  
-  return memberData || {
-    uuid: user.id,
-    nickname: user.user_metadata?.nickname || 'Anonymous',
-    name: user.user_metadata?.name || '',
-    email: user.email || '',
-    created_at: user.created_at,
-    updated_at: user.updated_at
-  }
-}
-
-function getLoginUrl() {
-  return '/auth/login'
-}
-
-async function getPost(id: string) {
-  const backendClient = createClient()
-  const { data, error } = await backendClient
-    .from('community_posts')
-    .select('*')
-    .eq('id', id)
-    .eq('is_deleted', false)
-    .single()
-
-  if (error || !data) {
-    return null
-  }
-
-  return data as CommunityPost
-}
-
-async function getCategories() {
-  const backendClient = createClient()
-  const { data, error } = await backendClient
-    .from('community_categories')
-    .select('*')
-    .eq('is_active', true)
-    .order('order_index', { ascending: true })
-
-  if (error) {
-    console.error('Error fetching categories:', error)
-    return []
-  }
-
-  return data as CommunityCategory[]
+async function getCategories(): Promise<CommunityCategory[]> {
+  const rows = await q(
+    `SELECT id, name, description, order_index, is_active
+     FROM ${TABLE_COMMUNITY_CATEGORIES}
+     WHERE is_active = true
+     ORDER BY order_index ASC`
+  );
+  return rows as CommunityCategory[];
 }
 
 export default async function EditPage({
-  params
+  params,
 }: {
-  params: { id: string }
+  params: { id: string };
 }) {
-  const currentUser = await getCurrentUser()
-  
-  if (!currentUser) {
-    redirect(getLoginUrl())
+  const { userId } = auth();
+
+  if (!userId) {
+    redirect('/auth/login');
   }
 
-  const post = await getPost(params.id)
-  
+  const member = await findMemberByUserId(userId!);
+
+  if (!member) {
+    redirect('/auth/login');
+  }
+
+  const memberUuid =
+    (member['uuid'] as string | undefined) ??
+    (member['id_uuid'] as string | undefined) ??
+    userId!;
+
+  const posts = await q(
+    `SELECT * FROM ${TABLE_COMMUNITY_POSTS}
+     WHERE id = $1 AND is_deleted = false
+     LIMIT 1`,
+    [params.id]
+  );
+
+  const post = posts[0];
+
   if (!post) {
-    redirect('/')
+    redirect('/');
   }
 
-  if (post.uuid_author !== currentUser.uuid) {
-    redirect(`/community/post/${params.id}`)
+  if (post.uuid_author !== memberUuid) {
+    redirect(`/community/post/${params.id}`);
   }
 
-  const categories = await getCategories()
+  const categories = await getCategories();
+  const authorNameSnapshot =
+    (member['nickname'] as string | undefined)?.trim() ??
+    (member['name'] as string | undefined)?.trim() ??
+    null;
+  const authorAvatarSnapshot =
+    (member['avatar'] as string | undefined)?.trim() ?? null;
 
   return (
     <div className="max-w-4xl mx-auto">
       <div className="bg-white rounded-lg shadow-lg p-8">
         <h1 className="text-2xl font-bold mb-6">Edit Post</h1>
         <WriteForm
-          authorUuid={currentUser.uuid}
+          authorNameSnapshot={authorNameSnapshot}
+          authorAvatarSnapshot={authorAvatarSnapshot}
           categories={categories}
           initialData={{
             title: post.title,
             content: post.content,
-            id_category: post.id_category ? String(post.id_category) : undefined
+            id_category: post.id_category ? String(post.id_category) : undefined,
           }}
           postId={post.id}
         />
       </div>
     </div>
-  )
+  );
 }

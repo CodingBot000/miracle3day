@@ -1,7 +1,8 @@
 'use client';
 
 import { SkinTypes } from '@/constants/treatment/antiaging-agebased';
-import Image from 'next/image';
+import Image from "next/image";
+
 import { useState } from 'react';
 
 interface SkinTypesSectionProps {

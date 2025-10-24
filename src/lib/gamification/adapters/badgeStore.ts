@@ -10,7 +10,17 @@ export function createBadgeStore(): BadgeStore {
   return {
     async getConfig() {
       warn('getConfig');
-      return { quiz_rules: [] };
+      return { 
+        quiz_rules: {
+          daily_full_reward_quota: 5,
+          overflow_multiplier: 0.2,
+          base_attempt_exp: 5,
+          correct_bonus_exp: 1,
+          streak_bonus_per_day: 0.05,
+          streak_bonus_cap: 0.25,
+          reset_tz: 'Asia/Seoul'
+        }
+      };
     },
 
     async getTodaySolvedCount() {

@@ -1,7 +1,7 @@
 "use client";
 
 import { UserOutputDto } from "@/app/api/auth/getUser/getUser.dto";
-import Image from "next/image";
+import Image from "next/image";;
 import Link from "next/link";
 import { MoreVertical, Bookmark, CalendarCheck, Heart, Gift, PenLine, Bell } from "lucide-react";
 

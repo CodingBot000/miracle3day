@@ -1,80 +1,80 @@
+import { NextResponse } from "next/server";
 import { TABLE_MEMBERS } from "@/constants/tables";
-import { createClient } from "@/utils/session/server";
+import { q } from "@/lib/db";
 import { country } from "@/constants/country";
 
-export async function PUT(req: Request) {
-  const backendClient = createClient();
+export const runtime = "nodejs";
 
+export async function PUT(req: Request) {
   try {
     const body = await req.json();
-    const { uuid, displayName, fullName, nation, birthYear, birthMonth, birthDay, gender, email } = body;
-
-    console.log('Update Profile Request:', { 
-      uuid, displayName, fullName, nation, 
-      birthYear, birthMonth, birthDay, gender, email 
-    });
+    const {
+      uuid,
+      displayName,
+      fullName,
+      nation,
+      birthYear,
+      birthMonth,
+      birthDay,
+      gender,
+      email,
+    } = body ?? {};
 
     if (!uuid) {
-      throw new Error("UUID is required");
+      return NextResponse.json({ error: "UUID is required" }, { status: 400 });
     }
 
-    // 국가 코드로 id_country 찾기
     const countryData = country.find((c) => c.country_code === nation);
     if (!nation || !countryData) {
-      throw new Error("Invalid country code");
+      return NextResponse.json({ error: "Invalid country code" }, { status: 400 });
     }
 
-    // 생년월일 포맷팅
-    const paddedMonth = String(birthMonth).padStart(2, '0');
-    const paddedDay = String(birthDay).padStart(2, '0');
+    const paddedMonth = String(birthMonth).padStart(2, "0");
+    const paddedDay = String(birthDay).padStart(2, "0");
     const birthDate = `${birthYear}-${paddedMonth}-${paddedDay}`;
 
-    // 업데이트할 데이터 객체 생성
     const updateData: Record<string, any> = {
       nickname: displayName,
       id_country: countryData.country_code,
       birth_date: birthDate,
-      gender: gender,
-      updated_at: new Date().toISOString()
+      gender,
     };
 
-    // 선택적 필드는 값이 있을 때만 포함
     if (fullName?.trim()) {
-      updateData.name = fullName;
+      updateData.name = fullName.trim();
     }
-    
+
     if (email?.trim()) {
-      updateData.secondary_email = email;
+      updateData.secondary_email = email.trim();
     }
 
-    console.log('Update Data:', updateData);
-
-    const { data, error } = await backendClient
-      .from(TABLE_MEMBERS)
-      .update(updateData)
-      .eq('uuid', uuid)
-      .select();
-
-    if (error) {
-      console.error('Supabase Error:', error);
-      return Response.json(
-        { error: error.message },
-        { status: error.code === "23505" ? 409 : 500 }
-      );
+    const entries = Object.entries(updateData).filter(([, value]) => value !== undefined);
+    if (!entries.length) {
+      return NextResponse.json({ error: "No fields to update" }, { status: 400 });
     }
 
-    return Response.json({ data });
-  } catch (error) {
-    console.error('Server Error:', error);
-    if (error instanceof Error) {
-      return Response.json(
-        { error: error.message },
-        { status: 500 }
-      );
-    }
-    return Response.json(
-      { error: "Unknown error occurred" },
-      { status: 500 }
+    const fields: string[] = [];
+    const values: any[] = [];
+
+    entries.forEach(([key, value], idx) => {
+      fields.push(`${key} = $${idx + 1}`);
+      values.push(value);
+    });
+
+    values.push(uuid);
+
+    const rows = await q(
+      `UPDATE ${TABLE_MEMBERS}
+       SET ${fields.join(", ")}, updated_at = NOW()
+       WHERE uuid = $${values.length}
+       RETURNING *`,
+      values
     );
+
+    return NextResponse.json({ data: rows[0] ?? null });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Failed to update profile";
+    console.error("PUT /api/auth/update_profile error:", error);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
-} 
+}

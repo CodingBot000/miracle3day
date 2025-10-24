@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import * as React from "react";
+import { getImageUrl } from "@/lib/images";
 import type { CategoryItem } from "./categories";
 
 export function CategoryCard({ item }: { item: CategoryItem }) {

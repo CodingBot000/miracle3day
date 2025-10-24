@@ -1,5 +1,5 @@
 import * as React from "react";
-import Image from "next/image";
+import Image from "next/image";;
 import type { TopicWithAreas, Locale } from "@/app/models/treatmentData.dto";
 import DualImageCarousel from "@/components/atoms/DualImageCarousel";
 

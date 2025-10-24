@@ -1,39 +1,43 @@
-import { createClient } from "@/utils/session/server";
+import { NextResponse } from "next/server";
 import { LIMIT } from "./constnat";
 import { TABLE_EVENT } from "@/constants/tables";
+import { q } from "@/lib/db";
 
 export async function GET(
   req: Request,
   { params }: { params: { id: string } }
 ) {
-  const backendClient = createClient();
-
   const id_hospital = params.id;
 
   const { searchParams } = new URL(req.url);
-  const pageParam = parseInt(searchParams.get("pageParam") as string);
+  const pageParam = Number(searchParams.get("pageParam") ?? "0");
+  const page = Number.isFinite(pageParam) && pageParam > 0 ? pageParam : 0;
 
-  const offset = pageParam * LIMIT;
-  const limit = offset + LIMIT - 1;
+  const offset = page * LIMIT;
 
   try {
-    const { data, error, count, status, statusText } = await backendClient
-      .from(TABLE_EVENT)
-      .select("*", { count: "exact" })
-      .eq( "id_uuid_hospital", id_hospital )
-      .range(offset, limit)
-      .order("created_at", { ascending: true });
+    const rows = await q(
+      `SELECT * FROM ${TABLE_EVENT}
+       WHERE id_uuid_hospital = $1
+       ORDER BY created_at ASC
+       LIMIT $2 OFFSET $3`,
+      [id_hospital, LIMIT, offset]
+    );
 
-    if (error) {
-      return Response.json({ data: null }, { status, statusText });
-    }
+    const countRows = await q<{ count: number }>(
+      `SELECT COUNT(*)::int AS count
+       FROM ${TABLE_EVENT}
+       WHERE id_uuid_hospital = $1`,
+      [id_hospital]
+    );
 
-    const nextCursor = count && limit < count;
+    const total = countRows[0]?.count ?? 0;
+    const nextCursor = (page + 1) * LIMIT < total;
 
-    return Response.json({ data, nextCursor }, { status, statusText });
+    return NextResponse.json({ data: rows, nextCursor }, { status: 200 });
   } catch (error) {
     if (error instanceof Error) {
-      return Response.json(
+      return NextResponse.json(
         { data: null },
         { status: 500, statusText: error.message }
       );

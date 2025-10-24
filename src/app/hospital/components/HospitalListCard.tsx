@@ -4,6 +4,7 @@ import { HospitalData } from "@/app/models/hospitalData.dto";
 import { findRegionByKey, REGIONS } from "@/constants";
 import { ROUTE } from "@/router";
 import Link from "next/link";
+import Image from "next/image";
 
 interface HospitalListCardProps {
   hospital: HospitalData;

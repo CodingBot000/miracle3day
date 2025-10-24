@@ -9,7 +9,7 @@ import {
 import { useMemo, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Check } from "lucide-react";
-import Image from "next/image";
+import Image from "next/image";;
 import { cn } from "@/lib/utils";
 import { translateLanguage } from "@/constants";
 import { useCookieLanguage } from "@/hooks/useCookieLanguage";

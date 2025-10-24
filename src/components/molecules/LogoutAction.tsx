@@ -1,45 +1,20 @@
 "use client";
 
-import Button from "@/components/atoms/button/Button";
-import { createClient } from "@/utils/session/client";
-import { useRouter } from "next/navigation";
-import { ROUTE } from "@/router";
+import { SignOutButton } from "@clerk/nextjs";
 
-export default function LogoutAction() {
-  const backendClient = createClient();
-  const router = useRouter();
+type LogoutActionProps = {
+  label?: string;
+};
 
-  const handleLogout = async () => {
-    try {
-      // Use signOut with scope: 'global' to ensure server-side logout
-      const { error } = await backendClient.auth.signOut({ scope: 'global' });
-      
-      if (error) {
-        console.error('Logout error:', error);
-        return;
-      }
-
-      // Force clear all cookies by calling server logout API
-      await fetch('/api/auth/logout', {
-        method: 'POST',
-        credentials: 'include',
-      });
-      
-      // Force page reload to ensure fresh server-side state
-      window.location.href = ROUTE.HOME;
-    } catch (error) {
-      console.error('Logout error:', error);
-    }
-  };
-
+export default function LogoutAction({ label = "Logout" }: LogoutActionProps) {
   return (
-    <Button 
-      color="red" 
-      variant="outline" 
-      onClick={handleLogout}
-      type="button"
-    >
-      LOGOUT
-    </Button>
+    <SignOutButton redirectUrl="/">
+      <button
+        type="button"
+        className="rounded-md border border-transparent bg-red-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-600"
+      >
+        {label}
+      </button>
+    </SignOutButton>
   );
 }

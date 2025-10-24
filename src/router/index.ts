@@ -33,10 +33,7 @@ const createDetailRouter = (router: string) => (slug: string) => {
 export const ROUTE = {
   HOME: createNormalRouter("HOME"),
   LOGIN: createAuthRouter("LOGIN"),
-  SIGN_UP: createAuthRouter("SIGN_UP"),
-  EMAIL_VERIFICATION: createAuthRouter("EMAIL_VERIFICATION"),
   MY_PAGE: createUserRouter("MY_PAGE"),
-  FORGET_PASSWORD: createAuthRouter("FORGET_PASSWORD"),
   LOCATION: createNormalRouter("LOCATION"),
   LOCATION_DETAIL: createDetailRouter("LOCATION"),
   HOSPITAL: createNormalRouter("HOSPITAL"),
@@ -56,7 +53,6 @@ export const ROUTE = {
   RECOMMEND: createNormalRouter("RECOMMEND"),
   RECOMMEND_DETAIL: createDetailRouter("RECOMMEND"),
   FAVORITE: createUserRouter("FAVORITE"),
-  UPDATE_PASSWORD: createNormalRouter("update-password"),
   UPLOAD_HOSPITAL: createAdminRouter("upload"),
   WITHDRAWAL: '/auth/withdrawal',
   RESERVATION: (id: string) => `/hospital/${id}/reservation`

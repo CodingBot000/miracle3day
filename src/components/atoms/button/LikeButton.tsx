@@ -1,79 +1,59 @@
 'use client'
 
-import { useState } from 'react'
-import { createClient } from "@/utils/session/client";
+import { useState } from 'react';
 
 interface LikeButtonProps {
-  postId: number
-  initialLiked: boolean
-  initialCount: number
-  userId: string
+  postId: number;
+  initialLiked: boolean;
+  initialCount: number;
 }
 
 export default function LikeButton({
   postId,
   initialLiked,
   initialCount,
-  userId
 }: LikeButtonProps) {
-  const [isLiked, setIsLiked] = useState(initialLiked)
-  const [likesCount, setLikesCount] = useState(initialCount)
-  const [isLoading, setIsLoading] = useState(false)
-  const backendClient = createClient()
-
-  const syncLikeCount = async (nextCount: number) => {
-    const { error } = await backendClient
-      .from('community_posts')
-      .update({ like_count: nextCount, updated_at: new Date().toISOString() })
-      .eq('id', postId)
-
-    if (error) {
-      console.error('Failed to sync like count:', error)
-    }
-  }
+  const [isLiked, setIsLiked] = useState(initialLiked);
+  const [likesCount, setLikesCount] = useState(initialCount);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleToggleLike = async () => {
-    if (isLoading) return
-    
-    setIsLoading(true)
-    
+    if (isLoading) return;
+
+    setIsLoading(true);
+
     try {
       if (isLiked) {
-        const { error } = await backendClient
-          .from('community_likes')
-          .delete()
-          .eq('id_post', postId)
-          .eq('uuid_member', userId)
-        
-        if (!error) {
-          setIsLiked(false)
-          setLikesCount((prev) => {
-            const next = prev - 1
-            void syncLikeCount(next)
-            return next
-          })
+        const res = await fetch(`/api/community/posts/${postId}/likes`, {
+          method: 'DELETE',
+        });
+
+        if (!res.ok) {
+          const message = await res.text();
+          throw new Error(message || 'Failed to unlike');
         }
+
+        const data = await res.json();
+        setIsLiked(false);
+        setLikesCount(data?.count ?? likesCount - 1);
       } else {
-        const { error } = await backendClient
-          .from('community_likes')
-          .insert({
-            id_post: postId,
-            uuid_member: userId
-          })
-        
-        if (!error) {
-          setIsLiked(true)
-          setLikesCount((prev) => {
-            const next = prev + 1
-            void syncLikeCount(next)
-            return next
-          })
+        const res = await fetch(`/api/community/posts/${postId}/likes`, {
+          method: 'POST',
+        });
+
+        if (!res.ok) {
+          const message = await res.text();
+          throw new Error(message || 'Failed to like');
         }
+
+        const data = await res.json();
+        setIsLiked(true);
+        setLikesCount(data?.count ?? likesCount + 1);
       }
     } catch (error) {
-      console.error('Error toggling like:', error)
+      console.error('Error toggling like:', error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   }
 

@@ -1,34 +1,62 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@/utils/session/server"; 
-import { TABLE_POINT_TRANSACTIONS } from "@/constants/tables";
+import { auth } from "@clerk/nextjs/server";
+import { q } from "@/lib/db";
+import { TABLE_MEMBERS } from "@/constants/tables";
 
-/** GET /api/point
- *  반환: { point: number }
- */
-export async function GET(req: Request) {
-  const backendClient = createClient();
-
-  // 로그인 확인
-  const {
-    data: { user },
-    error: userErr,
-  } = await backendClient.auth.getUser();
-  if (userErr || !user) {
+export async function GET() {
+  const { userId } = auth();
+  if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  
 
-  const { data: pointTransaction, error: pointTransactionError } = await backendClient
-    .from(TABLE_POINT_TRANSACTIONS)
-    .select("point_balance")
-    .eq("user_id", user.id)
-    .single();
+  try {
+    let rows = await q<{ point_balance: number | null }>(
+      `
+        SELECT point_balance
+        FROM ${TABLE_MEMBERS}
+        WHERE clerk_user_id = $1
+        LIMIT 1
+      `,
+      [userId]
+    );
 
+    if (!rows.length) {
+      try {
+        rows = await q<{ point_balance: number | null }>(
+          `
+            SELECT point_balance
+            FROM ${TABLE_MEMBERS}
+            WHERE id_uuid::text = $1
+            LIMIT 1
+          `,
+          [userId]
+        );
+      } catch {
+        // ignore column mismatch
+      }
+    }
 
-  if (pointTransactionError && pointTransactionError.code !== 'PGRST116') { // PGRST116 is "not found"
-    return NextResponse.json({ error: pointTransactionError.message }, { status: 500 });
+    if (!rows.length) {
+      try {
+        rows = await q<{ point_balance: number | null }>(
+          `
+            SELECT point_balance
+            FROM ${TABLE_MEMBERS}
+            WHERE uuid::text = $1
+            LIMIT 1
+          `,
+          [userId]
+        );
+      } catch {
+        // ignore column mismatch
+      }
+    }
+
+    const balance = rows[0]?.point_balance ?? 0;
+    return NextResponse.json({ point_balance: balance });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Failed to fetch point balance";
+    console.error("GET /api/point error:", error);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
-  return NextResponse.json({
-    point_balance: pointTransaction?.point_balance,
-  });
 }

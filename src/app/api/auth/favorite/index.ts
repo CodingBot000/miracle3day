@@ -39,15 +39,20 @@ export const getFavoriteAPI = async ({
   return res;
 };
 
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_ROUTE ||
+  process.env.INTERNAL_API_BASE_URL ||
+  'http://localhost:3000';
+
 export const postFavoriteAPI = async ({
   id_hospital,
-  uuid,
 }: PostFavoriteInputDto) => {
-  const body = JSON.stringify({ id_hospital, uuid });
+  const body = JSON.stringify({ id_hospital });
 
   const res = await fetchUtils<{ redirect: string }>({
-    url: `${process.env.NEXT_PUBLIC_API_ROUTE}/api/auth/favorite`,
+    url: `${API_BASE}/api/auth/favorite`,
     fetchOptions: {
+      credentials: 'include',
       method: "POST",
       body,
     },
@@ -58,13 +63,13 @@ export const postFavoriteAPI = async ({
 
 export const deleteFavoriteAPI = async ({
   id_hospital,
-  uuid,
 }: DeleteFavoriteInputDto) => {
-  const body = JSON.stringify({ id_hospital, uuid });
+  const body = JSON.stringify({ id_hospital });
 
   const res = await fetchUtils({
-    url: `${process.env.NEXT_PUBLIC_API_ROUTE}/api/auth/favorite`,
+    url: `${API_BASE}/api/auth/favorite`,
     fetchOptions: {
+      credentials: 'include',
       method: "DELETE",
       body,
     },

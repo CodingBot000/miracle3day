@@ -1,8 +1,9 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { LucideSparkles } from "lucide-react";
-import Image from "next/image";
+
 import { aboutUsContent } from "@/app/contents/aboutUsContent";
+import Image from "next/image";
 
 export default function AboutUsPage() {
   return (

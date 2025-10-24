@@ -4,10 +4,11 @@ import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import type { TSnsType } from '../login/actions';
+// import type { TSnsType } from '../login/actions';
 import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 import TermsHtmlModal from '@/components/template/modal/TermsHtmlModal';
 import { useUser } from '@clerk/nextjs';
+import { SNS_APPLE, SNS_GOOGLE, SNS_FACEBOOK } from '@/constants/key';
 
 interface TermItem {
   id: string;
@@ -23,6 +24,10 @@ const terms: TermItem[] = [
   { id: 'privacy', label: 'Collection and Use of Personal Information', required: true, url: { ko: '/contents/signup_terms/privacy_collection_and_use_MimoTok_ko.html', en: '/contents/signup_terms/privacy_collection_and_use_MimoTok_en.html' } },
   { id: 'marketing', label: 'Leverage marketing and advertising', required: false, url: { ko: '/contents/signup_terms/leverage_marketing_and_advertising_ko.html', en: '/contents/signup_terms/leverage_marketing_and_advertising_en.html' } },
 ];
+
+export type TSnsType = typeof SNS_FACEBOOK | typeof SNS_GOOGLE | typeof SNS_APPLE;
+
+const snsLoginList: TSnsType[] = [SNS_GOOGLE, SNS_FACEBOOK, SNS_APPLE];
 
 type TermsClientProps = {
   initialProvider?: TSnsType;

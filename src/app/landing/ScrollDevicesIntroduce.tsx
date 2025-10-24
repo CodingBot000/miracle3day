@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
+import Image from "next/image";;
 import React from "react";
 import { cards } from "@/content/deviceContents";
 

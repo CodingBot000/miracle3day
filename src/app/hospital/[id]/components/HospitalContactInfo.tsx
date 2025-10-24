@@ -1,6 +1,7 @@
 import { HospitalDetailInfo } from "@/app/models/hospitalData.dto";
-import React, { useState } from "react";
 import Image from "next/image";
+import React, { useState } from "react";
+// import Image from "next/image";;
 
 type ContactType = 'tel' | 'email' | 'link';
 

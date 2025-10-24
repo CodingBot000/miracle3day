@@ -1,58 +1,58 @@
-import { createClient } from "@/utils/session/server";
+import { NextResponse } from "next/server";
 import { LIMIT } from "./constant";
-import { TABLE_REVIEW } from "@/constants/tables";
+import { TABLE_BANNER_ITEM, TABLE_REVIEW } from "@/constants/tables";
+import { q } from "@/lib/db";
 
 export async function GET(
   req: Request,
   { params }: { params: { id: string } }
 ) {
-  const backendClient = createClient();
-
-  const id = params.id;
+  const bannerId = Number(params.id);
 
   const { searchParams } = new URL(req.url);
-  const pageParam = parseInt(searchParams.get("pageParam") as string);
-
-  const offset = pageParam * LIMIT;
-  const limit = offset + LIMIT - 1;
+  const pageParam = Number(searchParams.get("pageParam") ?? "0");
+  const page = Number.isFinite(pageParam) && pageParam > 0 ? pageParam : 0;
+  const offset = page * LIMIT;
 
   try {
-    const surgeriesId = await backendClient
-      .from("banner_item")
-      .select(`id_surgeries`)
-      .match({ id });
-
-    if (!surgeriesId.data) {
-      const { status, statusText } = surgeriesId;
-
-      return Response.json({
-        status,
-        statusText,
-      });
+    if (!Number.isFinite(bannerId)) {
+      return NextResponse.json({ data: [], nextCursor: false }, { status: 400 });
     }
 
-    const surgeriesIds = surgeriesId?.data[0]?.id_surgeries;
+    const bannerRows = await q<{ id_surgeries: (string | number)[] | null }>(
+      `SELECT id_surgeries FROM ${TABLE_BANNER_ITEM} WHERE id = $1 LIMIT 1`,
+      [bannerId]
+    );
+
+    const surgeriesIds = bannerRows[0]?.id_surgeries ?? [];
 
     if (!surgeriesIds) {
-      return Response.json({ data: [], nextCursor: 0 });
+      return NextResponse.json({ data: [], nextCursor: false }, { status: 200 });
     }
 
-    const { data, error, status, statusText, count } = await backendClient
-      .from(TABLE_REVIEW)
-      .select("*", { count: "exact" })
-      .overlaps("id_surgeries", surgeriesIds)
-      .range(offset, limit);
+    const surgeryIdsText = surgeriesIds.map((id) => String(id));
 
-    if (error) {
-      return Response.json({ data: null }, { status, statusText });
-    }
+    const rows = await q(
+      `SELECT * FROM ${TABLE_REVIEW}
+       WHERE id_surgeries && $1::text[]
+       ORDER BY created_at DESC
+       LIMIT $2 OFFSET $3`,
+      [surgeryIdsText, LIMIT, offset]
+    );
 
-    const nextCursor = count && limit < count;
+    const countRows = await q<{ count: number }>(
+      `SELECT COUNT(*)::int AS count FROM ${TABLE_REVIEW}
+       WHERE id_surgeries && $1::text[]`,
+      [surgeryIdsText]
+    );
 
-    return Response.json({ data, nextCursor }, { status, statusText });
+    const total = countRows[0]?.count ?? 0;
+    const nextCursor = (page + 1) * LIMIT < total;
+
+    return NextResponse.json({ data: rows, nextCursor }, { status: 200 });
   } catch (error) {
     if (error instanceof Error) {
-      return Response.json(
+      return NextResponse.json(
         { data: null },
         { status: 500, statusText: error.message }
       );

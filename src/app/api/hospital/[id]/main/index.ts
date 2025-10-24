@@ -1,31 +1,26 @@
-import { fetchUtils } from "@/utils/fetch";
+import { fetchUtils } from '@/utils/fetch';
 import {
   HospitalDetailMainInputDto,
   HospitalDetailMainOutput,
-} from "./main.dto";
-import { createClient } from "@/utils/session/server";
+} from './main.dto';
+
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_ROUTE ||
+  process.env.INTERNAL_API_BASE_URL ||
+  '';
 
 export const getHospitalMainAPI = async ({
   id,
 }: HospitalDetailMainInputDto): Promise<HospitalDetailMainOutput> => {
-  const backendClient = createClient();
-  console.log(`getHospitalMainAPI id :${id}`);
-
-  const {
-    data: { user },
-  } = await backendClient.auth.getUser();
-
-  const url = `${process.env.NEXT_PUBLIC_API_ROUTE}/api/hospital/${id}/main?uuid=${user?.id}`;
+  const url = `${API_BASE}/api/hospital/${id}/main`;
 
   const data = await fetchUtils<HospitalDetailMainOutput>({
     url,
     fetchOptions: {
-      cache: "no-cache",
+      cache: 'no-cache',
+      credentials: 'include',
     },
   });
-  console.log("qq getHospitalMainAPI data", data);
-  // console.log("qq getHospitalMainAPI data.hospital_info", data.hospital_info);
-  // console.log("qq getHospitalMainAPI data.hospital_info.imageurls", data.hospital_info.imageurls);
-  // console.log("qq getHospitalMainAPI data.hospital_info.name", data.hospital_info.name);
+
   return data;
 };

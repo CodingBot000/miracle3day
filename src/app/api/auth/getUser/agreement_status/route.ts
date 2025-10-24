@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { auth } from '@clerk/nextjs/server';
-import { query } from '@/server/db';
+import { q } from '@/lib/db';
+import { TABLE_MEMBERS } from '@/constants/tables';
 
 export const runtime = 'nodejs';
 
@@ -32,17 +33,17 @@ export async function GET() {
   }
 
   try {
-    const result = await query(
+    const rows = await q<{ terms_agreements: unknown }>(
       `
         SELECT terms_agreements
-        FROM public.members
+        FROM ${TABLE_MEMBERS}
         WHERE clerk_user_id = $1
         LIMIT 1
       `,
       [userId]
     );
 
-    const record = result.rows[0];
+    const record = rows[0];
     let termsAgreements: unknown = record?.terms_agreements ?? null;
 
     if (typeof termsAgreements === 'string') {

@@ -1,9 +1,10 @@
 'use client';
 
 import { DoctorData } from "@/app/models/hospitalData.dto";
-import Image from "next/image";
+// import Image from "next/image";;
 import { useState } from "react";
 import { useCookieLanguage } from "@/hooks/useCookieLanguage";
+import Image from "next/image";
 
 interface HospitalDoctorListProps {
   doctors: DoctorData[];

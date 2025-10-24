@@ -1,6 +1,10 @@
 import { auth, currentUser, clerkClient } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
-import { query } from '@/server/db';
+import { q } from '@/lib/db';
+import {
+  TABLE_MEMBERS,
+  TABLE_MEMBER_SOCIAL_ACCOUNTS,
+} from '@/constants/tables';
 
 export const runtime = 'nodejs';
 
@@ -18,13 +22,14 @@ export async function POST(req: Request) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
-    const done = (user.publicMetadata as any)?.onboarding_completed === true;
-    if (done) {
+    const onboardingDone = (user.publicMetadata as any)?.onboarding_completed === true;
+    if (onboardingDone) {
       return NextResponse.json({ ok: true });
     }
 
     const email = user.emailAddresses?.[0]?.emailAddress ?? null;
-    const isEmailVerified = !!user.emailAddresses?.find((e) => e.id === user.primaryEmailAddressId)?.verification?.status;
+    const isEmailVerified =
+      !!user.emailAddresses?.find((e) => e.id === user.primaryEmailAddressId)?.verification?.status;
     const avatar = user.imageUrl ?? null;
     const name = user.fullName ?? null;
     const nickname = body.nickname || name || null;
@@ -57,7 +62,7 @@ export async function POST(req: Request) {
       terms_of_service:{ agreed: true, required: true },
     });
 
-    const values = [
+    const baseValues = [
       auth_primary_provider,
       JSON.stringify(provider_ids),
       email,
@@ -78,41 +83,41 @@ export async function POST(req: Request) {
       secondary_email,
     ];
 
-    const existingMember = await query(
-      'SELECT id_uuid FROM public.members WHERE clerk_user_id = $1',
+    const existingMember = await q<{ id_uuid: string }>(
+      `SELECT id_uuid FROM ${TABLE_MEMBERS} WHERE clerk_user_id = $1`,
       [user.id]
     );
 
-    let memberId = existingMember.rows[0]?.id_uuid as string | undefined;
+    let memberId = existingMember[0]?.id_uuid ?? null;
 
     if (memberId) {
-      await query(
-        `UPDATE public.members SET
-          auth_primary_provider = $1,
-          provider_ids = $2::jsonb,
-          email = $3,
-          is_email_verified = $4,
-          has_password = $5,
-          name = $6,
-          nickname = $7,
-          avatar = $8,
-          phone_country_code = $9,
-          phone_number = $10,
-          is_phone_verified = $11,
-          id_country = $12,
-          birth_date = $13,
-          gender = $14,
-          terms_agreements = $15::jsonb,
-          terms_version = $16,
-          terms_agreed_at = $17,
-          secondary_email = $18,
-          updated_at = now()
-        WHERE clerk_user_id = $19`,
-        [...values, user.id]
+      await q(
+        `UPDATE ${TABLE_MEMBERS}
+         SET auth_primary_provider = $1,
+             provider_ids = $2::jsonb,
+             email = $3,
+             is_email_verified = $4,
+             has_password = $5,
+             name = $6,
+             nickname = $7,
+             avatar = $8,
+             phone_country_code = $9,
+             phone_number = $10,
+             is_phone_verified = $11,
+             id_country = $12,
+             birth_date = $13,
+             gender = $14,
+             terms_agreements = $15::jsonb,
+             terms_version = $16,
+             terms_agreed_at = $17,
+             secondary_email = $18,
+             updated_at = now()
+         WHERE clerk_user_id = $19`,
+        [...baseValues, user.id]
       );
     } else {
-      const insertMembers = `
-        INSERT INTO public.members (
+      const insertSql = `
+        INSERT INTO ${TABLE_MEMBERS} (
           clerk_user_id,
           auth_primary_provider,
           provider_ids,
@@ -135,59 +140,42 @@ export async function POST(req: Request) {
           created_at,
           updated_at
         ) VALUES (
-          $1,
-          $2,
-          $3::jsonb,
-          $4,
-          $5,
-          $6,
-          $7,
-          $8,
-          $9,
-          $10,
-          $11,
-          $12,
-          $13,
-          $14,
-          $15,
-          $16::jsonb,
-          $17,
-          $18,
-          $19,
-          now(),
-          now()
+          $1, $2, $3::jsonb, $4, $5, $6, $7, $8, $9, $10,
+          $11, $12, $13, $14, $15, $16::jsonb, $17, $18, $19, now(), now()
         )
-        RETURNING id_uuid;
+        RETURNING id_uuid
       `;
 
-      const memberInsert = await query(insertMembers, [user.id, ...values]);
-      memberId = memberInsert.rows[0]?.id_uuid;
+      const inserted = await q<{ id_uuid: string }>(insertSql, [user.id, ...baseValues]);
+      memberId = inserted[0]?.id_uuid ?? null;
     }
 
-    const externalAccounts = user.externalAccounts || [];
-    if (memberId && externalAccounts.length > 0) {
-      const socialSql = `
-        INSERT INTO public.member_social_accounts (
-          member_id_uuid,
-          provider,
-          provider_user_id,
-          provider_email,
-          created_at,
-          updated_at
-        ) VALUES ($1, $2, $3, $4, now(), now())
-        ON CONFLICT DO NOTHING;
-      `;
+    if (memberId) {
+      const externalAccounts = user.externalAccounts || [];
+      if (externalAccounts.length > 0) {
+        const socialSql = `
+          INSERT INTO ${TABLE_MEMBER_SOCIAL_ACCOUNTS} (
+            member_id_uuid,
+            provider,
+            provider_user_id,
+            provider_email,
+            created_at,
+            updated_at
+          ) VALUES ($1, $2, $3, $4, now(), now())
+          ON CONFLICT DO NOTHING
+        `;
 
-      for (const acc of externalAccounts) {
-        await query(socialSql, [
-          memberId, 
-          acc.provider, 
-          acc.externalId ?? null, 
-          acc.emailAddress ?? null]);
+        for (const acc of externalAccounts) {
+          await q(socialSql, [
+            memberId,
+            acc.provider,
+            acc.externalId ?? null,
+            acc.emailAddress ?? null,
+          ]);
+        }
       }
     }
 
-    // ✅ Clerk 업데이트: 권장 방식
     await clerkClient.users.updateUser(user.id, {
       publicMetadata: {
         ...(user.publicMetadata || {}),

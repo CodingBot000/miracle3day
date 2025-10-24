@@ -1,13 +1,17 @@
-import { createClient } from "@/utils/session/server";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 
 export async function POST() {
   try {
-    const backendClient = createClient();
-    
-    // Sign out from server-side Supabase
-    await backendClient.auth.signOut();
+    const { sessionId } = auth();
+    if (sessionId) {
+      try {
+        await clerkClient.sessions.revokeSession(sessionId);
+      } catch (err) {
+        console.error("Failed to revoke Clerk session:", err);
+      }
+    }
 
     // Clear all cookies
     const cookieStore = cookies();

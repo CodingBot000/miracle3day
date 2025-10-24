@@ -2,6 +2,7 @@ import { S3Client } from "@aws-sdk/client-s3";
 
 export const s3 = new S3Client({
   region: process.env.LIGHTSAIL_REGION,
+  endpoint: process.env.LIGHTSAIL_ENDPOINT!,
   // Lightsail Object Storage는 S3 호환이므로 endpoint 지정해도 되고 생략해도 됩니다.
   // 버킷 전용 엔드포인트를 쓸 때는 아래 사용:
 //   endpoint: process.env.LIGHTSAIL_ENDPOINT, 

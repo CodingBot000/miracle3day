@@ -4,7 +4,7 @@ import { UserOutputDto } from "@/app/api/auth/getUser/getUser.dto";
 import LogoutAction from "@/components/molecules/LogoutAction";
 import { ArrowLeft, Camera, ChevronRight, MessageCircle } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
+import Image from "next/image";;
 import { findCountry } from "@/constants/country";
 import { useRouter } from "next/navigation";
 import { ROUTE } from "@/router";
@@ -157,7 +157,7 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
 
             <div className="bg-white rounded-lg">
               {renderProfileField("Gender", user?.userInfo?.gender ? (user.userInfo.gender === "M" ? "Male" : "Female") : null, !user?.userInfo?.gender)}
-              {renderProfileField("Nationality", findCountry(user?.userInfo?.id_country)?.country_name, !findCountry(user?.userInfo?.id_country)?.country_name)}
+              {renderProfileField("Nationality", user?.userInfo?.id_country ? findCountry(user.userInfo.id_country)?.country_name : null, !user?.userInfo?.id_country)}
               {renderProfileField("Phone Number Verification", "Phone Number Verification", false)}
               {renderProfileField("Email", user?.userInfo?.email, false)}
               {renderProfileField("Secondary Email", user?.userInfo?.secondary_email, false)}

@@ -6,11 +6,13 @@ import {
   Calendar,
   MapPin,
   Heart,
+  Hospital,
 } from "lucide-react";
 import { ROUTE } from "@/router";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { LocationEnum } from "@/constants";
 import clsx from "clsx";
+import AuthClient from "@/components/molecules/auth/AuthClient";
 
 const MenuMobile = () => {
   const router = useRouter();
@@ -38,7 +40,7 @@ const MenuMobile = () => {
         <span className="text-xs text-[#333]">Home</span>
       </button>
       <button
-        onClick={() => goTo(ROUTE.RECOMMEND)}
+        onClick={() => goTo(ROUTE.TREATMENT_INFO)}
         className="flex flex-col items-center gap-1 p-2 hover:opacity-80"
       >
         <Stethoscope className="w-6 h-6" />
@@ -51,20 +53,34 @@ const MenuMobile = () => {
         <Calendar className="w-6 h-6" />
         <span className="text-xs text-[#333]">Event</span>
       </button>
-      <button
+      {/* <button
         onClick={() => goTo(ROUTE.LOCATION_DETAIL("") + locationNum)}
         className="flex flex-col items-center gap-1 p-2 hover:opacity-80"
       >
         <MapPin className="w-6 h-6" />
         <span className="text-xs text-[#333]">Location</span>
+      </button> */}
+            <button
+        onClick={() => goTo(ROUTE.HOSPITAL)}
+        className="flex flex-col items-center gap-1 p-2 hover:opacity-80"
+      >
+        <Hospital className="w-6 h-6" />
+        <span className="text-xs text-[#333]">Clinics</span>
       </button>
-      <button
+      <div className="flex flex-col items-center gap-1 p-2 hover:opacity-80">
+          <div className="relative text-black">
+            <AuthClient iconColor={'black'} />
+          </div>
+        <span className="text-xs text-[#333]">My Page</span>
+      </div>
+
+      {/* <button
         onClick={() => goTo(ROUTE.FAVORITE)}
         className="flex flex-col items-center gap-1 p-2 hover:opacity-80"
       >
         <Heart className="w-6 h-6" />
         <span className="text-xs text-[#333]">Favorite</span>
-      </button>
+      </button> */}
     </div>
   );
 };

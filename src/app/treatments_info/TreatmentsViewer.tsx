@@ -142,7 +142,7 @@ const treatments: Treatment[] = useMemo(() => {
       
          <div className="mt-6 mb-6 flex items-center gap-2">
    
-            <BackButton size="lg" strokeWidth={2.5} />
+            {/* <BackButton size="lg" strokeWidth={2.5} /> */}
            <h2 className="text-2xl font-semibold mb-3 flex-shrink-0">
             {lang === "ko" ? "시술 선택" : "Select Treatment"}
             </h2>
@@ -183,7 +183,7 @@ const treatments: Treatment[] = useMemo(() => {
         <aside className="hidden md:flex md:flex-col md:col-span-4">
          <div className="mt-6 mb-6 flex items-center gap-2">
    
-            <BackButton size="lg" strokeWidth={2.5} />
+            {/* <BackButton size="lg" strokeWidth={2.5} /> */}
            <h2 className="text-xl md:text-2xl font-semibold mb-3 flex-shrink-0">
               {lang === "ko" ? "시술 리스트" : "Treatments"}
             </h2>

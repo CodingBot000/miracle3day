@@ -1,6 +1,7 @@
 import { HospitalDetailInfo } from "@/app/models/hospitalData.dto";
 import Image from "next/image";
 import React, { useState } from "react";
+import { parseSNSUrl, type SNSPlatform } from "@/utils/snsUtils";
 // import Image from "next/image";;
 
 type ContactType = 'tel' | 'email' | 'link';
@@ -10,6 +11,7 @@ interface ContactItem {
   label: string;
   value: string;
   type: ContactType;
+  platform?: SNSPlatform;
 }
 
 interface HospitalContactInfoProps {
@@ -29,42 +31,46 @@ const HospitalContactInfo = ({ hospitalDetails }: HospitalContactInfoProps) => {
     }
   };
 
-  const handleClick = (item: ContactItem) => {
+  const handleClick = async (item: ContactItem) => {
     if (item.type === 'tel') {
       // 모바일에서는 전화걸기
       window.location.href = `tel:${item.value}`;
     } else if (item.type === 'email') {
       // 이메일 클라이언트 열기
       window.location.href = `mailto:${item.value}`;
-    } else if (item.type === 'link') {
-      const value = item.value.toLowerCase();
-      
-      if (value.includes('instagram') || value.includes('@') && item.label.toLowerCase() === 'instagram') {
-        // Instagram 앱 또는 웹사이트
-        const instagramUrl = value.startsWith('@') 
-          ? `https://instagram.com/${value.slice(1)}`
-          : value.startsWith('http') ? value : `https://instagram.com/${value}`;
-        
-        // 모바일에서 앱 시도 후 웹사이트로 fallback
-        const appUrl = `instagram://user?username=${value.replace('@', '')}`;
-        
-        // 앱 시도
-        const appLink = document.createElement('a');
-        appLink.href = appUrl;
-        appLink.click();
-        
-        // 1초 후 웹사이트로 fallback
-        setTimeout(() => {
-          window.open(instagramUrl, '_blank');
-        }, 1000);
-      } else if (value.includes('facebook')) {
-        // Facebook 처리
-        const facebookUrl = value.startsWith('http') ? value : `https://facebook.com/${value}`;
-        window.open(facebookUrl, '_blank');
-      } else {
-        // 일반 웹사이트
-        const url = value.startsWith('http') ? value : `https://${value}`;
-        window.open(url, '_blank');
+    } else if (item.type === 'link' && item.platform) {
+      const parsed = parseSNSUrl(item.platform, item.value);
+
+      // WeChat의 경우 ID 복사
+      if (parsed.isIdOnly) {
+        try {
+          await navigator.clipboard.writeText(parsed.displayValue);
+          if (parsed.message) {
+            alert(parsed.message);
+          }
+        } catch (err) {
+          console.error('복사 실패:', err);
+        }
+      } else if (parsed.url) {
+        // Instagram의 경우 앱 시도 후 웹으로 fallback
+        if (item.platform === 'instagram') {
+          const username = parsed.url.split('instagram.com/')[1]?.replace('/', '');
+          if (username) {
+            const appUrl = `instagram://user?username=${username}`;
+            const appLink = document.createElement('a');
+            appLink.href = appUrl;
+            appLink.click();
+
+            // 1초 후 웹사이트로 fallback
+            setTimeout(() => {
+              window.open(parsed.url, '_blank');
+            }, 1000);
+            return;
+          }
+        }
+
+        // 일반 SNS는 새 창에서 열기
+        window.open(parsed.url, '_blank');
       }
     }
   };
@@ -85,61 +91,71 @@ const HospitalContactInfo = ({ hospitalDetails }: HospitalContactInfoProps) => {
       icon: <Image src="/icons/icon_sns_homepage.svg" alt="Homepage" width={16} height={16} />,
       label: "homepage",
       value: hospitalDetails.other_channel,
-      type: "link"
+      type: "link",
+      platform: "other"
     },
     {
       icon: <Image src="/icons/icon_sns_instagram.png" alt="Instagram" width={16} height={16} />,
       label: "instagram",
       value: hospitalDetails.instagram,
-      type: "link"
+      type: "link",
+      platform: "instagram"
     },
     {
       icon: <Image src="/icons/icon_sns_facebook.png" alt="Facebook Messenger" width={16} height={16} />,
       label: "facebook_messenger",
       value: hospitalDetails.facebook_messenger,
-      type: "link"
+      type: "link",
+      platform: "facebook"
     },
     {
       icon: <Image src="/icons/icon_sns_we_chat.png" alt="WeChat" width={16} height={16} />,
       label: "we_chat",
       value: hospitalDetails.we_chat,
-      type: "link"
+      type: "link",
+      platform: "wechat"
     },
     {
       icon: <Image src="/icons/icon_sns_whats_app.jpg" alt="WhatsApp" width={16} height={16} />,
       label: "whats_app",
       value: hospitalDetails.whats_app,
-      type: "link"
+      type: "link",
+      platform: "whatsapp"
     },
     {
       icon: <Image src="/icons/icon_sns_ticktok.png" alt="TikTok" width={16} height={16} />,
       label: "tiktok",
       value: hospitalDetails.tiktok,
-      type: "link"
+      type: "link",
+      platform: "tiktok"
     },
     {
       icon: <Image src="/icons/icon_sns_youtube.svg" alt="YouTube" width={16} height={16} />,
       label: "youtube",
       value: hospitalDetails.youtube,
-      type: "link"
+      type: "link",
+      platform: "youtube"
     },
     {
       icon: <Image src="/icons/icon_sns_line.png" alt="Line" width={16} height={16} />,
       label: "line",
       value: hospitalDetails.line,
-      type: "link"
+      type: "link",
+      platform: "line"
     },
     {
       icon: <Image src="/icons/icon_sns_kakaotalk.png" alt="KakaoTalk" width={16} height={16} />,
       label: "kakao_talk",
       value: hospitalDetails.kakao_talk,
-      type: "link"
+      type: "link",
+      platform: "kakao_talk"
     },
     {
       icon: <Image src="/icons/icon_sns_facebook.png" alt="Telegram" width={16} height={16} />,
       label: "telegram",
       value: hospitalDetails.telegram,
-      type: "link"
+      type: "link",
+      platform: "telegram"
     },
   ];
 

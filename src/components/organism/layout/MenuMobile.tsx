@@ -7,6 +7,7 @@ import {
   MapPin,
   Heart,
   Hospital,
+  MessageSquareText,
 } from "lucide-react";
 import { ROUTE } from "@/router";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
@@ -63,6 +64,14 @@ const MenuMobile = () => {
       >
         <Stethoscope className="w-6 h-6" />
         <span className="text-xs text-[#333]">Procedure</span>
+      </button>
+     
+      <button
+        onClick={() => goTo("/community")}
+        className="flex flex-col items-center gap-1 p-2 hover:opacity-80"
+      >
+        <MessageSquareText size={20} />
+        <span className="text-xs text-[#333]">Community</span>
       </button>
       <button
         onClick={() => goTo(ROUTE.EVENT)}

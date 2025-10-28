@@ -111,7 +111,6 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
       <HospitalLanguageSupport available_language={hospital_details.available_languages}/>
       
       
-        
 
       {/* Hospital Amenities */}
       <HospitalAmenities hospitalDetails={hospital_details} />

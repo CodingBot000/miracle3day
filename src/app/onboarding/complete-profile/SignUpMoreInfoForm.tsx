@@ -1,10 +1,14 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import type { ChangeEvent } from 'react';
-
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Label } from '@/components/ui/label';
+import { NationModal } from '@/components/template/modal/NationModal';
+import { CountryCode } from '@/app/models/country-code.dto';
 
 const initialForm = {
   id_country: '',
@@ -16,6 +20,51 @@ const initialForm = {
   nickname: '',
 };
 
+// 14세 이상 제한을 위한 날짜 계산
+const getMaxDate = () => {
+  const date = new Date();
+  date.setFullYear(date.getFullYear() - 14);
+  return date;
+};
+
+// 100세 제한을 위한 날짜 계산
+const getMinDate = () => {
+  const date = new Date();
+  date.setFullYear(date.getFullYear() - 100);
+  return date;
+};
+
+// DatePicker용 커스텀 인풋 컴포넌트
+const CustomInput = React.forwardRef<HTMLInputElement, any>(
+  ({ value, onClick, placeholder, className }, ref) => (
+    <div className="flex items-center cursor-pointer" onClick={onClick}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-5 w-5 text-gray-400 mr-2"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+        />
+      </svg>
+      <input
+        value={value || ''}
+        className={`${className} cursor-pointer flex-1`}
+        placeholder={placeholder}
+        readOnly
+        ref={ref}
+      />
+    </div>
+  )
+);
+
+CustomInput.displayName = 'CustomInput';
+
 export default function SignUpMoreInfoForm() {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
@@ -24,6 +73,8 @@ export default function SignUpMoreInfoForm() {
     ...initialForm,
     nickname: '',
   });
+  const [birthDate, setBirthDate] = useState<Date | null>(null);
+  const [nation, setNation] = useState<CountryCode | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [checkingAgreement, setCheckingAgreement] = useState(true);
@@ -98,10 +149,34 @@ export default function SignUpMoreInfoForm() {
     setError(null);
 
     try {
+      // birthDate를 YYYY-MM-DD 형식으로 변환
+      let formattedBirthDate = '';
+      if (birthDate) {
+        const year = birthDate.getFullYear();
+        const month = String(birthDate.getMonth() + 1).padStart(2, '0');
+        const day = String(birthDate.getDate()).padStart(2, '0');
+        formattedBirthDate = `${year}-${month}-${day}`;
+      }
+
+      // nation의 country_code를 id_country로 설정
+      // phone_country_code와 phone_number를 결합 (+{phone_code}{phone_number})
+      const phoneCode = nation?.phone_code || '82';
+      const fullPhoneNumber = form.phone_number
+        ? `+${phoneCode}${form.phone_number}`
+        : '';
+
+      const submitData = {
+        ...form,
+        birth_date: formattedBirthDate || form.birth_date,
+        id_country: nation?.country_code || form.id_country,
+        phone_country_code: nation?.phone_code ? `+${nation.phone_code}` : '+82',
+        phone_number: fullPhoneNumber,
+      };
+
       const res = await fetch('/api/onboarding/complete', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify(submitData),
       });
 
       if (!res.ok) {
@@ -109,7 +184,9 @@ export default function SignUpMoreInfoForm() {
         throw new Error(msg || 'Failed to complete onboarding');
       }
 
-      router.replace('/');
+      // 세션이 업데이트되었으므로 window.location.href로 완전히 새로고침하며 이동
+      // AuthClient가 업데이트된 세션 정보를 반영하도록 함
+      window.location.href = '/';
     } catch (err) {
       console.error('Onboarding error:', err);
       setError(err instanceof Error ? err.message : 'Unknown error');
@@ -129,7 +206,7 @@ export default function SignUpMoreInfoForm() {
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div className="space-y-1">
-          <label className="text-sm font-medium text-slate-600">Nickname</label>
+          <Label className="text-sm font-medium text-slate-600">Nickname</Label>
           <input
             type="text"
             value={form.nickname}
@@ -137,62 +214,91 @@ export default function SignUpMoreInfoForm() {
             className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2 text-sm"
           />
         </div>
+
         <div className="space-y-1">
-          <label className="text-sm font-medium text-slate-600">Country</label>
-          <input
-            type="text"
-            value={form.id_country}
-            onChange={handleChange('id_country')}
-            placeholder="e.g. KR"
-            className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2 text-sm"
+          <Label className="text-sm font-medium text-slate-600">Country</Label>
+          <NationModal
+            nation={nation?.country_name || ''}
+            onSelect={(value: CountryCode) => setNation(value)}
           />
         </div>
+
         <div className="space-y-1">
-          <label className="text-sm font-medium text-slate-600">Birth date</label>
-          <input
-            type="date"
-            value={form.birth_date}
-            onChange={handleChange('birth_date')}
-            className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2 text-sm"
-          />
+          <Label className="text-sm font-medium text-slate-600">Birth date</Label>
+          <p className="text-xs text-slate-500 mb-1">You must be at least 14 years old</p>
+          <div className="w-full rounded-lg border border-slate-200 bg-white/70 shadow-sm">
+            <DatePicker
+              selected={birthDate}
+              onChange={(date: Date | null) => setBirthDate(date)}
+              dateFormat="yyyy-MM-dd"
+              maxDate={getMaxDate()}
+              minDate={getMinDate()}
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode="select"
+              placeholderText="Select your birth date"
+              className="w-full px-3 py-2 text-sm outline-none bg-transparent"
+              customInput={<CustomInput />}
+            />
+          </div>
         </div>
+
         <div className="space-y-1">
-          <label className="text-sm font-medium text-slate-600">Gender</label>
-          <input
-            type="text"
+          <Label className="text-sm font-medium text-slate-600">Gender</Label>
+          <RadioGroup
             value={form.gender}
-            onChange={handleChange('gender')}
-            placeholder="female / male / other"
-            className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2 text-sm"
-          />
+            onValueChange={(value) => setForm((prev) => ({ ...prev, gender: value }))}
+            className="flex space-x-4 pt-2"
+          >
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="male" id="male" />
+              <Label htmlFor="male" className="font-normal cursor-pointer">Male</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="female" id="female" />
+              <Label htmlFor="female" className="font-normal cursor-pointer">Female</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="other" id="other" />
+              <Label htmlFor="other" className="font-normal cursor-pointer">Other</Label>
+            </div>
+          </RadioGroup>
         </div>
+
         <div className="space-y-1">
-          <label className="text-sm font-medium text-slate-600">Secondary email</label>
+          <Label className="text-sm font-medium text-slate-600">Secondary email</Label>
           <input
             type="email"
             value={form.secondary_email}
             onChange={handleChange('secondary_email')}
             className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2 text-sm"
+            placeholder="Optional"
           />
         </div>
-        <div className="space-y-1">
-          <label className="text-sm font-medium text-slate-600">Phone country code</label>
-          <input
-            type="text"
-            value={form.phone_country_code}
-            onChange={handleChange('phone_country_code')}
-            placeholder="e.g. +82"
-            className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2 text-sm"
-          />
-        </div>
-        <div className="space-y-1">
-          <label className="text-sm font-medium text-slate-600">Phone number</label>
-          <input
-            type="text"
-            value={form.phone_number}
-            onChange={handleChange('phone_number')}
-            className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2 text-sm"
-          />
+
+        <div className="space-y-1 md:col-span-2">
+          <Label className="text-sm font-medium text-slate-600">Phone number</Label>
+          <div className="flex gap-2">
+            {/* Phone country code (read-only) */}
+            <div className="w-24 flex-shrink-0">
+              <input
+                type="text"
+                value={nation?.phone_code ? `+${nation.phone_code}` : '+82'}
+                readOnly
+                className="w-full rounded-lg border border-slate-200 bg-gray-100 px-3 py-2 text-sm text-center font-medium text-gray-700"
+              />
+            </div>
+            {/* Phone number input */}
+            <div className="flex-1">
+              <input
+                type="text"
+                value={form.phone_number}
+                onChange={handleChange('phone_number')}
+                className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2 text-sm"
+                placeholder="Enter phone number (Optional)"
+              />
+            </div>
+          </div>
         </div>
       </div>
 

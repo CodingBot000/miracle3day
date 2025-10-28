@@ -41,7 +41,7 @@ export function ProductCard({
 }: ProductCardProps) {
   const [scrapped, setScrapped] = useState(false);
 
-  const resolvedSrc = src || "/default/hospital_default.png";
+  const resolvedSrc = src || "/hospital/hospitalimg/hospital_default.png";
 
   const handleToggleScrap = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault(); // 링크 이동 방지

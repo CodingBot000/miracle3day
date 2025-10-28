@@ -1,12 +1,5 @@
 import { CountryCode } from "@/app/models/country-code.dto";
 
-// type CountryItem = {
-//   country_name: string;
-//   phone_code: string;
-//   country_code: string;
-//   id: number;
-// };
-
 export function findCountry(value: string | number): CountryCode | undefined {
   return country.find((item) =>
     item.country_name === value ||

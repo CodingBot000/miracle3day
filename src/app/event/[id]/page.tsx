@@ -67,6 +67,8 @@ const EventDetailPage = async ({ params: { id } }: EventDetailPageProps) => {
     desc:${desc}\n
     `);
 
+ 
+  
   return (
     <main>
   <section className="max-w-[768px] mx-auto mt-8 flex flex-col justify-center gap-4 px-4">
@@ -106,10 +108,15 @@ const EventDetailPage = async ({ params: { id } }: EventDetailPageProps) => {
       <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">{desc}</p>
     </div>
 
-    <div className="flex items-start gap-4">
+  
+    {hospitalData === null || hospitalData === undefined ? (
+       <div>Hospital data not found</div>
+    ) : (
+      <div className="flex items-start gap-4">
       <div className="relative w-full max-w-[300px] aspect-[16/9] rounded-lg overflow-hidden border">
+
         <Image
-          src={hospitalData.imageurls[0]}
+          src={hospitalData.thumbnail_url || "hospital/hospitalimg/hospital_default.png"}
           alt={hospitalData.name}
           fill
           className="object-cover object-center"
@@ -128,6 +135,8 @@ const EventDetailPage = async ({ params: { id } }: EventDetailPageProps) => {
         </div>
       </div>
     </div>
+    )}
+    
   </section>
 </main>
 

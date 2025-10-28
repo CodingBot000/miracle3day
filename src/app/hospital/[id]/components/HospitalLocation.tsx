@@ -54,9 +54,9 @@ const HospitalLocation = ({ hospitalInfo }: HospitalLocationProps) => {
 
       <div className="space-y-2 mb-4">
       {hospitalInfo.address_full_road_en && (
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-2">
             <span className="text-sm font-semibold text-gray-800 min-w-[80px]">
-              Road Name Address:
+              Road Name<br />Address
             </span>
             <span className="text-sm text-gray-800 flex-1">
               {hospitalInfo.address_full_road_en}
@@ -80,9 +80,9 @@ const HospitalLocation = ({ hospitalInfo }: HospitalLocationProps) => {
           </div>
         )}
         {hospitalInfo.address_full_jibun_en && (
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-2">
             <span className="text-sm font-semibold text-gray-800 min-w-[80px]">
-              Lot Number Address:
+              Lot Number<br />Address
             </span>
             <span className="text-sm text-gray-800 flex-1">
               {hospitalInfo.address_full_jibun_en}
@@ -106,9 +106,9 @@ const HospitalLocation = ({ hospitalInfo }: HospitalLocationProps) => {
           </div>
         )}
         {hospitalInfo.directions_to_clinic_en && (
-         <div className="flex items-center gap-1">
+         <div className="flex items-center gap-2">
             <span className="text-sm font-semibold text-gray-800 min-w-[80px]">
-              Directions:
+              Directions
           </span>
           <span className="text-sm text-gray-800">
             {hospitalInfo.directions_to_clinic_en}
@@ -118,7 +118,7 @@ const HospitalLocation = ({ hospitalInfo }: HospitalLocationProps) => {
       </div>
 
       {/* 외부 지도 앱 버튼 */}
-      <div className="flex gap-3 mb-4">
+      <div className="flex gap-3 md:gap-4 mb-4">
         <button
           onClick={() => handleMapClick("google")}
           className="hover:opacity-80 transition-opacity"
@@ -127,8 +127,8 @@ const HospitalLocation = ({ hospitalInfo }: HospitalLocationProps) => {
           <Image
             src="/icons/icon_map_google.webp"
             alt="Google Maps"
-            width={60}
-            height={60}
+            width={40}
+            height={40}
             className="rounded-lg"
           />
         </button>
@@ -140,8 +140,8 @@ const HospitalLocation = ({ hospitalInfo }: HospitalLocationProps) => {
           <Image
             src="/icons/icon_map_naver.webp"
             alt="Naver Map"
-            width={60}
-            height={60}
+            width={40}
+            height={40}
             className="rounded-lg"
           />
         </button>
@@ -153,8 +153,8 @@ const HospitalLocation = ({ hospitalInfo }: HospitalLocationProps) => {
           <Image
             src="/icons/icon_map_kakao.webp"
             alt="Kakao Map"
-            width={60}
-            height={60}
+            width={40}
+            height={40}
             className="rounded-lg"
           />
         </button>

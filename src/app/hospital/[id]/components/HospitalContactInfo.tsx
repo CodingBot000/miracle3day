@@ -76,7 +76,7 @@ const HospitalContactInfo = ({ hospitalDetails }: HospitalContactInfoProps) => {
       type: "tel"
     },
     {
-      icon: <Image src="/icons/icon_sns_email.jpg" alt="Email" width={16} height={16} />,
+      icon: <Image src="/icons/icon_sns_email.png" alt="Email" width={16} height={16} />,
       label: "email",
       value: hospitalDetails.email,
       type: "email"
@@ -184,12 +184,12 @@ const HospitalContactInfo = ({ hospitalDetails }: HospitalContactInfoProps) => {
             {/* 아이콘 버튼 */}
             <button
               onClick={() => handleClick(item)}
-              className="w-16 h-16 flex items-center justify-center rounded-lg hover:bg-gray-50 transition-colors"
+              className="w-10 h-10 md:w-16 md:h-16 flex items-center justify-center rounded-lg hover:bg-gray-50 transition-colors"
             >
-              <div className="w-12 h-12 relative">
+              <div className="w-10 h-10 relative">
                 {React.cloneElement(item.icon as React.ReactElement, {
-                  width: 48,
-                  height: 48,
+                  width: 32,
+                  height: 32,
                   className: "w-full h-full object-contain"
                 })}
               </div>

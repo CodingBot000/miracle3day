@@ -121,8 +121,8 @@ export async function GET(req: Request) {
         await session.save();
         return res;
       }
-      // 기존 회원 - 바로 active 상태로 설정
-      const res = NextResponse.redirect(new URL("/user/my-page", req.url));
+      // 기존 회원 - 바로 active 상태로 설정하고 홈으로 이동
+      const res = NextResponse.redirect(new URL("/", req.url));
       const session = await getIronSession(req, res, sessionOptions) as any;
       
       session.auth = {

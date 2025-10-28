@@ -35,5 +35,6 @@ export async function submitCheckIn(): Promise<{ was_already: boolean; day: numb
 export async function fetchPoint(): Promise<number> {
   const res = await fetch("/api/point", { cache: "no-store" });
   if (!res.ok) throw new Error("Failed to fetch point");
-  return res.json();
+  const data = await res.json();
+  return data.point_balance ?? 0;
 }

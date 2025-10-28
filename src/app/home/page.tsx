@@ -175,7 +175,7 @@ export default async function HomePage() {
           <p className="font-bold text-[1.5rem] mb-[5px]">New Beauty</p>
           <p className="text-[1.0rem]">Make Attraction</p>
         </div>
-         <Beauty />
+
          <AgeChecker />
       </section> */}
 

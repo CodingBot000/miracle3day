@@ -9,6 +9,7 @@ import Link from "next/link";
 import SearchPanel from "./SearchPanel";
 import AuthClient from "@/components/molecules/auth/AuthClient";
 import { useHeader } from "@/contexts/HeaderContext";
+import { useMobileModeStore } from "@/stores/useMobileModeStore";
 
 
 // const Auth = dynamic(() => import("@/components/molecules/auth/AuthServer"), {
@@ -18,6 +19,18 @@ const LayoutHeader = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { isTransparentMode } = useHeader();
+  const { isMobileMode } = useMobileModeStore();
+
+  // 모바일 모드일 때 LayoutHeader의 스타일을 조정할 수 있습니다
+  useEffect(() => {
+    if (isMobileMode) {
+      console.log('📱 Mobile mode is active!');
+      // 여기서 모바일 모드일 때의 레이아웃 변경 로직을 추가하세요
+      // 예: setState, 스타일 변경, 특정 요소 숨기기 등
+    } else {
+      console.log('💻 Desktop mode is active');
+    }
+  }, [isMobileMode]);
 
 
   useEffect(() => {
@@ -72,7 +85,9 @@ const LayoutHeader = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-[200] flex items-center px-4 py-2 min-h-[88px] ease-in-out ${getHeaderStyles()}`}
       style={{
-        transition: getTransitionStyle()
+        transition: getTransitionStyle(),
+        // 모바일 모드일 때 하단 패딩 추가 (예시)
+        // paddingBottom: isMobileMode ? '4rem' : '0.5rem'
       }}
     >
       <div className="w-full flex justify-between items-center max-w-[1080px] mx-auto">
@@ -82,11 +97,7 @@ const LayoutHeader = () => {
             {/* <div className="flex items-center">
               <Menu />
             </div> */}
-            {/* chat */}
-            <Link href="/chat">
-              <MessageCircle size={20} />
-            </Link>
-
+ 
             {/* community */}
             <Link href="/community">
               <MessageSquareText size={20} />
@@ -102,9 +113,11 @@ const LayoutHeader = () => {
               <LanguageSelector iconColor={isTransparentMode && !isScrolled ? 'white' : 'black'} />
             </div>
           </div>
+          {!isMobileMode && (
           <div className="relative text-black">
             <AuthClient iconColor={isTransparentMode && !isScrolled ? 'white' : 'black'} />
           </div>
+          )}
         </div>
       </div>
     </header>

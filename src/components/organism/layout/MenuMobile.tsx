@@ -13,12 +13,30 @@ import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { LocationEnum } from "@/constants";
 import clsx from "clsx";
 import AuthClient from "@/components/molecules/auth/AuthClient";
+import { useMobileModeStore } from "@/stores/useMobileModeStore";
+import { useEffect } from "react";
 
 const MenuMobile = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const locationNum = searchParams.get("locationNum") || LocationEnum.Apgujung;
+  const { setMobileMode } = useMobileModeStore();
+
+  // 모바일 화면 크기를 감지하여 store 업데이트
+  useEffect(() => {
+    const checkMobile = () => {
+      const isMobile = window.innerWidth < 768; // md breakpoint (Tailwind의 max-md와 동일)
+      setMobileMode(isMobile);
+    };
+
+    // 초기 체크
+    checkMobile();
+
+    // resize 이벤트 리스너 등록
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, [setMobileMode]);
 
   const goTo = (targetPath: string) => {
     if (pathname === targetPath) return;

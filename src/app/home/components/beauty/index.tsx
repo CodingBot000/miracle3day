@@ -53,7 +53,7 @@ export default function Beauty() {
     <div className="w-full px-4">
       {/* Desktop: 4 columns, Mobile: 2x2 grid */}
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        {clinics.map(({ imageurls, name_en, id_uuid, location }) => {
+        {clinics.map(({ thumbnail_url, imageurls, name_en, id_uuid, location }) => {
           const hasValidImage =
             Array.isArray(imageurls) &&
             imageurls.length > 0 &&
@@ -62,7 +62,7 @@ export default function Beauty() {
 
           const imageSrc = hasValidImage
             ? imageurls[0]
-            : "/default/hospital_default.png";
+            : "/hospital/hospitalimg/hospital_default.png";
 
           return (
             <article key={id_uuid} className="w-full">
@@ -70,7 +70,7 @@ export default function Beauty() {
                 alt={name_en}
                 name={name_en}
                 href={ROUTE.HOSPITAL_DETAIL("") + id_uuid}
-                src={imageSrc}
+                src={thumbnail_url ? thumbnail_url : "/hospital/hospitalimg/hospital_default.png"}
                 locationNum={
                   typeof location === "string"
                     ? location

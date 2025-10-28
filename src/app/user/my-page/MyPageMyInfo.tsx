@@ -162,6 +162,12 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
               {renderProfileField("Email", user?.userInfo?.email, false)}
               {renderProfileField("Secondary Email", user?.userInfo?.secondary_email, false)}
               {/*   {renderProfileField("Treatment Experience", "Public", false)} */}
+                         {/* chat */}
+            <div className="flex justify-between items-center p-4 border-t">
+              <Link href="/user/my-page/chat-list">
+                Chatting List <MessageCircle size={20} />
+              </Link>
+            </div>
               <div className="flex justify-between items-center p-4 border-t">
               <Link
                 href="/legal/cookie-policy"

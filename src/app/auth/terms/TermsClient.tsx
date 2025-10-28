@@ -10,14 +10,14 @@ import TermsHtmlModal from '@/components/template/modal/TermsHtmlModal';
 
 import { SNS_APPLE, SNS_GOOGLE, SNS_FACEBOOK } from '@/constants/key';
 
-interface TermItem {
+export interface TermItem {
   id: string;
   label: string;
   required: boolean;
   url?: { ko?: string; en: string };
 }
 
-const terms: TermItem[] = [
+export const terms: TermItem[] = [
   { id: 'age', label: 'Age 14 or older', required: true },
   { id: 'service', label: 'Terms of Service', required: true, url: { ko: '/contents/signup_terms/terms_of_use_ko.html', en: '/contents/signup_terms/terms_of_use_en.html' } },
   { id: 'location', label: 'Terms and Conditions of Location-based Services', required: true, url: { ko: '/contents/signup_terms/terms_and_conditions_of_LBS_BeautyWell_MimoTok_ko.html', en: '/contents/signup_terms/terms_and_conditions_of_LBS_BeautyWell_Mimotok_en.html' } },
@@ -107,9 +107,7 @@ export default function TermsClient({ initialProvider }: TermsClientProps) {
 
   const handleAgreeAll = (checked: boolean) => {
     const newCheckedItems = terms.reduce((acc, term) => {
-      if (term.required) {
-        acc[term.id] = checked;
-      }
+      acc[term.id] = checked;
       return acc;
     }, {} as Record<string, boolean>);
 

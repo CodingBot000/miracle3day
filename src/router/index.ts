@@ -51,6 +51,7 @@ export const ROUTE = {
   ONLINE_CONSULTING_DETAIL: createDetailRouter("ONLINE_CONSULTING"),
   ABOUTUS: createNormalRouter("ABOUTUS"),
   RECOMMEND: createNormalRouter("RECOMMEND"),
+  TREATMENT_INFO: "/treatments_info",
   RECOMMEND_DETAIL: createDetailRouter("RECOMMEND"),
   FAVORITE: createUserRouter("FAVORITE"),
   UPLOAD_HOSPITAL: createAdminRouter("upload"),

@@ -5,6 +5,7 @@ import SectionHero from '@/components/k-beauty/SectionHero';
 import SectionContent from '@/components/k-beauty/SectionContent';
 import TransparentHeaderWrapper from '@/components/layout/TransparentHeaderWrapper';
 import type { KBeautySection } from '@/types/kBeauty';
+import BackButton from '@/components/common/BackButton';
 
 interface Props {
   params: {
@@ -126,6 +127,7 @@ export default function KBeautySectionPage({ params }: Props) {
       >
         <TransparentHeaderWrapper>
           <div className="bg-white">
+      
             <SectionHero
               title={section.title || ''}
               subtitle={section.subtitle || ''}

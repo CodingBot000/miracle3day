@@ -81,7 +81,7 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
         <div className="space-y-6">
           {/* Hospital Name and Description */}
           <div className="space-y-2">
-            <h1 className="text-2xl font-medium text-gray-900 leading-[33.6px]">
+            <h1 className="text-xl md:text-2xl font-medium text-gray-900 leading-[33.6px]">
             {/* const doctorName = language === 'ko' ? doctor.name : doctor.name_en;
           const doctorBio = language === 'ko' ? doctor.bio : doctor.bio_en;
           const hasBio = doctorBio && doctorBio.trim() !== ''; */}
@@ -89,7 +89,7 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
               {language === 'ko' ? hospital_info.name : hospital_info.name_en}
             </h1>
             {hospital_details.introduction_en && (
-                <div className="text-base text-gray-500 leading-[22.4px] whitespace-pre-line">
+                <div className="text-sm md:text-base text-gray-500 leading-[22.4px] whitespace-pre-line">
                   {language === 'ko' ? hospital_details.introduction : hospital_details.introduction_en}
                 </div>
               )}

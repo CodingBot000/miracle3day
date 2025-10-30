@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Stars } from '@/components/atoms/Stars';
 
 type PlaceHit = {
   id: string;
@@ -47,7 +48,7 @@ export default function GooglePlacesLabPage() {
       const r = await fetch('/api/places/search', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ textQuery, languageCode: 'ko' })
+        body: JSON.stringify({ textQuery, languageCode: 'en' })
       });
       const data = await r.json();
       if (!r.ok) throw new Error(JSON.stringify(data));
@@ -60,16 +61,20 @@ export default function GooglePlacesLabPage() {
   }
 
   async function loadDetails(placeId: string) {
-    console.log('loadDetails', placeId);
     setLoadingDetails(true);
     setError(null);
     setDetails(null);
     setSelectedPlaceId(placeId);
     try {
-      const r = await fetch(`/api/places/details?placeId=${encodeURIComponent(placeId)}&lang=ko`);
+      // 현재 브라우저 언어 가져오기
+      const uiLang = typeof navigator !== 'undefined' ? navigator.language : 'en'; // 예: 'ko-KR'
+      const targetLang = uiLang.split('-')[0].toLowerCase(); // 'ko'
+
+      const r = await fetch(
+        `/api/places/details?placeId=${encodeURIComponent(placeId)}&lang=ko&tl=${targetLang}&translate=true`,
+        { headers: { 'x-ui-lang': uiLang } }
+      );
       const data = await r.json();
-      console.log('loadDetails r.ok:', r.ok);
-      console.log('loadDetails data:', data);
       if (!r.ok) throw new Error(JSON.stringify(data));
       setDetails(data);
     } catch (e: any) {
@@ -141,11 +146,15 @@ export default function GooglePlacesLabPage() {
       {details && (
         <section className="space-y-4">
           <div className="border rounded p-4">
-            <div className="text-lg font-semibold">{details.name ?? '(이름 없음)'}</div>
+            <div className="text-lg font-semibold">{details.name ?? ''}</div>
             <div className="text-sm text-gray-600">{details.address}</div>
-            <div className="mt-2">
-              <span className="font-medium">평점:</span>{' '}
-              {details.rating ?? '-'} / 5 ({details.userRatingCount}개)
+            <div className="mt-2 flex items-center gap-2">
+              {typeof details.rating === 'number' ? (
+                <Stars score={details.rating} size={20} />
+              ) : (
+                <span className="text-sm text-gray-600">평점 정보 없음</span>
+              )}
+              <span className="text-sm text-gray-600">({details.userRatingCount}개)</span>
             </div>
           </div>
 
@@ -180,7 +189,11 @@ export default function GooglePlacesLabPage() {
                         )}
                       </div>
                       <div className="text-sm whitespace-nowrap">
-                        ⭐ {rv.rating ?? '-'}점
+                        {typeof rv.rating === 'number' ? (
+                          <Stars score={rv.rating} size={16} showNumber={false} />
+                        ) : (
+                          '—'
+                        )}
                       </div>
                     </div>
                     {rv.publishTime && (

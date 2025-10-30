@@ -1,26 +1,32 @@
-// src/app/api/places/details/route.ts
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 import { NextRequest, NextResponse } from 'next/server';
+import { normalizeLang, pickTargetLang } from '@/lib/lang';
+import { translateBatch } from '@/lib/translate';
 
 export async function GET(req: NextRequest) {
   try {
     const placeId = req.nextUrl.searchParams.get('placeId');
-    const languageCode = req.nextUrl.searchParams.get('lang') || 'ko';
+    const languageCode = req.nextUrl.searchParams.get('lang') || 'ko'; // Places 표시 언어
+    const tlParam = req.nextUrl.searchParams.get('tl');                // 번역 타겟 언어
+    const translateFlag = (req.nextUrl.searchParams.get('translate') || 'true') === 'true';
 
     if (!placeId) {
       return NextResponse.json({ error: 'placeId is required' }, { status: 400 });
     }
 
-    // v1 Details: reviewsSort 파라미터 없음(삭제)
+    // 번역 대상 언어: 쿼리 or 헤더 or 기본값
+    const headerUILang = req.headers.get('x-ui-lang') || undefined; // (선택) 프런트에서 전달 가능
+    const targetLang = normalizeLang(tlParam || headerUILang) || pickTargetLang(undefined, 'en');
+
+    // v1 Details 호출 (reviews 5개 제한)
     const url = new URL(`https://places.googleapis.com/v1/places/${placeId}`);
     url.searchParams.set('languageCode', languageCode);
 
     const r = await fetch(url.toString(), {
       headers: {
         'X-Goog-Api-Key': process.env.GOOGLE_PLACES_API_KEY!,
-        // FieldMask는 v1에서 필수. 필요한 필드만 요청
         'X-Goog-FieldMask': [
           'id',
           'displayName',
@@ -30,6 +36,11 @@ export async function GET(req: NextRequest) {
           'reviews',
           'reviews.rating',
           'reviews.text',
+          'reviews.text.text',
+          'reviews.text.languageCode',
+          'reviews.originalText',
+          'reviews.originalText.text',
+          'reviews.originalText.languageCode',
           'reviews.publishTime',
           'reviews.authorAttribution',
           'reviews.authorAttribution.displayName',
@@ -40,21 +51,68 @@ export async function GET(req: NextRequest) {
     });
 
     const data = await r.json();
-
     if (!r.ok) {
-      // Google 응답 그대로 래핑해 전달
       return NextResponse.json({ error: data }, { status: r.status });
     }
 
-    // 최대 5개만 오며, 서버에서 최신순으로 정렬
-    const reviews = Array.isArray(data.reviews) ? data.reviews.slice() : [];
-    reviews.sort((a: any, b: any) => {
+    // 최신순 정렬
+    let reviews: any[] = Array.isArray(data.reviews) ? data.reviews.slice() : [];
+    reviews.sort((a, b) => {
       const ta = a?.publishTime ? Date.parse(a.publishTime) : 0;
       const tb = b?.publishTime ? Date.parse(b.publishTime) : 0;
-      return tb - ta; // 최신 우선
+      return tb - ta;
     });
 
-    // 응답 최소화 형태로 반환
+    // 번역 대상 수집 (이미 targetLang인 경우 제외)
+    type ItemForTranslation = { idx: number; sourceLang: string; text: string };
+    const baseTexts: string[] = [];
+    const needTranslate: ItemForTranslation[] = [];
+
+    reviews.forEach((rv, idx) => {
+      // 표시용 기본 텍스트: 우선 reviews.text.text, 없으면 originalText.text
+      const shown = rv?.text?.text ?? rv?.originalText?.text ?? '';
+      const shownLang = normalizeLang(rv?.text?.languageCode || rv?.originalText?.languageCode);
+      baseTexts[idx] = shown;
+
+      if (translateFlag) {
+        const isSameLang = shownLang && normalizeLang(shownLang) === targetLang;
+        if (!isSameLang && shown.trim()) {
+          needTranslate.push({ idx, sourceLang: shownLang, text: shown });
+        }
+      }
+    });
+
+    // 배치 번역 수행
+    const translatedMap = new Map<number, string>();
+    if (needTranslate.length > 0) {
+      const order = needTranslate.map((x) => x.text);
+      const translated = await translateBatch(order, targetLang);
+      translated.forEach((tr, i) => {
+        const idx = needTranslate[i].idx;
+        translatedMap.set(idx, tr.text);
+      });
+    }
+
+    // 결과 조립: 번역된 텍스트가 있으면 교체, 없으면 원문 유지
+    const finalReviews = reviews.map((rv, idx) => {
+      const outText =
+        translatedMap.has(idx) ? translatedMap.get(idx) : baseTexts[idx];
+
+      return {
+        rating: rv?.rating ?? null,
+        publishTime: rv?.publishTime ?? null,
+        authorAttribution: rv?.authorAttribution ?? null,
+        sourceLanguage:
+          rv?.text?.languageCode ||
+          rv?.originalText?.languageCode ||
+          null,
+        text: {
+          text: outText || '',
+          languageCode: translatedMap.has(idx) ? targetLang : (rv?.text?.languageCode || rv?.originalText?.languageCode || null)
+        }
+      };
+    });
+
     return NextResponse.json(
       {
         id: data.id ?? null,
@@ -62,11 +120,11 @@ export async function GET(req: NextRequest) {
         address: data.formattedAddress ?? null,
         rating: data.rating ?? null,
         userRatingCount: data.userRatingCount ?? 0,
-        reviews
+        targetLang,
+        reviews: finalReviews
       },
       {
-        // (선택) 60초 캐시 – 필요 없으면 제거
-        headers: { 'Cache-Control': 'public, max-age=60' }
+        headers: { 'Cache-Control': 'public, max-age=60' } // (선택) 60초 캐시
       }
     );
   } catch (e: any) {

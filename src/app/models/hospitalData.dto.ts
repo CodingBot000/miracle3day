@@ -230,6 +230,7 @@ export interface BusinessHourData {
     bio_en: string;
     image_url: string;
     chief: number;
+    display_order: number;
   }
   
   export type HospitalAddress = {

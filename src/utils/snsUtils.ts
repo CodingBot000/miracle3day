@@ -211,6 +211,45 @@ export const parseYouTubeUrl = (input: string): ParsedSNSResult => {
 };
 
 /**
+ * YouTube 채널 정보 추출
+ * @가 있는 경우 사용자명, 없으면 채널 ID로 간주
+ */
+export const extractYouTubeChannelInfo = (input: string): { channelUrl: string; channelId: string; username?: string } | null => {
+  if (!input) return null;
+
+  const parsed = parseYouTubeUrl(input);
+  if (!parsed.url) return null;
+
+  // URL에서 채널 정보 추출
+  const url = parsed.url;
+
+  // @username 형태
+  const usernameMatch = url.match(/youtube\.com\/@([^/?]+)/);
+  if (usernameMatch) {
+    return {
+      channelUrl: url,
+      channelId: '',
+      username: usernameMatch[1]
+    };
+  }
+
+  // /channel/ID 형태
+  const channelMatch = url.match(/youtube\.com\/channel\/([^/?]+)/);
+  if (channelMatch) {
+    return {
+      channelUrl: url,
+      channelId: channelMatch[1]
+    };
+  }
+
+  // 기타 형태는 그대로 반환
+  return {
+    channelUrl: url,
+    channelId: ''
+  };
+};
+
+/**
  * Telegram URL 파싱
  */
 export const parseTelegramUrl = (input: string): ParsedSNSResult => {
@@ -264,14 +303,21 @@ export const parseSNSUrl = (platform: SNSPlatform, input: string): ParsedSNSResu
 /**
  * SNS 링크 클릭 핸들러
  * WeChat은 ID 복사, 나머지는 새 창에서 열기
+ * @param onCopySuccess - ID 복사 성공 시 호출되는 콜백 (복사된 텍스트와 메시지 전달)
  */
-export const handleSNSClick = (platform: SNSPlatform, input: string): void => {
+export const handleSNSClick = (
+  platform: SNSPlatform,
+  input: string,
+  onCopySuccess?: (copiedText: string, message?: string) => void
+): void => {
   const parsed = parseSNSUrl(platform, input);
 
   if (parsed.isIdOnly) {
     // WeChat의 경우 ID 복사
     navigator.clipboard.writeText(parsed.displayValue);
-    if (parsed.message) {
+    if (onCopySuccess) {
+      onCopySuccess(parsed.displayValue, parsed.message);
+    } else if (parsed.message) {
       alert(parsed.message);
     }
   } else if (parsed.url) {

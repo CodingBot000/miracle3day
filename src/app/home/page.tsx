@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import { getBannerAPI } from "@/app/api/home/banner";
-import HomeClient from "./HomeClient";
+
 import Beauty from "./components/beauty";
 import LocationHospital from "./components/location";
 import { LocationEnum, LOCATIONS, LocationType } from "@/constants";

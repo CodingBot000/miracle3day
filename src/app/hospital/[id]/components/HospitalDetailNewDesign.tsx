@@ -14,6 +14,9 @@ import ResponsiveImageMosaic from "@/components/template/ResponsiveImageMosaic";
 import ImageGalleryModal from "@/components/template/modal/ImageGalleryModal";
 import HospitalLanguageSupport from "./HospitalLanguageSupport";
 import { useCookieLanguage } from "@/hooks/useCookieLanguage";
+import HospitalYouTubePreview from "./HospitalYouTubePreview";
+import TreatmentProductList from "@/components/organism/layout/TreatmentProductList";
+import { useTreatmentProducts } from "@/hooks/useTreatmentProducts";
 
 interface HospitalDetailNewDesignProps {
   hospitalData: HospitalDetailMainOutput;
@@ -23,9 +26,12 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
   const router = useRouter();
   const { language } = useCookieLanguage();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
+
   console.log('HospitalDetailNewDesign hospitalData:', hospitalData);
   const { hospital_info, hospital_details, doctors, business_hours } = hospitalData;
+
+  // Fetch treatment products
+  const { data: treatmentProducts = [], isLoading: isLoadingProducts } = useTreatmentProducts(hospital_info.id_uuid);
 
   const handleBackClick = () => {
     router.back();
@@ -102,7 +108,12 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
       </div>
 
       <HospitalBusinessHours business_hours={business_hours} />
-     
+
+      {/* Treatment Products */}
+      {!isLoadingProducts && treatmentProducts.length > 0 && (
+        <TreatmentProductList products={treatmentProducts} />
+      )}
+
       {/* Hospital Location */}
       <HospitalLocation hospitalInfo={hospital_info} />
 
@@ -110,7 +121,10 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
       <HospitalDoctorList doctors={doctors} />
       <HospitalLanguageSupport available_language={hospital_details.available_languages}/>
       
-      
+              {/* Youtube Video */}
+              {hospital_details.youtube && (
+              <HospitalYouTubePreview youtube={hospital_details.youtube} />
+              )}
 
       {/* Hospital Amenities */}
       <HospitalAmenities hospitalDetails={hospital_details} />

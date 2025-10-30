@@ -2,6 +2,7 @@ import { HospitalDetailInfo } from "@/app/models/hospitalData.dto";
 import Image from "next/image";
 import React, { useState } from "react";
 import { parseSNSUrl, type SNSPlatform } from "@/utils/snsUtils";
+import CopyAlertModal from "@/components/template/modal/CopyAlertModal";
 // import Image from "next/image";;
 
 type ContactType = 'tel' | 'email' | 'link';
@@ -20,6 +21,9 @@ interface HospitalContactInfoProps {
 
 const HospitalContactInfo = ({ hospitalDetails }: HospitalContactInfoProps) => {
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+  const [showCopyModal, setShowCopyModal] = useState(false);
+  const [copiedText, setCopiedText] = useState('');
+  const [copyMessage, setCopyMessage] = useState('');
 
   const handleCopy = async (text: string, index: number) => {
     try {
@@ -41,13 +45,13 @@ const HospitalContactInfo = ({ hospitalDetails }: HospitalContactInfoProps) => {
     } else if (item.type === 'link' && item.platform) {
       const parsed = parseSNSUrl(item.platform, item.value);
 
-      // WeChat의 경우 ID 복사
+      // WeChat의 경우 ID 복사 및 모달 표시
       if (parsed.isIdOnly) {
         try {
           await navigator.clipboard.writeText(parsed.displayValue);
-          if (parsed.message) {
-            alert(parsed.message);
-          }
+          setCopiedText(parsed.displayValue);
+          setCopyMessage(parsed.message || '');
+          setShowCopyModal(true);
         } catch (err) {
           console.error('복사 실패:', err);
         }
@@ -213,6 +217,14 @@ const HospitalContactInfo = ({ hospitalDetails }: HospitalContactInfoProps) => {
           </div>
         ))}
       </div>
+
+      {/* Copy Alert Modal */}
+      <CopyAlertModal
+        isOpen={showCopyModal}
+        onClose={() => setShowCopyModal(false)}
+        mainString={copiedText}
+        subDescString={copyMessage}
+      />
     </div>
   );
 };

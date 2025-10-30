@@ -85,7 +85,9 @@ const TreatmentProductList = ({ products }: TreatmentProductListProps) => {
             aria-label={isExpanded ? "Collapse" : "Expand"}
           >
             <span className="text-sm text-gray-600">
-              {isExpanded ? "Close" : "View"}
+              {/* {isExpanded ? "Close" : "View"} */}
+              {isExpanded ? (language === 'ko' ? "닫기" : "Close") : (language === 'ko' ? "더보기" : "View More")}
+              
             </span>
             {isExpanded ? (
               <ChevronUp className="w-4 h-4 text-gray-600" />

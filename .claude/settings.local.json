@@ -32,7 +32,8 @@
       "Bash(psql:*)",
       "Bash(git -C /Users/switch/Development/WebBeauty/beauty_proejcts/complete/beauty-main log --oneline -20)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(timeout 5 curl:*)"
     ],
     "deny": []
   }

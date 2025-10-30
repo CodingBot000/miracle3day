@@ -14,6 +14,7 @@ export interface TreatmentProductData {
   department: string;
   level1: TreatmentProductJsonb;
   name: TreatmentProductJsonb;
+  option_value: string;
   unit: TreatmentProductJsonb;
   price: number;
   group_id: string;

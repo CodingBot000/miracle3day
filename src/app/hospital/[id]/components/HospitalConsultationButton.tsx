@@ -85,19 +85,19 @@ const HospitalConsultationButton = ({ hospitalId }: HospitalConsultationButtonPr
   return (
     <>
       {error && (
-        <div className="fixed left-0 right-0 bottom-24 flex justify-center px-4 z-50">
-          <div className="bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg max-w-[360px] w-full">
+        <div className="fixed bottom-[calc(200px+160px)] right-5 z-50 max-w-xs">
+          <div className="bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg">
             <p className="text-sm">{language === 'ko' ? labels.ko.error : labels.en.error}</p>
           </div>
         </div>
       )}
 
-      <div className="fixed left-0 right-0 bottom-0 flex justify-center px-4 py-0 bg-white z-40 shadow-lg">
-        <div className="w-full max-w-[360px] h-20 flex items-center px-4 gap-3">
+      <div className="fixed bottom-[200px] right-5 z-40">
+        <div className="flex flex-col gap-3 bg-white/95 backdrop-blur-sm shadow-lg rounded-xl p-4 w-56">
           <button
             onClick={handleChatConsultation}
             disabled={isCreatingChat}
-            className="flex-1 h-12 bg-[#4CAF50] text-white rounded-lg font-semibold text-base leading-[22.4px] hover:bg-[#45a049] transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="h-12 bg-[#4CAF50] text-white rounded-lg font-semibold text-base leading-[22.4px] hover:bg-[#45a049] transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2 w-full"
           >
             {isCreatingChat ? (
               <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
@@ -112,7 +112,7 @@ const HospitalConsultationButton = ({ hospitalId }: HospitalConsultationButtonPr
           <button
             onClick={handleReservationClick}
             disabled={isCreatingChat}
-            className="flex-1 h-12 bg-[#FB718F] text-white rounded-lg font-semibold text-base leading-[22.4px] hover:bg-[#f5648a] transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+            className="h-12 bg-[#FB718F] text-white rounded-lg font-semibold text-base leading-[22.4px] hover:bg-[#f5648a] transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed w-full"
           >
             {language === 'ko' ? labels.ko.reservation : labels.en.reservation}
           </button>

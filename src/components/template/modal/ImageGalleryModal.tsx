@@ -59,44 +59,46 @@ const ImageGalleryModal = ({
   if (!isOpen || !images || images.length === 0) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center">
+    <div className="fixed inset-0 z-50">
       {/* Background overlay */}
-      <div 
-        className="absolute inset-0" 
+      <div
+        className="absolute inset-0 bg-black bg-opacity-90"
         onClick={onClose}
       />
-      
-      {/* Close button */}
-      <button
-        onClick={onClose}
-        className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white bg-opacity-20 hover:bg-opacity-30 transition-all"
-        aria-label="Close modal"
-      >
-        <svg 
-          width="24" 
-          height="24" 
-          viewBox="0 0 24 24" 
-          fill="none" 
-          stroke="white" 
-          strokeWidth="2" 
-          strokeLinecap="round" 
-          strokeLinejoin="round"
-        >
-          <path d="m18 6-12 12" />
-          <path d="m6 6 12 12" />
-        </svg>
-      </button>
 
-      {/* Image container */}
-      <div className="relative w-full h-full flex items-center justify-center p-4">
-        <div className="relative max-w-[90vw] max-h-[90vh] w-full h-full">
-          <Image
-            src={images[currentIndex]}
-            alt={`Hospital image ${currentIndex + 1}`}
-            fill
-            className="object-contain"
-            priority
-          />
+      <div className="absolute inset-x-0 top-24 bottom-24 md:top-28 md:bottom-16 flex items-center justify-center">
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-6 z-10 p-2 rounded-full bg-white bg-opacity-20 hover:bg-opacity-30 transition-all"
+          aria-label="Close modal"
+        >
+          <svg 
+            width="24" 
+            height="24" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="white" 
+            strokeWidth="2" 
+            strokeLinecap="round" 
+            strokeLinejoin="round"
+          >
+            <path d="m18 6-12 12" />
+            <path d="m6 6 12 12" />
+          </svg>
+        </button>
+
+        {/* Image container */}
+        <div className="relative w-full h-full flex items-center justify-center p-4">
+          <div className="relative max-w-[90vw] max-h-[70vh] w-full h-full">
+            <Image
+              src={images[currentIndex]}
+              alt={`Hospital image ${currentIndex + 1}`}
+              fill
+              className="object-contain"
+              priority
+            />
+          </div>
         </div>
 
         {/* Navigation arrows */}
@@ -143,36 +145,36 @@ const ImageGalleryModal = ({
             </button>
           </>
         )}
+
+        {/* Image counter */}
+        {images.length > 1 && (
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1 bg-white bg-opacity-20 rounded-full text-white text-sm">
+            {currentIndex + 1} / {images.length}
+          </div>
+        )}
+
+        {/* Thumbnail strip */}
+        {images.length > 1 && (
+          <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex gap-2 max-w-[80vw] overflow-x-auto p-2">
+            {images.map((image, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className={`relative w-16 h-16 flex-shrink-0 rounded overflow-hidden border-2 transition-all ${
+                  index === currentIndex ? 'border-white' : 'border-transparent opacity-70'
+                }`}
+              >
+                <Image
+                  src={image}
+                  alt={`Thumbnail ${index + 1}`}
+                  fill
+                  className="object-cover"
+                />
+              </button>
+            ))}
+          </div>
+        )}
       </div>
-
-      {/* Image counter */}
-      {images.length > 1 && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1 bg-white bg-opacity-20 rounded-full text-white text-sm">
-          {currentIndex + 1} / {images.length}
-        </div>
-      )}
-
-      {/* Thumbnail strip */}
-      {images.length > 1 && (
-        <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex gap-2 max-w-[80vw] overflow-x-auto p-2">
-          {images.map((image, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`relative w-16 h-16 flex-shrink-0 rounded overflow-hidden border-2 transition-all ${
-                index === currentIndex ? 'border-white' : 'border-transparent opacity-70'
-              }`}
-            >
-              <Image
-                src={image}
-                alt={`Thumbnail ${index + 1}`}
-                fill
-                className="object-cover"
-              />
-            </button>
-          ))}
-        </div>
-      )}
     </div>
   );
 };

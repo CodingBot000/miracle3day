@@ -9,7 +9,7 @@ interface ReviewCardForHomeProps {
 
 const ReviewCardForHome = ({ review }: ReviewCardForHomeProps) => {
   return (
-    <div className="border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow h-[250px] md:h-[330px] w-[300px] md:w-[400px] flex flex-col">
+    <div className="border rounded-lg p-4 bg-rose-50 shadow-sm hover:shadow-md transition-shadow h-[250px] md:h-[330px] w-[300px] md:w-[400px] flex flex-col">
       <div className="flex items-center gap-3 mb-3">
         {review.authorAttribution?.photoUri && (
           <img
@@ -44,7 +44,7 @@ const ReviewCardForHome = ({ review }: ReviewCardForHomeProps) => {
         </p>
       </div>
 
-      {review.authorAttribution?.uri && (
+      {/* {review.authorAttribution?.uri && (
         <div className="mt-auto">
           <a
             className="text-xs text-blue-600 underline hover:text-blue-800"
@@ -55,7 +55,7 @@ const ReviewCardForHome = ({ review }: ReviewCardForHomeProps) => {
             View original
           </a>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

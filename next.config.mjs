@@ -43,16 +43,8 @@ const nextConfig = {
         hostname: "beauty-bucket-public.s3.us-west-2.amazonaws.com",
         protocol: "https",
       },
-      {
-        hostname: "img.clerk.com",
-        protocol: "https",
-      },
-      {
-        hostname: "images.clerk.dev",
-        protocol: "https",
-      },
     ],
-    domains: ['beauty-bucket-public.s3.us-west-2.amazonaws.com', 'img.clerk.com', 'images.clerk.dev'],
+    domains: ['beauty-bucket-public.s3.us-west-2.amazonaws.com'],
 
     unoptimized: true,
   },

@@ -340,12 +340,12 @@ export default function ProtocolPage() {
       {/* Header */}
       <header className="flex flex-col sm:flex-row sm:items-center gap-3 justify-between">
         <div>
-          <button
+          {/* <button
             onClick={() => router.push('/treatment-landing-v2')}
             className="text-blue-600 hover:text-blue-800 mb-2 flex items-center gap-1"
           >
             <ArrowLeft className="w-4 h-4" />
-          </button>
+          </button> */}
           <h1 className="text-2xl font-extrabold">
             {locale === 'ko' ? content.topic_title_ko : content.topic_title_en}
           </h1>

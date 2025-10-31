@@ -85,9 +85,7 @@ export default function TreatmentProtocol() {
           
             Premium Beauty Care
           </h1>
-          {/* <p className="mt-3 text-base sm:text-lg text-gray-600">
-            Find your perfect Korean beauty treatment in 1 minute.
-          </p> */}
+    
         </div>
       </section>
       {/* <header className="flex flex-col sm:flex-row sm:items-center gap-3 justify-between">

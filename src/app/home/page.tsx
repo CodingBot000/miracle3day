@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import { getBannerAPI } from "@/app/api/home/banner";
-import HomeClient from "./HomeClient";
+
 import Beauty from "./components/beauty";
 import LocationHospital from "./components/location";
 import { LocationEnum, LOCATIONS, LocationType } from "@/constants";
@@ -32,9 +32,6 @@ import QuizPage from "../gamification/quize/page";
 import WhyKoreaButton from "./components/WhyKoreaButton";
 import AgeGuideCTA from "../treatment-based-age-guide/components/AgeGuideCTA";
 import { getLangFromCookies, Lang, t } from "@/i18n/i18n";
-import UploadTest from "../upload-test/UploadTest";
-import UploadTestViaServer from "../upload-test/UploadTestViaServer";
-
 
 export default async function HomePage() {
   // const bannerItem = await getBannerAPI();
@@ -175,7 +172,7 @@ export default async function HomePage() {
           <p className="font-bold text-[1.5rem] mb-[5px]">New Beauty</p>
           <p className="text-[1.0rem]">Make Attraction</p>
         </div>
-         <Beauty />
+
          <AgeChecker />
       </section> */}
 

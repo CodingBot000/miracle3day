@@ -39,4 +39,30 @@ import { UserInfoDto } from "../api/auth/getUser/getUser.dto";
   // export interface HospitalDetailReviewOutDto extends InfinityScrollOutputDto {
   //   data: ReviewResponseData;
   // }
+
+  // Google Maps 리뷰 관련 DTO
+  export interface ReviewDataFromGoogleMap {
+    rating: number | null;
+    publishTime: string | null;
+    authorAttribution: {
+      displayName?: string;
+      photoUri?: string;
+      uri?: string;
+    } | null;
+    sourceLanguage: string | null;
+    text: {
+      text: string;
+      languageCode: string | null;
+    };
+  }
+
+  export interface GooglePlaceReviewsResponse {
+    id: string | null;
+    name: string | null;
+    address: string | null;
+    rating: number | null;
+    userRatingCount: number;
+    targetLang: string;
+    reviews: ReviewDataFromGoogleMap[];
+  }
   

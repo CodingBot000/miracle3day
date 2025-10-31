@@ -23,9 +23,11 @@ const TABLE_SURGERY_INFO = "surgery_info";
 const TABLE_RESERVATIONS = "reservations";
 const TABLE_POINT_TRANSACTIONS = "point_transactions";
 const TABLE_ATTENDANCE_MONTHLY = "attendance_monthly";
+const TABLE_TREATMENT_INFO = "treatment_info";
 const TABLE_TREATMENTS_ROOT = "treatments_root";
 const TABLE_TREATMENTS_ALIAS = "treatments_alias";
 const TABLE_TREATMENT_CARE_PROTOCOLS = "treatment_care_protocols";
+const TABLE_TREATMENT_PRODUCT = "treatment_product";
 // const TABLE_HOSPITAL = "hospital_test";
 // const TABLE_DOCTOR = "doctor_test";
 // const TABLE_HOSPITAL_DETAIL = "hospital_details_test";
@@ -65,9 +67,11 @@ export {
   TABLE_RESERVATIONS,
   TABLE_POINT_TRANSACTIONS,
   TABLE_ATTENDANCE_MONTHLY,
+  TABLE_TREATMENT_INFO,
   TABLE_TREATMENTS_ROOT,
   TABLE_TREATMENTS_ALIAS,
   TABLE_TREATMENT_CARE_PROTOCOLS,
+  TABLE_TREATMENT_PRODUCT,
   STORAGE_IMAGES,
   STORAGE_HOSPITAL_IMG,
   STORAGE_DOCTOR_IMG,

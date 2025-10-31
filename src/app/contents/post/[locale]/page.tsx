@@ -147,9 +147,9 @@ export default function KBeautyIndexPage({ params }: Props) {
       <header className="bg-white shadow-sm border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-6 py-8">
           <div className="text-center">
-          <div className="flex items-center gap-2">
+          {/* <div className="flex items-center gap-2">
             <BackButton size="lg" strokeWidth={2.5} />
-          </div>
+          </div> */}
             <h1 className="text-5xl font-bold bg-gradient-to-r from-pink-600 via-purple-600 to-blue-600 bg-clip-text text-transparent mb-3" style={{ fontFamily: "'Inter', 'Pretendard', sans-serif" }}>
               {isKorean ? 'K-뷰티 가이드' : 'K-Beauty Guide'}
             </h1>

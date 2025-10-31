@@ -5,6 +5,16 @@ import { TABLE_HOSPITAL } from "@/constants/tables";
 import { q } from "@/lib/db";
 import type { HospitalData } from "@/app/models/hospitalData.dto";
 
+// Fisher-Yates shuffle algorithm for randomizing array order
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
 export async function GET() {
   try {
     const sql = `
@@ -27,8 +37,7 @@ export async function GET() {
         show
       FROM ${TABLE_HOSPITAL}
       WHERE show = true
-      ORDER BY created_at DESC
-      LIMIT 4
+
     `;
 
     let rows = await q<HospitalData>(sql);
@@ -53,14 +62,16 @@ export async function GET() {
         address_full_jibun_en,
         show
         FROM ${TABLE_HOSPITAL}
-        ORDER BY created_at DESC
-        LIMIT 4
+
       `;
       rows = await q<HospitalData>(fallbackSql);
     }
 
+    // Randomize the order of hospitals
+    const shuffledRows = shuffleArray(rows);
+
     return Response.json(
-      { data: rows },
+      { data: shuffledRows },
       { status: 200, statusText: "success", headers: { "Cache-Control": "no-store" } }
     );
   } catch (error) {

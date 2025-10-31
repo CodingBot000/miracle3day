@@ -14,6 +14,12 @@ import ResponsiveImageMosaic from "@/components/template/ResponsiveImageMosaic";
 import ImageGalleryModal from "@/components/template/modal/ImageGalleryModal";
 import HospitalLanguageSupport from "./HospitalLanguageSupport";
 import { useCookieLanguage } from "@/hooks/useCookieLanguage";
+import HospitalYouTubePreview from "./HospitalYouTubePreview";
+import TreatmentProductList from "@/components/organism/layout/TreatmentProductList";
+import { useTreatmentProducts } from "@/hooks/useTreatmentProducts";
+import ReviewSection from "@/components/template/ReviewSection";
+import { useGooglePlaceReviews } from "@/hooks/useGooglePlaceReviews";
+import Stars from "@/components/atoms/Stars";
 
 interface HospitalDetailNewDesignProps {
   hospitalData: HospitalDetailMainOutput;
@@ -26,6 +32,12 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
   
   console.log('HospitalDetailNewDesign hospitalData:', hospitalData);
   const { hospital_info, hospital_details, doctors, business_hours } = hospitalData;
+
+  // Google Places 리뷰 가져오기
+  const { data: googleReviewsData, isLoading: isLoadingGoogleReviews } = useGooglePlaceReviews(hospital_info.searchkey || '');
+
+  // Treatment Products 가져오기
+  const { data: treatmentProducts = [], isLoading: isLoadingProducts } = useTreatmentProducts(hospital_info.id_uuid);
 
   const handleBackClick = () => {
     router.back();
@@ -82,18 +94,32 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
           {/* Hospital Name and Description */}
           <div className="space-y-2">
             <h1 className="text-xl md:text-2xl font-medium text-gray-900 leading-[33.6px]">
-            {/* const doctorName = language === 'ko' ? doctor.name : doctor.name_en;
-          const doctorBio = language === 'ko' ? doctor.bio : doctor.bio_en;
-          const hasBio = doctorBio && doctorBio.trim() !== ''; */}
 
               {language === 'ko' ? hospital_info.name : hospital_info.name_en}
             </h1>
+
+            {/* Google 리뷰 평점 통계 */}
+            {googleReviewsData && (
+              <div className="flex items-center gap-2 mt-2">
+                {typeof googleReviewsData.rating === 'number' ? (
+                  <>
+                    <Stars score={googleReviewsData.rating} size={20} />
+                    <span className="text-sm text-gray-600">
+                      ({googleReviewsData.userRatingCount}  {language === 'ko' ? '개의 리뷰' : 'reviews'} )
+                    </span>
+                  </>
+                ) : (
+                  <span className="text-sm text-gray-600">평점 정보 없음</span>
+                )}
+              </div>
+            )}
+
             {hospital_details.introduction_en && (
                 <div className="text-sm md:text-base text-gray-500 leading-[22.4px] whitespace-pre-line">
                   {language === 'ko' ? hospital_details.introduction : hospital_details.introduction_en}
                 </div>
               )}
-          
+
           </div>
 
           {/* Contact Information */}
@@ -102,7 +128,18 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
       </div>
 
       <HospitalBusinessHours business_hours={business_hours} />
-     
+
+      {/* Google Reviews Section */}
+      <h2 className="px-4 py-8 text-lg font-semibold text-black mb-4 leading-[26.6px]">
+        Reviews
+      </h2>
+      {googleReviewsData?.reviews && googleReviewsData.reviews.length > 0 && (
+        <ReviewSection
+          reviews={googleReviewsData.reviews}
+          isLoading={isLoadingGoogleReviews}
+        />
+      )}
+
       {/* Hospital Location */}
       <HospitalLocation hospitalInfo={hospital_info} />
 
@@ -110,8 +147,15 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
       <HospitalDoctorList doctors={doctors} />
       <HospitalLanguageSupport available_language={hospital_details.available_languages}/>
       
-      
-        
+              {/* Youtube Video */}
+              {hospital_details.youtube && (
+              <HospitalYouTubePreview youtube={hospital_details.youtube} />
+              )}
+
+      {/* Treatment Products */}
+      {!isLoadingProducts && treatmentProducts.length > 0 && (
+        <TreatmentProductList products={treatmentProducts} />
+      )}
 
       {/* Hospital Amenities */}
       <HospitalAmenities hospitalDetails={hospital_details} />

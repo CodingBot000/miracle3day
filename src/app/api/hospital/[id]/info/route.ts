@@ -1,5 +1,6 @@
 import { TABLE_DOCTOR, TABLE_HOSPITAL, TABLE_HOSPITAL_BUSINESS_HOUR, TABLE_HOSPITAL_DETAIL, TABLE_HOSPITAL_TREATMENT } from "@/constants/tables";
 import { query } from "@/lib/db";
+import { DoctorData } from "@/app/models/hospitalData.dto";
 
 export async function GET(req: Request, { params }: { params: { id: string } }) {
   const id_uuid = params.id;
@@ -51,7 +52,7 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
     const detailSql = `SELECT * FROM ${TABLE_HOSPITAL_DETAIL} WHERE id_uuid_hospital = $1 LIMIT 1`;
     const businessSql = `SELECT * FROM ${TABLE_HOSPITAL_BUSINESS_HOUR} WHERE id_uuid_hospital = $1 ORDER BY day_of_week`;
     const treatmentSql = `SELECT * FROM ${TABLE_HOSPITAL_TREATMENT} WHERE id_uuid_hospital = $1`;
-    const doctorSql = `SELECT * FROM ${TABLE_DOCTOR} WHERE id_uuid_hospital = $1`;
+    const doctorSql = `SELECT * FROM ${TABLE_DOCTOR} WHERE id_uuid_hospital = $1 ORDER BY display_order ASC NULLS LAST`;
 
     const [detailRes, businessRes, treatmentRes, doctorRes] = await Promise.all([
       query(detailSql, [id_uuid]),
@@ -60,6 +61,16 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
       query(doctorSql, [id_uuid]),
     ]);
 
+    const doctors: DoctorData[] = doctorRes.rows.map((doctor) => ({
+      name: doctor.name ?? "",
+      name_en: doctor.name_en ?? "",
+      bio: doctor.bio ?? "",
+      bio_en: doctor.bio_en ?? "",
+      image_url: doctor.image_url ?? "",
+      chief: Number(doctor.chief ?? 0),
+      display_order: Number(doctor.display_order ?? 0),
+    }));
+
     return Response.json(
       {
         data: {
@@ -67,7 +78,7 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
           hospital_details: detailRes.rows[0] ?? null,
           business_hours: businessRes.rows,
           treatments: treatmentRes.rows,
-          doctors: doctorRes.rows,
+          doctors,
         },
       },
       { status: 200, statusText: "success", headers: { "Cache-Control": "no-store" } }

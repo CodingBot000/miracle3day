@@ -29,7 +29,7 @@ export default function TreatmentBasedAgeGuide() {
           <div className="flex justify-between items-center mb-4">
             
    
-            <BackButton size="lg" strokeWidth={2.5} />
+            {/* <BackButton size="lg" strokeWidth={2.5} /> */}
             {/* <h1 className="text-2xl md:text-4xl bg-gradient-to-r from-rose-600 via-pink-600 to-purple-700 bg-clip-text text-transparent flex-1 font-bold"> */}
             <h1 className="text-2xl md:text-4xl text-rose-600  flex-1 font-bold">
               {language === 'ko' ? '연령대별\n안티에이징 가이드' : 'Age-Based Anti-Aging Guide'}

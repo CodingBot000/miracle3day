@@ -18,7 +18,7 @@ import HospitalYouTubePreview from "./HospitalYouTubePreview";
 import TreatmentProductList from "@/components/organism/layout/TreatmentProductList";
 import { useTreatmentProducts } from "@/hooks/useTreatmentProducts";
 import ReviewSection from "@/components/template/ReviewSection";
-import { useGooglePlaceReviews } from "@/hooks/useGooglePlaceReviews";
+import { useHospitalGoogleReviews } from "@/hooks/useHospitalGoogleReviews";
 import { ReviewStats } from "@/components/molecules/ReviewStats";
 
 interface HospitalDetailNewDesignProps {
@@ -33,8 +33,8 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
   console.log('HospitalDetailNewDesign hospitalData:', hospitalData);
   const { hospital_info, hospital_details, doctors, business_hours } = hospitalData;
 
-  // Google Places 리뷰 가져오기
-  const { data: googleReviewsData, isLoading: isLoadingGoogleReviews } = useGooglePlaceReviews(hospital_info.searchkey || '');
+  // Google Places 리뷰 가져오기 (DB 캐시 우선)
+  const { data: googleReviewsData, isLoading: isLoadingGoogleReviews } = useHospitalGoogleReviews(hospital_info.id_uuid);
 
   // Treatment Products 가져오기
   const { data: treatmentProducts = [], isLoading: isLoadingProducts } = useTreatmentProducts(hospital_info.id_uuid);

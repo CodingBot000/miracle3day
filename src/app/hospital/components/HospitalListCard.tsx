@@ -5,6 +5,9 @@ import { findRegionByKey, REGIONS } from "@/constants";
 import { ROUTE } from "@/router";
 import Link from "next/link";
 import Image from "next/image";
+import { ReviewStats } from "@/components/molecules/ReviewStats";
+import { useGooglePlaceReviews } from "@/hooks/useGooglePlaceReviews";
+import { useCookieLanguage } from "@/hooks/useCookieLanguage";
 
 interface HospitalListCardProps {
   hospital: HospitalData;
@@ -14,6 +17,11 @@ interface HospitalListCardProps {
 }
 
 const HospitalListCard = ({ hospital, href, showCategories = false, showTreatmentInfo = false }: HospitalListCardProps) => {
+  // Language hook
+  const { language } = useCookieLanguage();
+
+  // Google Places 리뷰 가져오기
+  const { data: googleReviewsData } = useGooglePlaceReviews(hospital.searchkey || '');
   const categories = [
     { label: "Laser toning", bgColor: "#F5F5F7" },
     { label: "acne scar", bgColor: "#F5F5F7" },
@@ -54,21 +62,31 @@ const HospitalListCard = ({ hospital, href, showCategories = false, showTreatmen
           <div className="flex-1 space-y-2 md:space-y-4">
             <div className="space-y-2 md:space-y-4">
               <h3 className="text-base md:text-lg lg:text-xl xl:text-2xl font-normal text-black leading-tight">
-                {hospital.name_en}
+                {language === 'ko' ? hospital.name : hospital.name_en}
               </h3>
+              {/* <div className="flex items-center gap-2 text-xs text-gray-500">
+                <span className="font-bold">{language === 'ko' ? '도로명 주소' : 'Road Name'}:</span>
+                <span>{language === 'ko' ? hospital.address_full_road : hospital.address_full_road_en}</span>
+              </div>
+
               <div className="flex items-center gap-2 text-xs text-gray-500">
-                <span className="font-bold">Road Name:</span>
-                <span>{hospital.address_full_road_en}</span>
-              </div>   
-              
-              <div className="flex items-center gap-2 text-xs text-gray-500">
-                <span className="font-bold">Lot number address:</span>
-                <span>{hospital.address_full_jibun_en}</span>
-              </div>   
-              
+                <span className="font-bold">{language === 'ko' ? '지번 주소' : 'Lot number address'}:</span>
+                <span>{language === 'ko' ? hospital.address_full_jibun : hospital.address_full_jibun_en}</span>
+              </div>
+               */}
+               {/* 구글 별점 통계 표시 */}
+               {googleReviewsData && (
+                <ReviewStats
+                  rating={googleReviewsData.rating}
+                  userRatingCount={googleReviewsData.userRatingCount}
+                  language={language}
+                  size={16}
+                  className="mt-1"
+                />
+              )}
                <div className="flex items-center gap-2 text-xs text-gray-500">
-                <span className="font-bold">Location :</span>
-                <span>{region?.label.en}</span>
+                <span className="font-bold">{language === 'ko' ? '위치' : 'Location'} :</span>
+                <span>{language === 'ko' ? region?.label.ko : region?.label.en}</span>
               </div>   
               <p className="text-sm md:text-base lg:text-lg text-gray-500">
                 

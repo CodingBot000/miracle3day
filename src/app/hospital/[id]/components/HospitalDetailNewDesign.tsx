@@ -105,7 +105,7 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
                   <>
                     <Stars score={googleReviewsData.rating} size={20} />
                     <span className="text-sm text-gray-600">
-                      ({googleReviewsData.userRatingCount}개의 리뷰)
+                      ({googleReviewsData.userRatingCount}  {language === 'ko' ? '개의 리뷰' : 'reviews'} )
                     </span>
                   </>
                 ) : (

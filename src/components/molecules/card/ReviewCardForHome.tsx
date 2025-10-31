@@ -23,11 +23,11 @@ const ReviewCardForHome = ({ review }: ReviewCardForHomeProps) => {
           <div className="font-medium text-sm truncate">
             {review.authorAttribution?.displayName ?? 'Anonymous'}
           </div>
-          {review.publishTime && (
+          {/* {review.publishTime && (
             <div className="text-xs text-gray-500">
               {new Date(review.publishTime).toLocaleDateString()}
             </div>
-          )}
+          )} */}
         </div>
         <div className="flex-shrink-0">
           {typeof review.rating === 'number' ? (

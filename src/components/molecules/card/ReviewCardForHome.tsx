@@ -4,7 +4,7 @@ import { ReviewDataFromGoogleMap } from '@/app/models/reviewData.dto';
 import Stars from '@/components/atoms/Stars';
 
 interface ReviewCardForHomeProps {
-  review: ReviewDataFromGoogleMap;
+  review: ReviewDataFromGoogleMap & { translatedText?: string };
 }
 
 const ReviewCardForHome = ({ review }: ReviewCardForHomeProps) => {
@@ -40,7 +40,7 @@ const ReviewCardForHome = ({ review }: ReviewCardForHomeProps) => {
 
       <div className="flex-1 overflow-hidden mb-3">
         <p className="text-sm text-gray-700 line-clamp-6 md:line-clamp-8 whitespace-pre-wrap">
-          {review.text?.text ?? '(No content)'}
+          {review.translatedText || (review.text?.text ?? '(No content)')}
         </p>
       </div>
 

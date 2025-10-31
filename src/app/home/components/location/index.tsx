@@ -11,13 +11,14 @@ const LocationHospital = async ({ locationNum }: { locationNum?: string }) => {
   return (
     <div className={styles.hospitalCardGridStyle}>
       {data ? (
-        data.map(({ imageurls, name, id_unique, id_uuid }) => (
+        data.map(({ imageurls, name, id_unique, id_uuid, searchkey }) => (
           <article key={id_uuid} className="md:w-full md:px-2">
             <HospitalCard
               alt={name}
               name={name}
               href={ROUTE.HOSPITAL_DETAIL("") + id_uuid}
               src={imageurls[0]}
+              searchKey={searchkey}
               locationNum={locationNum}
             />
           </article>

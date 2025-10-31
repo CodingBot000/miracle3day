@@ -18,7 +18,7 @@ export const ItemList = ({ id }: { id: string }) => {
       {(item) => {
         return (
           <>
-            {item.data.map(({ id_unique, imageurls, name, id_uuid }) => {
+            {item.data.map(({ id_unique, imageurls, name, id_uuid, searchkey }) => {
               return (
                 <HospitalCard
                   key={id_uuid}
@@ -26,6 +26,7 @@ export const ItemList = ({ id }: { id: string }) => {
                   alt={name}
                   name={name}
                   href={ROUTE.HOSPITAL_DETAIL("") + id_uuid}
+                  searchKey={searchkey}
                 />
               );
             })}

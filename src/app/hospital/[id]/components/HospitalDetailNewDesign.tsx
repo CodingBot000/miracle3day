@@ -19,7 +19,7 @@ import TreatmentProductList from "@/components/organism/layout/TreatmentProductL
 import { useTreatmentProducts } from "@/hooks/useTreatmentProducts";
 import ReviewSection from "@/components/template/ReviewSection";
 import { useGooglePlaceReviews } from "@/hooks/useGooglePlaceReviews";
-import Stars from "@/components/atoms/Stars";
+import { ReviewStats } from "@/components/molecules/ReviewStats";
 
 interface HospitalDetailNewDesignProps {
   hospitalData: HospitalDetailMainOutput;
@@ -100,18 +100,13 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
 
             {/* Google 리뷰 평점 통계 */}
             {googleReviewsData && (
-              <div className="flex items-center gap-2 mt-2">
-                {typeof googleReviewsData.rating === 'number' ? (
-                  <>
-                    <Stars score={googleReviewsData.rating} size={20} />
-                    <span className="text-sm text-gray-600">
-                      ({googleReviewsData.userRatingCount}  {language === 'ko' ? '개의 리뷰' : 'reviews'} )
-                    </span>
-                  </>
-                ) : (
-                  <span className="text-sm text-gray-600">평점 정보 없음</span>
-                )}
-              </div>
+              <ReviewStats
+                rating={googleReviewsData.rating}
+                userRatingCount={googleReviewsData.userRatingCount}
+                language={language}
+                size={20}
+                className="mt-2"
+              />
             )}
 
             {hospital_details.introduction_en && (

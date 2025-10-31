@@ -109,6 +109,7 @@ const FavoritePage = () => {
                 name={hospital.name}
                 href={href(hospital.id_unique)}
                 src={hospital.imageurls[0]}
+                searchKey={hospital.searchkey}
               />
             </div>
           ));

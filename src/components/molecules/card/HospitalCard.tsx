@@ -1,20 +1,20 @@
 "use client";
 
 import { findRegionByKey, REGIONS } from "@/constants";
-// import Image from "next/image";;
 import Link from "next/link";
-// import { SmartImage } from "@/components/template/SmartImage";
 import Image from "next/image";
+import { useGooglePlaceReviews } from "@/hooks/useGooglePlaceReviews";
+import { ReviewStats } from "@/components/molecules/ReviewStats";
+import { useCookieLanguage } from "@/hooks/useCookieLanguage";
 
 interface HospitalCardProps {
   src: string;
   alt: string;
-
   onSelect?: (name: string) => void;
-
   name: string;
   href: string;
   locationNum?: string;
+  searchKey?: string | null;
 }
 
 export const HospitalCard = ({
@@ -23,8 +23,10 @@ export const HospitalCard = ({
   name,
   href,
   locationNum,
+  searchKey,
   onSelect,
 }: HospitalCardProps) => {
+  const { language } = useCookieLanguage();
   const locationKey =
     typeof locationNum === "string" && locationNum.length > 0
       ? Number.parseInt(locationNum, 10)
@@ -33,8 +35,10 @@ export const HospitalCard = ({
     typeof locationKey === "number" && Number.isFinite(locationKey)
       ? findRegionByKey(REGIONS, locationKey)
       : undefined;
-        
-  // console.log('HospitalCard src:', src);
+
+  // Google Places 리뷰 가져오기
+  const { data: googleReviewsData } = useGooglePlaceReviews(searchKey || '');
+
   return (
     <article onClick={() => onSelect && onSelect(name)}>
       <Link href={href}>
@@ -43,7 +47,6 @@ export const HospitalCard = ({
             {/* Hospital Image */}
             <div className="relative h-40 md:h-48 rounded-t-xl overflow-hidden flex-shrink-0">
               <Image src={src} alt={alt} fill className="object-cover" />
-
             </div>
 
             {/* Hospital Info */}
@@ -51,12 +54,17 @@ export const HospitalCard = ({
               <h3 className="font-semibold text-gray-900 text-sm md:text-lg mb-1 line-clamp-2">
                 {name}
               </h3>
-              {/* {region?.label?.en && (
-                <p className="text-gray-500 text-xs md:text-sm">
-                  {region.label.en}
 
-                </p>
-              )} */}
+              {/* Google 리뷰 평점 통계 */}
+              {googleReviewsData && (
+                <ReviewStats
+                  rating={googleReviewsData.rating}
+                  userRatingCount={googleReviewsData.userRatingCount}
+                  language={language}
+                  size={16}
+                  className="mt-1"
+                />
+              )}
             </div>
           </div>
         </div>

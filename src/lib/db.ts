@@ -5,13 +5,13 @@ const createPool = () => {
   // Remove surrounding quotes from password if present
   const password = process.env.PGPASSWORD?.replace(/^['"]|['"]$/g, '');
 
-  console.log('[DB] Creating pool with config:');
-  console.log('  Host:', process.env.PGHOST);
-  console.log('  Port:', process.env.PGPORT);
-  console.log('  Database:', process.env.PGDATABASE);
-  console.log('  User:', process.env.PGUSER);
-  console.log('  Password length:', password?.length);
-  console.log('  SSL:', process.env.PGSSL);
+  // console.log('[DB] Creating pool with config:');
+  // console.log('  Host:', process.env.PGHOST);
+  // console.log('  Port:', process.env.PGPORT);
+  // console.log('  Database:', process.env.PGDATABASE);
+  // console.log('  User:', process.env.PGUSER);
+  // console.log('  Password length:', password?.length);
+  // console.log('  SSL:', process.env.PGSSL);
 
   return new Pool({
     host: process.env.PGHOST,

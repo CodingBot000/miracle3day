@@ -63,31 +63,32 @@ export const ChoiceCard = React.forwardRef<HTMLDivElement, ChoiceCardProps>(
         onClick={() => !disabled && onSelect?.()}
         onKeyDown={handleKeyDown}
         data-selected={selected ? '' : undefined}
-          className={cn(
-          // 가득 채우고 세로 패딩만 유지
-          'w-full py-5 px-4 rounded-lg border cursor-pointer transition-all duration-200 bg-white',
-          
-          selected
-            ? 'border-rose-400 shadow-md'
-            : 'border-gray-300 hover:border-rose-300 hover:shadow-md',
+        className={cn(
+          'w-full py-5 px-4 rounded-lg cursor-pointer transition-all duration-200 bg-white',
           disabled && 'opacity-60 cursor-not-allowed',
           className
         )}
-        // className={cn(
-        //   'cursor-pointer transition-all duration-200 rounded-lg border',
-        //   disabled && 'opacity-60 cursor-not-allowed',
-        //   className
-        // )}
-        // style={{
-        //   width: '328px',
-        //   height: '89px',
-        //   padding: '20px 16px',
-        //   borderRadius: '8px',
-        //   borderWidth: '1px',
-        //   borderColor: selected ? '#FB718F' : '#E5E7EB',
-        //   boxShadow: '0px 1px 2px 0px #0000000D',
-        //   backgroundColor: '#FFFFFF'
-        // }}
+        style={{
+          borderWidth: selected ? '2px' : '1px',
+          borderColor: selected ? '#FB718F' : '#E5E7EB',
+          borderStyle: 'solid',
+          ...(selected && {
+            boxShadow: '0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)'
+          }),
+          ...props.style
+        }}
+        onMouseEnter={(e) => {
+          if (!disabled && !selected) {
+            e.currentTarget.style.borderColor = '#FB718F';
+            e.currentTarget.style.boxShadow = '0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)';
+          }
+        }}
+        onMouseLeave={(e) => {
+          if (!disabled && !selected) {
+            e.currentTarget.style.borderColor = '#E5E7EB';
+            e.currentTarget.style.boxShadow = '';
+          }
+        }}
         {...props}
       >
         <div className="flex items-center" style={{ gap: '16px' }}>

@@ -101,15 +101,17 @@ const LayoutHeader = () => {
           <div className="flex items-center gap-2">
             <div className={`flex items-center gap-2 transition-colors duration-300 ${getIconColor()}`}>
               {/* community */}
-              <Link href="/community">
-                <MessageSquareText size={20} />
-              </Link>
+              {!isMobileMode && (
+                <Link href="/community">
+                  <MessageSquareText size={20} />
+                </Link>
+              )}
 
-              <div>
+              {/* <div>
                 <button onClick={() => setShowSearch(true)}>
                   <Search size={20} />
                 </button>
-              </div>
+              </div> */}
               <div>
                 <LanguageSelector iconColor={isTransparentMode && !isScrolled ? 'white' : 'black'} />
               </div>

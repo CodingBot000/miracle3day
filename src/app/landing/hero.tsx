@@ -6,6 +6,7 @@ import React, { useMemo } from "react";
 import { ROUTE } from "@/router";
 import { Button } from "@/components/ui/button";
 import ScrollDevicesIntroduce from "./ScrollDevicesIntroduce";
+import { useCookieLanguage } from "@/hooks/useCookieLanguage";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 12 },
@@ -13,6 +14,7 @@ const fadeUp = {
 };
 
 export default function Hero() {
+  const { language } = useCookieLanguage();
   // 두 줄로 쪼갠 히어로 타이포 (원본 문구를 Tailwind로 표현)
   const heading = useMemo(() => ([
     "Find your perfect",
@@ -52,7 +54,7 @@ export default function Hero() {
             href="https://treatment-estimate-landinng-tan.vercel.app/"
             className="w-full h-12 px-6 flex items-center justify-center rounded-[14px] bg-pink-400 text-white font-medium hover:bg-pink-500 transition-colors duration-200 shadow-sm"
           >
-            Get My Recommendation
+            {language === 'ko' ? '나만의 AI 매칭 시작' : 'Start My AI Beauty Match'}
           </Link>
           {/* <Link
                 href="/hospital"
@@ -73,7 +75,7 @@ export default function Hero() {
             className="w-full h-12 px-6 flex items-center justify-center rounded-[14px] bg-orange-400 text-white font-medium hover:bg-orange-500 transition-colors duration-200 shadow-sm"
           >
               
-                AI Skin Analysis(Camera)
+                {language === 'ko' ? 'AI 피부 분석 (카메라)' : 'AI Skin Analysis (Camera)'}
               
             </Link>
         </div>

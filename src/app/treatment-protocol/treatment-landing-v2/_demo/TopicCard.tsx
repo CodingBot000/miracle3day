@@ -105,6 +105,7 @@ export default function TopicCard({ topic, locale, topicIndex, onAreaClick, onTo
             </div>
           ))}
         </div>
+        
       </div>
 
       {/* Desktop Layout: 가로형 (기존 유지) */}

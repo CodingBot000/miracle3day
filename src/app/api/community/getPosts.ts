@@ -73,11 +73,17 @@ export async function getCommunityPostsDTO(categoryId?: string): Promise<Communi
   }
 }
 
-export async function getCommunityCategories(): Promise<CommunityCategory[]> {
+export async function getCommunityCategories(lang: string = 'ko'): Promise<CommunityCategory[]> {
   try {
     const categories = await q<CommunityCategory>(
       `
-        SELECT id, name, description, order_index, is_active
+        SELECT
+          id,
+          name->'${lang}' as name,
+          description->'${lang}' as description,
+          order_index,
+          is_active,
+          category_type
         FROM ${TABLE_COMMUNITY_CATEGORIES}
         WHERE is_active = true
         ORDER BY order_index ASC

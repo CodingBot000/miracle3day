@@ -22,8 +22,8 @@ import Hero from "../landing/hero";
 import MiddleSection1 from "../landing/MiddleSection1";
 import MiddleSection2 from "../landing/MiddleSection2";
 import MiddleSection3 from "../landing/MiddleSection3";
-import ProtocolPage from "../treatment-landing-v2/protocol/page";
-import TreatmentProtocol from "../treatment-landing-v2/TreatmentProtocol";
+import ProtocolPage from "../treatment-protocol/treatment-landing-v2/protocol/page";
+import TreatmentProtocol from "../treatment-protocol/treatment-landing-v2/TreatmentProtocol";
 import ScrollDevicesIntroduce from "../landing/ScrollDevicesIntroduce";
 import LanguageText from "./LanguageText";
 import TreatmentBasedAgeGuide from "../treatment-based-age-guide/page";
@@ -32,6 +32,7 @@ import QuizPage from "../gamification/quize/page";
 import WhyKoreaButton from "./components/WhyKoreaButton";
 import AgeGuideCTA from "../treatment-based-age-guide/components/AgeGuideCTA";
 import { getLangFromCookies, Lang, t } from "@/i18n/i18n";
+import ReviewScrollSection from "@/app/landing/ReviewScrollSection";
 
 export default async function HomePage() {
   // const bannerItem = await getBannerAPI();
@@ -101,6 +102,8 @@ export default async function HomePage() {
 
         <Beauty />
 
+        {/* Random Reviews Infinite Scroll */}
+        <ReviewScrollSection />
 
           <div className="text-right mt-24 px-4">
               <Link

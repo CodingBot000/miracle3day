@@ -18,8 +18,10 @@ import HospitalYouTubePreview from "./HospitalYouTubePreview";
 import TreatmentProductList from "@/components/organism/layout/TreatmentProductList";
 import { useTreatmentProducts } from "@/hooks/useTreatmentProducts";
 import ReviewSection from "@/components/template/ReviewSection";
-import { useGooglePlaceReviews } from "@/hooks/useGooglePlaceReviews";
-import Stars from "@/components/atoms/Stars";
+import { useHospitalGoogleReviews } from "@/hooks/useHospitalGoogleReviews";
+import { ReviewStats } from "@/components/molecules/ReviewStats";
+import { useTranslatedGoogleReviews, getTargetLanguage } from "@/hooks/useTranslatedGoogleReviews";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface HospitalDetailNewDesignProps {
   hospitalData: HospitalDetailMainOutput;
@@ -33,11 +35,29 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
   console.log('HospitalDetailNewDesign hospitalData:', hospitalData);
   const { hospital_info, hospital_details, doctors, business_hours } = hospitalData;
 
-  // Google Places 리뷰 가져오기
-  const { data: googleReviewsData, isLoading: isLoadingGoogleReviews } = useGooglePlaceReviews(hospital_info.searchkey || '');
+  // Google Places 리뷰 가져오기 (DB 캐시 우선)
+  const { data: googleReviewsData, isLoading: isLoadingGoogleReviews } = useHospitalGoogleReviews(hospital_info.id_uuid);
+
+  // 브라우저 언어로 리뷰 번역
+  const targetLang = getTargetLanguage();
+  const reviews = googleReviewsData?.reviews ?? [];
+
+  const {
+    data: translatedReviews,
+    isLoading: isLoadingTranslation,
+    isFetching: isFetchingTranslation,
+  } = useTranslatedGoogleReviews({
+    hospitalId: hospital_info.id_uuid,
+    targetLang,
+    reviews,
+    enabled: !!googleReviewsData && reviews.length > 0,
+  });
 
   // Treatment Products 가져오기
   const { data: treatmentProducts = [], isLoading: isLoadingProducts } = useTreatmentProducts(hospital_info.id_uuid);
+
+  // 번역 완료 여부 확인
+  const showReviewSkeleton = isLoadingGoogleReviews || isLoadingTranslation || isFetchingTranslation;
 
   const handleBackClick = () => {
     router.back();
@@ -100,18 +120,13 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
 
             {/* Google 리뷰 평점 통계 */}
             {googleReviewsData && (
-              <div className="flex items-center gap-2 mt-2">
-                {typeof googleReviewsData.rating === 'number' ? (
-                  <>
-                    <Stars score={googleReviewsData.rating} size={20} />
-                    <span className="text-sm text-gray-600">
-                      ({googleReviewsData.userRatingCount}  {language === 'ko' ? '개의 리뷰' : 'reviews'} )
-                    </span>
-                  </>
-                ) : (
-                  <span className="text-sm text-gray-600">평점 정보 없음</span>
-                )}
-              </div>
+              <ReviewStats
+                rating={googleReviewsData.rating}
+                userRatingCount={googleReviewsData.userRatingCount}
+                language={language}
+                size={20}
+                className="mt-2"
+              />
             )}
 
             {hospital_details.introduction_en && (
@@ -133,11 +148,35 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
       <h2 className="px-4 py-8 text-lg font-semibold text-black mb-4 leading-[26.6px]">
         Reviews
       </h2>
-      {googleReviewsData?.reviews && googleReviewsData.reviews.length > 0 && (
+
+      {/* 번역 중일 때 Skeleton UI */}
+      {showReviewSkeleton && (
+        <section className="py-8 border-b-8 border-gray-50">
+          <div className="px-4">
+            <div className="space-y-3">
+              <Skeleton className="h-[250px] md:h-[330px] w-[300px] md:w-[400px]" />
+              <Skeleton className="h-[250px] md:h-[330px] w-[300px] md:w-[400px]" />
+              <Skeleton className="h-[250px] md:h-[330px] w-[300px] md:w-[400px]" />
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 번역 완료 후 리뷰 표시 */}
+      {!showReviewSkeleton && translatedReviews && translatedReviews.length > 0 && (
         <ReviewSection
-          reviews={googleReviewsData.reviews}
-          isLoading={isLoadingGoogleReviews}
+          reviews={translatedReviews}
+          isLoading={false}
         />
+      )}
+
+      {/* 리뷰 없음 */}
+      {!showReviewSkeleton && (!translatedReviews || translatedReviews.length === 0) && (
+        <section className="py-8 border-b-8 border-gray-50">
+          <div className="px-4">
+            <div className="text-sm text-gray-600">No reviews yet.</div>
+          </div>
+        </section>
       )}
 
       {/* Hospital Location */}

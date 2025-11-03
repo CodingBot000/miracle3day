@@ -57,7 +57,7 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
     }
 
     if (!file.type.startsWith('image/')) {
-      alert('Please select an image file');
+      toast.success('Please select an image file');
       return;
     }
 

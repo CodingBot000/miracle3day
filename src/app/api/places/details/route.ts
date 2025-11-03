@@ -12,6 +12,10 @@ export async function GET(req: NextRequest) {
     const tlParam = req.nextUrl.searchParams.get('tl');                // 번역 타겟 언어
     const translateFlag = (req.nextUrl.searchParams.get('translate') || 'true') === 'true';
 
+    // 새 옵션: 최소 별점/최소 개수 (기본 4.0점 이상, 최소 3개)
+    const minRating = Number(req.nextUrl.searchParams.get('minRating') ?? 4);
+    const minCount  = Math.max(1, Number(req.nextUrl.searchParams.get('minCount') ?? 3));
+
     if (!placeId) {
       return NextResponse.json({ error: 'placeId is required' }, { status: 400 });
     }
@@ -23,6 +27,7 @@ export async function GET(req: NextRequest) {
     // v1 Details 호출 (reviews 5개 제한)
     const url = new URL(`https://places.googleapis.com/v1/places/${placeId}`);
     url.searchParams.set('languageCode', languageCode);
+    // 주의: reviewsSort는 v1에서 NEWEST만 유효하지만, 환경에 따라 바인딩 오류가 있을 수 있어 수동 정렬로 처리
 
     const r = await fetch(url.toString(), {
       headers: {
@@ -62,6 +67,37 @@ export async function GET(req: NextRequest) {
       const tb = b?.publishTime ? Date.parse(b.publishTime) : 0;
       return tb - ta;
     });
+
+    // ★ 별점 필터: 낮은 별점 배제 (+ 텍스트 없는 리뷰도 배제 추천)
+    reviews = reviews.filter((rv) => {
+      const rating = typeof rv?.rating === 'number' ? rv.rating : 0;
+      const text = rv?.text?.text ?? rv?.originalText?.text ?? '';
+      return rating >= minRating && text.trim().length > 0;
+    });
+
+    // 최대 5개 제한(원 API가 5개까지이므로 체감상 동일) — 필요 없으면 주석 처리
+    reviews = reviews.slice(0, 5);
+
+    // 최소 개수 미만이면 빈 배열 반환(섹션 스킵 용이), 상태 플래그 동봉
+    if (reviews.length < minCount) {
+      return NextResponse.json(
+        {
+          id: data.id ?? null,
+          name: data.displayName?.text ?? null,
+          address: data.formattedAddress ?? null,
+          rating: data.rating ?? null,
+          userRatingCount: data.userRatingCount ?? 0,
+          targetLang,
+          reviews: [],
+          meta: {
+            filteredBy: { minRating, minCount },
+            insufficient: true,
+            availableCount: reviews.length
+          }
+        },
+        { headers: { 'Cache-Control': 'public, max-age=60' } }
+      );
+    }
 
     // 번역 대상 수집 (이미 targetLang인 경우 제외)
     type ItemForTranslation = { idx: number; sourceLang: string; text: string };
@@ -108,7 +144,9 @@ export async function GET(req: NextRequest) {
           null,
         text: {
           text: outText || '',
-          languageCode: translatedMap.has(idx) ? targetLang : (rv?.text?.languageCode || rv?.originalText?.languageCode || null)
+          languageCode: translatedMap.has(idx)
+            ? targetLang
+            : (rv?.text?.languageCode || rv?.originalText?.languageCode || null)
         }
       };
     });
@@ -121,11 +159,14 @@ export async function GET(req: NextRequest) {
         rating: data.rating ?? null,
         userRatingCount: data.userRatingCount ?? 0,
         targetLang,
-        reviews: finalReviews
+        reviews: finalReviews,
+        meta: {
+          filteredBy: { minRating, minCount },
+          insufficient: false,
+          availableCount: finalReviews.length
+        }
       },
-      {
-        headers: { 'Cache-Control': 'public, max-age=60' } // (선택) 60초 캐시
-      }
+      { headers: { 'Cache-Control': 'public, max-age=60' } }
     );
   } catch (e: any) {
     return NextResponse.json({ error: e?.message ?? 'unknown error' }, { status: 500 });

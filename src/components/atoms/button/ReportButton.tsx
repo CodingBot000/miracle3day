@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 interface ReportButtonProps {
   targetType: 'post' | 'comment'
@@ -36,12 +37,12 @@ export default function ReportButton({
         throw new Error(message || 'Failed to submit report');
       }
 
-      alert('Your report has been submitted.');
+      toast.success('Your report has been submitted.');
       setIsReportModalOpen(false);
       setReportReason('');
     } catch (error) {
       console.error('Error reporting:', error);
-      alert('신고 처리 중 오류가 발생했습니다.');
+      toast.success('신고 처리 중 오류가 발생했습니다.');
     } finally {
       setIsSubmitting(false);
     }

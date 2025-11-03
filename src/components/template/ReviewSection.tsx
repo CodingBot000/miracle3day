@@ -36,20 +36,11 @@ const ReviewSection = ({ reviews, isLoading = false }: ReviewSectionProps) => {
       <div className="px-4">
         {/* <h2 className="text-xl font-semibold mb-6">Google Reviews (Max 5)</h2> */}
 
-        <div className="overflow-x-auto md:overflow-visible">
-          <div className="grid grid-cols-2 gap-4 md:hidden">
+        {/* All devices: Horizontal scroll */}
+        <div className="overflow-x-auto -mx-4 px-4">
+          <div className="flex gap-3 md:gap-4 pb-2">
             {reviews.map((review, idx) => (
-              <div key={idx} className="flex justify-center">
-                <ReviewCardForHome review={review} />
-              </div>
-            ))}
-          </div>
-
-          <div className="hidden md:flex md:flex-wrap md:gap-4">
-            {reviews.slice(0, 4).map((review, idx) => (
-              <div key={idx}>
-                <ReviewCardForHome review={review} />
-              </div>
+              <ReviewCardForHome key={idx} review={review} />
             ))}
           </div>
         </div>

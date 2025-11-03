@@ -92,18 +92,18 @@ const HospitalConsultationButton = ({ hospitalId }: HospitalConsultationButtonPr
         </div>
       )}
 
-      <div className="fixed bottom-[200px] right-5 z-40">
-        <div className="flex flex-col gap-3 bg-white/95 backdrop-blur-sm shadow-lg rounded-xl p-4 w-56">
+      <div className="fixed bottom-[100px] right-5 z-40">
+        <div className="flex flex-col gap-1.5 bg-white/95 backdrop-blur-sm shadow-lg rounded-lg p-2 w-28">
           <button
             onClick={handleChatConsultation}
             disabled={isCreatingChat}
-            className="h-12 bg-[#4CAF50] text-white rounded-lg font-semibold text-base leading-[22.4px] hover:bg-[#45a049] transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2 w-full"
+            className="px-2 py-1 bg-[#4CAF50] text-white rounded-md font-medium text-xs leading-tight hover:bg-[#45a049] transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-1 w-full"
           >
             {isCreatingChat ? (
-              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+              <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white"></div>
             ) : (
               <>
-                <MessageCircle size={18} />
+                <MessageCircle size={12} />
                 {language === 'ko' ? labels.ko.chat : labels.en.chat}
               </>
             )}
@@ -112,7 +112,7 @@ const HospitalConsultationButton = ({ hospitalId }: HospitalConsultationButtonPr
           <button
             onClick={handleReservationClick}
             disabled={isCreatingChat}
-            className="h-12 bg-[#FB718F] text-white rounded-lg font-semibold text-base leading-[22.4px] hover:bg-[#f5648a] transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed w-full"
+            className="px-2 py-1 bg-[#FB718F] text-white rounded-md font-medium text-xs leading-tight hover:bg-[#f5648a] transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed w-full"
           >
             {language === 'ko' ? labels.ko.reservation : labels.en.reservation}
           </button>

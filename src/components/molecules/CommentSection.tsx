@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { CommunityComment, Member } from '@/app/models/communityData.dto';
 import CommentItem from './CommentItem';
+import { toast } from 'sonner';
 
 interface CommentSectionProps {
   postId: number
@@ -56,7 +57,7 @@ export default function CommentSection({
       }
     } catch (error) {
       console.error('Error posting comment:', error);
-      alert('An error occurred while posting the comment.');
+      toast.success('An error occurred while posting the comment.');
     } finally {
       setIsSubmitting(false);
     }
@@ -86,7 +87,7 @@ export default function CommentSection({
       setComments(nextComments);
     } catch (error) {
       console.error('Error deleting comment:', error);
-      alert('An error occurred while deleting the comment.');
+      toast.success('An error occurred while deleting the comment.');
     }
   };
 
@@ -130,7 +131,7 @@ export default function CommentSection({
       }
     } catch (error) {
       console.error('Error posting reply:', error);
-      alert('An error occurred while posting the reply.');
+      toast.success('An error occurred while posting the reply.');
     }
   };
 

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { CommunityCategory } from '@/app/models/communityData.dto';
 import { isAnonymousCategoryName } from '@/app/community/utils';
+import { toast } from 'sonner';
 
 interface WriteFormProps {
   authorNameSnapshot?: string | null;
@@ -95,7 +96,7 @@ export default function WriteForm({
       }
     } catch (error) {
       console.error('Error submitting post:', error);
-      alert('글 작성 중 오류가 발생했습니다.');
+      toast.success('글 작성 중 오류가 발생했습니다.');
     } finally {
       setIsSubmitting(false);
     }

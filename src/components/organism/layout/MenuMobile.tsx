@@ -16,6 +16,7 @@ import clsx from "clsx";
 import AuthClient from "@/components/molecules/auth/AuthClient";
 import { useMobileModeStore } from "@/stores/useMobileModeStore";
 import { useEffect } from "react";
+import { usePlatform } from "@/hooks/usePlatform";
 
 const MenuMobile = () => {
   const router = useRouter();
@@ -23,6 +24,7 @@ const MenuMobile = () => {
   const pathname = usePathname();
   const locationNum = searchParams.get("locationNum") || LocationEnum.Apgujung;
   const { setMobileMode } = useMobileModeStore();
+  const { isWebView } = usePlatform();
 
   // 모바일 화면 크기를 감지하여 store 업데이트
   useEffect(() => {
@@ -43,6 +45,11 @@ const MenuMobile = () => {
     if (pathname === targetPath) return;
     router.push(targetPath);
   };
+
+  // 웹뷰(앱)에서는 MenuMobile을 표시하지 않음
+  if (isWebView) {
+    return null;
+  }
 
   return (
     <div

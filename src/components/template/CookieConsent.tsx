@@ -15,6 +15,9 @@ export default function CookieConsent() {
   const locale = language === 'ko' ? 'ko' : 'en';
 
   useEffect(() => {
+    // 플랫폼 감지가 완료될 때까지 대기
+    if (!isClient) return;
+
     // 웹뷰(앱)에서는 쿠키 동의 배너를 표시하지 않음
     if (isWebView) {
       setShow(false);
@@ -23,7 +26,7 @@ export default function CookieConsent() {
 
     const consent = Cookies.get(COOKIE_NAME);
     if (!consent) setShow(true);
-  }, [isWebView]);
+  }, [isWebView, isClient]);
 
   const acceptAllCookies = () => {
     Cookies.set(COOKIE_NAME, 'accepted', {

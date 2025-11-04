@@ -54,7 +54,7 @@ export default async function HomePage() {
       {/* HeroVideos: 모바일은 full-width, 데스크탑은 max-w-[1200px] */}
       <div className="w-full md:max-w-[1200px] md:mx-auto relative z-10">
         <HeroVideos>
-          <div className="absolute inset-0 bg-black/40 z-10"></div>
+          <div className="absolute inset-0 bg-black/15 z-10"></div>
           <div className="absolute inset-0 flex items-end justify-end text-white z-30 pb-6 pr-6 md:pb-12 md:pr-12">
             <div className="text-right">
               <WhyKoreaButton />

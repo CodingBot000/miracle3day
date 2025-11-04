@@ -51,7 +51,7 @@ export default function Hero() {
         {/* CTA buttons */}
         <div className="mt-6 flex flex-col gap-3 w-full max-w-xs mx-auto">
           <Link
-            href="https://treatment-estimate-landinng-tan.vercel.app/"
+            href={ROUTE.RECOMMEND_ESTIMATE}
             className="w-full h-12 px-6 flex items-center justify-center rounded-[14px] bg-pink-400 text-white font-medium hover:bg-pink-500 transition-colors duration-200 shadow-sm"
           >
             {language === 'ko' ? '나만의 AI 매칭 시작' : 'Start My AI Beauty Match'}

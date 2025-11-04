@@ -4,18 +4,26 @@ import { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useCookieLanguage } from '@/hooks/useCookieLanguage';
+import { usePlatform } from '@/hooks/usePlatform';
 
 const COOKIE_NAME = 'cookie_consent';
 
 export default function CookieConsent() {
   const [show, setShow] = useState(false);
   const { language } = useCookieLanguage();
+  const { isWebView, isClient } = usePlatform();
   const locale = language === 'ko' ? 'ko' : 'en';
 
   useEffect(() => {
+    // 웹뷰(앱)에서는 쿠키 동의 배너를 표시하지 않음
+    if (isWebView) {
+      setShow(false);
+      return;
+    }
+
     const consent = Cookies.get(COOKIE_NAME);
     if (!consent) setShow(true);
-  }, []);
+  }, [isWebView]);
 
   const acceptAllCookies = () => {
     Cookies.set(COOKIE_NAME, 'accepted', {

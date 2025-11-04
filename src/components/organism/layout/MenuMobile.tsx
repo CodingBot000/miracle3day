@@ -24,7 +24,7 @@ const MenuMobile = () => {
   const pathname = usePathname();
   const locationNum = searchParams.get("locationNum") || LocationEnum.Apgujung;
   const { setMobileMode } = useMobileModeStore();
-  const { isWebView } = usePlatform();
+  const { isWebView, isClient } = usePlatform();
 
   // 모바일 화면 크기를 감지하여 store 업데이트
   useEffect(() => {
@@ -45,6 +45,11 @@ const MenuMobile = () => {
     if (pathname === targetPath) return;
     router.push(targetPath);
   };
+
+  // 플랫폼 감지가 완료될 때까지 렌더링 지연 (깜빡임 방지)
+  if (!isClient) {
+    return null;
+  }
 
   // 웹뷰(앱)에서는 MenuMobile을 표시하지 않음
   if (isWebView) {

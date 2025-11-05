@@ -6,7 +6,7 @@ import { getHospitalBeautyAPI } from "@/app/api/home/hospital";
 import { HospitalOutputDto } from "@/app/models/hospitalData.dto";
 import { HospitalCard } from "@/components/molecules/card/HospitalCard";
 
-export default function Beauty() {
+export default function ClinicListForHome() {
   const [datas, setDatas] = useState<HospitalOutputDto["data"]>([]);
   const [loading, setLoading] = useState(true);
 

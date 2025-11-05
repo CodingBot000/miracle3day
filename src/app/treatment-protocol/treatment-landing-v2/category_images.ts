@@ -161,4 +161,21 @@ export const CATEGORY_IMAGES = [
       "/landing_model/img10.jpg"
     ]
   ];
-  
+
+// 성형외과 수술용 이미지 배열 (2개 카테고리: facial_surgery, body_surgery)
+export const SURGERY_IMAGES = [
+  // 카테고리 0: facial_surgery (안면 성형)
+  [
+    "/landing_model/model_1.png",
+    "/landing_model/model_2.jpeg",
+    "/landing_model/img1.png",
+    "/landing_model/img2.png",
+  ],
+  // 카테고리 1: body_surgery (신체 성형)
+  [
+    "/landing_model/model_3.jpeg",
+    "/landing_model/model_4.jpeg",
+    "/landing_model/img4.png",
+    "/landing_model/img5.png",
+  ],
+];

@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic";
 
 import { getBannerAPI } from "@/app/api/home/banner";
 
-import Beauty from "./components/beauty";
+import ClinicListForHome from "./components/clinic_list";
 import LocationHospital from "./components/location";
 import { LocationEnum, LOCATIONS, LocationType } from "@/constants";
 import { cookies } from "next/headers";
@@ -18,13 +18,11 @@ import { Smile } from "lucide-react";
 import HeroVideos from "./components/hero/HeroVideos";
 import CategoryMenu from "@/components/organism/layout/CategoryMenu";
 import AgeChecker from "@/components/template/AgeChecker";
-import Hero from "../landing/hero";
-import MiddleSection1 from "../landing/MiddleSection1";
-import MiddleSection2 from "../landing/MiddleSection2";
-import MiddleSection3 from "../landing/MiddleSection3";
+import Hero from "./hero";
+
 import ProtocolPage from "../treatment-protocol/treatment-landing-v2/protocol/page";
 import TreatmentProtocol from "../treatment-protocol/treatment-landing-v2/TreatmentProtocol";
-import ScrollDevicesIntroduce from "../landing/ScrollDevicesIntroduce";
+import ScrollDevicesIntroduce from "./components/ScrollDevicesIntroduce";
 import LanguageText from "./LanguageText";
 import TreatmentBasedAgeGuide from "../treatment-based-age-guide/page";
 import TransparentHeaderWrapper from "@/components/layout/TransparentHeaderWrapper";
@@ -32,7 +30,7 @@ import QuizPage from "../gamification/quize/page";
 import WhyKoreaButton from "./components/WhyKoreaButton";
 import AgeGuideCTA from "../treatment-based-age-guide/components/AgeGuideCTA";
 import { getLangFromCookies, Lang, t } from "@/i18n/i18n";
-import ReviewScrollSection from "@/app/landing/ReviewScrollSection";
+import ReviewScrollSection from "@/app/home/components/ReviewScrollSection";
 
 export default async function HomePage() {
   // const bannerItem = await getBannerAPI();
@@ -100,7 +98,7 @@ export default async function HomePage() {
           </Link>
         </div>
 
-        <Beauty />
+        <ClinicListForHome />
 
         {/* Random Reviews Infinite Scroll */}
         <ReviewScrollSection />

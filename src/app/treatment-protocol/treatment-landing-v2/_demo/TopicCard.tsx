@@ -91,7 +91,7 @@ export default function TopicCard({ topic, locale, topicIndex, onAreaClick, onTo
           />
         </div> */}
 
-        {/* 하단: 5개 이미지 가로 나열 */}
+        {/* 하단: 4개 이미지 가로 나열 */}
         <div className="h-32 flex">
           {topicImages.map((src, index) => (
             <div key={index} className="flex-1 relative">

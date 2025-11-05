@@ -27,6 +27,7 @@ const TABLE_TREATMENT_INFO = "treatment_info";
 const TABLE_TREATMENTS_ROOT = "treatments_root";
 const TABLE_TREATMENTS_ALIAS = "treatments_alias";
 const TABLE_TREATMENT_CARE_PROTOCOLS = "treatment_care_protocols";
+const TABLE_SURGERY_CARE_PROTOCOLS = "surgery_care_protocols";
 const TABLE_TREATMENT_PRODUCT = "treatment_product";
 // const TABLE_HOSPITAL = "hospital_test";
 // const TABLE_DOCTOR = "doctor_test";
@@ -71,6 +72,7 @@ export {
   TABLE_TREATMENTS_ROOT,
   TABLE_TREATMENTS_ALIAS,
   TABLE_TREATMENT_CARE_PROTOCOLS,
+  TABLE_SURGERY_CARE_PROTOCOLS,
   TABLE_TREATMENT_PRODUCT,
   STORAGE_IMAGES,
   STORAGE_HOSPITAL_IMG,

@@ -89,7 +89,7 @@ export default function CookieConsent() {
 
   return (
     <div
-      className="fixed bottom-6 right-6 z-50 max-w-sm w-[90%] sm:w-80 bg-white border border-gray-200 shadow-lg rounded-xl p-4 text-sm text-gray-800 animate-fadeIn"
+      className="fixed bottom-20 right-6 z-50 max-w-sm w-[90%] sm:w-80 bg-white border border-gray-200 shadow-lg rounded-xl p-4 text-sm text-gray-800 animate-fadeIn"
       role="dialog"
       aria-live="polite"
     >

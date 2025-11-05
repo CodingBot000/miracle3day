@@ -118,7 +118,7 @@ export default function RootLayout({
                   </MainContent>
                 </main>
 
-                {/* <CookieConsent /> */}
+                <CookieConsent />
                 <MenuMobile />
                 <Footer />
                 <Toaster richColors position="top-center" duration={1500}/>

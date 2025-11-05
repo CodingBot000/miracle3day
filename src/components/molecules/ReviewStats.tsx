@@ -3,7 +3,7 @@
 import Stars from "@/components/atoms/Stars";
 
 interface ReviewStatsProps {
-  rating?: number | null;
+  rating?: number | string | null;
   userRatingCount?: number;
   language?: 'ko' | 'en';
   size?: number;
@@ -26,21 +26,37 @@ export const ReviewStats = ({
   size = 20,
   className = ''
 }: ReviewStatsProps) => {
-  if (!rating && !userRatingCount) {
+  const rawRating =
+    typeof rating === 'string'
+      ? Number.parseFloat(rating)
+      : typeof rating === 'number'
+        ? rating
+        : null;
+
+  const ratingValue =
+    typeof rawRating === 'number' && Number.isFinite(rawRating)
+      ? rawRating
+      : null;
+
+  if (ratingValue === null && !userRatingCount) {
     return null;
   }
 
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
-      {typeof rating === 'number' ? (
+    <div className={`flex flex-col gap-0.5 sm:gap-1 ${className}`}>
+      {ratingValue !== null ? (
         <>
-          <Stars score={rating} size={size} />
-          <span className="text-sm text-gray-600">
+          <Stars
+            score={ratingValue}
+            size={size}
+            className="origin-left scale-90 sm:scale-100"
+          />
+          <span className="text-xs text-gray-600 sm:text-sm">
             ({userRatingCount} {language === 'ko' ? '개의 리뷰' : 'reviews'})
           </span>
         </>
       ) : (
-        <span className="text-sm text-gray-600">
+        <span className="text-xs text-gray-600 sm:text-sm">
           {language === 'ko' ? '평점 정보 없음' : 'No rating available'}
         </span>
       )}

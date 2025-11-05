@@ -3,12 +3,13 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
-import { useTopicList } from "@/hooks/useTreatmentData";
+import { useTopicList, useSurgeryProtocols } from "@/hooks/useTreatmentData";
 import type { TopicWithAreas, Locale } from "@/app/models/treatmentData.dto";
 import { useCookieLanguage } from "@/hooks/useCookieLanguage";
 import LottieLoading from "@/components/atoms/LottieLoading";
 
 import TopicCard from "./_demo/TopicCard";
+import SurgeryCard from "./_demo/SurgeryCard";
 
 const OutlineButton = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
   <button
@@ -28,12 +29,25 @@ export default function TreatmentProtocol() {
   const { language } = useCookieLanguage();
   const locale = language as Locale;
 
+  // Tab state: 'skin' or 'surgery'
+  const [category, setCategory] = React.useState<'skin' | 'surgery'>('skin');
+
   // Fetch topic list from database using the new API
-  const { data: topicListResponse, isLoading, error } = useTopicList();
+  const { data: topicListResponse, isLoading: topicsLoading, error: topicsError } = useTopicList();
+
+  // Fetch surgery protocols
+  const { data: surgeryResponse, isLoading: surgeryLoading, error: surgeryError } = useSurgeryProtocols();
 
   const topics = React.useMemo(() => {
     return topicListResponse?.data || [];
   }, [topicListResponse]);
+
+  const surgeryCategories = React.useMemo(() => {
+    return surgeryResponse?.categories || [];
+  }, [surgeryResponse]);
+
+  const isLoading = category === 'skin' ? topicsLoading : surgeryLoading;
+  const error = category === 'skin' ? topicsError : surgeryError;
 
   React.useEffect(() => {
     if (topicListResponse) {
@@ -78,15 +92,56 @@ export default function TreatmentProtocol() {
 
   return (
     <div className="py-6 space-y-5 min-h-screen bg-gradient-to-br from-[#FDF5F0] via-white to-[#F8E8E0]">
-          {/* Hero */}
-          <section className="pt-10 pb-2">
+      {/* Hero */}
+      <section className="pt-10 pb-2">
         <div className="text-center">
-          <h1 className="text-2xl md:text-4xl font-bold font-bold tracking-tight text-gray-900">
-          
+          <h1 className="text-2xl md:text-4xl font-bold tracking-tight text-gray-900">
             Premium Beauty Care
           </h1>
-    
         </div>
+      </section>
+
+      {/* Category Tabs */}
+      <section className="flex justify-center gap-4 px-4">
+        <button
+          onClick={() => setCategory('skin')}
+          className={`
+            flex flex-col items-center px-6 py-4 rounded-xl
+            transition-all duration-200 border-2
+            ${category === 'skin'
+              ? 'bg-gradient-to-br from-[#FDF5F0] to-[#F8E8E0] border-[#E8B4A0] shadow-lg scale-105'
+              : 'bg-white border-gray-200 hover:border-gray-300 hover:shadow-md'
+            }
+          `}
+        >
+    
+          <span className="font-bold text-lg">
+            {locale === 'ko' ? '피부과 시술' : 'Skin Treatments'}
+          </span>
+          <span className="text-sm text-gray-600">
+            {locale === 'ko' ? '비수술 케어' : 'Non-surgical Care'}
+          </span>
+        </button>
+
+        <button
+          onClick={() => setCategory('surgery')}
+          className={`
+            flex flex-col items-center px-6 py-4 rounded-xl
+            transition-all duration-200 border-2
+            ${category === 'surgery'
+              ? 'bg-gradient-to-br from-[#F0F5FD] to-[#E0E8F8] border-[#3B82F6] shadow-lg scale-105'
+              : 'bg-white border-gray-200 hover:border-gray-300 hover:shadow-md'
+            }
+          `}
+        >
+    
+          <span className="font-bold text-lg">
+            {locale === 'ko' ? '성형외과 수술' : 'Plastic Surgery'}
+          </span>
+          <span className="text-sm text-gray-600">
+            {locale === 'ko' ? '외과 수술' : 'Surgical Procedures'}
+          </span>
+        </button>
       </section>
       {/* <header className="flex flex-col sm:flex-row sm:items-center gap-3 justify-between">
         <div>
@@ -107,18 +162,34 @@ export default function TreatmentProtocol() {
         locale={locale}
       /> */}
 
-      {/* Topic Cards with Area Buttons */}
+      {/* Content - Conditional Rendering */}
       <div className="space-y-6">
-        {topics.map((topic, index) => (
-          <TopicCard
-            key={topic.topic_id}
-            topic={topic}
-            locale={locale}
-            topicIndex={index}
-            onAreaClick={navigateToProtocol}
-            onTopicClick={navigateToProtocol}
-          />
-        ))}
+        {category === 'skin' && (
+          <>
+            {topics.map((topic) => (
+              <TopicCard
+                key={topic.topic_id}
+                topic={topic}
+                locale={locale}
+                onAreaClick={navigateToProtocol}
+                onTopicClick={navigateToProtocol}
+              />
+            ))}
+          </>
+        )}
+
+        {category === 'surgery' && (
+          <>
+            {surgeryCategories.map((surgeryCategory, index) => (
+              <SurgeryCard
+                key={surgeryCategory.category}
+                data={surgeryCategory}
+                locale={locale}
+                categoryIndex={index}
+              />
+            ))}
+          </>
+        )}
       </div>
 
       {/* 기존 상세 카테고리 섹션 (주석처리) */}

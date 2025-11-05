@@ -27,17 +27,8 @@ type TreatmentRootRow = {
   summary: Record<string, unknown> | null;
   tags: unknown[] | null;
   attributes: Record<string, unknown> | null;
-  pain_level: string | null;
-  pain_score_0_10: number | null;
-  effect_onset_weeks_min: number | null;
-  effect_onset_weeks_max: number | null;
-  duration_months_min: number | null;
-  duration_months_max: number | null;
-  cost_currency: string | null;
-  cost_from: number | null;
-  rec_sessions_min: number | null;
-  rec_sessions_max: number | null;
-  rec_interval_weeks: number | null;
+  created_at: string | null;
+  updated_at: string | null;
   alias_id: string | null;
 };
 
@@ -64,17 +55,8 @@ export async function GET(req: Request) {
           r.summary,
           r.tags,
           r.attributes,
-          r.pain_level,
-          r.pain_score_0_10,
-          r.effect_onset_weeks_min,
-          r.effect_onset_weeks_max,
-          r.duration_months_min,
-          r.duration_months_max,
-          r.cost_currency,
-          r.cost_from,
-          r.rec_sessions_min,
-          r.rec_sessions_max,
-          r.rec_interval_weeks,
+          r.created_at,
+          r.updated_at,
           NULL::text AS alias_id,
           0 AS priority
         FROM requested req
@@ -91,17 +73,8 @@ export async function GET(req: Request) {
           r.summary,
           r.tags,
           r.attributes,
-          r.pain_level,
-          r.pain_score_0_10,
-          r.effect_onset_weeks_min,
-          r.effect_onset_weeks_max,
-          r.duration_months_min,
-          r.duration_months_max,
-          r.cost_currency,
-          r.cost_from,
-          r.rec_sessions_min,
-          r.rec_sessions_max,
-          r.rec_interval_weeks,
+          r.created_at,
+          r.updated_at,
           req.requested_id AS alias_id,
           1 AS priority
         FROM requested req
@@ -117,17 +90,8 @@ export async function GET(req: Request) {
         summary,
         tags,
         attributes,
-        pain_level,
-        pain_score_0_10,
-        effect_onset_weeks_min,
-        effect_onset_weeks_max,
-        duration_months_min,
-        duration_months_max,
-        cost_currency,
-        cost_from,
-        rec_sessions_min,
-        rec_sessions_max,
-        rec_interval_weeks,
+        created_at,
+        updated_at,
         alias_id
       FROM (
         SELECT *,

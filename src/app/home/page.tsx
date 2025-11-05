@@ -1,30 +1,26 @@
 export const dynamic = "force-dynamic";
 
-import { getBannerAPI } from "@/app/api/home/banner";
 
-import Beauty from "./components/beauty";
-import LocationHospital from "./components/location";
+import ClinicListForHome from "./components/clinic_list";
 import { LocationEnum, LOCATIONS, LocationType } from "@/constants";
 import { cookies } from "next/headers";
-import LocationChipSelector from "./LocationChipSelector";
+
 import Link from "next/link";
 import { ROUTE } from "@/router";
 import Image from "next/image";;
 import SeeAllLink from "./SeeAllLink";
-import LocationHospitalClient from "./components/LocationHospitalClient";
+import LocationHospitalClient from "../deprecated/LocationHospitalClient";
 import DiagnosticIntro from "./components/DiagnosticIntro";
 import RecommendEventList from "./components/recommend";
 import { Smile } from "lucide-react";
 import HeroVideos from "./components/hero/HeroVideos";
 import CategoryMenu from "@/components/organism/layout/CategoryMenu";
 import AgeChecker from "@/components/template/AgeChecker";
-import Hero from "../landing/hero";
-import MiddleSection1 from "../landing/MiddleSection1";
-import MiddleSection2 from "../landing/MiddleSection2";
-import MiddleSection3 from "../landing/MiddleSection3";
+import Hero from "./hero";
+
 import ProtocolPage from "../treatment-protocol/treatment-landing-v2/protocol/page";
 import TreatmentProtocol from "../treatment-protocol/treatment-landing-v2/TreatmentProtocol";
-import ScrollDevicesIntroduce from "../landing/ScrollDevicesIntroduce";
+import ScrollDevicesIntroduce from "./components/ScrollDevicesIntroduce";
 import LanguageText from "./LanguageText";
 import TreatmentBasedAgeGuide from "../treatment-based-age-guide/page";
 import TransparentHeaderWrapper from "@/components/layout/TransparentHeaderWrapper";
@@ -32,7 +28,7 @@ import QuizPage from "../gamification/quize/page";
 import WhyKoreaButton from "./components/WhyKoreaButton";
 import AgeGuideCTA from "../treatment-based-age-guide/components/AgeGuideCTA";
 import { getLangFromCookies, Lang, t } from "@/i18n/i18n";
-import ReviewScrollSection from "@/app/landing/ReviewScrollSection";
+import ReviewScrollSection from "@/app/home/components/ReviewScrollSection";
 
 export default async function HomePage() {
   // const bannerItem = await getBannerAPI();
@@ -100,29 +96,27 @@ export default async function HomePage() {
           </Link>
         </div>
 
-        <Beauty />
+        <ClinicListForHome />
 
         {/* Random Reviews Infinite Scroll */}
         <ReviewScrollSection />
 
-          <div className="text-right mt-24 px-4">
-              <Link
-                href="/treatments_info"
-                className="inline-flex items-center gap-1 text-gray-400 hover:text-gray-900 transition-colors text-xl font-medium mb-4"
-              >
-                {/* <LanguageText /> */}
-                {t(lang, "아름다움의 파트너들", "Your Beauty Partners")}
+          {/* <div className="text-right mt-24 px-4">
+            <Link
+              href="/treatments_info"
+              className="inline-flex items-center gap-1 text-gray-400 hover:text-gray-900 transition-colors text-xl font-medium mb-4"
+            >
+        
+              {t(lang, "아름다움의 파트너들", "Your Beauty Partners")}
 
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </Link>
-            </div>
-
-              {/* Horizontal ticker (marquee) */}
-              <div className="w-full flex justify-center">
-                <ScrollDevicesIntroduce />
-              </div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </Link>
+          </div>
+          <div className="w-full flex justify-center">
+            <ScrollDevicesIntroduce />
+          </div> */}
 
 
           <section className="max-w-container mx-auto mt-20">
@@ -147,9 +141,7 @@ export default async function HomePage() {
         </section>
         {/* <TreatmentBasedAgeGuide /> */}
         <AgeGuideCTA />
-          {/* <MiddleSection2 /> */}
-          {/* <MiddleSection3 /> */}
-
+   
       {/* <section className="max-w-container mx-auto mt-20">
             <div className="my-8 px-4 md:px-6 lg:px-8">
 
@@ -180,17 +172,6 @@ export default async function HomePage() {
       </section> */}
 
 
-
-      {/* <section className="max-w-container mx-auto mt-20">
-        <div className="my-8 leading-6 pl-4 md:pl-6 lg:pl-8">
-          <p className="font-bold text-[1.5rem] mb-[5px]">Hospitals</p>
-          <p className="text-[1.0rem]">Choose the location u want</p>
-        </div>
-        <LocationChipSelector />
-        <SeeAllLink location={selectedLocation ?? LocationEnum.Apgujung} />
-
-        <LocationHospitalClient />
-      </section> */}
       </div>
     </TransparentHeaderWrapper>
   );

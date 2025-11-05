@@ -5,7 +5,7 @@ import Link from "next/link";
 import React, { useMemo } from "react";
 import { ROUTE } from "@/router";
 import { Button } from "@/components/ui/button";
-import ScrollDevicesIntroduce from "./ScrollDevicesIntroduce";
+import ScrollDevicesIntroduce from "./components/ScrollDevicesIntroduce";
 import { useCookieLanguage } from "@/hooks/useCookieLanguage";
 
 const fadeUp = {

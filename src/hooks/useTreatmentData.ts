@@ -1,11 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import { treatmentService } from '@/services/treatmentService';
-import { 
+import {
   GetTreatmentCareProtocolsParams,
   TreatmentCategoryResponse,
   TopicListResponse,
   TopicDetailResponse
 } from '@/app/models/treatmentData.dto';
+import type { SurgeryProtocolsResponse, SurgeryProtocol } from '@/app/models/surgeryData.dto';
 
 export const useTreatmentCareProtocols = (params?: GetTreatmentCareProtocolsParams) => {
   return useQuery({
@@ -46,6 +47,60 @@ export const useTopicDetail = (topic_id: string, area_id: string) => {
     queryKey: ['topic-detail', topic_id, area_id],
     queryFn: (): Promise<TopicDetailResponse> => treatmentService.getTopicDetail(topic_id, area_id),
     enabled: !!topic_id && !!area_id,
+    staleTime: 5 * 60 * 1000,
+  });
+};
+
+// Surgery hooks
+export const useSurgeryProtocols = () => {
+  return useQuery({
+    queryKey: ['surgery-protocols'],
+    queryFn: async (): Promise<SurgeryProtocolsResponse> => {
+      const baseUrl =
+        typeof window === "undefined"
+          ? process.env.NEXT_PUBLIC_API_ROUTE
+          : window.location.origin;
+      const url = `${baseUrl}/api/surgery_care_protocols`;
+
+      const response = await fetch(url, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        cache: "no-store",
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch surgery protocols: ${response.statusText}`);
+      }
+
+      return response.json();
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+};
+
+export const useSurgeryDetail = (id: string) => {
+  return useQuery({
+    queryKey: ['surgery-detail', id],
+    queryFn: async (): Promise<SurgeryProtocol> => {
+      const baseUrl =
+        typeof window === "undefined"
+          ? process.env.NEXT_PUBLIC_API_ROUTE
+          : window.location.origin;
+      const url = `${baseUrl}/api/surgery_care_protocols/${id}`;
+
+      const response = await fetch(url, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        cache: "no-store",
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch surgery detail: ${response.statusText}`);
+      }
+
+      return response.json();
+    },
+    enabled: !!id,
     staleTime: 5 * 60 * 1000,
   });
 };

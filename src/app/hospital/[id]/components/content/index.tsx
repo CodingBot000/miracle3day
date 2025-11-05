@@ -2,14 +2,14 @@
 
 import { useRef, useState } from "react";
 import dynamic from "next/dynamic";
-import HospitalDetailPageTab from "../tab/HospitalDetailPageTab";
+
 import { HospitalDetailMainOutput } from "@/app/api/hospital/[id]/main/main.dto";
 import ReservationCalendarClient from "./ReservationCalendarClient";
 import { ROUTE } from "@/router";
 import { useRouter } from "next/navigation";
 import { useReservationStore } from "@/stores/useReservationStore";
 
-const InfoTab = dynamic(() => import("./info"));
+
 // const EventTab = dynamic(() => import("./event"));
 const EventTab = dynamic(() => import("./HospitalEventWrapper"));
 const ReviewTab = dynamic(() => import("./ReviewWrapper"));
@@ -51,16 +51,13 @@ export default function HospitalDetailContent({ hospitalData } : DetailPageTabPr
   return (
     <>
         {/* /* PageHeader의 실제 높이 : min-height: 55px padding: 12px 24px (상하 12px) */ }
-        <div className="sticky top-[4.9375rem] z-[11] bg-white">
-          <HospitalDetailPageTab tabRefs={tabRefs} />
-        </div>
+
         <div className="mt-12" ref={tabRefs.event}><EventTab id={id_uuid_hospital} /></div>
         <div className="mt-12" ref={tabRefs.review}><ReviewTab id={id_uuid_hospital} /></div>
         <div className="mt-12" ref={tabRefs.review}>
           <ReservationCalendarClient id={id_uuid_hospital} onReservation={handleReservation} />
         </div>
-        <div className="mt-12" ref={tabRefs.info}><InfoTab hospitalData={hospitalData} /></div>
-
+  
         {/* 하단 예약 정보 바 */}
         <div
           className={`fixed left-0 right-0 bottom-0 z-[10000] flex justify-center pointer-events-none select-none

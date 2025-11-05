@@ -188,8 +188,8 @@ export default function TermsClient({ initialProvider }: TermsClientProps) {
       if (!sessionSaved) {
         throw new Error('세션 저장이 완료되지 않았습니다.');
       }
-
-      router.replace('/onboarding/complete-profile');
+      
+      router.replace('/auth/login/onboarding/complete-profile');
     } catch (error) {
       console.error('Failed to save terms agreement', error);
       setSubmissionError('can not save terms agreement. try again please.');

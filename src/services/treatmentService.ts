@@ -282,17 +282,8 @@ class TreatmentService {
           summary: (isRecord(item.summary) ? item.summary : {}) as Record<string, string>,
           tags: ensureArray<string>(item.tags),
           attributes,
-          pain_level: item.pain_level ?? undefined,
-          pain_score_0_10: item.pain_score_0_10 ?? undefined,
-          effect_onset_weeks_min: item.effect_onset_weeks_min ?? undefined,
-          effect_onset_weeks_max: item.effect_onset_weeks_max ?? undefined,
-          duration_months_min: item.duration_months_min ?? undefined,
-          duration_months_max: item.duration_months_max ?? undefined,
-          cost_currency: item.cost_currency ?? undefined,
-          cost_from: item.cost_from != null ? Number(item.cost_from) : undefined,
-          rec_sessions_min: item.rec_sessions_min ?? undefined,
-          rec_sessions_max: item.rec_sessions_max ?? undefined,
-          rec_interval_weeks: item.rec_interval_weeks ?? undefined,
+          created_at: item.created_at ?? undefined,
+          updated_at: item.updated_at ?? undefined,
         };
 
         map.set(item.id, treatment);

@@ -102,39 +102,43 @@ const TreatmentProductList = ({ products }: TreatmentProductListProps) => {
           <div className="space-y-8">
             {groupedProducts.map((deptGroup, deptIndex) => (
               <div key={deptIndex} className="space-y-6">
-            {/* Department Title */}
-            <div className="border-b border-gray-300 pb-2">
-              <h3 className="text-xl font-bold text-gray-900">
-                {deptGroup.department.toUpperCase()}
-              </h3>
-            </div>
 
             {/* Groups within department (grouped by level1) */}
-            {deptGroup.groups.map((group, groupIndex) => {
-              const level1Text = language === 'ko' ? group.groupTitle.ko : group.groupTitle.en;
+            <div className="w-full md:max-w-[700px] md:mx-auto space-y-6">
+                {/* Department Title */}
+              <div className="border-b border-gray-300 pb-2">
+                <h3 className="text-xl font-bold text-gray-900">
+                  {deptGroup.department.toUpperCase()}
+                </h3>
+              </div>
 
-              return (
-                <div key={groupIndex} className="space-y-2">
-                  {/* Level1 Title */}
-                  <div className="flex items-center gap-2">
-                    <Sparkles className="w-5 h-5 text-blue-500 flex-shrink-0" />
-                    <h4 className="text-base md:text-lg font-bold text-gray-800">
-                      {level1Text || '-'}
-                    </h4>
-                  </div>
 
-                  {/* Products in this level1 group (showing name) */}
-                  <div className="space-y-1">
-                    {group.items.map((product) => (
-                      <TreatmentProductCard
-                        key={product.id}
-                        product={product}
-                      />
-                    ))}
+              {deptGroup.groups.map((group, groupIndex) => {
+                const level1Text = language === 'ko' ? group.groupTitle.ko : group.groupTitle.en;
+
+                return (
+                  <div key={groupIndex} className="space-y-2">
+                    {/* Level1 Title */}
+                    <div className="flex items-center gap-2">
+                      <Sparkles className="w-5 h-5 text-blue-500 flex-shrink-0" />
+                      <h4 className="text-base md:text-lg font-bold text-gray-800">
+                        {level1Text || '-'}
+                      </h4>
+                    </div>
+
+                    {/* Products in this level1 group (showing name) */}
+                    <div className="space-y-1">
+                      {group.items.map((product) => (
+                        <TreatmentProductCard
+                          key={product.id}
+                          product={product}
+                        />
+                      ))}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
               </div>
             ))}
           </div>

@@ -2,6 +2,7 @@
 
 import { TreatmentProductData } from "@/app/models/treatmentProduct.dto";
 import { useCookieLanguage } from "@/hooks/useCookieLanguage";
+import { getKRWToUSD } from "@/app/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/utils/helpers";
 
 interface TreatmentProductCardProps {
   product: TreatmentProductData;
@@ -13,8 +14,10 @@ const TreatmentProductCard = ({ product }: TreatmentProductCardProps) => {
   const nameText = language === 'ko' ? product.name.ko : product.name.en;
   const unitText = language === 'ko' ? product.unit.ko : product.unit.en;
 
-  // Format price with comma separator
-  const formattedPrice = product.price.toLocaleString('ko-KR');
+  // Format price based on language
+  const formattedPrice = language === 'ko'
+    ? product.price.toLocaleString('ko-KR')
+    : Math.round(product.price * getKRWToUSD()).toLocaleString('en-US');
 
   // Show option_value and unit only if option_value exists
   const hasOptionValue = product.option_value && product.option_value.trim() !== '';
@@ -38,7 +41,7 @@ const TreatmentProductCard = ({ product }: TreatmentProductCardProps) => {
             </p>
           )}
           <p className="text-sm font-bold text-gray-900">
-            ₩{formattedPrice}
+            {language === 'ko' ? '₩' : '$'} {formattedPrice}
           </p>
         </div>
       </div>

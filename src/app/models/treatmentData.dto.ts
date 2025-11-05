@@ -128,21 +128,10 @@ export interface TreatmentRoot {
   en: string;
   group_id: string;
   summary: Record<string, string>;
-  tags: string[];
+  tags?: string[];
   attributes: TreatmentAttributes;
-  
-  // Generated columns
-  pain_level?: string;
-  pain_score_0_10?: number;
-  effect_onset_weeks_min?: number;
-  effect_onset_weeks_max?: number;
-  duration_months_min?: number;
-  duration_months_max?: number;
-  cost_currency?: string;
-  cost_from?: number;
-  rec_sessions_min?: number;
-  rec_sessions_max?: number;
-  rec_interval_weeks?: number;
+  created_at?: Date | string;
+  updated_at?: Date | string;
 }
 
 export interface TreatmentAlias {

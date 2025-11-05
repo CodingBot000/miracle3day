@@ -43,14 +43,14 @@ export const HospitalCard = ({
     <article onClick={() => onSelect && onSelect(name)}>
       <Link href={href}>
         <div className="w-full">
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 h-[250px] md:h-[330px] transition-all duration-250 hover:shadow-md flex flex-col">
-            {/* Hospital Image */}
-            <div className="relative h-40 md:h-48 rounded-t-xl overflow-hidden flex-shrink-0">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-100 transition-all duration-250 hover:shadow-md flex flex-col">
+            {/* Hospital Image - maintains aspect ratio */}
+            <div className="relative w-full aspect-[4/3] rounded-t-xl overflow-hidden">
               <Image src={src} alt={alt} fill className="object-cover" />
             </div>
 
             {/* Hospital Info */}
-            <div className="p-3 md:p-4 flex-grow flex flex-col justify-start">
+            <div className="p-3 md:p-4 flex flex-col justify-start min-h-[100px] md:min-h-[120px]">
               <h3 className="font-semibold text-gray-900 text-sm md:text-lg mb-1 line-clamp-2">
                 {name}
               </h3>

@@ -166,12 +166,11 @@ export default function TreatmentProtocol() {
       <div className="space-y-6">
         {category === 'skin' && (
           <>
-            {topics.map((topic, index) => (
+            {topics.map((topic) => (
               <TopicCard
                 key={topic.topic_id}
                 topic={topic}
                 locale={locale}
-                topicIndex={index}
                 onAreaClick={navigateToProtocol}
                 onTopicClick={navigateToProtocol}
               />

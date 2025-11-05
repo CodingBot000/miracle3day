@@ -1,17 +1,15 @@
 export const dynamic = "force-dynamic";
 
-import { getBannerAPI } from "@/app/api/home/banner";
 
 import ClinicListForHome from "./components/clinic_list";
-import LocationHospital from "./components/location";
 import { LocationEnum, LOCATIONS, LocationType } from "@/constants";
 import { cookies } from "next/headers";
-import LocationChipSelector from "./LocationChipSelector";
+
 import Link from "next/link";
 import { ROUTE } from "@/router";
 import Image from "next/image";;
 import SeeAllLink from "./SeeAllLink";
-import LocationHospitalClient from "./components/LocationHospitalClient";
+import LocationHospitalClient from "../deprecated/LocationHospitalClient";
 import DiagnosticIntro from "./components/DiagnosticIntro";
 import RecommendEventList from "./components/recommend";
 import { Smile } from "lucide-react";
@@ -103,24 +101,22 @@ export default async function HomePage() {
         {/* Random Reviews Infinite Scroll */}
         <ReviewScrollSection />
 
-          <div className="text-right mt-24 px-4">
-              <Link
-                href="/treatments_info"
-                className="inline-flex items-center gap-1 text-gray-400 hover:text-gray-900 transition-colors text-xl font-medium mb-4"
-              >
-                {/* <LanguageText /> */}
-                {t(lang, "아름다움의 파트너들", "Your Beauty Partners")}
+          {/* <div className="text-right mt-24 px-4">
+            <Link
+              href="/treatments_info"
+              className="inline-flex items-center gap-1 text-gray-400 hover:text-gray-900 transition-colors text-xl font-medium mb-4"
+            >
+        
+              {t(lang, "아름다움의 파트너들", "Your Beauty Partners")}
 
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </Link>
-            </div>
-
-              {/* Horizontal ticker (marquee) */}
-              <div className="w-full flex justify-center">
-                <ScrollDevicesIntroduce />
-              </div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </Link>
+          </div>
+          <div className="w-full flex justify-center">
+            <ScrollDevicesIntroduce />
+          </div> */}
 
 
           <section className="max-w-container mx-auto mt-20">
@@ -145,9 +141,7 @@ export default async function HomePage() {
         </section>
         {/* <TreatmentBasedAgeGuide /> */}
         <AgeGuideCTA />
-          {/* <MiddleSection2 /> */}
-          {/* <MiddleSection3 /> */}
-
+   
       {/* <section className="max-w-container mx-auto mt-20">
             <div className="my-8 px-4 md:px-6 lg:px-8">
 
@@ -178,17 +172,6 @@ export default async function HomePage() {
       </section> */}
 
 
-
-      {/* <section className="max-w-container mx-auto mt-20">
-        <div className="my-8 leading-6 pl-4 md:pl-6 lg:pl-8">
-          <p className="font-bold text-[1.5rem] mb-[5px]">Hospitals</p>
-          <p className="text-[1.0rem]">Choose the location u want</p>
-        </div>
-        <LocationChipSelector />
-        <SeeAllLink location={selectedLocation ?? LocationEnum.Apgujung} />
-
-        <LocationHospitalClient />
-      </section> */}
       </div>
     </TransparentHeaderWrapper>
   );

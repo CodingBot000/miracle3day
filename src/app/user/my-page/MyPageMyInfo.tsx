@@ -32,7 +32,7 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
   }, []);
   const handleProfileNavigation = () => {
     if (user?.userInfo?.uuid) {
-      router.push(`/onboarding/complete-profile?code=${user.userInfo.uuid}&returnUrl=/user/my-page`);
+      router.push(`/auth/login/onboarding/complete-profile?code=${user.userInfo.uuid}&returnUrl=/user/my-page`);
     }
   };
 

@@ -7,18 +7,17 @@ import { TOPIC_IMAGES } from "../category_images";
 interface TopicCardProps {
   topic: TopicWithAreas;
   locale: Locale;
-  topicIndex: number;
   onAreaClick: (topic_id: string, area_id: string) => void;
   onTopicClick?: (topic_id: string, area_id: string) => void;
 }
 
 
-export default function TopicCard({ topic, locale, topicIndex, onAreaClick, onTopicClick }: TopicCardProps) {
+export default function TopicCard({ topic, locale, onAreaClick, onTopicClick }: TopicCardProps) {
   const title = locale === 'ko' ? topic.topic_title_ko : topic.topic_title_en;
   const concernCopy = locale === 'ko' ? topic.concern_copy_ko : topic.concern_copy_en;
 
-  // 해당 토픽에 할당된 이미지 배열 가져오기
-  const topicImages = TOPIC_IMAGES[topicIndex] || TOPIC_IMAGES[0];
+  // 해당 토픽에 할당된 이미지 배열 가져오기 (topic_id로 매칭)
+  const topicImages = TOPIC_IMAGES[topic.topic_id] || TOPIC_IMAGES['lifting_firming'];
 
   // 첫 번째 area_id 가져오기
   const firstAreaId = topic.areas.length > 0 ? topic.areas[0].area_id : '';

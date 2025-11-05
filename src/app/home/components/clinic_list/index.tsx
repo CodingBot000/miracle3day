@@ -33,7 +33,7 @@ export default function ClinicListForHome() {
 
   if (loading) {
     return (
-      <div className="grid grid-cols-2 gap-4 px-4 py-10 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-4 px-4 py-10 xl:grid-cols-4">
         {Array.from({ length: 4 }).map((_, index) => (
           <div
             key={index}
@@ -51,22 +51,23 @@ export default function ClinicListForHome() {
 
   return (
     <div className="w-full px-4">
-      {/* Desktop: 4 columns, Mobile: 2x2 grid */}
-      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        {clinics.map(({ thumbnail_url, imageurls, name_en, id_uuid, location, searchkey }) => {
-          const hasValidImage =
-            Array.isArray(imageurls) &&
-            imageurls.length > 0 &&
-            typeof imageurls[0] === "string" &&
-            imageurls[0].length > 0;
+      {/* Desktop: 4 columns (xl: 1280px+), Mobile: 2x2 grid with max 480px container */}
+      <div className="w-full max-w-[480px] xl:max-w-none mx-auto">
+        <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
+          {clinics.map(({ thumbnail_url, imageurls, name_en, id_uuid, location, searchkey }) => {
+            const hasValidImage =
+              Array.isArray(imageurls) &&
+              imageurls.length > 0 &&
+              typeof imageurls[0] === "string" &&
+              imageurls[0].length > 0;
 
-          const imageSrc = hasValidImage
-            ? imageurls[0]
-            : "/hospital/hospitalimg/hospital_default.png";
+            const imageSrc = hasValidImage
+              ? imageurls[0]
+              : "/hospital/hospitalimg/hospital_default.png";
 
-          return (
-            <article key={id_uuid} className="w-full">
-              <HospitalCard
+            return (
+              <article key={id_uuid} className="w-full">
+                <HospitalCard
                 alt={name_en}
                 name={name_en}
                 href={ROUTE.HOSPITAL_DETAIL("") + id_uuid}
@@ -83,6 +84,7 @@ export default function ClinicListForHome() {
             </article>
           );
         })}
+        </div>
       </div>
     </div>
   );

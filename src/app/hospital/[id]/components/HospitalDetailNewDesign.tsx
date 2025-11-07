@@ -22,6 +22,7 @@ import { useHospitalGoogleReviews } from "@/hooks/useHospitalGoogleReviews";
 import { ReviewStats } from "@/components/molecules/ReviewStats";
 import { useTranslatedGoogleReviews, getTargetLanguage } from "@/hooks/useTranslatedGoogleReviews";
 import { Skeleton } from "@/components/ui/skeleton";
+import InstagramFeed from "@/components/organism/sns/InstagramFeed";
 
 interface HospitalDetailNewDesignProps {
   hospitalData: HospitalDetailMainOutput;
@@ -190,6 +191,8 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
               {hospital_details.youtube && (
               <HospitalYouTubePreview youtube={hospital_details.youtube} />
               )}
+
+      {/* <InstagramFeed feedId="bccc1448-efd4-4895-af05-a47a57c4531d" /> */}
 
       {/* Treatment Products */}
       {!isLoadingProducts && treatmentProducts.length > 0 && (

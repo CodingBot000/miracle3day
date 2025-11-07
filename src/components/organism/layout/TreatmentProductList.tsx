@@ -118,7 +118,11 @@ const TreatmentProductList = ({ products }: TreatmentProductListProps) => {
             )}
           </button>
         </div>
-
+        <div className="mx-4 md:mx-auto md:max-w-[700px] p-3 bg-amber-50 border border-amber-200 rounded-lg">
+          <p className="text-sm text-amber-800 font-medium">
+            ⚠️ {language === 'ko' ? "표기된 가격은 참고용이며 실제 가격과 차이가 있을 수 있습니다. 정확한건 상담을 통해 확인해주세요." : "The prices shown are for reference only and may differ from the actual prices. Please confirm the exact prices through a consultation."}
+          </p>
+        </div>
         {/* Preview Mode (Collapsed) - Show only department and level1 titles */}
         {!isExpanded && (
           <div className="w-full md:max-w-[700px] md:mx-auto space-y-6">

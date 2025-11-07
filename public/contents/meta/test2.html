@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instagram oEmbed Test</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    
+    .input-group {
+      margin-bottom: 20px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #555;
+    }
+    
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    
+    input:focus {
+      outline: none;
+      border-color: #0095f6;
+    }
+    
+    button {
+      width: 100%;
+      padding: 14px;
+      background: #0095f6;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    
+    button:hover {
+      background: #0077cc;
+    }
+    
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    
+    #result {
+      margin-top: 30px;
+      padding: 20px;
+      background: #f9f9f9;
+      border-radius: 8px;
+      min-height: 100px;
+    }
+    
+    #preview {
+      margin-top: 30px;
+    }
+    
+    .error {
+      color: #e74c3c;
+      padding: 15px;
+      background: #ffe6e6;
+      border-radius: 8px;
+      margin-top: 15px;
+    }
+    
+    .success {
+      color: #27ae60;
+      padding: 15px;
+      background: #e6f9e6;
+      border-radius: 8px;
+      margin-top: 15px;
+    }
+    
+    .loading {
+      text-align: center;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📸 Instagram oEmbed API Test</h1>
+    
+    <div class="input-group">
+      <label for="accessToken">Access Token:</label>
+      <input 
+        type="text" 
+        id="accessToken" 
+        placeholder="여기에 Access Token 붙여넣기 (EAAGm7...)"
+      >
+    </div>
+    
+    <div class="input-group">
+      <label for="instagramUrl">Instagram URL:</label>
+      <input 
+        type="text" 
+        id="instagramUrl" 
+        value="https://instagram.com/p/DQwjPwbk4uP"
+      >
+    </div>
+    
+    <button id="testBtn" onclick="testOEmbed()">
+      테스트 실행
+    </button>
+    
+    <div id="result"></div>
+    <div id="preview"></div>
+  </div>
+
+  <script>
+    async function testOEmbed() {
+      const accessToken = document.getElementById('accessToken').value.trim();
+      const instagramUrl = document.getElementById('instagramUrl').value.trim();
+      const resultDiv = document.getElementById('result');
+      const previewDiv = document.getElementById('preview');
+      const btn = document.getElementById('testBtn');
+      
+      // 초기화
+      resultDiv.innerHTML = '';
+      previewDiv.innerHTML = '';
+      
+      // 유효성 검사
+      if (!accessToken) {
+        resultDiv.innerHTML = '<div class="error">❌ Access Token을 입력해주세요!</div>';
+        return;
+      }
+      
+      if (!instagramUrl) {
+        resultDiv.innerHTML = '<div class="error">❌ Instagram URL을 입력해주세요!</div>';
+        return;
+      }
+      
+      // 로딩 시작
+      btn.disabled = true;
+      btn.textContent = '로딩 중...';
+      resultDiv.innerHTML = '<div class="loading">⏳ API 호출 중...</div>';
+      
+      try {
+        // API 호출
+        const apiUrl = `https://graph.facebook.com/v18.0/instagram_oembed?url=${encodeURIComponent(instagramUrl)}&access_token=${accessToken}`;
+        
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        
+        // 에러 체크
+        if (data.error) {
+          resultDiv.innerHTML = `
+            <div class="error">
+              <strong>❌ API 에러:</strong><br>
+              ${data.error.message}<br>
+              <small>Code: ${data.error.code}</small>
+            </div>
+          `;
+          return;
+        }
+        
+        // 성공
+        resultDiv.innerHTML = `
+          <div class="success">
+            ✅ 성공! oEmbed 데이터를 가져왔습니다.
+          </div>
+          <div style="margin-top: 15px; font-size: 12px; color: #666;">
+            <strong>응답 데이터:</strong>
+            <pre style="background: #f0f0f0; padding: 10px; border-radius: 4px; overflow-x: auto;">${JSON.stringify(data, null, 2)}</pre>
+          </div>
+        `;
+        
+        // Instagram 게시물 프리뷰 표시
+        if (data.html) {
+          previewDiv.innerHTML = data.html;
+          
+          // Instagram embed.js 로드 (이미 로드된 경우를 위해 체크)
+          if (window.instgrm) {
+            window.instgrm.Embeds.process();
+          } else {
+            const script = document.createElement('script');
+            script.src = '//www.instagram.com/embed.js';
+            script.async = true;
+            document.body.appendChild(script);
+          }
+        }
+        
+      } catch (error) {
+        resultDiv.innerHTML = `
+          <div class="error">
+            <strong>❌ 네트워크 에러:</strong><br>
+            ${error.message}
+          </div>
+        `;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '테스트 실행';
+      }
+    }
+    
+    // Enter 키로도 실행 가능
+    document.getElementById('accessToken').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') testOEmbed();
+    });
+    
+    document.getElementById('instagramUrl').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') testOEmbed();
+    });
+  </script>
+</body>
+</html>

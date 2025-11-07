@@ -7,6 +7,8 @@ import { User as UserIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import LoginRequiredModal from "@/components/template/modal/LoginRequiredModal";
 
 type AuthClientProps = {
   iconColor?: string;
@@ -15,6 +17,8 @@ type AuthClientProps = {
 export default function AuthClient({ iconColor = "#000" }: AuthClientProps) {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const router = useRouter();
 
   const checkAuth = useCallback(async () => {
     try {
@@ -37,19 +41,38 @@ export default function AuthClient({ iconColor = "#000" }: AuthClientProps) {
     checkAuth();
   }, [checkAuth]);
 
+  const handleLoginClick = () => {
+    setShowLoginModal(true);
+  };
+
+  const handleLoginConfirm = () => {
+    setShowLoginModal(false);
+    router.push(ROUTE.LOGIN);
+  };
+
+  const handleLoginCancel = () => {
+    setShowLoginModal(false);
+  };
+
   if (loading) return null;
 
   if (!user || user.status !== 'active') {
     return (
-      <Link href="/api/auth/google/start">
+      <>
         <button
           type="button"
           aria-label="Sign in with Google"
           className="flex items-center justify-center transition-opacity hover:opacity-80"
+          onClick={handleLoginClick}
         >
           <UserIcon size={24} style={{ color: iconColor }} />
         </button>
-      </Link>
+        <LoginRequiredModal
+          open={showLoginModal}
+          onConfirm={handleLoginConfirm}
+          onCancel={handleLoginCancel}
+        />
+      </>
     );
   }
 

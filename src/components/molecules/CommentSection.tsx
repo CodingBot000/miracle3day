@@ -4,11 +4,13 @@ import { useState } from 'react';
 import { CommunityComment, Member } from '@/app/models/communityData.dto';
 import CommentItem from './CommentItem';
 import { toast } from 'sonner';
+import { useCookieLanguage } from '@/hooks/useCookieLanguage';
+import { useRouter } from 'next/navigation';
 
 interface CommentSectionProps {
   postId: number
   comments: CommunityComment[]
-  currentUser: Member
+  currentUser: Member | null
 }
 
 export default function CommentSection({
@@ -16,6 +18,8 @@ export default function CommentSection({
   comments: initialComments,
   currentUser,
 }: CommentSectionProps) {
+  const { language } = useCookieLanguage();
+  const router = useRouter();
   const [comments, setComments] = useState(initialComments);
   const [newComment, setNewComment] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -137,29 +141,51 @@ export default function CommentSection({
 
   const totalComments = countComments(comments);
 
+  const handleLoginClick = () => {
+    router.push('/auth/login');
+  };
+
   return (
     <div className="mt-8 pt-8 border-t">
       <h3 className="text-xl font-semibold mb-6">
-        {totalComments} Comments
+        {totalComments} {language === 'ko' ? '댓글' : 'Comments'}
       </h3>
 
-      <div className="mb-6">
-        <textarea
-          value={newComment}
-          onChange={(e) => setNewComment(e.target.value)}
-          placeholder="Please write a comment."
-          className="w-full p-4 border rounded-lg resize-none h-24 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <div className="flex justify-end mt-2">
+      {currentUser ? (
+        <div className="mb-6">
+          <textarea
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+            placeholder={language === 'ko' ? '댓글을 작성해주세요.' : 'Please write a comment.'}
+            className="w-full p-4 border rounded-lg resize-none h-24 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <div className="flex justify-end mt-2">
+            <button
+              onClick={handleSubmitComment}
+              disabled={!newComment.trim() || isSubmitting}
+              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isSubmitting
+                ? (language === 'ko' ? '게시 중...' : 'Posting...')
+                : (language === 'ko' ? '댓글 작성' : 'Post Comment')}
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="mb-6 p-6 bg-gray-50 rounded-lg text-center">
+          <p className="text-gray-600 mb-4">
+            {language === 'ko'
+              ? '로그인해야 댓글 작성이 가능합니다.'
+              : 'You must be logged in to post a comment.'}
+          </p>
           <button
-            onClick={handleSubmitComment}
-            disabled={!newComment.trim() || isSubmitting}
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+            onClick={handleLoginClick}
+            className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
           >
-            {isSubmitting ? 'Posting...' : 'Post Comment'}
+            {language === 'ko' ? '로그인' : 'Login'}
           </button>
         </div>
-      </div>
+      )}
 
       <div className="space-y-4">
         {comments.map((comment) => (

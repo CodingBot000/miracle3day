@@ -11,6 +11,12 @@ import { findMemberByUserId } from '@/app/api/auth/getUser/member.helper';
 const updateSchema = z.object({
   title: z.string().min(1),
   content: z.string().min(1),
+
+  // New structure
+  topic_id: z.enum(['antiaging', 'wrinkles', 'pigmentation', 'acne', 'surgery']).optional(),
+  post_tag: z.enum(['question', 'review', 'discussion']).optional().nullable(),
+
+  // Legacy field for backward compatibility
   id_category: z.string().optional().nullable(),
   author_name_snapshot: z.string().optional().nullable(),
   author_avatar_snapshot: z.string().optional().nullable(),
@@ -28,14 +34,24 @@ export async function GET(
 
   try {
     const rows = await q(
-      `SELECT p.*, 
-              c.id AS category_id, 
-              c.name AS category_name, 
-              c.description AS category_description, 
-              c.order_index AS category_order_index, 
-              c.is_active AS category_is_active
+      `SELECT p.*,
+              tc.id AS topic_id_cat,
+              tc.name AS topic_name,
+              tc.description AS topic_description,
+              tc.icon AS topic_icon,
+              tc.category_type AS topic_category_type,
+              tc.display_order AS topic_display_order,
+              tc.is_active AS topic_is_active,
+              tg.id AS tag_id_cat,
+              tg.name AS tag_name,
+              tg.description AS tag_description,
+              tg.icon AS tag_icon,
+              tg.category_type AS tag_category_type,
+              tg.display_order AS tag_display_order,
+              tg.is_active AS tag_is_active
        FROM ${TABLE_COMMUNITY_POSTS} p
-       LEFT JOIN ${TABLE_COMMUNITY_CATEGORIES} c ON c.id = p.id_category
+       LEFT JOIN ${TABLE_COMMUNITY_CATEGORIES} tc ON tc.id = p.topic_id
+       LEFT JOIN ${TABLE_COMMUNITY_CATEGORIES} tg ON tg.id = p.post_tag
        WHERE p.id = $1 AND p.is_deleted = false
        LIMIT 1`,
       [postId]
@@ -47,13 +63,27 @@ export async function GET(
       return NextResponse.json({ post: null }, { status: 404 });
     }
 
-    if (post.category_id) {
-      post.category = {
-        id: post.category_id,
-        name: post.category_name,
-        description: post.category_description,
-        order_index: post.category_order_index,
-        is_active: post.category_is_active,
+    if (post.topic_id_cat) {
+      post.topic = {
+        id: post.topic_id_cat,
+        name: post.topic_name,
+        description: post.topic_description,
+        icon: post.topic_icon,
+        category_type: post.topic_category_type,
+        display_order: post.topic_display_order,
+        is_active: post.topic_is_active,
+      };
+    }
+
+    if (post.tag_id_cat) {
+      post.tag = {
+        id: post.tag_id_cat,
+        name: post.tag_name,
+        description: post.tag_description,
+        icon: post.tag_icon,
+        category_type: post.tag_category_type,
+        display_order: post.tag_display_order,
+        is_active: post.tag_is_active,
       };
     }
 
@@ -99,16 +129,18 @@ export async function PATCH(
       `UPDATE ${TABLE_COMMUNITY_POSTS}
        SET title = $1,
            content = $2,
-           id_category = $3,
-           author_name_snapshot = $4,
-           author_avatar_snapshot = $5,
+           topic_id = $3,
+           post_tag = $4,
+           author_name_snapshot = $5,
+           author_avatar_snapshot = $6,
            updated_at = now()
-       WHERE id = $6 AND uuid_author = $7
+       WHERE id = $7 AND uuid_author = $8
        RETURNING *`,
       [
         payload.title,
         payload.content,
-        payload.id_category ?? null,
+        payload.topic_id ?? null,
+        payload.post_tag ?? null,
         payload.author_name_snapshot ?? null,
         payload.author_avatar_snapshot ?? null,
         postId,
@@ -122,12 +154,21 @@ export async function PATCH(
       return NextResponse.json({ error: 'Post not found' }, { status: 404 });
     }
 
-    if (post.id_category) {
-      const categoryRows = await q(
-        `SELECT id, name, description, order_index, is_active FROM ${TABLE_COMMUNITY_CATEGORIES} WHERE id = $1`,
-        [post.id_category]
+    // Fetch topic and tag categories
+    if (post?.topic_id) {
+      const topicRows = await q(
+        `SELECT id, name, description, icon, category_type, display_order, is_active FROM ${TABLE_COMMUNITY_CATEGORIES} WHERE id = $1`,
+        [post.topic_id]
       );
-      post.category = categoryRows[0] ?? null;
+      post.topic = topicRows[0] ?? null;
+    }
+
+    if (post?.post_tag) {
+      const tagRows = await q(
+        `SELECT id, name, description, icon, category_type, display_order, is_active FROM ${TABLE_COMMUNITY_CATEGORIES} WHERE id = $1`,
+        [post.post_tag]
+      );
+      post.tag = tagRows[0] ?? null;
     }
 
     return NextResponse.json({ post });

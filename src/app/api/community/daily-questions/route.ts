@@ -7,16 +7,15 @@ export async function GET(req: NextRequest) {
   const category = searchParams.get('category'); // topic 필터 (antiaging, acne 등)
   const format = searchParams.get('format'); // question_type 필터 (poll, situation, open)
   const date = searchParams.get('date') || new Date().toISOString().split('T')[0];
-  const lang = searchParams.get('lang') || 'ko'; // 언어 파라미터 (기본값: ko)
 
   try {
     let sql = `
       SELECT
         dq.id,
         dq.question_type,
-        dq.title->'${lang}' as title,
-        dq.subtitle->'${lang}' as subtitle,
-        dq.situation_context->'${lang}' as situation_context,
+        dq.title,
+        dq.subtitle,
+        dq.situation_context,
         dq.id_category,
         dq.difficulty,
         dq.points_reward,
@@ -27,12 +26,12 @@ export async function GET(req: NextRequest) {
         dq.created_at,
         dq.updated_at,
         c.id as category_id,
-        c.name->'${lang}' as category_name,
+        c.name as category_name,
         COALESCE(
           json_agg(
             json_build_object(
               'id', po.id,
-              'option_text', po.option_text->'${lang}',
+              'option_text', po.option_text,
               'vote_count', po.vote_count,
               'display_order', po.display_order
             ) ORDER BY po.display_order

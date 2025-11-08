@@ -7,6 +7,7 @@ import type { CommunityPost } from '@/app/models/communityData.dto';
 import { ANONYMOUS_FALLBACK, isAnonymousCategoryName } from './utils';
 import { useLoginGuard } from '@/hooks/useLoginGuard';
 import { getImageUrl } from '@/lib/images';
+import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 
 interface PostListProps {
   posts: CommunityPost[]
@@ -15,6 +16,7 @@ interface PostListProps {
 
 export default function PostList({ posts, isAuthenticated }: PostListProps) {
   const router = useRouter();
+  const { language } = useCookieLanguage();
   const dateFormatter = useMemo(
     () =>
       new Intl.DateTimeFormat('ko-KR', {
@@ -37,22 +39,19 @@ export default function PostList({ posts, isAuthenticated }: PostListProps) {
   };
 
   const handleClick = async (event: MouseEvent<HTMLAnchorElement>, postId: number) => {
+    // 읽기는 로그인 불필요 - 바로 이동
+    // view_count는 서버에서 자동 증가됨
     if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) {
       return;
     }
 
     event.preventDefault();
-
-    if (!requireLogin()) {
-      return;
-    }
-
     router.push(`/community/post/${postId}`);
   };
 
   const getAuthorPresentation = (post: CommunityPost) => {
-    const anonymous = isAnonymousCategoryName(post.category?.name)
-    if (anonymous) {
+    // New structure: use is_anonymous field
+    if (post.is_anonymous) {
       return ANONYMOUS_FALLBACK
     }
 
@@ -85,9 +84,14 @@ export default function PostList({ posts, isAuthenticated }: PostListProps) {
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex flex-wrap items-center gap-3 text-sm text-gray-500 mb-2">
-                    {post.category && (
-                      <span className="bg-gray-100 px-2 py-1 rounded">
-                        {post.category.name}
+                    {post.topic && (
+                      <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">
+                        {typeof post.topic.name === 'string' ? post.topic.name : post.topic.name[language]}
+                      </span>
+                    )}
+                    {post.tag && (
+                      <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">
+                        {typeof post.tag.name === 'string' ? post.tag.name : post.tag.name[language]}
                       </span>
                     )}
                     <div className="flex items-center gap-2">

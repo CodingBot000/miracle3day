@@ -8,14 +8,22 @@ import type {
   CountRow,
 } from '@/app/models/communityData.dto';
 
-export async function getCommunityPostsDTO(categoryId?: string): Promise<CommunityPostsDTO> {
+export async function getCommunityPostsDTO(
+  topicId?: string,      // ← 파라미터 이름도 변경
+  tagId?: string         // ← 새로 추가
+): Promise<CommunityPostsDTO> {
   try {
     const values: any[] = [];
     const where: string[] = ['is_deleted = false'];
 
-    if (categoryId) {
-      values.push(categoryId);
-      where.push(`id_category = $${values.length}`);
+    if (topicId) {
+      values.push(topicId);
+      where.push(`topic_id = $${values.length}`);  // ← id_category → topic_id
+    }
+
+    if (tagId) {
+      values.push(tagId);
+      where.push(`post_tag = $${values.length}`);  // ← 새로 추가
     }
 
     const sql = `
@@ -24,7 +32,10 @@ export async function getCommunityPostsDTO(categoryId?: string): Promise<Communi
         uuid_author,
         title,
         content,
-        id_category,
+        topic_id,                    -- ← id_category → topic_id
+        post_tag,                    -- ← 새로 추가
+        is_anonymous,                -- ← 새로 추가
+        is_pinned,                   -- ← 새로 추가
         view_count,
         is_deleted,
         created_at,
@@ -35,7 +46,9 @@ export async function getCommunityPostsDTO(categoryId?: string): Promise<Communi
         COALESCE(like_count, 0) AS like_count
       FROM ${TABLE_COMMUNITY_POSTS}
       ${where.length ? `WHERE ${where.join(' AND ')}` : ''}
-      ORDER BY created_at DESC
+      ORDER BY 
+        CASE WHEN is_pinned THEN 0 ELSE 1 END,  -- ← 고정글 우선
+        created_at DESC
     `;
 
     const posts = await q<CommunityPost>(sql, values);
@@ -73,20 +86,21 @@ export async function getCommunityPostsDTO(categoryId?: string): Promise<Communi
   }
 }
 
-export async function getCommunityCategories(lang: string = 'ko'): Promise<CommunityCategory[]> {
+export async function getCommunityCategories(): Promise<CommunityCategory[]> {
   try {
     const categories = await q<CommunityCategory>(
       `
         SELECT
           id,
-          name->'${lang}' as name,
-          description->'${lang}' as description,
-          order_index,
+          name,
+          description,
+          display_order,
           is_active,
-          category_type
+          category_type,
+          icon
         FROM ${TABLE_COMMUNITY_CATEGORIES}
         WHERE is_active = true
-        ORDER BY order_index ASC
+        ORDER BY display_order ASC
       `
     );
 

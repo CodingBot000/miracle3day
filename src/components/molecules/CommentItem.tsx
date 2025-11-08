@@ -6,7 +6,7 @@ import ReportButton from '@/components/atoms/button/ReportButton'
 
 interface CommentItemProps {
   comment: CommunityComment
-  currentUser: Member
+  currentUser: Member | null
   onDelete: (commentId: number) => void
   onReply: (parentId: number, content: string) => void
   depth: number
@@ -23,7 +23,7 @@ export default function CommentItem({
   const [replyContent, setReplyContent] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const isAuthor = currentUser.uuid === comment.uuid_author
+  const isAuthor = currentUser ? currentUser.uuid === comment.uuid_author : false
 
   const handleReplySubmit = async () => {
     if (!replyContent.trim() || isSubmitting) return
@@ -61,7 +61,7 @@ export default function CommentItem({
           </div>
         </div>
         <p className="text-gray-700 mb-2 whitespace-pre-wrap">{comment.content}</p>
-        {depth < 1 && (
+        {depth < 1 && currentUser && (
           <button
             onClick={() => setIsReplying(!isReplying)}
             className="text-blue-500 hover:text-blue-600 text-sm"

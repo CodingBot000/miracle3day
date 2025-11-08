@@ -10,7 +10,7 @@ import { findMemberByUserId } from '@/app/api/auth/getUser/member.helper';
 
 const createSchema = z.object({
   content: z.string().min(1),
-  parentId: z.number().optional().nullable(),
+  parentId: z.union([z.number(), z.string().transform(Number)]).optional().nullable(),
 });
 
 async function recalcCommentCount(postId: number | string) {

@@ -11,6 +11,13 @@ import { findMemberByUserId } from '@/app/api/auth/getUser/member.helper';
 const createSchema = z.object({
   title: z.string().min(1),
   content: z.string().min(1),
+
+  // New structure
+  topic_id: z.enum(['antiaging', 'wrinkles', 'pigmentation', 'acne', 'surgery']),
+  post_tag: z.enum(['question', 'review', 'discussion']).optional().nullable(),
+  is_anonymous: z.boolean().optional().default(false),
+
+  // Legacy field for backward compatibility
   id_category: z.string().optional().nullable(),
   author_name_snapshot: z.string().optional().nullable(),
   author_avatar_snapshot: z.string().optional().nullable(),
@@ -37,20 +44,20 @@ export async function POST(req: Request) {
       (member['id_uuid'] as string | undefined) ??
       userId;
 
-    const categoryId = payload.id_category ?? null;
-    let authorNameSnapshot = payload.author_name_snapshot ?? null;
-    let authorAvatarSnapshot = payload.author_avatar_snapshot ?? null;
+    // Handle anonymous posts - clear author info if is_anonymous is true
+    const isAnonymous = payload.is_anonymous ?? false;
+    let authorNameSnapshot: string | null = null;
+    let authorAvatarSnapshot: string | null = null;
 
-    if (!authorNameSnapshot) {
-      authorNameSnapshot =
-        (member['nickname'] as string | undefined)?.trim() ||
+    if (!isAnonymous) {
+      authorNameSnapshot = (payload.author_name_snapshot ??
+        (member['nickname'] as string | undefined)?.trim()) ||
         (member['name'] as string | undefined)?.trim() ||
         null;
-    }
 
-    if (!authorAvatarSnapshot) {
-      authorAvatarSnapshot =
-        (member['avatar'] as string | undefined)?.trim() || null;
+      authorAvatarSnapshot = (payload.author_avatar_snapshot ??
+        (member['avatar'] as string | undefined)?.trim()) ||
+        null;
     }
 
     const rows = await q(
@@ -59,7 +66,9 @@ export async function POST(req: Request) {
           uuid_author,
           title,
           content,
-          id_category,
+          topic_id,
+          post_tag,
+          is_anonymous,
           view_count,
           comment_count,
           like_count,
@@ -67,16 +76,19 @@ export async function POST(req: Request) {
           author_avatar_snapshot,
           created_at,
           updated_at,
-          is_deleted
+          is_deleted,
+          is_pinned
         )
-        VALUES ($1, $2, $3, $4, 0, 0, 0, $5, $6, now(), now(), false)
+        VALUES ($1, $2, $3, $4, $5, $6, 0, 0, 0, $7, $8, now(), now(), false, false)
         RETURNING *
       `,
       [
         memberUuid,
         payload.title,
         payload.content,
-        categoryId,
+        payload.topic_id,
+        payload.post_tag ?? null,
+        isAnonymous,
         authorNameSnapshot,
         authorAvatarSnapshot,
       ]
@@ -84,12 +96,21 @@ export async function POST(req: Request) {
 
     const post = rows[0];
 
-    if (post?.id_category) {
-      const categoryRows = await q(
-        `SELECT id, name, description, order_index, is_active FROM ${TABLE_COMMUNITY_CATEGORIES} WHERE id = $1`,
-        [post.id_category]
+    // Fetch topic and tag categories
+    if (post?.topic_id) {
+      const topicRows = await q(
+        `SELECT id, name, description, icon, category_type, display_order, is_active FROM ${TABLE_COMMUNITY_CATEGORIES} WHERE id = $1`,
+        [post.topic_id]
       );
-      post.category = categoryRows[0] ?? null;
+      post.topic = topicRows[0] ?? null;
+    }
+
+    if (post?.post_tag) {
+      const tagRows = await q(
+        `SELECT id, name, description, icon, category_type, display_order, is_active FROM ${TABLE_COMMUNITY_CATEGORIES} WHERE id = $1`,
+        [post.post_tag]
+      );
+      post.tag = tagRows[0] ?? null;
     }
 
     return NextResponse.json({ post }, { status: 201 });

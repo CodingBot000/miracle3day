@@ -2,7 +2,10 @@ import { NextResponse } from "next/server";
 import { randomString, toCodeChallenge } from "@/lib/oauth";
 import { cookies } from "next/headers";
 
-export async function GET() {
+export async function GET(req: Request) {
+  const url = new URL(req.url);
+  const redirectUrl = url.searchParams.get("state") || "/";
+
   const state = randomString(16);
   const verifier = randomString(32);
   const challenge = toCodeChallenge(verifier);
@@ -10,6 +13,8 @@ export async function GET() {
   const cookieStore = await cookies();
   cookieStore.set("oidc_state", state, { httpOnly: true, maxAge: 300, sameSite: "lax", secure: process.env.NODE_ENV === "production" });
   cookieStore.set("pkce_verifier", verifier, { httpOnly: true, maxAge: 300, sameSite: "lax", secure: process.env.NODE_ENV === "production" });
+  // Store redirect URL in cookie to retrieve after OAuth callback
+  cookieStore.set("auth_redirect", redirectUrl, { httpOnly: true, maxAge: 300, sameSite: "lax", secure: process.env.NODE_ENV === "production" });
 
   const params = new URLSearchParams({
     client_id: process.env.GOOGLE_CLIENT_ID!,

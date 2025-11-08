@@ -273,6 +273,7 @@ export default async function PostDetailPage({
                 postId={post.id}
                 initialLiked={hasUserLiked}
                 initialCount={likeCountValue}
+                isAuthenticated={!!currentUser}
               />
               <div className="flex items-center gap-1 text-gray-500">
                 <span>👁</span>
@@ -286,6 +287,7 @@ export default async function PostDetailPage({
             <ReportButton
               targetType="post"
               targetId={post.id}
+              isAuthenticated={!!currentUser}
             />
           </div>
         </div>

@@ -57,6 +57,7 @@ export default function CommentItem({
             <ReportButton
               targetType="comment"
               targetId={comment.id}
+              isAuthenticated={!!currentUser}
             />
           </div>
         </div>

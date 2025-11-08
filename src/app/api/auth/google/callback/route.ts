@@ -41,7 +41,8 @@ export async function GET(req: Request) {
   const cookieStore = await cookies();
   const savedState = cookieStore.get("oidc_state")?.value;
   const verifier = cookieStore.get("pkce_verifier")?.value;
-  
+  const redirectUrl = cookieStore.get("auth_redirect")?.value || "/";
+
   if (!code || !state || state !== savedState || !verifier) {
     return NextResponse.redirect(new URL("/auth/error", req.url));
   }
@@ -121,10 +122,10 @@ export async function GET(req: Request) {
         await session.save();
         return res;
       }
-      // 기존 회원 - 바로 active 상태로 설정하고 홈으로 이동
-      const res = NextResponse.redirect(new URL("/", req.url));
+      // 기존 회원 - 바로 active 상태로 설정하고 원래 페이지로 이동
+      const res = NextResponse.redirect(new URL(redirectUrl, req.url));
       const session = await getIronSession(req, res, sessionOptions) as any;
-      
+
       session.auth = {
         provider,
         provider_user_id: providerUserId,

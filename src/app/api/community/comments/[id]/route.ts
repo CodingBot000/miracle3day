@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { getAuthSession } from "@/lib/auth-helper";
 import { q } from '@/lib/db';
 import {
@@ -67,7 +68,12 @@ export async function DELETE(
       return NextResponse.json({ error: 'Comment not found' }, { status: 404 });
     }
 
-    const total = await recalcCommentCount(comment.id_post);
+    const postId = comment.id_post;
+    const total = await recalcCommentCount(postId);
+
+    // 캐시 무효화
+    revalidatePath('/community');
+    revalidatePath(`/community/post/${postId}`);
 
     return NextResponse.json({ ok: true, total });
   } catch (error) {

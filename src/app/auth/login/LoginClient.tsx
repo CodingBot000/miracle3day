@@ -1,8 +1,17 @@
 "use client";
 
+import { useSearchParams } from 'next/navigation';
+
 export default function LoginClient() {
+  const searchParams = useSearchParams();
+
+  // Get redirect URL from query params (default to home page)
+  const redirectUrl = searchParams.get('redirect') || '/';
+
   const handleGoogleLogin = () => {
-    window.location.href = '/api/auth/google/start';
+    // Pass redirect URL as state parameter to OAuth flow
+    const oauthUrl = `/api/auth/google/start?state=${encodeURIComponent(redirectUrl)}`;
+    window.location.href = oauthUrl;
   };
 
   return (

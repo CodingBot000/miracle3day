@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { getAuthSession } from "@/lib/auth-helper";
 import { z } from 'zod';
 import { q } from '@/lib/db';
@@ -92,6 +93,10 @@ export async function POST(
       avatar: member['avatar'] as string | undefined,
     };
     comment.replies = [];
+
+    // 캐시 무효화
+    revalidatePath('/community');
+    revalidatePath(`/community/post/${postId}`);
 
     return NextResponse.json({ comment, total });
   } catch (error) {

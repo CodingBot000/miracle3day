@@ -1,6 +1,6 @@
 'use client'
 
-import { MouseEvent, useMemo } from 'react';
+import { MouseEvent, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { CommunityPost } from '@/app/models/communityData.dto';
@@ -29,6 +29,19 @@ export default function PostList({ posts, isAuthenticated }: PostListProps) {
   );
 
   const { requireLogin, loginModal } = useLoginGuard(isAuthenticated);
+
+  // 뒤로가기/앞으로가기 시 자동 새로고침
+  useEffect(() => {
+    const handlePopState = () => {
+      router.refresh(); // 서버 데이터 재검증
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [router]);
 
   const formatDate = (value: string) => {
     const parsed = new Date(value);

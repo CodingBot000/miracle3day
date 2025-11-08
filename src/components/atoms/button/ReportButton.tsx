@@ -2,19 +2,31 @@
 
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { useLoginGuard } from '@/hooks/useLoginGuard';
 
 interface ReportButtonProps {
   targetType: 'post' | 'comment'
   targetId: number
+  isAuthenticated: boolean
 }
 
 export default function ReportButton({
   targetType,
   targetId,
+  isAuthenticated,
 }: ReportButtonProps) {
+  const { requireLogin, loginModal } = useLoginGuard(isAuthenticated);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [reportReason, setReportReason] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleOpenModal = () => {
+    // Check login before opening report modal
+    if (!requireLogin()) {
+      return;
+    }
+    setIsReportModalOpen(true);
+  };
 
   const handleReport = async () => {
     if (!reportReason.trim() || isSubmitting) return;
@@ -51,12 +63,12 @@ export default function ReportButton({
   return (
     <>
       <button
-        onClick={() => setIsReportModalOpen(true)}
+        onClick={handleOpenModal}
         className="text-gray-500 hover:text-red-600 text-sm"
       >
         Report
       </button>
-
+      {loginModal}
       {isReportModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-md">

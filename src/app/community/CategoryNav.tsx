@@ -9,11 +9,27 @@ export default function CategoryNav({ categories }: { categories: any[] }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  const currentView = searchParams.get('view') || 'posts';  // ← 현재 view 상태
   const currentTopic = searchParams.get('topic');  // ← topic 파라미터
   const currentTag = searchParams.get('tag');      // ← tag 파라미터
 
   const topicCategories = categories.filter(c => c.category_type === 'topic');
   const tagCategories = categories.filter(c => c.category_type === 'free');
+
+  // URL 빌더 헬퍼 - view 상태 유지
+  const buildUrl = (params: Record<string, string | undefined>) => {
+    const urlParams = new URLSearchParams();
+
+    // 현재 view 유지
+    urlParams.set('view', currentView);
+
+    // 전달받은 파라미터 추가
+    Object.entries(params).forEach(([key, value]) => {
+      if (value) urlParams.set(key, value);
+    });
+
+    return `/community?${urlParams.toString()}`;
+  };
 
   return (
     <nav className="space-y-6 mb-8">
@@ -23,9 +39,9 @@ export default function CategoryNav({ categories }: { categories: any[] }) {
           {language === 'ko' ? '🎯 주제별 커뮤니티' : '🎯 Topics'}
         </h3>
         <div className="flex flex-wrap gap-2">
-          <Link href="/community">
+          <Link href={buildUrl({ tag: currentTag })}>
             <button className={`px-4 py-2.5 rounded-lg font-semibold transition-all ${
-              pathname === '/community' && !currentTopic && !currentTag
+              !currentTopic
                 ? 'bg-blue-600 text-white shadow-lg'
                 : 'bg-white text-gray-700 hover:bg-blue-50 border border-gray-200'
             }`}>
@@ -34,7 +50,7 @@ export default function CategoryNav({ categories }: { categories: any[] }) {
           </Link>
 
           {topicCategories.map(cat => (
-            <Link key={cat.id} href={`/community?topic=${cat.id}`}>
+            <Link key={cat.id} href={buildUrl({ topic: cat.id, tag: currentTag })}>
               <button className={`px-4 py-2.5 rounded-lg font-semibold transition-all ${
                 currentTopic === cat.id
                   ? 'bg-blue-600 text-white shadow-lg'
@@ -57,7 +73,7 @@ export default function CategoryNav({ categories }: { categories: any[] }) {
             </h3>
             <div className="flex flex-wrap gap-2">
               {tagCategories.map(cat => (
-                <Link key={cat.id} href={`/community?tag=${cat.id}`}>
+                <Link key={cat.id} href={buildUrl({ topic: currentTopic, tag: cat.id })}>
                   <button className={`px-4 py-2.5 rounded-lg font-semibold transition-all ${
                     currentTag === cat.id
                       ? 'bg-blue-600 text-white shadow-lg'

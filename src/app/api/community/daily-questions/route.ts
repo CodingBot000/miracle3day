@@ -9,6 +9,9 @@ export async function GET(req: NextRequest) {
   const category = searchParams.get('category'); // topic 필터 (antiaging, acne 등)
   const format = searchParams.get('format'); // question_type 필터 (poll, situation, open)
   const date = searchParams.get('date') || new Date().toISOString().split('T')[0];
+  const page = parseInt(searchParams.get('page') || '1');
+  const limit = parseInt(searchParams.get('limit') || '10');
+  const offset = (page - 1) * limit;
 
   try {
     // 1. 사용자 인증 확인 (옵셔널 - 비로그인 사용자도 질문 조회 가능)
@@ -96,11 +99,52 @@ export async function GET(req: NextRequest) {
       params.push(format);
     }
 
-    sql += ` GROUP BY dq.id, c.id, c.name ORDER BY dq.created_at DESC`;
+    sql += ` GROUP BY dq.id, c.id, c.name ORDER BY dq.display_date DESC, dq.id DESC`;
+    sql += ` LIMIT $${params.length + 1} OFFSET $${params.length + 2}`;
+    params.push(limit, offset);
 
-    const questions = await q(sql, params);
+    // Count query for pagination
+    let countSql = `
+      SELECT COUNT(*) as total
+      FROM community_daily_questions dq
+      WHERE dq.is_active = true
+    `;
+    const countParams: any[] = [];
 
-    return NextResponse.json({ questions });
+    // Apply same filters to count query
+    if (date !== 'all') {
+      countSql += ` AND dq.display_date = $${countParams.length + 1}`;
+      countParams.push(date);
+    }
+
+    if (category) {
+      countSql += ` AND dq.id_category = $${countParams.length + 1}`;
+      countParams.push(category);
+    }
+
+    if (format) {
+      countSql += ` AND dq.question_type = $${countParams.length + 1}`;
+      countParams.push(format);
+    }
+
+    // Execute both queries
+    const [questions, countResult] = await Promise.all([
+      q(sql, params),
+      q(countSql, countParams)
+    ]);
+
+    const total = parseInt(countResult[0]?.total || '0');
+    const hasMore = offset + questions.length < total;
+
+    return NextResponse.json({
+      questions,
+      pagination: {
+        page,
+        limit,
+        total,
+        hasMore
+      }
+    });
   } catch (error: any) {
     console.error('GET daily-questions error:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });

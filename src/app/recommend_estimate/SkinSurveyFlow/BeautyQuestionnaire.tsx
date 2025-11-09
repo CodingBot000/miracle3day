@@ -8,7 +8,7 @@ import PageHeader from '../PageHeader';
 import PreviewReport from './questionnaire/PreviewReport';
 import { steps, questions } from '@/content/estimate/form-definition';
 import { recommendTreatments, RecommendationOutput } from './questionnaire/questionScript/matching/index';
-import RecommendationResult from '@/components/recommendation/RecommendationResult';
+import RecommendationResult from '@/app/recommend_estimate/SkinSurveyFlow/recommendation/RecommendationResult';
 
 import { 
   USER_INFO,

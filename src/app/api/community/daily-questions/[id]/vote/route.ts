@@ -71,15 +71,27 @@ export async function POST(
 
     await client.query('COMMIT');
 
-    // 업데이트된 투표 결과 반환
+    // 업데이트된 투표 결과 반환 (is_selected_by_user 필드 포함)
     const options = await q(
-      `SELECT * FROM community_poll_options
+      `SELECT
+        id,
+        id_question,
+        option_text,
+        vote_count,
+        display_order,
+        created_at,
+        (id = $2) as is_selected_by_user
+       FROM community_poll_options
        WHERE id_question = $1
        ORDER BY display_order`,
-      [questionId]
+      [questionId, id_option]
     );
 
-    return NextResponse.json({ options });
+    return NextResponse.json({
+      success: true,
+      voted_option_id: id_option,
+      options
+    });
   } catch (error: any) {
     await client.query('ROLLBACK');
     console.error('Vote error:', error);

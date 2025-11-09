@@ -3,11 +3,15 @@ import { getCommunityCategories, getCommunityPostsDTO } from '@/app/api/communit
 import type { CommunityCategory } from '@/app/models/communityData.dto';
 import PostList from './PostList';
 import WritePostButton from './WritePostButton';
+import QuestionList from './questions/QuestionList';
+import DailyMission from './questions/DailyMission';
+import { Suspense } from 'react';
 
 interface CommunityPageProps {
   searchParams?: {
-    topic?: string;    // ← category → topic
-    tag?: string;      // ← 새로 추가
+    view?: 'posts' | 'questions';  // 추가: 탭 구분
+    topic?: string;
+    tag?: string;
   }
 }
 
@@ -20,14 +24,50 @@ export default async function HomePage({ searchParams }: CommunityPageProps) {
   const languageCookie = cookieStore.get('language');
   const language = (languageCookie?.value as 'ko' | 'en') || 'ko';
 
+  // 기본값: posts
+  const currentView = searchParams?.view || 'posts';
+  const topicId = searchParams?.topic;
+  const tagId = searchParams?.tag;
+
+  // Questions 뷰일 때
+  if (currentView === 'questions') {
+    return (
+      <div className="space-y-6">
+        {/* 탭 네비게이션 */}
+        <div className="flex gap-2 border-b border-gray-200">
+          <a
+            href="/community?view=posts"
+            className="px-6 py-3 text-gray-600 hover:text-gray-900 transition"
+          >
+            {language === 'ko' ? '📝 게시판' : '📝 Posts'}
+          </a>
+          <a
+            href="/community?view=questions"
+            className="px-6 py-3 text-pink-600 border-b-2 border-pink-600 font-semibold"
+          >
+            {language === 'ko' ? '💬 데일리 질문' : '💬 Daily Questions'}
+          </a>
+        </div>
+
+        {/* Daily Questions */}
+        <Suspense fallback={<div className="animate-pulse bg-gray-200 h-32 rounded-xl mb-6" />}>
+          <DailyMission />
+        </Suspense>
+
+        <Suspense fallback={<div className="animate-pulse bg-gray-200 h-96 rounded-xl" />}>
+          <QuestionList category={topicId} format={tagId} />
+        </Suspense>
+      </div>
+    );
+  }
+
+  // Posts 뷰 (기존 코드)
   const categories = await getCommunityCategories();
   const categoryMap = new Map<string, CommunityCategory>(
     categories.map((category) => [category.id, category])
   );
 
   // topic과 tag 파라미터 처리
-  const topicId = searchParams?.topic;
-  const tagId = searchParams?.tag;
 
   // getPosts 호출 (topic과 tag 모두 전달)
   const { posts, commentsCount, likesCount } = await getCommunityPostsDTO(topicId, tagId);
@@ -71,6 +111,23 @@ export default async function HomePage({ searchParams }: CommunityPageProps) {
 
   return (
     <div className="space-y-6">
+      {/* 탭 네비게이션 */}
+      <div className="flex gap-2 border-b border-gray-200">
+        <a
+          href="/community?view=posts"
+          className="px-6 py-3 text-pink-600 border-b-2 border-pink-600 font-semibold"
+        >
+          {language === 'ko' ? '📝 게시판' : '📝 Posts'}
+        </a>
+        <a
+          href="/community?view=questions"
+          className="px-6 py-3 text-gray-600 hover:text-gray-900 transition"
+        >
+          {language === 'ko' ? '💬 데일리 질문' : '💬 Daily Questions'}
+        </a>
+      </div>
+
+      {/* Posts 목록 */}
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold">{headerLabel}</h2>
         <WritePostButton isAuthenticated={isAuthenticated} />

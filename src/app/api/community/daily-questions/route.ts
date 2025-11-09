@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { q } from '@/lib/db';
+import { getAuthSession } from '@/lib/auth-helper';
+import { findMemberByUserId } from '@/app/api/auth/getUser/member.helper';
 
 // GET: 오늘의 질문 목록 조회
 export async function GET(req: NextRequest) {
@@ -9,6 +11,19 @@ export async function GET(req: NextRequest) {
   const date = searchParams.get('date') || new Date().toISOString().split('T')[0];
 
   try {
+    // 1. 사용자 인증 확인 (옵셔널 - 비로그인 사용자도 질문 조회 가능)
+    let memberUuid: string | null = null;
+    try {
+      const authSession = await getAuthSession(req);
+      if (authSession) {
+        const member = await findMemberByUserId(authSession.userId);
+        memberUuid = member?.uuid || member?.id_uuid || null;
+      }
+    } catch (error) {
+      // 비로그인 사용자는 투표 상태 없이 반환
+      memberUuid = null;
+    }
+
     let sql = `
       SELECT
         dq.id,
@@ -33,18 +48,35 @@ export async function GET(req: NextRequest) {
               'id', po.id,
               'option_text', po.option_text,
               'vote_count', po.vote_count,
-              'display_order', po.display_order
+              'display_order', po.display_order,
+              'is_selected_by_user', CASE
+                WHEN $1::uuid IS NOT NULL THEN EXISTS(
+                  SELECT 1 FROM community_poll_votes
+                  WHERE id_question = dq.id
+                    AND id_option = po.id
+                    AND uuid_member = $1::uuid
+                )
+                ELSE false
+              END
             ) ORDER BY po.display_order
           ) FILTER (WHERE po.id IS NOT NULL),
           '[]'
-        ) as poll_options
+        ) as poll_options,
+        CASE
+          WHEN dq.question_type = 'poll' AND $1::uuid IS NOT NULL THEN EXISTS(
+            SELECT 1 FROM community_poll_votes
+            WHERE id_question = dq.id
+              AND uuid_member = $1::uuid
+          )
+          ELSE false
+        END as user_has_voted
       FROM community_daily_questions dq
       LEFT JOIN community_categories c ON dq.id_category = c.id
       LEFT JOIN community_poll_options po ON dq.id = po.id_question
       WHERE dq.is_active = true
     `;
 
-    const params: any[] = [];
+    const params: any[] = [memberUuid];
 
     // date 파라미터 처리: 'all'이면 모든 날짜, 아니면 특정 날짜
     if (date !== 'all') {

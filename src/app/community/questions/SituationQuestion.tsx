@@ -4,8 +4,16 @@ import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 import { useRouter } from 'next/navigation';
 
 export default function SituationQuestion({ question }: { question: any }) {
+  console.log('SituationQuestion question', question);
   const router = useRouter();
   const { language } = useCookieLanguage();
+
+  // 다국어 텍스트 추출 헬퍼
+  const getText = (jsonbField: any): string => {
+    if (!jsonbField) return '';
+    if (typeof jsonbField === 'string') return jsonbField;
+    return jsonbField[language] || jsonbField.en || jsonbField.ko || '';
+  };
 
   const handleAnswer = () => {
     router.push(`/community/questions/${question.id}`);
@@ -26,12 +34,15 @@ export default function SituationQuestion({ question }: { question: any }) {
         </span>
       </div>
 
-      <h3 className="text-2xl font-bold text-gray-900 mb-4">{question.title}</h3>
+      <h3 className="text-2xl font-bold text-gray-900 mb-4">
+        {getText(question.title)}
+      </h3>
 
       {question.situation_context && (
         <div className="bg-orange-50 border-l-4 border-orange-500 p-4 rounded-lg mb-4">
-          {/* <div className="font-bold text-orange-800 text-sm mb-2">📍 상황</div> */}
-          <div className="text-gray-700 line-clamp-3">{question.situation_context}</div>
+          <div className="text-gray-700 line-clamp-3">
+            {getText(question.situation_context)}
+          </div>
         </div>
       )}
 

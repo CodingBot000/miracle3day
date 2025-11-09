@@ -24,7 +24,7 @@ interface PollQuestionProps {
 }
 
 export default function PollQuestion({ question }: PollQuestionProps) {
-  console.log('PollQuestion question', question);
+  // console.log('PollQuestion question', question);
   const { language } = useCookieLanguage();
 
   // 다국어 텍스트 추출 헬퍼

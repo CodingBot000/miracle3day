@@ -4,7 +4,7 @@ import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 import { useRouter } from 'next/navigation';
 
 export default function SituationQuestion({ question }: { question: any }) {
-  console.log('SituationQuestion question', question);
+  // console.log('SituationQuestion question', question);
   const router = useRouter();
   const { language } = useCookieLanguage();
 

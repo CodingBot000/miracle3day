@@ -54,9 +54,19 @@
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;     /* Firefox */
   }
-  
+
   .scrollbar-hide::-webkit-scrollbar {
     display: none;             /* Chrome, Safari and Opera */
+  }
+
+  /* Smooth scrolling behavior */
+  .scroll-smooth {
+    scroll-behavior: smooth;
+  }
+
+  /* iOS Safari smooth inertial scrolling */
+  .overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
   }
 }
 

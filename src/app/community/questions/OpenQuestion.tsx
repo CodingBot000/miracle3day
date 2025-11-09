@@ -4,7 +4,7 @@ import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 import { useRouter } from 'next/navigation';
 
 export default function OpenQuestion({ question }: { question: any }) {
-  console.log('OpenQuestion question', question);
+  // console.log('OpenQuestion question', question);
   const router = useRouter();
   const { language } = useCookieLanguage();
 

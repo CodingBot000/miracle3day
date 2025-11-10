@@ -46,7 +46,14 @@ export default function PollQuestion({ question }: PollQuestionProps) {
   const [loading, setLoading] = useState(false);
 
   const handleVote = async (optionId: number) => {
-    if (loading || voted) return;
+    // 같은 옵션 재선택 방지
+    if (optionId === selectedOptionId) {
+      toast.info(language === 'ko' ? '이미 선택한 옵션입니다' : 'You already selected this option');
+      return;
+    }
+
+    // 로딩 중 중복 클릭 방지
+    if (loading) return;
 
     // Optimistic Update - 이전 상태 백업
     const previousOptions = [...options];
@@ -57,11 +64,16 @@ export default function PollQuestion({ question }: PollQuestionProps) {
     setVoted(true);
     setSelectedOptionId(optionId);
 
-    // UI 즉시 업데이트 (투표수 +1)
+    // UI 즉시 업데이트 (재투표시 이전 옵션 -1, 새 옵션 +1)
     setOptions(prevOptions =>
       prevOptions.map(opt => ({
         ...opt,
-        vote_count: opt.id === optionId ? opt.vote_count + 1 : opt.vote_count,
+        vote_count:
+          opt.id === optionId
+            ? opt.vote_count + 1
+            : opt.id === previousSelectedId
+            ? Math.max(0, opt.vote_count - 1)
+            : opt.vote_count,
         is_selected_by_user: opt.id === optionId
       }))
     );
@@ -74,26 +86,37 @@ export default function PollQuestion({ question }: PollQuestionProps) {
       });
 
       if (res.ok) {
-        const { options: updatedOptions, voted_option_id } = await res.json();
+        const { options: updatedOptions, voted_option_id, message } = await res.json();
 
         // 서버 응답으로 최종 동기화
         setOptions(updatedOptions);
         setSelectedOptionId(voted_option_id);
         setVoted(true);
 
-        toast.success(`🎉 +${question.points_reward} points earned!`);
+        // 메시지에 따라 토스트 표시
+        if (message?.includes('changed')) {
+          toast.success(language === 'ko' ? '🔄 투표가 변경되었습니다!' : '🔄 Vote changed successfully!');
+        } else {
+          toast.success(
+            language === 'ko'
+              ? `🎉 +${question.points_reward} 포인트 획득!`
+              : `🎉 +${question.points_reward} points earned!`
+          );
+        }
       } else {
         // 실패 시 롤백
         setOptions(previousOptions);
         setVoted(previousVoted);
         setSelectedOptionId(previousSelectedId);
 
-        const { error } = await res.json();
+        const { error, alreadySelected } = await res.json();
 
-        if (error === 'Already voted') {
-          toast.error('You have already voted on this poll!');
+        if (alreadySelected) {
+          toast.info(language === 'ko' ? '이미 선택한 옵션입니다' : 'You already selected this option');
+        } else if (error === 'Already voted') {
+          toast.error(language === 'ko' ? '이미 투표하셨습니다!' : 'You have already voted on this poll!');
         } else {
-          toast.error(error || 'Failed to vote');
+          toast.error(error || (language === 'ko' ? '투표 실패' : 'Failed to vote'));
         }
       }
     } catch (error) {
@@ -142,21 +165,21 @@ export default function PollQuestion({ question }: PollQuestionProps) {
             <button
               key={option.id}
               onClick={() => handleVote(option.id)}
-              disabled={voted || loading}
+              disabled={loading}
               className={`w-full relative overflow-hidden p-4 rounded-lg border-2 transition ${
                 isSelected
-                  ? 'border-green-500 bg-green-50'
-                  : voted || loading
-                  ? 'border-gray-300 cursor-default'
+                  ? 'border-green-500 bg-green-50 cursor-default'
+                  : loading
+                  ? 'border-gray-300 cursor-wait opacity-60'
                   : 'border-gray-300 hover:border-green-500 hover:bg-green-50 cursor-pointer'
               }`}
             >
-              {/* Progress Bar */}
+              {/* Progress Bar - 항상 표시 */}
               <div
                 className={`absolute left-0 top-0 h-full transition-all duration-500 ${
                   isSelected ? 'bg-green-300 opacity-40' : 'bg-green-200 opacity-30'
                 }`}
-                style={{ width: voted ? `${percentage}%` : '0%' }}
+                style={{ width: totalVotes > 0 ? `${percentage}%` : '0%' }}
               />
 
               {/* Content */}
@@ -170,26 +193,37 @@ export default function PollQuestion({ question }: PollQuestionProps) {
                   </span>
                 </div>
 
-                {voted && (
-                  <div className="flex items-center gap-2">
-                    <span className="text-gray-500 text-sm">
-                      {option.vote_count} votes
-                    </span>
+                {/* 투표 결과는 항상 표시 (로그인 여부 무관) */}
+                <div className="flex items-center gap-2">
+                  <span className="text-gray-500 text-sm">
+                    {option.vote_count} {language === 'ko' ? '표' : 'votes'}
+                  </span>
+                  {totalVotes > 0 && (
                     <span className={`font-bold text-lg ${isSelected ? 'text-green-700' : 'text-gray-600'}`}>
                       {percentage}%
                     </span>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             </button>
           );
         })}
       </div>
 
-      {voted && (
-        <p className="text-gray-500 text-sm mt-3">
-          👥 {totalVotes} people voted
-        </p>
+      {/* 총 투표수는 항상 표시 */}
+      {totalVotes > 0 && (
+        <div className="mt-3 space-y-1">
+          <p className="text-gray-500 text-sm">
+            👥 {totalVotes} {language === 'ko' ? '명이 투표했습니다' : 'people voted'}
+          </p>
+          {voted && (
+            <p className="text-gray-400 text-xs">
+              💡 {language === 'ko'
+                ? '다른 옵션을 선택하여 투표를 변경할 수 있습니다'
+                : 'You can change your vote by selecting a different option'}
+            </p>
+          )}
+        </div>
       )}
     </div>
   );

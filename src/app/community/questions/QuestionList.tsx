@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import QuestionCard from './QuestionCard';
 import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 
-export default function QuestionList({ category, format }: { category?: string, format?: string }) {
+export default function QuestionList({ topic, category, format, filter }: { topic?: string, category?: string, format?: string, filter?: string }) {
   const { language } = useCookieLanguage();
   const [questions, setQuestions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -21,14 +21,15 @@ export default function QuestionList({ category, format }: { category?: string, 
 
     try {
       const params = new URLSearchParams({
-        date: 'all',
         lang: language,
         page: pageNum.toString(),
         limit: '10'
       });
 
+      if (topic) params.append('topic', topic);
       if (category) params.append('category', category);
       if (format) params.append('format', format);
+      if (filter) params.append('filter', filter);
 
       const res = await fetch(
         `/api/community/daily-questions?${params.toString()}`,
@@ -55,7 +56,7 @@ export default function QuestionList({ category, format }: { category?: string, 
   useEffect(() => {
     setPage(1);
     fetchQuestions(1, false);
-  }, [category, format, language]);
+  }, [topic, category, format, filter, language]);
 
   const handleLoadMore = () => {
     const nextPage = page + 1;

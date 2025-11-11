@@ -115,10 +115,10 @@ export default function TreatmentProtocol() {
           `}
         >
     
-          <span className="font-bold text-lg">
+          <span className="font-bold text-sm md:text-lg">
             {locale === 'ko' ? '피부과 시술' : 'Skin Treatments'}
           </span>
-          <span className="text-sm text-gray-600">
+          <span className="text-xs md:text-sm text-gray-600">
             {locale === 'ko' ? '비수술 케어' : 'Non-surgical Care'}
           </span>
         </button>
@@ -134,11 +134,13 @@ export default function TreatmentProtocol() {
             }
           `}
         >
-    
-          <span className="font-bold text-lg">
+     
+        
+         
+          <span className="font-bold text-sm md:text-lg">
             {locale === 'ko' ? '성형외과 수술' : 'Plastic Surgery'}
           </span>
-          <span className="text-sm text-gray-600">
+          <span className="text-xs md:text-sm text-gray-600">
             {locale === 'ko' ? '외과 수술' : 'Surgical Procedures'}
           </span>
         </button>

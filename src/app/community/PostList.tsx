@@ -28,7 +28,7 @@ export default function PostList({ posts, isAuthenticated }: PostListProps) {
     []
   );
 
-  const { requireLogin, loginModal } = useLoginGuard(isAuthenticated);
+  const { requireLogin, loginModal } = useLoginGuard();
 
   // 뒤로가기/앞으로가기 시 자동 새로고침
   useEffect(() => {

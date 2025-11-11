@@ -37,7 +37,9 @@
       "Bash(PGPASSWORD='iamhappy000##$$' psql:*)",
       "Bash(pkill:*)",
       "Bash(python3:*)",
-      "Bash(npx eslint:*)"
+      "Bash(npx eslint:*)",
+      "Bash(timeout 10 curl:*)",
+      "Bash(/tmp/original_community_page.tsx)"
     ],
     "deny": []
   }

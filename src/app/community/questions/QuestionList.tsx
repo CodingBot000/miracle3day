@@ -5,6 +5,9 @@ import QuestionCard from './QuestionCard';
 import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 
 export default function QuestionList({ topic, category, format, filter }: { topic?: string, category?: string, format?: string, filter?: string }) {
+  console.log('=== QuestionList 렌더링됨 ===');
+  console.log('받은 filter prop:', filter);
+
   const { language } = useCookieLanguage();
   const [questions, setQuestions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -13,6 +16,8 @@ export default function QuestionList({ topic, category, format, filter }: { topi
   const [hasMore, setHasMore] = useState(true);
 
   const fetchQuestions = async (pageNum: number, append = false) => {
+    console.log('fetchQuestions 호출됨, filter:', filter);
+
     if (append) {
       setLoadingMore(true);
     } else {
@@ -31,17 +36,29 @@ export default function QuestionList({ topic, category, format, filter }: { topi
       if (format) params.append('format', format);
       if (filter) params.append('filter', filter);
 
+      console.log('=== API 요청 ===');
+      console.log('URL:', `/api/community/daily-questions?${params.toString()}`);
+
       const res = await fetch(
         `/api/community/daily-questions?${params.toString()}`,
         { cache: 'no-store' }
       );
       const data = await res.json();
 
+      console.log('=== API 응답 ===');
+      console.log('Status:', res.status);
+      console.log('Data:', data);
+      console.log('Questions 개수:', data.questions?.length);
+      console.log('Filter 적용됐는가?', data.questions?.map((q: any) => ({ id: q.id, tags: q.tags })));
+
       if (append) {
         setQuestions(prev => [...prev, ...(data.questions || [])]);
       } else {
         setQuestions(data.questions || []);
       }
+
+      console.log('=== State 업데이트 ===');
+      console.log('Questions State:', data.questions?.length, '개 저장됨');
 
       setHasMore(data.pagination?.hasMore || false);
     } catch (error) {
@@ -54,6 +71,14 @@ export default function QuestionList({ topic, category, format, filter }: { topi
   };
 
   useEffect(() => {
+    console.log('=== QuestionList useEffect 실행됨 ===');
+    console.log('filter:', filter);
+    console.log('topic:', topic);
+    console.log('category:', category);
+    console.log('format:', format);
+    console.log('language:', language);
+    console.log('의존성 변경 감지됨! 새로운 데이터를 가져옵니다...');
+
     setPage(1);
     fetchQuestions(1, false);
   }, [topic, category, format, filter, language]);

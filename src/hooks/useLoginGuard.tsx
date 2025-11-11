@@ -1,23 +1,44 @@
 'use client'
 
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState, useEffect } from 'react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import LoginRequiredModal from '@/components/template/modal/LoginRequiredModal'
 
-export function useLoginGuard(isAuthenticated: boolean) {
+export function useLoginGuard() {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const [user, setUser] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
   const [open, setOpen] = useState(false)
 
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const res = await fetch('/api/auth/session')
+        if (res.ok) {
+          const data = await res.json()
+          setUser(data.auth)
+        } else {
+          setUser(null)
+        }
+      } catch (error) {
+        setUser(null)
+      } finally {
+        setLoading(false)
+      }
+    }
+    checkAuth()
+  }, [])
+
   const requireLogin = useCallback(() => {
-    if (isAuthenticated) {
+    if (user && user.status === 'active') {
       return true
     }
 
     setOpen(true)
     return false
-  }, [isAuthenticated])
+  }, [user])
 
   const modal = useMemo(() => {
     // Build current URL with query params for redirect

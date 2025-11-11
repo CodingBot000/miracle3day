@@ -72,8 +72,8 @@ export default function QuestionList({ topic, category, format, filter }: { topi
     return (
       <div className="text-center py-12 text-gray-500 bg-white rounded-xl">
         <div className="text-6xl mb-4">🤔</div>
-        <p className="text-xl font-semibold">No questions available today</p>
-        <p className="text-sm mt-2">Check back tomorrow for new questions!</p>
+        <p className="text-xl font-semibold">{language === 'ko' ? '오늘 질문이 없습니다' : 'No questions available today'}</p>
+        <p className="text-sm mt-2">{language === 'ko' ? '내일 다시 확인해주세요' : 'Check back tomorrow for new questions!'}</p>
       </div>
     );
   }

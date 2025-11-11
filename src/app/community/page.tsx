@@ -34,7 +34,7 @@ export default async function HomePage({ searchParams }: CommunityPageProps) {
     return (
       <div className="space-y-6">
         {/* 탭 네비게이션 */}
-        <div className="flex gap-2 border-b border-gray-200">
+        {/* <div className="flex gap-2 border-b border-gray-200">
           <a
             href="/community?view=posts"
             className="px-6 py-3 text-gray-600 hover:text-gray-900 transition"
@@ -47,7 +47,7 @@ export default async function HomePage({ searchParams }: CommunityPageProps) {
           >
             {language === 'ko' ? '💬 데일리 질문' : '💬 Daily Questions'}
           </a>
-        </div>
+        </div> */}
 
         {/* Daily Questions */}
         <Suspense fallback={<div className="animate-pulse bg-gray-200 h-32 rounded-xl mb-6" />}>
@@ -112,7 +112,7 @@ export default async function HomePage({ searchParams }: CommunityPageProps) {
   return (
     <div className="space-y-6">
       {/* 탭 네비게이션 */}
-      <div className="flex gap-2 border-b border-gray-200">
+      {/* <div className="flex gap-2 border-b border-gray-200">
         <a
           href="/community?view=posts"
           className="px-6 py-3 text-pink-600 border-b-2 border-pink-600 font-semibold"
@@ -125,7 +125,7 @@ export default async function HomePage({ searchParams }: CommunityPageProps) {
         >
           {language === 'ko' ? '💬 데일리 질문' : '💬 Daily Questions'}
         </a>
-      </div>
+      </div> */}
 
       {/* Posts 목록 */}
       <div className="flex justify-between items-center">

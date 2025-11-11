@@ -12,10 +12,10 @@ import { requireUserId } from '@/lib/auth/require-user';
 
 async function getCategories(): Promise<CommunityCategory[]> {
   const rows = await q(
-    `SELECT id, name, description, order_index, is_active
+    `SELECT id, name, description, icon, category_type, display_order, is_active
      FROM ${TABLE_COMMUNITY_CATEGORIES}
      WHERE is_active = true
-     ORDER BY order_index ASC`
+     ORDER BY category_type, COALESCE(display_order) ASC`
   );
   return rows as CommunityCategory[];
 }
@@ -75,7 +75,9 @@ export default async function EditPage({
           initialData={{
             title: post.title,
             content: post.content,
-            id_category: post.id_category ? String(post.id_category) : undefined,
+            topic_id: post.topic_id,
+            post_tag: post.post_tag,
+            is_anonymous: post.is_anonymous,
           }}
           postId={post.id}
         />

@@ -2,21 +2,44 @@
 
 import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 import { useRouter } from 'next/navigation';
+import { useLoginGuard } from '@/hooks/useLoginGuard';
 
 export default function SituationQuestion({ question }: { question: any }) {
   const router = useRouter();
   const { language } = useCookieLanguage();
+  const { requireLogin, loginModal } = useLoginGuard();
 
-  const handleAnswer = () => {
+  // 다국어 텍스트 추출
+  const getText = (jsonbField: any): string => {
+    if (!jsonbField) return '';
+    if (typeof jsonbField === 'string') return jsonbField;
+    return jsonbField[language] || jsonbField.en || jsonbField.ko || '';
+  };
+
+  // 읽기 화면으로 이동 (로그인 불필요)
+  const handleCardClick = () => {
     router.push(`/community/questions/${question.id}`);
   };
 
-  const handleViewAnswers = () => {
-    router.push(`/community/questions/${question.id}#answers`);
+  // 글쓰기 화면 (로그인 필수)
+  const handleShareExperience = (e: React.MouseEvent) => {
+    e.stopPropagation(); // 카드 클릭 방지
+
+    // 로그인 체크 - 비로그인시 모달 표시
+    if (!requireLogin()) {
+      return;
+    }
+
+    // 글쓰기 화면으로 이동
+    router.push(`/community/questions/${question.id}/write`);
   };
 
   return (
-    <div>
+    <div
+      onClick={handleCardClick}
+      className="cursor-pointer hover:shadow-lg transition-shadow"
+    >
+      {/* 태그 영역 */}
       <div className="flex items-center gap-2 mb-3 flex-wrap">
         <span className="bg-orange-100 text-orange-800 text-sm font-bold px-3 py-1 rounded-full">
           {language === 'ko' ? '🎭 상황 · 경험 공유' : '🎭 Situation · Experience Sharing'}
@@ -26,29 +49,52 @@ export default function SituationQuestion({ question }: { question: any }) {
         </span>
       </div>
 
-      <h3 className="text-2xl font-bold text-gray-900 mb-4">{question.title}</h3>
+      {/* 제목 */}
+      <h3 className="text-2xl font-bold text-gray-900 mb-4">
+        {getText(question.title)}
+      </h3>
 
+      {/* 상황 배경 */}
       {question.situation_context && (
         <div className="bg-orange-50 border-l-4 border-orange-500 p-4 rounded-lg mb-4">
-          {/* <div className="font-bold text-orange-800 text-sm mb-2">📍 상황</div> */}
-          <div className="text-gray-700 line-clamp-3">{question.situation_context}</div>
+          <div className="text-gray-700 line-clamp-3">
+            {getText(question.situation_context)}
+          </div>
         </div>
       )}
 
-      <div className="flex gap-3 flex-wrap">
+      {/* 하단: 버튼 + 통계 */}
+      <div className="flex items-center justify-between gap-3">
+        {/* 왼쪽: 공유 버튼 */}
         <button
-          onClick={handleAnswer}
-          className="flex-1 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition hover:scale-[1.02] active:scale-[0.98]"
+          onClick={handleShareExperience}
+          className="flex-shrink-0 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition hover:scale-[1.02] active:scale-[0.98]"
         >
-          {language === 'ko' ? '💬 내 경험 공유하기' : '💬 Share My Experience'}
+          {language === 'ko' ? '💬 내 경험 공유' : '💬 Share Experience'}
         </button>
-        <button
-          onClick={handleViewAnswers}
-          className="px-6 py-3 border-2 border-gray-300 rounded-lg font-semibold hover:border-orange-500 hover:bg-orange-50 transition"
-        >
-          {language === 'ko' ? `👀 ${question.answer_count || 0}개 답변` : `👀 ${question.answer_count || 0} answers`}
-        </button>
+
+        {/* 오른쪽: 통계 정보 (읽기 전용) */}
+        <div className="flex-1 flex items-center gap-4 justify-end text-gray-600 text-sm">
+          <div className="flex items-center gap-1">
+            <span>👀</span>
+            <span>{question.view_count || 0}</span>
+            <span className="text-xs text-gray-500">
+              {language === 'ko' ? '조회' : 'views'}
+            </span>
+          </div>
+          
+          <div className="flex items-center gap-1">
+            <span>💬</span>
+            <span>{question.answer_count || 0}</span>
+            <span className="text-xs text-gray-500">
+              {language === 'ko' ? '답변' : 'answers'}
+            </span>
+          </div>
+        </div>
       </div>
+
+      {/* 로그인 모달 */}
+      {loginModal}
     </div>
   );
 }

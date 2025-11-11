@@ -28,7 +28,10 @@ export async function middleware(req: NextRequest) {
     console.log('[middleware] public path, passing through:', path);
   }
 
-  return ensureLangCookie(req, NextResponse.next());
+  const response = NextResponse.next();
+  // pathname을 헤더에 추가하여 layout에서 사용할 수 있게 함
+  response.headers.set('x-pathname', path);
+  return ensureLangCookie(req, response);
 }
 
 export const config = {

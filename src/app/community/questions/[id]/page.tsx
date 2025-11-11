@@ -6,6 +6,21 @@ import AnswerForm from './AnswerForm';
 import { getAuthSession } from '@/lib/auth-helper';
 import { findMemberByUserId } from '@/app/api/auth/getUser/member.helper';
 
+type MultiLingualField = string | { [key: string]: string } | null | undefined;
+
+function getLocalizedText(field: MultiLingualField, language: string) {
+  if (!field) return '';
+  if (typeof field === 'string') return field;
+
+  const normalizedLang = (language || '').toLowerCase();
+  return (
+    (normalizedLang ? field[normalizedLang] : '') ||
+    field.en ||
+    field.ko ||
+    ''
+  );
+}
+
 async function fetchQuestion(id: string, lang: string = 'ko') {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
@@ -121,13 +136,13 @@ export default async function QuestionDetailPage({
 
         {/* 제목 */}
         <h1 className="text-3xl font-bold text-gray-900 mb-3 leading-tight">
-          {question.title}
+          {getLocalizedText(question.title, language)}
         </h1>
 
         {/* 부제목 */}
         {question.subtitle && (
           <p className="text-lg text-gray-700 mb-4 leading-relaxed">
-            {question.subtitle}
+            {getLocalizedText(question.subtitle, language)}
           </p>
         )}
 
@@ -136,7 +151,7 @@ export default async function QuestionDetailPage({
           <div className="bg-white/50 border-l-4 border-orange-500 p-4 rounded-lg mt-4">
             {/* <div className="font-bold text-orange-800 text-sm mb-2">📍 상황</div> */}
             <div className="text-gray-700 leading-relaxed whitespace-pre-line">
-              {question.situation_context}
+              {getLocalizedText(question.situation_context, language)}
             </div>
           </div>
         )}

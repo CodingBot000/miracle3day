@@ -1,5 +1,25 @@
 'use client';
-
+/**
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 사용안하는 페이지로 추측됨 확인필요 
+ * 
+ * 
+ * 
+ */
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';

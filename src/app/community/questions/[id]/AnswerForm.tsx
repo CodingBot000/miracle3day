@@ -15,7 +15,7 @@ interface AnswerFormProps {
 export default function AnswerForm({ questionId, pointsReward, isAuthenticated }: AnswerFormProps) {
   const router = useRouter();
   const { language } = useCookieLanguage();
-  const { requireLogin, loginModal } = useLoginGuard(isAuthenticated);
+  const { requireLogin, loginModal } = useLoginGuard();
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(false);
 

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { getAuthSession } from "@/lib/auth-helper";
 import { q } from '@/lib/db';
 import {
@@ -61,6 +62,10 @@ export async function POST(
 
     const total = await updateLikeCount(postId);
 
+    // 캐시 무효화
+    revalidatePath('/community');
+    revalidatePath(`/community/post/${postId}`);
+
     return NextResponse.json({ liked: true, count: total });
   } catch (error) {
     console.error('POST /api/community/posts/[id]/likes error:', error);
@@ -103,6 +108,10 @@ export async function DELETE(
     );
 
     const total = await updateLikeCount(postId);
+
+    // 캐시 무효화
+    revalidatePath('/community');
+    revalidatePath(`/community/post/${postId}`);
 
     return NextResponse.json({ liked: false, count: total });
   } catch (error) {

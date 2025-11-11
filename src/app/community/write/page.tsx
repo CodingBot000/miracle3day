@@ -11,10 +11,10 @@ import { requireUserId } from '@/lib/auth/require-user';
 
 async function getCategories(): Promise<CommunityCategory[]> {
   const rows = await q(
-    `SELECT id, name, description, order_index, is_active
+    `SELECT id, name, description, is_active, category_type, icon, display_order
      FROM ${TABLE_COMMUNITY_CATEGORIES}
      WHERE is_active = true
-     ORDER BY order_index ASC`
+     ORDER BY display_order ASC`
   );
   return rows as CommunityCategory[];
 }

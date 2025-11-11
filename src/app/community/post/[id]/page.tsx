@@ -1,6 +1,8 @@
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { cookies } from "next/headers";
+import { getIronSession } from "iron-session";
+import { sessionOptions } from "@/lib/session";
 import CommentSection from '@/components/molecules/CommentSection';
 import LikeButton from '@/components/atoms/button/LikeButton';
 import ReportButton from '@/components/atoms/button/ReportButton';
@@ -66,43 +68,50 @@ export default async function PostDetailPage({
     redirect('/community');
   }
 
+  // 읽기는 로그인 불필요 - 세션이 있으면 member 정보 가져오기
   const cookieStore = cookies();
-  const sessionCookie = cookieStore.get("app_session");
-  
-  if (!sessionCookie) {
-    redirect('/auth/login');
+  const session = await getIronSession(cookieStore, sessionOptions);
+  const auth = (session as any).auth;
+
+  let userId: string | null = null;
+  let member: any = null;
+  let memberUuid: string | null = null;
+
+  if (auth && auth.status === "active" && auth.id_uuid) {
+    userId = auth.id_uuid as string;
+    member = await findMemberByUserId(userId);
+
+    if (member) {
+      memberUuid =
+        (member['uuid'] as string | undefined) ??
+        (member['id_uuid'] as string | undefined) ??
+        userId;
+    }
   }
-  
-  // 임시로 userId 설정 - 실제로는 세션에서 추출해야 함
-  const userId = "temp-user-id";
-
-  const member = await findMemberByUserId(userId!);
-
-  if (!member) {
-    redirect('/auth/login');
-  }
-
-  const memberUuid =
-    (member['uuid'] as string | undefined) ??
-    (member['id_uuid'] as string | undefined) ??
-    userId!;
 
   const posts = await q(
-    `SELECT p.*, 
-            c.name AS category_name, 
-            c.description AS category_description,
-            c.is_active AS category_is_active
+    `SELECT p.*,
+            tc.name AS topic_name,
+            tc.icon AS topic_icon,
+            tc.is_active AS topic_is_active,
+            tg.name AS tag_name,
+            tg.icon AS tag_icon,
+            tg.is_active AS tag_is_active
      FROM ${TABLE_COMMUNITY_POSTS} p
-     LEFT JOIN ${TABLE_COMMUNITY_CATEGORIES} c ON c.id = p.id_category
+     LEFT JOIN ${TABLE_COMMUNITY_CATEGORIES} tc ON tc.id = p.topic_id
+     LEFT JOIN ${TABLE_COMMUNITY_CATEGORIES} tg ON tg.id = p.post_tag
      WHERE p.id = $1 AND p.is_deleted = false
      LIMIT 1`,
     [postId]
   );
 
   const post = posts[0] as CommunityPost & {
-    category_name?: string | null;
-    category_description?: string | null;
-    category_is_active?: boolean | null;
+    topic_name?: string | { en: string; ko: string } | null;
+    topic_icon?: string | null;
+    topic_is_active?: boolean | null;
+    tag_name?: string | { en: string; ko: string } | null;
+    tag_icon?: string | null;
+    tag_is_active?: boolean | null;
   };
 
   if (!post) {
@@ -112,7 +121,7 @@ export default async function PostDetailPage({
   const comments = await q(
     `SELECT c.*, m.nickname, m.avatar
      FROM ${TABLE_COMMUNITY_COMMENTS} c
-     LEFT JOIN members m ON m.uuid = c.uuid_author
+     LEFT JOIN members m ON m.id_uuid = c.uuid_author
      WHERE c.id_post = $1 AND c.is_deleted = false
      ORDER BY c.created_at ASC`,
     [postId]
@@ -131,7 +140,7 @@ export default async function PostDetailPage({
 
   const commentTree = buildCommentTree(formattedComments);
   const totalComments = countComments(commentTree);
-  const isAuthor = memberUuid === post.uuid_author;
+  const isAuthor = memberUuid ? memberUuid === post.uuid_author : false;
 
   const likeCountRows = await q<{ count: number }>(
     `SELECT COUNT(*)::int AS count FROM ${TABLE_COMMUNITY_LIKES} WHERE id_post = $1`,
@@ -139,11 +148,15 @@ export default async function PostDetailPage({
   );
   const likeCountValue = likeCountRows[0]?.count ?? post.like_count ?? 0;
 
-  const userLikeRows = await q(
-    `SELECT 1 FROM ${TABLE_COMMUNITY_LIKES} WHERE id_post = $1 AND uuid_member = $2 LIMIT 1`,
-    [postId, memberUuid]
-  );
-  const hasUserLiked = userLikeRows.length > 0;
+  // 로그인한 경우에만 좋아요 여부 확인
+  let hasUserLiked = false;
+  if (memberUuid) {
+    const userLikeRows = await q(
+      `SELECT 1 FROM ${TABLE_COMMUNITY_LIKES} WHERE id_post = $1 AND uuid_member = $2 LIMIT 1`,
+      [postId, memberUuid]
+    );
+    hasUserLiked = userLikeRows.length > 0;
+  }
 
   const viewRows = await q(
     `UPDATE ${TABLE_COMMUNITY_POSTS}
@@ -158,13 +171,26 @@ export default async function PostDetailPage({
   const nextViewCount =
     viewRows[0]?.view_count ?? (post.view_count ?? 0) + 1;
 
-  const categoryName =
-    post.category_is_active === false ? null : post.category_name ?? null;
-  const anonymousCategory = isAnonymousCategoryName(categoryName);
-  const authorName = anonymousCategory
+  // Get language from cookie
+  const languageCookie = cookieStore.get('language');
+  const language = (languageCookie?.value as 'ko' | 'en') || 'ko';
+
+  const getDisplayName = (name: string | { en: string; ko: string } | null | undefined): string | null => {
+    if (!name) return null;
+    if (typeof name === 'string') return name;
+    return name[language] || name.ko || name.en || null;
+  };
+
+  const topicName =
+    post.topic_is_active === false ? null : getDisplayName(post.topic_name);
+  const tagName =
+    post.tag_is_active === false ? null : getDisplayName(post.tag_name);
+
+  // Use is_anonymous field instead of category check
+  const authorName = post.is_anonymous
     ? ANONYMOUS_FALLBACK.name
     : post.author_name_snapshot?.trim() || ANONYMOUS_FALLBACK.name;
-  const authorAvatar = anonymousCategory
+  const authorAvatar = post.is_anonymous
     ? ANONYMOUS_FALLBACK.avatar
     : post.author_avatar_snapshot?.trim() || ANONYMOUS_FALLBACK.avatar;
 
@@ -175,8 +201,9 @@ export default async function PostDetailPage({
     timeZone: 'Asia/Seoul',
   }).format(new Date(post.created_at));
 
-  const currentUser: Member = {
-    uuid: memberUuid,
+  // 로그인한 경우에만 currentUser 생성
+  const currentUser: Member | null = member ? {
+    uuid: memberUuid!,
     nickname:
       (member['nickname'] as string | undefined) ??
       (member['name'] as string | undefined) ??
@@ -186,14 +213,14 @@ export default async function PostDetailPage({
     avatar: member['avatar'] as string | undefined,
     created_at: (member['created_at'] as string | undefined) ?? new Date().toISOString(),
     updated_at: (member['updated_at'] as string | undefined) ?? new Date().toISOString(),
-  };
+  } : null;
 
   return (
     <div className="max-w-4xl mx-auto">
       <SetCommunityHeader>
         <div className="mt-4">
           <span className="inline-flex px-4 py-2 rounded-full bg-blue-50 text-blue-700 text-sm font-medium">
-            {categoryName ?? 'All Posts'}
+            {topicName ?? 'Community'}
           </span>
         </div>
       </SetCommunityHeader>
@@ -201,9 +228,14 @@ export default async function PostDetailPage({
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
-              {categoryName && (
+              {topicName && (
                 <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
-                  {categoryName}
+                  {post.topic_icon && `${post.topic_icon} `}{topicName}
+                </span>
+              )}
+              {tagName && (
+                <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">
+                  {post.tag_icon && `${post.tag_icon} `}{tagName}
                 </span>
               )}
               <div className="flex items-center gap-3 text-gray-500 text-sm">
@@ -241,6 +273,7 @@ export default async function PostDetailPage({
                 postId={post.id}
                 initialLiked={hasUserLiked}
                 initialCount={likeCountValue}
+                isAuthenticated={!!currentUser}
               />
               <div className="flex items-center gap-1 text-gray-500">
                 <span>👁</span>
@@ -254,6 +287,7 @@ export default async function PostDetailPage({
             <ReportButton
               targetType="post"
               targetId={post.id}
+              isAuthenticated={!!currentUser}
             />
           </div>
         </div>

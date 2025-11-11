@@ -1,64 +1,40 @@
 import { cookies } from "next/headers";
-import { getCommunityCategories, getCommunityPostsDTO } from '@/app/api/community/getPosts';
-import type { CommunityCategory } from '@/app/models/communityData.dto';
-import PostList from './PostList';
-import WritePostButton from './WritePostButton';
+import { Suspense } from 'react';
+import QuestionsView from './QuestionsView';
+import PostsView from './PostsView';
 
 interface CommunityPageProps {
   searchParams?: {
-    category?: string
+    view?: 'posts' | 'questions';
+    topic?: string;
+    tag?: string;
+    filter?: string;
   }
 }
 
 export default async function HomePage({ searchParams }: CommunityPageProps) {
   const cookieStore = cookies();
-  const sessionCookie = cookieStore.get("app_session");
-  const isAuthenticated = !!sessionCookie;
+  const languageCookie = cookieStore.get('language');
+  const language = (languageCookie?.value as 'ko' | 'en') || 'ko';
 
-  const categories = await getCommunityCategories();
-  const categoryMap = new Map<string, CommunityCategory>(
-    categories.map((category) => [category.id, category])
-  );
+  // 기본값: posts
+  const currentView = searchParams?.view || 'posts';
+  const topicId = searchParams?.topic;
+  const tagId = searchParams?.tag;
 
-  const defaultCategoryId = categories[0]?.id;
-  const requestedCategoryId = searchParams?.category;
-  const selectedCategoryId =
-    requestedCategoryId && categoryMap.has(requestedCategoryId)
-      ? requestedCategoryId
-      : defaultCategoryId;
+  console.log('=== HomePage (서버) 렌더링됨 ===');
+  console.log('currentView:', currentView);
+  console.log('searchParams:', searchParams);
 
-  const { posts, commentsCount, likesCount } = await getCommunityPostsDTO(selectedCategoryId);
+  // Questions 뷰일 때
+  if (currentView === 'questions') {
+    return (
+      <Suspense fallback={<div className="animate-pulse bg-gray-200 h-96 rounded-xl" />}>
+        <QuestionsView />
+      </Suspense>
+    );
+  }
 
-  const commentCountMap = new Map<number, number>(
-    commentsCount.map(({ id_post, count }) => [id_post, count])
-  );
-  const likeCountMap = new Map<number, number>(
-    likesCount.map(({ id_post, count }) => [id_post, count])
-  );
-
-  const enrichedPosts = posts.map((post) => ({
-    ...post,
-    comment_count: commentCountMap.get(post.id) ?? 0,
-    like_count: likeCountMap.get(post.id) ?? 0,
-    category: post.id_category ? categoryMap.get(post.id_category) : undefined,
-  }));
-
-  const activeCategoryLabel = selectedCategoryId
-    ? categoryMap.get(selectedCategoryId)?.name
-    : undefined;
-
-  return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">
-          {activeCategoryLabel ? `${activeCategoryLabel} Posts` : 'Community Posts'}
-        </h2>
-        <WritePostButton isAuthenticated={isAuthenticated} />
-      </div>
-
-      <div className="bg-white rounded-lg shadow">
-        <PostList posts={enrichedPosts} isAuthenticated={isAuthenticated} />
-      </div>
-    </div>
-  );
+  // Posts 뷰
+  return <PostsView topicId={topicId} tagId={tagId} language={language} />;
 }

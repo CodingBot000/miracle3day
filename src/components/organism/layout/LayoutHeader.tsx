@@ -27,6 +27,9 @@ const LayoutHeader = () => {
   // Check if current page is home
   const isHomePage = pathname === '/' || pathname === '/home';
 
+  // Check if current page is auth (login, terms, etc.)
+  const isAuthPage = pathname?.startsWith('/auth') ?? false;
+
   // 모바일 모드일 때 LayoutHeader의 스타일을 조정할 수 있습니다
   useEffect(() => {
     if (isMobileMode) {
@@ -98,41 +101,45 @@ const LayoutHeader = () => {
       <div className="flex-1 flex items-center px-4">
         <div className="w-full flex justify-between items-center max-w-[1080px] mx-auto">
           <Logo />
-          <div className="flex items-center gap-2">
-            <div className={`flex items-center gap-2 transition-colors duration-300 ${getIconColor()}`}>
-              {/* community */}
-              {!isMobileMode && (
-                <Link href="/community">
-                  <MessageSquareText size={20} />
-                </Link>
-              )}
+          {!isAuthPage && (
+            <div className="flex items-center gap-2">
+              <div className={`flex items-center gap-2 transition-colors duration-300 ${getIconColor()}`}>
+                {/* community */}
+                {!isMobileMode && (
+                  <Link href="/community">
+                    <MessageSquareText size={20} />
+                  </Link>
+                )}
 
-              {/* <div>
-                <button onClick={() => setShowSearch(true)}>
-                  <Search size={20} />
-                </button>
-              </div> */}
-              <div>
-                <LanguageSelector iconColor={isTransparentMode && !isScrolled ? 'white' : 'black'} />
+                {/* <div>
+                  <button onClick={() => setShowSearch(true)}>
+                    <Search size={20} />
+                  </button>
+                </div> */}
+                <div>
+                  <LanguageSelector iconColor={isTransparentMode && !isScrolled ? 'white' : 'black'} />
+                </div>
               </div>
+              {!isMobileMode && (
+              <div className="relative text-black">
+                <AuthClient iconColor={isTransparentMode && !isScrolled ? 'white' : 'black'} />
+              </div>
+              )}
             </div>
-            {!isMobileMode && (
-            <div className="relative text-black">
-              <AuthClient iconColor={isTransparentMode && !isScrolled ? 'white' : 'black'} />
-            </div>
-            )}
-          </div>
+          )}
         </div>
       </div>
 
       {/* Bottom Section - Back Button (fixed 40px height) */}
-      <div className="h-[30px] flex items-center px-4 border-t border-gray-200/20">
-        <div className="w-full max-w-[1080px] mx-auto">
-        {!isHomePage && (
-          <BackButton iconColor={isTransparentMode && !isScrolled ? 'white' : 'black'} />
-        )}
+      {!isAuthPage && (
+        <div className="h-[30px] flex items-center px-4 border-t border-gray-200/20">
+          <div className="w-full max-w-[1080px] mx-auto">
+          {!isHomePage && (
+            <BackButton iconColor={isTransparentMode && !isScrolled ? 'white' : 'black'} />
+          )}
+          </div>
         </div>
-      </div>
+      )}
       
     </header>
 

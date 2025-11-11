@@ -21,7 +21,7 @@ export default async function CommunityLayout({
   const language = langCookie?.value || 'en';
 
   try {
-    categories = await getCommunityCategories(language)
+    categories = await getCommunityCategories()
   } catch (error) {
     console.error('[CommunityLayout] Failed to fetch categories:', error)
     // DB 연결 실패시 빈 배열로 계속 진행

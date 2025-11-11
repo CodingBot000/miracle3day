@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { getAuthSession } from "@/lib/auth-helper";
 import { z } from 'zod';
 import { q } from '@/lib/db';
@@ -10,7 +11,7 @@ import { findMemberByUserId } from '@/app/api/auth/getUser/member.helper';
 
 const createSchema = z.object({
   content: z.string().min(1),
-  parentId: z.number().optional().nullable(),
+  parentId: z.union([z.number(), z.string().transform(Number)]).optional().nullable(),
 });
 
 async function recalcCommentCount(postId: number | string) {
@@ -92,6 +93,10 @@ export async function POST(
       avatar: member['avatar'] as string | undefined,
     };
     comment.replies = [];
+
+    // 캐시 무효화
+    revalidatePath('/community');
+    revalidatePath(`/community/post/${postId}`);
 
     return NextResponse.json({ comment, total });
   } catch (error) {

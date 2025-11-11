@@ -13,7 +13,7 @@ import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import CookieConsent from "@/components/template/CookieConsent";
 import { Toaster } from "sonner";
-import { HeaderProvider, useHeader } from "@/contexts/HeaderContext";
+import { HeaderProvider } from "@/contexts/HeaderContext";
 import MainContent from "@/components/layout/MainContent";
 import Script from "next/script";
 

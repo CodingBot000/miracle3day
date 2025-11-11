@@ -15,7 +15,7 @@ export default function ReportButton({
   targetId,
   isAuthenticated,
 }: ReportButtonProps) {
-  const { requireLogin, loginModal } = useLoginGuard(isAuthenticated);
+  const { requireLogin, loginModal } = useLoginGuard();
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [reportReason, setReportReason] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);

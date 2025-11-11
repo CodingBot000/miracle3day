@@ -16,7 +16,7 @@ export default function LikeButton({
   initialCount,
   isAuthenticated,
 }: LikeButtonProps) {
-  const { requireLogin, loginModal } = useLoginGuard(isAuthenticated);
+  const { requireLogin, loginModal } = useLoginGuard();
   const [isLiked, setIsLiked] = useState(initialLiked);
   const [likesCount, setLikesCount] = useState(initialCount);
   const [isLoading, setIsLoading] = useState(false);

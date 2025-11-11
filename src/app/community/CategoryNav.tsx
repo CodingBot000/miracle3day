@@ -39,7 +39,7 @@ export default function CategoryNav({ categories }: { categories: any[] }) {
           {language === 'ko' ? '🎯 주제별 커뮤니티' : '🎯 Topics'}
         </h3>
         <div className="flex flex-wrap gap-2">
-          <Link href={buildUrl({ tag: currentTag })}>
+          <Link href={buildUrl({ tag: currentTag ?? undefined })}>
             <button className={`px-4 py-2.5 rounded-lg font-semibold transition-all ${
               !currentTopic
                 ? 'bg-blue-600 text-white shadow-lg'
@@ -50,7 +50,7 @@ export default function CategoryNav({ categories }: { categories: any[] }) {
           </Link>
 
           {topicCategories.map(cat => (
-            <Link key={cat.id} href={buildUrl({ topic: cat.id, tag: currentTag })}>
+            <Link key={cat.id} href={buildUrl({ topic: cat.id, tag: currentTag ?? undefined })}>
               <button className={`px-4 py-2.5 rounded-lg font-semibold transition-all ${
                 currentTopic === cat.id
                   ? 'bg-blue-600 text-white shadow-lg'
@@ -73,7 +73,7 @@ export default function CategoryNav({ categories }: { categories: any[] }) {
             </h3>
             <div className="flex flex-wrap gap-2">
               {tagCategories.map(cat => (
-                <Link key={cat.id} href={buildUrl({ topic: currentTopic, tag: cat.id })}>
+                <Link key={cat.id} href={buildUrl({ topic: currentTopic ?? undefined, tag: cat.id })}>
                   <button className={`px-4 py-2.5 rounded-lg font-semibold transition-all ${
                     currentTag === cat.id
                       ? 'bg-blue-600 text-white shadow-lg'

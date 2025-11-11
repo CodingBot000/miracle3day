@@ -9,7 +9,7 @@ interface WritePostButtonProps {
 
 export default function WritePostButton({ isAuthenticated }: WritePostButtonProps) {
   const router = useRouter()
-  const { requireLogin, loginModal } = useLoginGuard(isAuthenticated)
+  const { requireLogin, loginModal } = useLoginGuard()
 
   const handleClick = () => {
     if (!requireLogin()) {

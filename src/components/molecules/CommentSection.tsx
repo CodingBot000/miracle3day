@@ -21,7 +21,7 @@ export default function CommentSection({
 }: CommentSectionProps) {
   const { language } = useCookieLanguage();
   const router = useRouter();
-  const { requireLogin, loginModal } = useLoginGuard(!!currentUser);
+  const { requireLogin, loginModal } = useLoginGuard();
   const [comments, setComments] = useState(initialComments);
   const [newComment, setNewComment] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);

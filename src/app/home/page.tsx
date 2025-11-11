@@ -29,6 +29,7 @@ import WhyKoreaButton from "./components/WhyKoreaButton";
 import AgeGuideCTA from "../treatment-based-age-guide/components/AgeGuideCTA";
 import { getLangFromCookies, Lang, t } from "@/i18n/i18n";
 import ReviewScrollSection from "@/app/home/components/ReviewScrollSection";
+import BeautyPartners from "../partners/BeautyPartners";
 
 export default async function HomePage() {
   // const bannerItem = await getBannerAPI();
@@ -53,7 +54,15 @@ export default async function HomePage() {
           <div className="absolute inset-0 bg-black/15 z-10"></div>
           <div className="absolute inset-0 flex items-end justify-end text-white z-30 pb-6 pr-6 md:pb-12 md:pr-12">
             <div className="text-right">
-              <WhyKoreaButton />
+              <div className="mb-2 md:mb-4">
+                <WhyKoreaButton />
+              </div>
+              <div className="mb-2 md:mb-4">
+                <AgeGuideCTA />
+              </div>
+              <div className="mb-2 md:mb-4">
+                <BeautyPartners />
+              </div>
               <h1 className="text-xl md:text-3xl lg:text-5xl font-bold drop-shadow-lg">Reveal Your Beauty</h1>
               <p className="mt-2 md:mt-4 text-sm md:text-base lg:text-lg drop-shadow-md">
                   Discover premium skincare <br className="md:hidden" />
@@ -119,17 +128,15 @@ export default async function HomePage() {
           </div> */}
 
 
-          <section className="max-w-container mx-auto mt-20">
+          {/* <section className="max-w-container mx-auto mt-20">
               <div className="text-center mb-8">
-              {/* <p className="text-pink-400 text-sm font-medium mb-4 tracking-wide">
-             Clinic List
-            </p> */}
+            
 
-            {/* 메인 제목 */}
+            
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Dermatology clinics in Korea for foreigners
             </h2>
-          </div>
+          </div> */}
             {/* <div className="my-8 leading-6 pl-4 md:pl-6 lg:pl-8">
 
               <p className="font-bold text-[1.5rem] mb-[5px]">New Beauty</p>
@@ -138,10 +145,12 @@ export default async function HomePage() {
             </div> */}
      
 
-        </section>
+        {/* </section> */}
         {/* <TreatmentBasedAgeGuide /> */}
-        <AgeGuideCTA />
-   
+        {/* <AgeGuideCTA />
+
+
+        <BeautyPartners /> */}
       {/* <section className="max-w-container mx-auto mt-20">
             <div className="my-8 px-4 md:px-6 lg:px-8">
 

@@ -405,7 +405,7 @@ export default function KBeautyResources() {
 
         {/* 언어 선택 */}
         <div className="flex justify-center gap-2 mt-6">
-          {(['ko', 'en', 'ja', 'zh'] as Language[]).map((lang) => (
+          {(['en', 'ja', 'zh', 'ko'] as Language[]).map((lang) => (
             <button
               key={lang}
               onClick={() => setSelectedLanguage(lang)}
@@ -425,7 +425,7 @@ export default function KBeautyResources() {
       {selectedCategory === 'all' && (
         <div className="mb-12">
           <div className="flex items-center gap-2 mb-6">
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-pink-500 to-purple-500 text-white">
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-pink-500 to-pink-400 text-white">
               ⭐ {t.featured}
             </span>
           </div>
@@ -537,23 +537,23 @@ function ResourceCard({
   language: Language;
   featured?: boolean;
 }) {
-  const Icon = categoryIcons[resource.category];
+  const Icon = categoryIcons[resource.category as keyof typeof categoryIcons];
   const t = translations[language];
 
   return (
-    <div className={`group relative bg-white rounded-xl border-2 transition-all hover:shadow-xl hover:-translate-y-1 ${
+    <div className={`group relative bg-white rounded-xl border-2 transition-all hover:shadow-xl hover:-translate-y-1 flex flex-col ${
       featured
         ? 'border-pink-300 shadow-lg shadow-pink-100'
         : 'border-gray-200 hover:border-pink-300'
     }`}>
       {/* Featured Badge */}
       {featured && (
-        <div className="absolute -top-3 -right-3 bg-gradient-to-r from-pink-500 to-purple-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+        <div className="absolute -top-3 -right-3 bg-gradient-to-r from-pink-500 to-pink-400 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
           ⭐ {t.featured}
         </div>
       )}
 
-      <div className="p-6">
+      <div className="p-6 flex flex-col flex-grow">
         {/* 헤더 */}
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center gap-3">
@@ -595,7 +595,7 @@ function ResourceCard({
           href={resource.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 w-full justify-center px-4 py-2.5 bg-gradient-to-r from-pink-500 to-pink-600 text-white rounded-lg font-medium hover:from-pink-600 hover:to-pink-700 transition-all shadow-md hover:shadow-lg"
+          className="mt-auto inline-flex items-center gap-2 w-full justify-center px-4 py-2.5 bg-gradient-to-r from-pink-500 to-pink-600 text-white rounded-lg font-medium hover:from-pink-600 hover:to-pink-700 transition-all shadow-md hover:shadow-lg"
         >
           <span>{t.visit}</span>
           <ExternalLink className="w-4 h-4" />

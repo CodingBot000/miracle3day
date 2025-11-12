@@ -490,10 +490,11 @@ export default function KBeautyResources() {
       {/* Footer 노트 */}
       <div className="mt-12 p-6 bg-gray-50 rounded-xl">
         <p className="text-sm text-gray-600 text-center">
-          {selectedLanguage === 'ko' && '모든 외부 링크는 정보 제공 목적입니다. iipuda는 외부 사이트의 내용에 대해 책임지지 않습니다.'}
-          {selectedLanguage === 'en' && 'All external links are for informational purposes. iipuda is not responsible for the content of external sites.'}
-          {selectedLanguage === 'ja' && 'すべての外部リンクは情報提供目的です。iipudaは外部サイトの内容について責任を負いません。'}
-          {selectedLanguage === 'zh' && '所有外部链接仅供参考。iipuda对外部网站内容不承担责任。'}
+        {selectedLanguage === 'ko' && '모든 외부 링크는 정보 제공 목적입니다. 당사는 외부 사이트의 내용에 대해 책임지지 않습니다.'}
+{selectedLanguage === 'en' && 'All external links are for informational purposes. We are not responsible for the content of external sites.'}
+{selectedLanguage === 'ja' && 'すべての外部リンクは情報提供目的です。当社は外部サイトの内容について責任を負いません。'}
+{selectedLanguage === 'zh' && '所有外部链接仅供参考。我们对外部网站内容不承担责任。'}
+
         </p>
       </div>
     </div>

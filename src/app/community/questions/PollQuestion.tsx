@@ -3,6 +3,9 @@
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { useCookieLanguage } from '@/hooks/useCookieLanguage';
+import { handleNotifications } from '@/utils/notificationHandler';
+import LevelUpModal from '@/components/gamification/LevelUpModal';
+import type { LevelUpNotification } from '@/types/badge';
 
 interface PollOption {
   id: number;
@@ -44,6 +47,7 @@ export default function PollQuestion({ question }: PollQuestionProps) {
 
   const [options, setOptions] = useState<PollOption[]>(question.poll_options || []);
   const [loading, setLoading] = useState(false);
+  const [levelUp, setLevelUp] = useState<LevelUpNotification | null>(null);
 
   const handleVote = async (optionId: number) => {
     // 같은 옵션 재선택 방지
@@ -86,12 +90,20 @@ export default function PollQuestion({ question }: PollQuestionProps) {
       });
 
       if (res.ok) {
-        const { options: updatedOptions, voted_option_id, message } = await res.json();
+        const { options: updatedOptions, voted_option_id, message, notifications } = await res.json();
 
         // 서버 응답으로 최종 동기화
         setOptions(updatedOptions);
         setSelectedOptionId(voted_option_id);
         setVoted(true);
+
+        // Handle badge notifications
+        if (notifications) {
+          const levelUpNotification = handleNotifications(notifications);
+          if (levelUpNotification) {
+            setLevelUp(levelUpNotification);
+          }
+        }
 
         // 메시지에 따라 토스트 표시
         if (message?.includes('changed')) {
@@ -224,6 +236,15 @@ export default function PollQuestion({ question }: PollQuestionProps) {
             </p>
           )}
         </div>
+      )}
+
+      {/* Level-up modal */}
+      {levelUp && (
+        <LevelUpModal
+          level={levelUp.level}
+          exp={levelUp.exp}
+          onClose={() => setLevelUp(null)}
+        />
       )}
     </div>
   );

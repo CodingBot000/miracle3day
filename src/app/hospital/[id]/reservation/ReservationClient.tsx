@@ -148,7 +148,7 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
       const newErrors: { [key: string]: string } = {};
       console.log('🔍 Step 1: Starting validation...');
       
-      if (!initialUserData?.userInfo?.uuid) newErrors.uuid = 'User UUID is required';
+      if (!initialUserData?.userInfo?.id_uuid) newErrors.uuid = 'User UUID is required';
       if (!formData.englishName) newErrors.englishName = 'English name is required';
       if (!formData.nationality) newErrors.nationality = 'Nationality is required';
       if (!formData.email) newErrors.email = 'Email is required';
@@ -173,7 +173,7 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
         const reservationData = {
           date: formData.date,
           time: formData.time,
-          id_user: initialUserData?.userInfo?.uuid,
+          id_user: initialUserData?.userInfo?.id_uuid,
           id_uuid_hospital: hospitalId,
           name: formData.englishName,
           english_name: formData.englishName,

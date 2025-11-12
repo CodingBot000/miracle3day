@@ -34,10 +34,7 @@ export default function ChatListPage() {
           return;
         }
 
-        const memberUuid =
-          userInfo.uuid ??
-          userInfo.id_uuid ??
-          userInfo.auth_user.id;
+        const memberUuid = userInfo.id_uuid;
 
         setUserId(memberUuid);
 

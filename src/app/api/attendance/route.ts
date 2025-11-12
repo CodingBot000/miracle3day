@@ -7,6 +7,7 @@ import {
   TABLE_MEMBERS,
   TABLE_POINT_TRANSACTIONS,
 } from "@/constants/tables";
+import { processActivity, ACTIVITY_TYPES } from '@/services/badges';
 
 const POINTS_PER_CHECK_IN = 10;
 const DAYS_IN_MONTH = 31;
@@ -206,12 +207,25 @@ export async function POST(req: Request) {
       }
     }
 
+    // Process badge activity for daily check-in
+    const notifications = await processActivity({
+      userId: memberUuid,
+      activityType: ACTIVITY_TYPES.DAILY_CHECKIN,
+      metadata: { ym, day },
+      referenceId: `${ym}:${day}`,
+    }).catch(err => {
+      console.error('Badge error:', err);
+      return [];
+    });
+
     return NextResponse.json({
+      success: true,
       ym,
       day,
       was_already: false,
       points_awarded: awardedPoints ? POINTS_PER_CHECK_IN : 0,
       attended_today: true,
+      notifications,
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Failed to check in";

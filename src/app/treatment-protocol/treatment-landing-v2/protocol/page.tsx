@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import Link from "next/link";
 import { useTopicDetail } from "@/hooks/useTreatmentData";
 import type { Benefits, Locale, SequenceStep, SequenceTitle, LocalizedText } from "@/app/models/treatmentData.dto";
 import { useCookieLanguage } from "@/hooks/useCookieLanguage";
@@ -359,27 +360,27 @@ export default function ProtocolPage() {
       <div className="bg-white rounded-lg p-4 shadow-sm">
 
         <div className="flex flex-wrap gap-2">
-          {areas.map((area) => (
-            <button
-              key={area.area_id}
-              onClick={() => {
-                const params = new URLSearchParams({
-                  topic_id: topic_id!,
-                  area_id: area.area_id
-                });
-                router.push(`/treatment-protocol/treatment-landing-v2/protocol?${params.toString()}`);
-              }}
-              className={`
-                px-4 py-2 text-sm font-medium rounded-full transition-all duration-200
-                ${area.area_id === area_id
-                  ? 'bg-gradient-to-r from-[#8B4513] to-[#A0522D] text-white shadow-md'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }
-              `}
-            >
-              {locale === 'ko' ? area.area_name_ko : area.area_name_en}
-            </button>
-          ))}
+          {areas.map((area) => {
+            const isSelected = area.area_id === area_id;
+            const areaName = locale === 'ko' ? area.area_name_ko : area.area_name_en;
+
+            return (
+              <Link
+                key={area.area_id}
+                href={`/treatment-protocol/treatment-landing-v2/protocol?topic_id=${topic_id}&area_id=${area.area_id}`}
+                replace
+                className={`
+                  px-4 py-2 text-sm font-medium rounded-full transition-all duration-200
+                  ${isSelected
+                    ? 'bg-gradient-to-r from-[#8B4513] to-[#A0522D] text-white shadow-md'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }
+                `}
+              >
+                {areaName}
+              </Link>
+            );
+          })}
         </div>
       </div>
 

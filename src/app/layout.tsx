@@ -16,6 +16,7 @@ import { Toaster } from "sonner";
 import { HeaderProvider } from "@/contexts/HeaderContext";
 import MainContent from "@/components/layout/MainContent";
 import Script from "next/script";
+import { headers } from "next/headers";
 
 // import { ProgressBar } from "@/components/atoms/loading/progress-bar";
 // import { PageTransitionOverlay } from "@/components/atoms/loading/page-transition-overlay";
@@ -84,9 +85,14 @@ const LayoutHeader = dynamic(() => import("@/components/organism/layout/LayoutHe
   ssr: false,
 });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  // 서버 사이드에서 pathname 확인
+  const headersList = await headers();
+  const pathname = headersList.get('x-pathname') || '';
+  const isAuthPage = pathname.startsWith('/auth/login');
+
   return (
     <html lang="en" className="overflow-x-hidden" suppressHydrationWarning>
         <head>
@@ -103,24 +109,30 @@ export default function RootLayout({
               <ScrollTop />
               <div id="modal-root" />
 
-              <Suspense fallback={<div>Loading header...</div>}>
-                <LayoutHeader />
-              </Suspense>
+              {!isAuthPage && (
+                <Suspense fallback={<div>Loading header...</div>}>
+                  <LayoutHeader />
+                </Suspense>
+              )}
 
               {/* 배경/루트 래퍼: 변형/음수마진으로 넘칠 때를 대비해 clip */}
               <div className="bg-gradient-to-br from-[#FDF5F0] via-white to-[#F8E8E0] flex flex-col min-h-screen w-full overflow-x-clip">
                 {/* 메인: 헤더 고정으로 인한 여백 없음 */}
-                <main className="flex-grow pb-[72px] w-full relative">
+                <main className={`flex-grow w-full relative ${!isAuthPage ? 'pb-[72px]' : ''}`}>
                   {/* HeroVideo는 이 안에서 full-width로 표시되고,
                       나머지 컨텐츠는 max-w-[1200px] 제한 */}
-                  <MainContent>
-                    {children}
-                  </MainContent>
+                  {isAuthPage ? (
+                    children
+                  ) : (
+                    <MainContent>
+                      {children}
+                    </MainContent>
+                  )}
                 </main>
 
                 <CookieConsent />
-                <MenuMobile />
-                <Footer />
+                {!isAuthPage && <MenuMobile />}
+                {!isAuthPage && <Footer />}
                 <Toaster richColors position="top-center" duration={1500}/>
               </div>
             </HeaderProvider>

@@ -3,7 +3,7 @@ import KBeautyResources from '@/components/kbeauty-resources';
 
 // SEO Metadata
 export const metadata: Metadata = {
-  title: 'K-Beauty Partners | iipuda',
+  title: 'K-Beauty Partners | Mimotok',
   description: 'Discover the best K-beauty shopping sites, educational resources, and communities. Your complete guide to Korean beauty products and information.',
   keywords: ['K-beauty', 'Korean beauty', 'skincare', 'cosmetics', 'Olive Young', 'beauty shopping', 'K-beauty blogs', 'Korean skincare'],
   openGraph: {

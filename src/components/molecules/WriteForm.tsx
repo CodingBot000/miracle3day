@@ -5,6 +5,9 @@ import { useRouter } from 'next/navigation';
 import type { CommunityCategory, TopicId, PostTagId } from '@/app/models/communityData.dto';
 import { toast } from 'sonner';
 import { useCookieLanguage } from '@/hooks/useCookieLanguage';
+import { handleNotifications } from '@/utils/notificationHandler';
+import LevelUpModal from '@/components/gamification/LevelUpModal';
+import type { LevelUpNotification } from '@/types/badge';
 
 interface WriteFormProps {
   authorNameSnapshot?: string | null;
@@ -35,6 +38,7 @@ export default function WriteForm({
   const [postTag, setPostTag] = useState<string>(initialData?.post_tag || '');
   const [isAnonymous, setIsAnonymous] = useState(initialData?.is_anonymous || false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [levelUp, setLevelUp] = useState<LevelUpNotification | null>(null);
 
   const topicCategories = categories.filter(c => c.category_type === 'topic');
   const tagCategories = categories.filter(c => c.category_type === 'free');
@@ -94,6 +98,15 @@ export default function WriteForm({
         }
 
         const data = await response.json();
+
+        // Handle badge notifications (only for create, not edit)
+        if (data?.notifications) {
+          const levelUpNotification = handleNotifications(data.notifications);
+          if (levelUpNotification) {
+            setLevelUp(levelUpNotification);
+          }
+        }
+
         if (data?.post?.id) {
           router.push(`/community/post/${data.post.id}`);
         } else {
@@ -211,6 +224,15 @@ export default function WriteForm({
           {isSubmitting ? 'Processing...' : postId ? 'Update' : 'Create'}
         </button>
       </div>
+
+      {/* Level-up modal */}
+      {levelUp && (
+        <LevelUpModal
+          level={levelUp.level}
+          exp={levelUp.exp}
+          onClose={() => setLevelUp(null)}
+        />
+      )}
     </form>
   )
 }

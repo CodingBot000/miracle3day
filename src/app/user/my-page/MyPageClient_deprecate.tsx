@@ -18,7 +18,7 @@ export default function MyPageClient({ user }: MyPageClientProps) {
       <div>{user?.userInfo?.email ?? "Unknown User"}</div>
       <div>{user?.userInfo?.created_at ?? "Unknown User"}</div>
       <div>{user?.userInfo?.updated_at ?? "Unknown User"}</div>
-      <div>{user?.userInfo?.uuid ?? "Unknown User"}</div>
+      <div>{user?.userInfo?.id_uuid ?? "Unknown User"}</div>
       <div>{user?.userInfo?.user_no ?? "Unknown User"}</div>
       <div>{user?.userInfo?.id_country ?? "Unknown User"}</div>
       <div>{user?.userInfo?.gender ?? "Unknown User"}</div>

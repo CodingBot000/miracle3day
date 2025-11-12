@@ -30,10 +30,7 @@ export default function ChatChannelPage({ params }: { params: { channelUrl: stri
           return;
         }
 
-        const resolvedUserId =
-          userInfo.uuid ??
-          userInfo.id_uuid ??
-          userInfo.auth_user.id;
+        const resolvedUserId = userInfo.id_uuid;
 
         console.log('[ChatChannelPage] User logged in, user ID:', resolvedUserId);
         setUserId(resolvedUserId);

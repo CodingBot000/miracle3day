@@ -32,10 +32,7 @@ const HospitalConsultationButton = ({ hospitalId }: HospitalConsultationButtonPr
         return;
       }
 
-      const memberUuid =
-        userInfo.uuid ??
-        userInfo.id_uuid ??
-        userInfo.auth_user.id;
+      const memberUuid = userInfo.id_uuid;
 
       // Create chat channel
       const res = await fetch("/api/chat/create_channel", {

@@ -24,13 +24,21 @@ const OutlineButton = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => 
 
 OutlineButton.displayName = 'OutlineButton';
 
+const STORAGE_KEY = 'treatment-protocol-category';
+
 export default function TreatmentProtocol() {
   const router = useRouter();
   const { language } = useCookieLanguage();
   const locale = language as Locale;
 
-  // Tab state: 'skin' or 'surgery'
-  const [category, setCategory] = React.useState<'skin' | 'surgery'>('skin');
+  // Initialize category from localStorage or default to 'skin'
+  const [category, setCategory] = React.useState<'skin' | 'surgery'>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      return (saved === 'surgery' ? 'surgery' : 'skin') as 'skin' | 'surgery';
+    }
+    return 'skin';
+  });
 
   // Fetch topic list from database using the new API
   const { data: topicListResponse, isLoading: topicsLoading, error: topicsError } = useTopicList();
@@ -60,6 +68,14 @@ export default function TreatmentProtocol() {
       console.error("[TreatmentProtocol] topic list error:", error);
     }
   }, [error]);
+
+  // Handle category change and save to localStorage
+  const handleCategoryChange = React.useCallback((newCategory: 'skin' | 'surgery') => {
+    setCategory(newCategory);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(STORAGE_KEY, newCategory);
+    }
+  }, []);
 
   // 공통 네비게이션 함수
   const navigateToProtocol = React.useCallback((topic_id: string, area_id: string) => {
@@ -104,7 +120,7 @@ export default function TreatmentProtocol() {
       {/* Category Tabs */}
       <section className="flex justify-center gap-4 px-4">
         <button
-          onClick={() => setCategory('skin')}
+          onClick={() => handleCategoryChange('skin')}
           className={`
             flex flex-col items-center px-6 py-4 rounded-xl
             transition-all duration-200 border-2
@@ -114,7 +130,7 @@ export default function TreatmentProtocol() {
             }
           `}
         >
-    
+
           <span className="font-bold text-sm md:text-lg">
             {locale === 'ko' ? '피부과 시술' : 'Skin Treatments'}
           </span>
@@ -124,7 +140,7 @@ export default function TreatmentProtocol() {
         </button>
 
         <button
-          onClick={() => setCategory('surgery')}
+          onClick={() => handleCategoryChange('surgery')}
           className={`
             flex flex-col items-center px-6 py-4 rounded-xl
             transition-all duration-200 border-2
@@ -134,9 +150,9 @@ export default function TreatmentProtocol() {
             }
           `}
         >
-     
-        
-         
+
+
+
           <span className="font-bold text-sm md:text-lg">
             {locale === 'ko' ? '성형외과 수술' : 'Plastic Surgery'}
           </span>

@@ -18,15 +18,32 @@ export default function SurgeryCard({ data, locale, categoryIndex }: SurgeryCard
   // 해당 카테고리에 할당된 이미지 배열 가져오기
   const surgeryImages = SURGERY_IMAGES[categoryIndex] || SURGERY_IMAGES[0];
 
-  const handleSurgeryClick = (surgeryId: string) => {
-    router.push(`/treatment-protocol/surgery/${surgeryId}`);
+  const handleSurgeryClick = (e: React.MouseEvent, surgeryId: string) => {
+    e.stopPropagation(); // Prevent card click event
+    router.push(`/treatment-protocol/surgery/${surgeryId}?category=${data.category}`);
+  };
+
+  // Handle card click - navigate to first surgery
+  const handleCardClick = (e: React.MouseEvent) => {
+    // Only handle click if it's on the card itself, not on buttons
+    if ((e.target as HTMLElement).tagName === 'BUTTON') {
+      return;
+    }
+
+    if (data.surgeries.length > 0) {
+      const firstSurgeryId = data.surgeries[0].id;
+      router.push(`/treatment-protocol/surgery/${firstSurgeryId}?category=${data.category}`);
+    }
   };
 
   const title = locale === 'ko' ? data.category_title_ko : data.category_title_en;
   const concernCopy = locale === 'ko' ? data.concern_copy_ko : data.concern_copy_en;
-
+  // console.log("SurgeryCard data:", data);
   return (
-    <div className="group bg-white/80 backdrop-blur-sm border-[#E8B4A0]/30 hover:shadow-xl hover:scale-105 transition-all duration-300 hover:bg-white/90 rounded-lg overflow-hidden">
+    <div
+      onClick={handleCardClick}
+      className="group bg-white/80 backdrop-blur-sm border-[#E8B4A0]/30 hover:shadow-xl hover:scale-105 transition-all duration-300 hover:bg-white/90 rounded-lg overflow-hidden cursor-pointer"
+    >
       {/* Mobile Layout: 세로형 */}
       <div className="md:hidden">
         {/* 상단: 제목, 설명, 수술 목록 */}
@@ -51,7 +68,7 @@ export default function SurgeryCard({ data, locale, categoryIndex }: SurgeryCard
             {data.surgeries.map((surgery) => (
               <button
                 key={surgery.id}
-                onClick={() => handleSurgeryClick(surgery.id)}
+                onClick={(e) => handleSurgeryClick(e, surgery.id)}
                 className="
                   px-3 py-2 text-sm font-medium rounded-full
                   bg-gradient-to-r from-[#2563EB] to-[#3B82F6]
@@ -106,7 +123,7 @@ export default function SurgeryCard({ data, locale, categoryIndex }: SurgeryCard
             {data.surgeries.map((surgery) => (
               <button
                 key={surgery.id}
-                onClick={() => handleSurgeryClick(surgery.id)}
+                onClick={(e) => handleSurgeryClick(e, surgery.id)}
                 className="
                   px-3 py-2 text-sm font-medium rounded-full
                   bg-gradient-to-r from-[#2563EB] to-[#3B82F6]

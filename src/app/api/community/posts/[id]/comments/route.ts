@@ -8,6 +8,7 @@ import {
   TABLE_COMMUNITY_POSTS,
 } from '@/constants/tables';
 import { findMemberByUserId } from '@/app/api/auth/getUser/member.helper';
+import { processActivity, ACTIVITY_TYPES } from '@/services/badges';
 
 const createSchema = z.object({
   content: z.string().min(1),
@@ -94,11 +95,30 @@ export async function POST(
     };
     comment.replies = [];
 
+    // Process badge activity for comment creation
+    const notifications = await processActivity({
+      userId: memberUuid,
+      activityType: ACTIVITY_TYPES.COMMENT_CREATED,
+      metadata: {
+        commentId: comment.id,
+        postId: postId,
+      },
+      referenceId: comment.id,
+    }).catch(err => {
+      console.error('Badge error:', err);
+      return [];
+    });
+
     // 캐시 무효화
     revalidatePath('/community');
     revalidatePath(`/community/post/${postId}`);
 
-    return NextResponse.json({ comment, total });
+    return NextResponse.json({
+      success: true,
+      comment,
+      total,
+      notifications,
+    });
   } catch (error) {
     console.error('POST /api/community/posts/[id]/comments error:', error);
     const message = error instanceof Error ? error.message : 'Failed to create comment';

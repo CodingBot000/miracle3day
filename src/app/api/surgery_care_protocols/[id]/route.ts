@@ -27,7 +27,7 @@ type SurgeryProtocolRow = {
 };
 
 export async function GET(
-  req: Request,
+  _req: Request,
   { params }: { params: { id: string } }
 ) {
   try {
@@ -79,7 +79,7 @@ export async function GET(
     return Response.json(surgeryProtocol, {
       headers: {
         "Content-Type": "application/json",
-        "Cache-Control": "no-store",
+        "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600",
       },
     });
   } catch (err) {

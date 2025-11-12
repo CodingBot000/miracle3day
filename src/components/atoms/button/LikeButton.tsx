@@ -2,6 +2,9 @@
 
 import { useState } from 'react';
 import { useLoginGuard } from '@/hooks/useLoginGuard';
+import { handleNotifications } from '@/utils/notificationHandler';
+import LevelUpModal from '@/components/gamification/LevelUpModal';
+import type { LevelUpNotification } from '@/types/badge';
 
 interface LikeButtonProps {
   postId: number;
@@ -20,6 +23,7 @@ export default function LikeButton({
   const [isLiked, setIsLiked] = useState(initialLiked);
   const [likesCount, setLikesCount] = useState(initialCount);
   const [isLoading, setIsLoading] = useState(false);
+  const [levelUp, setLevelUp] = useState<LevelUpNotification | null>(null);
 
   const handleToggleLike = async () => {
     // Check login before allowing like/unlike
@@ -58,6 +62,14 @@ export default function LikeButton({
         const data = await res.json();
         setIsLiked(true);
         setLikesCount(data?.count ?? likesCount + 1);
+
+        // Handle badge notifications (only for like, not unlike)
+        if (data?.notifications) {
+          const levelUpNotification = handleNotifications(data.notifications);
+          if (levelUpNotification) {
+            setLevelUp(levelUpNotification);
+          }
+        }
       }
     } catch (error) {
       console.error('Error toggling like:', error);
@@ -81,6 +93,15 @@ export default function LikeButton({
         <span>{likesCount}</span>
       </button>
       {loginModal}
+
+      {/* Level-up modal */}
+      {levelUp && (
+        <LevelUpModal
+          level={levelUp.level}
+          exp={levelUp.exp}
+          onClose={() => setLevelUp(null)}
+        />
+      )}
     </>
   )
 }

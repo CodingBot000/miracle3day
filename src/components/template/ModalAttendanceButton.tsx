@@ -3,6 +3,9 @@
 import * as React from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import AttendanceCalendar from "./AttendanceCalendar";
+import { handleNotifications } from '@/utils/notificationHandler';
+import LevelUpModal from '@/components/gamification/LevelUpModal';
+import type { LevelUpNotification } from '@/types/badge';
 
 type MonthResp = { ym: string; attendedDays: number[] };
 
@@ -17,6 +20,7 @@ export default function ModalAttendanceButton() {
   const [year, setYear] = React.useState(today.getFullYear());
   const [month, setMonth] = React.useState(today.getMonth() + 1); // 1~12
   const [attendedDays, setAttendedDays] = React.useState<number[]>([]);
+  const [levelUp, setLevelUp] = React.useState<LevelUpNotification | null>(null);
 
   // 모달이 열릴 때 현재 달 데이터 로딩
   React.useEffect(() => {
@@ -50,19 +54,27 @@ export default function ModalAttendanceButton() {
   async function handleCheckIn(date: Date) {
     // 클라이언트 타임존 전달 → 로컬 자정 기준 처리
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const res = await fetch("/api/attendance/check_in", {
+    const res = await fetch("/api/attendance", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ tz }),
     });
     if (!res.ok) return false;
 
-    const data = await res.json(); // { ym, day, was_already, points_awarded, attended_today }
+    const data = await res.json(); // { ym, day, was_already, points_awarded, attended_today, notifications }
     if (!data.was_already) {
       // optimistic 갱신 또는 서버 재조회
       setAttendedDays((prev) =>
         prev.includes(data.day) ? prev : [...prev, data.day].sort((a, b) => a - b)
       );
+
+      // Handle badge notifications
+      if (data.notifications) {
+        const levelUpNotification = handleNotifications(data.notifications);
+        if (levelUpNotification) {
+          setLevelUp(levelUpNotification);
+        }
+      }
     }
     return !data.was_already;
   }
@@ -94,9 +106,18 @@ export default function ModalAttendanceButton() {
         </div>
 
         <div className="mt-2 text-xs text-gray-500">
-          Check in daily and collect +10 points! Don’t miss out!
+          Check in daily and collect +10 points! Don&apos;t miss out!
         </div>
       </DialogContent>
+
+      {/* Level-up modal */}
+      {levelUp && (
+        <LevelUpModal
+          level={levelUp.level}
+          exp={levelUp.exp}
+          onClose={() => setLevelUp(null)}
+        />
+      )}
     </Dialog>
   );
 }

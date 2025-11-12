@@ -6,6 +6,7 @@
 import { query } from '@/lib/db';
 import {
   ActivityLogInput,
+  ActivityType,
   logActivity,
   getActivityCount,
   hasCheckedInToday,
@@ -83,7 +84,7 @@ async function ensureUserState(userId: string): Promise<void> {
 /**
  * Gets user's current badge state (level and exp)
  */
-async function getUserState(userId: string): Promise<{ level: number; exp: number }> {
+export async function getUserState(userId: string): Promise<{ level: number; exp: number }> {
   try {
     const result = await query(
       `SELECT level, exp FROM badges_user_profile WHERE user_id = $1`,
@@ -351,7 +352,7 @@ export async function processActivity(params: {
     // 2. Log the activity
     await logActivity({
       userId,
-      activityType,
+      activityType: activityType as ActivityType,
       metadata,
       referenceId,
     });
@@ -360,7 +361,7 @@ export async function processActivity(params: {
     const oldState = await getUserState(userId);
 
     // 4. Calculate and add exp
-    const baseExp = getExpForActivity(activityType);
+    const baseExp = getExpForActivity(activityType as ActivityType);
     const { leveledUp, newLevel, newExp } = await updateUserState(userId, baseExp);
 
     // 5. Check for level up

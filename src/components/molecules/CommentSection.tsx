@@ -7,6 +7,9 @@ import { toast } from 'sonner';
 import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 import { useRouter } from 'next/navigation';
 import { useLoginGuard } from '@/hooks/useLoginGuard';
+import { handleNotifications } from '@/utils/notificationHandler';
+import LevelUpModal from '@/components/gamification/LevelUpModal';
+import type { LevelUpNotification } from '@/types/badge';
 
 interface CommentSectionProps {
   postId: number
@@ -25,6 +28,7 @@ export default function CommentSection({
   const [comments, setComments] = useState(initialComments);
   const [newComment, setNewComment] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [levelUp, setLevelUp] = useState<LevelUpNotification | null>(null);
 
   const countComments = (items: CommunityComment[]): number => {
     return items.reduce((total, item) => {
@@ -60,6 +64,14 @@ export default function CommentSection({
         const nextComments = [...comments, newCommentWithReplies];
         setComments(nextComments);
         setNewComment('');
+
+        // Handle badge notifications
+        if (data?.notifications) {
+          const levelUpNotification = handleNotifications(data.notifications);
+          if (levelUpNotification) {
+            setLevelUp(levelUpNotification);
+          }
+        }
 
         // 서버 데이터 재검증 (백그라운드)
         router.refresh();
@@ -208,6 +220,15 @@ export default function CommentSection({
             />
           ))}
         </div>
+
+        {/* Level-up modal */}
+        {levelUp && (
+          <LevelUpModal
+            level={levelUp.level}
+            exp={levelUp.exp}
+            onClose={() => setLevelUp(null)}
+          />
+        )}
       </div>
     </>
   )

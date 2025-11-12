@@ -48,8 +48,7 @@ export async function POST(req: NextRequest) {
       success: true,
       message: 'Check-in successful!',
       streak: result.streak,
-      pointsEarned: result.pointsEarned,
-      expEarned: result.expEarned,
+      notifications: result.notifications,
     });
   } catch (error) {
     console.error('[CheckinAPI] Error:', error);

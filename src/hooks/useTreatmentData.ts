@@ -104,3 +104,30 @@ export const useSurgeryDetail = (id: string) => {
     staleTime: 5 * 60 * 1000,
   });
 };
+
+export const useSurgeryCategories = (category: string) => {
+  return useQuery({
+    queryKey: ['surgery-categories', category],
+    queryFn: async (): Promise<SurgeryProtocolsResponse> => {
+      const baseUrl =
+        typeof window === "undefined"
+          ? process.env.NEXT_PUBLIC_API_ROUTE
+          : window.location.origin;
+      const url = `${baseUrl}/api/surgery_care_protocols?eq.category=${category}`;
+
+      const response = await fetch(url, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        cache: "no-store",
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch surgery categories: ${response.statusText}`);
+      }
+
+      return response.json();
+    },
+    enabled: !!category,
+    staleTime: 5 * 60 * 1000,
+  });
+};

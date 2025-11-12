@@ -1,12 +1,13 @@
 'use client';
 
 import * as React from "react";
-import { useRouter } from "next/navigation";
-import { useSurgeryDetail } from "@/hooks/useTreatmentData";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useSurgeryDetail, useSurgeryCategories } from "@/hooks/useTreatmentData";
 import type { Locale } from "@/app/models/surgeryData.dto";
 import { useCookieLanguage } from "@/hooks/useCookieLanguage";
 import LottieLoading from "@/components/atoms/LottieLoading";
 import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 
 interface Props {
   params: { id: string };
@@ -14,10 +15,18 @@ interface Props {
 
 export default function SurgeryDetailPage({ params }: Props) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { language } = useCookieLanguage();
   const locale = language as Locale;
 
   const { data: surgery, isLoading, error } = useSurgeryDetail(params.id);
+
+  // Get category from URL params or from surgery data
+  const categoryParam = searchParams.get('category');
+  const surgeryCategory = surgery?.category || categoryParam;
+
+  // Fetch all surgeries in the same category for navigation
+  const { data: categoriesData } = useSurgeryCategories(surgeryCategory || '');
 
   if (isLoading) {
     return (
@@ -45,6 +54,9 @@ export default function SurgeryDetailPage({ params }: Props) {
 
   const areaName = locale === 'ko' ? surgery.area_name_ko : surgery.area_name_en;
 
+  // Get all surgeries in the same category
+  const surgeries = categoriesData?.categories[0]?.surgeries || [];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#F0F5FD] via-white to-[#E0E8F8] py-6">
       <div className="max-w-4xl mx-auto px-4">
@@ -58,6 +70,37 @@ export default function SurgeryDetailPage({ params }: Props) {
             {locale === 'ko' ? '목록으로' : 'Back to List'}
           </span>
         </button>
+
+        {/* Surgery Navigation Tabs */}
+        {surgeries.length > 0 && (
+          <div className="mb-6 bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-lg">
+            <h3 className="text-sm font-semibold text-gray-600 mb-3">
+              {locale === 'ko' ? '부위' : 'Area'}
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {surgeries.map((item) => {
+                const isSelected = item.id === params.id;
+                const itemName = locale === 'ko' ? item.area_name_ko : item.area_name_en;
+
+                return (
+                  <Link
+                    key={item.id}
+                    href={`/treatment-protocol/surgery/${item.id}?category=${surgeryCategory}`}
+                    className={`
+                      px-4 py-2 text-sm font-medium rounded-full transition-all duration-200
+                      ${isSelected
+                        ? 'bg-gradient-to-r from-[#2563EB] to-[#3B82F6] text-white shadow-md'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      }
+                    `}
+                  >
+                    {itemName}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {/* Header */}
         <header className="mb-8 bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg">

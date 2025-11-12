@@ -7,6 +7,7 @@ import {
   TABLE_COMMUNITY_CATEGORIES,
 } from '@/constants/tables';
 import { findMemberByUserId } from '@/app/api/auth/getUser/member.helper';
+import { processActivity, ACTIVITY_TYPES } from '@/services/badges';
 
 const createSchema = z.object({
   title: z.string().min(1),
@@ -113,7 +114,26 @@ export async function POST(req: Request) {
       post.tag = tagRows[0] ?? null;
     }
 
-    return NextResponse.json({ post }, { status: 201 });
+    // Process badge activity for post creation
+    const notifications = await processActivity({
+      userId: memberUuid,
+      activityType: ACTIVITY_TYPES.POST_CREATED,
+      metadata: {
+        postId: post.id,
+        topicId: post.topic_id,
+        postTag: post.post_tag,
+      },
+      referenceId: post.id,
+    }).catch(err => {
+      console.error('Badge error:', err);
+      return [];
+    });
+
+    return NextResponse.json({
+      success: true,
+      post,
+      notifications,
+    }, { status: 201 });
   } catch (error) {
     console.error('POST /api/community/posts error:', error);
     const message = error instanceof Error ? error.message : 'Failed to create post';

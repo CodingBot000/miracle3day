@@ -24,7 +24,7 @@ export default function SurgeryCard({ data, locale, categoryIndex }: SurgeryCard
 
   const title = locale === 'ko' ? data.category_title_ko : data.category_title_en;
   const concernCopy = locale === 'ko' ? data.concern_copy_ko : data.concern_copy_en;
-
+  console.log("SurgeryCard data:", data);
   return (
     <div className="group bg-white/80 backdrop-blur-sm border-[#E8B4A0]/30 hover:shadow-xl hover:scale-105 transition-all duration-300 hover:bg-white/90 rounded-lg overflow-hidden">
       {/* Mobile Layout: 세로형 */}

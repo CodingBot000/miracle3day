@@ -7,6 +7,7 @@ import {
   TABLE_COMMUNITY_POSTS,
 } from '@/constants/tables';
 import { findMemberByUserId } from '@/app/api/auth/getUser/member.helper';
+import { processActivity, ACTIVITY_TYPES } from '@/services/badges';
 
 async function updateLikeCount(postId: number | string) {
   const countRows = await q<{ count: number }>(
@@ -62,11 +63,42 @@ export async function POST(
 
     const total = await updateLikeCount(postId);
 
+    // Process badge activity for like given
+    const notifications = await processActivity({
+      userId: memberUuid,
+      activityType: ACTIVITY_TYPES.LIKE_GIVEN,
+      metadata: { postId: postId },
+      referenceId: String(postId),
+    }).catch(err => {
+      console.error('Badge error:', err);
+      return [];
+    });
+
+    // Get post author and process badge activity for like received (no notification for receiver)
+    const postResult = await q(
+      `SELECT uuid_author FROM ${TABLE_COMMUNITY_POSTS} WHERE id = $1`,
+      [postId]
+    );
+
+    if (postResult[0]) {
+      processActivity({
+        userId: postResult[0].uuid_author,
+        activityType: ACTIVITY_TYPES.LIKE_RECEIVED,
+        metadata: { postId: postId, fromUser: memberUuid },
+        referenceId: String(postId),
+      }).catch(err => console.error('Badge error:', err));
+    }
+
     // 캐시 무효화
     revalidatePath('/community');
     revalidatePath(`/community/post/${postId}`);
 
-    return NextResponse.json({ liked: true, count: total });
+    return NextResponse.json({
+      success: true,
+      liked: true,
+      count: total,
+      notifications,
+    });
   } catch (error) {
     console.error('POST /api/community/posts/[id]/likes error:', error);
     const message = error instanceof Error ? error.message : 'Failed to like post';

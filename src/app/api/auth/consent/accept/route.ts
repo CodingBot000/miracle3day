@@ -3,6 +3,7 @@ import { sessionOptions } from "@/lib/session";
 import { NextResponse } from "next/server";
 import { q } from "@/lib/db";
 import { TABLE_MEMBERS, TABLE_MEMBER_SOCIAL_ACCOUNTS } from "@/constants/tables";
+import { initializeBadgeSystem } from "@/services/badges/initialization";
 
 export async function POST(req: Request) {
   const res = new NextResponse();
@@ -128,6 +129,12 @@ Google도 이메일을 반환하지 않습니다.
     );
 
     await q("COMMIT");
+
+    // ✨ 배지 시스템 초기화 (Non-Blocking)
+    // await 없이 실행하여 회원가입 응답 속도에 영향 없게
+    initializeBadgeSystem(memberId).catch(err => {
+      console.error('Badge init background error:', err);
+    });
 
     // 5) 세션 active로 승격
     session.auth = {

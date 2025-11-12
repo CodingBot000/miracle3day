@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { q, pool } from '@/lib/db';
 import { getAuthSession } from "@/lib/auth-helper";
 import { findMemberByUserId } from '@/app/api/auth/getUser/member.helper';
+import { processActivity, ACTIVITY_TYPES } from '@/services/badges';
 
 // POST: 투표하기
 export async function POST(
@@ -98,7 +99,8 @@ export async function POST(
       );
     }
 
-    // 포인트는 첫 투표시만 지급
+    // 포인트 및 배지는 첫 투표시만 지급
+    let notifications: any[] = [];
     if (isFirstVote) {
       const questionResult = await client.query(
         `SELECT points_reward FROM community_daily_questions WHERE id = $1`,
@@ -107,6 +109,17 @@ export async function POST(
       const pointsToAdd = questionResult.rows[0]?.points_reward || 10;
 
       await addPoints(client, memberUuid, pointsToAdd, 'poll_vote', questionId);
+
+      // Process badge activity for poll voting (only on first vote)
+      notifications = await processActivity({
+        userId: memberUuid,
+        activityType: ACTIVITY_TYPES.POLL_VOTED,
+        metadata: { questionId: questionId, optionId: id_option },
+        referenceId: String(questionId),
+      }).catch(err => {
+        console.error('Badge error:', err);
+        return [];
+      });
     }
 
     await client.query('COMMIT');
@@ -130,6 +143,7 @@ export async function POST(
       success: true,
       voted_option_id: id_option,
       options,
+      notifications,
       message: isFirstVote ? 'Vote recorded! +10 points' : 'Vote changed successfully!'
     });
   } catch (error: any) {

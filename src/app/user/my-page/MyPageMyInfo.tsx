@@ -2,19 +2,17 @@
 
 import { UserOutputDto } from "@/app/api/auth/getUser/getUser.dto";
 import LogoutAction from "@/components/molecules/LogoutAction";
-import { ArrowLeft, Camera, ChevronRight, MessageCircle } from "lucide-react";
+import { Camera, ChevronRight, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";;
 import { findCountry } from "@/constants/country";
 import { useRouter } from "next/navigation";
 import { ROUTE } from "@/router";
-import ModalAttendanceButton from "@/components/template/ModalAttendanceButton";
-import AttendanceSection from "@/components/template/AttendanceSection";
-import AttendanceModalButton from "@/components/template/AttendanceModalButton2";
 import { fetchPoint } from "@/services/attendance";
 import { useEffect, useState, useRef } from "react";
 import { uploadProfileImage } from "@/services/profileImage";
 import { toast } from "sonner";
+import BadgeSection from "@/components/mypage/BadgeSection";
 
 interface MyPageMyInfoClientDetailProps {
   user: UserOutputDto;
@@ -27,12 +25,14 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
   const [avatarUrl, setAvatarUrl] = useState<string>(user?.userInfo?.avatar || "/default/profile_default.png");
   const fileInputRef = useRef<HTMLInputElement>(null);
   
+  console.log("MyPageMyInfo user", user);
+  console.log("MyPageMyInfo user?.userInfo?.id_uuid:", user?.userInfo?.id_uuid);
   useEffect(() => {
     void loadTodayAttendance();
   }, []);
   const handleProfileNavigation = () => {
-    if (user?.userInfo?.uuid) {
-      router.push(`/auth/login/onboarding/complete-profile?code=${user.userInfo.uuid}&returnUrl=/user/my-page`);
+    if (user?.userInfo?.id_uuid) {
+      router.push(`/auth/login/onboarding/complete-profile?code=${user.userInfo.id_uuid}&returnUrl=/user/my-page`);
     }
   };
 
@@ -52,7 +52,7 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (!file || !user?.userInfo?.uuid) {
+    if (!file || !user?.userInfo?.id_uuid) {
       return;
     }
 
@@ -62,11 +62,11 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
     }
 
     setIsUploading(true);
-    
+
     try {
       const result = await uploadProfileImage({
         file,
-        userUuid: user.userInfo.uuid,
+        userUuid: user.userInfo.id_uuid,
       });
 
       if (result.success && result.imagePath) {
@@ -90,7 +90,7 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
         <span className={needsUpdate ? "text-red-500" : ""}>
           {value || "Need to set"}
         </span>
-        <ChevronRight className="w-5 h-5 ml-2 text-gray-400" />
+        {/* <ChevronRight className="w-5 h-5 ml-2 text-gray-400" /> */}
       </div>
     </div>
   );
@@ -137,25 +137,21 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
             <h2 className="mt-4 text-xl font-medium">{user?.userInfo?.nickname || ""}</h2>
           </div>
 
-          {/* Info List */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-medium mb-4">My Information</h3>
-            {/* <ModalAttendanceButton /> */}
-            {/* <AttendanceSection /> */}
-            {/* checked In */ }
-            <div className="flex items-center gap-4">
-              <div className="flex-1">
-                <AttendanceModalButton /> point: {point}
-              </div>
-              <Link href="/gamification/quize">
-                <button className="px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-800 text-white font-semibold rounded-full hover:from-amber-600 hover:to-yellow-600 transition-all shadow-sm hover:shadow-md flex items-center gap-2">
-                  <span>🏆</span>
-                  <span>Quiz</span>
-                </button>
-              </Link>
+          {/* Badge Section */}
+          {user?.userInfo?.id_uuid && (
+            <div className="mb-8">
+              <BadgeSection
+                userUuid={user.userInfo.id_uuid}
+                currentPoints={point}
+              />
             </div>
+          )}
 
-            <div className="bg-white rounded-lg">
+          {/* Info List */}
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">My Information</h3>
+
+            <div className="bg-white rounded-lg shadow-sm">
               {renderProfileField("Gender", user?.userInfo?.gender ? (user.userInfo.gender === "M" ? "Male" : "Female") : null, !user?.userInfo?.gender)}
               {renderProfileField("Nationality", user?.userInfo?.id_country ? findCountry(user.userInfo.id_country)?.country_name : null, !user?.userInfo?.id_country)}
               {renderProfileField("Phone Number Verification", "Phone Number Verification", false)}
@@ -163,11 +159,13 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
               {renderProfileField("Secondary Email", user?.userInfo?.secondary_email, false)}
               {/*   {renderProfileField("Treatment Experience", "Public", false)} */}
                          {/* chat */}
-            <div className="flex justify-between items-center p-4 border-t">
-              <Link href="/user/my-page/chat-list">
-                Chatting List <MessageCircle size={20} />
-              </Link>
-            </div>
+                         <div className="flex justify-between items-center p-4 border-t">
+                <span className="text-gray-600">My Chatting List</span>
+                <Link href="/user/my-page/chat-list" className="flex items-center text-gray-400 hover:text-gray-600">
+                  <MessageCircle className="w-5 h-5 mr-2" />
+                  <ChevronRight className="w-5 h-5" />
+                </Link>
+              </div>
               <div className="flex justify-between items-center p-4 border-t">
               <Link
                 href="/legal/cookie-policy"
@@ -176,13 +174,7 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
                 Cookie Policy
               </Link>
               </div>
-              <div className="flex justify-between items-center p-4 border-t">
-                <span className="text-gray-600">My Chatting List</span>
-                <Link href="/user/my-page/chat-list" className="flex items-center text-gray-400 hover:text-gray-600">
-                  <MessageCircle className="w-5 h-5 mr-2" />
-                  <ChevronRight className="w-5 h-5" />
-                </Link>
-              </div>
+
 
               <div className="flex justify-between items-center p-4">
                 <span className="text-gray-600"></span>

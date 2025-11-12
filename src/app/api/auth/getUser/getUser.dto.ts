@@ -19,7 +19,7 @@ export interface UserInfoDto {
   name: string;
   email: string;
   updated_at: string;
-  uuid: string;
+  id_uuid: string;
   user_no: number;
   id_country: string;
   avatar: string;
@@ -28,4 +28,9 @@ export interface UserInfoDto {
   birth_date: string;
   gender: string;
   secondary_email: string;
+  phone_number: string;
+  phone_country_code: string;
+  point_balance: number;
+  terms_agreements: any;
+  auth_primary_provider: string | null;
 }

@@ -164,7 +164,10 @@ const HospitalContactInfo = ({ hospitalDetails }: HospitalContactInfoProps) => {
   ];
 
   const filteredItems = contactItems.filter(
-    item => (item.value && item.value.trim() !== '') && !(item.label === 'email' && item.value.includes('notexist'))
+    item => (item.value && item.value.trim() !== '') &&
+            !(item.label === 'email' && item.value.includes('notexist')) &&
+            item.type !== 'tel' && // Hide tel from display
+            item.type !== 'email' // Hide email from display
   );
 
   const needsCopyButton = (item: ContactItem) => item.type === 'tel' || item.type === 'email';

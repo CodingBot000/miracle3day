@@ -34,7 +34,7 @@ const TreatmentProductCard = ({ product }: TreatmentProductCardProps) => {
 
         {/* Right side - Option value, unit, and price */}
         <div className="flex-shrink-0 text-right">
-          {hasOptionValue && (
+          {hasOptionValue && Number(product.option_value) > 0 && (
             <p className="text-xs text-gray-500 mb-0.5">
               {product.option_value}
               {unitText && ` (${unitText})`}

@@ -10,7 +10,7 @@ interface ReviewCardForHomeProps {
 
 const ReviewCardForHome = ({ review }: ReviewCardForHomeProps) => {
   return (
-    <div className="border rounded-lg p-3 md:p-4 bg-rose-50 shadow-sm hover:shadow-md transition-shadow h-[200px] md:h-[230px] w-[220px] md:w-[350px] flex flex-col flex-shrink-0">
+    <div className="border-2 !border-black rounded-lg p-3 md:p-4 bg-white shadow-sm hover:shadow-md transition-shadow h-[200px] md:h-[230px] w-[220px] md:w-[350px] flex flex-col flex-shrink-0">
       <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
         {review.authorAttribution?.photoUri && (
           <img

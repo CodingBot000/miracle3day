@@ -9,26 +9,38 @@
 
 // 커스텀 Tailwind 확장
 @layer base {
+  /* Box-sizing reset */
+  *,
+  *::before,
+  *::after {
+    @apply box-border;
+  }
+
   html {
-    @apply antialiased;
+    @apply antialiased h-full;
   }
-  
+
   body {
-    @apply bg-white text-black leading-normal;
+    @apply bg-white text-black leading-normal h-full;
   }
-  
+
   a {
     @apply flex text-inherit no-underline cursor-pointer;
   }
-  
+
   a:focus,
   a:hover,
   a:active {
     @apply outline-none;
   }
-  
+
   main {
     @apply min-h-[calc(100vh-10rem)];
+  }
+
+  /* Apply default border color only to form elements to avoid conflicts */
+  :where(input, textarea, select, button, [role="textbox"]) {
+    @apply border-border;
   }
 }
 
@@ -195,16 +207,7 @@
   }
 }
 
-
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-} 
+ 
 
 
 .badge-only,

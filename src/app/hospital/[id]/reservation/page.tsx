@@ -1,4 +1,4 @@
-import { getUserAPI } from '@/app/api/auth/getUser';
+import { getUserAPIServer } from '@/app/api/auth/getUser/getUser.server';
 import ReservationClient from './ReservationClient';
 import { redirect } from 'next/navigation';
 import { ROUTE } from '@/router';
@@ -12,8 +12,8 @@ interface PageProps {
 }
 
 export default async function ReservationPage({ params }: PageProps) {
-  // 서버에서 사용자 정보 가져오기
-  const userData = await getUserAPI();
+  // 서버에서 사용자 정보 가져오기 (Server Component용 함수 사용)
+  const userData = await getUserAPIServer();
   const hospitalData = await getHospitalMainAPI({id: params.id });
   console.log("ReservationPage server userData:", userData);
   

@@ -198,7 +198,30 @@ export default function SignUpMoreInfoForm() {
   return (
     <div className="space-y-6 rounded-2xl border border-white/40 bg-white/80 p-8 shadow-xl backdrop-blur">
       <div>
-        <h1 className="text-2xl font-semibold text-slate-900">Complete your profile</h1>
+        <div className="flex items-center gap-3 mb-4">
+          <button
+            type="button"
+            onClick={() => router.back()}
+            className="flex items-center justify-center w-8 h-8 rounded-lg hover:bg-slate-100 transition-colors"
+            aria-label="Go back"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 text-slate-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+          </button>
+          <h1 className="text-2xl font-semibold text-slate-900">Complete your profile</h1>
+        </div>
         <p className="mt-2 text-sm text-slate-500">
         Tell us a little more about yourself so we can personalize your experience.
         <br />

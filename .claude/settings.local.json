@@ -7,7 +7,11 @@
       "Bash(ls:*)",
       "Bash(npm run build:*)",
       "Bash(find:*)",
-      "Bash(npm run dev:*)"
+      "Bash(npm run dev:*)",
+      "Bash(git mv:*)",
+      "Bash(npm run lint:*)",
+      "Bash(psql:*)",
+      "Bash(python3:*)"
     ],
     "deny": [],
     "ask": []

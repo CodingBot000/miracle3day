@@ -121,7 +121,8 @@ export default function KBeautySectionPage({ params }: Props) {
           html { overflow: hidden !important; }
         `
       }} />
-      <div 
+      <div
+        id="post-scroll-container"
         className="fixed inset-0 bg-gradient-to-br from-[#FDF5F0] via-white to-[#F8E8E0] overflow-y-auto"
         style={{ zIndex: 1 }}
       >

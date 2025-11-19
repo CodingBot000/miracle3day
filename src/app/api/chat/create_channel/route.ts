@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
 
     // DB에서 member 정보 조회
     const memberRows = await q<{ nickname: string | null }>(
-      `SELECT nickname FROM ${TABLE_MEMBERS} WHERE uuid = $1 LIMIT 1`,
+      `SELECT nickname FROM ${TABLE_MEMBERS} WHERE id_uuid = $1 LIMIT 1`,
       [member_uuid]
     );
 

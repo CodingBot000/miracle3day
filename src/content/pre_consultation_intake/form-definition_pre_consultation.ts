@@ -1,8 +1,8 @@
-import BudgetStep from "@/app/(site)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/BudgetStep";
-import TreatmentGoalsStep from "@/app/(site)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/TreatmentGoalsStep";
-import VisitPathStep from "@/app/(site)/recommend_estimate/SkinSurveyFlow/questionnaire/VisitPathStep";
-import SkinConcernsStep from "@/app/(site)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/SkinConcernsStep";
-import HealthConditionStep from "@/app/(site)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/HealthConditionStep";
+import BudgetStep from "@/app/(consult)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/BudgetStep";
+import TreatmentGoalsStep from "@/app/(consult)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/TreatmentGoalsStep";
+import VisitPathStep from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/VisitPathStep";
+import SkinConcernsStep from "@/app/(consult)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/SkinConcernsStep";
+import HealthConditionStep from "@/app/(consult)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/HealthConditionStep";
 import {  BUDGET,
    HEALTH_CONDITIONS,
     PREFERENCES,
@@ -12,11 +12,11 @@ import {  BUDGET,
         TREATMENT_EXPERIENCE_BEFORE,
          TREATMENT_GOALS,
           UPLOAD_PHOTO} from '@/constants/pre_consult_steps';
-import UploadImageStep from "@/app/(site)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/UploadImageStep";
-import SkinTypeStep from "@/app/(site)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/SkinTypeStep";
-import PreferencesStep from "@/app/(site)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/PreferencesStep";
-import PrioriotyFactorStep from "@/app/(site)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/PrioriotyFactorStep";
-import TreatmentExpBeforeStep from "@/app/(site)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/TreatmentExpBefore";
+import UploadImageStep from "@/app/(consult)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/UploadImageStep";
+import SkinTypeStep from "@/app/(consult)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/SkinTypeStep";
+import PreferencesStep from "@/app/(consult)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/PreferencesStep";
+import PrioriotyFactorStep from "@/app/(consult)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/PrioriotyFactorStep";
+import TreatmentExpBeforeStep from "@/app/(consult)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/TreatmentExpBefore";
 
 // ═══════════════════════════════════════════════════════════
 // STEPS 정의 - 기재된 순서로 나옴

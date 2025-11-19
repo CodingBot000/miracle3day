@@ -33,36 +33,47 @@ const LayoutHeader = () => {
   // 모바일 모드일 때 LayoutHeader의 스타일을 조정할 수 있습니다
   useEffect(() => {
     if (isMobileMode) {
-      console.log('📱 Mobile mode is active!');
       // 여기서 모바일 모드일 때의 레이아웃 변경 로직을 추가하세요
       // 예: setState, 스타일 변경, 특정 요소 숨기기 등
-    } else {
-      console.log('💻 Desktop mode is active');
     }
   }, [isMobileMode]);
 
 
   useEffect(() => {
     if (!isTransparentMode) {
-      setScrollPosition(0); // 투명 모드가 아니면 스크롤 위치 리셋
+      setScrollPosition(0);
       return;
     }
 
-    const handleScroll = () => {
-      const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-      setScrollPosition(currentScrollPosition);
+    let rafId: number;
+    let lastScrollPosition = -1;
+
+    const checkScroll = () => {
+      // Check for custom scroll container (used in post pages)
+      const postScrollContainer = document.getElementById('post-scroll-container');
+
+      let currentScrollPosition: number;
+      if (postScrollContainer) {
+        // If post scroll container exists, use its scroll position
+        currentScrollPosition = postScrollContainer.scrollTop || 0;
+      } else {
+        // Otherwise use window scroll position
+        currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+      }
+
+      if (currentScrollPosition !== lastScrollPosition) {
+        lastScrollPosition = currentScrollPosition;
+        setScrollPosition(currentScrollPosition);
+      }
+
+      rafId = requestAnimationFrame(checkScroll);
     };
 
-    // Check initial scroll position immediately
-    handleScroll();
+    // Start checking scroll position using requestAnimationFrame
+    rafId = requestAnimationFrame(checkScroll);
 
-    // Also check after a brief delay to catch any layout shifts
-    const timeoutId = setTimeout(handleScroll, 100);
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      clearTimeout(timeoutId);
+      cancelAnimationFrame(rafId);
     };
   }, [isTransparentMode]);
 

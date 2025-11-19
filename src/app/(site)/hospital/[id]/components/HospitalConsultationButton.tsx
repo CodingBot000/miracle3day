@@ -3,8 +3,9 @@
 import { useRouter } from "next/navigation";
 import { ROUTE } from "@/router";
 import { useState } from "react";
-import { MessageCircle } from "lucide-react";
+import { MessageCircle, Video } from "lucide-react";
 import { useCookieLanguage } from "@/hooks/useCookieLanguage";
+import { useLoginGuard } from "@/hooks/useLoginGuard";
 
 interface HospitalConsultationButtonProps {
   hospitalId: string;
@@ -13,8 +14,28 @@ interface HospitalConsultationButtonProps {
 const HospitalConsultationButton = ({ hospitalId }: HospitalConsultationButtonProps) => {
   const router = useRouter();
   const { language } = useCookieLanguage();
+  const { requireLogin, loginModal } = useLoginGuard();
   const [isCreatingChat, setIsCreatingChat] = useState(false);
   const [error, setError] = useState<string>("");
+
+  const labels = {
+    ko: {
+      chat: "상담하기",
+      reservation: "예약하기",
+      videoConsultation: "화상상담예약",
+      chatError: "상담을 시작할 수 없습니다. 다시 시도해주세요.",
+      reservationError: "방문 예약페이지를 열수 없습니다. 다시 시도해주세요.",
+      videoConsultationError: "실시간 상담 예약 페이지를 열 수 없습니다. 다시 시도해주세요.",
+    },
+    en: {
+      chat: "Start Chat",
+      reservation: "Make Reservation",
+      videoConsultation: "Video Consultation",
+      chatError: "Unable to start consultation. Please try again.",
+      reservationError: "Unable to open reservation page. Please try again.",
+      videoConsultationError: "Unable to open video consultation booking page. Please try again.",
+    },
+  };
 
   const handleChatConsultation = async () => {
     try {
@@ -22,17 +43,15 @@ const HospitalConsultationButton = ({ hospitalId }: HospitalConsultationButtonPr
       setError("");
 
       // Check if user is logged in
-      const userRes = await fetch("/api/auth/getUser/session");
-      const userData = await userRes.json();
-      const userInfo = userData?.userInfo;
-
-      if (!userInfo?.auth_user) {
-        // Redirect to login with return URL
-        router.push(`/login?redirect=/hospital/${hospitalId}`);
+      if (!requireLogin()) {
+        setIsCreatingChat(false);
         return;
       }
 
-      const memberUuid = userInfo.id_uuid;
+      // Get user info after login check
+      const userRes = await fetch("/api/auth/getUser");
+      const userData = await userRes.json();
+      const memberUuid = userData?.userInfo?.id_uuid;
 
       // Create chat channel
       const res = await fetch("/api/chat/create_channel", {
@@ -57,34 +76,78 @@ const HospitalConsultationButton = ({ hospitalId }: HospitalConsultationButtonPr
       router.push(`/chat/${encodeURIComponent(data.channel_url)}`);
     } catch (err: any) {
       console.error("Error creating chat:", err);
-      setError(err.message || "Failed to start consultation. Please try again.");
+      setError(language === 'ko' ? labels.ko.chatError : labels.en.chatError);
       setIsCreatingChat(false);
     }
   };
 
   const handleReservationClick = () => {
-    router.push(ROUTE.RESERVATION(hospitalId));
+    try {
+      setError("");
+
+      // Check if user is logged in
+      if (!requireLogin()) {
+        return;
+      }
+
+      router.push(ROUTE.RESERVATION(hospitalId));
+    } catch (err: any) {
+      console.error("Error opening reservation page:", err);
+      setError(language === 'ko' ? labels.ko.reservationError : labels.en.reservationError);
+    }
   };
 
-  const labels = {
-    ko: {
-      chat: "상담하기",
-      reservation: "예약하기",
-      error: "상담을 시작할 수 없습니다. 다시 시도해주세요.",
-    },
-    en: {
-      chat: "Start Chat",
-      reservation: "Make Reservation",
-      error: "Unable to start consultation. Please try again.",
-    },
+  const handleVideoConsultation = async () => {
+    try {
+      
+      setError("");
+
+      // 1. Check if user is logged in
+      if (!requireLogin()) {
+        return;
+      }
+
+      // Get user info after login check
+      const userRes = await fetch("/api/auth/getUser");
+      const userData = await userRes.json();
+      const userInfo = userData?.userInfo;
+      console.log('userRes:', userRes);
+      console.log('userData:', userData);
+      console.log('userInfo:', userInfo);
+      console.log('userInfo.birth_date:', userInfo.birth_date);
+      console.log('userInfo.id_country:', userInfo.id_country);
+      console.log('userInfo.phone_country_code:', userInfo.phone_country_code);
+      // 2. Check if user has complete profile (birthDate, id_country, phone_country_code)
+      const hasCompleteProfile =
+        userInfo.birth_date &&
+        userInfo.id_country &&
+        userInfo.phone_country_code;
+        console.log('hasCompleteProfile:', hasCompleteProfile);
+      if (!hasCompleteProfile) {
+        const currentUrl = `/hospital/${hospitalId}`;
+        router.push(
+          `/login/onboarding/complete-profile?code=${userInfo.id_uuid}&returnUrl=${encodeURIComponent(currentUrl)}`
+        );
+        return;
+      }
+
+      // 3. Navigate to video consultation form with hospital ID
+      router.push(`/pre_consultation_intake_form?hospitalId=${hospitalId}`);
+    } catch (err: any) {
+      console.error("Error starting video consultation:", err);
+      setError(language === 'ko' ? labels.ko.videoConsultationError : labels.en.videoConsultationError);
+    }
   };
 
   return (
     <>
+      {/* Login Required Modal */}
+      {loginModal}
+
       {error && (
         <div className="fixed bottom-[calc(200px+160px)] right-5 z-50 max-w-xs">
           <div className="bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg">
-            <p className="text-sm">{language === 'ko' ? labels.ko.error : labels.en.error}</p>
+            <p className="text-sm">{error}</p>
           </div>
         </div>
       )}
@@ -112,6 +175,15 @@ const HospitalConsultationButton = ({ hospitalId }: HospitalConsultationButtonPr
             className="px-2 py-1 bg-[#FB718F] text-white rounded-md font-medium text-xs leading-tight hover:bg-[#f5648a] transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed w-full"
           >
             {language === 'ko' ? labels.ko.reservation : labels.en.reservation}
+          </button>
+
+          <button
+            onClick={handleVideoConsultation}
+            disabled={isCreatingChat}
+            className="px-2 py-1 bg-[#2196F3] text-white rounded-md font-medium text-xs leading-tight hover:bg-[#1976D2] transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-1 w-full"
+          >
+            <Video size={12} />
+            {language === 'ko' ? labels.ko.videoConsultation : labels.en.videoConsultation}
           </button>
         </div>
       </div>

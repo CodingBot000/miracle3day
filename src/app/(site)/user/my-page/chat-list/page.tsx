@@ -25,7 +25,7 @@ export default function ChatListPage() {
     const fetchChannels = async () => {
       try {
         // 1. 사용자 인증 확인
-        const authRes = await fetch("/api/auth/getUser/session");
+        const authRes = await fetch("/api/auth/getUser");
         const authData = await authRes.json();
         const userInfo = authData?.userInfo;
 

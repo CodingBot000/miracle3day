@@ -14,7 +14,7 @@ export default function ChatPage() {
     const checkAuth = async () => {
       try {
         console.log('[ChatPage] Checking auth...');
-        const res = await fetch("/api/auth/getUser/session");
+        const res = await fetch("/api/auth/getUser");
         const data = await res.json();
         console.log('[ChatPage] User data:', data);
 

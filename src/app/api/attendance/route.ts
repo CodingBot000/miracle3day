@@ -179,31 +179,15 @@ export async function POST(req: Request) {
     }
 
     if (awardedPoints) {
-      const updateAttempts: Array<{ sql: string; value: string }> = [
-        {
-          sql: `UPDATE ${TABLE_MEMBERS}
-                SET point_balance = COALESCE(point_balance, 0) + $1
-                WHERE id_uuid = $2`,
-          value: memberUuid,
-        },
-        {
-          sql: `UPDATE ${TABLE_MEMBERS}
-                SET point_balance = COALESCE(point_balance, 0) + $1
-                WHERE uuid = $2`,
-          value: memberUuid,
-        },
-      ];
-
-      for (const attempt of updateAttempts) {
-        if (!attempt.value) continue;
-        try {
-          const result = await query(attempt.sql, [POINTS_PER_CHECK_IN, attempt.value]);
-          if (result.rowCount && result.rowCount > 0) {
-            break;
-          }
-        } catch (error) {
-          // Ignore column mismatch; try next variant
-        }
+      try {
+        await query(
+          `UPDATE ${TABLE_MEMBERS}
+           SET point_balance = COALESCE(point_balance, 0) + $1
+           WHERE id_uuid = $2`,
+          [POINTS_PER_CHECK_IN, memberUuid]
+        );
+      } catch (error) {
+        console.error('Failed to update point balance:', error);
       }
     }
 

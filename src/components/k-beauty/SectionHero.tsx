@@ -16,7 +16,7 @@ export default function SectionHero({
   backgroundImage
 }: Props) {
   return (
-    <section className="relative h-[60vh] min-h-[500px] flex items-center justify-center overflow-hidden">
+    <section className="relative h-[70vh] min-h-[600px] max-h-[800px] flex flex-col items-center justify-center overflow-hidden pt-24 pb-12">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -30,15 +30,15 @@ export default function SectionHero({
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60" />
       </div>
 
-      {/* Content - positioned at 1/3 from top (66% from top = 2/3 down) */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 z-10 text-center text-white mt-[50vh]">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight" style={{ fontFamily: "'Inter', 'Pretendard', sans-serif" }}>
+      {/* Content - centered and contained within image area */}
+      <div className="container mx-auto px-6 sm:px-8 lg:px-12 z-10 text-center text-white max-w-5xl flex flex-col justify-center flex-1">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 sm:mb-10 md:mb-12 leading-tight px-4" style={{ fontFamily: "'Inter', 'Pretendard', sans-serif" }}>
           {title}
         </h1>
-        <p className="text-xl sm:text-xl md:text-2xl font-bold mb-3" style={{ fontFamily: "'Inter', 'Pretendard', sans-serif" }}>
+        <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold mb-6 sm:mb-8 md:mb-10 px-4" style={{ fontFamily: "'Inter', 'Pretendard', sans-serif" }}>
           {subtitle}
         </p>
-        <p className="text-base sm:text-lg md:text-xl text-gray-200 italic max-w-3xl mx-auto" style={{ fontFamily: "'Crimson Pro', 'Noto Serif KR', serif" }}>
+        <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-200 italic max-w-3xl mx-auto px-4 leading-relaxed" style={{ fontFamily: "'Crimson Pro', 'Noto Serif KR', serif" }}>
           {tagline}
         </p>
       </div>

@@ -1,9 +1,9 @@
-import UserInfoStep from "@/app/(site)/recommend_estimate/SkinSurveyFlow/questionnaire/UserInfoStep";
-import BudgetStep from "@/app/(site)/recommend_estimate/SkinSurveyFlow/questionnaire/BudgetStep";
-import TreatmentGoalsStep from "@/app/(site)/recommend_estimate/SkinSurveyFlow/questionnaire/TreatmentGoalsStep";
-import VisitPathStep from "@/app/(site)/recommend_estimate/SkinSurveyFlow/questionnaire/VisitPathStep";
-import SkinConcernsStep from "@/app/(site)/recommend_estimate/SkinSurveyFlow/questionnaire/SkinConcernsStep";
-import HealthConditionStep from "@/app/(site)/recommend_estimate/SkinSurveyFlow/questionnaire/HealthConditionStep";
+import UserInfoStep from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/UserInfoStep";
+import BudgetStep from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/BudgetStep";
+import TreatmentGoalsStep from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/TreatmentGoalsStep";
+import VisitPathStep from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/VisitPathStep";
+import SkinConcernsStep from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/SkinConcernsStep";
+import HealthConditionStep from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/HealthConditionStep";
 import {
   FaInstagram,
   FaReddit,
@@ -14,11 +14,11 @@ import {
 } from 'react-icons/fa';
 // import { SiLemon8 } from 'react-icons/si';
 import { USER_INFO, BUDGET, HEALTH_CONDITIONS, PREFERENCES, PRIORITYFACTORS, SKIN_CONCERNS, SKIN_TYPE, TREATMENT_EXPERIENCE_BEFORE, TREATMENT_GOALS, UPLOAD_PHOTO, VISIT_PATHS } from '@/constants/estimate_steps';
-import UploadImageStep from "@/app/(site)/recommend_estimate/SkinSurveyFlow/questionnaire/UploadImageStep";
-import SkinTypeStep from "@/app/(site)/recommend_estimate/SkinSurveyFlow/questionnaire/SkinTypeStep";
-import PreferencesStep from "@/app/(site)/recommend_estimate/SkinSurveyFlow/questionnaire/PreferencesStep";
-import PrioriotyFactorStep from "@/app/(site)/recommend_estimate/SkinSurveyFlow/questionnaire/PrioriotyFactorStep";
-import TreatmentExpBeforeStep from "@/app/(site)/recommend_estimate/SkinSurveyFlow/questionnaire/TreatmentExpBefore";
+import UploadImageStep from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/UploadImageStep";
+import SkinTypeStep from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/SkinTypeStep";
+import PreferencesStep from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/PreferencesStep";
+import PrioriotyFactorStep from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/PrioriotyFactorStep";
+import TreatmentExpBeforeStep from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/TreatmentExpBefore";
 
 export const steps = [
 

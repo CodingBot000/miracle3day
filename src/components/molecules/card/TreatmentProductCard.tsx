@@ -2,7 +2,7 @@
 
 import { TreatmentProductData } from "@/app/models/treatmentProduct.dto";
 import { useCookieLanguage } from "@/hooks/useCookieLanguage";
-import { getKRWToUSD } from "@/app/(site)/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/utils/helpers";
+import { getKRWToUSD } from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/utils/helpers";
 
 interface TreatmentProductCardProps {
   product: TreatmentProductData;

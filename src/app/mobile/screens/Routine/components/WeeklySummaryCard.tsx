@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import type { WeeklyRoutineStats } from '../../../state/routineTypes';
+import type { WeeklyRoutineStats } from '@/app/mobile/state/routineTypes';
 
 interface Props {
   stats: WeeklyRoutineStats;

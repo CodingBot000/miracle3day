@@ -1,4 +1,4 @@
-import type { Treatment } from "../../../../constants/treatment/types";
+import type { Treatment } from "@/constants/treatment/types";
 import type { SortKey, SortOrder } from "./SearchSortBar";
 
 export const matchScore = (t: Treatment, q: string, locale: "ko" | "en"): number => {

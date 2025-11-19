@@ -1,6 +1,6 @@
-import { TreatmentKey, Candidate, AreaId, RecommendedItem } from '../types';
-import { META } from '../constants/treatmentMeta';
-import { PRICE_TABLE } from '../constants/prices';
+import { TreatmentKey, Candidate, AreaId, RecommendedItem } from '@/app/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/types';
+import { META } from '@/app/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/constants/treatmentMeta';
+import { PRICE_TABLE } from '@/app/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/constants/prices';
 import { getCurrentExchangeRate } from '@/utils/exchangeRateManager';
 
 /**

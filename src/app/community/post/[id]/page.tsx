@@ -8,8 +8,8 @@ import LikeButton from '@/components/atoms/button/LikeButton';
 import ReportButton from '@/components/atoms/button/ReportButton';
 import { Member, CommunityPost, CommunityComment } from '@/app/models/communityData.dto';
 import PostNotFoundFallback from './PostNotFoundFallback';
-import SetCommunityHeader from '../../SetCommunityHeader';
-import { ANONYMOUS_FALLBACK, isAnonymousCategoryName } from '../../utils';
+import SetCommunityHeader from '@/app/community/SetCommunityHeader';
+import { ANONYMOUS_FALLBACK, isAnonymousCategoryName } from '@/app/community/utils';
 import { getImageUrl } from '@/lib/images';
 import {
   TABLE_COMMUNITY_POSTS,

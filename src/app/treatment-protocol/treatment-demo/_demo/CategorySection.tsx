@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import type { Category, Treatment } from "../../../../constants/treatment/types";
+import type { Category, Treatment } from "@/constants/treatment/types";
 import TreatmentCard from "./TreatmentCard";
 
 export default function CategorySection({

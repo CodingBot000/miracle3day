@@ -2,9 +2,9 @@
 
 import * as React from "react";
 import { useSearchParams } from "next/navigation";
-import { categories } from "../../../../constants/treatment/sample-data";
-import type { Treatment } from "../../../../constants/treatment/types";
-import { buildInfoLine } from "../../../../constants/treatment/types";
+import { categories } from "@/constants/treatment/sample-data";
+import type { Treatment } from "@/constants/treatment/types";
+import { buildInfoLine } from "@/constants/treatment/types";
 import CategorySection from "../_demo/CategorySection";
 
 type Locale = "ko" | "en";

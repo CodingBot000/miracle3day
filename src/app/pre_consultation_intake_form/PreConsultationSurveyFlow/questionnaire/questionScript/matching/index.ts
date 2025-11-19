@@ -15,32 +15,32 @@ import {
   Candidate,
   ExcludedItem,
   Substitution,
-} from './types';
+} from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/types';
 
 // Mappers
-import { mapConcernToCandidates } from './mappers/concernMapper';
-import { mapGoalToCandidates } from './mappers/goalMapper';
-import { adjustCandidatesByAgeGroup, adjustCandidatesByGender } from './mappers/ageGenderMapper';
+import { mapConcernToCandidates } from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/mappers/concernMapper';
+import { mapGoalToCandidates } from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/mappers/goalMapper';
+import { adjustCandidatesByAgeGroup, adjustCandidatesByGender } from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/mappers/ageGenderMapper';
 
 // Filters
-import { filterByArea } from './filters/areaFilter';
-import { substituteForPriority } from './filters/priorityFilter';
-import { enforceBudget } from './filters/budgetFilter';
-import { applyPastFilters } from './filters/pastTreatmentFilter';
-import { applyMedicalFilters } from './filters/medicalFilter';
+import { filterByArea } from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/filters/areaFilter';
+import { substituteForPriority } from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/filters/priorityFilter';
+import { enforceBudget } from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/filters/budgetFilter';
+import { applyPastFilters } from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/filters/pastTreatmentFilter';
+import { applyMedicalFilters } from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/filters/medicalFilter';
 
 // Analyzers
-import { analyzeTiers } from './analyzers/tierAnalyzer';
-import { buildUpgradeSuggestions } from './analyzers/upgradeSuggester';
+import { analyzeTiers } from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/analyzers/tierAnalyzer';
+import { buildUpgradeSuggestions } from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/analyzers/upgradeSuggester';
 
 // Utils
-import { addUniqueCandidates, toRecommendedItems, krwToUsd, getKRWToUSD, isInjectable, isLaser } from './utils/helpers';
-import { normalizePastTreatments } from './utils/compatibility';
+import { addUniqueCandidates, toRecommendedItems, krwToUsd, getKRWToUSD, isInjectable, isLaser } from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/utils/helpers';
+import { normalizePastTreatments } from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/utils/compatibility';
 
 // Constants
-import { BUDGET_UPPER_LIMITS } from './constants/mappings';
-import { META } from './constants/treatmentMeta';
-import { PRICE_TABLE } from './constants/prices';
+import { BUDGET_UPPER_LIMITS } from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/constants/mappings';
+import { META } from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/constants/treatmentMeta';
+import { PRICE_TABLE } from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/constants/prices';
 
 /**
  * 메인 추천 함수

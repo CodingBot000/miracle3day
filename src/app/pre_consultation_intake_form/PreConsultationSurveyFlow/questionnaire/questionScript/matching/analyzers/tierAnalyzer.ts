@@ -1,4 +1,4 @@
-import { SelectedConcern, TierAnalysis } from '../types';
+import { SelectedConcern, TierAnalysis } from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/types';
 
 /**
  * 선택된 concerns의 tier 분포 분석 (신규 기능)

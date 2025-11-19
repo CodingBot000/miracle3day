@@ -1,4 +1,4 @@
-import { TreatmentKey, TreatmentMeta, AreaId } from '../types';
+import { TreatmentKey, TreatmentMeta, AreaId } from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/types';
 
 /**
  * 공통 얼굴 영역

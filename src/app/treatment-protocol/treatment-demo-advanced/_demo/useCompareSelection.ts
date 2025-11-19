@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import type { Treatment } from "../../../../constants/treatment/types";
+import type { Treatment } from "@/constants/treatment/types";
 
 export default function useCompareSelection() {
   const [selected, setSelected] = React.useState<Treatment[]>([]);

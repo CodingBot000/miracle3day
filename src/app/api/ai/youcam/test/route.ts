@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { YouCamAuth } from '../lib/auth';
+import { YouCamAuth } from '@/app/api/ai/youcam/lib/auth';
 
 export async function GET() {
   try {

@@ -9,7 +9,7 @@ import Link from "next/link";
 import { ROUTE } from "@/router";
 import Image from "next/image";;
 import SeeAllLink from "./SeeAllLink";
-import LocationHospitalClient from "../deprecated/LocationHospitalClient";
+import LocationHospitalClient from "@/app/deprecated/LocationHospitalClient";
 import DiagnosticIntro from "./components/DiagnosticIntro";
 import RecommendEventList from "./components/recommend";
 import { Smile } from "lucide-react";
@@ -18,18 +18,18 @@ import CategoryMenu from "@/components/organism/layout/CategoryMenu";
 import AgeChecker from "@/components/template/AgeChecker";
 import Hero from "./hero";
 
-import ProtocolPage from "../treatment-protocol/treatment-landing-v2/protocol/page";
-import TreatmentProtocol from "../treatment-protocol/treatment-landing-v2/TreatmentProtocol";
+import ProtocolPage from "@/app/treatment-protocol/treatment-landing-v2/protocol/page";
+import TreatmentProtocol from "@/app/treatment-protocol/treatment-landing-v2/TreatmentProtocol";
 import ScrollDevicesIntroduce from "./components/ScrollDevicesIntroduce";
 import LanguageText from "./LanguageText";
-import TreatmentBasedAgeGuide from "../treatment-based-age-guide/page";
+import TreatmentBasedAgeGuide from "@/app/treatment-based-age-guide/page";
 import TransparentHeaderWrapper from "@/components/layout/TransparentHeaderWrapper";
-import QuizPage from "../gamification/quize/page";
+import QuizPage from "@/app/gamification/quize/page";
 import WhyKoreaButton from "./components/WhyKoreaButton";
-import AgeGuideCTA from "../treatment-based-age-guide/components/AgeGuideCTA";
+import AgeGuideCTA from "@/app/treatment-based-age-guide/components/AgeGuideCTA";
 import { getLangFromCookies, Lang, t } from "@/i18n/i18n";
 import ReviewScrollSection from "@/app/home/components/ReviewScrollSection";
-import BeautyPartners from "../partners/BeautyPartners";
+import BeautyPartners from "@/app/partners/BeautyPartners";
 
 export default async function HomePage() {
   // const bannerItem = await getBannerAPI();

@@ -3,7 +3,7 @@ import {
     InfinityScrollInputDto,
   } from "@/types/infinite";
 import { HospitalData } from "./hospitalData.dto";
-import { UserInfoDto } from "../api/auth/getUser/getUser.dto";
+import { UserInfoDto } from "@/app/api/auth/getUser/getUser.dto";
   
   export interface HospitalDetailReviewInputDto extends InfinityScrollInputDto {
     id: string;

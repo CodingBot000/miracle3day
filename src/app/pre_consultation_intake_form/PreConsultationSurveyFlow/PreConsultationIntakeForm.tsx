@@ -4,8 +4,8 @@ import { ChevronLeft, ChevronRight, Heart, Star, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import PageHeader from '../PageHeader';
-import PreviewReport from './questionnaire/PreviewReport';
+import PageHeader from '@/app/pre_consultation_intake_form/PageHeader';
+import PreviewReport from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/PreviewReport';
 import { preConsultationSteps, questions } from '@/content/pre_consultation_intake/form-definition_pre_consultation';
 
 

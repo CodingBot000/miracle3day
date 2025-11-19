@@ -1,5 +1,5 @@
-import { TreatmentGoalId, Candidate } from '../types';
-import { expandGoalId } from '../utils/compatibility';
+import { TreatmentGoalId, Candidate } from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/types';
+import { expandGoalId } from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/utils/compatibility';
 
 /**
  * Treatment Goal → Candidate 매핑

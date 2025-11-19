@@ -1,11 +1,11 @@
 'use client';
 
 import React from 'react';
-import { useMobileAppState } from '../state/mobileAppState';
-import { BottomTabBar } from '../components/ui/BottomTabBar';
-import { RoutineScreen } from '../screens/Routine/RoutineScreen';
-import { PlaceholderScreen } from '../screens/Placeholder/PlaceholderScreen';
-import { SafeAreaContainer } from '../components/ui/SafeAreaContainer';
+import { useMobileAppState } from '@/app/mobile/state/mobileAppState';
+import { BottomTabBar } from '@/app/mobile/components/ui/BottomTabBar';
+import { RoutineScreen } from '@/app/mobile/screens/Routine/RoutineScreen';
+import { PlaceholderScreen } from '@/app/mobile/screens/Placeholder/PlaceholderScreen';
+import { SafeAreaContainer } from '@/app/mobile/components/ui/SafeAreaContainer';
 
 export function MobileAppShell() {
   const { activeTab } = useMobileAppState();

@@ -1,4 +1,4 @@
-import { TreatmentKey } from '../types';
+import { TreatmentKey } from '@/app/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/types';
 
 /**
  * 시술별 가격 테이블 (KRW)

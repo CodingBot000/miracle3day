@@ -1,6 +1,6 @@
-import { Candidate, MedicalId, ExcludedItem } from '../types';
-import { isInjectable, createsWound } from '../utils/helpers';
-import { META } from '../constants/treatmentMeta';
+import { Candidate, MedicalId, ExcludedItem } from '@/app/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/types';
+import { isInjectable, createsWound } from '@/app/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/utils/helpers';
+import { META } from '@/app/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/constants/treatmentMeta';
 
 /**
  * 의학적 상태 필터 (효과 우선이지만 금기 시술은 제외)

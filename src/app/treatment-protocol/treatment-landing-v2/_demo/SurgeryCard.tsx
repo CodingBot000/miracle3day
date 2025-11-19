@@ -4,7 +4,7 @@ import * as React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import type { SurgeryCategory, Locale } from "@/app/models/surgeryData.dto";
-import { SURGERY_IMAGES } from "../category_images";
+import { SURGERY_IMAGES } from "@/app/treatment-protocol/treatment-landing-v2/category_images";
 
 interface SurgeryCardProps {
   data: SurgeryCategory;

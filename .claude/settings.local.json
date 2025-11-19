@@ -41,7 +41,12 @@
       "Bash(timeout 10 curl:*)",
       "Bash(/tmp/original_community_page.tsx)",
       "Bash(git mv:*)",
-      "Bash(xargs:*)"
+      "Bash(xargs:*)",
+      "Bash(while read file)",
+      "Bash(do if grep -q \"from ['''']\\.\\./\" $file)",
+      "Bash(then echo 'FOUND RELATIVE IMPORTS IN: $file' grep \"from ['''']\\.\\./\" $file fi done)",
+      "Bash(for file in /Users/switch/Development/WebBeauty/beauty_proejcts/complete/beauty-main/src/app/ai/youcam/jscamera/components/ConcernSelector.tsx /Users/switch/Development/WebBeauty/beauty_proejcts/complete/beauty-main/src/app/ai/youcam/jscamera/page.tsx /Users/switch/Development/WebBeauty/beauty_proejcts/complete/beauty-main/src/app/ai/youcam/s2s/components/ConcernSelector.tsx /Users/switch/Development/WebBeauty/beauty_proejcts/complete/beauty-main/src/app/ai/youcam/s2s/page.tsx /Users/switch/Development/WebBeauty/beauty_proejcts/complete/beauty-main/src/app/api/ai/youcam/skin_analysis/route.ts /Users/switch/Development/WebBeauty/beauty_proejcts/complete/beauty-main/src/app/api/ai/youcam/test/route.ts /Users/switch/Development/WebBeauty/beauty_proejcts/complete/beauty-main/src/app/api/auth/countryCode/index.ts /Users/switch/Development/WebBeauty/beauty_proejcts/complete/beauty-main/src/app/api/auth/favorite/favorite.dto.ts /Users/switch/Development/WebBeauty/beauty_proejcts/complete/beauty-main/src/app/api/auth/member/avatar/route.ts /Users/switch/Development/WebBeauty/beauty_proejcts/complete/beauty-main/src/app/api/search/search.dto.ts /Users/switch/Development/WebBeauty/beauty_proejcts/complete/beauty-main/src/app/models/reviewData.dto.ts)",
+      "Bash(do echo \"=== $file ===\" grep -n \"import.*[''''\"\"]\" \"$file\")"
     ],
     "deny": []
   }

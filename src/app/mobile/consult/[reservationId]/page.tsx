@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import JitsiRoom from "../_components/JitsiRoom";
+import JitsiRoom from "@/app/mobile/consult/_components/JitsiRoom";
 import { useParams, useSearchParams, useRouter } from "next/navigation";
 import { useUserStore } from "@/stores/useUserStore";
 

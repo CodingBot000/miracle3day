@@ -2,9 +2,9 @@
 "use client";
 
 import * as React from "react";
-import { categories } from "../../../../constants/treatment/sample-data";
-import type { Category, Treatment } from "../../../../constants/treatment/types";
-import { buildInfoLine } from "../../../../constants/treatment/types";
+import { categories } from "@/constants/treatment/sample-data";
+import type { Category, Treatment } from "@/constants/treatment/types";
+import { buildInfoLine } from "@/constants/treatment/types";
 
 import LanguageToggle from "./LanguageToggle";
 import SearchSortBar, { type SortKey, type SortOrder } from "./SearchSortBar";

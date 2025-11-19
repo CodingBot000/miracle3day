@@ -1,6 +1,6 @@
-import { Candidate, AreaId, ExcludedItem } from '../types';
-import { inAreas } from '../utils/helpers';
-import { META } from '../constants/treatmentMeta';
+import { Candidate, AreaId, ExcludedItem } from '@/app/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/types';
+import { inAreas } from '@/app/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/utils/helpers';
+import { META } from '@/app/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/constants/treatmentMeta';
 
 /**
  * 부위 필터

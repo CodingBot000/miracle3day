@@ -1,6 +1,6 @@
-import { Candidate, PriorityId, Substitution, ExcludedItem, TreatmentKey } from '../types';
-import { PRICE_TABLE } from '../constants/prices';
-import { META, LIFTING_ORDER, TEXTURE_STRONG, TEXTURE_GENTLE } from '../constants/treatmentMeta';
+import { Candidate, PriorityId, Substitution, ExcludedItem, TreatmentKey } from '@/app/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/types';
+import { PRICE_TABLE } from '@/app/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/constants/prices';
+import { META, LIFTING_ORDER, TEXTURE_STRONG, TEXTURE_GENTLE } from '@/app/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/constants/treatmentMeta';
 
 /**
  * 예산 적용

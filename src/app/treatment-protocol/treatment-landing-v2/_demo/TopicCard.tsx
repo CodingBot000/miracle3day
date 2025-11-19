@@ -2,7 +2,7 @@ import * as React from "react";
 import Image from "next/image";;
 import type { TopicWithAreas, Locale } from "@/app/models/treatmentData.dto";
 import DualImageCarousel from "@/components/atoms/DualImageCarousel";
-import { TOPIC_IMAGES } from "../category_images";
+import { TOPIC_IMAGES } from "@/app/treatment-protocol/treatment-landing-v2/category_images";
 
 interface TopicCardProps {
   topic: TopicWithAreas;

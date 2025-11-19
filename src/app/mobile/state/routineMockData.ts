@@ -1,5 +1,5 @@
 import { DailyRoutineState, RoutineStepGroup, WeeklyRoutineStats, MonthlyRoutineStats, ChallengeSummary } from './routineTypes';
-import { formatISODate, getCurrentMonthKey } from '../lib/dateHelpers';
+import { formatISODate, getCurrentMonthKey } from '@/app/mobile/lib/dateHelpers';
 
 // 간단한 Step 정의는 여기서 하드코딩 (나중에 서버/DB로 이동 가능)
 const STEP_DEFINITIONS = [

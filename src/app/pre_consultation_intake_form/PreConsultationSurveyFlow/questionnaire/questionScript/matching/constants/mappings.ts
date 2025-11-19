@@ -1,4 +1,4 @@
-import { ConcernId, TreatmentGoalId, PastId } from '../types';
+import { ConcernId, TreatmentGoalId, PastId } from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/types';
 
 /**
  * 신규 통합 concern ID를 구버전 세부 ID 배열로 확장

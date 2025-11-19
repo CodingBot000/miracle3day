@@ -1,5 +1,5 @@
-import { SelectedConcern, Candidate, ConcernId } from '../types';
-import { expandConcernId } from '../utils/compatibility';
+import { SelectedConcern, Candidate, ConcernId } from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/types';
+import { expandConcernId } from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/utils/compatibility';
 
 /**
  * Concern → Candidate 매핑

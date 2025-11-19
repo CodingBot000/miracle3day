@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams, useSearchParams, useRouter } from "next/navigation";
-import DailyFrame from "../_components/DailyFrame";
+import DailyFrame from "@/app/mobile/consult-daily/_components/DailyFrame";
 
 export default function DailyConsultPage() {
   const router = useRouter();

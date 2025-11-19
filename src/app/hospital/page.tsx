@@ -1,11 +1,11 @@
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-import { getHospitalLocationAPI } from "../api/home/hospital/location";
+import { getHospitalLocationAPI } from "@/app/api/home/hospital/location";
 import { LocationEnum } from "@/constants";
 import { Metadata } from "next";
 import HospitalListNewDesign from "./components/HospitalListNewDesign";
-import { getHospitalListAPI } from "../api/hospital/list";
+import { getHospitalListAPI } from "@/app/api/hospital/list";
 
 type Props = {
   searchParams: { locationNum?: string };

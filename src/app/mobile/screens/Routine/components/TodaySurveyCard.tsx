@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useMobileAppState } from '../../../state/mobileAppState';
+import { useMobileAppState } from '@/app/mobile/state/mobileAppState';
 
 export function TodaySurveyCard() {
   const { todayRoutine, updateTodaySurvey } = useMobileAppState();

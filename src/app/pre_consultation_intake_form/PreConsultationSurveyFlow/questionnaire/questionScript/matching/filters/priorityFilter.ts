@@ -1,5 +1,5 @@
-import { Candidate, PriorityId, Substitution, ExcludedItem, TreatmentKey } from '../types';
-import { META } from '../constants/treatmentMeta';
+import { Candidate, PriorityId, Substitution, ExcludedItem, TreatmentKey } from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/types';
+import { META } from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/constants/treatmentMeta';
 
 /**
  * 우선순위 기반 치환/제거

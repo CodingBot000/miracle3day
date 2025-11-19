@@ -8,7 +8,7 @@ import {
   parseKakaoTalkUrl,
   parseYouTubeUrl,
   parseTelegramUrl,
-} from '../snsUtils';
+} from '@/utils/snsUtils';
 
 describe('SNS Utils', () => {
   describe('parseInstagramUrl', () => {

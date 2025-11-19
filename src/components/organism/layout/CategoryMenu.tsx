@@ -3,9 +3,9 @@ import { useState } from "react";
 import CategoryDepth1 from "./CategoryDepth1";
 import CategoryDepth2 from "./CategoryDepth2";
 import CategoryDepth3 from "./CategoryDepth3";
-import { SKIN_BEAUTY_CATEGORIES } from "../../../app/contents/category/skinBeautyCategories";
-import { PLASTIC_SURGERY_CATEGORIES } from "../../../app/contents/category/plasticSurgeryCategories";
-import { CATEGORY_ICONS } from "../../../app/contents/menuIconData";
+import { SKIN_BEAUTY_CATEGORIES } from "@/app/contents/category/skinBeautyCategories";
+import { PLASTIC_SURGERY_CATEGORIES } from "@/app/contents/category/plasticSurgeryCategories";
+import { CATEGORY_ICONS } from "@/app/contents/menuIconData";
 import { CategoryNode } from "@/app/contents/category/categoryNode";
 import { useRouter } from "next/navigation";
 

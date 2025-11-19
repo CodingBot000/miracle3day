@@ -1,6 +1,6 @@
-import { Candidate, PastId, ExcludedItem } from '../types';
-import { isLaser } from '../utils/helpers';
-import { META } from '../constants/treatmentMeta';
+import { Candidate, PastId, ExcludedItem } from '@/app/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/types';
+import { isLaser } from '@/app/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/utils/helpers';
+import { META } from '@/app/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/constants/treatmentMeta';
 
 /**
  * 과거 시술 필터 (영문 사유 포함)

@@ -1,4 +1,4 @@
-import { TreatmentKey, TreatmentMeta, AreaId } from '../types';
+import { TreatmentKey, TreatmentMeta, AreaId } from '@/app/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/types';
 
 /**
  * 공통 얼굴 영역

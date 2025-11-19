@@ -9,7 +9,7 @@ import { useGetUser } from "@/hooks/useGetUser";
 import { AlertModal } from "@/components/template/modal/Modal";
 import useModal from "@/hooks/useModal";
 import { ModalOverlay } from "@/components/organism/layout/ModalOverlay";
-import Button from "../button/Button";
+import Button from "@/components/atoms/button/Button";
 import { ROUTE } from "@/router";
 
 export interface FavoriteIconProps {

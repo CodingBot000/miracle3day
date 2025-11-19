@@ -1,4 +1,4 @@
-import { AgeGroup, Gender, Candidate, TreatmentKey } from '../types';
+import { AgeGroup, Gender, Candidate, TreatmentKey } from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/types';
 
 /**
  * 연령대별 선호 시술

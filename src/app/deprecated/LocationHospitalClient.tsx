@@ -7,7 +7,7 @@ import { HospitalCard } from "@/components/molecules/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ROUTE } from "@/router";
 import { LocationEnum, LOCATIONS } from "@/constants";
-import { styles } from "../home/style/homeStyleSet.tailwind";
+import { styles } from "@/app/home/style/homeStyleSet.tailwind";
 
 export default function LocationHospitalClient() {
     const [locationParam, setLocationParam] = useState<LocationEnum | null>(null);

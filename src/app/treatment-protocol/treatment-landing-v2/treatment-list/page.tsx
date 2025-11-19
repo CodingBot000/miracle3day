@@ -4,8 +4,8 @@ import * as React from "react";
 import { useSearchParams } from "next/navigation";
 import { useAllTreatmentCategories } from "@/hooks/useTreatmentData";
 import type { TreatmentCategoryResponse, Locale } from "@/app/models/treatmentData.dto";
-import { buildInfoLine } from "../../../../constants/treatment/types";
-import type { Treatment } from "../../../../constants/treatment/types";
+import { buildInfoLine } from "@/constants/treatment/types";
+import type { Treatment } from "@/constants/treatment/types";
 import CategorySection from "../_demo/CategorySection";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 

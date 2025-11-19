@@ -1,6 +1,6 @@
 'use client';
 
-import { SkinConcern } from '../../../../api/ai/youcam/lib/types';
+import { SkinConcern } from '@/app/api/ai/youcam/lib/types';
 
 interface ConcernSelectorProps {
   mode: 'SD' | 'HD';

@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useMobileAppState } from '../../state/mobileAppState';
+import { useMobileAppState } from '@/app/mobile/state/mobileAppState';
 import { MonthlyCalendar } from './components/MonthlyCalendar';
 
 export function MonthlyRoutineView() {

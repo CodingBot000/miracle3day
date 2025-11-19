@@ -1,9 +1,9 @@
-import { ConcernId, TreatmentGoalId, PastId } from '../types';
+import { ConcernId, TreatmentGoalId, PastId } from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/types';
 import {
   CONCERN_ID_EXPANSIONS,
   GOAL_ID_EXPANSIONS,
   PAST_TREATMENT_MAPPING
-} from '../constants/mappings';
+} from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/constants/mappings';
 
 /**
  * 신규 concern ID를 구버전 호환 ID 배열로 확장

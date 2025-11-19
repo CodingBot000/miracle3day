@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { SkinConcern } from '../../../api/ai/youcam/lib/types';
+import { SkinConcern } from '@/app/api/ai/youcam/lib/types';
 import CameraInterface from './components/CameraInterface';
 import ConcernSelector from './components/ConcernSelector';
 import AnalysisResults from './components/AnalysisResults';

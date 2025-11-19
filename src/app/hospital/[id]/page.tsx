@@ -1,4 +1,4 @@
-import { getHospitalMainAPI } from "../../api/hospital/[id]/main";
+import { getHospitalMainAPI } from "@/app/api/hospital/[id]/main";
 import { redirect } from "next/navigation";
 import { Metadata, ResolvingMetadata } from "next";
 import { capitalizeWord } from "@/utils/word";

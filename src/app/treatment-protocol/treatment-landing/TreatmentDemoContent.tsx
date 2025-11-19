@@ -3,9 +3,9 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
-import { categories } from "../../../constants/treatment/sample-data";
-import type { Category, Treatment } from "../../../constants/treatment/types";
-import { buildInfoLine } from "../../../constants/treatment/types";
+import { categories } from "@/constants/treatment/sample-data";
+import type { Category, Treatment } from "@/constants/treatment/types";
+import { buildInfoLine } from "@/constants/treatment/types";
 
 import LanguageToggle from "./_demo/LanguageToggle";
 import SearchSortBar, { type SortKey, type SortOrder } from "./_demo/SearchSortBar";

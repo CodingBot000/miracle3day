@@ -1,4 +1,4 @@
-import type { BadgeStore } from '../ports/badgeStore';
+import type { BadgeStore } from '@/lib/gamification/ports/badgeStore';
 
 export function createBadgeStore(): BadgeStore {
   const warn = (method: string) => {

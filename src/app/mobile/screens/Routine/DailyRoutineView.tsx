@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import { getStepDefinitions } from '../../state/routineMockData';
-import { useMobileAppState } from '../../state/mobileAppState';
+import { getStepDefinitions } from '@/app/mobile/state/routineMockData';
+import { useMobileAppState } from '@/app/mobile/state/mobileAppState';
 import { RoutineSection } from './components/RoutineSection';
 import { RoutineStepItem } from './components/RoutineStepItem';
 import { TodaySurveyCard } from './components/TodaySurveyCard';

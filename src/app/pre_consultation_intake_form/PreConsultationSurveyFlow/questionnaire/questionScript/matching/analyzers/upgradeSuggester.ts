@@ -1,5 +1,5 @@
-import { ExcludedItem, Substitution, PriorityId } from '../types';
-import { META } from '../constants/treatmentMeta';
+import { ExcludedItem, Substitution, PriorityId } from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/types';
+import { META } from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/constants/treatmentMeta';
 
 /**
  * 업셀/대안 제안 (영문)

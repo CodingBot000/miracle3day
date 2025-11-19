@@ -1,4 +1,4 @@
-import { TreatmentKey } from '../types';
+import { TreatmentKey } from '@/app/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/types';
 
 /**
  * 시술별 가격 테이블 (KRW)

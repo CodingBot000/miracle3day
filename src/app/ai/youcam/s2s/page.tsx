@@ -4,7 +4,7 @@ import { useState } from 'react';
 import ImageUploader from './components/ImageUploader';
 import ConcernSelector from './components/ConcernSelector';
 import AnalysisResults from './components/AnalysisResults';
-import { SkinConcern } from '../../../api/ai/youcam/lib/types';
+import { SkinConcern } from '@/app/api/ai/youcam/lib/types';
 
 export default function AIAnalysisPage() {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);

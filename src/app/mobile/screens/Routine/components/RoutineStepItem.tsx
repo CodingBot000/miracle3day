@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import type { RoutineStepDefinition } from '../../../state/routineTypes';
+import type { RoutineStepDefinition } from '@/app/mobile/state/routineTypes';
 
 interface Props {
   definition: RoutineStepDefinition;

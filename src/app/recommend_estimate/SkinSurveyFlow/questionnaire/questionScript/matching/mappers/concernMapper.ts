@@ -1,5 +1,5 @@
-import { SelectedConcern, Candidate, ConcernId } from '../types';
-import { expandConcernId } from '../utils/compatibility';
+import { SelectedConcern, Candidate, ConcernId } from '@/app/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/types';
+import { expandConcernId } from '@/app/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/utils/compatibility';
 
 /**
  * Concern → Candidate 매핑

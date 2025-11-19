@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useMemo } from 'react';
-import { useMobileAppState } from '../../../state/mobileAppState';
-import { getStepDefinitions } from '../../../state/routineMockData';
+import { useMobileAppState } from '@/app/mobile/state/mobileAppState';
+import { getStepDefinitions } from '@/app/mobile/state/routineMockData';
 import { ProgressRing } from './ProgressRing';
-import { formatKoreanDateLabel } from '../../../lib/dateHelpers';
+import { formatKoreanDateLabel } from '@/app/mobile/lib/dateHelpers';
 
 export function RoutineHeader() {
   const { todayRoutine } = useMobileAppState();

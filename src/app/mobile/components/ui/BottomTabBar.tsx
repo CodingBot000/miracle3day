@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useMobileAppState } from '../../state/mobileAppState';
+import { useMobileAppState } from '@/app/mobile/state/mobileAppState';
 
 const TABS = [
   { key: 'routine', label: '루틴', icon: '✓' },

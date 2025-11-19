@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useMobileAppState } from '../../state/mobileAppState';
+import { useMobileAppState } from '@/app/mobile/state/mobileAppState';
 import { WeeklySummaryCard } from './components/WeeklySummaryCard';
 
 export function WeeklyRoutineView() {

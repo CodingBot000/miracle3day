@@ -2,8 +2,8 @@
 
 import * as React from "react";
 import Image from "next/image";;
-import type { Category } from "../../../../constants/treatment/types";
-import { CATEGORY_IMAGES } from "../../treatment-landing-v2/category_images";
+import type { Category } from "@/constants/treatment/types";
+import { CATEGORY_IMAGES } from "@/app/treatment-protocol/treatment-landing-v2/category_images";
 
 type Locale = "ko" | "en";
 

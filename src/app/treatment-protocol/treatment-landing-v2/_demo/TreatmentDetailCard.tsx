@@ -1,5 +1,5 @@
 import * as React from "react";
-import type { Treatment, PainLevel } from "../../../../constants/treatment/types";
+import type { Treatment, PainLevel } from "@/constants/treatment/types";
 
 // Use existing Treatment type from constants
 

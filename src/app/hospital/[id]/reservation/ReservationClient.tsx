@@ -13,8 +13,8 @@ import { useReservationStore } from '@/stores/useReservationStore';
 import { UserOutputDto } from '@/app/api/auth/getUser/getUser.dto';
 import { HospitalDetailMainOutput } from '@/app/api/hospital/[id]/main/main.dto';
 import ReservationModal from '@/components/template/modal/ReservationModal';
-import ReservationCalendarClient from '../components/content/ReservationCalendarClient';
-import HospitalListCard from '../../components/HospitalListCard';
+import ReservationCalendarClient from '@/app/hospital/[id]/components/content/ReservationCalendarClient';
+import HospitalListCard from '@/app/hospital/components/HospitalListCard';
 
 interface ReservationClientProps {
   initialUserData: UserOutputDto | null;

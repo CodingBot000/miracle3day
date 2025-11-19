@@ -7,7 +7,7 @@ import { useTopicDetail } from "@/hooks/useTreatmentData";
 import type { Benefits, Locale, SequenceStep, SequenceTitle, LocalizedText } from "@/app/models/treatmentData.dto";
 import { useCookieLanguage } from "@/hooks/useCookieLanguage";
 import TreatmentDetailCard from "../_demo/TreatmentDetailCard";
-import { buildInfoLine } from "../../../../constants/treatment/types";
+import { buildInfoLine } from "@/constants/treatment/types";
 import { ArrowLeft } from "lucide-react";
 import { InfoIcon } from "@/components/icons/InfoIcon";
 import LottieLoading from '@/components/atoms/LottieLoading';

@@ -1,5 +1,5 @@
-import { calcAttemptExp } from '../domain/rules';
-import type { BadgeStore } from '../ports/badgeStore';
+import { calcAttemptExp } from '@/lib/gamification/domain/rules';
+import type { BadgeStore } from '@/lib/gamification/ports/badgeStore';
 
 export async function applyQuizAttempt(store: BadgeStore, input: {
   userId: string;

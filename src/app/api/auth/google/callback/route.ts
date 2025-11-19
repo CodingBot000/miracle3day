@@ -91,7 +91,7 @@ export async function GET(req: Request) {
       const termsAgreementsData = termsAgreements[0]?.terms_agreements as TermsAgreements | null;
       
       if (!termsAgreementsData) {
-        const res = NextResponse.redirect(new URL("/auth/terms", req.url));
+        const res = NextResponse.redirect(new URL("/terms", req.url));
         const session = await getIronSession(req, res, sessionOptions) as any;
         session.auth = {
           provider,
@@ -110,7 +110,7 @@ export async function GET(req: Request) {
       );
       
       if (hasUnagreeRequired) {
-        const res = NextResponse.redirect(new URL("/auth/terms", req.url));
+        const res = NextResponse.redirect(new URL("/terms", req.url));
         const session = await getIronSession(req, res, sessionOptions) as any;
         session.auth = {
           provider,
@@ -138,9 +138,9 @@ export async function GET(req: Request) {
       return res;
     } else {
       // 신규 회원 - pending 상태로 약관 동의 페이지로
-      const res = NextResponse.redirect(new URL("/auth/terms", req.url));
+      const res = NextResponse.redirect(new URL("/terms", req.url));
       const session = await getIronSession(req, res, sessionOptions) as any;
-      
+
       session.auth = {
         provider,
         provider_user_id: providerUserId,

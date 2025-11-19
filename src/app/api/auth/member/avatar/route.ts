@@ -2,7 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 import { getAuthSession } from "@/lib/auth-helper";
 import { BUCKET_USERS, TABLE_MEMBERS } from "@/constants/tables";
 import { q } from "@/lib/db";
-import { findMemberByUserId } from "../../getUser/member.helper";
+import { findMemberByUserId } from "@/app/api/auth/getUser/member.helper";
 
 export async function GET(request: Request) {
   try {

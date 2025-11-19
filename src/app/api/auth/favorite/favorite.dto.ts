@@ -1,5 +1,5 @@
 import { InfinityScrollOutputDto } from "@/types/infinite";
-import { LocationDetailData } from "../../location/[id]/location.dto";
+import { LocationDetailData } from "@/app/api/location/[id]/location.dto";
 
 export interface GetFavoriteInputDto {
   id_hospital?: string;

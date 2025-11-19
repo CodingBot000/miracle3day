@@ -11,7 +11,7 @@ import { EventCard, HospitalCard, ReviewCard } from "@/components/molecules/card
 import { ROUTE } from "@/router";
 import { Skeleton } from "@/components/ui/skeleton";
 import { daysYMDFormat } from "@/utils/days";
-import { styles } from "@/app/home/style/homeStyleSet.tailwind";
+import { styles } from "@/app/(site)/home/style/homeStyleSet.tailwind";
 import { ProductCard } from "@/components/molecules/card/ProductCard";
 
 export default function SearchPanel({ onClose }: { onClose: () => void }) {

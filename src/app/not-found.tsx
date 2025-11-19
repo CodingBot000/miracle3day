@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import NotFoundClient from "./NotFoundClient";
-import SuspenseWrapper from "../components/atoms/SuspenseWrapper";
+import SuspenseWrapper from "@/components/atoms/SuspenseWrapper";
 
 export default function NotFoundPage() {
   return (

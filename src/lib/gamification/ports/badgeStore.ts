@@ -1,4 +1,4 @@
-import type { QuizRules } from '../domain/rules';
+import type { QuizRules } from '@/lib/gamification/domain/rules';
 
 export interface BadgeStore {
   getConfig(): Promise<{ quiz_rules: QuizRules }>;

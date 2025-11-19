@@ -23,9 +23,9 @@ export async function POST(req: Request) {
     
     if (session.auth.status === 'pending') {
       console.log('Session is pending - need to complete terms agreement first');
-      return NextResponse.json({ 
-        error: 'Terms agreement required', 
-        redirect: '/auth/terms' 
+      return NextResponse.json({
+        error: 'Terms agreement required',
+        redirect: '/terms'
       }, { status: 403 });
     }
     

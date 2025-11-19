@@ -7,7 +7,7 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 import { useCookieLanguage } from "@/hooks/useCookieLanguage";
 import TermsHtmlModal from "@/components/template/modal/TermsHtmlModal";
-import { terms } from "@/app/auth/terms/TermsClient";
+import { terms } from "@/app/(auth)/terms/TermsClient";
 
 const LanguageSelector = dynamic(() => import("@/components/organism/layout/LanguageSelector"), {
   ssr: false,

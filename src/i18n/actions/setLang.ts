@@ -2,7 +2,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import type { Lang } from "../i18n";
+import type { Lang } from "@/i18n/i18n";
 
 export async function setLangAction(nextLang: Lang) {
   const lang: Lang = nextLang === "ko" ? "ko" : "en";

@@ -9,7 +9,7 @@ export async function requireUserId(): Promise<string> {
   const auth = (session as any).auth;
 
   if (!auth || auth.status !== "active" || !auth.id_uuid) {
-    redirect("/auth/login"); // 로그인 페이지로 즉시 이동 (throw)
+    redirect("/login"); // 로그인 페이지로 즉시 이동 (throw)
   }
   return auth.id_uuid as string;
 }

@@ -66,7 +66,7 @@ export async function PUT(req: Request) {
     const rows = await q(
       `UPDATE ${TABLE_MEMBERS}
        SET ${fields.join(", ")}, updated_at = NOW()
-       WHERE uuid = $${values.length}
+       WHERE id_uuid = $${values.length}
        RETURNING *`,
       values
     );

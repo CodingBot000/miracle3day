@@ -1,6 +1,11 @@
 {
     "safe_mode": false,
     "confirm_shell_commands": false,
-    "auto_approve_scripts": true
-  }
+    "auto_approve_scripts": true,
+
+    "security": {
+      "allowWrite": "always"
+    }
+
+}
   

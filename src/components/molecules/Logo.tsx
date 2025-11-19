@@ -3,14 +3,23 @@
 import Link from "next/link";
 import Image from "next/image";;
 import { ROUTE } from "@/router";
+import { useRouter } from "next/navigation";
 
 const STORAGE_KEY = 'treatment-protocol-category';
 
 const Logo = () => {
-  const handleLogoClick = () => {
+  const router = useRouter();
+
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault(); // Link의 기본 동작 방지
+
     // Reset treatment protocol category to 'skin' when going home
     if (typeof window !== 'undefined') {
       localStorage.setItem(STORAGE_KEY, 'skin');
+
+      // 모든 브라우저 히스토리 초기화하고 홈으로 이동
+      window.history.pushState(null, '', ROUTE.HOME);
+      router.replace(ROUTE.HOME);
     }
   };
 

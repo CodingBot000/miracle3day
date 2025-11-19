@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { YouCamSkinAnalysis } from '../lib/skin-analysis';
-import { ResultParser } from '../lib/result-parser';
-import { SkinConcern } from '../lib/types';
+import { YouCamSkinAnalysis } from '@/app/api/ai/youcam/lib/skin-analysis';
+import { ResultParser } from '@/app/api/ai/youcam/lib/result-parser';
+import { SkinConcern } from '@/app/api/ai/youcam/lib/types';
 
 export async function POST(request: NextRequest) {
   try {

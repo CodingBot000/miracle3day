@@ -2,7 +2,7 @@
 "use client";
 
 import React from "react";
-import { useLanguageCookie } from "@/hooks/useLanguageCookie";
+import { useCookieLanguage } from "@/hooks/useCookieLanguage";
 
 export type ImageCompressionModalStatus = "idle" | "compressing" | "done" | "error";
 
@@ -28,7 +28,7 @@ const ImageCompressionModal: React.FC<ImageCompressionModalProps> = ({
   hasTimeoutError,
   onClose,
 }) => {
-  const { lang } = useLanguageCookie(); // 예: "ko" | "en"
+  const { language: lang } = useCookieLanguage(); // 예: "ko" | "en"
 
   if (!open) return null;
 

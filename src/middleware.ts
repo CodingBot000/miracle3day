@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 const AUTH_REQUIRED_PATHS = [
   "/user",
   "/gamification/quize",
-  "/auth/withdrawal",
+  "/withdrawal",
 ];
 
 function isAuthRequiredPath(pathname: string) {

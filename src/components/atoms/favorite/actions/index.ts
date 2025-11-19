@@ -26,14 +26,14 @@ export const favoriteActions = async ({
   // const sessionCookie = cookieStore.get("app_session");
   
   // if (!sessionCookie) {
-  //   redirect(referer ?? "/auth/login");
+  //   redirect(referer ?? "/login");
   // }
   
   const userId = await requireUserId();                 // ✅ 세션에서 보안적으로 추출
   const member = await findMemberByUserId(userId);      // (원하면 생략 가능)
 
   if (!member) {
-    redirect("/auth/login");
+    redirect("/login");
   }
 
   // 세션에서 사용자 ID 추출 (간단한 방법)
@@ -43,17 +43,17 @@ export const favoriteActions = async ({
   //   // 실제로는 별도 헬퍼 함수나 미들웨어에서 처리해야 함
   //   userId = "temp-user-id"; // 임시 처리
   // } catch {
-  //   redirect(referer ?? "/auth/login");
+  //   redirect(referer ?? "/login");
   // }
   
   // if (!userId) {
-  //   redirect(referer ?? "/auth/login");
+  //   redirect(referer ?? "/login");
   // }
 
   // const member = await findMemberByUserId(userId!);
 
   // if (!member) {
-  //   redirect("/auth/login");
+  //   redirect("/login");
   // }
 
   const memberUuid =

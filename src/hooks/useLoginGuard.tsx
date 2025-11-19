@@ -44,7 +44,7 @@ export function useLoginGuard() {
     // Build current URL with query params for redirect
     const queryString = searchParams.toString()
     const currentUrl = pathname + (queryString ? `?${queryString}` : '')
-    const loginUrl = `/auth/login?redirect=${encodeURIComponent(currentUrl)}`
+    const loginUrl = `/login?redirect=${encodeURIComponent(currentUrl)}`
 
     return (
       <LoginRequiredModal

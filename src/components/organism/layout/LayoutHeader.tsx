@@ -19,7 +19,7 @@ import { useMobileModeStore } from "@/stores/useMobileModeStore";
 // });
 const LayoutHeader = () => {
   const [showSearch, setShowSearch] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [scrollPosition, setScrollPosition] = useState(0);
   const { isTransparentMode } = useHeader();
   const { isMobileMode } = useMobileModeStore();
   const pathname = usePathname();
@@ -44,22 +44,39 @@ const LayoutHeader = () => {
 
   useEffect(() => {
     if (!isTransparentMode) {
-      setIsScrolled(false); // 투명 모드가 아니면 항상 불투명
+      setScrollPosition(0); // 투명 모드가 아니면 스크롤 위치 리셋
       return;
     }
 
     const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      // LayoutHeader의 높이 이상 스크롤되면 불투명해지도록
-      setIsScrolled(scrollPosition >= 158);
+      const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+      setScrollPosition(currentScrollPosition);
     };
 
-    // Check initial scroll position
+    // Check initial scroll position immediately
     handleScroll();
 
+    // Also check after a brief delay to catch any layout shifts
+    const timeoutId = setTimeout(handleScroll, 100);
+
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(timeoutId);
+    };
   }, [isTransparentMode]);
+
+  // 헤더 높이 (158px)를 기준으로 스크롤 진행도 계산 (0~1)
+  const HEADER_HEIGHT = 158;
+  const scrollProgress = isTransparentMode
+    ? Math.min(scrollPosition / HEADER_HEIGHT, 1)
+    : 1;
+
+  // 배경 opacity 계산 (0.0 -> 0.95)
+  const bgOpacity = scrollProgress * 0.95;
+
+  // 텍스트 색상 계산 (흰색 -> 검정색)
+  const isScrolled = scrollProgress > 0.5; // 50% 이상 스크롤되면 텍스트 색상 변경
 
   // 스타일 계산
   const getHeaderStyles = () => {
@@ -67,26 +84,18 @@ const LayoutHeader = () => {
       // 투명 모드가 아닌 경우: 항상 배경이 있음
       return 'bg-white/95 backdrop-blur-md shadow-md';
     }
-    // 투명 모드인 경우: 스크롤에 따라 변경
-    return isScrolled ? 'bg-white/95 backdrop-blur-md shadow-md' : 'bg-transparent';
+    // 투명 모드인 경우: 완전 투명 또는 동적 opacity
+    if (scrollPosition === 0) {
+      return 'bg-transparent';
+    }
+    return 'backdrop-blur-md shadow-md';
   };
 
   const getIconColor = () => {
     if (!isTransparentMode) {
-      // 투명 모드가 아닌 경우: 항상 검정색
       return 'text-black';
     }
-    // 투명 모드인 경우: 스크롤에 따라 변경
     return isScrolled ? 'text-black' : 'text-white';
-  };
-
-  const getTransitionStyle = () => {
-    if (!isTransparentMode) {
-      return 'all 300ms ease-in-out'; // 일반 모드는 빠른 전환
-    }
-    return isScrolled
-      ? 'all 2000ms ease-in-out'  // 투명→불투명: 2초
-      : 'all 500ms ease-in-out';   // 불투명→투명: 0.5초
   };
 
   return (
@@ -94,7 +103,10 @@ const LayoutHeader = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-[200] flex flex-col min-h-[88px] max-h-[128px] ease-in-out ${getHeaderStyles()}`}
       style={{
-        transition: getTransitionStyle(),
+        backgroundColor: isTransparentMode && scrollPosition > 0
+          ? `rgba(255, 255, 255, ${bgOpacity})`
+          : undefined,
+        transition: 'all 300ms ease-in-out',
       }}
     >
       {/* Top Section - Main Content (fills remaining space) */}

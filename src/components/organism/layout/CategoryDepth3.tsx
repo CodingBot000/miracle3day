@@ -1,4 +1,4 @@
-import { CategoryNode } from "@/app/contents/category/categoryNode";
+import { CategoryNode } from "@/app/(site)/contents/category/categoryNode";
 
 interface CategoryDepth3Props {
   items: CategoryNode[];

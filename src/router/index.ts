@@ -32,7 +32,7 @@ const createDetailRouter = (router: string) => (slug: string) => {
 
 export const ROUTE = {
   HOME: createNormalRouter("HOME"),
-  LOGIN: createAuthRouter("LOGIN"),
+  LOGIN: "/login",
   MY_PAGE: createUserRouter("MY_PAGE"),
   LOCATION: createNormalRouter("LOCATION"),
   LOCATION_DETAIL: createDetailRouter("LOCATION"),
@@ -56,6 +56,6 @@ export const ROUTE = {
   RECOMMEND_DETAIL: createDetailRouter("RECOMMEND"),
   FAVORITE: createUserRouter("FAVORITE"),
   UPLOAD_HOSPITAL: createAdminRouter("upload"),
-  WITHDRAWAL: '/auth/withdrawal',
+  WITHDRAWAL: '/withdrawal',
   RESERVATION: (id: string) => `/hospital/${id}/reservation`
 }

@@ -27,8 +27,18 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
   
   console.log("MyPageMyInfo user", user);
   console.log("MyPageMyInfo user?.userInfo?.id_uuid:", user?.userInfo?.id_uuid);
+
   useEffect(() => {
     void loadTodayAttendance();
+
+    // 페이지 진입 시 body 스크롤 강제 복원 (모달에서 돌아왔을 때 스크롤 안 되는 이슈 방지)
+    document.body.style.overflow = 'auto';
+    document.body.style.position = '';
+    document.body.style.width = '';
+
+    return () => {
+      // cleanup
+    };
   }, []);
   const handleProfileNavigation = () => {
     if (user?.userInfo?.id_uuid) {
@@ -152,7 +162,7 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
             <h3 className="text-lg font-semibold text-gray-800 mb-4">My Information</h3>
 
             <div className="bg-white rounded-lg shadow-sm">
-              {renderProfileField("Gender", user?.userInfo?.gender ? (user.userInfo.gender === "M" ? "Male" : "Female") : null, !user?.userInfo?.gender)}
+              {renderProfileField("Gender", user?.userInfo?.gender ? (user.userInfo.gender === "M" ? "Male" : "Female") : "other", !user?.userInfo?.gender)}
               {renderProfileField("Nationality", user?.userInfo?.id_country ? findCountry(user.userInfo.id_country)?.country_name : null, !user?.userInfo?.id_country)}
               {renderProfileField("Phone Number Verification", "Phone Number Verification", false)}
               {renderProfileField("Email", user?.userInfo?.email, false)}

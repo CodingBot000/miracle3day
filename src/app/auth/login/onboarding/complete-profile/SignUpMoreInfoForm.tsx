@@ -200,11 +200,13 @@ export default function SignUpMoreInfoForm() {
       <div>
         <h1 className="text-2xl font-semibold text-slate-900">Complete your profile</h1>
         <p className="mt-2 text-sm text-slate-500">
-          Tell us a bit more so we can personalize your experience.
+        Tell us a little more about yourself so we can personalize your experience.
+        <br />
+        This helps us provide tailored recommendations and seamless real-time video consultations.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div className="flex flex-col gap-4">
         <div className="space-y-1">
           <Label className="text-sm font-medium text-slate-600">Nickname</Label>
           <input
@@ -216,7 +218,7 @@ export default function SignUpMoreInfoForm() {
         </div>
 
         <div className="space-y-1">
-          <Label className="text-sm font-medium text-slate-600">Country</Label>
+          {/* <Label className="text-sm font-medium text-slate-600">Country</Label> */}
           <NationModal
             nation={nation?.country_name || ''}
             onSelect={(value: CountryCode) => setNation(value)}
@@ -260,7 +262,7 @@ export default function SignUpMoreInfoForm() {
             </div>
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="other" id="other" />
-              <Label htmlFor="other" className="font-normal cursor-pointer">Other</Label>
+              <Label htmlFor="other" className="font-normal cursor-pointer">Other (including prefer not to say)</Label>
             </div>
           </RadioGroup>
         </div>
@@ -276,7 +278,7 @@ export default function SignUpMoreInfoForm() {
           />
         </div>
 
-        <div className="space-y-1 md:col-span-2">
+        <div className="space-y-1">
           <Label className="text-sm font-medium text-slate-600">Phone number</Label>
           <div className="flex gap-2">
             {/* Phone country code (read-only) */}

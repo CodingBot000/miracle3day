@@ -146,5 +146,5 @@ module.exports = {
   	}
   },
   plugins: [require("tailwindcss-animate")],
-  important: true,
+  // important: true, // Removed to follow Tailwind + shadcn best practices
 }; 

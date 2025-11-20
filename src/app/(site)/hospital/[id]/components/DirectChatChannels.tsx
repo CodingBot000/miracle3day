@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import { parseSNSUrl, type SNSPlatform } from "@/utils/snsUtils";
 import CopyAlertModal from "@/components/template/modal/CopyAlertModal";
 import { useCookieLanguage } from "@/hooks/useCookieLanguage";
+import { MessageCircle } from "lucide-react";
 
 interface DirectChatChannelsProps {
   hospitalDetails: HospitalDetailInfo;
@@ -186,11 +187,12 @@ const DirectChatChannels = ({ hospitalDetails }: DirectChatChannelsProps) => {
     <>
       <div className="relative">
         {/* Direct Chat 버튼 */}
+      
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="px-2 py-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-md font-medium text-xs leading-tight hover:from-purple-700 hover:to-pink-700 transition-all flex items-center justify-center gap-1 w-full"
+          className="px-2 py-1 bg-pink-600 text-white rounded-md font-medium text-xs leading-tight hover:from-purple-700 hover:to-pink-700 transition-all flex items-center justify-center gap-1 w-full"
         >
-          <span>{isKorean ? labels.ko.directChat : labels.en.directChat}</span>
+            <MessageCircle size={12} /><span>{isKorean ? labels.ko.directChat : labels.en.directChat}</span>
           <svg
             className={`w-3 h-3 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
             fill="none"

@@ -139,7 +139,7 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
           </div>
 
           {/* Contact Information */}
-          <HospitalContactInfo hospitalDetails={hospital_details} />
+          {/* <HospitalContactInfo hospitalDetails={hospital_details} /> */}
         </div>
       </div>
 

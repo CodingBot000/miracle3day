@@ -31,7 +31,7 @@ const HospitalConsultationButton = ({ hospitalId, hospitalDetails }: HospitalCon
       videoConsultationError: "실시간 상담 예약 페이지를 열 수 없습니다. 다시 시도해주세요.",
     },
     en: {
-      chat: "Start Chat",
+      chat: "Platform Chat",
       reservation: "Make Reservation",
       videoConsultation: "Video Consultation",
       chatError: "Unable to start consultation. Please try again.",
@@ -128,12 +128,7 @@ const HospitalConsultationButton = ({ hospitalId, hospitalDetails }: HospitalCon
       const userRes = await fetch("/api/auth/getUser");
       const userData = await userRes.json();
       const userInfo = userData?.userInfo;
-      console.log('userRes:', userRes);
-      console.log('userData:', userData);
-      console.log('userInfo:', userInfo);
-      console.log('userInfo.birth_date:', userInfo.birth_date);
-      console.log('userInfo.id_country:', userInfo.id_country);
-      console.log('userInfo.phone_country_code:', userInfo.phone_country_code);
+      
       // 2. Check if user has complete profile (birthDate, id_country, phone_country_code)
       const hasCompleteProfile =
         userInfo.birth_date &&
@@ -156,6 +151,18 @@ const HospitalConsultationButton = ({ hospitalId, hospitalDetails }: HospitalCon
     }
   };
 
+  // Direct Chat 채널이 있는지 확인
+  const hasDirectChatChannels = 
+    (hospitalDetails.instagram && hospitalDetails.instagram.trim() !== '') ||
+    (hospitalDetails.facebook_messenger && hospitalDetails.facebook_messenger.trim() !== '') ||
+    (hospitalDetails.we_chat && hospitalDetails.we_chat.trim() !== '') ||
+    (hospitalDetails.whats_app && hospitalDetails.whats_app.trim() !== '') ||
+    (hospitalDetails.tiktok && hospitalDetails.tiktok.trim() !== '') ||
+    (hospitalDetails.line && hospitalDetails.line.trim() !== '') ||
+    (hospitalDetails.kakao_talk && hospitalDetails.kakao_talk.trim() !== '') ||
+    (hospitalDetails.telegram && hospitalDetails.telegram.trim() !== '') ||
+    (hospitalDetails.other_channel && hospitalDetails.other_channel.trim() !== '');
+
   return (
     <>
       {/* Login Required Modal */}
@@ -171,8 +178,10 @@ const HospitalConsultationButton = ({ hospitalId, hospitalDetails }: HospitalCon
 
       <div className="fixed bottom-[100px] right-5 z-40">
         <div className="flex flex-col gap-1.5 bg-white/95 backdrop-blur-sm shadow-lg rounded-lg p-2 w-28">
-          {/* Direct Chat 버튼 */}
-          <DirectChatChannels hospitalDetails={hospitalDetails} />
+          {/* Direct Chat 버튼 - 채널 데이터가 있을 때만 표시 */}
+          {hasDirectChatChannels && (
+            <DirectChatChannels hospitalDetails={hospitalDetails} />
+          )}
 
           <button
             onClick={handleChatConsultation}

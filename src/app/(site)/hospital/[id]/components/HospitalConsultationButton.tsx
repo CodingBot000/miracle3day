@@ -7,6 +7,7 @@ import { MessageCircle, Video } from "lucide-react";
 import { useCookieLanguage } from "@/hooks/useCookieLanguage";
 import { useLoginGuard } from "@/hooks/useLoginGuard";
 import { HospitalDetailInfo } from "@/app/models/hospitalData.dto";
+import DirectChatChannels from "./DirectChatChannels";
 
 interface HospitalConsultationButtonProps {
   hospitalId: string;
@@ -170,6 +171,9 @@ const HospitalConsultationButton = ({ hospitalId, hospitalDetails }: HospitalCon
 
       <div className="fixed bottom-[100px] right-5 z-40">
         <div className="flex flex-col gap-1.5 bg-white/95 backdrop-blur-sm shadow-lg rounded-lg p-2 w-28">
+          {/* Direct Chat 버튼 */}
+          <DirectChatChannels hospitalDetails={hospitalDetails} />
+
           <button
             onClick={handleChatConsultation}
             disabled={isCreatingChat}

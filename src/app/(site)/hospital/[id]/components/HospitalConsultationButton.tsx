@@ -6,12 +6,14 @@ import { useState } from "react";
 import { MessageCircle, Video } from "lucide-react";
 import { useCookieLanguage } from "@/hooks/useCookieLanguage";
 import { useLoginGuard } from "@/hooks/useLoginGuard";
+import { HospitalDetailInfo } from "@/app/models/hospitalData.dto";
 
 interface HospitalConsultationButtonProps {
   hospitalId: string;
+  hospitalDetails: HospitalDetailInfo;
 }
 
-const HospitalConsultationButton = ({ hospitalId }: HospitalConsultationButtonProps) => {
+const HospitalConsultationButton = ({ hospitalId, hospitalDetails }: HospitalConsultationButtonProps) => {
   const router = useRouter();
   const { language } = useCookieLanguage();
   const { requireLogin, loginModal } = useLoginGuard();
@@ -48,32 +50,46 @@ const HospitalConsultationButton = ({ hospitalId }: HospitalConsultationButtonPr
         return;
       }
 
-      // Get user info after login check
-      const userRes = await fetch("/api/auth/getUser");
-      const userData = await userRes.json();
-      const memberUuid = userData?.userInfo?.id_uuid;
-
-      // Create chat channel
-      const res = await fetch("/api/chat/create_channel", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          member_uuid: memberUuid,
-          hospital_id_uuid: hospitalId,
-          payload: {
-            message: "I would like to schedule a consultation",
-          },
-        }),
+      // 1. 서버에서 채널 초기화 (유저 upsert + 채널 생성 + 토큰 발급)
+      const res = await fetch('/api/stream/init-channel', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ hospitalId }),
       });
 
-      const data = await res.json();
-
-      if (!data.ok) {
-        throw new Error(data.error || "Failed to create chat channel");
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || 'Failed to initialize stream channel');
       }
 
-      // Redirect to chat channel
-      router.push(`/chat/${encodeURIComponent(data.channel_url)}`);
+      const { token, apiKey, channelId } = await res.json();
+
+      // 2. 사용자 정보 가져오기 (userId 필요)
+      const userRes = await fetch("/api/auth/getUser");
+      const userData = await userRes.json();
+      const userId = userData?.userInfo?.id_uuid;
+
+      if (!userId) {
+        throw new Error("User ID not found");
+      }
+
+      // 3. Stream 클라이언트 연결
+      const { StreamChat } = await import("stream-chat");
+      const client = StreamChat.getInstance(apiKey);
+
+      await client.connectUser(
+        {
+          id: userId,
+        },
+        token
+      );
+
+      // 4. 채널 watch (서버에서 이미 생성됨)
+      const channel = client.channel('messaging', channelId);
+      await channel.watch();
+
+      // 5. 채팅 페이지로 이동
+      router.push(`/chat?cid=${channelId}`);
     } catch (err: any) {
       console.error("Error creating chat:", err);
       setError(language === 'ko' ? labels.ko.chatError : labels.en.chatError);

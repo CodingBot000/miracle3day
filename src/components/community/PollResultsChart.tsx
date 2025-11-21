@@ -1,28 +1,18 @@
 'use client';
 
 import { useCookieLanguage } from '@/hooks/useCookieLanguage';
+import type { PollOption } from '@/services/poll';
+import type { PollVote } from '@/services/poll';
 
-interface PollOption {
-  id: number;
-  option_text: any; // JSONB: {en: string, ko: string}
-  vote_count: number;
-  display_order: number;
-  is_selected_by_user?: boolean;
+interface PollResultsChartProps {
+  options: PollOption[];
+  userVote: PollVote | null;
 }
 
-interface PollResultsPreviewProps {
-  question: {
-    id: number;
-    title: any; // JSONB
-    subtitle?: any; // JSONB
-    points_reward: number;
-    poll_options: PollOption[];
-    user_has_voted?: boolean;
-  };
-  onViewComments?: () => void;
-}
-
-export default function PollResultsPreview({ question, onViewComments }: PollResultsPreviewProps) {
+export default function PollResultsChart({
+  options,
+  userVote,
+}: PollResultsChartProps) {
   const { language } = useCookieLanguage();
 
   // 다국어 텍스트 추출 헬퍼
@@ -32,37 +22,21 @@ export default function PollResultsPreview({ question, onViewComments }: PollRes
     return jsonbField[language] || jsonbField.en || jsonbField.ko || '';
   };
 
-  const totalVotes = question.poll_options.reduce(
-    (sum: number, opt: PollOption) => sum + opt.vote_count,
-    0
-  );
+  const totalVotes = options.reduce((sum, opt) => sum + opt.vote_count, 0);
 
   return (
-    <div>
-      <div className="flex items-center gap-2 mb-3 flex-wrap">
-        <span className="bg-green-100 text-green-800 text-sm font-bold px-3 py-1 rounded-full">
-          {language === 'ko' ? '📊 QUICK POLL · 결과' : '📊 QUICK POLL · Results'}
-        </span>
-        <span className="bg-yellow-100 text-yellow-800 text-sm font-bold px-3 py-1 rounded-full">
-          +{question.points_reward} pts
-        </span>
-        {question.user_has_voted && (
-          <span className="bg-blue-100 text-blue-800 text-sm font-bold px-3 py-1 rounded-full">
-            ✓ {language === 'ko' ? '투표완료' : 'Voted'}
-          </span>
-        )}
-      </div>
-
-      <h3 className="text-2xl font-bold text-gray-900 mb-2">{getText(question.title)}</h3>
-      {question.subtitle && <p className="text-gray-600 mb-4">{getText(question.subtitle)}</p>}
-
-      <div className="space-y-3 mt-4">
-        {question.poll_options.map((option) => {
+    <div className="poll-results-chart">
+      <h2 className="text-xl font-bold mb-4">
+        {language === 'ko' ? '투표 결과' : 'Poll Results'}
+      </h2>
+      
+      <div className="space-y-3">
+        {options.map((option) => {
           const percentage = totalVotes > 0
             ? Math.round((option.vote_count / totalVotes) * 100)
             : 0;
 
-          const isSelected = option.is_selected_by_user;
+          const isSelected = option.is_selected_by_user || (userVote && userVote.id_option === option.id);
 
           return (
             <div
@@ -111,22 +85,10 @@ export default function PollResultsPreview({ question, onViewComments }: PollRes
 
       {/* 총 투표수 표시 */}
       {totalVotes > 0 && (
-        <div className="mt-3 flex items-center justify-between">
-          <p className="text-gray-500 text-sm">
+        <div className="mt-4 pt-4 border-t border-gray-200">
+          <p className="text-gray-500 text-sm text-center">
             👥 {totalVotes} {language === 'ko' ? '명이 투표했습니다' : 'people voted'}
           </p>
-          <button 
-            onClick={() => {
-              if (onViewComments) {
-                onViewComments();
-              } else {
-                window.location.href = `/community/poll-results/${question.id}`;
-              }
-            }}
-            className="px-4 py-2 bg-blue-500 text-white text-sm font-semibold rounded-lg hover:bg-blue-600 transition-colors"
-          >
-            {language === 'ko' ? '댓글보기' : 'View Comments'}
-          </button>
         </div>
       )}
     </div>

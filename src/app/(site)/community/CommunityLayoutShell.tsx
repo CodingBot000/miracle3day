@@ -106,7 +106,7 @@ export default function CommunityLayoutShell({
   return (
     <CommunityHeaderContext.Provider value={contextValue}>
       <div className="min-h-full bg-gray-50 py-8 sm:py-10">
-        <div className="bg-white shadow-sm rounded-xl border border-gray-100">
+        <div className="max-w-[1200px] mx-auto bg-white shadow-sm rounded-xl border border-gray-100">
           <header className="border-b border-gray-100 px-6 py-4">
             {/* <Link href="/community">
               <h1 className="text-xl font-semibold text-gray-900">Beauty Community</h1>

@@ -306,7 +306,13 @@ export default function PollQuestion({ question }: PollQuestionProps) {
               {language === 'ko' ? '투표 결과' : 'Poll Results'}
             </DialogTitle>
           </DialogHeader>
-          <PollResultsPreview question={{ ...question, poll_options: options }} />
+          <PollResultsPreview 
+            question={{ ...question, poll_options: options }} 
+            onViewComments={() => {
+              setShowResultsModal(false);
+              router.push(`/community/poll-results/${question.id}`);
+            }}
+          />
         </DialogContent>
       </Dialog>
     </div>

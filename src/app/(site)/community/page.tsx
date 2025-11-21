@@ -30,12 +30,14 @@ export default async function HomePage({ searchParams }: CommunityPageProps) {
   // Questions 뷰일 때
   if (currentView === 'questions') {
     return (
-      <Suspense fallback={<div className="animate-pulse bg-gray-200 h-96 rounded-xl" />}>
-              
-        <DailyMission />
-      
-        <QuestionsView />
-      </Suspense>
+      <>
+        <Suspense fallback={<div className="animate-pulse bg-gray-200 h-32 rounded-xl mb-6" />}>
+          <DailyMission />
+        </Suspense>
+        <Suspense fallback={<div className="animate-pulse bg-gray-200 h-96 rounded-xl" />}>
+          <QuestionsView />
+        </Suspense>
+      </>
     );
   }
 

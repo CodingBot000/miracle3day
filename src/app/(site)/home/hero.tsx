@@ -39,7 +39,7 @@ export default function Hero() {
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.6 }}
-        className="w-full max-w-screen-xl flex flex-col items-center gap-3"
+        className="w-full max-w-screen-xl flex flex-col items-center"
       >
         {heading.map((line, i) => (
           <motion.p
@@ -59,14 +59,34 @@ export default function Hero() {
         </motion.p>
 
         {/* CTA buttons */}
-        <div className="mt-6 flex flex-col gap-3 w-full max-w-xs mx-auto">
+        <div className="mt-6 flex flex-row gap-3 w-full max-w-2xl mx-auto justify-center">
           <Link
             href={ROUTE.RECOMMEND_ESTIMATE}
-            className="w-full h-12 px-6 flex items-center justify-center rounded-[14px] bg-pink-400 text-white font-medium hover:bg-pink-500 transition-colors duration-200 shadow-sm"
+            className="flex-1 min-h-[50px], h-[70px] px-6 flex items-center justify-center rounded-[14px] bg-pink-400 text-white font-medium hover:bg-pink-500 transition-colors duration-200 shadow-sm"
           >
             {language === 'ko' ? '나만의 AI 매칭 시작' : 'Start My AI Beauty Match'}
           </Link>
-          {/* <Link
+        
+          <Link 
+          href={ROUTE.TREATMENT_PROTOCOL}
+            className="flex-1 min-h-[50px], h-[70px] px-6 flex items-center justify-center rounded-[14px] bg-orange-400 text-white font-medium hover:bg-orange-500 transition-colors duration-200 shadow-sm"
+          >
+              
+                {language === 'ko' ? '시술/클리닉 보기' : 'View Treatments/Clinics'}
+              
+            </Link>
+        </div>
+        
+      </motion.div>
+      {/* <Link 
+          href={ROUTE.AI_ANALYSIS_CAMERA_PAGE}
+            className="flex-1 min-h-[50px], h-[70px] px-6 flex items-center justify-center rounded-[14px] bg-orange-400 text-white font-medium hover:bg-orange-500 transition-colors duration-200 shadow-sm"
+          >
+              
+                {language === 'ko' ? 'AI 피부 분석 (카메라)' : 'AI Skin Analysis (Camera)'}
+              
+            </Link> */}
+  {/* <Link
                 href="/hospital"
 
             className="inline-flex items-center justify-center
@@ -79,18 +99,6 @@ export default function Hero() {
           >
             Go to Korean Clinic
           </Link> */}
-
-          <Link 
-          href={ROUTE.AI_ANALYSIS_CAMERA_PAGE}
-            className="w-full h-12 px-6 flex items-center justify-center rounded-[14px] bg-orange-400 text-white font-medium hover:bg-orange-500 transition-colors duration-200 shadow-sm"
-          >
-              
-                {language === 'ko' ? 'AI 피부 분석 (카메라)' : 'AI Skin Analysis (Camera)'}
-              
-            </Link>
-        </div>
-        
-      </motion.div>
 
   
     </section>

@@ -44,11 +44,11 @@ export default function SkinTopicCard({
 
   return (
     <div
-      className="group cursor-pointer relative rounded-lg overflow-hidden bg-black/5 hover:shadow-xl hover:scale-[1.02] transition-all duration-300"
+      className="group cursor-pointer relative rounded-lg overflow-hidden bg-black/5 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 flex flex-col"
       onClick={handleTopicClick}
     >
       {/* 이미지 + 타이틀 영역 */}
-      <div className="relative h-[220px] md:h-[260px]">
+      <div className="relative w-full aspect-[4/3] flex-shrink-0">
         <Image
           src={backgroundImage}
           alt={title}
@@ -68,7 +68,7 @@ export default function SkinTopicCard({
       </div>
 
       {/* 모바일 태그 영역: 최대 두 줄, 넘치면 +N */}
-      <div className="md:hidden px-2 pb-2">
+      <div className="md:hidden px-2 pt-2 pb-2">
         <div className="flex flex-wrap gap-x-1 gap-y-0.5">
           {mobileVisibleAreas.map((area) => (
             <button

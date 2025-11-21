@@ -30,6 +30,7 @@ import AgeGuideCTA from "@/app/(site)/treatment-based-age-guide/components/AgeGu
 import { getLangFromCookies, Lang, t } from "@/i18n/i18n";
 import ReviewScrollSection from "@/app/(site)/home/components/ReviewScrollSection";
 import BeautyPartners from "@/app/(site)/partners/BeautyPartners";
+import QuestionsView from "../community/QuestionsView";
 
 export default async function HomePage() {
   // const bannerItem = await getBannerAPI();
@@ -93,8 +94,10 @@ export default async function HomePage() {
           <Hero />
 {/* <UploadTestViaServer /> */}
           {/* <MiddleSection1 /> */}
-
-          <TreatmentProtocol />
+          
+        <QuestionsView isMainPage={true} />
+      
+          {/* <TreatmentProtocol /> */}
 
 
        {/* See All Clinics Link */}

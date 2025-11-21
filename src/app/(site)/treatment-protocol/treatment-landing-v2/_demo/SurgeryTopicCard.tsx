@@ -86,7 +86,7 @@ export default function SurgeryTopicCard({
       </div>
 
       {/* 모바일 태그 영역: 최대 두 줄, 넘치면 +N */}
-      <div className="md:hidden px-2 pb-2">
+      <div className="md:hidden px-2 pt-2 pb-2">
         <div className="flex flex-wrap gap-x-1 gap-y-0.5">
           {mobileVisible.map((surgery) => (
             <button

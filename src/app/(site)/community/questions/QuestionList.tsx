@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import QuestionCard from './QuestionCard';
 import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 
-export default function QuestionList({ topic, category, format, filter }: { topic?: string, category?: string, format?: string, filter?: string }) {
+export default function QuestionList({ topic, category, format, filter, isMainPage = false }: { topic?: string, category?: string, format?: string, filter?: string, isMainPage?: boolean }) {
   console.log('=== QuestionList 렌더링됨 ===');
   console.log('받은 filter prop:', filter);
 
@@ -25,10 +25,11 @@ export default function QuestionList({ topic, category, format, filter }: { topi
     }
 
     try {
+      const limit = isMainPage ? '1' : '10';
       const params = new URLSearchParams({
         lang: language,
         page: pageNum.toString(),
-        limit: '10'
+        limit: limit
       });
 
       if (topic) params.append('topic', topic);
@@ -110,7 +111,7 @@ export default function QuestionList({ topic, category, format, filter }: { topi
       ))}
 
       {/* Load More 버튼 */}
-      {hasMore && (
+      {hasMore && !isMainPage && (
         <div className="flex justify-center py-6">
           <button
             onClick={handleLoadMore}

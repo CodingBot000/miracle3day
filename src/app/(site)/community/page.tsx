@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { Suspense } from 'react';
 import QuestionsView from './QuestionsView';
 import PostsView from './PostsView';
+import DailyMission from "./questions/DailyMission";
 
 interface CommunityPageProps {
   searchParams?: {
@@ -30,6 +31,9 @@ export default async function HomePage({ searchParams }: CommunityPageProps) {
   if (currentView === 'questions') {
     return (
       <Suspense fallback={<div className="animate-pulse bg-gray-200 h-96 rounded-xl" />}>
+              
+        <DailyMission />
+      
         <QuestionsView />
       </Suspense>
     );

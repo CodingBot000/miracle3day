@@ -15,12 +15,22 @@ const fadeUp = {
 
 export default function Hero() {
   const { language } = useCookieLanguage();
-  // 두 줄로 쪼갠 히어로 타이포 (원본 문구를 Tailwind로 표현)
-  const heading = useMemo(() => ([
-    "Find your perfect",
-    "Korean beauty treatment",
-    "in 1 minute."
-  ]), []);
+  const isKorean = language === 'ko';
+  
+  // 두 줄로 쪼갠 히어로 타이포
+  const heading = useMemo(() => {
+    if (isKorean) {
+      return [
+        "전문가가 엄선한 한국의 상위 미용 피부과/성형외과를",
+        "한 곳에서 비교하고 연결하세요."
+      ];
+    } else {
+      return [
+        "Connect with Korea's leading aesthetic dermatology clinics,",
+        "vetted by experts."
+      ];
+    }
+  }, [isKorean]);
 
   return (
     <section className="w-full flex flex-col items-center gap-10 px-4 py-12">

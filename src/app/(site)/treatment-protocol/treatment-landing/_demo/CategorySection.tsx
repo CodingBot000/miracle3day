@@ -18,7 +18,7 @@ export default function CategorySection({
     <section className="my-6">
       <div className="mb-2">
         <h2 className="text-xl font-bold">{category[locale]}</h2>
-        <p className="text-sm text-neutral-600">{category.concern_copy[locale]}</p>
+        {/* <p className="text-sm text-neutral-600">{category.concern_copy[locale]}</p> */}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

@@ -10,6 +10,8 @@ import LottieLoading from "@/components/atoms/LottieLoading";
 
 import TopicCard from "./_demo/TopicCard";
 import SurgeryCard from "./_demo/SurgeryCard";
+import SkinTopicCard from "./_demo/SkinTopicCard";
+import SurgeryTopicCard from "./_demo/SurgeryTopicCard";
 
 const OutlineButton = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
   <button
@@ -181,7 +183,37 @@ export default function TreatmentProtocol() {
       /> */}
 
       {/* Content - Conditional Rendering */}
-      <div className="space-y-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 px-4">
+        {category === 'skin' && (
+          <>
+            {topics.map((topic) => (
+              <SkinTopicCard
+                key={topic.topic_id}
+                topic={topic}
+                locale={locale}
+                onAreaClick={navigateToProtocol}
+                onTopicClick={navigateToProtocol}
+              />
+            ))}
+          </>
+        )}
+
+        {category === 'surgery' && (
+          <>
+            {surgeryCategories.map((surgeryCategory, index) => (
+              <SurgeryTopicCard
+                key={surgeryCategory.category}
+                data={surgeryCategory}
+                locale={locale}
+                categoryIndex={index}
+              />
+            ))}
+          </>
+        )}
+      </div>
+
+
+      {/* <div className="space-y-6">
         {category === 'skin' && (
           <>
             {topics.map((topic) => (
@@ -193,6 +225,7 @@ export default function TreatmentProtocol() {
                 onTopicClick={navigateToProtocol}
               />
             ))}
+            
           </>
         )}
 
@@ -208,7 +241,8 @@ export default function TreatmentProtocol() {
             ))}
           </>
         )}
-      </div>
+      </div> */}
+
 
       {/* 기존 상세 카테고리 섹션 (주석처리) */}
       {/* {filteredCategories.slice(0, 3).map(cat => (

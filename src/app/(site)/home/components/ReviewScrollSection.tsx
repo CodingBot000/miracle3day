@@ -146,12 +146,14 @@ export default function ReviewScrollSection() {
   // Skeleton loading state - 항상 공간 차지
   if (loading) {
     return (
-      <section className="w-full pt-8 md:pt-12  h-[350px] md:h-[450px]">
-        <div className="container mx-auto px-4">
-          <h2 className="text-2xl md:text-3xl font-semibold mb-3">Customer Reviews</h2>
+      <section className="w-full pt-8 md:pt-12 h-[350px] md:h-[450px]">
+        <div className="w-full -mx-4 sm:-mx-6 lg:-mx-8">
+          <div className="px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl md:text-3xl font-semibold mb-3">Customer Reviews</h2>
+          </div>
 
-          <div className="w-full -mx-4 overflow-x-auto overflow-y-hidden">
-            <div className="flex gap-4 px-4">
+          <div className="w-full overflow-x-auto overflow-y-hidden">
+            <div className="flex gap-4 px-4 sm:px-6 lg:px-8">
               {Array.from({ length: 5 }).map((_, i) => (
                 <div
                   key={i}
@@ -184,11 +186,13 @@ export default function ReviewScrollSection() {
   if (error) {
     return (
       <section className="w-full pt-8 md:pt-12 h-[350px] md:h-[450px]">
-        <div className="container mx-auto px-4">
-          <h2 className="text-2xl md:text-3xl font-semibold mb-3">Customer Reviews</h2>
-          <div className="text-center py-8">
-            <p className="text-red-600 mb-2">Failed to load reviews</p>
-            <p className="text-sm text-gray-500">{error}</p>
+        <div className="w-full -mx-4 sm:-mx-6 lg:-mx-8">
+          <div className="px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl md:text-3xl font-semibold mb-3">Customer Reviews</h2>
+            <div className="text-center py-8">
+              <p className="text-red-600 mb-2">Failed to load reviews</p>
+              <p className="text-sm text-gray-500">{error}</p>
+            </div>
           </div>
         </div>
       </section>
@@ -198,11 +202,13 @@ export default function ReviewScrollSection() {
   // No reviews - 여전히 공간 차지
   if (!reviews || reviews.length === 0) {
     return (
-      <section className="w-full pt-8 md:pt-12  h-[350px] md:h-[450px]">
-        <div className="container mx-auto px-4">
-          <h2 className="text-2xl md:text-3xl font-semibold mb-3">Customer Reviews</h2>
-          <div className="text-center py-8">
-            <p className="text-gray-500">No reviews available at the moment</p>
+      <section className="w-full pt-8 md:pt-12 h-[350px] md:h-[450px]">
+        <div className="w-full -mx-4 sm:-mx-6 lg:-mx-8">
+          <div className="px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl md:text-3xl font-semibold mb-3">Customer Reviews</h2>
+            <div className="text-center py-8">
+              <p className="text-gray-500">No reviews available at the moment</p>
+            </div>
           </div>
         </div>
       </section>
@@ -213,15 +219,17 @@ export default function ReviewScrollSection() {
 
   return (
     <section className="w-full pt-8 md:pt-12 h-[350px] md:h-[450px]">
-      <div className="container mx-auto px-4">
-        <h2 className="text-2xl md:text-3xl font-semibold mb-3">
-          Customer Reviews Top ({reviews.length} reviews)
-        </h2>
+      <div className="w-full -mx-4 sm:-mx-6 lg:-mx-8">
+        <div className="px-4 sm:px-6 lg:px-8 mb-3">
+          <h2 className="text-2xl md:text-3xl font-semibold">
+            Customer Reviews Top {reviews.length} reviews
+          </h2>
+        </div>
 
-        <div className="w-full -mx-4 overflow-x-auto overflow-y-hidden">
+        <div className="w-full overflow-x-auto overflow-y-hidden">
           <div
             ref={wrapRef}
-            className="flex gap-4 px-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+            className="flex gap-4 px-4 sm:px-6 lg:px-8 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
           >
             {doubled.map((review, idx) => (
               <div key={`review-${idx}`} className="shrink-0">
@@ -232,9 +240,11 @@ export default function ReviewScrollSection() {
         </div>
 
         {prefersReduced && (
-          <p className="text-sm text-gray-500 text-center mt-4">
-            Auto-scroll disabled due to motion preferences
-          </p>
+          <div className="px-4 sm:px-6 lg:px-8">
+            <p className="text-sm text-gray-500 text-center mt-4">
+              Auto-scroll disabled due to motion preferences
+            </p>
+          </div>
         )}
       </div>
     </section>

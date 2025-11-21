@@ -66,9 +66,9 @@ const CategoryGridCard: React.FC<CategoryGridCardProps> = ({
           <h3 className="text-lg font-bold text-[#8B4513] mb-1 md:mb-2 leading-tight">
             {category[locale]}
           </h3>
-          <p className="text-xs md:text-sm text-[#A0522D] opacity-80 leading-relaxed">
+          {/* <p className="text-xs md:text-sm text-[#A0522D] opacity-80 leading-relaxed">
             {category.concern_copy[locale]}
-          </p>
+          </p> */}
         </div>
 
         {/* Right side - 3/4 width on desktop, 2/3 on mobile */}

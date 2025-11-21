@@ -14,7 +14,7 @@ export default function BeautyPartners() {
         className="inline-flex items-center gap-1 md:gap-3 px-2 md:px-4 py-1 md:py-2 bg-gradient-to-r from-pink-600 via-purple-600 to-blue-600 text-white text-xs md:text-sm font-semibold rounded-full shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300"
       >
         <span>
-          {isKorean ? 'K뷰티 도우미들' : 'K-Beauty Partners'}
+          {isKorean ? 'K뷰티 파트너들' : 'K-Beauty Partners'}
           <span className="hidden md:inline ml-1">
             {isKorean ? '보기' : 'View'}
           </span>

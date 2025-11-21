@@ -108,9 +108,9 @@ export default function CommunityLayoutShell({
       <div className="min-h-full bg-gray-50 py-8 sm:py-10">
         <div className="bg-white shadow-sm rounded-xl border border-gray-100">
           <header className="border-b border-gray-100 px-6 py-4">
-            <Link href="/community">
+            {/* <Link href="/community">
               <h1 className="text-xl font-semibold text-gray-900">Beauty Community</h1>
-            </Link>
+            </Link> */}
 
             {headerContent ?? (
               <div className="mt-6">

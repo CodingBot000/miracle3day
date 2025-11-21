@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import * as React from "react";
 import Image from "next/image";
@@ -12,116 +12,142 @@ interface SurgeryTopicCardProps {
   categoryIndex: number;
 }
 
-export default function SurgeryTopicCard({ data, locale, categoryIndex }: SurgeryTopicCardProps) {
+export default function SurgeryTopicCard({
+  data,
+  locale,
+  categoryIndex,
+}: SurgeryTopicCardProps) {
   const router = useRouter();
 
   // 해당 카테고리에 할당된 이미지 배열 가져오기
   const surgeryImages = SURGERY_IMAGES[categoryIndex] || SURGERY_IMAGES[0];
-  
-  // 첫 번째 이미지를 배경으로 사용
-  const backgroundImage = surgeryImages[0] || '';
+  const backgroundImage = surgeryImages[0] || "";
 
-  const handleSurgeryClick = (e: React.MouseEvent, surgeryId: string) => {
-    e.stopPropagation(); // Prevent card click event
-    router.push(`/treatment-protocol/surgery/${surgeryId}?category=${data.category}`);
+  const title =
+    locale === "ko" ? data.category_title_ko : data.category_title_en;
+
+  const getAreaLabel = (surgery: SurgeryCategory["surgeries"][number]) =>
+    locale === "ko" ? surgery.area_name_ko : surgery.area_name_en;
+
+  const handleSurgeryClick = (
+    e: React.MouseEvent,
+    surgeryId: string
+  ): void => {
+    e.stopPropagation(); // 카드 클릭 막기
+    router.push(
+      `/treatment-protocol/surgery/${surgeryId}?category=${data.category}`
+    );
   };
 
-  // Handle card click - navigate to first surgery
-  const handleCardClick = (e: React.MouseEvent) => {
-    // Only handle click if it's on the card itself, not on buttons
-    if ((e.target as HTMLElement).tagName === 'BUTTON') {
-      return;
-    }
-
+  // 카드 전체 클릭 시: 첫 번째 시술로 이동
+  const handleCardClick = (): void => {
     if (data.surgeries.length > 0) {
       const firstSurgeryId = data.surgeries[0].id;
-      router.push(`/treatment-protocol/surgery/${firstSurgeryId}?category=${data.category}`);
+      router.push(
+        `/treatment-protocol/surgery/${firstSurgeryId}?category=${data.category}`
+      );
     }
   };
 
-  const title = locale === 'ko' ? data.category_title_ko : data.category_title_en;
-  // const concernCopy = locale === 'ko' ? data.concern_copy_ko : data.concern_copy_en;
-  // console.log("SurgeryCard data:", data);
+  // 태그 개수 제한 (두 줄 안에 웬만하면 들어가도록)
+  const MOBILE_VISIBLE_MAX = 4;
+  const DESKTOP_VISIBLE_MAX = 6;
+
+  const mobileVisible = data.surgeries.slice(0, MOBILE_VISIBLE_MAX);
+  const mobileHiddenCount = data.surgeries.length - mobileVisible.length;
+
+  const desktopVisible = data.surgeries.slice(0, DESKTOP_VISIBLE_MAX);
+  const desktopHiddenCount = data.surgeries.length - desktopVisible.length;
+
   return (
     <div
       onClick={handleCardClick}
-      className="group relative rounded-lg overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer"
+      className="group relative rounded-lg overflow-hidden bg-black/5 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 cursor-pointer"
     >
-      {/* 배경 이미지 */}
-      <div className="absolute inset-0">
+      {/* 이미지 + 카테고리 타이틀 영역 */}
+      <div className="relative h-[220px] md:h-[260px]">
+        {/* 배경 이미지 */}
         <Image
           src={backgroundImage}
           alt={title}
           fill
           className="object-cover"
-          sizes="(max-width: 768px) 50vw, 20vw"
+          sizes="(max-width: 768px) 100vw, 33vw"
         />
-        {/* 어두운 오버레이로 텍스트 가독성 향상 */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60" />
-      </div>
+        {/* 어두운 오버레이 */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/70" />
 
-      {/* Mobile Layout */}
-      <div className="md:hidden relative z-10 min-h-[180px] flex flex-col justify-between p-3">
-        {/* Category Header */}
-        <div className="mb-2">
-          <h2 className="text-sm font-bold text-white mb-2 leading-tight drop-shadow-lg line-clamp-2">
+        {/* 타이틀만 이미지 위에 */}
+        <div className="absolute inset-x-3 md:inset-x-4 bottom-3 md:bottom-4">
+          <h2 className="text-base md:text-2xl font-bold text-white leading-tight drop-shadow-lg line-clamp-2">
             {title}
           </h2>
         </div>
+      </div>
 
-        {/* Surgery List */}
-        <div className="flex flex-wrap gap-1">
-          {data.surgeries.slice(0, 2).map((surgery) => (
+      {/* 모바일 태그 영역: 최대 두 줄, 넘치면 +N */}
+      <div className="md:hidden px-2 pb-2">
+        <div className="flex flex-wrap gap-x-1 gap-y-0.5">
+          {mobileVisible.map((surgery) => (
             <button
               key={surgery.id}
               onClick={(e) => handleSurgeryClick(e, surgery.id)}
               className="
-                px-2 py-1 text-xs font-medium rounded-full
+                px-2 py-0.5 text-[11px] leading-none font-medium rounded-full
                 bg-white/90 backdrop-blur-sm
                 text-[#2563EB] hover:bg-white
-                transform hover:scale-105 transition-all duration-200
-                shadow-lg hover:shadow-xl
+                transform hover:scale-105 transition-all duration-150
+                shadow-sm
               "
             >
-              {locale === 'ko' ? surgery.area_name_ko : surgery.area_name_en}
+              {getAreaLabel(surgery)}
             </button>
           ))}
-          {data.surgeries.length > 2 && (
-            <span className="px-2 py-1 text-xs text-white/80 backdrop-blur-sm rounded-full bg-black/30">
-              +{data.surgeries.length - 2}
+
+          {mobileHiddenCount > 0 && (
+            <span
+              className="
+                px-2 py-0.5 text-[11px] leading-none font-medium rounded-full
+                bg-white/60 backdrop-blur-sm
+                text-white
+              "
+            >
+              +{mobileHiddenCount}
             </span>
           )}
         </div>
       </div>
 
-      {/* Desktop Layout */}
-      <div className="hidden md:flex relative z-10 min-h-[280px] p-8">
-        <div className="flex flex-col justify-between w-full">
-          {/* Category Header */}
-          <div className="mb-4">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 leading-tight drop-shadow-lg">
-              {title}
-            </h2>
-          </div>
+      {/* 데스크탑 태그 영역: 패딩/갭 최소화 + +N */}
+      <div className="hidden md:block px-3 py-2">
+        <div className="flex flex-wrap gap-x-1 gap-y-0.5">
+          {desktopVisible.map((surgery) => (
+            <button
+              key={surgery.id}
+              onClick={(e) => handleSurgeryClick(e, surgery.id)}
+              className="
+                px-2 py-0.5 text-[13px] leading-none font-medium rounded-full
+                bg-white/90 backdrop-blur-sm
+                text-[#2563EB] hover:bg-white
+                transform hover:scale-105 transition-all duration-150
+                shadow-sm
+              "
+            >
+              {getAreaLabel(surgery)}
+            </button>
+          ))}
 
-          {/* Surgery List - Pill Buttons */}
-          <div className="flex flex-wrap gap-2">
-            {data.surgeries.map((surgery) => (
-              <button
-                key={surgery.id}
-                onClick={(e) => handleSurgeryClick(e, surgery.id)}
-                className="
-                  px-3 py-1.5 text-sm font-medium rounded-full
-                  bg-white/90 backdrop-blur-sm
-                  text-[#2563EB] hover:bg-white
-                  transform hover:scale-105 transition-all duration-200
-                  shadow-lg hover:shadow-xl
-                "
-              >
-                {locale === 'ko' ? surgery.area_name_ko : surgery.area_name_en}
-              </button>
-            ))}
-          </div>
+          {desktopHiddenCount > 0 && (
+            <span
+              className="
+                px-2 py-0.5 text-xs leading-none font-medium rounded-full
+                bg-white/60 backdrop-blur-sm
+                text-white
+              "
+            >
+              +{desktopHiddenCount}
+            </span>
+          )}
         </div>
       </div>
     </div>

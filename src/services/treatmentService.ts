@@ -145,6 +145,15 @@ class TreatmentService {
       throw new Error(`Topic "${topicId}" not found`);
     }
 
+    // Debug: Log available areas
+    console.log(`[TreatmentService] Looking for area_id: "${areaId}" in topic "${topicId}"`);
+    console.log(`[TreatmentService] Available areas:`, category.areas.map(a => ({
+      area_id: a.area_id,
+      area_name_ko: a.area_name_ko,
+      sequence_length: Array.isArray(a.sequence) ? a.sequence.length : 'not array',
+      sequence: a.sequence
+    })));
+
     const areas = category.areas
       .map(area => ({
         area_id: area.area_id,
@@ -160,6 +169,14 @@ class TreatmentService {
     if (!targetArea) {
       throw new Error(`Area not found for topic "${topicId}"`);
     }
+
+    console.log(`[TreatmentService] Found targetArea:`, {
+      area_id: targetArea.area_id,
+      requested_area_id: areaId,
+      match: targetArea.area_id === areaId,
+      sequence_length: Array.isArray(targetArea.sequence) ? targetArea.sequence.length : 'not array',
+      sequence: targetArea.sequence
+    });
 
     const primaryTreatments = targetArea.primary_treatments ?? [];
     const altTreatments = targetArea.alt_treatments ?? [];

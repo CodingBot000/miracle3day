@@ -15,7 +15,7 @@ const PrioriotyFactorStep: React.FC<PrioriotyFactorStepProps> = ({ data, onDataC
   const priorityItems = questions.priorities;
   const [selections, setSelections] = useState<PrioritySelection>({});
 
-  const numbers = [1, 2, 3, 4, 5, 6];
+  const numbers = [1, 2, 3, 4, 5];
 
   useEffect(() => {
     if (data.priorityOrder?.prioritySelections) {
@@ -110,7 +110,7 @@ const PrioriotyFactorStep: React.FC<PrioriotyFactorStepProps> = ({ data, onDataC
           </div>
           
           <div className="flex justify-center gap-2 mb-3">
-            {[1, 2, 3, 4, 5, 6].map((score) => (
+            {[1, 2, 3, 4, 5].map((score) => (
               <div key={score} className="flex flex-col items-center gap-1">
                 <span className="text-sm text-gray-500 font-medium">{score}</span>
                 <div

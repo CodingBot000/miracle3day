@@ -9,6 +9,8 @@ import CookieConsent from "@/components/template/CookieConsent";
 import { Toaster } from "sonner";
 import { HeaderProvider } from "@/contexts/HeaderContext";
 import Script from "next/script";
+import GA4Scripts from "@/components/common/GA4Scripts";
+import GA4PageViewTracker from "@/components/common/GA4PageView";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -81,6 +83,11 @@ export default function RootLayout({
         </Script>
       </head>
       <body className={inter.className + " min-h-screen flex flex-col overflow-x-hidden"}>
+        {/* GA4 스크립트 삽입 */}
+        <GA4Scripts />
+        {/* 라우트 변경 시 page_view 전송 */}
+        <GA4PageViewTracker />
+
         <ProgressBar />
 
         <Providers>

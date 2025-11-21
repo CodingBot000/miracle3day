@@ -3,6 +3,7 @@
 import { Channel } from 'stream-chat';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
+import type { CustomChannelData } from '@/types/stream-chat';
 
 interface ChannelHeaderProps {
   channel: Channel | null;
@@ -20,9 +21,10 @@ export default function ChannelHeader({ channel }: ChannelHeaderProps) {
   }
 
   // 채널 커스텀 필드에서 정보 추출 (channel.id 파싱 금지)
-  const hospitalName = channel.data?.hospitalName || '병원';
-  const userName = channel.data?.userName || 'User';
-  const hospitalId = channel.data?.hospitalId; // Full UUID
+  const channelData = channel.data as CustomChannelData | undefined;
+  const hospitalName = channelData?.hospitalName || '병원';
+  const userName = channelData?.userName || 'User';
+  const hospitalId = channelData?.hospitalId; // Full UUID
 
   const handleBack = () => {
     if (hospitalId) {

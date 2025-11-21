@@ -23,7 +23,9 @@ export async function POST(req: NextRequest) {
 
     const userId = userResult.userInfo.id_uuid;
     const userName = userResult.userInfo.nickname || userResult.userInfo.name || 'User';
-    const userImage = userResult.userInfo.avatar || userResult.userInfo.auth_user?.imageUrl;
+    const userImage: string | undefined = 
+      (userResult.userInfo.avatar as string | undefined) || 
+      (userResult.userInfo.auth_user?.imageUrl as string | undefined);
 
     if (!userId) {
       return NextResponse.json(

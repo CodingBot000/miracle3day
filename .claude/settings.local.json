@@ -14,7 +14,8 @@
       "Bash(python3:*)",
       "Bash(rm:*)",
       "Bash(npm install:*)",
-      "Bash(npm uninstall:*)"
+      "Bash(npm uninstall:*)",
+      "Bash(npm i:*)"
     ],
     "deny": [],
     "ask": []

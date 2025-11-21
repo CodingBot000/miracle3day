@@ -90,6 +90,7 @@
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.51.1",
+    "@types/he": "^1.2.3",
     "@types/js-cookie": "^3.0.6",
     "@types/node": "^20.17.30",
     "@types/nprogress": "^0.2.3",

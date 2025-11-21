@@ -41,7 +41,9 @@ export async function POST(req: NextRequest) {
 
     const userId = userResult.userInfo.id_uuid;
     const userName = userResult.userInfo.nickname || userResult.userInfo.name || 'User';
-    const userImage = userResult.userInfo.avatar || userResult.userInfo.auth_user?.imageUrl;
+    const userImage: string | undefined = 
+      (userResult.userInfo.avatar as string | undefined) || 
+      (userResult.userInfo.auth_user?.imageUrl as string | undefined);
 
     if (!userId) {
       return NextResponse.json(
@@ -91,12 +93,12 @@ export async function POST(req: NextRequest) {
         name: userName,
         image: userImage,
         user_type: 'customer',
-      },
+      } as any,
       {
         id: hospitalId,
         name: hospitalName,
         user_type: 'hospital',
-      },
+      } as any,
     ]);
 
     console.log('[init-channel] Users upserted');
@@ -112,7 +114,7 @@ export async function POST(req: NextRequest) {
       userType: 'customer',
       hospitalName,
       userName,
-    });
+    } as any);
 
     // 채널이 이미 존재하면 재사용, 없으면 생성
     try {

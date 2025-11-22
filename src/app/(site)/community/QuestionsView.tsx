@@ -5,7 +5,7 @@ import QuestionList from './questions/QuestionList';
 import DailyMission from './questions/DailyMission';
 import { Suspense } from 'react';
 
-export default function QuestionsView() {
+export default function QuestionsView({ isMainPage = false }: { isMainPage?: boolean }) {
   const searchParams = useSearchParams();
 
   const topicId = searchParams?.get('topic') ?? undefined;
@@ -20,12 +20,12 @@ export default function QuestionsView() {
   return (
     <div className="space-y-6">
       {/* Daily Questions */}
-      <Suspense fallback={<div className="animate-pulse bg-gray-200 h-32 rounded-xl mb-6" />}>
+      {/* <Suspense fallback={<div className="animate-pulse bg-gray-200 h-32 rounded-xl mb-6" />}>
         <DailyMission />
-      </Suspense>
+      </Suspense> */}
 
       <Suspense fallback={<div className="animate-pulse bg-gray-200 h-96 rounded-xl" />}>
-        <QuestionList category={topicId} format={tagId} filter={filter} />
+        <QuestionList category={topicId} format={tagId} filter={filter} isMainPage={isMainPage} />
       </Suspense>
     </div>
   );

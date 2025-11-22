@@ -37,7 +37,7 @@ export default function SurgeryCard({ data, locale, categoryIndex }: SurgeryCard
   };
 
   const title = locale === 'ko' ? data.category_title_ko : data.category_title_en;
-  const concernCopy = locale === 'ko' ? data.concern_copy_ko : data.concern_copy_en;
+  // const concernCopy = locale === 'ko' ? data.concern_copy_ko : data.concern_copy_en;
   // console.log("SurgeryCard data:", data);
   return (
     <div
@@ -56,11 +56,11 @@ export default function SurgeryCard({ data, locale, categoryIndex }: SurgeryCard
                 {title}
               </h2>
             </div>
-            {concernCopy && (
+            {/* {concernCopy && (
               <p className="text-sm text-[#4B5563] opacity-80 leading-relaxed mb-4 italic">
                 {concernCopy}
               </p>
-            )}
+            )} */}
           </div>
 
           {/* Surgery List */}
@@ -111,11 +111,11 @@ export default function SurgeryCard({ data, locale, categoryIndex }: SurgeryCard
                 {title}
               </h2>
             </div>
-            {concernCopy && (
+            {/* {concernCopy && (
               <p className="text-lg text-[#4B5563] opacity-80 leading-relaxed italic">
                 {concernCopy}
               </p>
-            )}
+            )} */}
           </div>
 
           {/* Surgery List - Pill Buttons */}

@@ -139,7 +139,7 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
           </div>
 
           {/* Contact Information */}
-          <HospitalContactInfo hospitalDetails={hospital_details} />
+          {/* <HospitalContactInfo hospitalDetails={hospital_details} /> */}
         </div>
       </div>
 
@@ -203,7 +203,10 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
       <HospitalAmenities hospitalDetails={hospital_details} />
 
       {/* Bottom Consultation Button */}
-      <HospitalConsultationButton hospitalId={hospital_info.id_uuid} />
+      <HospitalConsultationButton 
+      hospitalId={hospital_info.id_uuid} 
+      hospitalDetails={hospital_details}
+      />
       
       {/* Image Gallery Modal */}
       <ImageGalleryModal

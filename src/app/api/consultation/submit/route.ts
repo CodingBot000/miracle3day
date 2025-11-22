@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { q } from '@/lib/db';
+import { getUserAPIServer } from '@/app/api/auth/getUser/getUser.server';
 
 export async function POST(request: NextRequest) {
   try {
@@ -51,8 +52,23 @@ export async function POST(request: NextRequest) {
     const visitPath = data.visitPath?.visitPath || null;
     const visitPathOther = data.visitPath?.otherPath || null;
 
+    // Demographics Basic (race/ethnic_background)
+    const race = data.demographicsBasic?.ethnic_background || null;
+
     // Image paths
     const imagePaths = data.imagePaths || [];
+
+    // Get logged-in user's member UUID
+    let idUuidMember = null;
+    try {
+      const userResult = await getUserAPIServer();
+      if (userResult?.userInfo?.id_uuid) {
+        idUuidMember = userResult.userInfo.id_uuid;
+      }
+    } catch (error) {
+      // If session check fails, continue with null (user not logged in)
+      console.log('Session check failed or user not logged in:', error);
+    }
 
     // DB에 삽입
     const sql = `
@@ -66,11 +82,12 @@ export async function POST(request: NextRequest) {
         medical_conditions, medical_conditions_other,
         priorities, treatment_goals, past_treatments,
         past_treatments_side_effect_desc, anything_else,
-        visit_path, visit_path_other, image_paths
+        visit_path, visit_path_other, image_paths,
+        race, id_uuid_member
       ) VALUES (
         $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12,
         $13, $14, $15, $16, $17, $18, $19, $20, $21, $22,
-        $23, $24, $25, $26
+        $23, $24, $25, $26, $27, $28
       )
       RETURNING id_uuid
     `;
@@ -85,7 +102,8 @@ export async function POST(request: NextRequest) {
       JSON.stringify(medicalConditions), medicalConditionsOther,
       JSON.stringify(priorities), JSON.stringify(treatmentGoals), JSON.stringify(pastTreatments),
       pastTreatmentsSideEffectDesc, anythingElse,
-      visitPath, visitPathOther, JSON.stringify(imagePaths)
+      visitPath, visitPathOther, JSON.stringify(imagePaths),
+      race, idUuidMember
     ];
 
     const result = await q(sql, params);

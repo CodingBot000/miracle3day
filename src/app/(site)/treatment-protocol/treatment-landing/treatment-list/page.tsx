@@ -50,9 +50,9 @@ export default function TreatmentListPage() {
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900">
           {selectedCategory[locale]}
         </h1>
-        <p className="mt-3 text-base sm:text-lg text-gray-600">
+        {/* <p className="mt-3 text-base sm:text-lg text-gray-600">
           {selectedCategory.concern_copy[locale]}
-        </p>
+        </p> */}
       </div>
 
       {/* Areas horizontal list */}

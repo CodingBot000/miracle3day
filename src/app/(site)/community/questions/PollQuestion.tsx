@@ -6,6 +6,15 @@ import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 import { handleNotifications } from '@/utils/notificationHandler';
 import LevelUpModal from '@/components/gamification/LevelUpModal';
 import type { LevelUpNotification } from '@/types/badge';
+import { usePathname, useRouter } from 'next/navigation';
+import { useLoginGuard } from '@/hooks/useLoginGuard';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import PollResultsPreview from './PollResultsPreview';
 
 interface PollOption {
   id: number;
@@ -29,6 +38,10 @@ interface PollQuestionProps {
 export default function PollQuestion({ question }: PollQuestionProps) {
   // console.log('PollQuestion question', question);
   const { language } = useCookieLanguage();
+  const pathname = usePathname();
+  const router = useRouter();
+  const isHome = pathname === "/home";
+  const { requireLogin, loginModal } = useLoginGuard();
 
   // 다국어 텍스트 추출 헬퍼
   const getText = (jsonbField: any): string => {
@@ -48,8 +61,33 @@ export default function PollQuestion({ question }: PollQuestionProps) {
   const [options, setOptions] = useState<PollOption[]>(question.poll_options || []);
   const [loading, setLoading] = useState(false);
   const [levelUp, setLevelUp] = useState<LevelUpNotification | null>(null);
+  const [showResultsModal, setShowResultsModal] = useState(false);
+
+
+  const handleViewResults = () => {
+    if (isHome) {
+      router.push('/community?view=questions');
+      return;
+    }
+
+    if (!requireLogin()) {
+      return;
+    }
+    // 결과보기 모달 열기
+    setShowResultsModal(true);
+  };
 
   const handleVote = async (optionId: number) => {
+    if (isHome) {
+      router.push('/community?view=questions');
+      return;
+    }
+
+    // 로그인 체크
+    if (!requireLogin()) {
+      return;
+    }
+
     // 같은 옵션 재선택 방지
     if (optionId === selectedOptionId) {
       toast.info(language === 'ko' ? '이미 선택한 옵션입니다' : 'You already selected this option');
@@ -208,11 +246,11 @@ export default function PollQuestion({ question }: PollQuestionProps) {
                 {/* 투표 결과는 항상 표시 (로그인 여부 무관) */}
                 <div className="flex items-center gap-2">
                   <span className="text-gray-500 text-sm">
-                    {option.vote_count} {language === 'ko' ? '표' : 'votes'}
+                    <span className="blur-sm">{option.vote_count}</span> {language === 'ko' ? '표' : 'votes'}
                   </span>
                   {totalVotes > 0 && (
                     <span className={`font-bold text-lg ${isSelected ? 'text-green-700' : 'text-gray-600'}`}>
-                      {percentage}%
+                      <span className="blur-sm">{percentage}</span>%
                     </span>
                   )}
                 </div>
@@ -238,6 +276,16 @@ export default function PollQuestion({ question }: PollQuestionProps) {
         </div>
       )}
 
+      {/* 결과보기 */}
+      <div className="mt-3">
+        <button 
+          onClick={handleViewResults}
+          className="px-6 py-3 bg-pink-600 text-white rounded-lg font-semibold hover:bg-pink-700 transition flex items-center gap-2" 
+        >
+          {language === 'ko' ? '결과 보기' : 'View Results'}
+        </button>
+      </div>
+
       {/* Level-up modal */}
       {levelUp && (
         <LevelUpModal
@@ -246,6 +294,27 @@ export default function PollQuestion({ question }: PollQuestionProps) {
           onClose={() => setLevelUp(null)}
         />
       )}
+
+      {/* Login modal */}
+      {loginModal}
+
+      {/* Results Modal */}
+      <Dialog open={showResultsModal} onOpenChange={setShowResultsModal}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold">
+              {language === 'ko' ? '투표 결과' : 'Poll Results'}
+            </DialogTitle>
+          </DialogHeader>
+          <PollResultsPreview 
+            question={{ ...question, poll_options: options }} 
+            onViewComments={() => {
+              setShowResultsModal(false);
+              router.push(`/community/poll-results/${question.id}`);
+            }}
+          />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

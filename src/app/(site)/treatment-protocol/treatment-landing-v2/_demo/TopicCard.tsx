@@ -14,7 +14,7 @@ interface TopicCardProps {
 
 export default function TopicCard({ topic, locale, onAreaClick, onTopicClick }: TopicCardProps) {
   const title = locale === 'ko' ? topic.topic_title_ko : topic.topic_title_en;
-  const concernCopy = locale === 'ko' ? topic.concern_copy_ko : topic.concern_copy_en;
+  // const concernCopy = locale === 'ko' ? topic.concern_copy_ko : topic.concern_copy_en;
 
   // 해당 토픽에 할당된 이미지 배열 가져오기 (topic_id로 매칭)
   const topicImages = TOPIC_IMAGES[topic.topic_id] || TOPIC_IMAGES['lifting_firming'];
@@ -42,11 +42,11 @@ export default function TopicCard({ topic, locale, onAreaClick, onTopicClick }: 
             <h2 className="text-xl font-bold text-[#8B4513] mb-3 leading-tight">
               {title}
             </h2>
-            {concernCopy && (
+            {/* {concernCopy && (
               <p className="text-sm text-[#A0522D] opacity-80 leading-relaxed mb-4">
                 {concernCopy}
               </p>
-            )}
+            )} */}
           </div>
 
           {/* Area Buttons */}
@@ -116,11 +116,11 @@ export default function TopicCard({ topic, locale, onAreaClick, onTopicClick }: 
             <h2 className="text-lg font-bold text-[#8B4513] mb-2 leading-tight">
               {title}
             </h2>
-            {concernCopy && (
+            {/* {concernCopy && (
               <p className="text-xs text-[#A0522D] opacity-80 leading-relaxed">
                 {concernCopy}
               </p>
-            )}
+            )} */}
           </div>
 
           {/* Area Buttons */}

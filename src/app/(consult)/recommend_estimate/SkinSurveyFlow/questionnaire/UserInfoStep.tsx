@@ -21,13 +21,13 @@ const UserInfo: React.FC<UserInfoStepProps> = ({ data, onDataChange }) => {
 
   
   const handleChange = (field: string, value: string | number | undefined) => {
-    if (field === 'email') {
-      if (value && typeof value === 'string' && !isValidEmail(value)) {
-        setEmailError("유효한 이메일 주소를 입력해주세요.")
-      } else {
-        setEmailError(undefined)
-      }
-    }
+    // if (field === 'email') {
+    //   if (value && typeof value === 'string' && !isValidEmail(value)) {
+    //     setEmailError("유효한 이메일 주소를 입력해주세요.")
+    //   } else {
+    //     setEmailError(undefined)
+    //   }
+    // }
     onDataChange({
       ...data,
       userInfo: {
@@ -42,7 +42,7 @@ const UserInfo: React.FC<UserInfoStepProps> = ({ data, onDataChange }) => {
  
   return (
     <div className="space-y-6">
-      <div className="grid md:grid-cols-2 gap-6">
+      {/* <div className="grid md:grid-cols-2 gap-6">
         <div className="space-y-2">
           <Label htmlFor="firstName" className="text-gray-700 font-medium">First Name</Label>
           <Input
@@ -64,7 +64,7 @@ const UserInfo: React.FC<UserInfoStepProps> = ({ data, onDataChange }) => {
             placeholder="Enter your last name"
           />
         </div>
-      </div>
+      </div> */}
 
       <div className="grid md:grid-cols-2 gap-6">
         <div className="space-y-2">
@@ -152,7 +152,7 @@ const UserInfo: React.FC<UserInfoStepProps> = ({ data, onDataChange }) => {
         </div>
     </div>                
 
-      <div className="space-y-2">
+      {/* <div className="space-y-2">
         <Label htmlFor="email" className="text-gray-700 font-medium">Email Address</Label>
         <Input
           id="email"
@@ -207,7 +207,7 @@ const UserInfo: React.FC<UserInfoStepProps> = ({ data, onDataChange }) => {
           onChange={(value) => handleChange('koreanPhoneNumber', value)}
           placeholder="Enter Korean phone number (numbers only)"
         />
-      </div>
+      </div> */}
     </div>
   );
 };

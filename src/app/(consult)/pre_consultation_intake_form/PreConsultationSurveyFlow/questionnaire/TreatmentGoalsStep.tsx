@@ -4,6 +4,8 @@ import { Card } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { questions } from '@/content/pre_consultation_intake/form-definition_pre_consultation';
 import { ChoiceCard } from '@/components/molecules/card/ChoiceCard';
+import { useCookieLanguage } from '@/hooks/useCookieLanguage';
+import { getLocalizedText } from '@/utils/i18n';
 
 interface TreatmentGoalsStepProps {
   data: any;
@@ -11,6 +13,7 @@ interface TreatmentGoalsStepProps {
 }
 
 const TreatmentGoalsStep: React.FC<TreatmentGoalsStepProps> = ({ data, onDataChange }) => {
+  const { language } = useCookieLanguage();
   
 
   const handleGoalToggle = (goalId: string) => {
@@ -41,8 +44,8 @@ const TreatmentGoalsStep: React.FC<TreatmentGoalsStepProps> = ({ data, onDataCha
               <ChoiceCard
                 key={goal.id}
                 mode="multi"
-                title={goal.label}
-                subtitle={goal.description}
+                title={getLocalizedText(goal.label, language)}
+                subtitle={getLocalizedText(goal.description, language)}
                 selected={isSelected}
                 onSelect={() => handleGoalToggle(goal.id)}
          

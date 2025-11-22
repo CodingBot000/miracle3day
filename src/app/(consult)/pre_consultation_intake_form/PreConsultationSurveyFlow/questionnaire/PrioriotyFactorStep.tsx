@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { questions } from '@/content/pre_consultation_intake/form-definition_pre_consultation';
+import { useCookieLanguage } from '@/hooks/useCookieLanguage';
+import { getLocalizedText } from '@/utils/i18n';
 
 interface PrioriotyFactorStepProps {
   data: any;
@@ -12,10 +14,11 @@ interface PrioritySelection {
 }
 
 const PrioriotyFactorStep: React.FC<PrioriotyFactorStepProps> = ({ data, onDataChange }) => {
+  const { language } = useCookieLanguage();
   const priorityItems = questions.priorities;
   const [selections, setSelections] = useState<PrioritySelection>({});
 
-  const numbers = [1, 2, 3, 4, 5, 6];
+  const numbers = [1, 2, 3, 4, 5];
 
   useEffect(() => {
     if (data.priorityOrder?.prioritySelections) {
@@ -110,7 +113,7 @@ const PrioriotyFactorStep: React.FC<PrioriotyFactorStepProps> = ({ data, onDataC
           </div>
           
           <div className="flex justify-center gap-2 mb-3">
-            {[1, 2, 3, 4, 5, 6].map((score) => (
+            {[1, 2, 3, 4, 5].map((score) => (
               <div key={score} className="flex flex-col items-center gap-1">
                 <span className="text-sm text-gray-500 font-medium">{score}</span>
                 <div
@@ -138,8 +141,8 @@ const PrioriotyFactorStep: React.FC<PrioriotyFactorStepProps> = ({ data, onDataC
           <Card key={item.id} className="p-4 bg-white border border-gray-200">
             <div className="flex gap-4">
               <div className="flex-[3] min-w-0 break-words">
-                <h3 className="font-medium text-gray-900 mb-1">{item.label}</h3>
-                <p className="text-sm text-gray-600 break-words">{item.description}</p>
+                <h3 className="font-medium text-gray-900 mb-1">{getLocalizedText(item.label, language)}</h3>
+                <p className="text-sm text-gray-600 break-words">{getLocalizedText(item.description, language)}</p>
               </div>
          
               <div className="flex-[2] flex items-center justify-center flex-shrink-0">

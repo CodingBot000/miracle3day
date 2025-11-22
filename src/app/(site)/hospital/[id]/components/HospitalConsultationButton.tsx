@@ -6,12 +6,15 @@ import { useState } from "react";
 import { MessageCircle, Video } from "lucide-react";
 import { useCookieLanguage } from "@/hooks/useCookieLanguage";
 import { useLoginGuard } from "@/hooks/useLoginGuard";
+import { HospitalDetailInfo } from "@/app/models/hospitalData.dto";
+import DirectChatChannels from "./DirectChatChannels";
 
 interface HospitalConsultationButtonProps {
   hospitalId: string;
+  hospitalDetails: HospitalDetailInfo;
 }
 
-const HospitalConsultationButton = ({ hospitalId }: HospitalConsultationButtonProps) => {
+const HospitalConsultationButton = ({ hospitalId, hospitalDetails }: HospitalConsultationButtonProps) => {
   const router = useRouter();
   const { language } = useCookieLanguage();
   const { requireLogin, loginModal } = useLoginGuard();
@@ -28,7 +31,7 @@ const HospitalConsultationButton = ({ hospitalId }: HospitalConsultationButtonPr
       videoConsultationError: "실시간 상담 예약 페이지를 열 수 없습니다. 다시 시도해주세요.",
     },
     en: {
-      chat: "Start Chat",
+      chat: "Platform Chat",
       reservation: "Make Reservation",
       videoConsultation: "Video Consultation",
       chatError: "Unable to start consultation. Please try again.",
@@ -48,32 +51,46 @@ const HospitalConsultationButton = ({ hospitalId }: HospitalConsultationButtonPr
         return;
       }
 
-      // Get user info after login check
-      const userRes = await fetch("/api/auth/getUser");
-      const userData = await userRes.json();
-      const memberUuid = userData?.userInfo?.id_uuid;
-
-      // Create chat channel
-      const res = await fetch("/api/chat/create_channel", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          member_uuid: memberUuid,
-          hospital_id_uuid: hospitalId,
-          payload: {
-            message: "I would like to schedule a consultation",
-          },
-        }),
+      // 1. 서버에서 채널 초기화 (유저 upsert + 채널 생성 + 토큰 발급)
+      const res = await fetch('/api/stream/init-channel', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ hospitalId }),
       });
 
-      const data = await res.json();
-
-      if (!data.ok) {
-        throw new Error(data.error || "Failed to create chat channel");
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || 'Failed to initialize stream channel');
       }
 
-      // Redirect to chat channel
-      router.push(`/chat/${encodeURIComponent(data.channel_url)}`);
+      const { token, apiKey, channelId } = await res.json();
+
+      // 2. 사용자 정보 가져오기 (userId 필요)
+      const userRes = await fetch("/api/auth/getUser");
+      const userData = await userRes.json();
+      const userId = userData?.userInfo?.id_uuid;
+
+      if (!userId) {
+        throw new Error("User ID not found");
+      }
+
+      // 3. Stream 클라이언트 연결
+      const { StreamChat } = await import("stream-chat");
+      const client = StreamChat.getInstance(apiKey);
+
+      await client.connectUser(
+        {
+          id: userId,
+        },
+        token
+      );
+
+      // 4. 채널 watch (서버에서 이미 생성됨)
+      const channel = client.channel('messaging', channelId);
+      await channel.watch();
+
+      // 5. 채팅 페이지로 이동
+      router.push(`/chat?cid=${channelId}`);
     } catch (err: any) {
       console.error("Error creating chat:", err);
       setError(language === 'ko' ? labels.ko.chatError : labels.en.chatError);
@@ -111,12 +128,7 @@ const HospitalConsultationButton = ({ hospitalId }: HospitalConsultationButtonPr
       const userRes = await fetch("/api/auth/getUser");
       const userData = await userRes.json();
       const userInfo = userData?.userInfo;
-      console.log('userRes:', userRes);
-      console.log('userData:', userData);
-      console.log('userInfo:', userInfo);
-      console.log('userInfo.birth_date:', userInfo.birth_date);
-      console.log('userInfo.id_country:', userInfo.id_country);
-      console.log('userInfo.phone_country_code:', userInfo.phone_country_code);
+      
       // 2. Check if user has complete profile (birthDate, id_country, phone_country_code)
       const hasCompleteProfile =
         userInfo.birth_date &&
@@ -139,6 +151,18 @@ const HospitalConsultationButton = ({ hospitalId }: HospitalConsultationButtonPr
     }
   };
 
+  // Direct Chat 채널이 있는지 확인
+  const hasDirectChatChannels = 
+    (hospitalDetails.instagram && hospitalDetails.instagram.trim() !== '') ||
+    (hospitalDetails.facebook_messenger && hospitalDetails.facebook_messenger.trim() !== '') ||
+    (hospitalDetails.we_chat && hospitalDetails.we_chat.trim() !== '') ||
+    (hospitalDetails.whats_app && hospitalDetails.whats_app.trim() !== '') ||
+    (hospitalDetails.tiktok && hospitalDetails.tiktok.trim() !== '') ||
+    (hospitalDetails.line && hospitalDetails.line.trim() !== '') ||
+    (hospitalDetails.kakao_talk && hospitalDetails.kakao_talk.trim() !== '') ||
+    (hospitalDetails.telegram && hospitalDetails.telegram.trim() !== '') ||
+    (hospitalDetails.other_channel && hospitalDetails.other_channel.trim() !== '');
+
   return (
     <>
       {/* Login Required Modal */}
@@ -154,6 +178,11 @@ const HospitalConsultationButton = ({ hospitalId }: HospitalConsultationButtonPr
 
       <div className="fixed bottom-[100px] right-5 z-40">
         <div className="flex flex-col gap-1.5 bg-white/95 backdrop-blur-sm shadow-lg rounded-lg p-2 w-28">
+          {/* Direct Chat 버튼 - 채널 데이터가 있을 때만 표시 */}
+          {hasDirectChatChannels && (
+            <DirectChatChannels hospitalDetails={hospitalDetails} />
+          )}
+
           <button
             onClick={handleChatConsultation}
             disabled={isCreatingChat}

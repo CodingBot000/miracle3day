@@ -40,6 +40,7 @@ export const ROUTE = {
   HOSPITAL_DETAIL: createDetailRouter("HOSPITAL"),
   EVENT: createNormalRouter("EVENT"),
   EVENT_DETAIL: createDetailRouter("EVENT"),
+  TREATMENT_PROTOCOL: '/treatment-protocol/treatment-landing-v2',
   // DIAGNOTSTIC: createNormalRouter("DIAGNOTSTIC"),
   // DIAGNOTSTIC_DETAIL: createDetailRouter("DIAGNOTSTIC"),
   // ONLINE_CONSULTING: createNormalRouter("ONLINE_CONSULTING"),
@@ -57,5 +58,6 @@ export const ROUTE = {
   FAVORITE: createUserRouter("FAVORITE"),
   UPLOAD_HOSPITAL: createAdminRouter("upload"),
   WITHDRAWAL: '/withdrawal',
-  RESERVATION: (id: string) => `/hospital/${id}/reservation`
+  RESERVATION: (id: string) => `/hospital/${id}/reservation`,
+
 }

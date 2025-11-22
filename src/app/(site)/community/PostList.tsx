@@ -89,15 +89,18 @@ export default function PostList({ posts, isAuthenticated }: PostListProps) {
             const likeCount = post.like_count ?? post.like_count ?? 0
 
             return (
-              <Link
+              <div
                 key={post.id}
-                href={`/community/post/${post.id}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block p-6 border border-gray-200 rounded-lg hover:border-pink-300 hover:shadow-md transition-all"
-                onClick={(event) => handleClick(event, post.id)}
+                className="block p-6 !border-2 !border-solid !border-gray-200 rounded-lg hover:!border-pink-300 hover:shadow-md transition-all bg-white"
               >
-                <div className="flex flex-col">
+                <Link
+                  href={`/community/post/${post.id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block"
+                  onClick={(event) => handleClick(event, post.id)}
+                >
+                  <div className="flex flex-col">
                   {/* 헤더: 카테고리, 작성자, 날짜 */}
                   <div className="flex flex-wrap items-center gap-3 text-sm text-gray-500 mb-3">
                     {post.topic && (
@@ -147,7 +150,8 @@ export default function PostList({ posts, isAuthenticated }: PostListProps) {
                     </div>
                   </div>
                 </div>
-              </Link>
+                </Link>
+              </div>
             )
           })
         )}

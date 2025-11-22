@@ -5,6 +5,8 @@ import { Card } from '@/components/ui/card';
 import { preConsultationSteps, questions } from '@/content/pre_consultation_intake/form-definition_pre_consultation';
 import { getBudgetRangeById } from '@/content/estimate/datamapper';
 import { Button } from '@/components/ui/button';
+import { useCookieLanguage } from '@/hooks/useCookieLanguage';
+import { getLocalizedText } from '@/utils/i18n';
 import { USER_INFO, BUDGET,
    HEALTH_CONDITIONS,
     PREFERENCES,
@@ -34,7 +36,7 @@ interface PreviewReportProps {
 const PreviewReport: React.FC<PreviewReportProps> = 
 ({ open, onOpenChange, formData, showSendFormButton, onSubmissionComplete }) => 
   {
-
+  const { language } = useCookieLanguage();
   const router = useRouter();
   const [isSubmissionModalOpen, setIsSubmissionModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -194,7 +196,10 @@ const PreviewReport: React.FC<PreviewReportProps> =
         );
       case SKIN_TYPE:
         const skinType = data.skinType;
-        const skinTypeLabel = questions.skinTypes.find(type => type.id === skinType)?.label || skinType;
+        const skinTypeLabel = getLocalizedText(
+          questions.skinTypes.find(type => type.id === skinType)?.label,
+          language
+        ) || skinType;
         return (
           <div className="space-y-2">
             <p><strong>Skin Type:</strong> {skinTypeLabel}</p>
@@ -204,7 +209,10 @@ const PreviewReport: React.FC<PreviewReportProps> =
       case SKIN_CONCERNS:
         const skinConcerns = data.skinConcerns;
         const skinConcernLabels = skinConcerns?.concerns?.map((concernId: string) => {
-          return questions.skinConcerns.find(concern => concern.id === concernId)?.label || concernId;
+          return getLocalizedText(
+            questions.skinConcerns.find(concern => concern.id === concernId)?.label,
+            language
+          ) || concernId;
         }).join(', ');
         return (
           <div className="space-y-2">
@@ -219,15 +227,19 @@ const PreviewReport: React.FC<PreviewReportProps> =
         );
 
       case BUDGET:
+        const budgetRange = getBudgetRangeById(data.budget);
         return (
           <div className="space-y-2">
-            <p><strong>Budget Range:</strong> {getBudgetRangeById(data.budget)?.label}</p>
+            <p><strong>Budget Range:</strong> {budgetRange ? getLocalizedText(budgetRange.label, language) : data.budget}</p>
           </div>
         );
         case PREFERENCES:
         const treatmentAreas = data.treatmentAreas;
         const treatmentAreaLabels = treatmentAreas?.treatmentAreas?.map((areaId: string) => {
-          return questions.treatmentAreas.find(area => area.id === areaId)?.label || areaId;
+          return getLocalizedText(
+            questions.treatmentAreas.find(area => area.id === areaId)?.label,
+            language
+          ) || areaId;
         }).join(', ');
         return (
           <div className="space-y-2">
@@ -243,7 +255,10 @@ const PreviewReport: React.FC<PreviewReportProps> =
         );
         case PRIORITYFACTORS:
         const priorityLabels = data.priorityOrder?.priorityOrder?.map((priorityId: string) => {
-          return questions.priorities.find(priority => priority.id === priorityId)?.label || priorityId;
+          return getLocalizedText(
+            questions.priorities.find(priority => priority.id === priorityId)?.label,
+            language
+          ) || priorityId;
         }).join(' > ');
         return (
           <div className="space-y-2">
@@ -252,7 +267,10 @@ const PreviewReport: React.FC<PreviewReportProps> =
         );
       case TREATMENT_GOALS:
         const treatmentGoalLabels = data.goals?.map((goalId: string) => {
-          return questions.treatmentGoals.find(goal => goal.id === goalId)?.label || goalId;
+          return getLocalizedText(
+            questions.treatmentGoals.find(goal => goal.id === goalId)?.label,
+            language
+          ) || goalId;
         }).join(', ');
         return (
           <div className="space-y-2">
@@ -263,7 +281,10 @@ const PreviewReport: React.FC<PreviewReportProps> =
       case TREATMENT_EXPERIENCE_BEFORE:
         const pastTreatments = data.pastTreatments;
         const pastTreatmentLabels = pastTreatments?.pastTreatments?.map((treatmentId: string) => {
-          return questions.pastTreatments.find(treatment => treatment.id === treatmentId)?.label || treatmentId;
+          return getLocalizedText(
+            questions.pastTreatments.find(treatment => treatment.id === treatmentId)?.label,
+            language
+          ) || treatmentId;
         }).join(', ');
         return (
           <div className="space-y-2">
@@ -283,7 +304,10 @@ const PreviewReport: React.FC<PreviewReportProps> =
       case HEALTH_CONDITIONS:
         const healthConditions = data.healthConditions;
         const healthConditionLabels = healthConditions?.healthConditions?.map((conditionId: string) => {
-          return questions.medicalConditions.find(condition => condition.id === conditionId)?.label || conditionId;
+          return getLocalizedText(
+            questions.medicalConditions.find(condition => condition.id === conditionId)?.label,
+            language
+          ) || conditionId;
         }).join(', ');
         return (
           <div className="space-y-2">
@@ -389,7 +413,7 @@ const PreviewReport: React.FC<PreviewReportProps> =
             {preConsultationSteps.map((step) => (
               <Card key={step.id} className="p-4">
                 <h3 className="text-lg font-medium text-gray-900 mb-3">
-                  {step.title}
+                  {getLocalizedText(step.title, language)}
                 </h3>
                 <div className="text-gray-600">
                   {getStepSummary(step.id, formData[step.id])}

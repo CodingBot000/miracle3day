@@ -16,7 +16,7 @@ import { Smile } from "lucide-react";
 import HeroVideos from "./components/hero/HeroVideos";
 import CategoryMenu from "@/components/organism/layout/CategoryMenu";
 import AgeChecker from "@/components/template/AgeChecker";
-import Hero from "./hero";
+import Hero from "./HeadSection";
 
 import ProtocolPage from "@/app/(site)/treatment-protocol/treatment-landing-v2/protocol/page";
 import TreatmentProtocol from "@/app/(site)/treatment-protocol/treatment-landing-v2/TreatmentProtocol";
@@ -30,6 +30,9 @@ import AgeGuideCTA from "@/app/(site)/treatment-based-age-guide/components/AgeGu
 import { getLangFromCookies, Lang, t } from "@/i18n/i18n";
 import ReviewScrollSection from "@/app/(site)/home/components/ReviewScrollSection";
 import BeautyPartners from "@/app/(site)/partners/BeautyPartners";
+import QuestionsView from "../community/QuestionsView";
+import HeadSection from "./HeadSection";
+import { motion } from "framer-motion";
 
 export default async function HomePage() {
   // const bannerItem = await getBannerAPI();
@@ -46,6 +49,11 @@ export default async function HomePage() {
     (loc) => loc === locationParam
   );
 
+  const fadeUp = {
+    hidden: { opacity: 0, y: 12 },
+    show:   { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } }
+  };
+
   return (
     <TransparentHeaderWrapper>
       {/* HeroVideos: 모바일은 full-width, 데스크탑은 max-w-[1200px] */}
@@ -54,7 +62,7 @@ export default async function HomePage() {
           <div className="absolute inset-0 bg-black/15 z-10"></div>
           <div className="absolute inset-0 flex items-end justify-end text-white z-30 pb-6 pr-6 md:pb-12 md:pr-12">
             <div className="text-right">
-              <div className="mb-2 md:mb-4">
+              {/* <div className="mb-2 md:mb-4">
                 <WhyKoreaButton />
               </div>
               <div className="mb-2 md:mb-4">
@@ -62,11 +70,16 @@ export default async function HomePage() {
               </div>
               <div className="mb-2 md:mb-4">
                 <BeautyPartners />
-              </div>
-              <h1 className="text-xl md:text-3xl lg:text-5xl font-bold drop-shadow-lg">Reveal Your Beauty</h1>
+              </div> */}
+              <h1 className="text-xl md:text-3xl lg:text-5xl font-bold drop-shadow-lg">
+              {t(lang, "젊어 보이는 피부, 검증된 전문가와 함께", "Youthful Skin, Expert Care")}
+              </h1>
               <p className="mt-2 md:mt-4 text-sm md:text-base lg:text-lg drop-shadow-md">
-                  Discover premium skincare <br className="md:hidden" />
-                  & wellness experiences
+                {t(lang, "어떤 안티에이징 시술이 맞는지 헷갈리나요? 우리가 함께 찾아드립니다",
+                  "Confused about anti-aging treatments? We’ve got you covered"
+                )}
+                  {/* Discover premium skincare <br className="md:hidden" />
+                  & wellness experiences */}
               </p>
             </div>
           </div>
@@ -85,11 +98,23 @@ export default async function HomePage() {
           <CategoryMenu />
         </div> */}
 
-          <Hero />
+          <HeadSection />
 {/* <UploadTestViaServer /> */}
           {/* <MiddleSection1 /> */}
+          <section className="w-full flex flex-col items-center gap-10 px-4 py-12">
+      {/* Heading */}
+        
 
-          <TreatmentProtocol />
+        <div
+          className="text-center text-2xl md:text-4xl font-bold tracking-tight">
+          {t(lang, "오늘의 핫 이슈", "Today's Hot Issue")}
+
+        </div>
+        
+        <QuestionsView isMainPage={true} />
+  
+      </section>
+          {/* <TreatmentProtocol /> */}
 
 
        {/* See All Clinics Link */}
@@ -109,6 +134,16 @@ export default async function HomePage() {
 
         {/* Random Reviews Infinite Scroll */}
         <ReviewScrollSection />
+        <div className="mb-2 md:mb-4">
+                <WhyKoreaButton />
+              </div>
+              <div className="mb-2 md:mb-4">
+                <AgeGuideCTA />
+              </div>
+              <div className="mb-2 md:mb-4">
+                <BeautyPartners />
+              </div>
+
 
           {/* <div className="text-right mt-24 px-4">
             <Link

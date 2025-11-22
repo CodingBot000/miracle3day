@@ -4,6 +4,8 @@ import { Card } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { questions } from '@/content/estimate/form-definition';
 import { ChoiceCard } from '@/components/molecules/card/ChoiceCard';
+import { useCookieLanguage } from '@/hooks/useCookieLanguage';
+import { getLocalizedText } from '@/utils/i18n';
 
 interface PreferencesStepProps {
   data: any;
@@ -11,6 +13,7 @@ interface PreferencesStepProps {
 }
 
 const PreferencesStep: React.FC<PreferencesStepProps> = ({ data, onDataChange }) => {
+  const { language } = useCookieLanguage();
   const treatmentAreas = data.treatmentAreas || { treatmentAreas: [] };
 
   const [hasOtherArea, setHasOtherArea] = useState(
@@ -77,7 +80,7 @@ const PreferencesStep: React.FC<PreferencesStepProps> = ({ data, onDataChange })
               <ChoiceCard
                 key={area.id}
                 mode="multi"
-                title={area.label}
+                title={getLocalizedText(area.label, language)}
                 selected={isSelected}
                 onSelect={() => handleAreaToggle(area.id)}
              

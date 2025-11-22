@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { questions } from '@/content/pre_consultation_intake/form-definition_pre_consultation';
+import { useCookieLanguage } from '@/hooks/useCookieLanguage';
+import { getLocalizedText } from '@/utils/i18n';
 
 interface PrioriotyFactorStepProps {
   data: any;
@@ -12,6 +14,7 @@ interface PrioritySelection {
 }
 
 const PrioriotyFactorStep: React.FC<PrioriotyFactorStepProps> = ({ data, onDataChange }) => {
+  const { language } = useCookieLanguage();
   const priorityItems = questions.priorities;
   const [selections, setSelections] = useState<PrioritySelection>({});
 
@@ -138,8 +141,8 @@ const PrioriotyFactorStep: React.FC<PrioriotyFactorStepProps> = ({ data, onDataC
           <Card key={item.id} className="p-4 bg-white border border-gray-200">
             <div className="flex gap-4">
               <div className="flex-[3] min-w-0 break-words">
-                <h3 className="font-medium text-gray-900 mb-1">{item.label}</h3>
-                <p className="text-sm text-gray-600 break-words">{item.description}</p>
+                <h3 className="font-medium text-gray-900 mb-1">{getLocalizedText(item.label, language)}</h3>
+                <p className="text-sm text-gray-600 break-words">{getLocalizedText(item.description, language)}</p>
               </div>
          
               <div className="flex-[2] flex items-center justify-center flex-shrink-0">

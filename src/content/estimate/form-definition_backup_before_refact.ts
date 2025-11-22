@@ -19,19 +19,19 @@ import SkinTypeStep from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/ques
 import PreferencesStep from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/PreferencesStep";
 import PrioriotyFactorStep from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/PrioriotyFactorStep";
 import TreatmentExpBeforeStep from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/TreatmentExpBefore";
-import AgeRangeStep from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/AgeRangeStep";
+// import AgeRangeStep from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/AgeRangeStep";
 
 // ═══════════════════════════════════════════════════════════
 // STEPS 정의 - 기재된 순서로 나옴
 // ═══════════════════════════════════════════════════════════
 export const steps = [
   // STEP 1: Age Range (새로 추가)
-  {
-    id: AGE_RANGE,
-    title: "What's your age range?",
-    subtitle: "This helps us recommend age-appropriate treatments",
-    component: AgeRangeStep,
-  },
+  // {
+  //   id: AGE_RANGE,
+  //   title: "What's your age range?",
+  //   subtitle: "This helps us recommend age-appropriate treatments",
+  //   component: AgeRangeStep,
+  // },
 
   // STEP 2: Skin Type
   {

@@ -2,6 +2,8 @@
 import { questions } from '@/content/estimate/form-definition';
 
 import { ChoiceCard } from '@/components/molecules/card/ChoiceCard';
+import { useCookieLanguage } from '@/hooks/useCookieLanguage';
+import { getLocalizedText } from '@/utils/i18n';
 
 interface SkinTypeStepProps {
   data: any;
@@ -9,6 +11,7 @@ interface SkinTypeStepProps {
 }
 
 const SkinTypeStep: React.FC<SkinTypeStepProps> = ({ data, onDataChange }) => {
+  const { language } = useCookieLanguage();
  
   const handleSkinTypeChange = (typeId: string) => {
     onDataChange({
@@ -34,8 +37,8 @@ const SkinTypeStep: React.FC<SkinTypeStepProps> = ({ data, onDataChange }) => {
             <ChoiceCard
               key={type.id}
               mode="single"
-              title={type.label}
-              subtitle={type.description}
+              title={getLocalizedText(type.label, language)}
+              subtitle={getLocalizedText(type.description, language)}
               selected={isSelected}
               onSelect={() => handleSkinTypeChange(type.id)}
               showIndicator={false} // 싱글은 점 숨김 (디자인 가이드)

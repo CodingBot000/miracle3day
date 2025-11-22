@@ -33,7 +33,7 @@ const TreatmentCard: React.FC<TreatmentCardProps> = ({ treatment, tier }) => {
       case 1:
         return {
           gradient: 'from-blue-50 to-blue-100',
-          border: 'border-blue-200',
+          border: 'border-blue-100',
           badge: 'bg-blue-500',
           text: 'text-blue-900',
           icon: 'text-blue-600',

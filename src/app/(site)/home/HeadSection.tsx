@@ -13,7 +13,7 @@ const fadeUp = {
   show:   { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } }
 };
 
-export default function Hero() {
+export default function HeadSection() {
   const { language } = useCookieLanguage();
   const isKorean = language === 'ko';
   

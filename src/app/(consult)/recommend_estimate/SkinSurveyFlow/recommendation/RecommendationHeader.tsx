@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Sparkles, DollarSign, Calendar, Wallet } from 'lucide-react';
+import { questions } from '@/content/estimate/form-definition';
 
 export interface RecommendationHeaderProps {
   totalPriceKRW: number;
@@ -36,27 +37,14 @@ const RecommendationHeader: React.FC<RecommendationHeaderProps> = ({
   };
 
   // 예산 ID를 사용자 친화적인 텍스트로 변환
-  const getBudgetLabel = (budgetId?: string, upperLimit?: number) => {
+  const getBudgetLabel = (budgetId?: string) => {
     if (!budgetId) return null;
 
-    const budgetLabels: Record<string, string> = {
-      "under-500": "Under $500",
-      "500-1500": "$500 - $1,500",
-      "1500-3000": "$1,500 - $3,000",
-      "3000-5000": "$3,000 - $5,000",
-      "under-1000": "Under $1,000",
-      "1000-5000": "$1,000 - $5,000",
-      "5000-10000": "$5,000 - $10,000",
-      "10000-plus": "Over $10,000",
-      "flexible": "Flexible Budget",
-      "no_limit": "No Limit",
-      "unsure": "Unsure",
-    };
-
-    return budgetLabels[budgetId] || budgetId;
+    const budgetRange = questions.budgetRanges.find(range => range.id === budgetId);
+    return budgetRange?.label.en || budgetId;
   };
 
-  const budgetLabel = getBudgetLabel(budgetRangeId, budgetUpperLimit);
+  const budgetLabel = getBudgetLabel(budgetRangeId);
   const isWithinBudget = budgetUpperLimit ? totalPriceKRW <= budgetUpperLimit : true;
 
   return (

@@ -15,7 +15,10 @@
       "Bash(rm:*)",
       "Bash(npm install:*)",
       "Bash(npm uninstall:*)",
-      "Bash(npm i:*)"
+      "Bash(npm i:*)",
+      "WebFetch(domain:docs.anthropic.com)",
+      "WebFetch(domain:docs.claude.com)",
+      "WebFetch(domain:code.claude.com)"
     ],
     "deny": [],
     "ask": []

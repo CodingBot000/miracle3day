@@ -4,6 +4,8 @@ import { Card } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { questions } from '@/content/pre_consultation_intake/form-definition_pre_consultation';
 import { ChoiceCard } from '@/components/molecules/card/ChoiceCard';
+import { useCookieLanguage } from '@/hooks/useCookieLanguage';
+import { getLocalizedText } from '@/utils/i18n';
 
 interface HealthConditionStepProps {
   data: any;
@@ -11,6 +13,7 @@ interface HealthConditionStepProps {
 }
 
 const HealthConditionStep: React.FC<HealthConditionStepProps> = ({ data, onDataChange }) => {
+  const { language } = useCookieLanguage();
   const healthConditions = data.healthConditions || { healthConditions: [] };
   const [hasOtherCondition, setHasOtherCondition] = useState(
     Array.isArray(healthConditions.healthConditions) && healthConditions.healthConditions.includes('other')
@@ -89,8 +92,8 @@ const HealthConditionStep: React.FC<HealthConditionStepProps> = ({ data, onDataC
                 <ChoiceCard
                   key={condition.id}
                   mode="multi"
-                  title={condition.label}
-                  subtitle={condition.description}
+                  title={getLocalizedText(condition.label, language)}
+                  subtitle={getLocalizedText(condition.description, language)}
                   selected={isSelected}
                   onSelect={() => handleHealthConditionToggle(condition.id)}
            

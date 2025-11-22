@@ -4,6 +4,8 @@ import { Card } from '@/components/ui/card';
 import { questions } from '@/content/estimate/form-definition';
 import { Textarea } from '@/components/ui/textarea';
 import { ChoiceCard } from '@/components/molecules/card/ChoiceCard';
+import { useCookieLanguage } from '@/hooks/useCookieLanguage';
+import { getLocalizedText } from '@/utils/i18n';
 
 interface SkinConcernsStepProps {
   data: any;
@@ -19,6 +21,7 @@ const TIER_TITLES: { [key: number]: string } = {
 };
 
 const SkinConcernsStep: React.FC<SkinConcernsStepProps> = ({ data, onDataChange }) => {
+  const { language } = useCookieLanguage();
   const skinConcerns = data.skinConcerns || { concerns: [] };
   const [hasOtherConcern, setHasOtherConcern] = useState(
     Array.isArray(skinConcerns.concerns) && skinConcerns.concerns.includes('other')
@@ -102,8 +105,8 @@ const SkinConcernsStep: React.FC<SkinConcernsStepProps> = ({ data, onDataChange 
                   <ChoiceCard
                     key={concern.id}
                     mode="multi"
-                    title={concern.label}
-                    subtitle={concern.description}
+                    title={getLocalizedText(concern.label, language)}
+                    subtitle={getLocalizedText(concern.description, language)}
                     selected={isSelected}
                     onSelect={() => handleConcernToggle(concern.id)}
                   />

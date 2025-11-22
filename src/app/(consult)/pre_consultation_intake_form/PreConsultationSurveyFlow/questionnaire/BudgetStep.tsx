@@ -2,6 +2,8 @@
 import { Label } from '@/components/ui/label';
 import { questions } from '@/content/pre_consultation_intake/form-definition_pre_consultation';
 import { ChoiceCard } from '@/components/molecules/card/ChoiceCard';
+import { useCookieLanguage } from '@/hooks/useCookieLanguage';
+import { getLocalizedText } from '@/utils/i18n';
 
 interface BudgetStepProps {
   data: any;
@@ -9,6 +11,7 @@ interface BudgetStepProps {
 }
 
 const BudgetStep: React.FC<BudgetStepProps> = ({ data, onDataChange }) => {
+  const { language } = useCookieLanguage();
 
   const handleBudgetChange = (budgetId: string) => {
       onDataChange({
@@ -32,8 +35,8 @@ const BudgetStep: React.FC<BudgetStepProps> = ({ data, onDataChange }) => {
               <ChoiceCard
                 key={type.id}
                 mode="single"
-                title={type.label}
-                subtitle={type.description}
+                title={getLocalizedText(type.label, language)}
+                subtitle={getLocalizedText(type.description, language)}
                 selected={isSelected}
                 onSelect={() => handleBudgetChange(type.id)}
                 showIndicator={false} // 싱글은 점 숨김 (디자인 가이드)

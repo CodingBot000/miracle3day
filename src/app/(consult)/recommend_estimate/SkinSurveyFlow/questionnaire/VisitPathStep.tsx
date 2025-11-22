@@ -6,6 +6,8 @@ import { questions } from '@/content/estimate/form-definition';
 import { FaInstagram, FaReddit, FaTiktok, FaYoutube, FaGoogle, FaComments } from 'react-icons/fa';
 import { ChoiceCard } from '@/components/molecules/card/ChoiceCard';
 import { log } from '@/utils/logger';
+import { useCookieLanguage } from '@/hooks/useCookieLanguage';
+import { getLocalizedText } from '@/utils/i18n';
 // import { SiLemon8 } from 'react-icons/si';
 
 interface VisitPathStepProps {
@@ -14,6 +16,7 @@ interface VisitPathStepProps {
 }
 
 const VisitPathStep: React.FC<VisitPathStepProps> = ({ data, onDataChange }) => {
+  const { language } = useCookieLanguage();
   const visitPath = data.visitPath || { visitPath: '', otherPath: '' };
   const [hasOtherPath, setHasOtherPath] = useState(visitPath.visitPath === 'other');
   const [tempOtherPath, setTempOtherPath] = useState(visitPath.otherPath || '');
@@ -127,9 +130,9 @@ const VisitPathStep: React.FC<VisitPathStepProps> = ({ data, onDataChange }) => 
               <ChoiceCard
                 key={path.id}
                 mode="single"
-                title={path.label}
-                subtitle={(path.id === 'Chat_Ai' ||
-                  path.id === 'web_search')  ? path.description : undefined}
+                title={getLocalizedText(path.label, language)}
+                subtitle={(path.id === 'chat_ai' ||
+                  path.id === 'web_search')  ? getLocalizedText(path.description, language) : undefined}
                 selected={isSelected}
                 onSelect={() => handleVisitPathChange(path.id)}
                 showIndicator={false} // 싱글은 점 숨김 (디자인 가이드)

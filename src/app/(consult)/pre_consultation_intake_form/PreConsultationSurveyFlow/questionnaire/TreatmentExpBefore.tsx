@@ -4,6 +4,8 @@ import { Card } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { questions } from '@/content/pre_consultation_intake/form-definition_pre_consultation';
 import { ChoiceCard } from '@/components/molecules/card/ChoiceCard';
+import { useCookieLanguage } from '@/hooks/useCookieLanguage';
+import { getLocalizedText } from '@/utils/i18n';
 
 interface TreatmentExpBeforeStepProps {
   data: any;
@@ -11,6 +13,7 @@ interface TreatmentExpBeforeStepProps {
 }
 
 const TreatmentExpBeforeStep: React.FC<TreatmentExpBeforeStepProps> = ({ data, onDataChange }) => {
+  const { language } = useCookieLanguage();
   const pastTreatments = data.pastTreatments || { pastTreatments: [] };
   // 임시로 부작용 텍스트를 저장하는 상태
   const [tempSideEffects, setTempSideEffects] = useState(pastTreatments.sideEffects || '');
@@ -132,8 +135,8 @@ const TreatmentExpBeforeStep: React.FC<TreatmentExpBeforeStepProps> = ({ data, o
               <ChoiceCard
                 key={treatment.id}
                 mode="multi"
-                title={treatment.label}
-                subtitle={treatment.description}
+                title={getLocalizedText(treatment.label, language)}
+                subtitle={getLocalizedText(treatment.description, language)}
                 selected={isSelected}
                 onSelect={() => handlePastTreatmentToggle(treatment.id)}
            
@@ -146,7 +149,7 @@ const TreatmentExpBeforeStep: React.FC<TreatmentExpBeforeStepProps> = ({ data, o
       {/* Side Effects Description */}
       <div>
         <Label className="text-lg font-medium text-gray-800 mb-4 block">
-          If you have experienced any side effects after the selected procedure(s), please describe them below. (Optional)
+        {language === 'ko' ? "선택한 시술 후 부작용이 있었다면 아래에 설명해주세요. (선택 사항)" : "If you have experienced any side effects after the selected procedure(s), please describe them below. (Optional)"}
         </Label>
         <Textarea
           value={tempSideEffects}
@@ -162,12 +165,13 @@ const TreatmentExpBeforeStep: React.FC<TreatmentExpBeforeStepProps> = ({ data, o
       {/* Additional Notes */}
       <div>
         <Label className="text-lg font-medium text-gray-800 mb-4 block">
-          Anything else you&apos;d like us to know? (Optional)
+          {language === 'ko' ? "다른 사항이 있으신가요? (선택 사항)" : "Anything else you&apos;d like us to know? (Optional)"}
         </Label>
         <Textarea
           value={pastTreatments.additionalNotes || ''}
           onChange={(e) => handleNotesChange(e.target.value)}
-          placeholder="Share any specific concerns, expectations, or questions you have about treatment..."
+          placeholder=
+          {language === 'ko' ? "시술에 대한 그외 걱정, 기대하는바 혹은 질문이 있으신가요? 아래에 설명해주세요." : "Share any specific concerns, expectations, or questions you have about treatment..."}
           className="border-rose-200 focus:border-rose-400 focus:ring-rose-400/20 min-h-[120px]"
         />
       </div>

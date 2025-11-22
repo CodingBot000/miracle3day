@@ -16,7 +16,7 @@ import { Smile } from "lucide-react";
 import HeroVideos from "./components/hero/HeroVideos";
 import CategoryMenu from "@/components/organism/layout/CategoryMenu";
 import AgeChecker from "@/components/template/AgeChecker";
-import Hero from "./hero";
+import Hero from "./HeadSection";
 
 import ProtocolPage from "@/app/(site)/treatment-protocol/treatment-landing-v2/protocol/page";
 import TreatmentProtocol from "@/app/(site)/treatment-protocol/treatment-landing-v2/TreatmentProtocol";
@@ -31,6 +31,8 @@ import { getLangFromCookies, Lang, t } from "@/i18n/i18n";
 import ReviewScrollSection from "@/app/(site)/home/components/ReviewScrollSection";
 import BeautyPartners from "@/app/(site)/partners/BeautyPartners";
 import QuestionsView from "../community/QuestionsView";
+import HeadSection from "./HeadSection";
+import { motion } from "framer-motion";
 
 export default async function HomePage() {
   // const bannerItem = await getBannerAPI();
@@ -46,6 +48,11 @@ export default async function HomePage() {
   const selectedLocation: LocationType | undefined = LOCATIONS.find(
     (loc) => loc === locationParam
   );
+
+  const fadeUp = {
+    hidden: { opacity: 0, y: 12 },
+    show:   { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } }
+  };
 
   return (
     <TransparentHeaderWrapper>
@@ -91,12 +98,22 @@ export default async function HomePage() {
           <CategoryMenu />
         </div> */}
 
-          <Hero />
+          <HeadSection />
 {/* <UploadTestViaServer /> */}
           {/* <MiddleSection1 /> */}
-          
+          <section className="w-full flex flex-col items-center gap-10 px-4 py-12">
+      {/* Heading */}
+        
+
+        <div
+          className="text-center text-2xl md:text-4xl font-bold tracking-tight">
+          {t(lang, "오늘의 핫 이슈", "Today's Hot Issue")}
+
+        </div>
+        
         <QuestionsView isMainPage={true} />
-      
+  
+      </section>
           {/* <TreatmentProtocol /> */}
 
 

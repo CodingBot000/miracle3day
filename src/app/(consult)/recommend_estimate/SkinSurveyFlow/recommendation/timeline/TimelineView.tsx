@@ -35,6 +35,66 @@ const TimelineView: React.FC<TimelineViewProps> = ({ recommendations }) => {
         estimatedDuration={estimatedDuration}
       />
 
+      {/* Tier Legend */}
+      <div className="mb-8 p-5 bg-white rounded-2xl shadow-lg shadow-gray-200/50 border border-gray-100">
+        <h4 className="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-4">
+          Treatment Categories
+        </h4>
+        <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+          {/* Tier 1 - Dermatology */}
+          <div className="flex items-start gap-3 p-3 bg-blue-50 rounded-xl">
+            <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0">
+              {/* <span className="text-white font-bold text-xs">1</span> */}
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="font-semibold text-blue-900 text-sm">Dermatology</p>
+              <p className="text-xs text-blue-700 mt-0.5 leading-relaxed">
+                Skin health, acne, pigmentation & texture treatments
+              </p>
+            </div>
+          </div>
+
+          {/* Tier 2 - Anti-Aging */}
+          <div className="flex items-start gap-3 p-3 bg-green-50 rounded-xl">
+            <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
+              {/* <span className="text-white font-bold text-xs">2</span> */}
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="font-semibold text-green-900 text-sm">Anti-Aging</p>
+              <p className="text-xs text-green-700 mt-0.5 leading-relaxed">
+                Wrinkle reduction, lifting & skin rejuvenation
+              </p>
+            </div>
+          </div>
+
+          {/* Tier 3 - Facial Contouring */}
+          <div className="flex items-start gap-3 p-3 bg-pink-50 rounded-xl">
+            <div className="w-8 h-8 rounded-full bg-pink-500 flex items-center justify-center flex-shrink-0">
+              {/* <span className="text-white font-bold text-xs">3</span> */}
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="font-semibold text-pink-900 text-sm">Facial Contouring</p>
+              <p className="text-xs text-pink-700 mt-0.5 leading-relaxed">
+                V-line, jawline & facial reshaping procedures
+              </p>
+            </div>
+          </div>
+
+          {/* Other Treatments */}
+          <div className="flex items-start gap-3 p-3 bg-gray-50 rounded-xl">
+            <div className="w-8 h-8 rounded-full bg-gray-500 flex items-center justify-center flex-shrink-0">
+              {/* <span className="text-white font-bold text-xs">3</span> */}
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="font-semibold text-gray-900 text-sm">Specialty Care</p>
+              <p className="text-xs text-gray-700 mt-0.5 leading-relaxed">
+                Body treatments, hair care & specialized procedures
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Timeline items */}
       <div className="space-y-0">
         {sortedTreatments.map((treatment, index) => {

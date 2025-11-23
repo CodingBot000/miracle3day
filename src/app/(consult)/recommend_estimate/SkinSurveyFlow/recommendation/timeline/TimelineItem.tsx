@@ -38,7 +38,7 @@ const TimelineItem: React.FC<TimelineItemProps> = ({
       case 1:
         return 'border-blue-500 bg-blue-500';
       case 2:
-        return 'border-purple-500 bg-purple-500';
+        return 'border-green-500 bg-green-500';
       case 3:
         return 'border-pink-500 bg-pink-500';
       default:
@@ -81,7 +81,7 @@ const TimelineItem: React.FC<TimelineItemProps> = ({
             {/* Header */}
             <div className="flex items-start justify-between">
               <div>
-                <h3 className="text-lg font-semibold text-gray-900">
+                <h3 className="text-xl font-semibold text-gray-900">
                   {treatment.label}
                 </h3>
                 {tier && (

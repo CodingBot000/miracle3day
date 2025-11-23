@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button } from '@/components/ui/button';
-import { MapPin, Share2, MessageCircle } from 'lucide-react';
+import { MapPin, Share2, MessageCircle, ArrowRight } from 'lucide-react';
 
 export interface ActionButtonsProps {
   onFindClinics?: () => void;
@@ -14,41 +13,42 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
   onConsult,
 }) => {
   return (
-    <div className="mt-8 space-y-4">
+    <div className="mt-10 space-y-6">
       {/* Primary action buttons */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {/* Find Clinics */}
-        <Button
+        <button
           onClick={onFindClinics}
-          className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white h-14"
+          className="group relative flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold rounded-2xl shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 transition-all duration-300 hover:-translate-y-0.5"
         >
-          <MapPin className="w-5 h-5 mr-2" />
-          Find Nearby Clinics
-        </Button>
+          <MapPin className="w-5 h-5" />
+          <span>Find Clinics</span>
+          <ArrowRight className="w-4 h-4 opacity-0 -ml-2 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
+        </button>
 
         {/* Share Results */}
-        <Button
+        <button
           onClick={onShare}
-          variant="outline"
-          className="border-2 border-gray-300 hover:border-gray-400 h-14"
+          className="group relative flex items-center justify-center gap-3 px-6 py-4 bg-white text-gray-700 font-semibold rounded-2xl shadow-lg shadow-gray-200/50 border border-gray-200 hover:border-gray-300 hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5"
         >
-          <Share2 className="w-5 h-5 mr-2" />
-          Share Results
-        </Button>
+          <Share2 className="w-5 h-5 text-gray-500 group-hover:text-gray-700 transition-colors" />
+          <span>Share Results</span>
+        </button>
 
         {/* Book Consultation */}
-        <Button
+        <button
           onClick={onConsult}
-          className="bg-gradient-to-r from-rose-400 to-pink-500 hover:from-rose-500 hover:to-pink-600 text-white h-14"
+          className="group relative flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-rose-500 to-pink-500 text-white font-semibold rounded-2xl shadow-lg shadow-rose-500/25 hover:shadow-xl hover:shadow-rose-500/30 transition-all duration-300 hover:-translate-y-0.5"
         >
-          <MessageCircle className="w-5 h-5 mr-2" />
-          Book Consultation
-        </Button>
+          <MessageCircle className="w-5 h-5" />
+          <span>Book Consultation</span>
+          <ArrowRight className="w-4 h-4 opacity-0 -ml-2 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
+        </button>
       </div>
 
       {/* Additional info */}
-      <div className="text-center p-4 bg-gray-50 rounded-lg">
-        <p className="text-sm text-gray-600">
+      <div className="text-center px-6 py-5 bg-gradient-to-r from-gray-50 to-slate-50 rounded-2xl border border-gray-100">
+        <p className="text-sm text-gray-600 leading-relaxed">
           Ready to start your journey? Find qualified clinics near you or book a consultation to discuss your personalized treatment plan.
         </p>
       </div>

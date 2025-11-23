@@ -134,6 +134,18 @@ export type AgeGroup = "teens" | "20s" | "30s" | "40s" | "50s" | "60s" | "70_plu
 
 export type Gender = "male" | "female" | "non_binary" | "no_answer";
 
+// ─────────────────────────────────────────────────────────
+// Ethnicity (인종)
+// ─────────────────────────────────────────────────────────
+export type EthnicityId =
+  | "asian"
+  | "white"
+  | "african"
+  | "hispanic"
+  | "middle_eastern"
+  | "mixed"
+  | "prefer_not_to_say";
+
 export type Category = "laser" | "ultrasound" | "rf" | "injectable" | "other";
 
 // ─────────────────────────────────────────────────────────
@@ -217,6 +229,7 @@ export interface RecommendInputs {
   skinTypeId?: SkinTypeId;
   ageGroup?: AgeGroup;
   gender?: Gender;
+  ethnicity?: EthnicityId;  // 인종별 가중치 조정용
   skinConcerns: SelectedConcern[];
   treatmentGoals: TreatmentGoalId[];
   treatmentAreas: AreaId[];
@@ -285,6 +298,7 @@ export interface RecommendationOutput {
   substitutions: Substitution[];
   upgradeSuggestions: string[];
   notes: string[];
+  ethnicityNote?: string;         // 인종별 안내 코멘트
   budgetRangeId?: BudgetId;      // 사용자가 설정한 예산
   budgetUpperLimit?: number;      // 예산의 상한값 (KRW)
 }

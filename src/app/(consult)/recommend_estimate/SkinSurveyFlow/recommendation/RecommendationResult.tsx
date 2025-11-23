@@ -34,6 +34,7 @@ const RecommendationResult: React.FC<RecommendationResultProps> = ({
         totalPriceUSD={output.totalPriceUSD}
         treatmentCount={output.recommendations.length}
         notes={output.notes}
+        ethnicityNote={output.ethnicityNote}
         budgetRangeId={output.budgetRangeId}
         budgetUpperLimit={output.budgetUpperLimit}
       />

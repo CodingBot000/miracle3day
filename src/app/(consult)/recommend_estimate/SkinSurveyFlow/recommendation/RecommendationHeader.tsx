@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card } from '@/components/ui/card';
-import { Sparkles, DollarSign, Calendar, Wallet } from 'lucide-react';
+import { Sparkles, DollarSign, Calendar, Wallet, Users } from 'lucide-react';
 import { questions } from '@/content/estimate/form-definition';
 
 export interface RecommendationHeaderProps {
@@ -8,6 +8,7 @@ export interface RecommendationHeaderProps {
   totalPriceUSD: number;
   treatmentCount: number;
   notes: string[];
+  ethnicityNote?: string;
   budgetRangeId?: string;
   budgetUpperLimit?: number;
 }
@@ -17,6 +18,7 @@ const RecommendationHeader: React.FC<RecommendationHeaderProps> = ({
   totalPriceUSD,
   treatmentCount,
   notes,
+  ethnicityNote,
   budgetRangeId,
   budgetUpperLimit,
 }) => {
@@ -130,6 +132,23 @@ const RecommendationHeader: React.FC<RecommendationHeaderProps> = ({
           </div>
         </Card>
       </div>
+
+      {/* Ethnicity-specific note */}
+      {ethnicityNote && (
+        <Card className="p-4 bg-blue-50 border-blue-200">
+          <div className="flex items-start space-x-3">
+            <div className="p-2 bg-blue-500 rounded-lg flex-shrink-0">
+              <Users className="w-4 h-4 text-white" />
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-medium text-blue-900 mb-1">Personalized for Your Skin Type</p>
+              <p className="text-sm text-blue-800">
+                {ethnicityNote}
+              </p>
+            </div>
+          </div>
+        </Card>
+      )}
 
       {/* Important notes */}
       {notes.length > 0 && (

@@ -21,6 +21,7 @@ import {
 import { mapConcernToCandidates } from './mappers/concernMapper';
 import { mapGoalToCandidates } from './mappers/goalMapper';
 import { adjustCandidatesByAgeGroup, adjustCandidatesByGender } from './mappers/ageGenderMapper';
+import { adjustCandidatesByEthnicity, generateEthnicityNote } from './mappers/ethnicityMapper';
 
 // Filters
 import { filterByArea } from './filters/areaFilter';
@@ -50,6 +51,7 @@ export function recommendTreatments(input: RecommendInputs): RecommendationOutpu
     skinTypeId,
     ageGroup,
     gender,
+    ethnicity,
     skinConcerns,
     treatmentGoals,
     treatmentAreas,
@@ -71,6 +73,7 @@ export function recommendTreatments(input: RecommendInputs): RecommendationOutpu
   console.log("priorityId:", priorityId);
   console.log("rawPast:", rawPast);
   console.log("medicalConditions:", medicalConditions);
+  console.log("ethnicity:", ethnicity);
 
   // Past treatments 정규화 (신규 → 구버전)
   const pastTreatments = normalizePastTreatments(rawPast);
@@ -141,6 +144,10 @@ export function recommendTreatments(input: RecommendInputs): RecommendationOutpu
   candidates = adjustCandidatesByAgeGroup(candidates, ageGroup);
   candidates = adjustCandidatesByGender(candidates, gender);
   console.log(`[MATCHING] After age/gender adjustments: ${candidates.length} candidates`);
+
+  // 1.8) 인종별 가중치 조정
+  candidates = adjustCandidatesByEthnicity(candidates, ethnicity);
+  console.log(`[MATCHING] After ethnicity adjustments: ${candidates.length} candidates`);
 
   // 2) 부위 필터
   console.log("[MATCHING] === Step 2: Area Filter ===");
@@ -233,6 +240,12 @@ export function recommendTreatments(input: RecommendInputs): RecommendationOutpu
     budgetUpper
   );
 
+  // 8.5) 인종별 안내 노트 생성
+  const ethnicityNote = generateEthnicityNote(ethnicity);
+  if (ethnicityNote) {
+    console.log("[MATCHING] Ethnicity note:", ethnicityNote);
+  }
+
   // 9) 추가 노트
   if (pastTreatments.includes("laser_2w") || pastTreatments.includes("laser_recent")) {
     notes.push("Laser in the last 2 weeks: defer further laser until recovery.");
@@ -301,6 +314,7 @@ export function recommendTreatments(input: RecommendInputs): RecommendationOutpu
     substitutions,
     upgradeSuggestions,
     notes,
+    ethnicityNote,
     budgetRangeId,
     budgetUpperLimit: budgetUpper === Infinity ? undefined : budgetUpper,
   };

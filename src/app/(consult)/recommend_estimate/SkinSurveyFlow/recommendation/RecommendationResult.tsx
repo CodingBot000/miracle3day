@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { RecommendationOutput } from '@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching';
 import RecommendationHeader from './RecommendationHeader';
 import ViewToggle from './common/ViewToggle';
+import TimelineInfoModal from './common/TimelineInfoModal';
 import CardView from './card/CardView';
 import TimelineView from './timeline/TimelineView';
 import ExcludedSection from './ExcludedSection';
 import ActionButtons from './ActionButtons';
 import ShareModal from './ShareModal';
 import { Card } from '@/components/ui/card';
-import { AlertCircle, Sparkles } from 'lucide-react';
+import { AlertCircle, Sparkles, Info } from 'lucide-react';
 
 export interface RecommendationResultProps {
   output: RecommendationOutput;
@@ -39,6 +40,7 @@ const RecommendationResult: React.FC<RecommendationResultProps> = ({
 }) => {
   const [viewMode, setViewMode] = useState<'card' | 'timeline'>('card');
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [isTimelineInfoOpen, setIsTimelineInfoOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-rose-50/50 via-white to-purple-50/30 relative">
@@ -101,12 +103,34 @@ const RecommendationResult: React.FC<RecommendationResultProps> = ({
           </motion.div>
         ) : (
           <>
-            {/* View toggle */}
+            {/* View toggle with Timeline info button */}
             <motion.div variants={fadeInUp}>
-              <ViewToggle
-                currentView={viewMode}
-                onViewChange={setViewMode}
-              />
+              <div className="relative">
+                {/* ViewToggle - always centered */}
+                <div className="flex justify-center">
+                  <ViewToggle
+                    currentView={viewMode}
+                    onViewChange={setViewMode}
+                  />
+                </div>
+
+                {/* Timeline info button - positioned to the right */}
+                <AnimatePresence>
+                  {viewMode === 'timeline' && (
+                    <motion.button
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.9 }}
+                      transition={{ duration: 0.2 }}
+                      onClick={() => setIsTimelineInfoOpen(true)}
+                      className="sm:absolute sm:right-0 sm:top-1/2 sm:-translate-y-1/2 flex items-center gap-2 px-4 py-2.5 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-xl transition-colors duration-200 border border-blue-200 hover:border-blue-300 mt-3 sm:mt-0 mx-auto sm:mx-0"
+                    >
+                      <Info className="w-4 h-4" />
+                      <span className="text-sm font-medium">What is Timeline?</span>
+                    </motion.button>
+                  )}
+                </AnimatePresence>
+              </div>
             </motion.div>
 
             {/* Main content area */}
@@ -153,6 +177,12 @@ const RecommendationResult: React.FC<RecommendationResultProps> = ({
           open={isShareModalOpen}
           onOpenChange={setIsShareModalOpen}
           output={output}
+        />
+
+        {/* Timeline info modal */}
+        <TimelineInfoModal
+          isOpen={isTimelineInfoOpen}
+          onClose={() => setIsTimelineInfoOpen(false)}
         />
       </motion.div>
     </div>

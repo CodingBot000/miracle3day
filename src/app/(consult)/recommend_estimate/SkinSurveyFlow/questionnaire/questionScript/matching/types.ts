@@ -230,6 +230,7 @@ export interface RecommendInputs {
   ageGroup?: AgeGroup;
   gender?: Gender;
   ethnicity?: EthnicityId;  // 인종별 가중치 조정용
+  countryCode?: string;     // 거주 국가 (2자리 ISO 코드) - 기후 경고용
   skinConcerns: SelectedConcern[];
   treatmentGoals: TreatmentGoalId[];
   treatmentAreas: AreaId[];
@@ -290,6 +291,20 @@ export interface Substitution {
   reason: "price" | "pain" | "recoveryTime";
 }
 
+// ClimateWarning 인터페이스 (climateWarning.ts에서 정의)
+export interface ClimateWarning {
+  show: boolean;
+  severity: 'low' | 'medium' | 'high' | 'critical';
+  title: { ko: string; en: string };
+  message: { ko: string; en: string };
+  recommendation: { ko: string; en: string };
+  uvRiskLevel: 1 | 2 | 3 | 4 | 5;
+}
+
+export interface RecommendedItemWithClimateWarning extends RecommendedItem {
+  climateWarning?: ClimateWarning | null;
+}
+
 export interface RecommendationOutput {
   recommendations: RecommendedItem[];
   totalPriceKRW: number;
@@ -298,9 +313,10 @@ export interface RecommendationOutput {
   substitutions: Substitution[];
   upgradeSuggestions: string[];
   notes: string[];
-  ethnicityNote?: string;         // 인종별 안내 코멘트
-  budgetRangeId?: BudgetId;      // 사용자가 설정한 예산
-  budgetUpperLimit?: number;      // 예산의 상한값 (KRW)
+  ethnicityNote?: string;           // 인종별 안내 코멘트
+  climateWarningSummary?: string;   // 기후 경고 요약
+  budgetRangeId?: BudgetId;         // 사용자가 설정한 예산
+  budgetUpperLimit?: number;        // 예산의 상한값 (KRW)
 }
 
 export interface TierAnalysis {

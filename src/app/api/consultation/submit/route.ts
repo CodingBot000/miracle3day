@@ -96,13 +96,13 @@ export async function POST(request: NextRequest) {
       submissionId, formVersion,
       privateFirstName, privateLastName, privateEmail,
       privateAgeRange, privateGender, country, koreanPhoneNumber,
-      JSON.stringify(messengers), skinTypes, budgetRanges,
-      JSON.stringify(skinConcerns), skinConcernsOther,
-      JSON.stringify(treatmentAreas), treatmentAreasOther,
-      JSON.stringify(medicalConditions), medicalConditionsOther,
-      JSON.stringify(priorities), JSON.stringify(treatmentGoals), JSON.stringify(pastTreatments),
+      messengers, skinTypes, budgetRanges,
+      skinConcerns, skinConcernsOther,
+      treatmentAreas, treatmentAreasOther,
+      medicalConditions, medicalConditionsOther,
+      priorities, treatmentGoals, pastTreatments,
       pastTreatmentsSideEffectDesc, anythingElse,
-      visitPath, visitPathOther, JSON.stringify(imagePaths),
+      visitPath, visitPathOther, imagePaths,
       race, idUuidMember
     ];
 

@@ -39,7 +39,7 @@ export default function QuestionCard({ question }: QuestionCardProps) {
   const selectedBorderColor = borderColor[question.question_type] || 'border-l-gray-300';
 
   return (
-    <div className={`bg-white rounded-xl p-6 shadow-lg border-l-8 ${selectedBorderColor} hover:shadow-xl transition`}>
+    <div className={`bg-white rounded-xl p-4 sm:p-6 shadow-lg border-l-4 sm:border-l-8 ${selectedBorderColor} hover:shadow-xl transition`}>
       {question.question_type === 'poll' && question.poll_options && (
         <PollQuestion question={{
           id: question.id,

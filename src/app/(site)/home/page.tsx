@@ -108,9 +108,12 @@ export default async function HomePage() {
         <div
           className="text-center text-2xl md:text-4xl font-bold tracking-tight">
           {t(lang, "오늘의 핫 이슈", "Today's Hot Issue")}
-
         </div>
-        
+        <div
+          className="text-center text-sm md:text-xl font-gray-200 tracking-tight">
+          {t(lang, "다른 사람들의 다양한 의견이 궁금하지않나요? 참여하고 다른 사람들의 의견도 확인해보세요!", 
+            "Curious about what others think? Join in and see a variety of opinions from different people!")}
+        </div>
         <QuestionsView isMainPage={true} />
   
       </section>

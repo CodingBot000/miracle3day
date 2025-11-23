@@ -62,19 +62,17 @@ export default function HeadSection() {
         <div className="mt-6 flex flex-row gap-3 w-full max-w-2xl mx-auto justify-center">
           <Link
             href={ROUTE.RECOMMEND_ESTIMATE}
-            className="flex-1 min-h-[50px], h-[70px] px-6 flex items-center justify-center rounded-[14px] bg-pink-400 text-white font-medium hover:bg-pink-500 transition-colors duration-200 shadow-sm"
+            className="flex-1 basis-0 min-w-0 min-h-[50px] h-[70px] px-3 sm:px-6 flex items-center justify-center rounded-[14px] bg-pink-400 text-white text-sm sm:text-base font-medium hover:bg-pink-500 transition-colors duration-200 shadow-sm text-center leading-tight"
           >
             {language === 'ko' ? '나만의 AI 매칭 시작' : 'Start My AI Beauty Match'}
           </Link>
-        
-          <Link 
-          href={ROUTE.TREATMENT_PROTOCOL}
-            className="flex-1 min-h-[50px], h-[70px] px-6 flex items-center justify-center rounded-[14px] bg-orange-400 text-white font-medium hover:bg-orange-500 transition-colors duration-200 shadow-sm"
+
+          <Link
+            href={ROUTE.TREATMENT_PROTOCOL}
+            className="flex-1 basis-0 min-w-0 min-h-[50px] h-[70px] px-3 sm:px-6 flex items-center justify-center rounded-[14px] bg-orange-400 text-white text-sm sm:text-base font-medium hover:bg-orange-500 transition-colors duration-200 shadow-sm text-center leading-tight"
           >
-              
-                {language === 'ko' ? '시술/클리닉 보기' : 'View Treatments/Clinics'}
-              
-            </Link>
+            {language === 'ko' ? '시술/클리닉 보기' : 'View Treatments/Clinics'}
+          </Link>
         </div>
         
       </motion.div>

@@ -437,7 +437,7 @@ const PreviewReport: React.FC<PreviewReportProps> =
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-light text-center mb-4">
+          <DialogTitle className="text-2xl font-bold text-center mb-4">
             Preview Your Consultation Request
           </DialogTitle>
         </DialogHeader>

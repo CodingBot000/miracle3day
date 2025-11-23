@@ -1,15 +1,20 @@
 import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { RecommendedItem } from '@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching';
+import { RecommendedItem, ClimateWarning } from '@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching';
 import { Zap, Clock, Heart, Sparkles } from 'lucide-react';
+import ClimateWarningBanner from './ClimateWarningBanner';
 
 export interface TreatmentCardProps {
-  treatment: RecommendedItem & { importance?: 1 | 2 | 3 };
+  treatment: RecommendedItem & {
+    importance?: 1 | 2 | 3;
+    climateWarning?: ClimateWarning | null;
+  };
   tier?: 1 | 2 | 3;
+  lang?: 'ko' | 'en';
 }
 
-const TreatmentCard: React.FC<TreatmentCardProps> = ({ treatment, tier }) => {
+const TreatmentCard: React.FC<TreatmentCardProps> = ({ treatment, tier, lang = 'en' }) => {
   // Default importance to 2 (Recommended) if not provided
   const importance = treatment.importance || 2;
   const formatKRW = (amount: number) => {
@@ -126,6 +131,11 @@ const TreatmentCard: React.FC<TreatmentCardProps> = ({ treatment, tier }) => {
             <span className="text-xs font-medium">{getImportanceLabel(importance)}</span>
           </div>
         </div>
+
+        {/* Climate Warning Banner */}
+        {treatment.climateWarning && treatment.climateWarning.show && treatment.climateWarning.severity !== 'low' && (
+          <ClimateWarningBanner warning={treatment.climateWarning} lang={lang} />
+        )}
 
         {/* Why this treatment */}
         <div className="space-y-2">

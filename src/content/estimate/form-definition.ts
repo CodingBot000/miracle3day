@@ -1054,8 +1054,8 @@ export const questions = {
         "en": "Age group"
       },
       "helperText": {
-        "ko": "해당하는 연령대를 선택해주세요.",
-        "en": "Please select your age group."
+        "ko": "연령대를 선택해주세요.\n정확한 시술 추천을 위해 간단히 참고합니다.",
+        "en": "Please select your age group.\nIt helps us provide more accurate recommendations."
       },
       "options": [
         {
@@ -1118,8 +1118,8 @@ export const questions = {
         "en": "Gender"
       },
       "helperText": {
-        "ko": "편하신 항목을 선택해주세요. 원치 않으시면 ‘답변하지 않음’을 선택하셔도 됩니다.",
-        "en": "Please choose the option you feel most comfortable with. You can select “Prefer not to say.”"
+        "ko": "성별을 선택해주세요.\n피부 타입과 반응이 성별에 따라 달라 정확도 향상에 도움이 됩니다.\n원치 않으시면 ‘답변하지 않음’을 선택하셔도 됩니다.",
+        "en": "Please select your gender.\nSkin characteristics can differ by gender, helping us personalize your recommendations.\nYou may choose “Prefer not to say.”"
       },
       "options": [
         {
@@ -1161,8 +1161,8 @@ export const questions = {
         "en": "Ethnic background / skin type group"
       },
       "helperText": {
-        "ko": "본인에게 가장 가까운 피부/인종 그룹을 선택해주세요. 선택은 선택사항이며, ‘답변하지 않음’을 선택하실 수 있습니다.",
-        "en": "Please select the skin/ethnic group that best describes you. This is optional and you may choose “Prefer not to say.”"
+        "ko": "본인과 가장 가까운 피부·인종 그룹을 선택해주세요.\n피부 반응이 그룹별로 조금씩 달라 맞춤 추천에 도움이 됩니다.\n원치 않으시면 ‘답변하지 않음’을 선택하셔도 됩니다.",
+        "en": "Please choose the skin/ethnic group that best describes you.\nSkin responses can vary slightly across groups, helping us personalize your recommendations.\nYou may select “Prefer not to say.”"
       },
       "options": [
         {
@@ -1225,8 +1225,8 @@ export const questions = {
         "en": "Current country of residence"
       },
       "helperText": {
-        "ko": "현재 거주 중인 국가를 선택해주세요. 시술 추천 시 기후·환경을 고려하는 데 사용됩니다.",
-        "en": "Please select the country you currently live in. This helps us consider climate and environment in our recommendations."
+        "ko": "현재 거주 중인 국가를 선택해주세요.\n국적이 아닌 ‘생활 중인 국가’ 기준이며, 기후·환경 차이가 시술 추천에 영향을 줄 수 있기 때문에 확인합니다.",
+        "en": "Please select the country you currently live in.\nThis refers to your place of residence (not nationality), and we ask because climate and environmental conditions can affect treatment recommendations."
       },
       "placeholder": {
         "ko": "거주 국가를 선택하세요",

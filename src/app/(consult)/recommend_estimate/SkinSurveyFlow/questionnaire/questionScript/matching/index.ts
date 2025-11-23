@@ -43,6 +43,9 @@ import { BUDGET_UPPER_LIMITS } from './constants/mappings';
 import { META } from './constants/treatmentMeta';
 import { PRICE_TABLE } from './constants/prices';
 
+// Climate Warning
+import { generateClimateWarningSummary } from './climateWarning';
+
 /**
  * 메인 추천 함수
  */
@@ -52,6 +55,7 @@ export function recommendTreatments(input: RecommendInputs): RecommendationOutpu
     ageGroup,
     gender,
     ethnicity,
+    countryCode,
     skinConcerns,
     treatmentGoals,
     treatmentAreas,
@@ -74,6 +78,7 @@ export function recommendTreatments(input: RecommendInputs): RecommendationOutpu
   console.log("rawPast:", rawPast);
   console.log("medicalConditions:", medicalConditions);
   console.log("ethnicity:", ethnicity);
+  console.log("countryCode:", countryCode);
 
   // Past treatments 정규화 (신규 → 구버전)
   const pastTreatments = normalizePastTreatments(rawPast);
@@ -246,6 +251,13 @@ export function recommendTreatments(input: RecommendInputs): RecommendationOutpu
     console.log("[MATCHING] Ethnicity note:", ethnicityNote);
   }
 
+  // 8.6) 기후 경고 요약 생성
+  const userCountryCode = countryCode || 'US';
+  const climateWarningSummary = generateClimateWarningSummary(recommendations, userCountryCode, 'en');
+  if (climateWarningSummary) {
+    console.log("[MATCHING] Climate warning summary:", climateWarningSummary);
+  }
+
   // 9) 추가 노트
   if (pastTreatments.includes("laser_2w") || pastTreatments.includes("laser_recent")) {
     notes.push("Laser in the last 2 weeks: defer further laser until recovery.");
@@ -315,6 +327,7 @@ export function recommendTreatments(input: RecommendInputs): RecommendationOutpu
     upgradeSuggestions,
     notes,
     ethnicityNote,
+    climateWarningSummary: climateWarningSummary || undefined,
     budgetRangeId,
     budgetUpperLimit: budgetUpper === Infinity ? undefined : budgetUpper,
   };

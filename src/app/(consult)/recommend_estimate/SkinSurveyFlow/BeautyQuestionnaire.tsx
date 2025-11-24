@@ -1,4 +1,5 @@
 import React, { isValidElement, useState } from 'react';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight, Heart, Star, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -99,6 +100,7 @@ const BeautyQuestionnaire: React.FC = () => {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [isValideSendForm, setIsValideSendForm] = useState(false);
   const [recommendationOutput, setRecommendationOutput] = useState<RecommendationOutput | null>(null);
+  const [isResultLoading, setIsResultLoading] = useState(false);
   const { toast } = useToast();
 
   // 현재 스텝의 유효성을 실시간으로 확인
@@ -275,7 +277,41 @@ const BeautyQuestionnaire: React.FC = () => {
           <div className="flex items-center gap-3">
             {currentStep === 0 ? (
               <>
-            
+            <Button
+                  onClick={handlePrevious}
+
+                  className="
+                    h-12 px-4 rounded-lg
+                    border bg-white text-[#777777] border-[#E4E5E7]
+                    hover:bg-[#F7F7F8] hover:border-[#DADCE0] hover:text-[#555555]
+                    active:bg-[#F1F2F4] active:border-[#C9CCD1] active:text-[#444444]
+                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-200 focus-visible:ring-offset-1
+                    transition-colors duration-150
+                    flex items-center justify-center
+                  "
+                >
+                  Previous
+                </Button>
+                <Button 
+                  onClick={(e) => {
+                    log.debug('Next Button clicked!', e);
+                    handleNext();
+                  }}
+                  disabled={!isCurrentStepValid()}
+                  translate="no" 
+                  className={`
+                    flex-1 h-12 px-4 rounded-lg
+                    flex items-center justify-center
+                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-200 focus-visible:ring-offset-1
+                    transition-colors duration-150
+                    ${!isCurrentStepValid() 
+                      ? 'bg-[#E4E5E7] text-[#9E9E9E] cursor-not-allowed' 
+                      : 'bg-[#FB718F] text-white hover:bg-[#F65E7D] active:bg-[#E95373]'
+                    }
+                  `}
+                >
+                  <span translate="no">Next</span>
+                </Button>
               <Button 
                   onClick={(e) => {
                     log.debug('Next Button clicked!', e);
@@ -440,7 +476,14 @@ const BeautyQuestionnaire: React.FC = () => {
             log.debug("Excluded:", output.excluded);
             log.debug("Full output:", output);
 
-            setRecommendationOutput(output);
+            // Start loading animation
+            setIsResultLoading(true);
+
+            // Show loading for 3 seconds then display results
+            setTimeout(() => {
+              setRecommendationOutput(output);
+              setIsResultLoading(false);
+            }, 3000);
           } catch (error) {
             log.error("Failed to generate recommendations:", error);
             toast({
@@ -452,8 +495,27 @@ const BeautyQuestionnaire: React.FC = () => {
         }}
       />
 
+      {/* Loading Screen */}
+      {isResultLoading && (
+        <div className="fixed inset-0 z-50 min-h-screen bg-gradient-to-br from-[#FDF5F0] via-white to-[#F8E8E0]">
+          <div className="flex flex-col justify-center items-center min-h-screen">
+            <DotLottieReact
+              src="/lottie/analysis.lottie"
+              loop
+              autoplay
+              style={{ width: 200, height: 200 }}
+            />
+            <p className="mt-4 text-xl font-medium text-gray-700">
+              (language === 'ko' ? "맞춤형 시술 계획을 분석 중입니다..." 
+              : "Analyzing your personalized treatment plan...")
+              
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Recommendation Result Screen */}
-      {recommendationOutput && (
+      {recommendationOutput && !isResultLoading && (
         <div className="fixed inset-0 bg-white z-50 overflow-y-auto">
           <RecommendationResult
             output={recommendationOutput}

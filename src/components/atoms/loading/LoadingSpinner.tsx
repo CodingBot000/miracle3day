@@ -5,6 +5,7 @@ import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 interface LoadingSpinnerProps {
   show?: boolean;
   backdrop?: boolean;
+  srcPath?: string;
   pageLoading?: boolean;
   size?: number;
 }
@@ -12,6 +13,7 @@ interface LoadingSpinnerProps {
 const LoadingSpinner = ({
   show = true,
   backdrop = false,
+  srcPath = "/lottie/loading_logo.lottie",
   pageLoading = false,
   size = 200,
 }: LoadingSpinnerProps) => {
@@ -30,7 +32,7 @@ const LoadingSpinner = ({
   return (
     <div className={extraClass}>
       <DotLottieReact
-        src="/logo/loading_logo.lottie"
+        src={srcPath}
         loop
         autoplay
         style={{ width: size, height: size }}

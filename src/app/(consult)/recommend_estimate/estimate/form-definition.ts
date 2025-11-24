@@ -163,19 +163,19 @@ export const steps = [
     component: TreatmentExpBeforeStep,
     optional: true,
   },
-    // STEP 7: User Info (마지막)
-    // {
-    //   id: USER_INFO,
-    //   title: {
-    //     ko: "맞춤형 치료 계획을 받아보세요",
-    //     en: "Get your personalized treatment plan"
-    //   },
-    //   subtitle: {
-    //     ko: "피부 상태는 개인의 나이, 성별, 인종, 생활 환경 등에 따라 다르게 나타납니다.\n\n보다 정확하고 과학적인 시술 추천을 위해 최소한의 정보를 선택적으로 요청드립니다.\n\n모든 항목은 필수가 아닌 선택 사항이며,\n\n'답변하지 않음'을 포함한 건너뛰기가 언제든 가능합니다.\n\n제공해주시는 정보는 개인정보 보호 기준에 따라 안전하게 관리되며,\n\n개인 맞춤 진단 및 추천 제공 목적 외에는 사용되지 않습니다.",
-    //     en: "Skin characteristics differ significantly depending on factors such as age, gender, ethnicity, and environment.\n\nTo make our recommendations more accurate and clinically relevant, we ask for minimal information on an optional basis.\n\nAll fields are optional, and\n\nyou may select \"Prefer not to say\" or skip any question.\n\nYour information will be securely protected and used only for personalized analysis and recommendations."
-    //   },
-    //   component: UserInfoStep,
-    // },
+
+    {
+      id: USER_INFO,
+      title: {
+        ko: "맞춤형 치료 계획을 받아보세요",
+        en: "Get your personalized treatment plan"
+      },
+      subtitle: {
+        ko: "피부 상태는 개인의 나이, 성별, 인종, 생활 환경 등에 따라 다르게 나타납니다.\n\n보다 정확하고 과학적인 시술 추천을 위해 최소한의 정보를 선택적으로 요청드립니다.\n\n모든 항목은 필수가 아닌 선택 사항이며,\n\n'답변하지 않음'을 포함한 건너뛰기가 언제든 가능합니다.\n\n제공해주시는 정보는 개인정보 보호 기준에 따라 안전하게 관리되며,\n\n개인 맞춤 진단 및 추천 제공 목적 외에는 사용되지 않습니다.",
+        en: "Skin characteristics differ significantly depending on factors such as age, gender, ethnicity, and environment.\n\nTo make our recommendations more accurate and clinically relevant, we ask for minimal information on an optional basis.\n\nAll fields are optional, and\n\nyou may select \"Prefer not to say\" or skip any question.\n\nYour information will be securely protected and used only for personalized analysis and recommendations."
+      },
+      component: UserInfoStep,
+    },
     {
       id: DEMOGRAPHICS_BASIC,
       title: {
@@ -209,10 +209,10 @@ export const steps = [
     //     ko: "더 정확한 분석을 위해 사진을 업로드하세요 (선택 사항)",
     //     en: "Upload a photo for more accurate analysis (Optional)"
     //   },
-    //   subtitle: {
-    //     ko: "png, jpg, jpeg 파일만 가능합니다. 이 단계는 건너뛸 수 있습니다.",
-    //     en: "Only png, jpg, jpeg files. This step can be skipped."
-    //   },
+      // subtitle: {
+      //   ko: "png, jpg, jpeg 파일만 가능합니다. 이 단계는 건너뛸 수 있습니다. 건너뛰시라면 파일 첨부 없이 다음버튼을 눌러주세요.",
+      //   en: "Only png, jpg, and jpeg files are supported.\nThis step is optional — if you'd like to skip it, simply proceed without uploading a file."
+      // },
     //   component: UploadImageStep,
     //   optional: true, // 새로운 플래그
     // },

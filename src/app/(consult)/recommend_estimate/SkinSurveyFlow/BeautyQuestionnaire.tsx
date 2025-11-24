@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import PageHeader from '../PageHeader';
 import PreviewReport from './questionnaire/PreviewReport';
-import { steps, questions } from '@/content/estimate/form-definition';
+import { steps, questions } from '@/app/(consult)/recommend_estimate/estimate/form-definition';
 import { recommendTreatments } from './questionnaire/questionScript/matching/index';
 import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 import { getLocalizedText } from '@/utils/i18n';
@@ -434,6 +434,7 @@ const BeautyQuestionnaire: React.FC = () => {
             const pastTreatmentsData = allStepData.pastTreatments?.pastTreatments || ["none"];
             const healthConditionsData = allStepData.healthConditions?.healthConditions || ["none"];
             const userInfoData = allStepData.userInfo || {};
+            const demographicsBasicData = allStepData.demographicsBasic || {};
 
             log.debug("=== Extracted Data ===");
             log.debug("skinConcernsData:", skinConcernsData);
@@ -443,6 +444,7 @@ const BeautyQuestionnaire: React.FC = () => {
             log.debug("goals:", allStepData.goals);
             log.debug("pastTreatmentsData:", pastTreatmentsData);
             log.debug("healthConditionsData:", healthConditionsData);
+            log.debug("demographicsBasicData:", demographicsBasicData);
 
             // Map skinConcerns to include tier information
             const skinConcerns = skinConcernsData.map((concernId: string) => {
@@ -453,10 +455,12 @@ const BeautyQuestionnaire: React.FC = () => {
               };
             });
 
+            // ageGroup, gender는 demographicsBasic에서 우선 가져오고, 없으면 userInfo에서 가져옴 (레거시 호환)
             const algorithmInput = {
               skinTypeId: allStepData.skinType || "combination",
-              ageGroup: userInfoData.ageRange,
-              gender: userInfoData.gender,
+              ageGroup: demographicsBasicData.age_group || userInfoData.ageRange,
+              gender: demographicsBasicData.gender || userInfoData.gender,
+              ethnicity: demographicsBasicData.ethnic_background,
               skinConcerns: skinConcerns,
               treatmentGoals: allStepData.goals || [],
               treatmentAreas: treatmentAreasData,

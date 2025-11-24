@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Sparkles, DollarSign, Wallet, Users, TrendingUp, AlertTriangle } from 'lucide-react';
-import { questions } from '@/content/estimate/form-definition';
+import { questions } from '@/app/(consult)/recommend_estimate/estimate/form-definition';
 
 export interface RecommendationHeaderProps {
   totalPriceKRW: number;

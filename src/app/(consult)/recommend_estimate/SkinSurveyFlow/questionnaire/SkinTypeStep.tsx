@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { questions } from '@/content/estimate/form-definition';
+import { questions } from '@/app/(consult)/recommend_estimate/estimate/form-definition';
 
 import { ChoiceCard } from '@/components/molecules/card/ChoiceCard';
 import { useCookieLanguage } from '@/hooks/useCookieLanguage';

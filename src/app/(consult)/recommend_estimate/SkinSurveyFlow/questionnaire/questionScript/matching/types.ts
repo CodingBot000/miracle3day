@@ -130,7 +130,12 @@ export type PastId =
 
 export type SkinTypeId = "dry" | "oily" | "combination" | "sensitive" | "normal" | "not_sure";
 
-export type AgeGroup = "teens" | "20s" | "30s" | "40s" | "50s" | "60s" | "70_plus" | "60plus";
+// 새 포맷: DB에 저장되는 값 (18_24, 25_34, 35_44, 45_54, 55_64, 65_plus, prefer_not_to_say)
+export type AgeGroupNew = "18_24" | "25_34" | "35_44" | "45_54" | "55_64" | "65_plus" | "prefer_not_to_say";
+// 레거시 포맷 (기존 호환)
+export type AgeGroupLegacy = "teens" | "20s" | "30s" | "40s" | "50s" | "60s" | "70_plus" | "60plus";
+// 통합 타입
+export type AgeGroup = AgeGroupNew | AgeGroupLegacy;
 
 export type Gender = "male" | "female" | "non_binary" | "no_answer";
 

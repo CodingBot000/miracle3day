@@ -20,10 +20,10 @@ const initialForm = {
   nickname: '',
 };
 
-// 14세 이상 제한을 위한 날짜 계산
+// 18세 이상 제한을 위한 날짜 계산
 const getMaxDate = () => {
   const date = new Date();
-  date.setFullYear(date.getFullYear() - 14);
+  date.setFullYear(date.getFullYear() - 18);
   return date;
 };
 

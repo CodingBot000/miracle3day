@@ -60,18 +60,24 @@ const TimelineItem: React.FC<TimelineItemProps> = ({
   };
 
   return (
-    <div className="relative flex items-start space-x-4">
+    <div className="relative flex items-stretch space-x-4">
       {/* Timeline connector */}
       <div className="flex flex-col items-center">
         {/* Circle indicator */}
-        <div className={`w-10 h-10 rounded-full border-4 ${getTierColor(tier)} flex items-center justify-center z-10`}>
+        <div className={`w-10 h-10 rounded-full border-4 ${getTierColor(tier)} flex items-center justify-center z-10 flex-shrink-0`}>
           <span className="text-white font-bold text-sm">{sessionNumber}</span>
         </div>
 
-        {/* Vertical line */}
-        {!isLast && (
-          <div className="w-1 h-full bg-gradient-to-b from-gray-300 to-gray-200 min-h-[60px]" />
-        )}
+        {/* Vertical line - 카드 높이만큼 채움 */}
+        <div className="flex-1 flex flex-col items-center w-1">
+          <div className="w-1 flex-1 bg-gradient-to-b from-gray-300 to-gray-200" />
+          {/* 마지막 아이템에 화살표 표시 */}
+          {isLast && (
+            <div className="flex flex-col items-center mt-1">
+              <div className="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[8px] border-t-gray-400" />
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Content card */}

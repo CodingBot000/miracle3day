@@ -10,13 +10,14 @@ export async function POST(request: NextRequest) {
     const submissionId = data.submissionId;
     const formVersion = 1;
 
-    // Private Info
+    // Private Info (userInfo는 레거시, demographicsBasic이 현재 사용됨)
     const privateFirstName = data.userInfo?.firstName || null;
     const privateLastName = data.userInfo?.lastName || null;
     const privateEmail = data.userInfo?.email || null;
-    const privateAgeRange = data.userInfo?.ageRange || null;
-    const privateGender = data.userInfo?.gender || null;
-    const country = data.userInfo?.country || null;
+    // ageRange, gender, country는 demographicsBasic에서 가져옴
+    const privateAgeRange = data.demographicsBasic?.age_group || data.userInfo?.ageRange || null;
+    const privateGender = data.demographicsBasic?.gender || data.userInfo?.gender || null;
+    const country = data.demographicsBasic?.country_of_residence || data.userInfo?.country || null;
     const koreanPhoneNumber = data.userInfo?.koreanPhoneNumber || null;
 
     // Messengers 처리
@@ -105,6 +106,37 @@ export async function POST(request: NextRequest) {
       visitPath, visitPathOther, imagePaths,
       race, idUuidMember
     ];
+
+    console.log('=== Consultation Submit Params ===');
+    console.log('submissionId:', submissionId);
+    console.log('formVersion:', formVersion);
+    console.log('privateFirstName:', privateFirstName);
+    console.log('privateLastName:', privateLastName);
+    console.log('privateEmail:', privateEmail);
+    console.log('privateAgeRange:', privateAgeRange);
+    console.log('privateGender:', privateGender);
+    console.log('country:', country);
+    console.log('koreanPhoneNumber:', koreanPhoneNumber);
+    console.log('messengers:', messengers);
+    console.log('skinTypes:', skinTypes);
+    console.log('budgetRanges:', budgetRanges);
+    console.log('skinConcerns:', skinConcerns);
+    console.log('skinConcernsOther:', skinConcernsOther);
+    console.log('treatmentAreas:', treatmentAreas);
+    console.log('treatmentAreasOther:', treatmentAreasOther);
+    console.log('medicalConditions:', medicalConditions);
+    console.log('medicalConditionsOther:', medicalConditionsOther);
+    console.log('priorities:', priorities);
+    console.log('treatmentGoals:', treatmentGoals);
+    console.log('pastTreatments:', pastTreatments);
+    console.log('pastTreatmentsSideEffectDesc:', pastTreatmentsSideEffectDesc);
+    console.log('anythingElse:', anythingElse);
+    console.log('visitPath:', visitPath);
+    console.log('visitPathOther:', visitPathOther);
+    console.log('imagePaths:', imagePaths);
+    console.log('race:', race);
+    console.log('idUuidMember:', idUuidMember);
+    console.log('=================================');
 
     const result = await q(sql, params);
 

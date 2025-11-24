@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 import { RecommendationOutput } from '@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching';
 import RecommendationHeader from './RecommendationHeader';
 import ViewToggle from './common/ViewToggle';
@@ -10,7 +12,7 @@ import ExcludedSection from './ExcludedSection';
 import ActionButtons from './ActionButtons';
 import ShareModal from './ShareModal';
 import { Card } from '@/components/ui/card';
-import { AlertCircle, Sparkles, Info } from 'lucide-react';
+import { AlertCircle, Sparkles, Info, RotateCcw, Home } from 'lucide-react';
 
 export interface RecommendationResultProps {
   output: RecommendationOutput;
@@ -38,9 +40,19 @@ const RecommendationResult: React.FC<RecommendationResultProps> = ({
   onFindClinics,
   onConsult,
 }) => {
+  const router = useRouter();
+  const { language } = useCookieLanguage();
   const [viewMode, setViewMode] = useState<'card' | 'timeline'>('card');
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [isTimelineInfoOpen, setIsTimelineInfoOpen] = useState(false);
+
+  const handleRetry = () => {
+    router.replace('/recommend_estimate');
+  };
+
+  const handleGoHome = () => {
+    router.replace('/');
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-rose-50/50 via-white to-purple-50/30 relative">
@@ -184,6 +196,28 @@ const RecommendationResult: React.FC<RecommendationResultProps> = ({
           isOpen={isTimelineInfoOpen}
           onClose={() => setIsTimelineInfoOpen(false)}
         />
+
+        {/* Navigation buttons */}
+        <motion.div
+          className="mt-8 flex gap-4"
+          variants={fadeInUp}
+        >
+          <button
+            onClick={handleRetry}
+            className="flex-1 flex items-center justify-center gap-2 py-4 px-6 bg-white border-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50 text-gray-700 font-medium rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md"
+          >
+            <RotateCcw className="w-5 h-5" />
+            <span>{language === 'ko' ? '다시하기' : 'Try Again'}</span>
+          </button>
+          <button
+            onClick={handleGoHome}
+            className="flex-1 flex items-center justify-center gap-2 py-4 px-6 bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white font-medium rounded-2xl transition-all duration-200 shadow-lg shadow-rose-500/25 hover:shadow-xl hover:shadow-rose-500/30"
+          >
+            <Home className="w-5 h-5" />
+            <span>{language === 'ko' ? '홈으로 가기' : 'Go to Home'}</span>
+          </button>
+        </motion.div>
+
       </motion.div>
     </div>
   );

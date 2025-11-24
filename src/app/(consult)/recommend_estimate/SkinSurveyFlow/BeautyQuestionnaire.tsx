@@ -1,15 +1,11 @@
-import React, { isValidElement, useState } from 'react';
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft, ChevronRight, Heart, Star, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import PageHeader from '../PageHeader';
 import PreviewReport from './questionnaire/PreviewReport';
 import { steps, questions } from '@/content/estimate/form-definition';
-import { recommendTreatments, RecommendationOutput } from './questionnaire/questionScript/matching/index';
-import RecommendationResult from '@/app/(consult)/recommend_estimate/SkinSurveyFlow/recommendation/RecommendationResult';
+import { recommendTreatments } from './questionnaire/questionScript/matching/index';
 import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 import { getLocalizedText } from '@/utils/i18n';
 
@@ -92,6 +88,9 @@ interface StepComponentProps {
   onSkip?: () => void; // Skip 기능을 위한 optional prop
 }
 
+const RESULT_STORAGE_KEY = 'recommendation_result';
+const FORM_DATA_STORAGE_KEY = 'recommendation_form_data';
+
 const BeautyQuestionnaire: React.FC = () => {
   const router = useRouter();
   const { language } = useCookieLanguage();
@@ -99,8 +98,6 @@ const BeautyQuestionnaire: React.FC = () => {
   const [formData, setFormData] = useState<Record<string, StepData>>({});
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [isValideSendForm, setIsValideSendForm] = useState(false);
-  const [recommendationOutput, setRecommendationOutput] = useState<RecommendationOutput | null>(null);
-  const [isResultLoading, setIsResultLoading] = useState(false);
   const { toast } = useToast();
 
   // 현재 스텝의 유효성을 실시간으로 확인
@@ -292,26 +289,7 @@ const BeautyQuestionnaire: React.FC = () => {
                 >
                   Previous
                 </Button>
-                <Button 
-                  onClick={(e) => {
-                    log.debug('Next Button clicked!', e);
-                    handleNext();
-                  }}
-                  disabled={!isCurrentStepValid()}
-                  translate="no" 
-                  className={`
-                    flex-1 h-12 px-4 rounded-lg
-                    flex items-center justify-center
-                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-200 focus-visible:ring-offset-1
-                    transition-colors duration-150
-                    ${!isCurrentStepValid() 
-                      ? 'bg-[#E4E5E7] text-[#9E9E9E] cursor-not-allowed' 
-                      : 'bg-[#FB718F] text-white hover:bg-[#F65E7D] active:bg-[#E95373]'
-                    }
-                  `}
-                >
-                  <span translate="no">Next</span>
-                </Button>
+           
               <Button 
                   onClick={(e) => {
                     log.debug('Next Button clicked!', e);
@@ -334,12 +312,37 @@ const BeautyQuestionnaire: React.FC = () => {
                 </Button>
               </>
             ) : currentStep === steps.length - 1 ? (
+              <>
+                <Button
+                  onClick={handlePrevious}
+                  // className="w-25 h-12 px-4 rounded-lg border border-gray-300 bg-white text-gray-500 flex items-center justify-center"
+                  // style={{ 
+                  //   borderColor: '#E4E5E7',
+                  //   color: '#777777',
+                  //   fontFamily: 'Pretendard Variable',
+                  //   fontWeight: 600,
+                  //   fontSize: '16px',
+                  //   lineHeight: '140%'
+                  // }}
+                  className="
+                    h-12 px-4 rounded-lg
+                    border bg-white text-[#777777] border-[#E4E5E7]
+                    hover:bg-[#F7F7F8] hover:border-[#DADCE0] hover:text-[#555555]
+                    active:bg-[#F1F2F4] active:border-[#C9CCD1] active:text-[#444444]
+                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-200 focus-visible:ring-offset-1
+                    transition-colors duration-150
+                    flex items-center justify-center
+                  "
+                >
+                  Previous
+                </Button>
               <Button onClick={handleSubmit} 
                 className="w-full h-12 px-4 rounded-lg text-white flex items-center justify-center"
                 style={{ backgroundColor: '#FB718F' }}
               >
                 Submit
               </Button>
+              </>
             ) : (
               <>
                 <Button
@@ -476,14 +479,12 @@ const BeautyQuestionnaire: React.FC = () => {
             log.debug("Excluded:", output.excluded);
             log.debug("Full output:", output);
 
-            // Start loading animation
-            setIsResultLoading(true);
+            // sessionStorage에 결과 저장
+            sessionStorage.setItem(RESULT_STORAGE_KEY, JSON.stringify(output));
+            sessionStorage.setItem(FORM_DATA_STORAGE_KEY, JSON.stringify(formData));
 
-            // Show loading for 3 seconds then display results
-            setTimeout(() => {
-              setRecommendationOutput(output);
-              setIsResultLoading(false);
-            }, 3000);
+            // 결과 페이지로 이동 (replace로 설문 페이지를 히스토리에서 제거)
+            router.replace('/recommend_estimate/SkinSurveyFlow/recommendation/result');
           } catch (error) {
             log.error("Failed to generate recommendations:", error);
             toast({
@@ -494,53 +495,6 @@ const BeautyQuestionnaire: React.FC = () => {
           }
         }}
       />
-
-      {/* Loading Screen */}
-      {isResultLoading && (
-        <div className="fixed inset-0 z-50 min-h-screen bg-gradient-to-br from-[#FDF5F0] via-white to-[#F8E8E0]">
-          <div className="flex flex-col justify-center items-center min-h-screen">
-            <DotLottieReact
-              src="/lottie/analysis.lottie"
-              loop
-              autoplay
-              style={{ width: 200, height: 200 }}
-            />
-            <p className="mt-4 text-xl font-medium text-gray-700">
-              (language === 'ko' ? "맞춤형 시술 계획을 분석 중입니다..." 
-              : "Analyzing your personalized treatment plan...")
-              
-            </p>
-          </div>
-        </div>
-      )}
-
-      {/* Recommendation Result Screen */}
-      {recommendationOutput && !isResultLoading && (
-        <div className="fixed inset-0 bg-white z-50 overflow-y-auto">
-          <RecommendationResult
-            output={recommendationOutput}
-            formData={formData}
-            onFindClinics={() => {
-              // Navigate to clinics page or show clinics
-              // router.push('/clinics');
-              // window.location.href = 'https://www.mimotok.cloud/hospital';
-              window.open('https://www.mimotok.cloud/hospital', '_blank', 'noopener,noreferrer');
-            }}
-            onConsult={() => {
-              // Open external consultation page in a new tab
-              window.open('https://www.mimotok.cloud/hospital', '_blank', 'noopener,noreferrer');
-            }}
-          />
-        </div>
-      )}
-
-      {/* Decorative Elements */}
-      {/* <div className="fixed top-20 right-10 opacity-20 pointer-events-none">
-        <Star className="w-8 h-8 text-rose-300 animate-pulse" />
-      </div>
-      <div className="fixed bottom-20 left-10 opacity-20 pointer-events-none">
-        <Heart className="w-6 h-6 text-pink-300 animate-pulse" />
-      </div> */}
     </div>
   );
 };

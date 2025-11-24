@@ -63,7 +63,7 @@ const TimelineInfoModal: React.FC<TimelineInfoModalProps> = ({ isOpen, onClose }
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold">What is Treatment Timeline?</h2>
-                  <p className="text-blue-100 text-sm mt-1">
+                  <p className="text-white text-sm mt-1">
                     Understanding your personalized treatment schedule
                   </p>
                 </div>

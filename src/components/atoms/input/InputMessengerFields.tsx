@@ -12,7 +12,7 @@ import {
 import CountryCodeSelector from "./CountryCodeSelector"
 import { CountryCode } from "@/app/models/country-code.dto"
 
-export type MessengerType = "instagram" | "line" | "kakaotalk" | "whatsapp"
+export type MessengerType = "instagram" | "line" | "kakaotalk" | "whatsapp" | "tiktok" | "wechat"
 
 export type MessengerInput = {
   type: MessengerType
@@ -31,8 +31,10 @@ const PLACEHOLDER: Record<MessengerType, string> = {
   instagram: "Enter your Instagram username (e.g., beautylover2025)",
   line: "Enter your LINE ID (e.g., beauty_line88)",
   kakaotalk: "Enter your KakaoTalk ID or phone number",
-  whatsapp: "Enter your phone number with country code (e.g., +821012345678)",
-}
+  whatsapp: "Enter your phone number including country code (e.g., +821012345678)",
+  tiktok: "Enter your TikTok username (e.g., @beauty_tips)",
+  wechat: "Enter your WeChat ID (e.g., wechat_id123)",
+};
 
 export default function InputMessengerFields({ value = [], onChange }: InputMessengerFieldsProps) {
   const [messengerInputs, setMessengerInputs] = useState<MessengerInput[]>([
@@ -142,6 +144,12 @@ export default function InputMessengerFields({ value = [], onChange }: InputMess
                   </SelectItem>
                   <SelectItem value="whatsapp">
                     <span translate="no" className="notranslate">WhatsApp</span>
+                  </SelectItem>
+                  <SelectItem value="tiktok">
+                    <span translate="no" className="notranslate">Tiktok</span>
+                  </SelectItem>
+                    <SelectItem value="wechat">
+                    <span translate="no" className="notranslate">WeChat</span>
                   </SelectItem>
                 </SelectContent>
               </Select>

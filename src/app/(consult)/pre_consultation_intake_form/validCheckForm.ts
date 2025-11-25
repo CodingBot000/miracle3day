@@ -12,73 +12,9 @@ import {
 } from '@/constants/pre_consult_steps';
 import { log } from '@/utils/logger';
 import { MessengerInput } from '@/components/atoms/input/InputMessengerFields';
+import { StepData } from '../models/recommend_estimate.dto';
+import { isValidEmail } from '@/utils/validators';
 
-interface SkinConcerns {
-  concerns: string[];
-  moreConcerns?: string;
-}
-
-interface TreatmentAreas {
-  treatmentAreas: string[];
-  otherAreas?: string;
-}
-
-interface PriorityOrder {
-  priorityOrder: string[];
-  isPriorityConfirmed?: boolean;
-}
-
-interface PastTreatments {
-  pastTreatments: string[];
-  sideEffects?: string;
-  additionalNotes?: string;
-}
-
-interface VisitPath {
-  visitPath: string;
-  otherPath?: string;
-}
-
-interface UploadImage {
-  uploadedImage?: string;
-  imageFile?: File;
-  imageFileName?: string;
-}
-
-interface HealthConditions {
-  healthConditions: string[];
-  otherConditions?: string;
-}
-
-interface UserInfo {
-  firstName: string;
-  lastName: string;
-  ageRange: string;
-  gender: string;
-  email: string;
-  koreanPhoneNumber: number;
-  country: string;
-  messengers: MessengerInput[];
-}
-
-export interface StepData {
-  ageRange?: string;
-  skinType?: string;
-  skinConcerns?: SkinConcerns; 
-  userInfo?: UserInfo;
-
-  treatmentAreas?: TreatmentAreas;
-  priorityOrder?: PriorityOrder;
-  pastTreatments?: PastTreatments;
-  budget?: string;
-  goals?: string[];
-  
-  visitPath?: VisitPath;
-  uploadImage?: UploadImage;
-  healthConditions?: HealthConditions;
- 
-  timeframe?: string;  
-}
 
 // 각 스텝별 필수 선택 항목 검증 함수
 export const validateStepData = (stepId: string, data: StepData): boolean => {
@@ -142,25 +78,25 @@ export const validateStepData = (stepId: string, data: StepData): boolean => {
     // case VISIT_PATHS:
     //   return !!data.visitPath?.visitPath; // 방문 경로 선택 필수
     
-    // case USER_INFO:
+    case USER_INFO:
       
-    //   const userInfo = data.userInfo;
-    //   if (!userInfo) return false;
+      const userInfo = data.userInfo;
+      if (!userInfo) return false;
       
-    //   // Check if there's at least one messenger with a non-empty value
-    //   const hasValidMessenger = userInfo.messengers && 
-    //     userInfo.messengers.length > 0 && 
-    //     userInfo.messengers.some((messenger: any) => messenger && messenger.value && messenger.value.trim() !== '');
+      // Check if there's at least one messenger with a non-empty value
+      const hasValidMessenger = userInfo.messengers && 
+        userInfo.messengers.length > 0 && 
+        userInfo.messengers.some((messenger: any) => messenger && messenger.value && messenger.value.trim() !== '');
       
-    //   return !!(
-    //     userInfo.firstName && 
-    //     userInfo.lastName &&
-    //     userInfo.ageRange &&
-    //     userInfo.gender &&
-    //     userInfo.email &&
-    //     isValidEmail(userInfo.email) && 
-    //     hasValidMessenger
-    //   );
+      return !!(
+        // userInfo.firstName && 
+        // userInfo.lastName &&
+        userInfo.ageRange &&
+        userInfo.gender &&
+        userInfo.email &&
+        isValidEmail(userInfo.email) && 
+        hasValidMessenger
+      );
     case UPLOAD_PHOTO:
       // 파일이 업로드되었는지 확인
       return !!(

@@ -1,21 +1,27 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { CountryCode } from '@/app/models/country-code.dto';
-import { isValidEmail } from '@/utils/validators';
 import { NationModal } from '@/components/template/modal/nations';
-import InputPhoneNumber from '@/components/atoms/input/InputPhoneNumber';
-import InputMessengerFields from '@/components/atoms/input/InputMessengerFields';
+// import { demographicsBasicData } from '../../estimate/demographics-data';
+import { getLocalizedText } from '@/utils/i18n';
+import { useCookieLanguage } from '@/hooks/useCookieLanguage';
+import { questions } from '../../estimate/form-definition_questions';
 
 interface UserInfoStepProps {
   data: any;
   onDataChange: (data: any) => void;
 }
 
+// 순환 참조 방지를 위해 demographics-data.ts에서 가져옴
+const ageGroupQuestion = questions.demographicsBasic.find(q => q.id === 'age_group');
+const genderQuestion = questions.demographicsBasic.find(q => q.id === 'gender');
+const ethnicBackgroundQuestion = questions.demographicsBasic.find(q => q.id === 'ethnic_background');
+
+
 const UserInfo: React.FC<UserInfoStepProps> = ({ data, onDataChange }) => {
   const userInfo = data.userInfo || {};
+  const { language } = useCookieLanguage();
   const [nation, setNation] = useState<CountryCode | null>(null);
   const [emailError, setEmailError] = useState<string | undefined>(undefined)
 
@@ -66,92 +72,120 @@ const UserInfo: React.FC<UserInfoStepProps> = ({ data, onDataChange }) => {
         </div>
       </div> */}
 
-      <div className="grid md:grid-cols-2 gap-6">
-        <div className="space-y-2">
-          <Label className="text-gray-700 font-medium">Age Range</Label>
-          <Select value={userInfo.ageRange || ''} onValueChange={(value) => handleChange('ageRange', value)}>
-            <SelectTrigger className="border-rose-200 focus:border-rose-400" translate="no">
-              <SelectValue placeholder="Select your age range" />
-            </SelectTrigger>
-            <SelectContent translate="no">
-              <SelectItem value="teen" translate="no">
-                <span translate="yes">Teen (14–19)</span>
-              </SelectItem>
-              <SelectItem value="20s" translate="no">
-                <span translate="yes">20s</span>
-              </SelectItem>
-              <SelectItem value="30s" translate="no">
-                <span translate="yes">30s</span>
-              </SelectItem>
-              <SelectItem value="40s" translate="no">
-                <span translate="yes">40s</span>
-              </SelectItem>
-              <SelectItem value="50s" translate="no">
-                <span translate="yes">50s</span>
-              </SelectItem>
-              <SelectItem value="60s" translate="no">
-                <span translate="yes">60s</span>
-              </SelectItem>
-              <SelectItem value="70s+" translate="no">
-                <span translate="yes">70+</span>
-              </SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div className="space-y-2">
-          <Label className="text-gray-700 font-medium">Gender</Label>
-          <Select value={userInfo.gender || ''} onValueChange={(value) => handleChange('gender', value)}>
-            <SelectTrigger className="border-rose-200 focus:border-rose-400" translate="no">
-              <SelectValue placeholder="Select gender" />
-            </SelectTrigger>
-            <SelectContent translate="no">
-              <SelectItem value="female" translate="no">
-                <span translate="yes">Female</span>
-              </SelectItem>
-              <SelectItem value="male" translate="no">
-                <span translate="yes">Male</span>
-              </SelectItem>
-              <SelectItem value="non-binary" translate="no">
-                <span translate="yes">Non-binary</span>
-              </SelectItem>
-              <SelectItem value="prefer-not-to-say" translate="no">
-                <span translate="yes">Prefer not to say</span>
-              </SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-
-      <div className="space-y-2">
-        <Label className="text-gray-700 font-medium">Country</Label>
-        {/* <div className="flex space-x-2">
-          <button
-            type="button"
-            className="w-48 px-3 py-2 border border-gray-300 rounded-md flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
-            onClick={() => setCountryModalOpen(true)}
-          >
-            <span>{selectedCountry.country_name}</span>
-            <svg className="w-4 h-4 ml-2 text-gray-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
-          </button>
-        </div> */}
-        {/* <CountrySelectModal
-          open={countryModalOpen}
-          countryList={country}
-          onSelect={(item) => handleChange('phoneCountry', `${item.country_name})`)}
-          onCancel={() => setCountryModalOpen(false)}
-        /> */}
-         <div>
-          <NationModal
-            nation={nation?.country_name || ""}
-            onSelect={(value: CountryCode) => {
-              setNation(value);
-              handleChange('country', value.country_name);
-            }}
-          />
-        </div>
-    </div>                
-
+      {/* Age Range - Radio Buttons */}
+            <div className="space-y-3">
+              <Label className="text-gray-700 font-medium">
+                {getLocalizedText(ageGroupQuestion?.title, language) || 'Age Range'}
+              </Label>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                {ageGroupQuestion?.options?.map((option) => (
+                  <label
+                    key={option.value}
+                    className={`
+                      flex items-center justify-center px-3 py-2 rounded-lg border cursor-pointer transition-all
+                      ${userInfo.ageRange === option.value
+                        ? 'border-rose-400 bg-rose-50 text-rose-700'
+                        : 'border-gray-200 bg-white hover:border-rose-200 hover:bg-rose-50/50'
+                      }
+                    `}
+                  >
+                    <input
+                      type="radio"
+                      name="ageRange"
+                      value={option.value}
+                      checked={userInfo.ageRange === option.value}
+                      onChange={(e) => handleChange('ageRange', e.target.value)}
+                      className="sr-only"
+                    />
+                    <span className="text-sm font-medium">
+                      {getLocalizedText(option.label, language)}
+                    </span>
+                  </label>
+                ))}
+              </div>
+            </div>
+      
+            {/* Gender - Radio Buttons */}
+            <div className="space-y-3">
+              <Label className="text-gray-700 font-medium">
+                {getLocalizedText(genderQuestion?.title, language) || 'Gender'}
+              </Label>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                {genderQuestion?.options?.map((option) => (
+                  <label
+                    key={option.value}
+                    className={`
+                      flex items-center justify-center px-3 py-2 rounded-lg border cursor-pointer transition-all
+                      ${userInfo.gender === option.value
+                        ? 'border-rose-400 bg-rose-50 text-rose-700'
+                        : 'border-gray-200 bg-white hover:border-rose-200 hover:bg-rose-50/50'
+                      }
+                    `}
+                  >
+                    <input
+                      type="radio"
+                      name="gender"
+                      value={option.value}
+                      checked={userInfo.gender === option.value}
+                      onChange={(e) => handleChange('gender', e.target.value)}
+                      className="sr-only"
+                    />
+                    <span className="text-sm font-medium">
+                      {getLocalizedText(option.label, language)}
+                    </span>
+                  </label>
+                ))}
+              </div>
+            </div>
+      
+            {/* Ethnic Background - Radio Buttons */}
+            <div className="space-y-3">
+              <Label className="text-gray-700 font-medium">
+                {getLocalizedText(ethnicBackgroundQuestion?.title, language) || 'Ethnic Background'}
+              </Label>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                {ethnicBackgroundQuestion?.options?.map((option) => (
+                  <label
+                    key={option.value}
+                    className={`
+                      flex items-center justify-center px-3 py-2 rounded-lg border cursor-pointer transition-all
+                      ${userInfo.ethnicBackground === option.value
+                        ? 'border-rose-400 bg-rose-50 text-rose-700'
+                        : 'border-gray-200 bg-white hover:border-rose-200 hover:bg-rose-50/50'
+                      }
+                    `}
+                  >
+                    <input
+                      type="radio"
+                      name="ethnicBackground"
+                      value={option.value}
+                      checked={userInfo.ethnicBackground === option.value}
+                      onChange={(e) => handleChange('ethnicBackground', e.target.value)}
+                      className="sr-only"
+                    />
+                    <span className="text-sm font-medium text-center">
+                      {getLocalizedText(option.label, language)}
+                    </span>
+                  </label>
+                ))}
+              </div>
+            </div>
+      
+            {/* Country */}
+            <div className="space-y-2">
+              <Label className="text-gray-700 font-medium">
+                {language === 'ko' ? '국가' : 'Country'}
+              </Label>
+              <div>
+                <NationModal
+                  nation={nation?.country_name || userInfo.country || ""}
+                  onSelect={(value: CountryCode) => {
+                    setNation(value);
+                    handleChange('country', value.country_name);
+                  }}
+                />
+              </div>
+            </div>
       {/* <div className="space-y-2">
         <Label htmlFor="email" className="text-gray-700 font-medium">Email Address</Label>
         <Input
@@ -196,16 +230,16 @@ const UserInfo: React.FC<UserInfoStepProps> = ({ data, onDataChange }) => {
 
 
       <div className="space-y-2">
-        <Label htmlFor="koreanPhoneNumber" className="text-gray-700 font-medium">Korean Phone Number (Optional)</Label>
-        <Label htmlFor="koreanPhoneNumber_desc" className="text-gray-600 font-sm">
-          We recommend providing your Korean phone number for smoother communication and consultation.
+        <Label htmlFor="phoneNumber" className="text-gray-700 font-medium">Phone Number (Optional)</Label>
+        <Label htmlFor="phoneNumber_desc" className="text-gray-600 font-sm">
+          We recommend providing your phone number for smoother communication and consultation.
           </Label>
         
         <InputPhoneNumber
-          id="koreanPhoneNumber"
-          value={userInfo.koreanPhoneNumber}
-          onChange={(value) => handleChange('koreanPhoneNumber', value)}
-          placeholder="Enter Korean phone number (numbers only)"
+          id="phoneNumber"
+          value={userInfo.phoneNumber}
+          onChange={(value) => handleChange('phoneNumber', value)}
+          placeholder="Enter phone number (numbers only)"
         />
       </div> */}
     </div>

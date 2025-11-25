@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
     const privateAgeRange = data.demographicsBasic?.age_group || data.userInfo?.ageRange || null;
     const privateGender = data.demographicsBasic?.gender || data.userInfo?.gender || null;
     const country = data.demographicsBasic?.country_of_residence || data.userInfo?.country || null;
-    const koreanPhoneNumber = data.userInfo?.koreanPhoneNumber || null;
+    const phoneNumber = data.userInfo?.phoneNumber || null;
 
     // Messengers 처리
     const messengers = data.userInfo?.messengers?.filter((msg: any) => msg.value?.trim() !== '').map((msg: any) => ({
@@ -96,7 +96,7 @@ export async function POST(request: NextRequest) {
     const params = [
       submissionId, formVersion,
       privateFirstName, privateLastName, privateEmail,
-      privateAgeRange, privateGender, country, koreanPhoneNumber,
+      privateAgeRange, privateGender, country, phoneNumber,
       messengers, skinTypes, budgetRanges,
       skinConcerns, skinConcernsOther,
       treatmentAreas, treatmentAreasOther,
@@ -116,7 +116,7 @@ export async function POST(request: NextRequest) {
     console.log('privateAgeRange:', privateAgeRange);
     console.log('privateGender:', privateGender);
     console.log('country:', country);
-    console.log('koreanPhoneNumber:', koreanPhoneNumber);
+    console.log('phoneNumber:', phoneNumber);
     console.log('messengers:', messengers);
     console.log('skinTypes:', skinTypes);
     console.log('budgetRanges:', budgetRanges);

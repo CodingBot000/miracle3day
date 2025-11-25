@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Card } from '@/components/ui/card';
-import { preConsultationSteps, questions } from '@/content/pre_consultation_intake/form-definition_pre_consultation';
-import { getBudgetRangeById } from '@/content/estimate/datamapper';
+import { preConsultationSteps } from '@/app/(consult)/pre_consultation_intake_form/pre_consultation_intake/form-definition_pre_con_steps';
+import { questions } from '@/app/(consult)/pre_consultation_intake_form/pre_consultation_intake/form-definition_pre_con_questions';
+import { getBudgetRangeById } from '@/app/(consult)/recommend_estimate/estimate/datamapper';
 import { Button } from '@/components/ui/button';
 import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 import { getLocalizedText } from '@/utils/i18n';
@@ -349,7 +350,7 @@ const PreviewReport: React.FC<PreviewReportProps> =
             <p><strong>Gender:</strong> {userInfo.gender}</p>
             <p><strong>Email:</strong> {userInfo.email}</p>
             <p><strong>Nation</strong> {userInfo.country}</p>
-            <p><strong>Korean Phone Number</strong> {userInfo.koreanPhoneNumber}</p>
+            <p><strong>Phone Number</strong> {userInfo.phoneNumber}</p>
              {userInfo.messengers && userInfo.messengers.length > 0 && (
               <div>
                 <p><strong>Messengers:</strong></p>

@@ -8,6 +8,8 @@ import { AlertTriangle, RotateCcw, Home } from 'lucide-react';
 import RecommendationResult from '../RecommendationResult';
 import { RecommendationOutput } from '@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching';
 import { useCookieLanguage } from '@/hooks/useCookieLanguage';
+import TreatmentAnalysisLoading from '@/app/(consult)/common/analysis_animation/TreatmentAnalysisLoading';
+import { MobileAnalysisLoadingScreen } from '@/app/(consult)/common/analysis_animation/MobileAnalysisLoadingScreen';
 
 const RESULT_STORAGE_KEY = 'recommendation_result';
 const FORM_DATA_STORAGE_KEY = 'recommendation_form_data';
@@ -43,9 +45,8 @@ export default function RecommendationResultPage() {
         setFormData(parsedFormData);
         setIsLoading(false);
 
-        // 사용 후 sessionStorage 정리
-        sessionStorage.removeItem(RESULT_STORAGE_KEY);
-        sessionStorage.removeItem(FORM_DATA_STORAGE_KEY);
+        // sessionStorage는 브라우저 탭이 닫힐 때까지 유지 (새로고침해도 유지됨)
+        // 탭을 닫으면 자동으로 삭제되므로 명시적으로 삭제하지 않음
       }, randomDelay);
 
       return () => clearTimeout(timer);
@@ -55,6 +56,24 @@ export default function RecommendationResultPage() {
       setShowDataLostModal(true);
     }
   }, [router]);
+
+  // 페이지를 벗어날 때 sessionStorage 정리
+  useEffect(() => {
+    const handleRouteChange = () => {
+      sessionStorage.removeItem(RESULT_STORAGE_KEY);
+      sessionStorage.removeItem(FORM_DATA_STORAGE_KEY);
+    };
+
+    // 브라우저의 뒤로가기/앞으로가기 감지
+    window.addEventListener('popstate', handleRouteChange);
+
+    // 컴포넌트 언마운트 시 (다른 페이지로 이동 시)
+    return () => {
+      window.removeEventListener('popstate', handleRouteChange);
+      // 페이지를 벗어날 때 정리
+      handleRouteChange();
+    };
+  }, []);
 
   const handleRetryQuestionnaire = () => {
     router.replace('/recommend_estimate');
@@ -69,17 +88,25 @@ export default function RecommendationResultPage() {
     return (
       <div className="fixed inset-0 z-50 min-h-screen bg-gradient-to-br from-[#FDF5F0] via-white to-[#F8E8E0]">
         <div className="flex flex-col justify-center items-center min-h-screen">
-          <DotLottieReact
+          {/* <DotLottieReact
             src="/lottie/analysis.lottie"
             loop
             autoplay
             style={{ width: 200, height: 200 }}
-          />
-          <p className="mt-4 text-xl font-medium text-gray-700">
+          /> */}
+          {/* <p className="mt-4 text-xl font-medium text-gray-700 justify-center items-center">
             {language === 'ko'
               ? "맞춤형 시술 계획을 분석 중입니다..."
               : "Analyzing your personalized treatment plan..."}
-          </p>
+          </p> */}
+          {/* <div className="mt-2 justify-center items-center">
+            <TreatmentAnalysisLoading />
+            </div> */}
+              
+                  {/* 모바일 전용 컴포넌트 (md:hidden으로 데스크탑에서 안 보임) */}
+                  <MobileAnalysisLoadingScreen />
+              
+              
         </div>
       </div>
     );

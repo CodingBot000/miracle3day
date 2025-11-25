@@ -4,7 +4,8 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import PageHeader from '../PageHeader';
 import PreviewReport from './questionnaire/PreviewReport';
-import { steps, questions } from '@/app/(consult)/recommend_estimate/estimate/form-definition';
+import { questions } from '@/app/(consult)/recommend_estimate/estimate/form-definition_questions';
+import { steps } from '@/app/(consult)/recommend_estimate/estimate/form-definition_steps';
 import { recommendTreatments } from './questionnaire/questionScript/matching/index';
 import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 import { getLocalizedText } from '@/utils/i18n';
@@ -28,58 +29,19 @@ import { isValidEmail } from '@/utils/validators';
 import { CountryCode, CountryInputDto } from '@/app/models/country-code.dto';
 import { MessengerInput } from '@/components/atoms/input/InputMessengerFields';
 import { log } from '@/utils/logger';
-import { validateStepData, getValidationMessage, StepData } from '../validCheckForm';
+import { validateStepData, getValidationMessage } from '../validCheckForm';
+import SkinTypeStep from './questionnaire/SkinTypeStep';
+import SkinConcernsStep from './questionnaire/SkinConcernsStep';
+import TreatmentGoalsStep from './questionnaire/TreatmentGoalsStep';
+import VisitPathStep from './questionnaire/VisitPathStep';
+import DemographicsBasic from './questionnaire/DemographicsBasic';
+import TreatmentExpBeforeStep from './questionnaire/TreatmentExpBefore';
+import PrioriotyFactorStep from './questionnaire/PrioriotyFactorStep';
+import PreferencesStep from './questionnaire/PreferencesStep';
+import HealthConditionStep from './questionnaire/HealthConditionStep';
+import BudgetStep from './questionnaire/BudgetStep';
+import { StepData } from '../../models/recommend_estimate.dto';
 
-
-interface UserInfo {
-  firstName: string;
-  lastName: string;
-  ageRange: string;
-  gender: string;
-  email: string;
-  koreanPhoneNumber: number;
-  country: string;
-  messengers: MessengerInput[];
-}
-
-
-
-interface SkinConcerns {
-  concerns: string[];
-  moreConcerns?: string;
-}
-
-interface TreatmentAreas {
-  treatmentAreas: string[];
-  otherAreas?: string;
-}
-
-interface PriorityOrder {
-  priorityOrder: string[];
-  isPriorityConfirmed?: boolean;
-}
-
-interface PastTreatments {
-  pastTreatments: string[];
-  sideEffects?: string;
-  additionalNotes?: string;
-}
-
-interface VisitPath {
-  visitPath: string;
-  otherPath?: string;
-}
-
-interface UploadImage {
-  uploadedImage?: string; // base64 이미지 데이터
-  imageFile?: File; // 실제 파일 객체
-  imageFileName?: string; // 파일명
-}
-
-interface HealthConditions {
-  healthConditions: string[];
-  otherConditions?: string;
-}
 
 
 interface StepComponentProps {
@@ -98,6 +60,7 @@ const BeautyQuestionnaire: React.FC = () => {
   const [formData, setFormData] = useState<Record<string, StepData>>({});
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [isValideSendForm, setIsValideSendForm] = useState(false);
+  const [isNavigating, setIsNavigating] = useState(false);
   const { toast } = useToast();
 
   // 현재 스텝의 유효성을 실시간으로 확인
@@ -182,16 +145,51 @@ const BeautyQuestionnaire: React.FC = () => {
     // log.debug('Questionnaire completed:', formData);
   };
 
-  const CurrentStepComponent = steps[currentStep].component as React.ComponentType<StepComponentProps>;
+  // useMemo로 현재 스텝 컴포넌트를 메모이제이션
+  const CurrentStepComponent = React.useMemo(() => {
+    const curStepId = steps[currentStep].id;
+
+    switch (curStepId) {
+      case SKIN_TYPE:
+        return SkinTypeStep as React.ComponentType<StepComponentProps>;
+      case SKIN_CONCERNS:
+        return SkinConcernsStep as React.ComponentType<StepComponentProps>;
+      case TREATMENT_GOALS:
+        return TreatmentGoalsStep as React.ComponentType<StepComponentProps>;
+      case BUDGET:
+        return BudgetStep as React.ComponentType<StepComponentProps>;
+      case HEALTH_CONDITIONS:
+        return HealthConditionStep as React.ComponentType<StepComponentProps>;
+      case PREFERENCES:
+        return PreferencesStep as React.ComponentType<StepComponentProps>;
+      case PRIORITYFACTORS:
+        return PrioriotyFactorStep as React.ComponentType<StepComponentProps>;
+      case TREATMENT_EXPERIENCE_BEFORE:
+        return TreatmentExpBeforeStep as React.ComponentType<StepComponentProps>;
+      case DEMOGRAPHICS_BASIC:
+        return DemographicsBasic as React.ComponentType<StepComponentProps>;
+      case VISIT_PATHS:
+        return VisitPathStep as React.ComponentType<StepComponentProps>;
+      default:
+        return SkinTypeStep as React.ComponentType<StepComponentProps>;
+    }
+  }, [currentStep]);
+
+  // 네비게이션 중일 때 흰 화면 표시
+  if (isNavigating) {
+    return (
+      <div className="fixed inset-0 bg-white z-50" />
+    );
+  }
 
   return (
     // <div className="min-h-screen bg-gradient-to-br from-rose-50 via-pink-50 to-purple-50">
     <div className="min-h-screen">
-      
+
       {/* Header */}
-      <PageHeader 
-        currentStep={currentStep} 
-        totalSteps={steps.length} 
+      <PageHeader
+        currentStep={currentStep}
+        totalSteps={steps.length}
         // onBack={currentStep > 0 ? handlePrevious : undefined}
         onBack={handlePrevious}
       />
@@ -313,6 +311,29 @@ const BeautyQuestionnaire: React.FC = () => {
               </>
             ) : currentStep === steps.length - 1 ? (
               <>
+               <Button
+                  onClick={handlePrevious}
+                  // className="w-25 h-12 px-4 rounded-lg border border-gray-300 bg-white text-gray-500 flex items-center justify-center"
+                  // style={{ 
+                  //   borderColor: '#E4E5E7',
+                  //   color: '#777777',
+                  //   fontFamily: 'Pretendard Variable',
+                  //   fontWeight: 600,
+                  //   fontSize: '16px',
+                  //   lineHeight: '140%'
+                  // }}
+                  className="
+                    h-12 px-4 rounded-lg
+                    border bg-white text-[#777777] border-[#E4E5E7]
+                    hover:bg-[#F7F7F8] hover:border-[#DADCE0] hover:text-[#555555]
+                    active:bg-[#F1F2F4] active:border-[#C9CCD1] active:text-[#444444]
+                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-200 focus-visible:ring-offset-1
+                    transition-colors duration-150
+                    flex items-center justify-center
+                  "
+                >
+                  Previous
+                </Button>
                 <Button
                   onClick={handlePrevious}
                   // className="w-25 h-12 px-4 rounded-lg border border-gray-300 bg-white text-gray-500 flex items-center justify-center"
@@ -419,6 +440,7 @@ const BeautyQuestionnaire: React.FC = () => {
         showSendFormButton={isValideSendForm}
         onOpenChange={setIsPreviewOpen}
         formData={formData}
+        onNavigateStart={() => setIsNavigating(true)}
         onSubmissionComplete={(allStepData) => {
           setIsPreviewOpen(false);
 

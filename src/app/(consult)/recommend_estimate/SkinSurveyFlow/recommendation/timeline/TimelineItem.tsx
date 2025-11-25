@@ -72,11 +72,11 @@ const TimelineItem: React.FC<TimelineItemProps> = ({
         <div className="flex-1 flex flex-col items-center w-1">
           <div className="w-1 flex-1 bg-gradient-to-b from-gray-300 to-gray-200" />
           {/* 마지막 아이템에 화살표 표시 */}
-          {isLast && (
+          {/* {isLast && (
             <div className="flex flex-col items-center mt-1">
               <div className="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[8px] border-t-gray-400" />
             </div>
-          )}
+          )} */}
         </div>
       </div>
 

@@ -52,7 +52,7 @@ const PreviewReport: React.FC<PreviewReportProps> =
     setIsSubmitting(true);
     setIsCompleted(false);
 
-    console.log("tempPass", tempPass);
+    log.debug("tempPass", tempPass);
     // if (tempPass) {
     //   // API 없이 바로 완료 처리 (임시)
     //   setIsCompleted(true);

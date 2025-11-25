@@ -18,7 +18,8 @@ import { USER_INFO, BUDGET,
          TREATMENT_GOALS,
           UPLOAD_PHOTO,
           VISIT_PATHS,
-          AGE_RANGE
+          AGE_RANGE,
+          VIDEO_CONSULT_SCHEDULE
      } from '@/constants/pre_consult_steps';
 import SubmissionModal from './SubmissionModal';
 import { useRouter } from 'next/navigation';
@@ -51,7 +52,7 @@ const PreviewReport: React.FC<PreviewReportProps> =
     setIsSubmitting(true);
     setIsCompleted(false);
 
-    console.log("tempPass", tempPass);
+    log.debug("tempPass", tempPass);
     if (tempPass) {
       // API 없이 바로 완료 처리 (임시)
       setIsCompleted(true);
@@ -121,7 +122,7 @@ const PreviewReport: React.FC<PreviewReportProps> =
         imagePaths = [`${bucket}/${imagePath}`];
       }
 
-      // API로 데이터 전송
+      // API로 데이터 전송 - submission_type을 'video_consult'로 설정
       const response = await fetch('/api/consultation/submit', {
         method: 'POST',
         headers: {
@@ -130,7 +131,8 @@ const PreviewReport: React.FC<PreviewReportProps> =
         body: JSON.stringify({
           ...allStepData,
           imagePaths,
-          submissionId // UUID를 API로 전달
+          submissionId, // UUID를 API로 전달
+          submissionType: 'video_consult' // 영상상담용 문진임을 표시
         })
       });
 
@@ -139,11 +141,37 @@ const PreviewReport: React.FC<PreviewReportProps> =
       }
 
       const result = await response.json();
-      
+
       if (!result.success) {
         throw new Error(result.error || 'Submission failed');
       }
-      log.debug('Submission successful:', result);
+      log.debug('Consultation submission successful:', result);
+
+      // 영상상담 예약 생성
+      if (allStepData.videoConsultSlots && allStepData.videoConsultTimezone) {
+        log.debug('Creating video consultation reservation...');
+
+        const reservationResponse = await fetch('/api/consult/video/reservations', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            submissionId: result.submissionId,
+            slots: allStepData.videoConsultSlots,
+            userTimezone: allStepData.videoConsultTimezone,
+          })
+        });
+
+        if (!reservationResponse.ok) {
+          const errorData = await reservationResponse.json();
+          throw new Error(`Failed to create video consultation reservation: ${errorData.error}`);
+        }
+
+        const reservationResult = await reservationResponse.json();
+        log.debug('Video consultation reservation created:', reservationResult);
+      }
+
       setIsCompleted(true);
       fbqTrack("Submit_diagnosis_click", { finalSubmit: "success" });
     } catch (error) {
@@ -334,6 +362,36 @@ const PreviewReport: React.FC<PreviewReportProps> =
                 <p className="text-gray-700 whitespace-pre-wrap">{visitPath.otherPath}</p>
               </div>
             )}
+          </div>
+        );
+
+      case VIDEO_CONSULT_SCHEDULE:
+        const videoConsultSlots = data.videoConsultSlots;
+        const userTimezone = data.videoConsultTimezone;
+        if (!videoConsultSlots || videoConsultSlots.length === 0) {
+          return <p>No preferred time slots selected</p>;
+        }
+        return (
+          <div className="space-y-3">
+            <p className="font-semibold">
+              {language === 'ko' ? '희망 상담 시간' : 'Preferred Consultation Times'}
+            </p>
+            {videoConsultSlots.map((slot: any, index: number) => (
+              <div key={index} className="p-3 bg-gray-50 rounded-md">
+                <p className="font-medium">
+                  {language === 'ko' ? `희망 시간 ${slot.rank}` : `Preferred Time ${slot.rank}`}
+                </p>
+                <p className="text-sm text-gray-700">
+                  <strong>{language === 'ko' ? '날짜' : 'Date'}:</strong> {slot.date}
+                </p>
+                <p className="text-sm text-gray-700">
+                  <strong>{language === 'ko' ? '시간' : 'Time'}:</strong> {slot.startTime} - {slot.endTime}
+                </p>
+              </div>
+            ))}
+            <p className="text-xs text-gray-500">
+              {language === 'ko' ? '시간대' : 'Timezone'}: {userTimezone}
+            </p>
           </div>
         );
 

@@ -138,7 +138,7 @@ export async function syncHospitalReviews(params: {
         });
 
         if (!needsSync) {
-          console.log(`[syncHospitalReviews] Cache is fresh for ${idUuidHospital}, skipping sync`);
+          log.debug(`[syncHospitalReviews] Cache is fresh for ${idUuidHospital}, skipping sync`);
           return {
             success: true,
             placeId: snapshot.place_id,
@@ -208,7 +208,7 @@ export async function syncHospitalReviews(params: {
       await upsertReviews(reviewData);
     }
 
-    console.log(
+    log.debug(
       `[syncHospitalReviews] Successfully synced ${idUuidHospital}: ${reviews.length} reviews`
     );
 

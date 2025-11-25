@@ -1622,5 +1622,5 @@ const output = recommendTreatments({
   pastTreatments: ["none"],
   medicalConditions: ["none"],
 });
-console.log(output);
+log.debug(output);
 */

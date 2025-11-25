@@ -34,5 +34,5 @@ export async function getKRWtoUSD(): Promise<number | null> {
 // // 사용 예시
 // (async () => {
 //   const rate = await getKRWtoUSD();
-//   console.log("1 KRW =", rate, "USD");
+//   log.debug("1 KRW =", rate, "USD");
 // })();

@@ -25,10 +25,10 @@ export default function AuthClient({ iconColor = "#000" }: AuthClientProps) {
       const res = await fetch('/api/auth/session');
       if (res.ok) {
         const data = await res.json();
-        console.log('Auth check checkAuth data', data);
+        log.debug('Auth check checkAuth data', data);
         setUser(data.auth);
       } else {
-        console.log('Auth check checkAuth null', null);
+        log.debug('Auth check checkAuth null', null);
         setUser(null);
       }
     } catch (error) {

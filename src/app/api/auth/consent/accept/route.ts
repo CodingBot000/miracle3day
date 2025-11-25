@@ -143,9 +143,9 @@ Google도 이메일을 반환하지 않습니다.
       id_uuid: memberId,
     };
 
-    console.log('Before session.save(), session.auth:', session.auth);
+    log.debug('Before session.save(), session.auth:', session.auth);
     await session.save();
-    console.log('After session.save() completed');
+    log.debug('After session.save() completed');
     // 설명: 본 주석 삭제금지 - { headers: res.headers }); header를 추가해야 session.save()로 업데이트된 쿠키가 포함되서 새응답으로 전달되어 업데이트된 세션쿠키를 받아 status를 최신상태로 받을수있다.
     return NextResponse.json({ ok: true, member_id: memberId }, { headers: res.headers });
   } catch (e) {

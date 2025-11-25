@@ -263,7 +263,7 @@ export default function ProtocolPage() {
 
   React.useEffect(() => {
     if (topicDetail) {
-      console.log("[ProtocolPage] topic detail:", topicDetail);
+      log.debug("[ProtocolPage] topic detail:", topicDetail);
     }
   }, [topicDetail]);
 
@@ -275,11 +275,11 @@ export default function ProtocolPage() {
 
   // Callback functions (hooks must be called before any conditional returns)
   const handleBook = React.useCallback((treatment: any) => {
-    console.log('Book treatment:', treatment.id);
+    log.debug('Book treatment:', treatment.id);
   }, []);
 
   const handleContact = React.useCallback((treatment: any) => {
-    console.log('Contact for treatment:', treatment.id);
+    log.debug('Contact for treatment:', treatment.id);
   }, []);
 
   const handleAreaChange = React.useCallback((newAreaId: string) => {
@@ -466,8 +466,8 @@ export default function ProtocolPage() {
                     }
                   }}
                   locale={locale}
-                  onBook={(treatment) => console.log('Book treatment:', treatment.id)}
-                  onContact={(treatment) => console.log('Contact for treatment:', treatment.id)}
+                  onBook={(treatment) => log.debug('Book treatment:', treatment.id)}
+                  onContact={(treatment) => log.debug('Contact for treatment:', treatment.id)}
                   buildInfoLine={buildInfoLine}
                 />
               ))}
@@ -534,8 +534,8 @@ export default function ProtocolPage() {
                     }
                   }}
                   locale={locale}
-                  onBook={(treatment) => console.log('Book treatment:', treatment.id)}
-                  onContact={(treatment) => console.log('Contact for treatment:', treatment.id)}
+                  onBook={(treatment) => log.debug('Book treatment:', treatment.id)}
+                  onContact={(treatment) => log.debug('Contact for treatment:', treatment.id)}
                   buildInfoLine={buildInfoLine}
                 />
               ))}
@@ -602,8 +602,8 @@ export default function ProtocolPage() {
                     }
                   }}
                   locale={locale}
-                  onBook={(treatment) => console.log('Book treatment:', treatment.id)}
-                  onContact={(treatment) => console.log('Contact for treatment:', treatment.id)}
+                  onBook={(treatment) => log.debug('Book treatment:', treatment.id)}
+                  onContact={(treatment) => log.debug('Contact for treatment:', treatment.id)}
                   buildInfoLine={buildInfoLine}
                 />
               ))}

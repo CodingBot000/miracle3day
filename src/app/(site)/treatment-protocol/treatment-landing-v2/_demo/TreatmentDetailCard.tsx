@@ -285,8 +285,8 @@ function InfoRow({ icon, label, children }: { icon?: string; label: string; chil
 // <TreatmentDetailCard
 //   locale="ko"
 //   data={picoData}
-//   onReserve={(d) => console.log("reserve", d.id)}
-//   onInquiry={(d) => console.log("inquiry", d.id)}
+//   onReserve={(d) => log.debug("reserve", d.id)}
+//   onInquiry={(d) => log.debug("inquiry", d.id)}
 // />
 //
 // const picoData: TreatmentData = {

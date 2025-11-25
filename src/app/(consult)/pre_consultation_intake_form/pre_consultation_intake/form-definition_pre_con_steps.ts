@@ -12,13 +12,15 @@ import {  BUDGET,
         TREATMENT_EXPERIENCE_BEFORE,
          TREATMENT_GOALS,
           UPLOAD_PHOTO,
-          USER_INFO} from '@/constants/pre_consult_steps';
+          USER_INFO,
+          VIDEO_CONSULT_SCHEDULE} from '@/constants/pre_consult_steps';
 import UploadImageStep from "@/app/(consult)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/UploadImageStep";
 import SkinTypeStep from "@/app/(consult)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/SkinTypeStep";
 import PreferencesStep from "@/app/(consult)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/PreferencesStep";
 import PrioriotyFactorStep from "@/app/(consult)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/PrioriotyFactorStep";
 import TreatmentExpBeforeStep from "@/app/(consult)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/TreatmentExpBefore";
 import UserInfoStep from "../PreConsultationSurveyFlow/questionnaire/UserInfoStep";
+import VideoConsultScheduleStep from "../PreConsultationSurveyFlow/questionnaire/VideoConsultScheduleStep";
 // ═══════════════════════════════════════════════════════════
 // STEPS 정의 - 기재된 순서로 나옴
 // ═══════════════════════════════════════════════════════════
@@ -193,5 +195,19 @@ export const preConsultationSteps = [
       component: UploadImageStep,
       optional: true, // 새로운 플래그
     },
-  
+
+    // Video Consultation Schedule
+    {
+      id: VIDEO_CONSULT_SCHEDULE,
+      title: {
+        ko: "화상 상담이 가능한 날짜와 시간을 알려주세요",
+        en: "When are you available for the video consultation?"
+      },
+      subtitle: {
+        ko: "최대 3개까지 희망 날짜와 시간을 선택해 주세요. 병원에서 검토 후 가능한 시간으로 확정해 드립니다.",
+        en: "Select up to three preferred date and time options. The clinic will review and confirm the best available slot."
+      },
+      component: VideoConsultScheduleStep,
+    },
+
 ];

@@ -8,7 +8,8 @@ import {
   SKIN_TYPE,
   TREATMENT_EXPERIENCE_BEFORE,
   TREATMENT_GOALS,
-  UPLOAD_PHOTO
+  UPLOAD_PHOTO,
+  VIDEO_CONSULT_SCHEDULE
 } from '@/constants/pre_consult_steps';
 import { log } from '@/utils/logger';
 import { MessengerInput } from '@/components/atoms/input/InputMessengerFields';
@@ -102,6 +103,19 @@ export const validateStepData = (stepId: string, data: StepData): boolean => {
       return !!(
         data.uploadImage?.uploadedImage || data.uploadImage?.imageFile
       );
+    case VIDEO_CONSULT_SCHEDULE:
+      // Validate that at least one complete slot is filled
+      const slots = data.videoConsultSlots;
+      if (!slots || slots.length === 0) return false;
+
+      // Check if at least the first slot is completely filled
+      const firstSlot = slots[0];
+      if (!firstSlot.date || !firstSlot.startTime || !firstSlot.endTime) return false;
+
+      // Validate that start time is before end time
+      if (firstSlot.startTime >= firstSlot.endTime) return false;
+
+      return true;
     default:
       return true;
   }
@@ -134,6 +148,8 @@ export const getValidationMessage = (stepId: string): string => {
     //   return 'Please fill in your name, age, gender, email address, and at least one messenger contact.';
     case UPLOAD_PHOTO:
       return 'Please post a picture to diagnose your skin.';
+    case VIDEO_CONSULT_SCHEDULE:
+      return 'Please select at least one preferred time slot with valid date and time.';
     default:
       return 'Please complete all required fields.';
   }

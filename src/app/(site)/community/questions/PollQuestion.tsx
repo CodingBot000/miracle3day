@@ -36,7 +36,7 @@ interface PollQuestionProps {
 }
 
 export default function PollQuestion({ question }: PollQuestionProps) {
-  // console.log('PollQuestion question', question);
+  // log.debug('PollQuestion question', question);
   const { language } = useCookieLanguage();
   const pathname = usePathname();
   const router = useRouter();

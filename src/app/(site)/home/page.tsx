@@ -44,7 +44,7 @@ export default async function HomePage() {
   const params = new URLSearchParams(search);
   const locationParam = params.get("locationNum");
   const lang: Lang = getLangFromCookies();
-  // console.log('qq qq HomePage locationParam: ', locationParam);
+  // log.debug('qq qq HomePage locationParam: ', locationParam);
   const selectedLocation: LocationType | undefined = LOCATIONS.find(
     (loc) => loc === locationParam
   );

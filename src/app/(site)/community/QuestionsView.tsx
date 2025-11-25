@@ -12,10 +12,10 @@ export default function QuestionsView({ isMainPage = false }: { isMainPage?: boo
   const tagId = searchParams?.get('tag') ?? undefined;
   const filter = searchParams?.get('filter') ?? undefined;
 
-  console.log('=== QuestionsView 렌더링됨 ===');
-  console.log('filter:', filter);
-  console.log('topicId:', topicId);
-  console.log('tagId:', tagId);
+  // log.debug('=== QuestionsView 렌더링됨 ===');
+  // log.debug('filter:', filter);
+  // log.debug('topicId:', topicId);
+  // log.debug('tagId:', tagId);
 
   return (
     <div className="space-y-6">

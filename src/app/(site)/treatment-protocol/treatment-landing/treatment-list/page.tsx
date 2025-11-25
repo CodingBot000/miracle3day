@@ -21,15 +21,15 @@ export default function TreatmentListPage() {
 
   // 더미 핸들러들 (현재는 콘솔 로그만)
   const handleSelect = React.useCallback((treatment: Treatment) => {
-    console.log('Treatment selected:', treatment.id);
+    log.debug('Treatment selected:', treatment.id);
   }, []);
 
   const handleBook = React.useCallback((treatment: Treatment) => {
-    console.log('Book treatment:', treatment.id);
+    log.debug('Book treatment:', treatment.id);
   }, []);
 
   const handleContact = React.useCallback(() => {
-    console.log('Contact clicked');
+    log.debug('Contact clicked');
   }, []);
 
   if (!selectedCategory) {

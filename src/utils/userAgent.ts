@@ -141,11 +141,11 @@ export const executeByPlatform = <T>(handlers: {
  */
 export const logPlatformInfo = (): void => {
   if (typeof window === 'undefined') {
-    console.log('[Platform] Server-side rendering');
+    log.debug('[Platform] Server-side rendering');
     return;
   }
 
-  console.log('[Platform Info]', {
+  log.debug('[Platform Info]', {
     platformType: getPlatformType(),
     isWebView: isWebView(),
     isAndroidWebView: isAndroidWebView(),

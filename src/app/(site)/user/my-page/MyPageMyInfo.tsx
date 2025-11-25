@@ -25,8 +25,8 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
   const [avatarUrl, setAvatarUrl] = useState<string>(user?.userInfo?.avatar || "/default/profile_default.png");
   const fileInputRef = useRef<HTMLInputElement>(null);
   
-  console.log("MyPageMyInfo user", user);
-  console.log("MyPageMyInfo user?.userInfo?.id_uuid:", user?.userInfo?.id_uuid);
+  log.debug("MyPageMyInfo user", user);
+  log.debug("MyPageMyInfo user?.userInfo?.id_uuid:", user?.userInfo?.id_uuid);
 
   useEffect(() => {
     void loadTodayAttendance();

@@ -20,11 +20,11 @@ export const ReviewCard = ({
   name,
   created_at,
 }: ReviewCardProps) => {
-  console.log(`ReviewCard ================================================`);
-  console.log(`ReviewCard name: ${name}`);
-  console.log(`ReviewCard created_at: ${created_at}`);
-  console.log(`ReviewCard src: ${src}`);
-  console.log(`ReviewCard content: ${content}`);
+  log.debug(`ReviewCard ================================================`);
+  log.debug(`ReviewCard name: ${name}`);
+  log.debug(`ReviewCard created_at: ${created_at}`);
+  log.debug(`ReviewCard src: ${src}`);
+  log.debug(`ReviewCard content: ${content}`);
   
   return (
     <article className="w-full max-w-[280px] h-auto flex-shrink-0">

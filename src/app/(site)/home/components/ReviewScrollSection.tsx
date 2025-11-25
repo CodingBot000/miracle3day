@@ -44,27 +44,27 @@ export default function ReviewScrollSection() {
   // Load data
   useEffect(() => {
     let mounted = true;
-    console.log('[ReviewScrollSection] Starting to fetch reviews...');
+    // log.debug('[ReviewScrollSection] Starting to fetch reviews...');
 
     (async () => {
       try {
         const res = await fetch('/api/places/random-reviews?limit=10', { cache: 'no-store' });
-        console.log('[ReviewScrollSection] Response status:', res.status);
+        // log.debug('[ReviewScrollSection] Response status:', res.status);
 
         if (!res.ok) {
           throw new Error(`HTTP ${res.status}: ${res.statusText}`);
         }
 
         const data = await res.json();
-        console.log('[ReviewScrollSection] Received data:', data);
-        console.log('[ReviewScrollSection] Reviews count:', data?.reviews?.length ?? 0);
+        // log.debug('[ReviewScrollSection] Received data:', data);
+        // log.debug('[ReviewScrollSection] Reviews count:', data?.reviews?.length ?? 0);
 
         if (mounted) {
           setReviews(data?.reviews ?? []);
           setError(null);
         }
       } catch (e) {
-        console.error('[ReviewScrollSection] Error loading reviews:', e);
+        // console.error('[ReviewScrollSection] Error loading reviews:', e);
         if (mounted) {
           setReviews([]);
           setError(e instanceof Error ? e.message : 'Unknown error');
@@ -72,7 +72,7 @@ export default function ReviewScrollSection() {
       } finally {
         if (mounted) {
           setLoading(false);
-          console.log('[ReviewScrollSection] Loading complete');
+          // log.debug('[ReviewScrollSection] Loading complete');
         }
       }
     })();
@@ -215,7 +215,7 @@ export default function ReviewScrollSection() {
     );
   }
 
-  console.log('[ReviewScrollSection] Rendering reviews:', convertedReviews.length);
+  // log.debug('[ReviewScrollSection] Rendering reviews:', convertedReviews.length);
 
   return (
     <section className="w-full pt-8 md:pt-12 h-[350px] md:h-[450px]">

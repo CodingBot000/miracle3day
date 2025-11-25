@@ -58,7 +58,7 @@ export async function GET(req: Request) {
       return Response.json({ data: null }, { status: 500, statusText: "Search failed" });
     }
 
-    console.log("Search data:", combinedData);
+    log.debug("Search data:", combinedData);
     // return Response.json({ data: combined }, { status: 200 });
     return NextResponse.json({ data: combinedData }, { status: 200 });
   } catch (error) {

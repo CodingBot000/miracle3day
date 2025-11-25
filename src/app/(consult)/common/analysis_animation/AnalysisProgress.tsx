@@ -19,18 +19,18 @@ export const AnalysisProgress: React.FC<AnalysisProgressProps> = ({
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    console.log('🔍 AnalysisProgress - Current index:', index, '/ Total steps:', steps.length);
+    log.debug('🔍 AnalysisProgress - Current index:', index, '/ Total steps:', steps.length);
 
     // 마지막 문장까지 도달하면 멈추고 콜백 호출
     if (index >= steps.length - 1) {
-      console.log('✅ Reached end, calling onComplete');
+      log.debug('✅ Reached end, calling onComplete');
       if (onComplete) onComplete();
       return;
     }
 
-    console.log('⏱️  Setting timer for', delayBetweenStepsMs, 'ms');
+    log.debug('⏱️  Setting timer for', delayBetweenStepsMs, 'ms');
     const timer = setTimeout(() => {
-      console.log('🔥 Timer fired, incrementing index from', index, 'to', index + 1);
+      log.debug('🔥 Timer fired, incrementing index from', index, 'to', index + 1);
       setIndex((prev) => {
         if (prev >= steps.length - 1) return prev; // 안전장치
         return prev + 1;
@@ -38,7 +38,7 @@ export const AnalysisProgress: React.FC<AnalysisProgressProps> = ({
     }, delayBetweenStepsMs);
 
     return () => {
-      console.log('🧹 Cleaning up timer for index:', index);
+      log.debug('🧹 Cleaning up timer for index:', index);
       clearTimeout(timer);
     };
   }, [index, steps.length, delayBetweenStepsMs, onComplete]);

@@ -29,8 +29,8 @@ export async function POST(request: Request) {
       [key: string]: any;
     };
 
-    console.log("[Daily][create-room] status:", dailyRes.status);
-    console.log("[Daily][create-room] response:", data);
+    log.debug("[Daily][create-room] status:", dailyRes.status);
+    log.debug("[Daily][create-room] response:", data);
 
     // 1) 이미 존재하는 방이면 → 성공으로 간주
     if (

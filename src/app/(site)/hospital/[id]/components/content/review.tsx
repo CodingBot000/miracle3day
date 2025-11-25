@@ -10,7 +10,7 @@
 
 
 // const ReviewTab = ({ id }: { id: string }) => {
-//   console.log("ReviewTab ReviewTab id (id_uuid_hospital):", id);
+//   log.debug("ReviewTab ReviewTab id (id_uuid_hospital):", id);
 //   const [reviews, setReviews] = useState<HospitalDetailReviewOutDto["data"]>([]);
 
 //   useEffect(() => {
@@ -21,12 +21,12 @@
     
 //     const fetchReviews = async () => {
 //       try {
-//         console.log("ReviewTab fetchReviews id:", id);
-//         console.log("ReviewTab call await getHospitalReviewListAPI");
+//         log.debug("ReviewTab fetchReviews id:", id);
+//         log.debug("ReviewTab call await getHospitalReviewListAPI");
 //         const res = await getHospitalReviewListAPI({ id, pageParam: 0 });
-//         // console.log("getHospitalReviewAPI param id:", id);
-//         // console.log("getHospitalReviewAPI response:", res);
-//         console.log("ReviewTab fetchReviews res:", res);
+//         // log.debug("getHospitalReviewAPI param id:", id);
+//         // log.debug("getHospitalReviewAPI response:", res);
+//         log.debug("ReviewTab fetchReviews res:", res);
 //         setReviews(res.data);
 //       } catch (error) {
 //         console.error("ReviewTab Error fetching reviews:", error);
@@ -35,7 +35,7 @@
 //     fetchReviews();
 //   }, [id]);
 
-//   console.log("ReviewTab reviews:", reviews);
+//   log.debug("ReviewTab reviews:", reviews);
 //   if (!reviews || reviews.length === 0) {
 //     return <NoData label="No reviews found"/>;
 //   }

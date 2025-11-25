@@ -9,20 +9,20 @@ export async function POST(req: Request) {
     const session = await getIronSession(req, new NextResponse(), sessionOptions) as any;
     
     // 디버깅 코드 삭제 금지 ** 절대로 삭제하지말것 **
-    console.log('=== Onboarding Complete Debug ===');
-    console.log('session:', session);
-    console.log('session.auth:', session.auth);
-    console.log('session.auth?.status:', session.auth?.status);
-    console.log('session.auth?.id_uuid:', session.auth?.id_uuid);
-    console.log('================================');
+    log.debug('=== Onboarding Complete Debug ===');
+    log.debug('session:', session);
+    log.debug('session.auth:', session.auth);
+    log.debug('session.auth?.status:', session.auth?.status);
+    log.debug('session.auth?.id_uuid:', session.auth?.id_uuid);
+    log.debug('================================');
     
     if (!session.auth) {
-      console.log('No session.auth - returning 401');
+      log.debug('No session.auth - returning 401');
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
     
     if (session.auth.status === 'pending') {
-      console.log('Session is pending - need to complete terms agreement first');
+      log.debug('Session is pending - need to complete terms agreement first');
       return NextResponse.json({
         error: 'Terms agreement required',
         redirect: '/terms'
@@ -30,7 +30,7 @@ export async function POST(req: Request) {
     }
     
     if (session.auth.status !== 'active' || !session.auth.id_uuid) {
-      console.log('Session not active or missing id_uuid - returning 401');
+      log.debug('Session not active or missing id_uuid - returning 401');
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 

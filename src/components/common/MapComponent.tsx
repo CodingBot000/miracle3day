@@ -41,9 +41,9 @@ interface MapComponentProps {
 //   const ref = useRef<HTMLDivElement>(null);
 
   const onReady = () => {
-    // console.log("Initializing map", ref.current, coordinates);
-    // console.log("coordinates[0].lat", Number(coordinates[0].lat));
-    // console.log("coordinates[0].lng", Number(coordinates[0].lng));
+    // log.debug("Initializing map", ref.current, coordinates);
+    // log.debug("coordinates[0].lat", Number(coordinates[0].lat));
+    // log.debug("coordinates[0].lng", Number(coordinates[0].lng));
     if (!ref.current) {
       console.warn("X Map container not ready");
       return;

@@ -29,7 +29,7 @@ export function formatDate(
 
 
   const cleaned = typeof date === "string" ? date.replace(/\.\d{6}/, "") : date;
-  console.log(`formatData cleaned: ${cleaned} origin : ${date}`);
+  log.debug(`formatData cleaned: ${cleaned} origin : ${date}`);
   const parsedDate = typeof cleaned === "string" ? new Date(cleaned) : cleaned;
 
 

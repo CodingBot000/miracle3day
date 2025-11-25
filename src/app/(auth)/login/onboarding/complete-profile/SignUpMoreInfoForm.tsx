@@ -94,7 +94,7 @@ export default function SignUpMoreInfoForm() {
           setIsSignedIn(true);
           setForm(prev => ({ ...prev, nickname: data.auth.email?.split('@')[0] || '' }));
         } else {
-          console.log('Auth check failed, redirecting to login. Auth data:', data.auth);
+          log.debug('Auth check failed, redirecting to login. Auth data:', data.auth);
           router.replace('/api/auth/google/start');
           return;
         }

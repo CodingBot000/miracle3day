@@ -51,7 +51,7 @@ export default function CategoryMenu() {
     setTab(tab);
     setSelected1(null);
     setSelected2(null);
-    console.log("recommend clicked:", tab);
+    log.debug("recommend clicked:", tab);
   };
 
   const handleSelect1 = (key: string) => {
@@ -67,7 +67,7 @@ export default function CategoryMenu() {
   };
 
   const handleSelect3 = (key: string) => {
-    console.log("3뎁스 선택:", key);
+    log.debug("3뎁스 선택:", key);
   };
 
   return (

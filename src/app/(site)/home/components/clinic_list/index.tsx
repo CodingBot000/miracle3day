@@ -18,7 +18,7 @@ export default function ClinicListForHome() {
           (item) => item && typeof item.id_uuid === "string"
         );
         setDatas(sanitized);
-        console.log("landing clinics count", sanitized.length);
+        log.debug("landing clinics count", sanitized.length);
       } catch (error) {
         console.error("Failed to fetch featured clinics:", error);
       } finally {

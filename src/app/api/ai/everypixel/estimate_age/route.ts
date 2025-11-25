@@ -5,7 +5,7 @@ export async function POST(req: NextRequest) {
   let imageUrl;
   try {
     const json = await req.json();
-    console.log('JSON 파싱 성공:', json);
+    log.debug('JSON 파싱 성공:', json);
     imageUrl = json.imageUrl;
   } catch (err) {
     console.error('JSON 파싱 실패:', err);
@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
   if (!imageUrl) {
     return NextResponse.json({ error: 'Missing imageUrl' }, { status: 400 });
   }
-  console.log('[API] imageUrl:', imageUrl);
+  log.debug('[API] imageUrl:', imageUrl);
 
   const clientId = process.env.EVERY_PIXEL_CLIENT_ID;
   const secretKey = process.env.EVERY_PIXEL_SECRET_KEY;
@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
     });
 
     const data = await apiResponse.json();
-    console.log('API call success:', data);
+    log.debug('API call success:', data);
     return NextResponse.json(data, { status: apiResponse.status });
   } catch (err) {
     console.error('API call failed:', err);

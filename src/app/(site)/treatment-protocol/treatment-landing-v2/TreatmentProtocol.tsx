@@ -61,7 +61,7 @@ export default function TreatmentProtocol() {
 
   React.useEffect(() => {
     if (topicListResponse) {
-      console.log("[TreatmentProtocol] loaded topics:", topicListResponse.data.length, topicListResponse.data);
+      log.debug("[TreatmentProtocol] loaded topics:", topicListResponse.data.length, topicListResponse.data);
     }
   }, [topicListResponse]);
 
@@ -109,7 +109,7 @@ export default function TreatmentProtocol() {
   }
 
   return (
-    <div className="py-6 space-y-5 min-h-screen bg-gradient-to-br from-[#FDF5F0] via-white to-[#F8E8E0]">
+    <div className="space-y-5 min-h-screen bg-gradient-to-br from-[#FDF5F0] via-white to-[#F8E8E0]">
       {/* Hero */}
       <section className="pt-10 pb-2">
         <div className="text-center">

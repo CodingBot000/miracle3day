@@ -5,7 +5,7 @@ interface HospitalLanguageSupportProps {
 }
 
 const HospitalLanguageSupport = ({ available_language }: HospitalLanguageSupportProps) => {
-  console.log('available_language:',available_language);
+  log.debug('available_language:',available_language);
   return (
     <div className="px-4 py-8 border-b-8 border-gray-50">
       <h2 className="text-lg font-semibold text-black mb-4 leading-[26.6px]">

@@ -33,7 +33,7 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
   const { language } = useCookieLanguage();
   const [isModalOpen, setIsModalOpen] = useState(false);
   
-  console.log('HospitalDetailNewDesign hospitalData:', hospitalData);
+  log.debug('HospitalDetailNewDesign hospitalData:', hospitalData);
   const { hospital_info, hospital_details, doctors, business_hours } = hospitalData;
 
   // Google Places 리뷰 가져오기 (DB 캐시 우선)
@@ -71,7 +71,7 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
-  console.log('HospitalDetailNewDesign hospitalData:' ,hospitalData);
+  log.debug('HospitalDetailNewDesign hospitalData:' ,hospitalData);
   return (
     <div className="max-w-container mx-auto min-h-screen relative">
       {/* Header with back button */}

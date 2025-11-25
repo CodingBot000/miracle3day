@@ -25,7 +25,8 @@ import {
       SKIN_TYPE,
       TREATMENT_EXPERIENCE_BEFORE,
       TREATMENT_GOALS,
-       UPLOAD_PHOTO
+       UPLOAD_PHOTO,
+       VIDEO_CONSULT_SCHEDULE
       } from '@/constants/pre_consult_steps';
 import { isValidEmail } from '@/utils/validators';
 import { CountryCode, CountryInputDto } from '@/app/models/country-code.dto';
@@ -43,6 +44,7 @@ import HealthConditionStep from './questionnaire/HealthConditionStep';
 import BudgetStep from './questionnaire/BudgetStep';
 import { StepData } from '../../models/recommend_estimate.dto';
 import UserInfo from './questionnaire/UserInfoStep';
+import VideoConsultScheduleStep from './questionnaire/VideoConsultScheduleStep';
 
 interface StepComponentProps {
   data: StepData;
@@ -163,8 +165,10 @@ const PreConsultationIntakeForm: React.FC = () => {
         return PrioriotyFactorStep as React.ComponentType<StepComponentProps>;
       case TREATMENT_EXPERIENCE_BEFORE:
         return TreatmentExpBeforeStep as React.ComponentType<StepComponentProps>;
-        case USER_INFO:
+      case USER_INFO:
         return UserInfo as React.ComponentType<StepComponentProps>;
+      case VIDEO_CONSULT_SCHEDULE:
+        return VideoConsultScheduleStep as React.ComponentType<StepComponentProps>;
       // case DEMOGRAPHICS_BASIC:
       //   return DemographicsBasic as React.ComponentType<StepComponentProps>;
       // case VISIT_PATHS:

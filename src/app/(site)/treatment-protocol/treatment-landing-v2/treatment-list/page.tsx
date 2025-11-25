@@ -18,9 +18,9 @@ export default function TreatmentListPage() {
   const { data: treatmentCategories, isLoading, error } = useAllTreatmentCategories();
 
   // 디버깅 로그 추가
-  console.log("=== TreatmentListPage Debug ===");
-  console.log("categoryKey from URL:", categoryKey);
-  console.log("locale from URL:", locale);
+  log.debug("=== TreatmentListPage Debug ===");
+  log.debug("categoryKey from URL:", categoryKey);
+  log.debug("locale from URL:", locale);
   
   // Convert database format to legacy format for compatibility
   const categories = React.useMemo(() => {
@@ -41,7 +41,7 @@ export default function TreatmentListPage() {
       })),
       treatments: category.areas.flatMap((area: any, areaIndex: number) => 
         area.primary_treatments.map((treatment: any, treatmentIndex: number) => {
-          console.log('Treatment summary type:', typeof treatment.summary, treatment.summary);
+          log.debug('Treatment summary type:', typeof treatment.summary, treatment.summary);
           return {
             id: `${treatment.id}_${areaIndex}_${treatmentIndex}`, // 고유 키 생성
             originalId: treatment.id, // 원본 ID 보존
@@ -58,29 +58,29 @@ export default function TreatmentListPage() {
     }));
   }, [treatmentCategories]);
 
-  console.log("Database categories:", categories.map(cat => cat.category_key));
+  log.debug("Database categories:", categories.map(cat => cat.category_key));
 
   // URL parameter로 전달받은 category 찾기 (대소문자 구분 없음)
   const selectedCategory = React.useMemo(() => {
     const found = categories.find(cat => 
       cat.category_key.toLowerCase() === categoryKey?.toLowerCase()
     );
-    console.log("selectedCategory found:", found ? found.category_key : "NOT FOUND");
-    console.log("Case-insensitive comparison - Input:", categoryKey?.toLowerCase(), "Found:", found?.category_key.toLowerCase());
+    log.debug("selectedCategory found:", found ? found.category_key : "NOT FOUND");
+    log.debug("Case-insensitive comparison - Input:", categoryKey?.toLowerCase(), "Found:", found?.category_key.toLowerCase());
     return found;
   }, [categoryKey, categories]);
 
   // 더미 핸들러들 (현재는 콘솔 로그만) - Hook들을 early return 전에 호출
   const handleSelect = React.useCallback((treatment: Treatment) => {
-    console.log('Treatment selected:', treatment.id);
+    log.debug('Treatment selected:', treatment.id);
   }, []);
 
   const handleBook = React.useCallback((treatment: Treatment) => {
-    console.log('Book treatment:', treatment.id);
+    log.debug('Book treatment:', treatment.id);
   }, []);
 
   const handleContact = React.useCallback(() => {
-    console.log('Contact clicked');
+    log.debug('Contact clicked');
   }, []);
 
   if (isLoading) {

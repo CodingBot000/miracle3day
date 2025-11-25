@@ -214,7 +214,7 @@ async function awardBadge(userId: string, badgeId: string): Promise<void> {
       [userId, badgeId]
     );
 
-    console.log(`[BadgeService] Awarded badge ${badgeId} to user ${userId}`);
+    log.debug(`[BadgeService] Awarded badge ${badgeId} to user ${userId}`);
   } catch (error) {
     console.error('[BadgeService] Failed to award badge:', error);
     throw error;
@@ -321,7 +321,7 @@ async function checkAndAwardBadges(
           points,
         });
 
-        console.log(`🏆 Badge awarded: ${badge.code} Lv.${nextLevel} to user ${userId}`);
+        log.debug(`🏆 Badge awarded: ${badge.code} Lv.${nextLevel} to user ${userId}`);
       }
     }
 
@@ -534,7 +534,7 @@ export async function getUserProfile(userId: string): Promise<any> {
 
     // 프로필 없으면 자동 생성 (2차 방어선)
     if (profileResult.rows.length === 0) {
-      console.log(`🔄 Auto-initializing badge system for user: ${userId}`);
+      log.debug(`🔄 Auto-initializing badge system for user: ${userId}`);
       await ensureUserState(userId);
 
       // 재조회

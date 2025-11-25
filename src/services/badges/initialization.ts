@@ -30,7 +30,7 @@ export async function initializeBadgeSystem(userId: string): Promise<boolean> {
       [userId]
     );
 
-    console.log(`✅ Badge system initialized for user: ${userId}`);
+    log.debug(`✅ Badge system initialized for user: ${userId}`);
     return true;
   } catch (error) {
     console.error(`⚠️ Badge initialization failed for user ${userId}:`, error);

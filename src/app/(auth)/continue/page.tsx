@@ -13,7 +13,7 @@ export default function AuthContinuePage() {
         const res = await fetch('/api/auth/session');
         if (res.ok) {
           const data = await res.json();
-          console.log('AuthContinuePage Auth check data:', data);
+          log.debug('AuthContinuePage Auth check data:', data);
           if (data.auth && data.auth.status === 'active') {
             // 이미 인증된 사용자는 마이페이지로
             router.replace('/user/my-page');

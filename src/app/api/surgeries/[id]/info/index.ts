@@ -9,7 +9,7 @@ export const getProcedureInfoAPI = async ({
 }: ProceduresInputDto): Promise<ProceduresOutputDto> => {
   
   const url = `${process.env.NEXT_PUBLIC_API_ROUTE}/api/surgeries/${id_unique}/info`;
-  // console.log('getProcedureInfoAPI url:', url)
+  // log.debug('getProcedureInfoAPI url:', url)
   const data = await fetchUtils<ProceduresOutputDto>({
     url,
     fetchOptions: { cache: "no-cache" },

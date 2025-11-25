@@ -16,7 +16,7 @@ export async function generateMetadata(
   { params, searchParams }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  console.log(`HospitalDetailPage generateMetadata  params:${params} params.id: ${params?.id}  searchParams:${searchParams}`);
+  log.debug(`HospitalDetailPage generateMetadata  params:${params} params.id: ${params?.id}  searchParams:${searchParams}`);
 
   const data = await getHospitalMainAPI({ id: params?.id });
   const previousImages = (await parent).openGraph?.images || [];
@@ -34,7 +34,7 @@ const HospitalDetailPage = async ({
   searchParams,
 }: HospitalDetailPageProps) => {
   const id_uuid_hospital = params?.id;
-  console.log(`HospitalDetailPage async params:${params} params.id: ${params?.id}  searchParams:${searchParams}`);
+  log.debug(`HospitalDetailPage async params:${params} params.id: ${params?.id}  searchParams:${searchParams}`);
 
   if (id_uuid_hospital === "undefined") redirect("/");
 

@@ -13,13 +13,13 @@ export function filterByArea(
 ): Candidate[] {
   const out: Candidate[] = [];
 
-  console.log(`[AREA FILTER] Selected areas:`, areas);
+  log.debug(`[AREA FILTER] Selected areas:`, areas);
 
   for (const c of cands) {
     const treatmentAreas = META[c.key].areas;
     const isMatch = inAreas(c.key, areas);
 
-    console.log(`[AREA FILTER] ${c.key}:`, {
+    log.debug(`[AREA FILTER] ${c.key}:`, {
       treatmentAreas,
       selectedAreas: areas,
       match: isMatch

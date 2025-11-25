@@ -59,15 +59,15 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
   // Zustand store에서 데이터 가져오기
   const reservationUserInfo = useReservationStore.getState().reservationUserInfo;
   
-  console.log("ReservationClient reservationUserInfo", reservationUserInfo);
-  console.log("ReservationClient initialUserData", initialUserData);
+  log.debug("ReservationClient reservationUserInfo", reservationUserInfo);
+  log.debug("ReservationClient initialUserData", initialUserData);
 
   // 컴포넌트 마운트 시 데이터 셋팅
   useEffect(() => {
     const userInfo = initialUserData?.userInfo;
-    console.log('ReservationClient userInfo : ', userInfo);
+    log.debug('ReservationClient userInfo : ', userInfo);
     if (!userInfo) {
-      console.log("ReservationClient userInfo not found");
+      log.debug("ReservationClient userInfo not found");
       // Set default birth date to 20 years ago if no user data
       const defaultDate = new Date();
       defaultDate.setFullYear(defaultDate.getFullYear() - 20);
@@ -146,7 +146,7 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
     try {
       // 폼 데이터 검증
       const newErrors: { [key: string]: string } = {};
-      console.log('🔍 Step 1: Starting validation...');
+      log.debug('🔍 Step 1: Starting validation...');
       
       if (!initialUserData?.userInfo?.id_uuid) newErrors.uuid = 'User UUID is required';
       if (!formData.englishName) newErrors.englishName = 'English name is required';
@@ -159,15 +159,15 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
       if (!formData.agreeReservation) newErrors.agreeReservation = 'Please agree to reservation terms';
       // if (!formData.agreeNoShow) newErrors.agreeNoShow = 'Please agree to no-show policy';
       
-      console.log('🔍 Step 2: Validation errors:', newErrors);
-      console.log('Rservationa aaaaa 2 4 :', initialUserData);
+      log.debug('🔍 Step 2: Validation errors:', newErrors);
+      log.debug('Rservationa aaaaa 2 4 :', initialUserData);
       
       setErrors(newErrors);
       
-      console.log('🔍 Step 3: Error count:', Object.keys(newErrors).length);
+      log.debug('🔍 Step 3: Error count:', Object.keys(newErrors).length);
 
       if (Object.keys(newErrors).length === 0) {
-        console.log('🔍 Step 4: No validation errors, proceeding with API call...');
+        log.debug('🔍 Step 4: No validation errors, proceeding with API call...');
         
         // API 전송 준비
         const reservationData = {
@@ -195,7 +195,7 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
           preferred_languages: formData.interpreterLanguage ? [formData.interpreterLanguage] : []
         };
 
-        console.log('🔍 Step 5: Reservation data ready:', reservationData);
+        log.debug('🔍 Step 5: Reservation data ready:', reservationData);
         
         const response = await fetch(`/api/hospital/${hospitalId}/reservation`, {
           method: "POST",
@@ -203,13 +203,13 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
           body: JSON.stringify(reservationData),
         });
 
-        console.log('🔍 Step 6: API response received:', response.status);
+        log.debug('🔍 Step 6: API response received:', response.status);
         
         const data = await response.json();
-        console.log('🔍 Step 7: API response data:', data);
+        log.debug('🔍 Step 7: API response data:', data);
 
         if (response.ok && data.success) {
-          console.log("✅ Reservation created successfully:", data.data);
+          log.debug("✅ Reservation created successfully:", data.data);
           router.back();
         } else {
           
@@ -217,7 +217,7 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
           alert(data.error || "An error occurred while processing your reservation. Please try again.");
         }
       } else {
-        console.log('🔍 Step 4: Validation failed, not submitting');
+        log.debug('🔍 Step 4: Validation failed, not submitting');
       }
     } catch (err) {
       console.error("🚨 Error in handleConfirm:", err);

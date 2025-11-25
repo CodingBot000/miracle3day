@@ -23,9 +23,9 @@ export default async function HomePage({ searchParams }: CommunityPageProps) {
   const topicId = searchParams?.topic;
   const tagId = searchParams?.tag;
 
-  console.log('=== HomePage (서버) 렌더링됨 ===');
-  console.log('currentView:', currentView);
-  console.log('searchParams:', searchParams);
+  log.debug('=== HomePage (서버) 렌더링됨 ===');
+  log.debug('currentView:', currentView);
+  log.debug('searchParams:', searchParams);
 
   // Questions 뷰일 때
   if (currentView === 'questions') {

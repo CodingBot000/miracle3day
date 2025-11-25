@@ -39,8 +39,8 @@ export async function POST(request: Request) {
       [key: string]: any;
     };
 
-    console.log("[Daily][create-token] status:", dailyRes.status);
-    console.log("[Daily][create-token] response:", data);
+    log.debug("[Daily][create-token] status:", dailyRes.status);
+    log.debug("[Daily][create-token] response:", data);
 
     if (!dailyRes.ok) {
       // Daily 가 준 에러를 그대로 전달

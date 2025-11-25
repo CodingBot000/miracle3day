@@ -54,10 +54,17 @@ interface DemographicsBasic {
   country_of_residence?: string;
 }
 
+interface VideoConsultTimeSlot {
+  rank: number;
+  date: string;
+  startTime: string;
+  endTime: string;
+}
+
 export interface StepData {
   ageRange?: string;
   skinType?: string;
-  skinConcerns?: SkinConcerns; 
+  skinConcerns?: SkinConcerns;
   userInfo?: UserInfo;
 
   treatmentAreas?: TreatmentAreas;
@@ -65,11 +72,13 @@ export interface StepData {
   pastTreatments?: PastTreatments;
   budget?: string;
   goals?: string[];
-  
+
   visitPath?: VisitPath;
   uploadImage?: UploadImage;
   healthConditions?: HealthConditions;
   demographicsBasic?: DemographicsBasic;
- 
-  timeframe?: string;  
+  videoConsultSlots?: VideoConsultTimeSlot[];
+  videoConsultTimezone?: string;
+
+  timeframe?: string;
 }

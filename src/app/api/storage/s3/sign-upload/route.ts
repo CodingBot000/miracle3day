@@ -46,7 +46,6 @@ export async function POST(req: NextRequest) {
       Bucket: BUCKET,
       Key: objectKey,
       ContentType: body.contentType || 'application/octet-stream',
-      ACL: 'public-read',
     });
 
     const signedUrl = await getSignedUrl(s3, command, { expiresIn: 60 });

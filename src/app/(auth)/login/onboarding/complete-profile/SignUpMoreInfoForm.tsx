@@ -92,7 +92,6 @@ export default function SignUpMoreInfoForm() {
         if (data.auth && (data.auth.status === 'active' || data.auth.status === 'pending')) {
           setUser(data.auth);
           setIsSignedIn(true);
-          setForm(prev => ({ ...prev, nickname: data.auth.email?.split('@')[0] || '' }));
         } else {
           log.debug('Auth check failed, redirecting to login. Auth data:', data.auth);
           router.replace('/api/auth/google/start');

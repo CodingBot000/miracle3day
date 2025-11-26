@@ -40,7 +40,7 @@ const STORAGE_IMAGES = "images";
 const STORAGE_HOSPITAL_IMG = "hospitalimg";
 const STORAGE_DOCTOR_IMG = "doctors";
 const STORAGE_MEMBER = "member";
-const BUCKET_USERS = "users";
+
 
 export {
   TABLE_SURGERY_INFO,
@@ -78,5 +78,5 @@ export {
   STORAGE_HOSPITAL_IMG,
   STORAGE_DOCTOR_IMG,
   STORAGE_MEMBER,
-  BUCKET_USERS
+
 }; 

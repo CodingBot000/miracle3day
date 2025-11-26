@@ -13,6 +13,7 @@ import { useEffect, useState, useRef } from "react";
 import { uploadProfileImage } from "@/services/profileImage";
 import { toast } from "sonner";
 import BadgeSection from "@/components/mypage/BadgeSection";
+import { useUserStore } from "@/stores/useUserStore";
 
 interface MyPageMyInfoClientDetailProps {
   user: UserOutputDto;
@@ -24,6 +25,7 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [avatarUrl, setAvatarUrl] = useState<string>(user?.userInfo?.avatar || "/default/profile_default.png");
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { updateAvatar } = useUserStore();
   
   log.debug("MyPageMyInfo user", user);
   log.debug("MyPageMyInfo user?.userInfo?.id_uuid:", user?.userInfo?.id_uuid);
@@ -81,6 +83,7 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
 
       if (result.success && result.imagePath) {
         setAvatarUrl(result.imagePath);
+        updateAvatar(result.imagePath); // 전역 store 업데이트
         toast.success('Profile image updated successfully');
       } else {
         toast.error(`Failed to upload image: ${result.error}`);
@@ -118,33 +121,43 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
 
         <div className="p-4">
           {/* Profile Image Section */}
-          <div className="flex flex-col items-center mb-8">
-            <div className="relative">
-              <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
-                <Image
-                  src={avatarUrl}
-                  alt="Profile"
-                  width={96}
-                  height={96}
-                  className="object-cover"
+          <div className="flex items-start justify-between mb-8">
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+                  <Image
+                    src={avatarUrl}
+                    alt="Profile"
+                    width={96}
+                    height={96}
+                    className="object-cover"
+                  />
+                </div>
+                <button
+                  onClick={handleCameraClick}
+                  disabled={isUploading}
+                  className="absolute bottom-0 right-0 bg-white rounded-full p-2 shadow-md disabled:opacity-50"
+                >
+                  <Camera className="w-5 h-5" />
+                </button>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  className="hidden"
                 />
               </div>
-              <button 
-                onClick={handleCameraClick}
-                disabled={isUploading}
-                className="absolute bottom-0 right-0 bg-white rounded-full p-2 shadow-md disabled:opacity-50"
-              >
-                <Camera className="w-5 h-5" />
-              </button>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="hidden"
-              />
+              <h2 className="text-xl font-medium">{user?.userInfo?.nickname || ""}</h2>
             </div>
-            <h2 className="mt-4 text-xl font-medium">{user?.userInfo?.nickname || ""}</h2>
+            <div className="flex gap-4">
+              <button className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
+                View
+              </button>
+              <button className="px-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors">
+                Edit
+              </button>
+            </div>
           </div>
 
           {/* Badge Section */}

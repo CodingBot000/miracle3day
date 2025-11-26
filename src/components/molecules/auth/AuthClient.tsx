@@ -1,7 +1,5 @@
 "use client";
 
-import { getUserAPI } from "@/app/api/auth/getUser";
-import { UserOutputDto } from "@/app/api/auth/getUser/getUser.dto";
 import { ROUTE } from "@/router";
 import { User as UserIcon } from "lucide-react";
 import Image from "next/image";
@@ -9,39 +7,43 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import LoginRequiredModal from "@/components/template/modal/LoginRequiredModal";
+import { useUserStore } from "@/stores/useUserStore";
 
 type AuthClientProps = {
   iconColor?: string;
 };
 
 export default function AuthClient({ iconColor = "#000" }: AuthClientProps) {
-  const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const router = useRouter();
+  const { userInfo, setUser } = useUserStore();
 
   const checkAuth = useCallback(async () => {
     try {
       const res = await fetch('/api/auth/getUser');
       if (res.ok) {
         const data = await res.json();
-        log.debug('Auth check checkAuth data', data);
         setUser(data.userInfo);
       } else {
-        log.debug('Auth check checkAuth null', null);
-        setUser(null);
+        setUser({});
       }
     } catch (error) {
-      console.error('Auth check checkAuth error:', error);
-      setUser(null);
+      console.error('[AuthClient] checkAuth error:', error);
+      setUser({});
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [setUser]);
 
   useEffect(() => {
+    // 이미 store에 유저 정보가 있으면 API 호출 스킵
+    if (userInfo?.id_uuid) {
+      setLoading(false);
+      return;
+    }
     checkAuth();
-  }, [checkAuth]);
+  }, [checkAuth, userInfo?.id_uuid]);
 
   const handleLoginClick = () => {
     setShowLoginModal(true);
@@ -58,7 +60,7 @@ export default function AuthClient({ iconColor = "#000" }: AuthClientProps) {
 
   if (loading) return null;
 
-  if (!user) {
+  if (!userInfo?.id_uuid) {
     return (
       <>
         <button
@@ -82,9 +84,9 @@ export default function AuthClient({ iconColor = "#000" }: AuthClientProps) {
     <div className="flex items-center gap-2">
       <Link href={ROUTE.MY_PAGE}>
         <div className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden cursor-pointer hover:opacity-80 transition-opacity">
-          {user.avatar ? (
+          {userInfo.avatar ? (
             <Image
-              src={user.avatar}
+              src={userInfo.avatar}
               alt="Profile"
               width={25}
               height={25}

@@ -98,6 +98,7 @@ export async function GET(req: Request) {
           provider_user_id: providerUserId,
           email,
           avatar: payload.picture as string,
+          name: payload.name as string,
           status: "pending",
         };
         await session.save();
@@ -117,6 +118,7 @@ export async function GET(req: Request) {
           provider_user_id: providerUserId,
           email,
           avatar: payload.picture as string,
+          name: payload.name as string,
           status: "pending",
         };
         await session.save();
@@ -131,6 +133,7 @@ export async function GET(req: Request) {
         provider_user_id: providerUserId,
         email,
         avatar: payload.picture as string,
+        name: payload.name as string,
         status: "active",
         id_uuid: memberId,
       };
@@ -146,6 +149,7 @@ export async function GET(req: Request) {
         provider_user_id: providerUserId,
         email,
         avatar: payload.picture as string,
+        name: payload.name as string,
         status: "pending",
       };
       await session.save();

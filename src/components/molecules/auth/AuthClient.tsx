@@ -22,11 +22,11 @@ export default function AuthClient({ iconColor = "#000" }: AuthClientProps) {
 
   const checkAuth = useCallback(async () => {
     try {
-      const res = await fetch('/api/auth/session');
+      const res = await fetch('/api/auth/getUser');
       if (res.ok) {
         const data = await res.json();
         log.debug('Auth check checkAuth data', data);
-        setUser(data.auth);
+        setUser(data.userInfo);
       } else {
         log.debug('Auth check checkAuth null', null);
         setUser(null);
@@ -58,7 +58,7 @@ export default function AuthClient({ iconColor = "#000" }: AuthClientProps) {
 
   if (loading) return null;
 
-  if (!user || user.status !== 'active') {
+  if (!user) {
     return (
       <>
         <button

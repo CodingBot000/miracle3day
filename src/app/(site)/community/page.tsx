@@ -1,3 +1,4 @@
+import { log } from '@/utils/logger';
 import { cookies } from "next/headers";
 import { Suspense } from 'react';
 import QuestionsView from './QuestionsView';

@@ -1,3 +1,4 @@
+import { log } from '@/utils/logger';
 import {
   GetTreatmentCareProtocolsParams,
   GetTreatmentCareProtocolsResponse,

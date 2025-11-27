@@ -1,3 +1,4 @@
+import { log } from '@/utils/logger';
 import { Metadata, ResolvingMetadata } from "next";
 import { capitalizeWord } from "@/utils/word";
 import { procedureMapper } from "@/constants";
@@ -78,8 +79,8 @@ const ProcedureDetailPage = async ({
     
     const src = imageurls[0]
 
-    const parsedData = description.replace(/\\"/g, '"');
-    const descriptionArray = parsedData.split('\\n')
+    const parsedData = description.replace(/\"/g, '"');
+    const descriptionArray = parsedData.split('\n')
  
     return (
       <main>
@@ -112,7 +113,8 @@ const ProcedureDetailPage = async ({
           ))}
                     {/* <div style={{ whiteSpace: "pre-wrap"}}> */}
                 {/* {description} */}
-            {/* {description.split(/\n/).map((line, index) => (
+            {/* {description.split(/
+/).map((line, index) => (
                     <React.Fragment key={index}>
                         {line}
                         <br />

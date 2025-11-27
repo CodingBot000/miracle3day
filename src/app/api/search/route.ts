@@ -1,3 +1,4 @@
+import { log } from '@/utils/logger';
 import { NextResponse } from "next/server";
 import { TABLE_EVENT, TABLE_HOSPITAL, TABLE_REVIEW } from "@/constants/tables";
 import { q } from "@/lib/db";

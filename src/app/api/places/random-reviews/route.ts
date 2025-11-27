@@ -9,6 +9,7 @@ export const dynamic = 'force-dynamic';
 
 import { NextRequest, NextResponse } from 'next/server';
 import { pool } from '@/lib/db';
+import { log } from '@/utils/logger';
 
 export async function GET(req: NextRequest) {
   try {

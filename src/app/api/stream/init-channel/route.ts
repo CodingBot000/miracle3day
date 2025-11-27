@@ -1,3 +1,4 @@
+import { log } from '@/utils/logger';
 import { NextRequest, NextResponse } from 'next/server';
 import { StreamChat } from 'stream-chat';
 import { getUserAPIServer } from '@/app/api/auth/getUser/getUser.server';

@@ -1,3 +1,4 @@
+import { log } from '@/utils/logger';
 import { YouCamAuth } from './auth';
 import { 
   SkinConcern, 
@@ -117,10 +118,10 @@ export class YouCamSkinAnalysis {
   }
 
   public async uploadImage(imageFile: File | Buffer, mode: 'SD' | 'HD' = 'SD'): Promise<string> {
-    log.debug('\\n=== Starting image upload ===');
+    log.debug('\n=== Starting image upload ===');
     
     let fileName = imageFile instanceof File ? imageFile.name : 'image.jpg';
-    fileName = fileName.replace(/\\s+/g, '_').replace(/[^a-zA-Z0-9._-]/g, '');
+    fileName = fileName.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9._-]/g, '');
     if (!fileName.includes('.')) {
       fileName = `image.jpg`;
     }
@@ -212,7 +213,7 @@ export class YouCamSkinAnalysis {
   public async analyzeSkin(request: SkinAnalysisRequest): Promise<string> {
     this.validateConcerns(request.concerns);
 
-    log.debug('\\n=== Starting skin analysis task ===');
+    log.debug('\n=== Starting skin analysis task ===');
     
     const endpoint = `${this.baseUrl}/s2s/v1.0/task/skin-analysis`;
     log.debug('Task endpoint:', endpoint);
@@ -264,7 +265,8 @@ export class YouCamSkinAnalysis {
     const errors: string[] = [];
     
     for (const format of payloadFormats) {
-      log.debug(`\nTrying payload format: ${format.name}`);
+      log.debug(`
+Trying payload format: ${format.name}`);
       log.debug('Request body:', JSON.stringify(format.body, null, 2));
     
       const response = await this.auth.makeAuthenticatedRequest(endpoint, {
@@ -333,7 +335,7 @@ export class YouCamSkinAnalysis {
     taskId: string, 
     maxRetries: number = 30
   ): Promise<SkinAnalysisResponse> {
-    log.debug('\\n=== Waiting for task completion ===');
+    log.debug('\n=== Waiting for task completion ===');
     
     for (let i = 0; i < maxRetries; i++) {
       log.debug(`Polling attempt ${i + 1}/${maxRetries}`);

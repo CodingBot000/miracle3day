@@ -1,3 +1,4 @@
+import { log } from '@/utils/logger';
 import { NextRequest, NextResponse } from 'next/server';
 import { q } from '@/lib/db';
 import { getUserAPIServer } from '@/app/api/auth/getUser/getUser.server';

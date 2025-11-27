@@ -1,5 +1,8 @@
 "use client";
 
+import { log } from '@/utils/logger';
+
+
 import * as React from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";

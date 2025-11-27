@@ -1,3 +1,4 @@
+import { log } from '@/utils/logger';
 import { getHospitalMainAPI } from "@/app/api/hospital/[id]/main";
 import { redirect } from "next/navigation";
 import { Metadata, ResolvingMetadata } from "next";

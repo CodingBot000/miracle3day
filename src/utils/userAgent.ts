@@ -1,3 +1,4 @@
+import { log } from '@/utils/logger';
 /**
  * User-Agent 감지 유틸리티
  * 웹뷰 환경과 일반 웹 환경을 구분하기 위한 함수들

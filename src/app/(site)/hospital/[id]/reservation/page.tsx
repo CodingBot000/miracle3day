@@ -1,3 +1,4 @@
+import { log } from '@/utils/logger';
 import { getUserAPIServer } from '@/app/api/auth/getUser/getUser.server';
 import ReservationClient from './ReservationClient';
 import { redirect } from 'next/navigation';

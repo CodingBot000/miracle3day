@@ -1,6 +1,7 @@
 // src/components/image/ImageUploaderWithCompressionExample.tsx
 "use client";
 
+import { log } from '@/utils/logger';
 import React, { useState } from "react";
 import {
   compressSingleImage,

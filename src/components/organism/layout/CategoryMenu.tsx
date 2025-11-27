@@ -1,4 +1,7 @@
 "use client";
+
+import { log } from '@/utils/logger';
+
 import { useState } from "react";
 import CategoryDepth1 from "./CategoryDepth1";
 import CategoryDepth2 from "./CategoryDepth2";

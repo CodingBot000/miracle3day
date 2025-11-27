@@ -1,5 +1,8 @@
 "use client";
 
+import { log } from '@/utils/logger';
+
+
 import { getHospitalReviewListByHospitalIdAPI } from "@/app/api/hospital/[id]/review";
 // import { HospitalDetailReviewOutDto } from "@/app/api/hospital/[id]/review/review";
 import { HospitalDetailReviewOutDto } from "@/app/models/reviewData.dto";

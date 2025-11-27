@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 "use client";
 
+import { log } from '@/utils/logger';
 import * as React from "react";
 import { categories } from "@/constants/treatment/sample-data";
 import type { Category, Treatment } from "@/constants/treatment/types";

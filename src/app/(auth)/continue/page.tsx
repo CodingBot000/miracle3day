@@ -1,5 +1,6 @@
 'use client';
 
+import { log } from '@/utils/logger';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 

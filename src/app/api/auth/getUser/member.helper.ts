@@ -1,3 +1,4 @@
+import { log } from '@/utils/logger';
 import { q } from '@/lib/db';
 import { TABLE_MEMBERS } from '@/constants/tables';
 

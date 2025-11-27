@@ -1,3 +1,4 @@
+import { log } from '@/utils/logger';
 import { fetchUtils } from "@/utils/fetch";
 import { EventDataListInputDto, EventDataListOutputDto } from "./event.dto";
 

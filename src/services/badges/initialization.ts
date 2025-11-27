@@ -1,3 +1,4 @@
+import { log } from '@/utils/logger';
 /**
  * Badge System Initialization
  * Non-blocking badge initialization for user registration

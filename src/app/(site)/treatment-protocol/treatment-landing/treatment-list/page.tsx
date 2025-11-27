@@ -1,5 +1,8 @@
 "use client";
 
+import { log } from '@/utils/logger';
+
+
 import * as React from "react";
 import { useSearchParams } from "next/navigation";
 import { categories } from "@/constants/treatment/sample-data";

@@ -1,3 +1,4 @@
+import { log } from '@/utils/logger';
 import { ParsedAnalysisResult, ScoreInfo, SkinConcern, SkinScore } from './types';
 import { promisify } from 'util';
 import { unzip } from 'zlib';

@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 "use client";
 
+import { log } from '@/utils/logger';
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { useTopicList, useSurgeryProtocols } from "@/hooks/useTreatmentData";

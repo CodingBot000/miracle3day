@@ -1,5 +1,6 @@
 'use client';
 
+import { log } from '@/utils/logger';
 import { useState } from 'react';
 
 export default function AgeChecker() {

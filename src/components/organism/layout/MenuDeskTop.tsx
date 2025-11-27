@@ -1,5 +1,8 @@
 "use client";
 
+import { log } from '@/utils/logger';
+
+
 import { useEffect, useState, useRef } from "react";
 import { clsx } from "clsx";
 import { MenuIcon } from "@/components/icons/menu";

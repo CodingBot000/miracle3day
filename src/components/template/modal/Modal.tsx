@@ -1,5 +1,8 @@
 "use client";
 
+import { log } from '@/utils/logger';
+
+
 import { PropsWithChildren, ReactNode } from "react";
 import {
   Dialog,

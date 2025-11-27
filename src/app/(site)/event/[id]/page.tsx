@@ -1,3 +1,4 @@
+import { log } from '@/utils/logger';
 
 import { Chip } from "@/components/atoms/Chip";
 import styles from "./event-detail.module.scss";
@@ -53,18 +54,28 @@ const EventDetailPage = async ({ params: { id } }: EventDetailPageProps) => {
   const price = data[0].price;
   const desc = eventData.description;
   log.debug(`qq qq EventDetailPage 
-    id:${id}\n
-    eventData:${eventData}\n
-    hospitalData:${hospitalData}\n
-    hospitalUUID:${hospitalUUID}\n
-    surgeryData:${surgeryData}\n
+    id:${id}
+
+    eventData:${eventData}
+
+    hospitalData:${hospitalData}
+
+    hospitalUUID:${hospitalUUID}
+
+    surgeryData:${surgeryData}
+
     
 
-    title:${title}\n
-    dateFrom:${dateFrom}\n
-    dateTo:${dateTo}\n
-    price:${price}\n
-    desc:${desc}\n
+    title:${title}
+
+    dateFrom:${dateFrom}
+
+    dateTo:${dateTo}
+
+    price:${price}
+
+    desc:${desc}
+
     `);
 
  

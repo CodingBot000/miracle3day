@@ -29,13 +29,3 @@ export const log = {
 
 // 타입 내보내기
 export type Logger = typeof log;
-
-// 전역 타입 선언
-declare global {
-  var log: Logger;
-}
-
-// 전역 등록 (서버와 클라이언트 공통)
-if (typeof globalThis !== 'undefined') {
-  (globalThis as any).log = log;
-}

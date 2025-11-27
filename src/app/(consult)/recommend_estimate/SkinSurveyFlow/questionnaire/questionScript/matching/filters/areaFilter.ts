@@ -1,3 +1,4 @@
+import { log } from '@/utils/logger';
 import { Candidate, AreaId, ExcludedItem } from '@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/types';
 import { inAreas } from '@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/utils/helpers';
 import { META } from '@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/constants/treatmentMeta';

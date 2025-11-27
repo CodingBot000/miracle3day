@@ -1,4 +1,7 @@
 "use client";
+
+import { log } from '@/utils/logger';
+
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SKIN_BEAUTY_CATEGORIES } from "@/app/(site)/contents/category/skinBeautyCategories";

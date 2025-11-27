@@ -1,3 +1,4 @@
+import { log } from '@/utils/logger';
 /**
  * Badge Service - Core badge management logic
  * Handles badge awarding, user state updates, and badge queries

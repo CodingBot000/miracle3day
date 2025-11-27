@@ -1,3 +1,4 @@
+import { log } from '@/utils/logger';
 import { Candidate, AreaId, ExcludedItem } from '@/app/(consult)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/types';
 import { inAreas } from '@/app/(consult)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/utils/helpers';
 import { META } from '@/app/(consult)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/constants/treatmentMeta';

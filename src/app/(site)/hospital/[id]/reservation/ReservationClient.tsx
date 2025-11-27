@@ -1,5 +1,6 @@
 'use client';
 
+import { log } from '@/utils/logger';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { FiArrowLeft, FiCalendar, FiAlertTriangle } from 'react-icons/fi';

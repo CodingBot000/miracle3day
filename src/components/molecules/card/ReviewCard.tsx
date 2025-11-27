@@ -1,3 +1,4 @@
+import { log } from '@/utils/logger';
 import Image from "next/image";;
 
 import { formatDate } from "@/app/utils/date/formatDate";

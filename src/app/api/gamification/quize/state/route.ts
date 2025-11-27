@@ -1,3 +1,4 @@
+import { log } from '@/utils/logger';
 export const runtime = 'edge';
 import { NextResponse } from 'next/server';
 import { createBadgeStore } from '@/lib/gamification/adapters/badgeStore';

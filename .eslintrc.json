@@ -5,10 +5,17 @@
     "plugin:react/recommended"
   ],
   "rules": {
-    "react-hooks/rules-of-hooks": "error",         // 훅은 컴포넌트나 커스텀 훅에서만 사용
-    "react-hooks/exhaustive-deps": "warn",         // 의존성 빠짐 경고
-    "@next/next/no-async-client-component": "error", // client 컴포넌트에서 async 금지
-    "react/react-in-jsx-scope": "off"
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "@next/next/no-async-client-component": "error",
+    "react/react-in-jsx-scope": "off",
+    "no-restricted-globals": [
+      "error",
+      {
+        "name": "log",
+        "message": "Import log from '@/utils/logger' instead of using global log."
+      }
+    ]
   },
   "parserOptions": {
     "ecmaVersion": 2020,
@@ -16,5 +23,5 @@
     "ecmaFeatures": {
       "jsx": true
     }
-  } 
+  }
 }

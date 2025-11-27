@@ -1,5 +1,8 @@
 "use client";
 
+import { log } from '@/utils/logger';
+
+
 import Link from "next/link";
 import Image from "next/image";;
 import { ROUTE } from "@/router";

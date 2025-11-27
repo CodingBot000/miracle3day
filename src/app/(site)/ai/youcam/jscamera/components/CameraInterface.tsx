@@ -1,5 +1,6 @@
 'use client';
 
+import { log } from '@/utils/logger';
 import { useRef, useState, useCallback, useEffect } from 'react';
 import Script from 'next/script';
 

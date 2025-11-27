@@ -1,5 +1,8 @@
 "use client";
 
+import { log } from '@/utils/logger';
+
+
 import { useEffect, useMemo, useState } from "react";
 import { ROUTE } from "@/router";
 import { getHospitalBeautyAPI } from "@/app/api/home/hospital";

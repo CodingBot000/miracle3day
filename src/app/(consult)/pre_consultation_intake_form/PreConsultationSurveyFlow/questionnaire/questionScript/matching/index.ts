@@ -1,3 +1,4 @@
+import { log } from '@/utils/logger';
 /**
  * 메인 추천 엔진
  * 기존 matchingDiagnosis.ts의 recommendTreatments 함수를 리팩토링

@@ -1,5 +1,8 @@
 "use client";
 
+import { log } from '@/utils/logger';
+
+
 import { useState } from "react";
 import { HospitalDetailMainOutput } from "@/app/api/hospital/[id]/main/main.dto";
 // import Image from "next/image";;

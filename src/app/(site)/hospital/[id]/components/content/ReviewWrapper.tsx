@@ -1,3 +1,4 @@
+import { log } from '@/utils/logger';
 
 import SuspenseWrapper from "@/components/atoms/SuspenseWrapper";
 import dynamicImport from "next/dynamic";

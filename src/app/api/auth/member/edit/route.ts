@@ -1,3 +1,4 @@
+import { log } from '@/utils/logger';
 import { NextResponse, NextRequest } from "next/server";
 import { getAuthSession } from "@/lib/auth-helper";
 import { TABLE_MEMBERS } from "@/constants/tables";

@@ -1,3 +1,4 @@
+import { log } from '@/utils/logger';
 import crypto from 'crypto';
 
 interface AuthResponse {
@@ -37,7 +38,9 @@ export class YouCamAuth {
     const timestamp = Date.now();
     const payload = `client_id=${this.apiKey}&timestamp=${timestamp}`;
     
-    const publicKey = `-----BEGIN PUBLIC KEY-----\n${this.secretKey}\n-----END PUBLIC KEY-----`;
+    const publicKey = `-----BEGIN PUBLIC KEY-----
+${this.secretKey}
+-----END PUBLIC KEY-----`;
     
     const encrypted = crypto.publicEncrypt(
       {

@@ -1,3 +1,4 @@
+import { log } from '@/utils/logger';
 /**
  * Sync orchestration: PlaceID → Google API → DB upsert
  */

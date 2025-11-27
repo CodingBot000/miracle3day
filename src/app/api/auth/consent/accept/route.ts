@@ -1,3 +1,4 @@
+import { log } from '@/utils/logger';
 import { getIronSession } from "iron-session";
 import { sessionOptions } from "@/lib/session";
 import { NextResponse } from "next/server";

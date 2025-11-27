@@ -1,5 +1,6 @@
 'use client';
 
+import { log } from '@/utils/logger';
 import { useRouter } from 'next/navigation';
 import React, { useCallback, useEffect, useState } from 'react';
 import type { ChangeEvent } from 'react';

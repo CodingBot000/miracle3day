@@ -33,6 +33,7 @@ import BeautyPartners from "@/app/(site)/partners/BeautyPartners";
 import QuestionsView from "../community/QuestionsView";
 import HeadSection from "./HeadSection";
 import { motion } from "framer-motion";
+import KBeautyGuideSection from "./components/KBeautyGuideSeciont";
 
 export default async function HomePage() {
   // const bannerItem = await getBannerAPI();
@@ -101,18 +102,16 @@ export default async function HomePage() {
           <HeadSection />
 {/* <UploadTestViaServer /> */}
           {/* <MiddleSection1 /> */}
-          <section className="w-full flex flex-col items-center gap-10 px-4 py-12">
-      {/* Heading */}
-        
-
-        <div
-          className="text-center text-2xl md:text-4xl font-bold tracking-tight">
-          {t(lang, "오늘의 핫 이슈", "Today's Hot Issue")}
-        </div>
-        <div
-          className="text-center text-sm md:text-xl font-gray-200 tracking-tight">
-          {t(lang, "다른 사람들의 다양한 의견이 궁금하지않나요? 참여하고 다른 사람들의 의견도 확인해보세요!", 
-            "Curious about what others think? Join in and see a variety of opinions from different people!")}
+          <section className="w-full flex flex-col items-center px-4 py-12">
+        {/* Heading */}
+        <div className="text-center">
+          <div className="text-2xl md:text-4xl font-bold tracking-tight">
+            {t(lang, "오늘의 핫 이슈", "Today's Hot Issue")}
+          </div>
+          <div className="text-sm md:text-xl text-gray-500 tracking-tight mt-2">
+            {t(lang, "다른 사람들의 다양한 의견이 궁금하지않나요? 참여하고 다른 사람들의 의견도 확인해보세요!",
+              "Curious about what others think? Join in and see a variety of opinions from different people!")}
+          </div>
         </div>
         <QuestionsView isMainPage={true} />
   
@@ -138,14 +137,16 @@ export default async function HomePage() {
         {/* Random Reviews Infinite Scroll */}
         <ReviewScrollSection />
         <div className="mb-2 md:mb-4">
-                <WhyKoreaButton />
+          <KBeautyGuideSection />
+          </div>
+                {/* <WhyKoreaButton />
               </div>
               <div className="mb-2 md:mb-4">
                 <AgeGuideCTA />
               </div>
               <div className="mb-2 md:mb-4">
                 <BeautyPartners />
-              </div>
+              </div> */}
 
 
           {/* <div className="text-right mt-24 px-4">
@@ -184,11 +185,11 @@ export default async function HomePage() {
      
 
         {/* </section> */}
-        {/* <TreatmentBasedAgeGuide /> */}
-        {/* <AgeGuideCTA />
+        {/* <TreatmentBasedAgeGuide />
+         <AgeGuideCTA />
 
 
-        <BeautyPartners /> */}
+        <BeautyPartners />  */}
       {/* <section className="max-w-container mx-auto mt-20">
             <div className="my-8 px-4 md:px-6 lg:px-8">
 

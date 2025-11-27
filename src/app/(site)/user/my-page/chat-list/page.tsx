@@ -6,13 +6,29 @@ import { ChevronLeft, MessageCircle, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import LottieLoading from "@/components/atoms/LottieLoading";
 
+interface ChannelMember {
+  user_id: string;
+  nickname: string;
+  image?: string;
+  user_type?: 'customer' | 'hospital';
+}
+
 interface ChannelData {
   channel_url: string;
+  channel_id: string;
   name: string;
   custom_type: string;
   data: string;
   member_count: number;
-  members: Array<{ user_id: string; nickname: string }>;
+  members: ChannelMember[];
+  hospital_id?: string;
+  hospital_name?: string;
+  last_message?: {
+    text: string;
+    created_at: string;
+    user_id: string;
+  } | null;
+  last_message_at?: string;
 }
 
 export default function ChatListPage() {
@@ -38,8 +54,8 @@ export default function ChatListPage() {
 
         setUserId(memberUuid);
 
-        // 2. 채널 리스트 가져오기
-        const channelRes = await fetch(`/api/chat/channels?userId=${memberUuid}`);
+        // 2. 채널 리스트 가져오기 (Stream Chat API)
+        const channelRes = await fetch('/api/stream/channels');
         const channelData = await channelRes.json();
 
         if (channelData.ok) {
@@ -61,6 +77,11 @@ export default function ChatListPage() {
   };
 
   const getHospitalIdFromChannel = (channel: ChannelData): string | null => {
+    // 먼저 직접 hospital_id 필드 확인
+    if (channel.hospital_id) {
+      return channel.hospital_id;
+    }
+    // fallback: data JSON 파싱
     try {
       const meta = JSON.parse(channel.data);
       return meta.hospital_id_uuid || null;
@@ -70,10 +91,20 @@ export default function ChatListPage() {
   };
 
   const getHospitalNameFromChannel = (channel: ChannelData): string => {
-    // 채널 이름이 member nickname으로 설정되어 있으므로,
-    // 상대방(병원)의 nickname을 찾아야 합니다
-    const otherMember = channel.members.find(m => m.user_id !== userId);
-    return otherMember?.nickname || channel.name || "Unknown Hospital";
+    // 먼저 직접 hospital_name 필드 확인
+    if (channel.hospital_name) {
+      return channel.hospital_name;
+    }
+    // fallback: 상대방(병원)의 nickname을 찾기
+    const otherMember = channel.members.find(
+      m => m.user_id !== userId && m.user_type === 'hospital'
+    );
+    if (otherMember?.nickname) {
+      return otherMember.nickname;
+    }
+    // 그래도 없으면 userId가 아닌 다른 멤버
+    const anyOtherMember = channel.members.find(m => m.user_id !== userId);
+    return anyOtherMember?.nickname || channel.name || "Unknown Hospital";
   };
 
   if (isLoading) {

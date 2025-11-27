@@ -240,7 +240,7 @@ export default function SignUpMoreInfoForm() {
         </div>
 
         <div className="space-y-1">
-          {/* <Label className="text-sm font-medium text-slate-600">Country</Label> */}
+          <Label htmlFor="nationality">Nationality</Label>
           <NationModal
             nation={nation?.country_name || ''}
             onSelect={(value: CountryCode) => setNation(value)}

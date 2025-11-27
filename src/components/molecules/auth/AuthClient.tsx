@@ -90,7 +90,7 @@ export default function AuthClient({ iconColor = "#000" }: AuthClientProps) {
               alt="Profile"
               width={25}
               height={25}
-              className="object-cover"
+              className="object-cover w-full h-full"
             />
           ) : (
             <UserIcon size={24} style={{ color: iconColor }} />

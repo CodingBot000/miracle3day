@@ -88,7 +88,7 @@
 //   const [exchangeRateInfo, setExchangeRateInfo] = useState<ExchangeRateData | null>(null);
   
 //   const handleNext = () => {
-//     router.replace('https://mimotok.cloud/hospital');
+//     router.replace('https://mimotok.com/hospital');
 //     // router.replace('/estimate/SkinSurveyFlow/questionnaire/complete');
 //   };
 

@@ -15,7 +15,7 @@ import GA4PageViewTracker from "@/components/common/GA4PageView";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://mimotok.cloud"),
+  metadataBase: new URL("https://www.mimotok.com"),
 title: "MimoTok - Your Beauty Journey",
   description:
     "Find the best beauty clinics and treatments in Korea. Book appointments, read reviews, and get expert advice.",

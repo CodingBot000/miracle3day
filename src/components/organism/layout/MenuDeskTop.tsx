@@ -53,7 +53,7 @@ const Menu = () => {
     <div className="flex items-center">
       <MenuIcon
         onClick={() => {
-          console.log("Menu Clicked open", open);
+          log.debug("Menu Clicked open", open);
           handleOpenModal();
         }}
       />

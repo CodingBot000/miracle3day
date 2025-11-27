@@ -146,8 +146,8 @@ class TreatmentService {
     }
 
     // Debug: Log available areas
-    console.log(`[TreatmentService] Looking for area_id: "${areaId}" in topic "${topicId}"`);
-    console.log(`[TreatmentService] Available areas:`, category.areas.map(a => ({
+    log.debug(`[TreatmentService] Looking for area_id: "${areaId}" in topic "${topicId}"`);
+    log.debug(`[TreatmentService] Available areas:`, category.areas.map(a => ({
       area_id: a.area_id,
       area_name_ko: a.area_name_ko,
       sequence_length: Array.isArray(a.sequence) ? a.sequence.length : 'not array',
@@ -170,7 +170,7 @@ class TreatmentService {
       throw new Error(`Area not found for topic "${topicId}"`);
     }
 
-    console.log(`[TreatmentService] Found targetArea:`, {
+    log.debug(`[TreatmentService] Found targetArea:`, {
       area_id: targetArea.area_id,
       requested_area_id: areaId,
       match: targetArea.area_id === areaId,

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { log } from '@/utils/logger';
 
 const AUTH_REQUIRED_PATHS = [
   "/user",
@@ -12,20 +13,20 @@ function isAuthRequiredPath(pathname: string) {
 
 export async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
-  console.log('[middleware] path:', path);
+  log.debug('[middleware] path:', path);
 
   if (isAuthRequiredPath(path)) {
-    console.log('[middleware] auth required path detected:', path);
+    log.debug('[middleware] auth required path detected:', path);
     const sessionCookie = req.cookies.get('app_session');
-    console.log('[middleware] session cookie exists:', !!sessionCookie);
+    log.debug('[middleware] session cookie exists:', !!sessionCookie);
     if (!sessionCookie) {
-      console.log("middleware: redirect unauthenticated user to login");
+      log.debug("middleware: redirect unauthenticated user to login");
       const redirectRes = NextResponse.redirect(new URL("/api/auth/google/start", req.url));
       return ensureLangCookie(req, redirectRes);
     }
-    console.log('[middleware] auth check passed, continuing');
+    log.debug('[middleware] auth check passed, continuing');
   } else {
-    console.log('[middleware] public path, passing through:', path);
+    log.debug('[middleware] public path, passing through:', path);
   }
 
   const response = NextResponse.next();

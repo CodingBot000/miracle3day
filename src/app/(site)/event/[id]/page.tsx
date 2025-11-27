@@ -38,7 +38,7 @@ interface EventDetailPageProps {
 }
 
 const EventDetailPage = async ({ params: { id } }: EventDetailPageProps) => {
-  console.log("EventDetailPage id:", id);
+  log.debug("EventDetailPage id:", id);
   const { data } = await getEventDetailAPI({ id });
 
   if (!data) return <LoadingSpinner backdrop />;
@@ -52,7 +52,7 @@ const EventDetailPage = async ({ params: { id } }: EventDetailPageProps) => {
   const dateTo = eventData.date_to;
   const price = data[0].price;
   const desc = eventData.description;
-  console.log(`qq qq EventDetailPage 
+  log.debug(`qq qq EventDetailPage 
     id:${id}\n
     eventData:${eventData}\n
     hospitalData:${hospitalData}\n

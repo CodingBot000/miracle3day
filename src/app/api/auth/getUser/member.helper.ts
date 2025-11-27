@@ -9,7 +9,7 @@ const LOOKUP_QUERIES = [
 
 export async function findMemberByUserId(userId: string): Promise<MemberRow> {
   if (!userId) {
-    console.log('findMemberByUserId: userId is empty');
+    log.debug('findMemberByUserId: userId is empty');
     return null;
   }
 
@@ -17,15 +17,15 @@ export async function findMemberByUserId(userId: string): Promise<MemberRow> {
     try {
       const rows = await q<Record<string, any>>(sql, [userId]);
       if (rows[0]) {
-        console.log('findMemberByUserId: Found member with query:', sql);
+        log.debug('findMemberByUserId: Found member with query:', sql);
         return rows[0];
       }
     } catch (error) {
-      console.log('findMemberByUserId: Query failed:', sql, error instanceof Error ? error.message : error);
+      log.debug('findMemberByUserId: Query failed:', sql, error instanceof Error ? error.message : error);
       // ignore column errors and continue to next strategy
     }
   }
 
-  console.log('findMemberByUserId: No member found for userId:', userId);
+  log.debug('findMemberByUserId: No member found for userId:', userId);
   return null;
 }

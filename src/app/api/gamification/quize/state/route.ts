@@ -5,7 +5,7 @@ import { getAuthSession } from "@/lib/auth-helper";
 
 export async function GET(req: Request) {
   try {
-    console.log('[QuizState] Starting GET request');
+    log.debug('[QuizState] Starting GET request');
 
     const authSession = await getAuthSession(req); if (!authSession) return NextResponse.json({ error: "Unauthorized" }, { status: 401 }); const { userId } = authSession;
 
@@ -14,20 +14,20 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    console.log('[QuizState] User ID:', userId);
+    log.debug('[QuizState] User ID:', userId);
 
     const store = createBadgeStore();
-    console.log('[QuizState] Store created');
+    log.debug('[QuizState] Store created');
 
     const { quiz_rules } = await store.getConfig();
-    console.log('[QuizState] Config loaded:', quiz_rules);
+    log.debug('[QuizState] Config loaded:', quiz_rules);
 
     const now = new Date();
     const ymd = new Intl.DateTimeFormat('sv-SE', { timeZone: quiz_rules.reset_tz || 'Asia/Seoul' })
       .format(now).slice(0, 10).replaceAll('-', '');
-    console.log('[QuizState] Date (YYYYMMDD):', ymd);
+    log.debug('[QuizState] Date (YYYYMMDD):', ymd);
 
-    console.log('[QuizState] Fetching parallel data...');
+    log.debug('[QuizState] Fetching parallel data...');
     const [todayCount, streakDays, badges, master, nextQuestion] = await Promise.all([
       store.getTodaySolvedCount(userId, ymd),
       store.getStreakDays(userId, ymd),
@@ -36,7 +36,7 @@ export async function GET(req: Request) {
       store.getNextQuestion(userId)
     ]);
 
-    console.log('[QuizState] Data fetched:', { todayCount, streakDays, badgesCount: badges.length, masterCount: master.length });
+    log.debug('[QuizState] Data fetched:', { todayCount, streakDays, badgesCount: badges.length, masterCount: master.length });
 
     return NextResponse.json({
       today: { count: todayCount, quota: quiz_rules.daily_full_reward_quota },

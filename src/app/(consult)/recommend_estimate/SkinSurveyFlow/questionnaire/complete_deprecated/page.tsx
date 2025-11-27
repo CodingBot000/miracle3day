@@ -36,7 +36,7 @@ export default function CompleteStep() {
   
   const handleNext = () => {
       // router.replace('/'); // 항상 루트("/")로 이동
-      router.replace('https://mimotok.cloud/hospital');
+      router.replace('https://mimotok.com/hospital');
   };
 
   useEffect(() => {

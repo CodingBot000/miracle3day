@@ -10,14 +10,18 @@ export async function POST(request: NextRequest) {
     const submissionId = data.submissionId;
     const formVersion = 1;
 
-    // Private Info
+    // Determine submission type: 'video_consult' or 'recommendation'
+    const submissionType = data.submissionType === 'video_consult' ? 'video_consult' : 'recommendation';
+
+    // Private Info (userInfo는 레거시, demographicsBasic이 현재 사용됨)
     const privateFirstName = data.userInfo?.firstName || null;
     const privateLastName = data.userInfo?.lastName || null;
     const privateEmail = data.userInfo?.email || null;
-    const privateAgeRange = data.userInfo?.ageRange || null;
-    const privateGender = data.userInfo?.gender || null;
-    const country = data.userInfo?.country || null;
-    const koreanPhoneNumber = data.userInfo?.koreanPhoneNumber || null;
+    // ageRange, gender, country는 demographicsBasic에서 가져옴
+    const privateAgeRange = data.demographicsBasic?.age_group || data.userInfo?.ageRange || null;
+    const privateGender = data.demographicsBasic?.gender || data.userInfo?.gender || null;
+    const country = data.demographicsBasic?.country_of_residence || data.userInfo?.country || null;
+    const phoneNumber = data.userInfo?.phoneNumber || null;
 
     // Messengers 처리
     const messengers = data.userInfo?.messengers?.filter((msg: any) => msg.value?.trim() !== '').map((msg: any) => ({
@@ -67,13 +71,13 @@ export async function POST(request: NextRequest) {
       }
     } catch (error) {
       // If session check fails, continue with null (user not logged in)
-      console.log('Session check failed or user not logged in:', error);
+      log.debug('Session check failed or user not logged in:', error);
     }
 
     // DB에 삽입
     const sql = `
       INSERT INTO consultation_submissions (
-        id_uuid, form_version,
+        id_uuid, form_version, submission_type,
         private_first_name, private_last_name, private_email,
         private_age_range, private_gender, country, korean_phone_number,
         messengers, skin_types, budget_ranges,
@@ -85,26 +89,58 @@ export async function POST(request: NextRequest) {
         visit_path, visit_path_other, image_paths,
         race, id_uuid_member
       ) VALUES (
-        $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12,
-        $13, $14, $15, $16, $17, $18, $19, $20, $21, $22,
-        $23, $24, $25, $26, $27, $28
+        $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13,
+        $14, $15, $16, $17, $18, $19, $20, $21, $22, $23,
+        $24, $25, $26, $27, $28, $29
       )
       RETURNING id_uuid
     `;
 
     const params = [
-      submissionId, formVersion,
+      submissionId, formVersion, submissionType,
       privateFirstName, privateLastName, privateEmail,
-      privateAgeRange, privateGender, country, koreanPhoneNumber,
-      JSON.stringify(messengers), skinTypes, budgetRanges,
-      JSON.stringify(skinConcerns), skinConcernsOther,
-      JSON.stringify(treatmentAreas), treatmentAreasOther,
-      JSON.stringify(medicalConditions), medicalConditionsOther,
-      JSON.stringify(priorities), JSON.stringify(treatmentGoals), JSON.stringify(pastTreatments),
+      privateAgeRange, privateGender, country, phoneNumber,
+      messengers, skinTypes, budgetRanges,
+      skinConcerns, skinConcernsOther,
+      treatmentAreas, treatmentAreasOther,
+      medicalConditions, medicalConditionsOther,
+      priorities, treatmentGoals, pastTreatments,
       pastTreatmentsSideEffectDesc, anythingElse,
-      visitPath, visitPathOther, JSON.stringify(imagePaths),
+      visitPath, visitPathOther, imagePaths,
       race, idUuidMember
     ];
+
+    log.debug('=== Consultation Submit Params ===');
+    log.debug('submissionId:', submissionId);
+    log.debug('formVersion:', formVersion);
+    log.debug('submissionType:', submissionType);
+    log.debug('privateFirstName:', privateFirstName);
+    log.debug('privateLastName:', privateLastName);
+    log.debug('privateEmail:', privateEmail);
+    log.debug('privateAgeRange:', privateAgeRange);
+    log.debug('privateGender:', privateGender);
+    log.debug('country:', country);
+    log.debug('phoneNumber:', phoneNumber);
+    log.debug('messengers:', messengers);
+    log.debug('skinTypes:', skinTypes);
+    log.debug('budgetRanges:', budgetRanges);
+    log.debug('skinConcerns:', skinConcerns);
+    log.debug('skinConcernsOther:', skinConcernsOther);
+    log.debug('treatmentAreas:', treatmentAreas);
+    log.debug('treatmentAreasOther:', treatmentAreasOther);
+    log.debug('medicalConditions:', medicalConditions);
+    log.debug('medicalConditionsOther:', medicalConditionsOther);
+    log.debug('priorities:', priorities);
+    log.debug('treatmentGoals:', treatmentGoals);
+    log.debug('pastTreatments:', pastTreatments);
+    log.debug('pastTreatmentsSideEffectDesc:', pastTreatmentsSideEffectDesc);
+    log.debug('anythingElse:', anythingElse);
+    log.debug('visitPath:', visitPath);
+    log.debug('visitPathOther:', visitPathOther);
+    log.debug('imagePaths:', imagePaths);
+    log.debug('race:', race);
+    log.debug('idUuidMember:', idUuidMember);
+    log.debug('=================================');
 
     const result = await q(sql, params);
 

@@ -13,6 +13,8 @@ import { useEffect, useState, useRef } from "react";
 import { uploadProfileImage } from "@/services/profileImage";
 import { toast } from "sonner";
 import BadgeSection from "@/components/mypage/BadgeSection";
+import { useUserStore } from "@/stores/useUserStore";
+import { log } from "@/utils/logger";
 
 interface MyPageMyInfoClientDetailProps {
   user: UserOutputDto;
@@ -24,9 +26,10 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [avatarUrl, setAvatarUrl] = useState<string>(user?.userInfo?.avatar || "/default/profile_default.png");
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { updateAvatar } = useUserStore();
   
-  console.log("MyPageMyInfo user", user);
-  console.log("MyPageMyInfo user?.userInfo?.id_uuid:", user?.userInfo?.id_uuid);
+  log.debug("MyPageMyInfo user", user);
+  log.debug("MyPageMyInfo user?.userInfo?.id_uuid:", user?.userInfo?.id_uuid);
 
   useEffect(() => {
     void loadTodayAttendance();
@@ -81,6 +84,7 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
 
       if (result.success && result.imagePath) {
         setAvatarUrl(result.imagePath);
+        updateAvatar(result.imagePath); // 전역 store 업데이트
         toast.success('Profile image updated successfully');
       } else {
         toast.error(`Failed to upload image: ${result.error}`);
@@ -109,42 +113,52 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-2xl mx-auto">
         {/* Header */}
-        <div className="flex-col px-4 py-4 flex items-center border-b">
-          {/* <Link href="/user/my-page" className="p-2">
+        {/* <div className="flex-col px-4 py-4 flex items-center border-b">
+          <Link href="/user/my-page" className="p-2">
             <ArrowLeft className="w-6 h-6" />
-          </Link> */}
+          </Link> 
           <h1 className="text-lg font-bold ml-2">My Page</h1>
-        </div>
+        </div> */}
 
         <div className="p-4">
           {/* Profile Image Section */}
-          <div className="flex flex-col items-center mb-8">
-            <div className="relative">
-              <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
-                <Image
-                  src={avatarUrl}
-                  alt="Profile"
-                  width={96}
-                  height={96}
-                  className="object-cover"
-                />
+          <div className="flex items-start justify-between mb-8">
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+                  <Image
+                    src={avatarUrl}
+                    alt="Profile"
+                    width={96}
+                    height={96}
+                    className="object-cover  w-full h-full"
+                  />
+                </div>
+                {/* <button
+                  onClick={handleCameraClick}
+                  disabled={isUploading}
+                  className="absolute bottom-0 right-0 bg-white rounded-full p-2 shadow-md disabled:opacity-50"
+                >
+                  <Camera className="w-5 h-5" />
+                </button>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  className="hidden"
+                /> */}
               </div>
-              <button 
-                onClick={handleCameraClick}
-                disabled={isUploading}
-                className="absolute bottom-0 right-0 bg-white rounded-full p-2 shadow-md disabled:opacity-50"
-              >
-                <Camera className="w-5 h-5" />
-              </button>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="hidden"
-              />
+              <h2 className="text-xl font-medium">{user?.userInfo?.nickname || ""}</h2>
             </div>
-            <h2 className="mt-4 text-xl font-medium">{user?.userInfo?.nickname || ""}</h2>
+            <div className="flex gap-4">
+              <button
+                onClick={() => router.push("/user/my-page/edit")}
+                className="px-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors"
+              >
+                Edit
+              </button>
+            </div>
           </div>
 
           {/* Badge Section */}
@@ -159,7 +173,7 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
 
           {/* Info List */}
           <div className="space-y-6">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">My Information</h3>
+            {/* <h3 className="text-lg font-semibold text-gray-800 mb-4">My Information</h3> */}
 
             <div className="bg-white rounded-lg shadow-sm">
               {renderProfileField("Gender", user?.userInfo?.gender ? (user.userInfo.gender === "M" ? "Male" : "Female") : "other", !user?.userInfo?.gender)}
@@ -193,7 +207,7 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
                 </div>
               </div>
               <div className="flex justify-between items-center p-4 border-t">
-                <span className="text-gray-600">Account</span>
+                {/* <span className="text-gray-600">Account</span> */}
                 <div className="flex items-center">
                   <Link href={ROUTE.WITHDRAWAL} className="text-gray-400 hover:text-gray-500 text-sm">
                     Withdrawal

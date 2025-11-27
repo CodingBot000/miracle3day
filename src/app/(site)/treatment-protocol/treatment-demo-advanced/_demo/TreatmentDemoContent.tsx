@@ -104,7 +104,7 @@ export default function TreatmentDemoContent() {
             locale={locale}
             categoryIndex={index}
             onClick={(category) => {
-              console.log('Category clicked:', category.category_key);
+              log.debug('Category clicked:', category.category_key);
             }}
           />
         ))}

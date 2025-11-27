@@ -42,7 +42,7 @@ const ImageUploaderWithCompressionExample: React.FC = () => {
         // 단일 파일
         const result = await compressSingleImage(fileArray[0], targetType);
         setProcessedCount(1);
-        console.log("compressed single result", result);
+        log.debug("compressed single result", result);
       } else {
         // 다중 파일
         const { results, errors } = await compressMultipleImages(
@@ -63,7 +63,7 @@ const ImageUploaderWithCompressionExample: React.FC = () => {
           setModalStatus("done");
         }
 
-        console.log("compressed multiple results", results);
+        log.debug("compressed multiple results", results);
       }
 
       if (fileArray.length === 1) {

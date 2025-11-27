@@ -37,7 +37,7 @@ const TreatmentProductList = ({ products }: TreatmentProductListProps) => {
 
     // Convert to GroupedTreatmentProducts structure
     const result: GroupedTreatmentProducts[] = [];
-// console.log("departmentMap",departmentMap);
+// log.debug("departmentMap",departmentMap);
     departmentMap.forEach((deptProducts, department) => {
       // Group by level1
       const level1Map = new Map<string, TreatmentProductData[]>();

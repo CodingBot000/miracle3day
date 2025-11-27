@@ -142,7 +142,7 @@ export default function TermsClient({ initialProvider }: TermsClientProps) {
         const res = await fetch('/api/auth/session');
         if (res.ok) {
           const data = await res.json();
-          console.log(`Session check ${i+1}:`, data); // 디버그 로그 추가
+          log.debug(`Session check ${i+1}:`, data); // 디버그 로그 추가
           if (data.auth?.status === 'active') {
             return true;
           }

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { log } from "@/utils/logger";
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "default-no-store";
@@ -19,8 +20,8 @@ const secretAccessKey = process.env.LIGHTSAIL_SECRET_KEY!;
 const bucket = process.env.LIGHTSAIL_BUCKET_NAME!;
 
 // 🔎 런타임에서 실제 무엇을 읽는지 마스킹 로그(일시적으로만 사용)
-console.log("[read.env] region=", region, "endpoint=", endpoint);
-console.log("[read.env] keyId=", mask(accessKeyId), "secret=", mask(secretAccessKey));
+log.debug("[read.env] region=", region, "endpoint=", endpoint);
+log.debug("[read.env] keyId=", mask(accessKeyId), "secret=", mask(secretAccessKey));
 
 const s3 = new S3Client({
   region,

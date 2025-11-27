@@ -1,9 +1,3 @@
-import UserInfoStep from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/UserInfoStep";
-import BudgetStep from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/BudgetStep";
-import TreatmentGoalsStep from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/TreatmentGoalsStep";
-import VisitPathStep from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/VisitPathStep";
-import SkinConcernsStep from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/SkinConcernsStep";
-import HealthConditionStep from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/HealthConditionStep";
 import {
   FaInstagram,
   FaReddit,
@@ -12,214 +6,6 @@ import {
   FaGoogle,
   FaComments
 } from 'react-icons/fa';
-// import { SiLemon8 } from 'react-icons/si';
-import { USER_INFO, BUDGET, HEALTH_CONDITIONS, PREFERENCES, PRIORITYFACTORS, SKIN_CONCERNS, SKIN_TYPE, TREATMENT_EXPERIENCE_BEFORE, TREATMENT_GOALS, UPLOAD_PHOTO, VISIT_PATHS, AGE_RANGE, DEMOGRAPHICS_BASIC } from '@/constants/estimate_steps';
-import UploadImageStep from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/UploadImageStep";
-import SkinTypeStep from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/SkinTypeStep";
-import PreferencesStep from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/PreferencesStep";
-import PrioriotyFactorStep from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/PrioriotyFactorStep";
-import TreatmentExpBeforeStep from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/TreatmentExpBefore";
-// import AgeRangeStep from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/AgeRangeStep";
-import DemographicsBasic from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/DemographicsBasic";
-
-// ═══════════════════════════════════════════════════════════
-// STEPS 정의 - 기재된 순서로 나옴
-// ═══════════════════════════════════════════════════════════
-export const steps = [
-  // STEP 1: Age Range (새로 추가)
-  // {
-  //   id: AGE_RANGE,
-  //   title: {
-  //     ko: "나이대를 알려주세요",
-  //     en: "What's your age range?"
-  //   },
-  //   subtitle: {
-  //     ko: "나이에 맞는 시술을 추천하는 데 도움이 됩니다",
-  //     en: "This helps us recommend age-appropriate treatments"
-  //   },
-  //   component: AgeRangeStep,
-  // },
-
-  // STEP 2: Skin Type
-  {
-    id: SKIN_TYPE,
-    title: {
-      ko: "피부 타입을 알려주세요",
-      en: "What's your skin type?"
-    },
-    subtitle: {
-      ko: "피부 특성을 파악하는 데 도움이 됩니다",
-      en: "Help us understand your skin characteristics"
-    },
-    component: SkinTypeStep,
-  },
-
-  // STEP 3: Skin Concerns (개선됨 - 계층적 구조)
-  {
-    id: SKIN_CONCERNS,
-    title: {
-      ko: "개선하고 싶은 부분은 무엇인가요?",
-      en: "What would you like to improve?"
-    },
-    subtitle: {
-      ko: "관심 있는 모든 영역을 선택하세요 (최대 5개)",
-      en: "Select all areas of concern (up to 5)"
-    },
-    component: SkinConcernsStep,
-  },
-
-  // STEP 4: Treatment Goals (간소화)
-  {
-    id: TREATMENT_GOALS,
-    title: {
-      ko: "주요 치료 목표는 무엇인가요?",
-      en: "What's your main treatment goal?"
-    },
-    subtitle: {
-      ko: "어떤 변화를 기대하시나요?",
-      en: "What transformation are you hoping to achieve?"
-    },
-    component: TreatmentGoalsStep,
-  },
-
-  // STEP 5: Budget (개선된 범위)
-  {
-    id: BUDGET,
-    title: {
-      ko: "예산 범위는 얼마인가요?",
-      en: "What's your budget range?"
-    },
-    subtitle: {
-      ko: "예산에 맞는 시술을 찾아보겠습니다",
-      en: "Let's find treatments that fit your budget"
-    },
-    component: BudgetStep,
-  },
-
-  // STEP 6: Health Conditions (안전 체크)
-  {
-    id: HEALTH_CONDITIONS,
-    title: {
-      ko: "알려주셔야 할 건강 상태가 있나요?",
-      en: "Do you have any medical conditions we should know about?"
-    },
-    subtitle: {
-      ko: "안전한 시술을 추천하는 데 도움이 됩니다",
-      en: "This helps us recommend safe treatments for you"
-    },
-    component: HealthConditionStep,
-  },
-
-
-  // ─────────────────────────────────────────────────────────
-  // 선택적 단계들 (조건부 표시)
-  // ─────────────────────────────────────────────────────────
-  // OPTIONAL: Treatment Areas (특정 고민 선택 시만 표시)
-  {
-    id: PREFERENCES,
-    title: {
-      ko: "어떤 얼굴 부위에 집중하고 싶으신가요?",
-      en: "Which facial areas do you want to focus on?"
-    },
-    subtitle: {
-      ko: "타겟팅된 치료를 위해 특정 영역을 선택하세요",
-      en: "Select specific areas for targeted treatment"
-    },
-    component: PreferencesStep,
-    optional: true,
-    // condition: (formData) => {
-    //   // Facial contouring 고민 선택 시만 표시
-    //   const contouringConcerns = ['filler-forehead', 'filler-jawline', 'filler-cheeks', 'double_chin'];
-    //   return formData.skinConcerns?.some(c => contouringConcerns.includes(c));
-    // }
-  },
-
-  // OPTIONAL: Priority Factors (제거 또는 간소화)
-  {
-    id: PRIORITYFACTORS,
-    title: {
-      ko: "가장 중요하게 생각하는 것은 무엇인가요?",
-      en: "What matters most to you?"
-    },
-    subtitle: {
-      ko: "우선순위를 정렬하세요 (드래그하여 순서 변경)",
-      en: "Rank your priorities (drag to reorder)"
-    },
-    component: PrioriotyFactorStep,
-    optional: true,
-  },
-
-  // OPTIONAL: Past Treatments (간소화된 버전)
-  {
-    id: TREATMENT_EXPERIENCE_BEFORE,
-    title: {
-      ko: "이전에 비슷한 시술을 받아보신 적이 있나요?",
-      en: "Have you had similar treatments before?"
-    },
-    subtitle: {
-      ko: "경험 수준을 파악하는 데 도움이 됩니다",
-      en: "This helps us understand your experience level"
-    },
-    component: TreatmentExpBeforeStep,
-    optional: true,
-  },
-    // STEP 7: User Info (마지막)
-    // {
-    //   id: USER_INFO,
-    //   title: {
-    //     ko: "맞춤형 치료 계획을 받아보세요",
-    //     en: "Get your personalized treatment plan"
-    //   },
-    //   subtitle: {
-    //     ko: "피부 상태는 개인의 나이, 성별, 인종, 생활 환경 등에 따라 다르게 나타납니다.\n\n보다 정확하고 과학적인 시술 추천을 위해 최소한의 정보를 선택적으로 요청드립니다.\n\n모든 항목은 필수가 아닌 선택 사항이며,\n\n'답변하지 않음'을 포함한 건너뛰기가 언제든 가능합니다.\n\n제공해주시는 정보는 개인정보 보호 기준에 따라 안전하게 관리되며,\n\n개인 맞춤 진단 및 추천 제공 목적 외에는 사용되지 않습니다.",
-    //     en: "Skin characteristics differ significantly depending on factors such as age, gender, ethnicity, and environment.\n\nTo make our recommendations more accurate and clinically relevant, we ask for minimal information on an optional basis.\n\nAll fields are optional, and\n\nyou may select \"Prefer not to say\" or skip any question.\n\nYour information will be securely protected and used only for personalized analysis and recommendations."
-    //   },
-    //   component: UserInfoStep,
-    // },
-    {
-      id: DEMOGRAPHICS_BASIC,
-      title: {
-        ko: "기본 정보",
-        en: "Basic information"
-      },
-      subtitle: {
-        ko: "더 정확한 맞춤 피부 추천을 위해 아래 정보를 선택적으로 입력해주세요. 원하지 않으시면 '답변하지 않음'을 선택하셔도 됩니다.",
-        en: "To provide more accurate, personalized skin recommendations, please answer the questions below. You can always choose \"Prefer not to say.\""
-      },
-      component: DemographicsBasic,
-    },
-  // OPTIONAL: Visit Path (마케팅 데이터, USER_INFO에 통합 가능)
-  {
-    id: VISIT_PATHS,
-    title: {
-      ko: "저희를 어떻게 알게 되셨나요?",
-      en: "How did you hear about us?"
-    },
-    subtitle: {
-      ko: "선택 사항",
-      en: "Optional"
-    },
-    component: VisitPathStep,
-    optional: true,
-  },
-    // OPTIONAL: Photo Upload (선택 사항)
-    // {
-    //   id: UPLOAD_PHOTO,
-    //   title: {
-    //     ko: "더 정확한 분석을 위해 사진을 업로드하세요 (선택 사항)",
-    //     en: "Upload a photo for more accurate analysis (Optional)"
-    //   },
-    //   subtitle: {
-    //     ko: "png, jpg, jpeg 파일만 가능합니다. 이 단계는 건너뛸 수 있습니다.",
-    //     en: "Only png, jpg, jpeg files. This step can be skipped."
-    //   },
-    //   component: UploadImageStep,
-    //   optional: true, // 새로운 플래그
-    // },
-  
-    
-  
-];
 
 // ═══════════════════════════════════════════════════════════
 // QUESTIONS 데이터 정의
@@ -1054,8 +840,8 @@ export const questions = {
         "en": "Age group"
       },
       "helperText": {
-        "ko": "해당하는 연령대를 선택해주세요.",
-        "en": "Please select your age group."
+        "ko": "연령대를 선택해주세요.\n정확한 시술 추천을 위해 간단히 참고합니다.",
+        "en": "Please select your age group.\nIt helps us provide more accurate recommendations."
       },
       "options": [
         {
@@ -1118,8 +904,8 @@ export const questions = {
         "en": "Gender"
       },
       "helperText": {
-        "ko": "편하신 항목을 선택해주세요. 원치 않으시면 ‘답변하지 않음’을 선택하셔도 됩니다.",
-        "en": "Please choose the option you feel most comfortable with. You can select “Prefer not to say.”"
+        "ko": "성별을 선택해주세요.\n피부 타입과 반응이 성별에 따라 달라 정확도 향상에 도움이 됩니다.\n원치 않으시면 ‘답변하지 않음’을 선택하셔도 됩니다.",
+        "en": "Please select your gender.\nSkin characteristics can differ by gender, helping us personalize your recommendations.\nYou may choose “Prefer not to say.”"
       },
       "options": [
         {
@@ -1161,8 +947,8 @@ export const questions = {
         "en": "Ethnic background / skin type group"
       },
       "helperText": {
-        "ko": "본인에게 가장 가까운 피부/인종 그룹을 선택해주세요. 선택은 선택사항이며, ‘답변하지 않음’을 선택하실 수 있습니다.",
-        "en": "Please select the skin/ethnic group that best describes you. This is optional and you may choose “Prefer not to say.”"
+        "ko": "본인과 가장 가까운 피부·인종 그룹을 선택해주세요.\n피부 반응이 그룹별로 조금씩 달라 맞춤 추천에 도움이 됩니다.\n원치 않으시면 ‘답변하지 않음’을 선택하셔도 됩니다.",
+        "en": "Please choose the skin/ethnic group that best describes you.\nSkin responses can vary slightly across groups, helping us personalize your recommendations.\nYou may select “Prefer not to say.”"
       },
       "options": [
         {
@@ -1225,8 +1011,8 @@ export const questions = {
         "en": "Current country of residence"
       },
       "helperText": {
-        "ko": "현재 거주 중인 국가를 선택해주세요. 시술 추천 시 기후·환경을 고려하는 데 사용됩니다.",
-        "en": "Please select the country you currently live in. This helps us consider climate and environment in our recommendations."
+        "ko": "현재 거주 중인 국가를 선택해주세요.\n국적이 아닌 ‘생활 중인 국가’ 기준이며, 기후·환경 차이가 시술 추천에 영향을 줄 수 있기 때문에 확인합니다.",
+        "en": "Please select the country you currently live in.\nThis refers to your place of residence (not nationality), and we ask because climate and environmental conditions can affect treatment recommendations."
       },
       "placeholder": {
         "ko": "거주 국가를 선택하세요",

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { questions } from '@/content/pre_consultation_intake/form-definition_pre_consultation';
+import { questions } from '@/app/(consult)/pre_consultation_intake_form/pre_consultation_intake/form-definition_pre_con_questions';
 
 import { ChoiceCard } from '@/components/molecules/card/ChoiceCard';
 import { useCookieLanguage } from '@/hooks/useCookieLanguage';

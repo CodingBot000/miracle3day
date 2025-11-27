@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    console.log('[init-channel] Request:', { hospitalId, userId });
+    log.debug('[init-channel] Request:', { hospitalId, userId });
 
     // 3. 병원 ID 유효성 검증 (DB 조회)
     const hospitalRows = await q<{ name: string | null; name_en: string | null }>(
@@ -84,7 +84,7 @@ export async function POST(req: NextRequest) {
     const shortUser = toShortId(userId);
     const channelId = `h${shortHospital}_u${shortUser}`;
 
-    console.log('[init-channel] Channel ID:', channelId);
+    log.debug('[init-channel] Channel ID:', channelId);
 
     // 6. 고객 및 병원 유저 upsert
     await serverClient.upsertUsers([
@@ -101,7 +101,7 @@ export async function POST(req: NextRequest) {
       } as any,
     ]);
 
-    console.log('[init-channel] Users upserted');
+    log.debug('[init-channel] Users upserted');
 
     // 7. 채널 생성 또는 가져오기
     const channel = serverClient.channel('messaging', channelId, {
@@ -119,11 +119,11 @@ export async function POST(req: NextRequest) {
     // 채널이 이미 존재하면 재사용, 없으면 생성
     try {
       await channel.create();
-      console.log('[init-channel] Channel created');
+      log.debug('[init-channel] Channel created');
     } catch (error: any) {
       // 채널이 이미 존재하는 경우 (에러 코드 4: 'channel already exists')
       if (error.code === 4) {
-        console.log('[init-channel] Channel already exists, reusing');
+        log.debug('[init-channel] Channel already exists, reusing');
         await channel.watch();
       } else {
         throw error;
@@ -133,7 +133,7 @@ export async function POST(req: NextRequest) {
     // 8. 고객용 토큰 생성
     const token = serverClient.createToken(userId);
 
-    console.log('[init-channel] Success:', { channelId, userId });
+    log.debug('[init-channel] Success:', { channelId, userId });
 
     // 9. 응답 반환
     return NextResponse.json({

@@ -11,7 +11,7 @@ const isLogEnabled = IS_SERVER ? ENABLE_SERVER_LOG : ENABLE_CLIENT_LOG;
 export const log = {
   info: (...args: any[]) => {
     if (!isLogEnabled) return;
-    console.log(`[${IS_SERVER ? 'SERVER' : 'CLIENT'}][INFO]`, ...args);
+    log.debug(`[${IS_SERVER ? 'SERVER' : 'CLIENT'}][INFO]`, ...args);
   },
   warn: (...args: any[]) => {
     if (!isLogEnabled) return;

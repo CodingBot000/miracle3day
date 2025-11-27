@@ -38,7 +38,7 @@ export default function SurgeryCard({ data, locale, categoryIndex }: SurgeryCard
 
   const title = locale === 'ko' ? data.category_title_ko : data.category_title_en;
   // const concernCopy = locale === 'ko' ? data.concern_copy_ko : data.concern_copy_en;
-  // console.log("SurgeryCard data:", data);
+  // log.debug("SurgeryCard data:", data);
   return (
     <div
       onClick={handleCardClick}

@@ -1,4 +1,7 @@
 {
-  "cSpell.words": ["supabase"],
-  "claude.autoApproveCodeEdits": true
+  "claudeCode.autoApprove": {
+    "Edit": true,
+    "Write": true,
+    "Read": true
+  }
 }

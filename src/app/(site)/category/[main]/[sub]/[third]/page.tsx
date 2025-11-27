@@ -79,7 +79,7 @@ export default function CategoryDetailPage() {
   };
 
   const handleSelect3 = (key: string, index: number) => {
-    console.log("handleSelect3", key, index);
+    log.debug("handleSelect3", key, index);
     setSelected3(index.toString()); //테스트위한임시
   };
 

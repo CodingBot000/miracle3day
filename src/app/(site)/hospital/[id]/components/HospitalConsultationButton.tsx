@@ -134,7 +134,7 @@ const HospitalConsultationButton = ({ hospitalId, hospitalDetails }: HospitalCon
         userInfo.birth_date &&
         userInfo.id_country &&
         userInfo.phone_country_code;
-        console.log('hasCompleteProfile:', hasCompleteProfile);
+        log.debug('hasCompleteProfile:', hasCompleteProfile);
       if (!hasCompleteProfile) {
         const currentUrl = `/hospital/${hospitalId}`;
         router.push(

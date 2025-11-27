@@ -130,9 +130,26 @@ export type PastId =
 
 export type SkinTypeId = "dry" | "oily" | "combination" | "sensitive" | "normal" | "not_sure";
 
-export type AgeGroup = "teens" | "20s" | "30s" | "40s" | "50s" | "60s" | "70_plus" | "60plus";
+// 새 포맷: DB에 저장되는 값 (18_24, 25_34, 35_44, 45_54, 55_64, 65_plus, prefer_not_to_say)
+export type AgeGroupNew = "18_24" | "25_34" | "35_44" | "45_54" | "55_64" | "65_plus" | "prefer_not_to_say";
+// 레거시 포맷 (기존 호환)
+export type AgeGroupLegacy = "teens" | "20s" | "30s" | "40s" | "50s" | "60s" | "70_plus" | "60plus";
+// 통합 타입
+export type AgeGroup = AgeGroupNew | AgeGroupLegacy;
 
 export type Gender = "male" | "female" | "non_binary" | "no_answer";
+
+// ─────────────────────────────────────────────────────────
+// Ethnicity (인종)
+// ─────────────────────────────────────────────────────────
+export type EthnicityId =
+  | "asian"
+  | "white"
+  | "african"
+  | "hispanic"
+  | "middle_eastern"
+  | "mixed"
+  | "prefer_not_to_say";
 
 export type Category = "laser" | "ultrasound" | "rf" | "injectable" | "other";
 
@@ -217,6 +234,8 @@ export interface RecommendInputs {
   skinTypeId?: SkinTypeId;
   ageGroup?: AgeGroup;
   gender?: Gender;
+  ethnicity?: EthnicityId;  // 인종별 가중치 조정용
+  countryCode?: string;     // 거주 국가 (2자리 ISO 코드) - 기후 경고용
   skinConcerns: SelectedConcern[];
   treatmentGoals: TreatmentGoalId[];
   treatmentAreas: AreaId[];
@@ -277,6 +296,20 @@ export interface Substitution {
   reason: "price" | "pain" | "recoveryTime";
 }
 
+// ClimateWarning 인터페이스 (climateWarning.ts에서 정의)
+export interface ClimateWarning {
+  show: boolean;
+  severity: 'low' | 'medium' | 'high' | 'critical';
+  title: { ko: string; en: string };
+  message: { ko: string; en: string };
+  recommendation: { ko: string; en: string };
+  uvRiskLevel: 1 | 2 | 3 | 4 | 5;
+}
+
+export interface RecommendedItemWithClimateWarning extends RecommendedItem {
+  climateWarning?: ClimateWarning | null;
+}
+
 export interface RecommendationOutput {
   recommendations: RecommendedItem[];
   totalPriceKRW: number;
@@ -285,8 +318,10 @@ export interface RecommendationOutput {
   substitutions: Substitution[];
   upgradeSuggestions: string[];
   notes: string[];
-  budgetRangeId?: BudgetId;      // 사용자가 설정한 예산
-  budgetUpperLimit?: number;      // 예산의 상한값 (KRW)
+  ethnicityNote?: string;           // 인종별 안내 코멘트
+  climateWarningSummary?: string;   // 기후 경고 요약
+  budgetRangeId?: BudgetId;         // 사용자가 설정한 예산
+  budgetUpperLimit?: number;        // 예산의 상한값 (KRW)
 }
 
 export interface TierAnalysis {

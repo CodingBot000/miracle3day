@@ -10,14 +10,14 @@ export default function SeeAllLink({
 }: {
   location: LocationType;
 }) {
-  console.log('qq qq SeeAllLink location: ', location);
+  log.debug('qq qq SeeAllLink location: ', location);
   return (
     <div className="flex justify-end mr-5">
       <Link
         href={ROUTE.LOCATION_DETAIL("") + location}
         scroll={true}
         onClick={() => {
-          console.log("클릭됨:", location);
+          log.debug("클릭됨:", location);
         }}
       >
         <Image src="/icons/icon_see_all.png" alt="see all" width={38} height={38} />

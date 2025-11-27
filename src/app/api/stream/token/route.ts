@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    console.log('[stream-token] Creating token for user:', userId);
+    log.debug('[stream-token] Creating token for user:', userId);
 
     // 2. Stream 사용자 정보 upsert
     await upsertStreamUser(userId, {
@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
       throw new Error('STREAM_API_KEY not configured');
     }
 
-    console.log('[stream-token] Token created successfully for:', userId);
+    log.debug('[stream-token] Token created successfully for:', userId);
 
     return NextResponse.json({
       ok: true,

@@ -37,7 +37,7 @@ const ProcedureDetailPage = async ({
       // 각 요소의 키를 소문자로 변환하고 공백을 제거
       const procedureKey = Object.keys(procedure)[0].toLowerCase().replace(/\s+/g, '');
       
-      // console.log('procedureKey, formattedKey:' , procedureKey, formattedKey);
+      // log.debug('procedureKey, formattedKey:' , procedureKey, formattedKey);
       // 입력 받은 키와 매칭되는 경우 해당 값을 반환
       if (procedureKey === formattedKey) {
         surgery_id_unique = procedure[Object.keys(procedure)[0]];
@@ -45,7 +45,7 @@ const ProcedureDetailPage = async ({
     }
     // id : skinbooster
     // surgery_id_unique : 2006  surgery_info 테이블의 id_unique  procedureMapper에 의해 매핑해서 리턴함
-    console.log('surgery_id_unique:',surgery_id_unique)
+    log.debug('surgery_id_unique:',surgery_id_unique)
     if (!surgery_id_unique) {
         return (
             <main>

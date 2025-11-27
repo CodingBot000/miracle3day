@@ -20,10 +20,10 @@ const initialForm = {
   nickname: '',
 };
 
-// 14세 이상 제한을 위한 날짜 계산
+// 18세 이상 제한을 위한 날짜 계산
 const getMaxDate = () => {
   const date = new Date();
-  date.setFullYear(date.getFullYear() - 14);
+  date.setFullYear(date.getFullYear() - 18);
   return date;
 };
 
@@ -92,9 +92,8 @@ export default function SignUpMoreInfoForm() {
         if (data.auth && (data.auth.status === 'active' || data.auth.status === 'pending')) {
           setUser(data.auth);
           setIsSignedIn(true);
-          setForm(prev => ({ ...prev, nickname: data.auth.email?.split('@')[0] || '' }));
         } else {
-          console.log('Auth check failed, redirecting to login. Auth data:', data.auth);
+          log.debug('Auth check failed, redirecting to login. Auth data:', data.auth);
           router.replace('/api/auth/google/start');
           return;
         }
@@ -241,7 +240,7 @@ export default function SignUpMoreInfoForm() {
         </div>
 
         <div className="space-y-1">
-          {/* <Label className="text-sm font-medium text-slate-600">Country</Label> */}
+          <Label htmlFor="nationality">Nationality</Label>
           <NationModal
             nation={nation?.country_name || ''}
             onSelect={(value: CountryCode) => setNation(value)}

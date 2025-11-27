@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Card } from '@/components/ui/card';
-import { steps, questions } from '@/content/estimate/form-definition';
-import { getBudgetRangeById } from '@/content/estimate/datamapper';
+import { questions } from '@/app/(consult)/recommend_estimate/estimate/form-definition_questions';
+import { steps } from '@/app/(consult)/recommend_estimate/estimate/form-definition_steps';
+import { getBudgetRangeById } from '@/app/(consult)/recommend_estimate/estimate/datamapper';
 import { Button } from '@/components/ui/button';
 import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 import { getLocalizedText } from '@/utils/i18n';
@@ -31,10 +32,11 @@ interface PreviewReportProps {
   showSendFormButton: boolean;
   formData: Record<string, any>;
   onSubmissionComplete?: (formData: Record<string, any>) => void;
+  onNavigateStart?: () => void;
 }
 
-const PreviewReport: React.FC<PreviewReportProps> = 
-({ open, onOpenChange, formData, showSendFormButton, onSubmissionComplete }) => 
+const PreviewReport: React.FC<PreviewReportProps> =
+({ open, onOpenChange, formData, showSendFormButton, onSubmissionComplete, onNavigateStart }) =>
   {
   const { language } = useCookieLanguage();
   const router = useRouter();
@@ -50,7 +52,7 @@ const PreviewReport: React.FC<PreviewReportProps> =
     setIsSubmitting(true);
     setIsCompleted(false);
 
-    console.log("tempPass", tempPass);
+    log.debug("tempPass", tempPass);
     // if (tempPass) {
     //   // API 없이 바로 완료 처리 (임시)
     //   setIsCompleted(true);
@@ -156,15 +158,21 @@ const PreviewReport: React.FC<PreviewReportProps> =
 
   const handleSubmissionComplete = () => {
     log.debug("MATCHING LOG: handleSubmissionComplete 호출됨");
+
+    // 네비게이션 시작 알림 (화면을 흰색으로 전환)
+    if (onNavigateStart) {
+      onNavigateStart();
+    }
+
     setIsSubmissionModalOpen(false);
     setIsCompleted(false);
     onOpenChange(false);
-    
+
     // 모든 스텝의 데이터를 합치기
     const allStepData = Object.values(formData).reduce((acc, stepData) => {
       return { ...acc, ...stepData };
     }, {});
-    
+
     // 부모 컴포넌트에 완료된 데이터 전달
     if (onSubmissionComplete) {
       onSubmissionComplete(allStepData);
@@ -352,7 +360,7 @@ const PreviewReport: React.FC<PreviewReportProps> =
             <p><strong>Gender:</strong> {userInfo.gender}</p>
             <p><strong>Email:</strong> {userInfo.email}</p>
             <p><strong>Nation</strong> {userInfo.country}</p>
-            <p><strong>Korean Phone Number</strong> {userInfo.koreanPhoneNumber}</p>
+            <p><strong>Phone Number</strong> {userInfo.phoneNumber}</p>
              {userInfo.messengers && userInfo.messengers.length > 0 && (
               <div>
                 <p><strong>Messengers:</strong></p>
@@ -437,7 +445,7 @@ const PreviewReport: React.FC<PreviewReportProps> =
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-light text-center mb-4">
+          <DialogTitle className="text-2xl font-bold text-center mb-4">
             Preview Your Consultation Request
           </DialogTitle>
         </DialogHeader>

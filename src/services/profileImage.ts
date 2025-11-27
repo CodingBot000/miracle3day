@@ -1,4 +1,4 @@
-import { BUCKET_USERS, STORAGE_MEMBER } from "@/constants/tables";
+import { STORAGE_MEMBER } from "@/constants/tables";
 
 const API_BASE =
   process.env.NEXT_PUBLIC_API_ROUTE ||
@@ -23,13 +23,13 @@ export const uploadProfileImage = async ({
   try {
     const fileExt = file.name.split('.').pop();
     const fileName = `profile_${userUuid}.${fileExt}`;
-    const filePath = `${STORAGE_MEMBER}/${userUuid}/${fileName}`;
-    const folderPath = `${STORAGE_MEMBER}/${userUuid}`;
+    const filePath = `${userUuid}/${fileName}`;
+    const folderPath = `${userUuid}`;
 
     // Delete existing files in the user's folder
     const listRes = await fetch(
       `${API_BASE}/api/storage/s3/list?bucket=${encodeURIComponent(
-        BUCKET_USERS
+        STORAGE_MEMBER
       )}&prefix=${encodeURIComponent(folderPath)}`,
       { cache: 'no-store' }
     );
@@ -51,7 +51,7 @@ export const uploadProfileImage = async ({
         const removeRes = await fetch(`${API_BASE}/api/storage/s3/remove`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ bucket: BUCKET_USERS, paths: filesToDelete }),
+          body: JSON.stringify({ bucket: STORAGE_MEMBER, paths: filesToDelete }),
         });
 
         if (!removeRes.ok) {
@@ -64,7 +64,7 @@ export const uploadProfileImage = async ({
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        bucket: BUCKET_USERS,
+        bucket: STORAGE_MEMBER,
         key: filePath,
         contentType: file.type || 'application/octet-stream',
         upsert: true,
@@ -91,7 +91,7 @@ export const uploadProfileImage = async ({
       throw new Error(message || `Failed to upload file (${putRes.status})`);
     }
 
-    const storagePath = `${BUCKET_USERS}/${filePath}`;
+    const storagePath = `${STORAGE_MEMBER}/${filePath}`;
 
     const patchRes = await fetch(`${API_BASE}/api/auth/member/avatar`, {
       method: 'PATCH',

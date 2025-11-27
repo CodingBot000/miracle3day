@@ -85,13 +85,13 @@ const MenuMobile = () => {
         <MessageSquareText size={20} />
         <span className="text-xs text-[#333]">Community</span>
       </button>
-      <button
+      {/* <button
         onClick={() => goTo(ROUTE.EVENT)}
         className="flex flex-col items-center gap-1 p-2 hover:opacity-80"
       >
         <Calendar className="w-6 h-6" />
         <span className="text-xs text-[#333]">Event</span>
-      </button>
+      </button> */}
       {/* <button
         onClick={() => goTo(ROUTE.LOCATION_DETAIL("") + locationNum)}
         className="flex flex-col items-center gap-1 p-2 hover:opacity-80"

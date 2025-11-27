@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 
 // const ReviewClient = ({ id }: { id: string }) => {
 export default function ReviewClient({ id }: { id: string })  {    
-  console.log("ReviewClient ReviewClient id (id_uuid_hospital):", id);
+  log.debug("ReviewClient ReviewClient id (id_uuid_hospital):", id);
   const [reviews, setReviews] = useState<HospitalDetailReviewOutDto["data"]>();
 
   useEffect(() => {
@@ -22,13 +22,13 @@ export default function ReviewClient({ id }: { id: string })  {
     
     const fetchReviews = async () => {
       try {
-        console.log("ReviewClient fetchReviews id:", id);
-        console.log("ReviewClient call await getHospitalReviewListAPI");
+        log.debug("ReviewClient fetchReviews id:", id);
+        log.debug("ReviewClient call await getHospitalReviewListAPI");
         // 병원기준 Review라 여기서 나오는 모든 리뷰는 병원이 동일하다 
         const res = await getHospitalReviewListByHospitalIdAPI({ id, pageParam: 0 });
-        // console.log("getHospitalReviewAPI param id:", id);
-        // console.log("getHospitalReviewAPI response:", res);
-        console.log("ReviewClient fetchReviews res:", res);
+        // log.debug("getHospitalReviewAPI param id:", id);
+        // log.debug("getHospitalReviewAPI response:", res);
+        log.debug("ReviewClient fetchReviews res:", res);
         setReviews(res.data);
       } catch (error) {
         console.error("ReviewClient Error fetching reviews:", error);
@@ -36,7 +36,7 @@ export default function ReviewClient({ id }: { id: string })  {
     fetchReviews();
   }, [id]);
   
-  console.log("ReviewClient reviews:", reviews);
+  log.debug("ReviewClient reviews:", reviews);
   if (!reviews || !reviews.reviewsWithMember || reviews.reviewsWithMember.length === 0) {
     return <NoData label="No reviews found"/>;
   }

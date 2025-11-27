@@ -93,7 +93,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
   const calculatePositionQuality = useCallback((hasFace: boolean, faceSize: number, centerX: number, centerY: number, videoWidth: number, videoHeight: number, straightnessQuality: number = 100) => {
     if (!hasFace) return 0;
     
-    console.log('🎯 calculatePositionQuality called with:', {
+    log.debug('🎯 calculatePositionQuality called with:', {
       faceSize: faceSize.toFixed(1),
       straightnessQuality: straightnessQuality.toFixed(1),
       centerPos: { x: centerX.toFixed(1), y: centerY.toFixed(1) }
@@ -117,7 +117,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
       sizeScore = 0; // Face too small/distant - no points
     }
     
-    console.log('📏 Size scoring:', {
+    log.debug('📏 Size scoring:', {
       faceSize: faceSize.toFixed(1),
       sizeScore,
       reasoning: faceSize >= 60 && faceSize <= 90 ? 'Perfect size - close to camera' :
@@ -170,7 +170,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
     const baseScore = sizeScore + horizontalScore + verticalScore;
     const finalScore = baseScore * straightnessMultiplier;
     
-    console.log('🔢 Position Quality Calculation:', {
+    log.debug('🔢 Position Quality Calculation:', {
       sizeScore,
       horizontalScore,
       verticalScore,
@@ -407,7 +407,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
 
   // Cleanup function
   const cleanup = useCallback(() => {
-    console.log('Cleaning up camera resources...');
+    log.debug('Cleaning up camera resources...');
     
     // Stop face detection directly
     if (faceDetectionInterval) {
@@ -418,7 +418,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
     if (streamRef.current) {
       streamRef.current.getTracks().forEach(track => {
         track.stop();
-        console.log('Stopped track:', track.kind);
+        log.debug('Stopped track:', track.kind);
       });
       streamRef.current = null;
     }
@@ -439,7 +439,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
 
   // Start webcam with simplified logic  
   const startWebcam = useCallback(async () => {
-    console.log('Starting webcam...');
+    log.debug('Starting webcam...');
     
     // Check prerequisites
     if (!isSecureContext()) {
@@ -456,7 +456,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
     await new Promise(resolve => setTimeout(resolve, 100));
     
     try {
-      console.log('Requesting camera stream...');
+      log.debug('Requesting camera stream...');
       
       const stream = await navigator.mediaDevices.getUserMedia({
         video: { 
@@ -466,14 +466,14 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
         }
       });
       
-      console.log('Stream obtained:', stream.id);
+      log.debug('Stream obtained:', stream.id);
       
       // Wait for video ref to be available with retry logic
       let retryCount = 0;
       const maxRetries = 20; // 2 seconds total wait
       
       while (!videoRef.current && retryCount < maxRetries) {
-        console.log(`Waiting for video ref... attempt ${retryCount + 1}`);
+        log.debug(`Waiting for video ref... attempt ${retryCount + 1}`);
         await new Promise(resolve => setTimeout(resolve, 100));
         retryCount++;
       }
@@ -485,7 +485,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
         return;
       }
 
-      console.log('Video ref is now available');
+      log.debug('Video ref is now available');
 
       // Store stream reference
       streamRef.current = stream;
@@ -493,20 +493,20 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
       
       // Simple video ready detection
       const handleVideoReady = () => {
-        console.log('🎥 handleVideoReady called!');
+        log.debug('🎥 handleVideoReady called!');
         const video = videoRef.current;
         if (video) {
-          console.log('🎥 Video ready - dimensions:', video.videoWidth, 'x', video.videoHeight);
-          console.log('🎥 Video state:', {
+          log.debug('🎥 Video ready - dimensions:', video.videoWidth, 'x', video.videoHeight);
+          log.debug('🎥 Video state:', {
             readyState: video.readyState,
             networkState: video.networkState,
             hasMetadata: video.videoWidth > 0 && video.videoHeight > 0
           });
         } else {
-          console.log('🎥 Video ready but no video ref');
+          log.debug('🎥 Video ready but no video ref');
         }
         
-        console.log('Setting isVideoReady to true');
+        log.debug('Setting isVideoReady to true');
         setIsVideoReady(true);
         setFaceGuidance({
           message: "Camera is ready! Please position your face in the center",
@@ -517,36 +517,36 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
         // Enhanced video metadata loading with proper event handling
         const waitForMetadata = () => {
           const video = videoRef.current;
-          console.log('📋 waitForMetadata called - video dimensions:', video?.videoWidth, 'x', video?.videoHeight);
+          log.debug('📋 waitForMetadata called - video dimensions:', video?.videoWidth, 'x', video?.videoHeight);
           
           if (video && video.videoWidth > 0 && video.videoHeight > 0) {
-            console.log('✅ Video metadata fully loaded - dimensions:', video.videoWidth, 'x', video.videoHeight);
-            console.log('🚀 About to call startFaceDetection');
+            log.debug('✅ Video metadata fully loaded - dimensions:', video.videoWidth, 'x', video.videoHeight);
+            log.debug('🚀 About to call startFaceDetection');
             startFaceDetection();
           } else {
-            console.log('⏳ Video metadata not ready, checking next frame...');
+            log.debug('⏳ Video metadata not ready, checking next frame...');
             // Use requestAnimationFrame to check again on the next frame
             requestAnimationFrame(() => {
               const retryVideo = videoRef.current;
-              console.log('🔄 Retry check - video dimensions:', retryVideo?.videoWidth, 'x', retryVideo?.videoHeight);
+              log.debug('🔄 Retry check - video dimensions:', retryVideo?.videoWidth, 'x', retryVideo?.videoHeight);
               
               if (retryVideo && retryVideo.videoWidth > 0 && retryVideo.videoHeight > 0) {
-                console.log('✅ Video metadata ready on next frame');
-                console.log('🚀 About to call startFaceDetection (retry)');
+                log.debug('✅ Video metadata ready on next frame');
+                log.debug('🚀 About to call startFaceDetection (retry)');
                 startFaceDetection();
               } else {
-                console.log('⏳ Still not ready, trying timeout...');
+                log.debug('⏳ Still not ready, trying timeout...');
                 // Final fallback after a short delay
                 setTimeout(() => {
                   const finalRetryVideo = videoRef.current;
-                  console.log('🔄 Final retry - video dimensions:', finalRetryVideo?.videoWidth, 'x', finalRetryVideo?.videoHeight);
+                  log.debug('🔄 Final retry - video dimensions:', finalRetryVideo?.videoWidth, 'x', finalRetryVideo?.videoHeight);
                   
                   if (finalRetryVideo && finalRetryVideo.videoWidth > 0) {
-                    console.log('✅ Video metadata ready after timeout');
-                    console.log('🚀 About to call startFaceDetection (final retry)');
+                    log.debug('✅ Video metadata ready after timeout');
+                    log.debug('🚀 About to call startFaceDetection (final retry)');
                     startFaceDetection();
                   } else {
-                    console.log('❌ Video metadata still not ready - will retry when detection runs');
+                    log.debug('❌ Video metadata still not ready - will retry when detection runs');
                   }
                 }, 200);
               }
@@ -571,7 +571,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
       // Fallback timeout
       setTimeout(() => {
         if (videoRef.current && videoRef.current.readyState >= 2) {
-          console.log('🕒 Video ready via fallback timeout');
+          log.debug('🕒 Video ready via fallback timeout');
           handleVideoReady();
         }
       }, 3000);
@@ -597,14 +597,14 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
 
   // Real-time face detection function
   const detectFace = useCallback(() => {
-    console.log('🔍 detectFace called');
+    log.debug('🔍 detectFace called');
     
     // Use requestAnimationFrame for smooth video frame processing
     requestAnimationFrame(() => {
-      console.log('🖼️ requestAnimationFrame executed');
+      log.debug('🖼️ requestAnimationFrame executed');
       
       if (!videoRef.current) {
-        console.log('❌ No video ref');
+        log.debug('❌ No video ref');
         return;
       }
       
@@ -612,7 +612,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
       const videoWidth = video.videoWidth;
       const videoHeight = video.videoHeight;
       
-      console.log('detectFace: video dimensions', { 
+      log.debug('detectFace: video dimensions', { 
         videoWidth, 
         videoHeight, 
         readyState: video.readyState,
@@ -620,8 +620,8 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
       });
       
       if (videoWidth === 0 || videoHeight === 0) {
-        console.log('❌ detectFace: invalid dimensions - width:', videoWidth, 'height:', videoHeight);
-        console.log('Video element state:', {
+        log.debug('❌ detectFace: invalid dimensions - width:', videoWidth, 'height:', videoHeight);
+        log.debug('Video element state:', {
           readyState: video.readyState,
           networkState: video.networkState,
           currentTime: video.currentTime,
@@ -630,7 +630,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
         return;
       }
       
-      console.log('✅ Video dimensions are valid, proceeding with face detection');
+      log.debug('✅ Video dimensions are valid, proceeding with face detection');
       
       try {
         // Create canvas for face detection
@@ -776,7 +776,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
           }
         }
         
-        console.log('🔍 REAL-TIME Face detection criteria (STRICTER):', {
+        log.debug('🔍 REAL-TIME Face detection criteria (STRICTER):', {
           skinRatio: skinRatio.toFixed(3),
           skinRatioPass: skinRatio > 0.25,
           skinPixelCount,
@@ -847,7 +847,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
             const frameDimension = Math.min(videoWidth, videoHeight);
             actualFaceSize = (faceDimension / frameDimension) * 100;
             
-            console.log('🔵 FACE SIZE CALCULATION:', {
+            log.debug('🔵 FACE SIZE CALCULATION:', {
               faceWidth: faceWidth.toFixed(1),
               faceHeight: faceHeight.toFixed(1),
               faceDimension: faceDimension.toFixed(1),
@@ -873,7 +873,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
           positionQuality = calculatePositionQuality(hasFace, actualFaceSize, actualFaceCenterX, actualFaceCenterY, videoWidth, videoHeight, straightnessQuality);
         }
         
-        console.log('📊 QUALITY SCORES:', {
+        log.debug('📊 QUALITY SCORES:', {
           hasFace,
           lightingQuality: lightingQuality.toFixed(1),
           straightnessQuality: straightnessQuality.toFixed(1),
@@ -896,7 +896,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
         );
         
         // Detailed debug output
-        console.log('Face Detection Results:', {
+        log.debug('Face Detection Results:', {
           hasFace,
           skinRatio: skinRatio.toFixed(3),
           skinPixelCount,
@@ -925,7 +925,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
           straightnessQuality
         });
         
-        console.log('setFaceMetrics called with:', {
+        log.debug('setFaceMetrics called with:', {
           positionQuality,
           lightingQuality,
           straightnessQuality,
@@ -1095,25 +1095,25 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
   
   // Start face detection with requestAnimationFrame-based timing
   const startFaceDetection = useCallback(() => {
-    console.log('🎯 startFaceDetection function called!');
-    console.log('🎯 Starting face detection with requestAnimationFrame...');
+    log.debug('🎯 startFaceDetection function called!');
+    log.debug('🎯 Starting face detection with requestAnimationFrame...');
     
     // Clear any existing interval
     if (faceDetectionInterval) {
-      console.log('⏹️ Clearing existing face detection interval:', faceDetectionInterval);
+      log.debug('⏹️ Clearing existing face detection interval:', faceDetectionInterval);
       clearInterval(faceDetectionInterval);
       setFaceDetectionInterval(null);
     }
     
     // Use interval but with requestAnimationFrame for smoother performance
-    console.log('⏱️ Setting up new interval...');
+    log.debug('⏱️ Setting up new interval...');
     const interval = setInterval(() => {
-      console.log('📸 Interval tick - calling detectFace');
+      log.debug('📸 Interval tick - calling detectFace');
       detectFace();
     }, 100); // Faster detection (100ms) for better real-time tracking
     
     setFaceDetectionInterval(interval);
-    console.log('✅ Face detection started with 60fps timing, interval ID:', interval);
+    log.debug('✅ Face detection started with 60fps timing, interval ID:', interval);
   }, [detectFace, faceDetectionInterval]);
   
   // Stop face detection
@@ -1126,15 +1126,15 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
 
   // YouCam SDK initialization with enhanced face detection
   const initializeYMK = useCallback(() => {
-    console.log('Initializing YouCam SDK with face detection...');
+    log.debug('Initializing YouCam SDK with face detection...');
     
     if (window.YMK) {
-      console.log('Available YMK methods:', Object.keys(window.YMK));
+      log.debug('Available YMK methods:', Object.keys(window.YMK));
       
       try {
         // Check what methods are actually available
         const availableMethods = Object.keys(window.YMK).filter(key => typeof window.YMK[key] === 'function');
-        console.log('Available YMK functions:', availableMethods);
+        log.debug('Available YMK functions:', availableMethods);
         
         // Try different initialization methods that might be available
         let initMethod = null;
@@ -1147,7 +1147,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
         }
         
         if (initMethod) {
-          console.log(`Using ${initMethod} method for SDK initialization`);
+          log.debug(`Using ${initMethod} method for SDK initialization`);
           
           const config = {
             modelPath: "https://plugins-media.makeupar.com/v1.0-skincare-camera-kit/",
@@ -1155,11 +1155,11 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
             enableFaceTracking: true,
             faceDetectionThreshold: 0.7,
             onFaceDetected: (faceData: any) => {
-              console.log('Face detected:', faceData);
+              log.debug('Face detected:', faceData);
               handleYouCamFaceDetection(faceData);
             },
             onFaceLost: () => {
-              console.log('Face lost');
+              log.debug('Face lost');
               setFaceGuidance({
                 message: "Keep your face inside the circle",
                 type: "error",
@@ -1173,7 +1173,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
           // Check if the method returns a promise
           if (initPromise && typeof initPromise.then === 'function') {
             initPromise.then((instance: any) => {
-              console.log('YouCam SDK initialized successfully');
+              log.debug('YouCam SDK initialized successfully');
               ymkInstanceRef.current = instance;
               setIsSDKLoaded(true);
               setFaceGuidance({
@@ -1187,7 +1187,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
             });
           } else {
             // Synchronous initialization
-            console.log('SDK initialized synchronously');
+            log.debug('SDK initialized synchronously');
             ymkInstanceRef.current = initPromise || window.YMK;
             setIsSDKLoaded(true);
             setFaceGuidance({
@@ -1198,7 +1198,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
           }
         } else {
           console.warn('No suitable initialization method found in YouCam SDK');
-          console.log('Falling back to standard webcam mode');
+          log.debug('Falling back to standard webcam mode');
           fallbackToWebcam();
         }
         
@@ -1207,14 +1207,14 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
         fallbackToWebcam();
       }
     } else {
-      console.log('YouCam SDK object not found');
+      log.debug('YouCam SDK object not found');
       fallbackToWebcam();
     }
   }, []);
   
   // Fallback to standard webcam
   const fallbackToWebcam = useCallback(() => {
-    console.log('Using standard webcam mode');
+    log.debug('Using standard webcam mode');
     setUseWebcam(true);
     setIsSDKLoaded(true);
     setFaceGuidance({
@@ -1342,14 +1342,14 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
   }, []);
 
   const handleSDKLoad = useCallback(() => {
-    console.log('YouCam SDK script loaded via onLoad event');
+    log.debug('YouCam SDK script loaded via onLoad event');
     // Add a small delay to ensure SDK is fully initialized
     setTimeout(() => {
       if (window.YMK && typeof window.YMK === 'object') {
-        console.log('YouCam SDK object found, initializing...');
+        log.debug('YouCam SDK object found, initializing...');
         initializeYMK();
       } else {
-        console.log('YouCam SDK not available, using standard webcam');
+        log.debug('YouCam SDK not available, using standard webcam');
         setUseWebcam(true);
         setIsSDKLoaded(true);
       }
@@ -1360,7 +1360,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
   const openYouCamCamera = useCallback(() => {
     if (ymkInstanceRef.current) {
       try {
-        console.log('Opening YouCam camera...');
+        log.debug('Opening YouCam camera...');
         setFaceGuidance({
           message: "Preparing camera...",
           type: "info",
@@ -1400,7 +1400,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
   const closeYouCamCamera = useCallback(() => {
     if (ymkInstanceRef.current) {
       try {
-        console.log('Closing YouCam camera...');
+        log.debug('Closing YouCam camera...');
         if (ymkInstanceRef.current.close) {
           ymkInstanceRef.current.close();
         } else if (ymkInstanceRef.current.stop) {
@@ -1421,7 +1421,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
   const captureYouCamPhoto = useCallback(() => {
     if (ymkInstanceRef.current && faceGuidance.canCapture) {
       try {
-        console.log('Capturing photo with YouCam...');
+        log.debug('Capturing photo with YouCam...');
         if (ymkInstanceRef.current.capture) {
           ymkInstanceRef.current.capture();
         } else if (ymkInstanceRef.current.takeSnapshot) {
@@ -1450,7 +1450,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
 
   // Main camera controls
   const openCamera = useCallback(() => {
-    console.log('Opening camera...');
+    log.debug('Opening camera...');
     
     // Stop any existing streams first
     if (streamRef.current) {
@@ -1484,7 +1484,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
   }, [startWebcam, faceDetectionInterval]);
 
   const closeCamera = useCallback(() => {
-    console.log('Closing camera...');
+    log.debug('Closing camera...');
     cleanup();
     setFaceGuidance({
       message: "Please open the camera",
@@ -1515,7 +1515,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
     if (context) {
       context.drawImage(video, 0, 0);
       const imageData = canvas.toDataURL('image/jpeg', 0.8);
-      console.log('Photo captured, size:', imageData.length);
+      log.debug('Photo captured, size:', imageData.length);
       onImageCapture(imageData);
       cleanup();
     }
@@ -1533,10 +1533,10 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
     // Check if SDK is already loaded when component mounts
     const checkSDKStatus = () => {
       if (window.YMK && typeof window.YMK === 'object') {
-        console.log('SDK already loaded on mount, initializing...');
+        log.debug('SDK already loaded on mount, initializing...');
         initializeYMK();
       } else {
-        console.log('SDK not loaded yet, will wait for script load event');
+        log.debug('SDK not loaded yet, will wait for script load event');
       }
     };
     
@@ -1545,7 +1545,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
     
     // Only return cleanup on unmount
     return () => {
-      console.log('Component unmounting, cleaning up...');
+      log.debug('Component unmounting, cleaning up...');
       clearTimeout(timeoutId);
       cleanup();
     };
@@ -1553,7 +1553,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
 
   // Debug effect to track faceMetrics changes
   useEffect(() => {
-    console.log('🔄 faceMetrics updated:', {
+    log.debug('🔄 faceMetrics updated:', {
       positionQuality: faceMetrics.positionQuality,
       lightingQuality: faceMetrics.lightingQuality,
       straightnessQuality: faceMetrics.straightnessQuality,
@@ -1568,7 +1568,7 @@ export default function CameraInterface({ onImageCapture, capturedImage }: Camer
         src="https://plugins-media.makeupar.com/v1.0-skincare-camera-kit/sdk.js"
         onLoad={handleSDKLoad}
         onError={() => {
-          console.log('SDK script failed to load, using standard webcam');
+          log.debug('SDK script failed to load, using standard webcam');
           setUseWebcam(true);
           setIsSDKLoaded(true);
         }}

@@ -1,14 +1,12 @@
-import React, { isValidElement, useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft, ChevronRight, Heart, Star, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import PageHeader from '../PageHeader';
 import PreviewReport from './questionnaire/PreviewReport';
-import { steps, questions } from '@/content/estimate/form-definition';
-import { recommendTreatments, RecommendationOutput } from './questionnaire/questionScript/matching/index';
-import RecommendationResult from '@/app/(consult)/recommend_estimate/SkinSurveyFlow/recommendation/RecommendationResult';
+import { questions } from '@/app/(consult)/recommend_estimate/estimate/form-definition_questions';
+import { steps } from '@/app/(consult)/recommend_estimate/estimate/form-definition_steps';
+import { recommendTreatments } from './questionnaire/questionScript/matching/index';
 import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 import { getLocalizedText } from '@/utils/i18n';
 
@@ -31,58 +29,19 @@ import { isValidEmail } from '@/utils/validators';
 import { CountryCode, CountryInputDto } from '@/app/models/country-code.dto';
 import { MessengerInput } from '@/components/atoms/input/InputMessengerFields';
 import { log } from '@/utils/logger';
-import { validateStepData, getValidationMessage, StepData } from '../validCheckForm';
+import { validateStepData, getValidationMessage } from '../validCheckForm';
+import SkinTypeStep from './questionnaire/SkinTypeStep';
+import SkinConcernsStep from './questionnaire/SkinConcernsStep';
+import TreatmentGoalsStep from './questionnaire/TreatmentGoalsStep';
+import VisitPathStep from './questionnaire/VisitPathStep';
+import DemographicsBasic from './questionnaire/DemographicsBasic';
+import TreatmentExpBeforeStep from './questionnaire/TreatmentExpBefore';
+import PrioriotyFactorStep from './questionnaire/PrioriotyFactorStep';
+import PreferencesStep from './questionnaire/PreferencesStep';
+import HealthConditionStep from './questionnaire/HealthConditionStep';
+import BudgetStep from './questionnaire/BudgetStep';
+import { StepData } from '../../models/recommend_estimate.dto';
 
-
-interface UserInfo {
-  firstName: string;
-  lastName: string;
-  ageRange: string;
-  gender: string;
-  email: string;
-  koreanPhoneNumber: number;
-  country: string;
-  messengers: MessengerInput[];
-}
-
-
-
-interface SkinConcerns {
-  concerns: string[];
-  moreConcerns?: string;
-}
-
-interface TreatmentAreas {
-  treatmentAreas: string[];
-  otherAreas?: string;
-}
-
-interface PriorityOrder {
-  priorityOrder: string[];
-  isPriorityConfirmed?: boolean;
-}
-
-interface PastTreatments {
-  pastTreatments: string[];
-  sideEffects?: string;
-  additionalNotes?: string;
-}
-
-interface VisitPath {
-  visitPath: string;
-  otherPath?: string;
-}
-
-interface UploadImage {
-  uploadedImage?: string; // base64 이미지 데이터
-  imageFile?: File; // 실제 파일 객체
-  imageFileName?: string; // 파일명
-}
-
-interface HealthConditions {
-  healthConditions: string[];
-  otherConditions?: string;
-}
 
 
 interface StepComponentProps {
@@ -91,6 +50,9 @@ interface StepComponentProps {
   onSkip?: () => void; // Skip 기능을 위한 optional prop
 }
 
+const RESULT_STORAGE_KEY = 'recommendation_result';
+const FORM_DATA_STORAGE_KEY = 'recommendation_form_data';
+
 const BeautyQuestionnaire: React.FC = () => {
   const router = useRouter();
   const { language } = useCookieLanguage();
@@ -98,7 +60,7 @@ const BeautyQuestionnaire: React.FC = () => {
   const [formData, setFormData] = useState<Record<string, StepData>>({});
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [isValideSendForm, setIsValideSendForm] = useState(false);
-  const [recommendationOutput, setRecommendationOutput] = useState<RecommendationOutput | null>(null);
+  const [isNavigating, setIsNavigating] = useState(false);
   const { toast } = useToast();
 
   // 현재 스텝의 유효성을 실시간으로 확인
@@ -183,16 +145,51 @@ const BeautyQuestionnaire: React.FC = () => {
     // log.debug('Questionnaire completed:', formData);
   };
 
-  const CurrentStepComponent = steps[currentStep].component as React.ComponentType<StepComponentProps>;
+  // useMemo로 현재 스텝 컴포넌트를 메모이제이션
+  const CurrentStepComponent = React.useMemo(() => {
+    const curStepId = steps[currentStep].id;
+
+    switch (curStepId) {
+      case SKIN_TYPE:
+        return SkinTypeStep as React.ComponentType<StepComponentProps>;
+      case SKIN_CONCERNS:
+        return SkinConcernsStep as React.ComponentType<StepComponentProps>;
+      case TREATMENT_GOALS:
+        return TreatmentGoalsStep as React.ComponentType<StepComponentProps>;
+      case BUDGET:
+        return BudgetStep as React.ComponentType<StepComponentProps>;
+      case HEALTH_CONDITIONS:
+        return HealthConditionStep as React.ComponentType<StepComponentProps>;
+      case PREFERENCES:
+        return PreferencesStep as React.ComponentType<StepComponentProps>;
+      case PRIORITYFACTORS:
+        return PrioriotyFactorStep as React.ComponentType<StepComponentProps>;
+      case TREATMENT_EXPERIENCE_BEFORE:
+        return TreatmentExpBeforeStep as React.ComponentType<StepComponentProps>;
+      case DEMOGRAPHICS_BASIC:
+        return DemographicsBasic as React.ComponentType<StepComponentProps>;
+      case VISIT_PATHS:
+        return VisitPathStep as React.ComponentType<StepComponentProps>;
+      default:
+        return SkinTypeStep as React.ComponentType<StepComponentProps>;
+    }
+  }, [currentStep]);
+
+  // 네비게이션 중일 때 흰 화면 표시
+  if (isNavigating) {
+    return (
+      <div className="fixed inset-0 bg-white z-50" />
+    );
+  }
 
   return (
     // <div className="min-h-screen bg-gradient-to-br from-rose-50 via-pink-50 to-purple-50">
     <div className="min-h-screen">
-      
+
       {/* Header */}
-      <PageHeader 
-        currentStep={currentStep} 
-        totalSteps={steps.length} 
+      <PageHeader
+        currentStep={currentStep}
+        totalSteps={steps.length}
         // onBack={currentStep > 0 ? handlePrevious : undefined}
         onBack={handlePrevious}
       />
@@ -275,7 +272,22 @@ const BeautyQuestionnaire: React.FC = () => {
           <div className="flex items-center gap-3">
             {currentStep === 0 ? (
               <>
-            
+            <Button
+                  onClick={handlePrevious}
+
+                  className="
+                    h-12 px-4 rounded-lg
+                    border bg-white text-[#777777] border-[#E4E5E7]
+                    hover:bg-[#F7F7F8] hover:border-[#DADCE0] hover:text-[#555555]
+                    active:bg-[#F1F2F4] active:border-[#C9CCD1] active:text-[#444444]
+                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-200 focus-visible:ring-offset-1
+                    transition-colors duration-150
+                    flex items-center justify-center
+                  "
+                >
+                  Previous
+                </Button>
+           
               <Button 
                   onClick={(e) => {
                     log.debug('Next Button clicked!', e);
@@ -298,12 +310,60 @@ const BeautyQuestionnaire: React.FC = () => {
                 </Button>
               </>
             ) : currentStep === steps.length - 1 ? (
+              <>
+               <Button
+                  onClick={handlePrevious}
+                  // className="w-25 h-12 px-4 rounded-lg border border-gray-300 bg-white text-gray-500 flex items-center justify-center"
+                  // style={{ 
+                  //   borderColor: '#E4E5E7',
+                  //   color: '#777777',
+                  //   fontFamily: 'Pretendard Variable',
+                  //   fontWeight: 600,
+                  //   fontSize: '16px',
+                  //   lineHeight: '140%'
+                  // }}
+                  className="
+                    h-12 px-4 rounded-lg
+                    border bg-white text-[#777777] border-[#E4E5E7]
+                    hover:bg-[#F7F7F8] hover:border-[#DADCE0] hover:text-[#555555]
+                    active:bg-[#F1F2F4] active:border-[#C9CCD1] active:text-[#444444]
+                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-200 focus-visible:ring-offset-1
+                    transition-colors duration-150
+                    flex items-center justify-center
+                  "
+                >
+                  Previous
+                </Button>
+                <Button
+                  onClick={handlePrevious}
+                  // className="w-25 h-12 px-4 rounded-lg border border-gray-300 bg-white text-gray-500 flex items-center justify-center"
+                  // style={{ 
+                  //   borderColor: '#E4E5E7',
+                  //   color: '#777777',
+                  //   fontFamily: 'Pretendard Variable',
+                  //   fontWeight: 600,
+                  //   fontSize: '16px',
+                  //   lineHeight: '140%'
+                  // }}
+                  className="
+                    h-12 px-4 rounded-lg
+                    border bg-white text-[#777777] border-[#E4E5E7]
+                    hover:bg-[#F7F7F8] hover:border-[#DADCE0] hover:text-[#555555]
+                    active:bg-[#F1F2F4] active:border-[#C9CCD1] active:text-[#444444]
+                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-200 focus-visible:ring-offset-1
+                    transition-colors duration-150
+                    flex items-center justify-center
+                  "
+                >
+                  Previous
+                </Button>
               <Button onClick={handleSubmit} 
                 className="w-full h-12 px-4 rounded-lg text-white flex items-center justify-center"
                 style={{ backgroundColor: '#FB718F' }}
               >
                 Submit
               </Button>
+              </>
             ) : (
               <>
                 <Button
@@ -380,6 +440,7 @@ const BeautyQuestionnaire: React.FC = () => {
         showSendFormButton={isValideSendForm}
         onOpenChange={setIsPreviewOpen}
         formData={formData}
+        onNavigateStart={() => setIsNavigating(true)}
         onSubmissionComplete={(allStepData) => {
           setIsPreviewOpen(false);
 
@@ -395,6 +456,7 @@ const BeautyQuestionnaire: React.FC = () => {
             const pastTreatmentsData = allStepData.pastTreatments?.pastTreatments || ["none"];
             const healthConditionsData = allStepData.healthConditions?.healthConditions || ["none"];
             const userInfoData = allStepData.userInfo || {};
+            const demographicsBasicData = allStepData.demographicsBasic || {};
 
             log.debug("=== Extracted Data ===");
             log.debug("skinConcernsData:", skinConcernsData);
@@ -404,6 +466,7 @@ const BeautyQuestionnaire: React.FC = () => {
             log.debug("goals:", allStepData.goals);
             log.debug("pastTreatmentsData:", pastTreatmentsData);
             log.debug("healthConditionsData:", healthConditionsData);
+            log.debug("demographicsBasicData:", demographicsBasicData);
 
             // Map skinConcerns to include tier information
             const skinConcerns = skinConcernsData.map((concernId: string) => {
@@ -414,10 +477,12 @@ const BeautyQuestionnaire: React.FC = () => {
               };
             });
 
+            // ageGroup, gender는 demographicsBasic에서 우선 가져오고, 없으면 userInfo에서 가져옴 (레거시 호환)
             const algorithmInput = {
               skinTypeId: allStepData.skinType || "combination",
-              ageGroup: userInfoData.ageRange,
-              gender: userInfoData.gender,
+              ageGroup: demographicsBasicData.age_group || userInfoData.ageRange,
+              gender: demographicsBasicData.gender || userInfoData.gender,
+              ethnicity: demographicsBasicData.ethnic_background,
               skinConcerns: skinConcerns,
               treatmentGoals: allStepData.goals || [],
               treatmentAreas: treatmentAreasData,
@@ -440,7 +505,12 @@ const BeautyQuestionnaire: React.FC = () => {
             log.debug("Excluded:", output.excluded);
             log.debug("Full output:", output);
 
-            setRecommendationOutput(output);
+            // sessionStorage에 결과 저장
+            sessionStorage.setItem(RESULT_STORAGE_KEY, JSON.stringify(output));
+            sessionStorage.setItem(FORM_DATA_STORAGE_KEY, JSON.stringify(formData));
+
+            // 결과 페이지로 이동 (replace로 설문 페이지를 히스토리에서 제거)
+            router.replace('/recommend_estimate/SkinSurveyFlow/recommendation/result');
           } catch (error) {
             log.error("Failed to generate recommendations:", error);
             toast({
@@ -451,34 +521,6 @@ const BeautyQuestionnaire: React.FC = () => {
           }
         }}
       />
-
-      {/* Recommendation Result Screen */}
-      {recommendationOutput && (
-        <div className="fixed inset-0 bg-white z-50 overflow-y-auto">
-          <RecommendationResult
-            output={recommendationOutput}
-            formData={formData}
-            onFindClinics={() => {
-              // Navigate to clinics page or show clinics
-              // router.push('/clinics');
-              // window.location.href = 'https://www.mimotok.cloud/hospital';
-              window.open('https://www.mimotok.cloud/hospital', '_blank', 'noopener,noreferrer');
-            }}
-            onConsult={() => {
-              // Open external consultation page in a new tab
-              window.open('https://www.mimotok.cloud/hospital', '_blank', 'noopener,noreferrer');
-            }}
-          />
-        </div>
-      )}
-
-      {/* Decorative Elements */}
-      {/* <div className="fixed top-20 right-10 opacity-20 pointer-events-none">
-        <Star className="w-8 h-8 text-rose-300 animate-pulse" />
-      </div>
-      <div className="fixed bottom-20 left-10 opacity-20 pointer-events-none">
-        <Heart className="w-6 h-6 text-pink-300 animate-pulse" />
-      </div> */}
     </div>
   );
 };

@@ -9,7 +9,8 @@ import PreviewReport from '@/app/(consult)/pre_consultation_intake_form/PreConsu
 import RecommendationResult from '@/app/(consult)/recommend_estimate/SkinSurveyFlow/recommendation/RecommendationResult';
 import { RecommendationOutput } from '@/app/(consult)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/types';
 import { recommendTreatments } from '@/app/(consult)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching';
-import { preConsultationSteps, questions } from '@/content/pre_consultation_intake/form-definition_pre_consultation';
+import { preConsultationSteps } from '@/app/(consult)/pre_consultation_intake_form/pre_consultation_intake/form-definition_pre_con_steps';
+import { questions } from '@/app/(consult)/pre_consultation_intake_form/pre_consultation_intake/form-definition_pre_con_questions';
 import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 import { getLocalizedText } from '@/utils/i18n';
 
@@ -24,12 +25,26 @@ import {
       SKIN_TYPE,
       TREATMENT_EXPERIENCE_BEFORE,
       TREATMENT_GOALS,
-       UPLOAD_PHOTO
+       UPLOAD_PHOTO,
+       VIDEO_CONSULT_SCHEDULE
       } from '@/constants/pre_consult_steps';
 import { isValidEmail } from '@/utils/validators';
 import { CountryCode, CountryInputDto } from '@/app/models/country-code.dto';
 import { log } from '@/utils/logger';
-import { validateStepData, getValidationMessage, StepData } from '../validCheckForm';
+import { validateStepData, getValidationMessage } from '../validCheckForm';
+
+import SkinTypeStep from './questionnaire/SkinTypeStep';
+import SkinConcernsStep from './questionnaire/SkinConcernsStep';
+import TreatmentGoalsStep from './questionnaire/TreatmentGoalsStep';
+// import DemographicsBasic from './questionnaire/DemographicsBasic';
+import TreatmentExpBeforeStep from './questionnaire/TreatmentExpBefore';
+import PrioriotyFactorStep from './questionnaire/PrioriotyFactorStep';
+import PreferencesStep from './questionnaire/PreferencesStep';
+import HealthConditionStep from './questionnaire/HealthConditionStep';
+import BudgetStep from './questionnaire/BudgetStep';
+import { StepData } from '../../models/recommend_estimate.dto';
+import UserInfo from './questionnaire/UserInfoStep';
+import VideoConsultScheduleStep from './questionnaire/VideoConsultScheduleStep';
 
 interface StepComponentProps {
   data: StepData;
@@ -44,7 +59,7 @@ const PreConsultationIntakeForm: React.FC = () => {
   const [formData, setFormData] = useState<Record<string, StepData>>({});
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [isValideSendForm, setIsValideSendForm] = useState(false);
-  const [recommendationOutput, setRecommendationOutput] = useState<RecommendationOutput | null>(null);
+
   const { toast } = useToast();
 
   // 현재 스텝의 유효성을 실시간으로 확인
@@ -129,8 +144,39 @@ const PreConsultationIntakeForm: React.FC = () => {
     // log.debug('Questionnaire completed:', formData);
   };
 
-  const CurrentStepComponent = preConsultationSteps[currentStep].component as React.ComponentType<StepComponentProps>;
+  // const CurrentStepComponent = preConsultationSteps[currentStep].component as React.ComponentType<StepComponentProps>;
+ const CurrentStepComponent = React.useMemo(() => {
+    const curStepId = preConsultationSteps[currentStep].id;
 
+    switch (curStepId) {
+      case SKIN_TYPE:
+        return SkinTypeStep as React.ComponentType<StepComponentProps>;
+      case SKIN_CONCERNS:
+        return SkinConcernsStep as React.ComponentType<StepComponentProps>;
+      case TREATMENT_GOALS:
+        return TreatmentGoalsStep as React.ComponentType<StepComponentProps>;
+      case BUDGET:
+        return BudgetStep as React.ComponentType<StepComponentProps>;
+      case HEALTH_CONDITIONS:
+        return HealthConditionStep as React.ComponentType<StepComponentProps>;
+      case PREFERENCES:
+        return PreferencesStep as React.ComponentType<StepComponentProps>;
+      case PRIORITYFACTORS:
+        return PrioriotyFactorStep as React.ComponentType<StepComponentProps>;
+      case TREATMENT_EXPERIENCE_BEFORE:
+        return TreatmentExpBeforeStep as React.ComponentType<StepComponentProps>;
+      case USER_INFO:
+        return UserInfo as React.ComponentType<StepComponentProps>;
+      case VIDEO_CONSULT_SCHEDULE:
+        return VideoConsultScheduleStep as React.ComponentType<StepComponentProps>;
+      // case DEMOGRAPHICS_BASIC:
+      //   return DemographicsBasic as React.ComponentType<StepComponentProps>;
+      // case VISIT_PATHS:
+      //   return VisitPathStep as React.ComponentType<StepComponentProps>;
+      default:
+        return SkinTypeStep as React.ComponentType<StepComponentProps>;
+    }
+  }, [currentStep]);
   return (
     // <div className="min-h-screen bg-gradient-to-br from-rose-50 via-pink-50 to-purple-50">
     <div className="min-h-screen">
@@ -301,24 +347,6 @@ const PreConsultationIntakeForm: React.FC = () => {
         </div>
       </div>
 
-      {/* Preview Floating Button */}
-      {/* <div className="fixed inset-x-0 top-[calc(64px+12px)] z-50 pointer-events-none">
-        <div className="relative mx-auto max-w-[768px] px-4">
-          <Button
-            onClick={() => setIsPreviewOpen(true)}
-            className="
-              absolute right-4 top-0
-              bg-white hover:bg-rose-50 text-rose-500
-              border border-rose-200 shadow-lg
-              rounded-full p-4
-              pointer-events-auto
-            "
-          >
-            <FileText className="w-6 h-6" />
-          </Button>
-        </div>
-      </div> */}
-      
       
       {/* Preview Dialog */}
       <PreviewReport
@@ -386,7 +414,6 @@ const PreConsultationIntakeForm: React.FC = () => {
             log.debug("Excluded:", output.excluded);
             log.debug("Full output:", output);
 
-            setRecommendationOutput(output);
           } catch (error) {
             log.error("Failed to generate recommendations:", error);
             toast({
@@ -398,33 +425,6 @@ const PreConsultationIntakeForm: React.FC = () => {
         }}
       />
 
-      {/* Recommendation Result Screen */}
-      {recommendationOutput && (
-        <div className="fixed inset-0 bg-white z-50 overflow-y-auto">
-          <RecommendationResult
-            output={recommendationOutput}
-            formData={formData}
-            onFindClinics={() => {
-              // Navigate to clinics page or show clinics
-              // router.push('/clinics');
-              // window.location.href = 'https://www.mimotok.cloud/hospital';
-              window.open('https://www.mimotok.cloud/hospital', '_blank', 'noopener,noreferrer');
-            }}
-            onConsult={() => {
-              // Open external consultation page in a new tab
-              window.open('https://www.mimotok.cloud/hospital', '_blank', 'noopener,noreferrer');
-            }}
-          />
-        </div>
-      )}
-
-      {/* Decorative Elements */}
-      {/* <div className="fixed top-20 right-10 opacity-20 pointer-events-none">
-        <Star className="w-8 h-8 text-rose-300 animate-pulse" />
-      </div>
-      <div className="fixed bottom-20 left-10 opacity-20 pointer-events-none">
-        <Heart className="w-6 h-6 text-pink-300 animate-pulse" />
-      </div> */}
     </div>
   );
 };

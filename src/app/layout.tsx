@@ -15,7 +15,7 @@ import GA4PageViewTracker from "@/components/common/GA4PageView";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://mimotok.cloud"),
+  metadataBase: new URL("https://www.mimotok.com"),
 title: "MimoTok - Your Beauty Journey",
   description:
     "Find the best beauty clinics and treatments in Korea. Book appointments, read reviews, and get expert advice.",
@@ -23,6 +23,11 @@ title: "MimoTok - Your Beauty Journey",
     "beauty",
     "clinic",
     "korea",
+    "kbeauty",
+    "skincare",
+    "cosmetics",
+    "dermatology",
+    "plastic surgery",
     "mimotok",
     "aesthetic",
     "treatment",
@@ -81,6 +86,11 @@ export default function RootLayout({
         <Script id="runtime-env" strategy="beforeInteractive">
 {`(function(){function d(){if(window.APP_ENV?.inWebView){return{inWebView:true,platform:window.APP_ENV.platform}}const u=navigator.userAgent;if(u.includes('MyAppWebView/1.0 (Android)'))return{inWebView:true,platform:'android'};if(u.includes('MyAppWebView/1.0 (iOS)'))return{inWebView:true,platform:'ios'};return{inWebView:false,platform:/Android/i.test(u)?'android':/iPhone|iPad|iPod/i.test(u)?'ios':'web'}}window.RUNTIME_ENV=d();document.documentElement.dataset.inWebview=String(window.RUNTIME_ENV.inWebView);document.documentElement.dataset.platform=window.RUNTIME_ENV.platform;})();`}
         </Script>
+         {/* <Script
+          async
+          crossOrigin="anonymous"
+          src="https://tweakcn.com/live-preview.min.js"
+        /> */}
       </head>
       <body className={inter.className + " min-h-screen flex flex-col overflow-x-hidden"}>
         {/* GA4 스크립트 삽입 */}

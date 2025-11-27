@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Label } from '@/components/ui/label';
-import { questions } from '@/content/pre_consultation_intake/form-definition_pre_consultation';
+import { questions } from '@/app/(consult)/pre_consultation_intake_form/pre_consultation_intake/form-definition_pre_con_questions';
 import { ChoiceCard } from '@/components/molecules/card/ChoiceCard';
 import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 import { getLocalizedText } from '@/utils/i18n';

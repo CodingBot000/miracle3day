@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
-import { questions } from '@/content/estimate/form-definition';
+import { questions } from '@/app/(consult)/recommend_estimate/estimate/form-definition_questions';
 import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 import { getLocalizedText } from '@/utils/i18n';
 

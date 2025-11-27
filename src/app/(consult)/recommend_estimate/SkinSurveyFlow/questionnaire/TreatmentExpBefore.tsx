@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
-import { questions } from '@/content/estimate/form-definition';
+import { questions } from '@/app/(consult)/recommend_estimate/estimate/form-definition_questions';
 import { ChoiceCard } from '@/components/molecules/card/ChoiceCard';
 import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 import { getLocalizedText } from '@/utils/i18n';

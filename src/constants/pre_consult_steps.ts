@@ -11,6 +11,7 @@ export const USER_INFO= "user-info";
 export const UPLOAD_PHOTO = "upload-photo";
 export const VISIT_PATHS = "visit-paths";
 export const AGE_RANGE = "age-range";
+export const VIDEO_CONSULT_SCHEDULE = "video-consult-schedule";
 
 
 

@@ -52,15 +52,15 @@ export class YouCamAuth {
 
   public async getAccessToken(): Promise<string> {
     if (this.accessToken && this.tokenExpiry && Date.now() < this.tokenExpiry) {
-      console.log('Using cached access token');
+      log.debug('Using cached access token');
       return this.accessToken;
     }
 
-    console.log('Generating new access token...');
+    log.debug('Generating new access token...');
     const idToken = this.generateIdToken();
 
-    console.log('Auth endpoint:', this.authEndpoint);
-    console.log('API Key:', this.apiKey.substring(0, 10) + '...');
+    log.debug('Auth endpoint:', this.authEndpoint);
+    log.debug('API Key:', this.apiKey.substring(0, 10) + '...');
     
     const response = await fetch(this.authEndpoint, {
       method: 'POST',
@@ -73,7 +73,7 @@ export class YouCamAuth {
       }),
     });
 
-    console.log('Auth response status:', response.status);
+    log.debug('Auth response status:', response.status);
     
     if (!response.ok) {
       const errorData = await response.text();

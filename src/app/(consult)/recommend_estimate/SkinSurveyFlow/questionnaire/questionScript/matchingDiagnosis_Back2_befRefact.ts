@@ -1077,4 +1077,4 @@ export function recommendTreatments(input: RecommendInputs): RecommendationOutpu
 //   pastTreatments: ["none"],
 //   medicalConditions: ["none"],
 // });
-// console.log(JSON.stringify(demo, null, 2));
+// log.debug(JSON.stringify(demo, null, 2));

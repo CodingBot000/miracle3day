@@ -63,40 +63,40 @@ export function recommendTreatments(input: RecommendInputs): RecommendationOutpu
   const substitutions: Substitution[] = [];
   const notes: string[] = [];
 
-  console.log("[MATCHING] === Step 0: Input Parameters ===");
-  console.log("skinConcerns:", skinConcerns);
-  console.log("treatmentGoals:", treatmentGoals);
-  console.log("treatmentAreas:", treatmentAreas);
-  console.log("budgetRangeId:", budgetRangeId);
-  console.log("priorityId:", priorityId);
-  console.log("rawPast:", rawPast);
-  console.log("medicalConditions:", medicalConditions);
+  log.debug("[MATCHING] === Step 0: Input Parameters ===");
+  log.debug("skinConcerns:", skinConcerns);
+  log.debug("treatmentGoals:", treatmentGoals);
+  log.debug("treatmentAreas:", treatmentAreas);
+  log.debug("budgetRangeId:", budgetRangeId);
+  log.debug("priorityId:", priorityId);
+  log.debug("rawPast:", rawPast);
+  log.debug("medicalConditions:", medicalConditions);
 
   // Past treatments 정규화 (신규 → 구버전)
   const pastTreatments = normalizePastTreatments(rawPast);
-  console.log("Normalized pastTreatments:", pastTreatments);
+  log.debug("Normalized pastTreatments:", pastTreatments);
 
   // 1) 기본 후보 수집
   let candidates: Candidate[] = [];
 
-  console.log("[MATCHING] === Step 1: Collecting Candidates ===");
+  log.debug("[MATCHING] === Step 1: Collecting Candidates ===");
   skinConcerns.forEach(concern => {
     const mapped = mapConcernToCandidates(concern);
-    console.log(`Concern "${concern.id}" mapped to ${mapped.length} candidates:`, mapped.map(c => c.key));
+    log.debug(`Concern "${concern.id}" mapped to ${mapped.length} candidates:`, mapped.map(c => c.key));
     addUniqueCandidates(candidates, mapped);
   });
-  console.log(`After concerns: ${candidates.length} candidates`);
+  log.debug(`After concerns: ${candidates.length} candidates`);
 
   treatmentGoals.forEach(goal => {
     const mapped = mapGoalToCandidates(goal);
-    console.log(`Goal "${goal}" mapped to ${mapped.length} candidates:`, mapped.map(c => c.key));
+    log.debug(`Goal "${goal}" mapped to ${mapped.length} candidates:`, mapped.map(c => c.key));
     addUniqueCandidates(candidates, mapped);
   });
-  console.log(`After goals: ${candidates.length} total candidates`);
+  log.debug(`After goals: ${candidates.length} total candidates`);
 
   // 1.5) Tier 분석 및 가중치 조정 (신규 기능)
   const tierAnalysis = analyzeTiers(skinConcerns);
-  console.log("[MATCHING] Tier analysis:", tierAnalysis);
+  log.debug("[MATCHING] Tier analysis:", tierAnalysis);
 
   if (tierAnalysis.hasTier3) {
     // Tier 3 (성형) 선택 시 injectable 우선순위 상승
@@ -140,90 +140,90 @@ export function recommendTreatments(input: RecommendInputs): RecommendationOutpu
   // 1.7) 연령대/성별 가중치 (효과 중심)
   candidates = adjustCandidatesByAgeGroup(candidates, ageGroup);
   candidates = adjustCandidatesByGender(candidates, gender);
-  console.log(`[MATCHING] After age/gender adjustments: ${candidates.length} candidates`);
+  log.debug(`[MATCHING] After age/gender adjustments: ${candidates.length} candidates`);
 
   // 2) 부위 필터
-  console.log("[MATCHING] === Step 2: Area Filter ===");
-  console.log("Before area filter:", candidates.length, "candidates");
+  log.debug("[MATCHING] === Step 2: Area Filter ===");
+  log.debug("Before area filter:", candidates.length, "candidates");
   candidates = filterByArea(candidates, treatmentAreas, excluded);
-  console.log("After area filter:", candidates.length, "candidates");
-  console.log("Excluded so far:", excluded.length, "items");
+  log.debug("After area filter:", candidates.length, "candidates");
+  log.debug("Excluded so far:", excluded.length, "items");
 
   // 3) 우선순위 반영
-  console.log("[MATCHING] === Step 3: Priority Filter ===");
-  console.log("Before priority filter:", candidates.length, "candidates");
+  log.debug("[MATCHING] === Step 3: Priority Filter ===");
+  log.debug("Before priority filter:", candidates.length, "candidates");
   candidates = substituteForPriority(candidates, priorityId, substitutions, excluded);
-  console.log("After priority filter:", candidates.length, "candidates");
-  console.log("Substitutions:", substitutions.length);
+  log.debug("After priority filter:", candidates.length, "candidates");
+  log.debug("Substitutions:", substitutions.length);
 
   // 4) 예산 적용
-  console.log("[MATCHING] === Step 4: Budget Filter ===");
+  log.debug("[MATCHING] === Step 4: Budget Filter ===");
   const budgetUpper = BUDGET_UPPER_LIMITS[budgetRangeId] || Infinity;
-  console.log("User selected budget ID:", budgetRangeId);
-  console.log("Budget upper limit:", budgetUpper === Infinity ? "Unlimited" : `${budgetUpper.toLocaleString('ko-KR')} KRW`);
-  console.log("Before budget filter:", candidates.length, "candidates");
+  log.debug("User selected budget ID:", budgetRangeId);
+  log.debug("Budget upper limit:", budgetUpper === Infinity ? "Unlimited" : `${budgetUpper.toLocaleString('ko-KR')} KRW`);
+  log.debug("Before budget filter:", candidates.length, "candidates");
 
   // 예산 적용 전 후보들의 총 가격 계산
   if (candidates.length > 0) {
     const preCandidateKeys = candidates.map(c => c.key);
-    console.log("Candidate treatment keys:", preCandidateKeys);
+    log.debug("Candidate treatment keys:", preCandidateKeys);
 
     // 각 후보의 가격 출력
     candidates.forEach(c => {
       const price = PRICE_TABLE[c.key] || 0;
-      console.log(`  - ${c.key}: ${price.toLocaleString('ko-KR')} KRW (importance: ${c.importance})`);
+      log.debug(`  - ${c.key}: ${price.toLocaleString('ko-KR')} KRW (importance: ${c.importance})`);
     });
   }
 
   candidates = enforceBudget(candidates, budgetUpper, substitutions, excluded, priorityId);
-  console.log("After budget filter:", candidates.length, "candidates");
+  log.debug("After budget filter:", candidates.length, "candidates");
 
   // 예산 적용 후 결과
   if (candidates.length > 0) {
     const postCandidateKeys = candidates.map(c => c.key);
-    console.log("Remaining after budget:", postCandidateKeys);
+    log.debug("Remaining after budget:", postCandidateKeys);
 
     let tempTotal = 0;
     candidates.forEach(c => {
       const price = PRICE_TABLE[c.key] || 0;
       tempTotal += price;
-      console.log(`  - ${c.key}: ${price.toLocaleString('ko-KR')} KRW`);
+      log.debug(`  - ${c.key}: ${price.toLocaleString('ko-KR')} KRW`);
     });
-    console.log("Total after budget filter:", tempTotal.toLocaleString('ko-KR'), "KRW");
-    console.log("Within budget?", budgetUpper === Infinity ? "Yes (unlimited)" : tempTotal <= budgetUpper ? "Yes" : "No");
+    log.debug("Total after budget filter:", tempTotal.toLocaleString('ko-KR'), "KRW");
+    log.debug("Within budget?", budgetUpper === Infinity ? "Yes (unlimited)" : tempTotal <= budgetUpper ? "Yes" : "No");
   } else {
-    console.log("⚠️ WARNING: All candidates removed by budget filter!");
-    console.log("Excluded count:", excluded.length);
-    console.log("Substitutions made:", substitutions.length);
+    log.debug("⚠️ WARNING: All candidates removed by budget filter!");
+    log.debug("Excluded count:", excluded.length);
+    log.debug("Substitutions made:", substitutions.length);
   }
 
   // 5) 과거 시술 필터
-  console.log("[MATCHING] === Step 5: Past Treatments Filter ===");
-  console.log("Before past filter:", candidates.length, "candidates");
+  log.debug("[MATCHING] === Step 5: Past Treatments Filter ===");
+  log.debug("Before past filter:", candidates.length, "candidates");
   candidates = applyPastFilters(candidates, pastTreatments, excluded);
-  console.log("After past filter:", candidates.length, "candidates");
+  log.debug("After past filter:", candidates.length, "candidates");
 
   // 6) 의학적 상태 필터
-  console.log("[MATCHING] === Step 6: Medical Conditions Filter ===");
-  console.log("Before medical filter:", candidates.length, "candidates");
+  log.debug("[MATCHING] === Step 6: Medical Conditions Filter ===");
+  log.debug("Before medical filter:", candidates.length, "candidates");
   candidates = applyMedicalFilters(candidates, medicalConditions, excluded, notes);
-  console.log("After medical filter:", candidates.length, "candidates");
-  console.log("Total excluded items:", excluded.length);
+  log.debug("After medical filter:", candidates.length, "candidates");
+  log.debug("Total excluded items:", excluded.length);
 
   // 7) 결과 변환
-  console.log("[MATCHING] Candidates before conversion:", candidates);
+  log.debug("[MATCHING] Candidates before conversion:", candidates);
   const recommendations = toRecommendedItems(candidates);
-  console.log("[MATCHING] Recommendations after conversion:", recommendations);
+  log.debug("[MATCHING] Recommendations after conversion:", recommendations);
 
   const totalPriceKRW = recommendations.reduce((sum, r) => {
-    console.log(`[MATCHING] Adding price: ${r.label} = ${r.priceKRW} KRW`);
+    log.debug(`[MATCHING] Adding price: ${r.label} = ${r.priceKRW} KRW`);
     return sum + r.priceKRW;
   }, 0);
-  console.log("[MATCHING] Total KRW:", totalPriceKRW);
+  log.debug("[MATCHING] Total KRW:", totalPriceKRW);
 
   const totalPriceUSD = krwToUsd(totalPriceKRW);
-  console.log("[MATCHING] Total USD:", totalPriceUSD);
-  console.log("[MATCHING] Exchange rate:", getKRWToUSD());
+  log.debug("[MATCHING] Total USD:", totalPriceUSD);
+  log.debug("[MATCHING] Exchange rate:", getKRWToUSD());
 
   // 8) 업셀 제안
   const upgradeSuggestions = buildUpgradeSuggestions(
@@ -243,7 +243,7 @@ export function recommendTreatments(input: RecommendInputs): RecommendationOutpu
 
   // 10) 추천 결과가 없을 때 상세 분석 및 안내
   if (recommendations.length === 0 && excluded.length > 0) {
-    console.log("[MATCHING] === No Recommendations - Analyzing Exclusion Reasons ===");
+    log.debug("[MATCHING] === No Recommendations - Analyzing Exclusion Reasons ===");
 
     // 제외 이유 분석
     const exclusionReasons = excluded.reduce((acc, item) => {
@@ -255,7 +255,7 @@ export function recommendTreatments(input: RecommendInputs): RecommendationOutpu
       return acc;
     }, {} as Record<string, string[]>);
 
-    console.log("Exclusion breakdown:", exclusionReasons);
+    log.debug("Exclusion breakdown:", exclusionReasons);
 
     // 주요 제외 이유 파악
     const reasonCounts = Object.entries(exclusionReasons).map(([reason, items]) => ({
@@ -264,7 +264,7 @@ export function recommendTreatments(input: RecommendInputs): RecommendationOutpu
       items
     })).sort((a, b) => b.count - a.count);
 
-    console.log("Top exclusion reasons:", reasonCounts);
+    log.debug("Top exclusion reasons:", reasonCounts);
 
     // 사용자에게 명확한 피드백 제공
     const primaryReason = reasonCounts[0];
@@ -290,7 +290,7 @@ export function recommendTreatments(input: RecommendInputs): RecommendationOutpu
       notes.push(`Additional factors: ${secondaryReasons.join(". ")}`);
     }
 
-    console.log("[MATCHING] User guidance notes added:", notes);
+    log.debug("[MATCHING] User guidance notes added:", notes);
   }
 
   const result = {
@@ -305,13 +305,13 @@ export function recommendTreatments(input: RecommendInputs): RecommendationOutpu
     budgetUpperLimit: budgetUpper === Infinity ? undefined : budgetUpper,
   };
 
-  console.log("[MATCHING] === Final Result Summary ===");
-  console.log("Budget ID:", budgetRangeId);
-  console.log("Budget Limit:", budgetUpper === Infinity ? "Unlimited" : `${budgetUpper.toLocaleString('ko-KR')} KRW`);
-  console.log("Total Cost:", `${totalPriceKRW.toLocaleString('ko-KR')} KRW (${totalPriceUSD.toLocaleString('en-US')} USD)`);
-  console.log("Recommendations:", recommendations.length, "treatments");
-  console.log("Excluded:", excluded.length, "treatments");
-  console.log("[MATCHING] Full result:", result);
+  log.debug("[MATCHING] === Final Result Summary ===");
+  log.debug("Budget ID:", budgetRangeId);
+  log.debug("Budget Limit:", budgetUpper === Infinity ? "Unlimited" : `${budgetUpper.toLocaleString('ko-KR')} KRW`);
+  log.debug("Total Cost:", `${totalPriceKRW.toLocaleString('ko-KR')} KRW (${totalPriceUSD.toLocaleString('en-US')} USD)`);
+  log.debug("Recommendations:", recommendations.length, "treatments");
+  log.debug("Excluded:", excluded.length, "treatments");
+  log.debug("[MATCHING] Full result:", result);
   return result;
 }
 

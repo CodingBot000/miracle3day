@@ -25,7 +25,7 @@ export default function AgeChecker() {
       });
     
       const json = await res.json();
-      console.log('결과:', json);
+      log.debug('결과:', json);
       
   };
 

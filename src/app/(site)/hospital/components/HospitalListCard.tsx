@@ -29,9 +29,9 @@ const HospitalListCard = ({ hospital, href, showCategories = false, showTreatmen
     { label: "IT", bgColor: "#F5F5F7" }
   ];
 
-  // console.log('hospital.name_en:' , hospital.name_en );
-  // console.log('hospital.thumbnail_url :', hospital.thumbnail_url );
-  // console.log('hospital.imageurls?[0] :', hospital.imageurls?[0] : "") ;
+  // log.debug('hospital.name_en:' , hospital.name_en );
+  // log.debug('hospital.thumbnail_url :', hospital.thumbnail_url );
+  // log.debug('hospital.imageurls?[0] :', hospital.imageurls?[0] : "") ;
 
   const region = findRegionByKey(REGIONS, parseInt(hospital.location!, 10));
   return (

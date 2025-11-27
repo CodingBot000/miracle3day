@@ -52,12 +52,12 @@ export class ResultParser {
     }
     
     if (!scoreFile) {
-      console.log('Available files in ZIP:', Object.keys(zip.files));
+      log.debug('Available files in ZIP:', Object.keys(zip.files));
       throw new Error('score_info.json not found in results');
     }
 
     const scoreContent = await scoreFile.async('string');
-    console.log('Score content:', scoreContent);
+    log.debug('Score content:', scoreContent);
     const scoreInfo: ScoreInfo = JSON.parse(scoreContent);
 
     const maskImages = new Map<string, Buffer>();
@@ -98,7 +98,7 @@ export class ResultParser {
             const maskData = await maskFile.async('nodebuffer');
             maskImages.set(score.output_mask_name, maskData);
           } else {
-            console.log(`Mask file not found: ${score.output_mask_name}`);
+            log.debug(`Mask file not found: ${score.output_mask_name}`);
           }
         }
       }

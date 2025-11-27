@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
     const url = new URL(req.url);
     const limit = Math.min(Math.max(Number(url.searchParams.get('limit') || 10), 1), 50); // 1~50 guard
 
-    console.log('[random-reviews] Fetching reviews with limit:', limit);
+    log.debug('[random-reviews] Fetching reviews with limit:', limit);
 
     // Simple ORDER BY random() approach - works everywhere
     const sql = `
@@ -37,7 +37,7 @@ export async function GET(req: NextRequest) {
 
     const { rows } = await pool.query(sql, [limit]);
 
-    console.log('[random-reviews] Found reviews:', rows.length);
+    log.debug('[random-reviews] Found reviews:', rows.length);
 
     return NextResponse.json(
       { reviews: rows },

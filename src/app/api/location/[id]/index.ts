@@ -13,7 +13,7 @@ export const getLocationDetailAPI = async ({
   const data = await fetchUtils<LocationDetailOutputDto>({
     url,
   });
-  console.log('qq qq LocationDetailAPI url: ', url);
-  console.log('qq qq LocationDetailAPI: ', data);
+  log.debug('qq qq LocationDetailAPI url: ', url);
+  log.debug('qq qq LocationDetailAPI: ', data);
   return data ?? [];
 };

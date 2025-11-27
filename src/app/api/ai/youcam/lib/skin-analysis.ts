@@ -52,7 +52,7 @@ export class YouCamSkinAnalysis {
     }
 
     const meta = await sharp(inputBuffer).metadata();
-    console.log('Original image dimensions:', meta.width, 'x', meta.height);
+    log.debug('Original image dimensions:', meta.width, 'x', meta.height);
     
     const longSide = Math.max(meta.width ?? 0, meta.height ?? 0);
     const shortSide = Math.min(meta.width ?? 0, meta.height ?? 0);
@@ -61,14 +61,14 @@ export class YouCamSkinAnalysis {
     const maxLongSide = mode === 'HD' ? 2560 : 1920;
     const minShortSide = mode === 'HD' ? 1080 : 480;
     
-    console.log(`Mode: ${mode}, Max long side: ${maxLongSide}, Min short side: ${minShortSide}`);
-    console.log(`Current: Long side: ${longSide}, Short side: ${shortSide}`);
+    log.debug(`Mode: ${mode}, Max long side: ${maxLongSide}, Min short side: ${minShortSide}`);
+    log.debug(`Current: Long side: ${longSide}, Short side: ${shortSide}`);
     
     // Check if resizing is needed
     let needsResize = false;
     if (longSide > maxLongSide) {
       needsResize = true;
-      console.log(`Image too large: ${longSide} > ${maxLongSide}`);
+      log.debug(`Image too large: ${longSide} > ${maxLongSide}`);
     }
     
     if (shortSide < minShortSide) {
@@ -78,7 +78,7 @@ export class YouCamSkinAnalysis {
     let processedBuffer = inputBuffer;
     
     if (needsResize) {
-      console.log('Resizing image...');
+      log.debug('Resizing image...');
       
       // Calculate new dimensions while maintaining aspect ratio
       const aspectRatio = (meta.width ?? 0) / (meta.height ?? 0);
@@ -94,7 +94,7 @@ export class YouCamSkinAnalysis {
         newWidth = Math.round(maxLongSide * aspectRatio);
       }
       
-      console.log(`Resizing to: ${newWidth} x ${newHeight}`);
+      log.debug(`Resizing to: ${newWidth} x ${newHeight}`);
       
       processedBuffer = await sharp(inputBuffer)
         .resize(newWidth, newHeight, {
@@ -107,7 +107,7 @@ export class YouCamSkinAnalysis {
         })
         .toBuffer();
         
-      console.log('Resizing completed');
+      log.debug('Resizing completed');
     }
 
     return {
@@ -117,7 +117,7 @@ export class YouCamSkinAnalysis {
   }
 
   public async uploadImage(imageFile: File | Buffer, mode: 'SD' | 'HD' = 'SD'): Promise<string> {
-    console.log('\\n=== Starting image upload ===');
+    log.debug('\\n=== Starting image upload ===');
     
     let fileName = imageFile instanceof File ? imageFile.name : 'image.jpg';
     fileName = fileName.replace(/\\s+/g, '_').replace(/[^a-zA-Z0-9._-]/g, '');
@@ -126,7 +126,7 @@ export class YouCamSkinAnalysis {
     }
     
     const originalFileSize = imageFile instanceof File ? imageFile.size : (imageFile as Buffer).length;
-    console.log('Original file info - Name:', fileName, 'Size:', originalFileSize);
+    log.debug('Original file info - Name:', fileName, 'Size:', originalFileSize);
     
     // Check file size limit (10MB)
     if (originalFileSize >= 10 * 1024 * 1024) {
@@ -137,10 +137,10 @@ export class YouCamSkinAnalysis {
     const {buffer: processedBuffer, contentType} = await this.validateAndResizeImage(imageFile, mode);
     const fileSize = processedBuffer.length;
     
-    console.log('Processed file info - Size:', fileSize, 'Type:', contentType);
+    log.debug('Processed file info - Size:', fileSize, 'Type:', contentType);
 
     const endpoint = `${this.baseUrl}/s2s/v1.1/file/skin-analysis`;
-    console.log('Using endpoint:', endpoint);
+    log.debug('Using endpoint:', endpoint);
     
     // Use the working format
     const requestBody = {
@@ -151,7 +151,7 @@ export class YouCamSkinAnalysis {
       }]
     };
     
-    console.log('Request body:', JSON.stringify(requestBody, null, 2));
+    log.debug('Request body:', JSON.stringify(requestBody, null, 2));
     
     const response = await this.auth.makeAuthenticatedRequest(endpoint, {
       method: 'POST',
@@ -161,11 +161,11 @@ export class YouCamSkinAnalysis {
       body: JSON.stringify(requestBody),
     });
 
-    console.log('Response status:', response.status);
+    log.debug('Response status:', response.status);
     
     if (response.ok) {
       const data = await response.json();
-      console.log('Success response:', JSON.stringify(data, null, 2));
+      log.debug('Success response:', JSON.stringify(data, null, 2));
       
       const fileData = data.result?.files?.[0];
       if (!fileData?.file_id) {
@@ -174,7 +174,7 @@ export class YouCamSkinAnalysis {
       
       // Upload to presigned URL if available
       if (fileData.requests?.[0]?.url) {
-        console.log('Uploading to presigned URL...');
+        log.debug('Uploading to presigned URL...');
         const uploadUrl = fileData.requests[0].url;
         const requiredHeaders = fileData.requests[0].headers || {};
         
@@ -190,21 +190,21 @@ export class YouCamSkinAnalysis {
           },
         });
 
-        console.log('Upload status:', uploadResponse.status);
+        log.debug('Upload status:', uploadResponse.status);
 
         if (!uploadResponse.ok) {
           const errorText = await uploadResponse.text();
-          console.log('Upload error:', errorText);
+          log.debug('Upload error:', errorText);
           throw new Error(`Failed to upload file: ${uploadResponse.status}`);
         }
         
-        console.log('File uploaded successfully to presigned URL');
+        log.debug('File uploaded successfully to presigned URL');
       }
       
       return fileData.file_id;
     } else {
       const errorText = await response.text();
-      console.log('Upload failed:', errorText);
+      log.debug('Upload failed:', errorText);
       throw new Error(`File upload failed: ${response.status}`);
     }
   }
@@ -212,10 +212,10 @@ export class YouCamSkinAnalysis {
   public async analyzeSkin(request: SkinAnalysisRequest): Promise<string> {
     this.validateConcerns(request.concerns);
 
-    console.log('\\n=== Starting skin analysis task ===');
+    log.debug('\\n=== Starting skin analysis task ===');
     
     const endpoint = `${this.baseUrl}/s2s/v1.0/task/skin-analysis`;
-    console.log('Task endpoint:', endpoint);
+    log.debug('Task endpoint:', endpoint);
     
     // Convert concerns to lowercase with underscores for dst_actions
     const dstActions = request.concerns.map(concern => 
@@ -264,8 +264,8 @@ export class YouCamSkinAnalysis {
     const errors: string[] = [];
     
     for (const format of payloadFormats) {
-      console.log(`\nTrying payload format: ${format.name}`);
-      console.log('Request body:', JSON.stringify(format.body, null, 2));
+      log.debug(`\nTrying payload format: ${format.name}`);
+      log.debug('Request body:', JSON.stringify(format.body, null, 2));
     
       const response = await this.auth.makeAuthenticatedRequest(endpoint, {
         method: 'POST',
@@ -275,15 +275,15 @@ export class YouCamSkinAnalysis {
         body: JSON.stringify(format.body),
       });
 
-      console.log('Task response status:', response.status);
+      log.debug('Task response status:', response.status);
 
       if (response.ok) {
         const taskData: TaskResponse = await response.json();
-        console.log('Task created successfully:', taskData);
+        log.debug('Task created successfully:', taskData);
         return taskData.result.task_id;
       } else {
         const errorText = await response.text();
-        console.log(`Failed with ${format.name}: ${response.status} - ${errorText}`);
+        log.debug(`Failed with ${format.name}: ${response.status} - ${errorText}`);
         
         try {
           const errorData = JSON.parse(errorText);
@@ -308,23 +308,23 @@ export class YouCamSkinAnalysis {
     const encodedTaskId = encodeURIComponent(taskId);
     const endpoint = `${this.baseUrl}/s2s/v1.0/task/skin-analysis?task_id=${encodedTaskId}`;
     
-    console.log('Getting task status from:', endpoint);
-    console.log('Original task ID:', taskId);
-    console.log('Encoded task ID:', encodedTaskId);
+    log.debug('Getting task status from:', endpoint);
+    log.debug('Original task ID:', taskId);
+    log.debug('Encoded task ID:', encodedTaskId);
     
     const response = await this.auth.makeAuthenticatedRequest(endpoint, {
       method: 'GET',
     });
 
-    console.log('Task status response:', response.status);
+    log.debug('Task status response:', response.status);
     
     if (response.ok) {
       const data = await response.json();
-      console.log('Task status data:', JSON.stringify(data, null, 2));
+      log.debug('Task status data:', JSON.stringify(data, null, 2));
       return data;
     } else {
       const errorText = await response.text();
-      console.log(`Task status error: ${response.status} - ${errorText}`);
+      log.debug(`Task status error: ${response.status} - ${errorText}`);
       throw new Error(`Failed to get task status: ${response.status} - ${errorText}`);
     }
   }
@@ -333,17 +333,17 @@ export class YouCamSkinAnalysis {
     taskId: string, 
     maxRetries: number = 30
   ): Promise<SkinAnalysisResponse> {
-    console.log('\\n=== Waiting for task completion ===');
+    log.debug('\\n=== Waiting for task completion ===');
     
     for (let i = 0; i < maxRetries; i++) {
-      console.log(`Polling attempt ${i + 1}/${maxRetries}`);
+      log.debug(`Polling attempt ${i + 1}/${maxRetries}`);
       const status = await this.getTaskStatus(taskId);
       
       const taskStatus = status.result.status;
-      console.log('Task status:', taskStatus);
+      log.debug('Task status:', taskStatus);
       
       if (taskStatus === 'success') {
-        console.log('Task completed successfully, downloading results...');
+        log.debug('Task completed successfully, downloading results...');
         const downloadUrl = status.result.results?.[0]?.data?.[0]?.url;
         if (!downloadUrl) {
           throw new Error('No download URL found in success response');
@@ -379,7 +379,7 @@ export class YouCamSkinAnalysis {
       // Use a very short interval to ensure we don't miss the polling window
       const maxPollingInterval = status.result.polling_interval || 300;
       const actualPollingInterval = Math.min(10, maxPollingInterval / 10) * 1000; // Poll every 10 seconds or 1/10 of max interval
-      console.log(`Task still running, max polling interval: ${maxPollingInterval}s, using: ${actualPollingInterval/1000}s`);
+      log.debug(`Task still running, max polling interval: ${maxPollingInterval}s, using: ${actualPollingInterval/1000}s`);
       
       await new Promise(resolve => setTimeout(resolve, actualPollingInterval));
     }
@@ -392,7 +392,7 @@ export class YouCamSkinAnalysis {
       throw new Error('Download URL is undefined');
     }
     
-    console.log('Downloading results from:', downloadUrl);
+    log.debug('Downloading results from:', downloadUrl);
     
     const response = await fetch(downloadUrl);
     

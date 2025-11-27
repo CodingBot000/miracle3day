@@ -36,7 +36,7 @@ interface PollQuestionProps {
 }
 
 export default function PollQuestion({ question }: PollQuestionProps) {
-  // console.log('PollQuestion question', question);
+  // log.debug('PollQuestion question', question);
   const { language } = useCookieLanguage();
   const pathname = usePathname();
   const router = useRouter();
@@ -186,24 +186,24 @@ export default function PollQuestion({ question }: PollQuestionProps) {
 
   return (
     <div>
-      <div className="flex items-center gap-2 mb-3 flex-wrap">
-        <span className="bg-green-100 text-green-800 text-sm font-bold px-3 py-1 rounded-full">
-          {language === 'ko' ? '📊 QUICK POLL · 1초 참여' : '📊 QUICK POLL · 1-sec Vote'}
+      <div className="flex items-center gap-1.5 sm:gap-2 mb-2 sm:mb-3 flex-wrap">
+        <span className="bg-green-100 text-green-800 text-xs sm:text-sm font-bold px-2 sm:px-3 py-0.5 sm:py-1 rounded-full">
+          {language === 'ko' ? '📊 QUICK POLL' : '📊 QUICK POLL'}
         </span>
-        <span className="bg-yellow-100 text-yellow-800 text-sm font-bold px-3 py-1 rounded-full">
+        <span className="bg-yellow-100 text-yellow-800 text-xs sm:text-sm font-bold px-2 sm:px-3 py-0.5 sm:py-1 rounded-full">
           +{question.points_reward} pts
         </span>
         {voted && (
-          <span className="bg-blue-100 text-blue-800 text-sm font-bold px-3 py-1 rounded-full">
+          <span className="bg-blue-100 text-blue-800 text-xs sm:text-sm font-bold px-2 sm:px-3 py-0.5 sm:py-1 rounded-full">
             ✓ {language === 'ko' ? '투표완료' : 'Voted'}
           </span>
         )}
       </div>
 
-      <h3 className="text-2xl font-bold text-gray-900 mb-2">{getText(question.title)}</h3>
-      {question.subtitle && <p className="text-gray-600 mb-4">{getText(question.subtitle)}</p>}
+      <h3 className="text-lg sm:text-2xl font-bold text-gray-900 mb-1 sm:mb-2">{getText(question.title)}</h3>
+      {question.subtitle && <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4">{getText(question.subtitle)}</p>}
 
-      <div className="space-y-3 mt-4">
+      <div className="space-y-2 sm:space-y-3 mt-3 sm:mt-4">
         {options.map((option) => {
           const percentage = totalVotes > 0
             ? Math.round((option.vote_count / totalVotes) * 100)
@@ -216,7 +216,7 @@ export default function PollQuestion({ question }: PollQuestionProps) {
               key={option.id}
               onClick={() => handleVote(option.id)}
               disabled={loading}
-              className={`w-full relative overflow-hidden p-4 rounded-lg border-2 transition ${
+              className={`w-full relative overflow-hidden py-1.5 px-2 sm:p-4 rounded-md sm:rounded-lg border sm:border-2 transition ${
                 isSelected
                   ? 'border-green-500 bg-green-50 cursor-default'
                   : loading
@@ -233,23 +233,23 @@ export default function PollQuestion({ question }: PollQuestionProps) {
               />
 
               {/* Content */}
-              <div className="relative flex justify-between items-center">
-                <div className="flex items-center gap-2">
+              <div className="relative flex justify-between items-center gap-1 sm:gap-2">
+                <div className="flex items-center gap-1 sm:gap-2 min-w-0 flex-1">
                   {isSelected && (
-                    <span className="text-green-600 text-xl">✓</span>
+                    <span className="text-green-600 text-sm sm:text-xl flex-shrink-0">✓</span>
                   )}
-                  <span className={`font-semibold ${isSelected ? 'text-green-800' : 'text-gray-900'}`}>
+                  <span className={`font-medium sm:font-semibold text-xs sm:text-base truncate ${isSelected ? 'text-green-800' : 'text-gray-900'}`}>
                     {getText(option.option_text)}
                   </span>
                 </div>
 
                 {/* 투표 결과는 항상 표시 (로그인 여부 무관) */}
-                <div className="flex items-center gap-2">
-                  <span className="text-gray-500 text-sm">
+                <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+                  <span className="text-gray-500 text-xs sm:text-sm hidden sm:inline">
                     <span className="blur-sm">{option.vote_count}</span> {language === 'ko' ? '표' : 'votes'}
                   </span>
                   {totalVotes > 0 && (
-                    <span className={`font-bold text-lg ${isSelected ? 'text-green-700' : 'text-gray-600'}`}>
+                    <span className={`font-bold text-xs sm:text-lg ${isSelected ? 'text-green-700' : 'text-gray-600'}`}>
                       <span className="blur-sm">{percentage}</span>%
                     </span>
                   )}
@@ -262,12 +262,12 @@ export default function PollQuestion({ question }: PollQuestionProps) {
 
       {/* 총 투표수는 항상 표시 */}
       {totalVotes > 0 && (
-        <div className="mt-3 space-y-1">
-          <p className="text-gray-500 text-sm">
+        <div className="mt-2 sm:mt-3 space-y-0.5 sm:space-y-1">
+          <p className="text-gray-500 text-xs sm:text-sm">
             👥 {totalVotes} {language === 'ko' ? '명이 투표했습니다' : 'people voted'}
           </p>
           {voted && (
-            <p className="text-gray-400 text-xs">
+            <p className="text-gray-400 text-[10px] sm:text-xs">
               💡 {language === 'ko'
                 ? '다른 옵션을 선택하여 투표를 변경할 수 있습니다'
                 : 'You can change your vote by selecting a different option'}
@@ -277,10 +277,10 @@ export default function PollQuestion({ question }: PollQuestionProps) {
       )}
 
       {/* 결과보기 */}
-      <div className="mt-3">
-        <button 
+      <div className="mt-2 sm:mt-3">
+        <button
           onClick={handleViewResults}
-          className="px-6 py-3 bg-pink-600 text-white rounded-lg font-semibold hover:bg-pink-700 transition flex items-center gap-2" 
+          className="px-4 sm:px-6 py-2 sm:py-3 bg-pink-600 text-white rounded-lg text-sm sm:text-base font-semibold hover:bg-pink-700 transition flex items-center gap-2"
         >
           {language === 'ko' ? '결과 보기' : 'View Results'}
         </button>

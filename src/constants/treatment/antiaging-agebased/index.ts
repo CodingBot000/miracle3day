@@ -12,7 +12,9 @@ export interface Treatment {
   effect: string;
   cycle?: string;
   duration?: string;
-  cost?: string;
+  costFrom?: number;
+  costTo?: number;
+  priceUnit?: string;
   interval?: string;
   time?: string;
   onset?: string;

@@ -1,6 +1,5 @@
 import React from 'react';
 import { LayoutGrid, Calendar } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
 export interface ViewToggleProps {
   currentView: 'card' | 'timeline';
@@ -9,36 +8,32 @@ export interface ViewToggleProps {
 
 const ViewToggle: React.FC<ViewToggleProps> = ({ currentView, onViewChange }) => {
   return (
-    <div className="flex justify-center mt-6">
-      <div className="inline-flex rounded-lg border border-gray-200 bg-white p-1">
-        <Button
-          variant={currentView === 'card' ? 'default' : 'ghost'}
-          size="sm"
+    <div className="flex justify-center mt-8">
+      <div className="inline-flex p-1.5 bg-white rounded-2xl shadow-lg shadow-gray-200/50 border border-gray-100">
+        <button
           onClick={() => onViewChange('card')}
           className={`
-            flex items-center space-x-2 px-4 py-2
+            relative flex items-center gap-2.5 px-5 py-2.5 rounded-xl font-medium text-sm transition-all duration-300
             ${currentView === 'card'
-              ? 'bg-gradient-to-r from-rose-400 to-pink-500 text-white'
-              : 'text-gray-600 hover:text-gray-900'}
+              ? 'bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-lg shadow-rose-500/30'
+              : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'}
           `}
         >
           <LayoutGrid className="w-4 h-4" />
           <span>Card View</span>
-        </Button>
-        <Button
-          variant={currentView === 'timeline' ? 'default' : 'ghost'}
-          size="sm"
+        </button>
+        <button
           onClick={() => onViewChange('timeline')}
           className={`
-            flex items-center space-x-2 px-4 py-2
+            relative flex items-center gap-2.5 px-5 py-2.5 rounded-xl font-medium text-sm transition-all duration-300
             ${currentView === 'timeline'
-              ? 'bg-gradient-to-r from-rose-400 to-pink-500 text-white'
-              : 'text-gray-600 hover:text-gray-900'}
+              ? 'bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-lg shadow-rose-500/30'
+              : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'}
           `}
         >
           <Calendar className="w-4 h-4" />
-          <span>Timeline View</span>
-        </Button>
+          <span>Timeline</span>
+        </button>
       </div>
     </div>
   );

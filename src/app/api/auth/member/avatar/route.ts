@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getAuthSession } from "@/lib/auth-helper";
-import { BUCKET_USERS, TABLE_MEMBERS } from "@/constants/tables";
+import { TABLE_MEMBERS } from "@/constants/tables";
 import { q } from "@/lib/db";
 import { findMemberByUserId } from "@/app/api/auth/getUser/member.helper";
 
@@ -31,16 +31,14 @@ export async function GET(request: Request) {
       return NextResponse.json({ avatarUrl: avatar }, { status: 200 });
     }
 
-    const base =
-      (process.env.NEXT_PUBLIC_LIGHTSAIL_ENDPOINT ||
-        process.env.LIGHTSAIL_ENDPOINT ||
-        "").replace(/\/+$/, "");
-    const key = [BUCKET_USERS.replace(/^\//, "").replace(/\/+$/, ""), avatar]
-      .filter(Boolean)
-      .join("/")
-      .replace(/\/+/g, "/");
+    const bucket = process.env.LIGHTSAIL_BUCKET_NAME || "";
+    const region = process.env.LIGHTSAIL_REGION || "us-west-2";
+    const key = avatar.replace(/^\/+/, "").replace(/\/+/g, "/");
 
-    const publicUrl = base ? `${base}/${key}` : `/${key}`;
+    // 버킷명을 포함한 올바른 S3 공개 URL 생성
+    const publicUrl = bucket
+      ? `https://${bucket}.s3.${region}.amazonaws.com/${key}`
+      : `/${key}`;
 
     if (!publicUrl) {
       console.error("avatar storage public url error: unable to construct URL");
@@ -93,13 +91,16 @@ export async function PATCH(req: NextRequest) {
       (member["id_uuid"] as string | undefined) ??
       userId;
 
-    const base =
-      (process.env.NEXT_PUBLIC_LIGHTSAIL_ENDPOINT ||
-        process.env.LIGHTSAIL_ENDPOINT ||
-        "").replace(/\/+$/, "");
-
+    const bucket = process.env.LIGHTSAIL_BUCKET_NAME || "";
+    const region = process.env.LIGHTSAIL_REGION || "us-west-2";
     const key = path.replace(/^\/+/, "");
-    const publicUrl = base ? `${base}/${key}` : `/${key}`;
+
+    // 버킷명을 포함한 올바른 S3 공개 URL 생성
+    const publicUrl = bucket
+      ? `https://${bucket}.s3.${region}.amazonaws.com/${key}`
+      : `/${key}`;
+
+    console.log("[PATCH avatar] bucket:", bucket, "region:", region, "key:", key, "publicUrl:", publicUrl);
 
     const updates = await q(
       `UPDATE ${TABLE_MEMBERS}

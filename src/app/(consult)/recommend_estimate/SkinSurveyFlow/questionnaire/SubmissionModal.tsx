@@ -2,6 +2,7 @@ import React from 'react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Loader2, CheckCircle } from 'lucide-react';
+import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 
 interface SubmissionModalProps {
   open: boolean;
@@ -18,6 +19,8 @@ const SubmissionModal: React.FC<SubmissionModalProps> = ({
   isCompleted,
   onComplete
 }) => {
+  const { language } = useCookieLanguage();
+
   return (
     <Dialog open={open} onOpenChange={() => {}}>
       <DialogContent 
@@ -52,10 +55,13 @@ const SubmissionModal: React.FC<SubmissionModalProps> = ({
                   Consultation Submitted Successfully!
                 </h3>
                 <p className="text-sm text-gray-600">
-                  Thank you for your submission.
+                  {language === 'ko' ? "제출이 완료되었습니다. 감사합니다."
+                  : "Thank you for your submission."}
                 </p>
-                <p className="text-sm text-gray-600">
-                  Experience the pinnacle of Korean dermatology—personalized elegance, guided by our advanced algorithm.
+                <p className="text-sm text-gray-600 whitespace-pre-line">
+                  {language === 'ko' ?
+                  "작성해주신 문진을 분석하여 AI 알고리즘이 맞춤형 시술 추천과 예상 비용을 제시합니다.\n진행 버튼을 눌러주세요."
+                  : "Your responses will now be analyzed,\nand our AI algorithm will provide personalized treatment recommendations and estimated costs.\nPlease press continue."}
                 </p>
               </div>
               <Button

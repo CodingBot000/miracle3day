@@ -3,7 +3,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { CountryCode } from '@/app/models/country-code.dto';
 import { NationModal } from '@/components/template/modal/nations';
-import { questions } from '@/content/estimate/form-definition';
+import { questions } from '@/app/(consult)/recommend_estimate/estimate/form-definition_questions';
 import { useCookieLanguage } from '@/hooks/useCookieLanguage';
 import { getLocalizedText } from '@/utils/i18n';
 
@@ -86,6 +86,7 @@ const DemographicsBasic: React.FC<DemographicsBasicStepProps> = ({ data, onDataC
                 </p>
               )}
               <div>
+                <Label htmlFor="nationality">Nationality</Label>
                 <NationModal
                   nation={nation?.country_name || demographicsData[question.id] || ""}
                   onSelect={handleCountryChange}

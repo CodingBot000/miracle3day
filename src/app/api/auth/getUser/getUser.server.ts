@@ -15,7 +15,7 @@ export const getUserAPIServer = async (): Promise<UserOutputDto | null> => {
     const session = await getIronSession(cookieStore, sessionOptions) as any;
 
     if (!session.auth || session.auth.status !== 'active' || !session.auth.id_uuid) {
-      console.log('[getUserAPIServer] No active session');
+      log.debug('[getUserAPIServer] No active session');
       return null;
     }
 
@@ -25,7 +25,7 @@ export const getUserAPIServer = async (): Promise<UserOutputDto | null> => {
     );
 
     if (!member.length) {
-      console.log('[getUserAPIServer] User not found in database');
+      log.debug('[getUserAPIServer] User not found in database');
       return null;
     }
 

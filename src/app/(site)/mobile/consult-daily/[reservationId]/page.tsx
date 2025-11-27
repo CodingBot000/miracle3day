@@ -24,7 +24,7 @@ export default function DailyConsultPage() {
 
         const roomName = `bl-${reservationId}`;
 
-        console.log("[Daily] Initializing room:", { roomName, userName, role });
+        log.debug("[Daily] Initializing room:", { roomName, userName, role });
 
         // 1) Create or get existing room
         const roomRes = await fetch("/mobile/consult-daily/api/create-room", {
@@ -34,7 +34,7 @@ export default function DailyConsultPage() {
         });
 
         const roomData = await roomRes.json();
-        console.log("[Daily] Room response:", roomData);
+        log.debug("[Daily] Room response:", roomData);
 
         if (!roomRes.ok) {
           // Show detailed error from Daily API
@@ -44,7 +44,7 @@ export default function DailyConsultPage() {
           throw new Error(errorMsg);
         }
 
-        console.log("[Daily] Room ready:", roomData);
+        log.debug("[Daily] Room ready:", roomData);
 
         // 2) Create meeting token with role-based permissions
         const tokenRes = await fetch("/mobile/consult-daily/api/create-token", {
@@ -58,7 +58,7 @@ export default function DailyConsultPage() {
         });
 
         const tokenData = await tokenRes.json();
-        console.log("[Daily] Token response:", tokenData);
+        log.debug("[Daily] Token response:", tokenData);
 
         if (!tokenRes.ok) {
           // Show detailed error from Daily API
@@ -72,13 +72,13 @@ export default function DailyConsultPage() {
           throw new Error("No token received from Daily API");
         }
 
-        console.log("[Daily] Token created successfully");
+        log.debug("[Daily] Token created successfully");
 
         // 3) Construct iframe URL with token
         const dailyDomain = process.env.NEXT_PUBLIC_DAILY_DOMAIN || "your-subdomain";
         const url = `https://${dailyDomain}/${roomName}?t=${tokenData.token}`;
 
-        console.log("[Daily] Opening URL:", url);
+        log.debug("[Daily] Opening URL:", url);
         setDailyUrl(url);
       } catch (err) {
         console.error("[Daily] Initialization error:", err);

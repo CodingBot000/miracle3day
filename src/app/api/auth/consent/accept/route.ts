@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import { q } from "@/lib/db";
 import { TABLE_MEMBERS, TABLE_MEMBER_SOCIAL_ACCOUNTS } from "@/constants/tables";
 import { initializeBadgeSystem } from "@/services/badges/initialization";
+import { generateNickname } from "@/app/utils/generateNickname";
 
 export async function POST(req: Request) {
   const res = new NextResponse();
@@ -22,6 +23,7 @@ export async function POST(req: Request) {
   const providerUserId = auth.provider_user_id as string;
   const email: string | null = auth.email ?? null;   // 이메일이 없어도 null 허용
   const avatar: string | null = auth.avatar ?? null;
+  const name: string | null = auth.name ?? null;     // 구글에서 가져온 이름
 
   // 약관 동의 정보 구성
   const termsAgreement = {
@@ -89,13 +91,14 @@ scope=openid email profile 에서 email 누락되면
 Google도 이메일을 반환하지 않습니다.
      */
     if (!memberId) {
+      const nickname = generateNickname(); // 랜덤 닉네임 자동 생성
       const created = await q(
         `
-        INSERT INTO ${TABLE_MEMBERS} (email, avatar, is_active, terms_agreements, created_at, updated_at)
-        VALUES ($1, $2, true, $3::jsonb, now(), now())
+        INSERT INTO ${TABLE_MEMBERS} (email, avatar, nickname, name, is_active, terms_agreements, created_at, updated_at)
+        VALUES ($1, $2, $3, $4, true, $5::jsonb, now(), now())
         RETURNING id_uuid
         `,
-        [email, avatar, JSON.stringify(termsAgreement)]
+        [email, avatar, nickname, name, JSON.stringify(termsAgreement)]
       );
       memberId = created[0].id_uuid as string;
     } else {
@@ -143,9 +146,9 @@ Google도 이메일을 반환하지 않습니다.
       id_uuid: memberId,
     };
 
-    console.log('Before session.save(), session.auth:', session.auth);
+    log.debug('Before session.save(), session.auth:', session.auth);
     await session.save();
-    console.log('After session.save() completed');
+    log.debug('After session.save() completed');
     // 설명: 본 주석 삭제금지 - { headers: res.headers }); header를 추가해야 session.save()로 업데이트된 쿠키가 포함되서 새응답으로 전달되어 업데이트된 세션쿠키를 받아 status를 최신상태로 받을수있다.
     return NextResponse.json({ ok: true, member_id: memberId }, { headers: res.headers });
   } catch (e) {

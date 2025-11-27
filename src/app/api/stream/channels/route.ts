@@ -52,7 +52,7 @@ export async function GET(req: NextRequest) {
 
     // 4. 응답 데이터 가공
     const channelList = channels.map((channel) => {
-      const channelData = channel.data || {};
+      const channelData = (channel.data || {}) as Record<string, any>;
       const members = Object.values(channel.state?.members || {}).map((member: any) => ({
         user_id: member.user_id || member.user?.id,
         nickname: member.user?.name || 'Unknown',
@@ -79,7 +79,7 @@ export async function GET(req: NextRequest) {
         members,
         created_at: channelData.created_at,
         updated_at: channelData.updated_at,
-        last_message_at: channel.data?.last_message_at,
+        last_message_at: channelData.last_message_at,
         last_message: lastMessage ? {
           text: lastMessage.text,
           created_at: lastMessage.created_at,

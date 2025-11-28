@@ -1,13 +1,12 @@
 'use client'
 
 import { MouseEvent, useMemo, useEffect } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { CommunityPost } from '@/app/models/communityData.dto';
-import { ANONYMOUS_FALLBACK, isAnonymousCategoryName } from './utils';
+import { ANONYMOUS_FALLBACK } from './utils';
 import { useLoginGuard } from '@/hooks/useLoginGuard';
-import { getImageUrl } from '@/lib/images';
 import { useCookieLanguage } from '@/hooks/useCookieLanguage';
+import PostCard from './PostCard';
 
 interface PostListProps {
   posts: CommunityPost[]
@@ -85,73 +84,20 @@ export default function PostList({ posts, isAuthenticated }: PostListProps) {
           posts.map((post) => {
             const authorPresentation = getAuthorPresentation(post)
             const formattedDate = formatDate(post.created_at)
-            const commentCount = post.comment_count ?? post.comment_count ?? 0
-            const likeCount = post.like_count ?? post.like_count ?? 0
+            const commentCount = post.comment_count ?? 0
+            const likeCount = post.like_count ?? 0
 
             return (
-              <div
+              <PostCard
                 key={post.id}
-                className="block p-6 !border-2 !border-solid !border-gray-200 rounded-lg hover:!border-pink-300 hover:shadow-md transition-all bg-white"
-              >
-                <Link
-                  href={`/community/post/${post.id}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block"
-                  onClick={(event) => handleClick(event, post.id)}
-                >
-                  <div className="flex flex-col">
-                  {/* 헤더: 카테고리, 작성자, 날짜 */}
-                  <div className="flex flex-wrap items-center gap-3 text-sm text-gray-500 mb-3">
-                    {post.topic && (
-                      <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">
-                        {typeof post.topic.name === 'string' ? post.topic.name : post.topic.name[language]}
-                      </span>
-                    )}
-                    {post.tag && (
-                      <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">
-                        {typeof post.tag.name === 'string' ? post.tag.name : post.tag.name[language]}
-                      </span>
-                    )}
-                    <div className="flex items-center gap-2">
-                      <div className="h-6 w-6 overflow-hidden rounded-full bg-gray-200">
-                        <img
-                          src={authorPresentation.avatar}
-                          alt={authorPresentation.name}
-                          className="h-full w-full object-cover"
-                          loading="lazy"
-                        />
-                      </div>
-                      <span className="text-xs">{authorPresentation.name}</span>
-                    </div>
-                    <span>·</span>
-                    <span className="text-xs">{formattedDate}</span>
-                  </div>
-
-                  {/* 제목과 내용 */}
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                    {post.title}
-                  </h3>
-                  <p className="text-gray-600 line-clamp-2 mb-3">{post.content}</p>
-
-                  {/* 통계: 조회수, 댓글, 좋아요 */}
-                  <div className="flex items-center gap-4 text-sm text-gray-500 mt-auto pt-3 border-t border-gray-100">
-                    <div className="flex items-center gap-1">
-                      <span>👁</span>
-                      <span>{post.view_count}</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <span>💬</span>
-                      <span>{commentCount}</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <span>❤️</span>
-                      <span>{likeCount}</span>
-                    </div>
-                  </div>
-                </div>
-                </Link>
-              </div>
+                post={post}
+                authorPresentation={authorPresentation}
+                formattedDate={formattedDate}
+                commentCount={commentCount}
+                likeCount={likeCount}
+                language={language}
+                onClickPost={handleClick}
+              />
             )
           })
         )}

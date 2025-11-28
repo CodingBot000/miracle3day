@@ -168,7 +168,7 @@ export default function CommentSection({
     <>
       {loginModal}
       <div className="mt-8 pt-8 border-t">
-        <h3 className="text-xl font-semibold mb-6">
+        <h3 className="text-sm md:text-3xl font-semibold mb-2">
           {totalComments} {language === 'ko' ? '댓글' : 'Comments'}
         </h3>
 

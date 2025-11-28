@@ -52,9 +52,9 @@ const MenuMobile = () => {
   }
 
   // 웹뷰(앱)에서는 MenuMobile을 표시하지 않음
-  if (isWebView) {
-    return null;
-  }
+  // if (isWebView) {
+  //   return null;
+  // }
 
   return (
     <div

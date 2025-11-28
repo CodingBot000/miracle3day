@@ -10,7 +10,8 @@ import {
   MessageSquareText,
 } from "lucide-react";
 import { ROUTE } from "@/router";
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useRouter, usePathname } from "@/i18n/routing";
+import { useSearchParams } from "next/navigation";
 import { LocationEnum } from "@/constants";
 import clsx from "clsx";
 import AuthClient from "@/components/molecules/auth/AuthClient";

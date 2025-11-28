@@ -1,6 +1,6 @@
 'use client';
 
-import { useCookieLanguage } from '@/hooks/useCookieLanguage';
+import { useLocale, useTranslations } from 'next-intl';
 import type { PollOption } from '@/services/poll';
 import type { PollVote } from '@/services/poll';
 
@@ -13,13 +13,13 @@ export default function PollResultsChart({
   options,
   userVote,
 }: PollResultsChartProps) {
-  const { language } = useCookieLanguage();
+  const locale = useLocale();
 
   // 다국어 텍스트 추출 헬퍼
   const getText = (jsonbField: any): string => {
     if (!jsonbField) return '';
     if (typeof jsonbField === 'string') return jsonbField;
-    return jsonbField[language] || jsonbField.en || jsonbField.ko || '';
+    return jsonbField[locale] || jsonbField.en || jsonbField.ko || '';
   };
 
   const totalVotes = options.reduce((sum, opt) => sum + opt.vote_count, 0);
@@ -27,7 +27,7 @@ export default function PollResultsChart({
   return (
     <div className="poll-results-chart">
       <h2 className="text-xl font-bold mb-4">
-        {language === 'ko' ? '투표 결과' : 'Poll Results'}
+        {locale === 'ko' ? '투표 결과' : 'Poll Results'}
       </h2>
       
       <div className="space-y-3">
@@ -69,7 +69,7 @@ export default function PollResultsChart({
                 {/* 투표 결과 표시 */}
                 <div className="flex items-center gap-2">
                   <span className="text-gray-500 text-sm">
-                    {option.vote_count} {language === 'ko' ? '표' : 'votes'}
+                    {option.vote_count} {locale === 'ko' ? '표' : 'votes'}
                   </span>
                   {totalVotes > 0 && (
                     <span className={`font-bold text-lg ${isSelected ? 'text-green-700' : 'text-gray-600'}`}>
@@ -87,7 +87,7 @@ export default function PollResultsChart({
       {totalVotes > 0 && (
         <div className="mt-4 pt-4 border-t border-gray-200">
           <p className="text-gray-500 text-sm text-center">
-            👥 {totalVotes} {language === 'ko' ? '명이 투표했습니다' : 'people voted'}
+            👥 {totalVotes} {locale === 'ko' ? '명이 투표했습니다' : 'people voted'}
           </p>
         </div>
       )}

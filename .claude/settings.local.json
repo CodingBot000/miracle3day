@@ -1,24 +1,7 @@
 {
   "permissions": {
     "allow": [
-      "Bash(tree:*)",
-      "Bash(sed:*)",
-      "Bash(mkdir:*)",
-      "Bash(ls:*)",
-      "Bash(npm run build:*)",
-      "Bash(find:*)",
-      "Bash(npm run dev:*)",
-      "Bash(git mv:*)",
-      "Bash(npm run lint:*)",
-      "Bash(psql:*)",
-      "Bash(python3:*)",
-      "Bash(rm:*)",
-      "Bash(npm install:*)",
-      "Bash(npm uninstall:*)",
-      "Bash(npm i:*)",
-      "WebFetch(domain:docs.anthropic.com)",
-      "WebFetch(domain:docs.claude.com)",
-      "WebFetch(domain:code.claude.com)"
+      "Bash(xargs sed:*)"
     ],
     "deny": [],
     "ask": []

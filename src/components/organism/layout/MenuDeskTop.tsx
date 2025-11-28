@@ -10,7 +10,7 @@ import { CancelIcon } from "@/components/icons/cancel";
 import { ROUTE } from "@/router";
 import { cosmetic, LOCATIONS, surgical } from "@/constants";
 import { createSidebarPath } from "@/utils";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import Portal from "@/components/common/portal";
 import useModal from "@/hooks/useModal";
 

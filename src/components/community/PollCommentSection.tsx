@@ -5,7 +5,7 @@ import { toast } from 'sonner';
 import PollCommentItem from './PollCommentItem';
 import PollCommentInput from './PollCommentInput';
 import { buildCommentTree } from '@/utils/commentTree';
-import { useCookieLanguage } from '@/hooks/useCookieLanguage';
+import { useLocale, useTranslations } from 'next-intl';
 import type { PollComment } from '@/services/pollComments';
 
 interface PollCommentSectionProps {
@@ -25,7 +25,7 @@ export default function PollCommentSection({
   onCommentAdded,
   onCommentDeleted,
 }: PollCommentSectionProps) {
-  const { language } = useCookieLanguage();
+  const locale = useLocale();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // 댓글 트리 구조로 변환
@@ -34,7 +34,7 @@ export default function PollCommentSection({
   // 댓글 작성
   const handleSubmitComment = async (content: string, parentId?: number) => {
     if (!isAuthenticated) {
-      toast.error(language === 'ko' ? '로그인이 필요합니다' : 'Please login to comment');
+      toast.error(locale === 'ko' ? '로그인이 필요합니다' : 'Please login to comment');
       return;
     }
 
@@ -57,10 +57,10 @@ export default function PollCommentSection({
 
       const newComment = await response.json();
       onCommentAdded(newComment);
-      toast.success(language === 'ko' ? '댓글이 작성되었습니다!' : 'Comment posted!');
+      toast.success(locale === 'ko' ? '댓글이 작성되었습니다!' : 'Comment posted!');
     } catch (error) {
       console.error('Error posting comment:', error);
-      toast.error(language === 'ko' ? '댓글 작성에 실패했습니다' : 'Failed to post comment');
+      toast.error(locale === 'ko' ? '댓글 작성에 실패했습니다' : 'Failed to post comment');
     } finally {
       setIsSubmitting(false);
     }
@@ -78,10 +78,10 @@ export default function PollCommentSection({
       }
 
       onCommentDeleted(commentId);
-      toast.success(language === 'ko' ? '댓글이 삭제되었습니다' : 'Comment deleted');
+      toast.success(locale === 'ko' ? '댓글이 삭제되었습니다' : 'Comment deleted');
     } catch (error) {
       console.error('Error deleting comment:', error);
-      toast.error(language === 'ko' ? '댓글 삭제에 실패했습니다' : 'Failed to delete comment');
+      toast.error(locale === 'ko' ? '댓글 삭제에 실패했습니다' : 'Failed to delete comment');
     }
   };
 
@@ -100,7 +100,7 @@ export default function PollCommentSection({
       <div className="space-y-4">
         {commentTree.length === 0 ? (
           <p className="text-gray-500 text-center py-8">
-            {language === 'ko' 
+            {locale === 'ko' 
               ? '아직 댓글이 없습니다. 첫 번째 댓글을 작성해보세요!' 
               : 'No comments yet. Be the first to share your thoughts!'
             }

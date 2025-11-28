@@ -6,10 +6,10 @@ import CTAButton from './CTAButton';
 
 interface Props {
   sectionKey: string;
-  intro: KBeautyIntro;
-  mainPoints: Record<string, KBeautyMainPoint>;
+  intro?: KBeautyIntro | Record<string, never>;
+  mainPoints?: Record<string, KBeautyMainPoint> | Record<string, never>;
   statistics?: KBeautyStatistics;
-  conclusion: KBeautyConclusion;
+  conclusion?: KBeautyConclusion | { title: string; quote: string; points: string[]; closingLine: string; image: string };
   cta?: KBeautyCTA;
 }
 
@@ -38,16 +38,18 @@ export default function SectionContent({
       </div>
 
       {/* Main Points */}
-      <div className="space-y-20 mb-20">
-        {Object.entries(mainPoints).map(([key, point]) => (
-          <MainPoint
-            key={key}
-            point={point}
-            sectionKey={sectionKey}
-            isFirst={key === 'point1'}
-          />
-        ))}
-      </div>
+      {mainPoints && Object.keys(mainPoints).length > 0 && (
+        <div className="space-y-20 mb-20">
+          {Object.entries(mainPoints).map(([key, point]) => (
+            <MainPoint
+              key={key}
+              point={point}
+              sectionKey={sectionKey}
+              isFirst={key === 'point1'}
+            />
+          ))}
+        </div>
+      )}
 
       {/* Statistics */}
       {statistics && (

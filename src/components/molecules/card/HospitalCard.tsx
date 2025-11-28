@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useGooglePlaceReviews } from "@/hooks/useGooglePlaceReviews";
 import { ReviewStats } from "@/components/molecules/ReviewStats";
-import { useCookieLanguage } from "@/hooks/useCookieLanguage";
+import { useLocale } from "next-intl";
 
 interface HospitalCardProps {
   src: string;
@@ -26,7 +26,7 @@ export const HospitalCard = ({
   searchKey,
   onSelect,
 }: HospitalCardProps) => {
-  const { language } = useCookieLanguage();
+  const locale = useLocale() as 'ko' | 'en';
   const locationKey =
     typeof locationNum === "string" && locationNum.length > 0
       ? Number.parseInt(locationNum, 10)
@@ -60,7 +60,7 @@ export const HospitalCard = ({
                 <ReviewStats
                   rating={googleReviewsData.rating}
                   userRatingCount={googleReviewsData.userRatingCount}
-                  language={language}
+                  language={locale}
                   size={16}
                   className="mt-1"
                 />

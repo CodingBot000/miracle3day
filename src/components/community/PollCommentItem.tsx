@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { formatDistanceToNow } from 'date-fns';
 import PollCommentInput from './PollCommentInput';
-import { useCookieLanguage } from '@/hooks/useCookieLanguage';
+import { useLocale, useTranslations } from 'next-intl';
 import type { PollComment } from '@/services/pollComments';
 
 interface PollCommentItemProps {
@@ -20,14 +20,14 @@ export default function PollCommentItem({
   onReply,
   onDelete,
 }: PollCommentItemProps) {
-  const { language } = useCookieLanguage();
+  const locale = useLocale();
   const [showReplyInput, setShowReplyInput] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const isAuthor = memberUuid === comment.uuid_author;
   const authorName = comment.is_anonymous 
-    ? (language === 'ko' ? '익명' : 'Anonymous')
-    : comment.author?.name || (language === 'ko' ? '사용자' : 'User');
+    ? (locale === 'ko' ? '익명' : 'Anonymous')
+    : comment.author?.name || (locale === 'ko' ? '사용자' : 'User');
 
   const handleReplySubmit = async (content: string) => {
     setIsSubmitting(true);
@@ -75,7 +75,7 @@ export default function PollCommentItem({
           <div className="text-sm text-gray-800 mb-2">
             {comment.is_deleted ? (
               <span className="italic text-gray-400">
-                {language === 'ko' ? '삭제된 댓글입니다' : 'Deleted comment'}
+                {locale === 'ko' ? '삭제된 댓글입니다' : 'Deleted comment'}
               </span>
             ) : (
               comment.content
@@ -89,18 +89,18 @@ export default function PollCommentItem({
                 onClick={() => setShowReplyInput(!showReplyInput)}
                 className="text-gray-600 hover:text-pink-500 font-medium"
               >
-                {language === 'ko' ? '답글' : 'Reply'}
+                {locale === 'ko' ? '답글' : 'Reply'}
               </button>
               {isAuthor && (
                 <button
                   onClick={() => {
-                    if (confirm(language === 'ko' ? '댓글을 삭제하시겠습니까?' : 'Are you sure you want to delete this comment?')) {
+                    if (confirm(locale === 'ko' ? '댓글을 삭제하시겠습니까?' : 'Are you sure you want to delete this comment?')) {
                       onDelete(comment.id);
                     }
                   }}
                   className="text-gray-600 hover:text-red-500 font-medium"
                 >
-                  {language === 'ko' ? '삭제' : 'Delete'}
+                  {locale === 'ko' ? '삭제' : 'Delete'}
                 </button>
               )}
             </div>
@@ -113,7 +113,7 @@ export default function PollCommentItem({
                 onSubmit={handleReplySubmit}
                 isSubmitting={isSubmitting}
                 isAuthenticated={true}
-                placeholder={language === 'ko' ? `${authorName}님에게 답글 작성...` : `Reply to ${authorName}...`}
+                placeholder={locale === 'ko' ? `${authorName}님에게 답글 작성...` : `Reply to ${authorName}...`}
                 showCancel
                 onCancel={() => setShowReplyInput(false)}
               />

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import PollResultsChart from './PollResultsChart';
 import PollCommentSection from './PollCommentSection';
 import BackButton from '@/components/common/BackButton';
-import { useCookieLanguage } from '@/hooks/useCookieLanguage';
+import { useLocale, useTranslations } from 'next-intl';
 import type { PollQuestion, PollOption, PollVote } from '@/services/poll';
 import type { PollComment } from '@/services/pollComments';
 
@@ -25,14 +25,14 @@ export default function PollResultsContent({
   isAuthenticated,
   memberUuid,
 }: PollResultsContentProps) {
-  const { language } = useCookieLanguage();
+  const locale = useLocale();
   const [comments, setComments] = useState(initialComments);
 
   // 다국어 텍스트 추출 헬퍼
   const getText = (jsonbField: any): string => {
     if (!jsonbField) return '';
     if (typeof jsonbField === 'string') return jsonbField;
-    return jsonbField[language] || jsonbField.en || jsonbField.ko || '';
+    return jsonbField[locale] || jsonbField.en || jsonbField.ko || '';
   };
 
   // 댓글 추가 핸들러
@@ -77,7 +77,7 @@ export default function PollResultsContent({
       {/* 댓글 섹션 */}
       <div className="bg-white rounded-2xl shadow-sm p-6">
         <h2 className="text-xl font-bold mb-4">
-          {language === 'ko' ? '댓글' : 'Comments'} ({comments.filter(c => !c.is_deleted).length})
+          {locale === 'ko' ? '댓글' : 'Comments'} ({comments.filter(c => !c.is_deleted).length})
         </h2>
         <PollCommentSection
           questionId={question.id}

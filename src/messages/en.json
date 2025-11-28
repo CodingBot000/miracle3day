@@ -1,0 +1,219 @@
+{
+  "Metadata": {
+    "title": "Mimotok - Korean Dermatology & Plastic Surgery Booking",
+    "description": "Book premium dermatology and plastic surgery procedures at top Korean clinics"
+  },
+  "Common": {
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "back": "Back",
+    "next": "Next",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search",
+    "login": "Sign In",
+    "logout": "Sign Out",
+    "register": "Sign Up",
+    "readMore": "Read More",
+    "backToTop": "Back to Top",
+    "share": "Share",
+    "relatedContent": "Related Content",
+    "seeAllClinics": "See All Clinics",
+    "exampleLabel": "ex: ",
+    "close": "Close",
+    "viewMore": "View More",
+    "progress": "Progress",
+    "post": "Post",
+    "posting": "Posting...",
+    "reply": "Reply",
+    "anonymous": "Anonymous",
+    "user": "User",
+    "votes": "votes",
+    "peopleVoted": "people voted",
+    "characters": "characters"
+  },
+  "Auth": {
+    "loginRequired": "Login Required",
+    "loginRequiredMessage": "You must be logged in to use this service. Would you like to go to the login/signup page?",
+    "goToLogin": "Go to Login/Signup",
+    "signInToContinue": "Sign in to continue",
+    "useGoogleAccount": "Use your Google account to explore clinics and book treatments."
+  },
+  "Comment": {
+    "comments": "Comments",
+    "writeComment": "Please write a comment.",
+    "postComment": "Post Comment",
+    "loginToComment": "You must be logged in to post a comment.",
+    "loginRequiredToComment": "Please login to comment",
+    "noCommentsYet": "No comments yet. Be the first to share your thoughts!",
+    "shareYourThoughts": "Share your thoughts...",
+    "replyTo": "Reply to {name}...",
+    "deletedComment": "Deleted comment",
+    "confirmDelete": "Are you sure you want to delete this comment?",
+    "commentPosted": "Comment posted!",
+    "commentDeleted": "Comment deleted",
+    "failedToPost": "Failed to post comment",
+    "failedToDelete": "Failed to delete comment"
+  },
+  "Poll": {
+    "pollResults": "Poll Results",
+    "loginToVote": "Please login to comment"
+  },
+  "ImageCompression": {
+    "compressing": "Compressing images...",
+    "completed": "Image compression completed",
+    "error": "Error during image compression",
+    "processing": "Image processing",
+    "optimizing": "We are compressing your images to an optimized size. Please wait a moment.",
+    "compressionDone": "Image compression has been completed.",
+    "timeoutError": "Some images could not be compressed within the time limit. Please check your network and try again.",
+    "generalError": "An error occurred while compressing images. Please try again.",
+    "processingNote": "Processing time may vary depending on image size and network conditions."
+  },
+  "TreatmentProduct": {
+    "priceDisclaimer": "The prices shown are for reference only and may differ from the actual prices. Please confirm the exact prices through a consultation."
+  },
+  "DailyQuestion": {
+    "minCharacters": "Answer must be at least 10 characters long",
+    "minCharsNote": "(Minimum 10 characters)",
+    "shareExperience": "Share your experience and advice... (Minimum 10 characters)",
+    "registering": "Registering...",
+    "submitAnswer": "Submit Answer (+{points} points)"
+  },
+  "Home": {
+    "heroTitle": "Youthful Skin, Expert Care",
+    "heroSubtitle": "Confused about anti-aging treatments? We've got you covered",
+    "hotIssueTitle": "Today's Hot Issue",
+    "hotIssueSubtitle": "Curious about what others think? Join in and see a variety of opinions from different people!"
+  },
+  "Navigation": {
+    "home": "Home",
+    "treatments": "Treatments",
+    "clinics": "Clinics",
+    "about": "About",
+    "contact": "Contact",
+    "mypage": "My Page",
+    "sections": "Content"
+  },
+  "Tooltips": {
+    "primary": {
+      "title": "Primary Treatment",
+      "summary": "The most standard, widely used option for this concern.",
+      "detail": "A primary treatment is the main, clinically proven solution commonly chosen first. It generally offers a strong balance of efficacy and safety.",
+      "examples": ["Forehead lines → Botox", "Skin laxity → Ultherapy / Thermage"]
+    },
+    "alternative": {
+      "title": "Alternative / Complementary",
+      "summary": "Options to replace or support the primary treatment.",
+      "detail": "\"Alternative\" provides a similar outcome with a different method. \"Complementary\" fills what the primary cannot fully address (e.g., volume, texture).",
+      "examples": ["After Botox, add filler for deep grooves", "Combine toning with gentle fractional for texture"]
+    },
+    "combo": {
+      "title": "Recommended Combination",
+      "summary": "Pairing treatments to boost synergy and longevity.",
+      "detail": "By addressing multiple layers (skin, muscle, fat) together, combinations can improve overall results and durability. Avoid stacking the same energy type too often.",
+      "examples": ["Ultherapy → Botox → Filler (sequence over weeks)"]
+    }
+  },
+  "KBeauty": {
+    "meta": {
+      "language": "en",
+      "lastUpdated": "2025-01-08"
+    },
+    "navigation": {
+      "home": "Home",
+      "about": "About",
+      "sections": "Content"
+    },
+    "sections": {
+      "section1": {
+        "id": "overview",
+        "slug": "why-k-beauty-is-best",
+        "title": "Why Korean Medical Aesthetics Leads the World",
+        "subtitle": "The Secret Behind K-Beauty That the World is Watching",
+        "tagline": "The answer to 'that skin' you've been searching for is in Korea",
+        "intro": {
+          "paragraph1": "The reason for visiting Korea is gradually shifting from K-pop concerts to 'dermatology appointments'.",
+          "paragraph2": "In 2024, **1.17 million foreign patients** visited Korea. More than half of them came for dermatology.",
+          "paragraph3": "What were they looking for? BTS's glowing skin? BLACKPINK's transparent radiance?",
+          "paragraph4": "The answer wasn't simply 'good genetics'.",
+          "paragraph5": "**Korea has a 'beauty ecosystem' that exists nowhere else in the world.**"
+        },
+        "cta": {
+          "text": "Find Korean Treatments for Your Skin",
+          "link": "/consultation"
+        }
+      },
+      "section2": {
+        "id": "skincare",
+        "slug": "k-skincare-secret",
+        "title": "The Secret of K-Skincare",
+        "subtitle": "The Revolution Created by the 10-Step Routine",
+        "tagline": "The Korean skincare philosophy the world is following",
+        "cta": {
+          "text": "Find Your Skin Type Routine",
+          "link": "/consultation"
+        }
+      },
+      "section3": {
+        "id": "dermatology",
+        "slug": "dermatology-treatments",
+        "title": "Why Korean Dermatology is Different",
+        "subtitle": "Lunchtime Miracle",
+        "tagline": "Korea's non-surgical revolution creating glowing skin without downtime",
+        "cta": {
+          "text": "Get Dermatology Treatment Consultation",
+          "link": "/consultation"
+        }
+      },
+      "section4": {
+        "id": "plastic-surgery",
+        "slug": "plastic-surgery-philosophy",
+        "title": "K-Plastic Surgery Philosophy: The Aesthetics of Naturalness",
+        "subtitle": "We Don't Erase Your Face",
+        "tagline": "Why Korean plastic surgery is different from the world - The philosophy of naturalness",
+        "cta": {
+          "text": "Get Facial Analysis & Consultation",
+          "link": "/consultation"
+        }
+      },
+      "section5": {
+        "id": "science",
+        "slug": "science-and-rd",
+        "title": "Beauty Created by Science",
+        "subtitle": "The Language of Beauty is Now Science",
+        "tagline": "K-Beauty's credibility built on R&D and clinical research",
+        "cta": {
+          "text": "Get Scientific Skin Analysis",
+          "link": "/consultation"
+        }
+      },
+      "section6": {
+        "id": "culture",
+        "slug": "k-culture-impact",
+        "title": "K-Culture That Changed World Beauty",
+        "subtitle": "BTS Asked, and the World Answered",
+        "tagline": "The global beauty revolution created by K-Culture",
+        "cta": {
+          "text": "Start My K-Beauty Journey",
+          "link": "/consultation"
+        }
+      },
+      "section7": {
+        "id": "lifestyle",
+        "slug": "beauty-lifestyle",
+        "title": "The Korean Beauty Lifestyle",
+        "subtitle": "Beauty is the Korean Language",
+        "tagline": "The philosophy of beauty woven into daily life",
+        "cta": {
+          "text": "Start My K-Beauty Routine",
+          "link": "/consultation"
+        }
+      }
+    }
+  }
+}

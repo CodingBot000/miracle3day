@@ -1,9 +1,8 @@
 'use client';
 
-import Link from "next/link";
-import Image from "next/image";;
+import { Link, useRouter } from "@/i18n/routing";
+import Image from "next/image";
 import { ROUTE } from "@/router";
-import { useRouter } from "next/navigation";
 
 const STORAGE_KEY = 'treatment-protocol-category';
 

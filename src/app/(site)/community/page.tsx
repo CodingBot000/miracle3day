@@ -16,7 +16,7 @@ interface CommunityPageProps {
 
 export default async function HomePage({ searchParams }: CommunityPageProps) {
   const cookieStore = cookies();
-  const languageCookie = cookieStore.get('language');
+  const languageCookie = cookieStore.get('lang');
   const language = (languageCookie?.value as 'ko' | 'en') || 'ko';
 
   // 기본값: posts
@@ -43,5 +43,10 @@ export default async function HomePage({ searchParams }: CommunityPageProps) {
   }
 
   // Posts 뷰
-  return <PostsView topicId={topicId} tagId={tagId} language={language} />;
+  return (
+    <Suspense fallback={<div className="animate-pulse bg-gray-200 h-96 rounded-xl" />}>
+      {/* @ts-ignore - Async Server Component */}
+      <PostsView topicId={topicId} tagId={tagId} language={language} />
+    </Suspense>
+  );
 }

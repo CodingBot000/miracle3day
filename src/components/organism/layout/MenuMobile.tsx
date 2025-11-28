@@ -15,8 +15,26 @@ import { LocationEnum } from "@/constants";
 import clsx from "clsx";
 import AuthClient from "@/components/molecules/auth/AuthClient";
 import { useMobileModeStore } from "@/stores/useMobileModeStore";
-import { useEffect } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { usePlatform } from "@/hooks/usePlatform";
+
+// 메뉴 아이템별 경로 매핑
+const MENU_PATHS = {
+  home: [ROUTE.HOME, "/home"],
+  procedure: [ROUTE.TREATMENT_INFO, "/treatments_info", "/treatment"],
+  community: ["/community"],
+  clinics: [ROUTE.HOSPITAL, "/hospital"],
+  mypage: [ROUTE.MY_PAGE, "/user/my-page", "/user"],
+} as const;
+
+type MenuKey = keyof typeof MENU_PATHS;
+
+const STORAGE_KEY = "lastSelectedMenu";
+
+// MenuMobile을 숨길 경로 패턴
+const HIDDEN_PATHS = [
+  /^\/community\/post\/\d+$/, // /community/post/[id]
+];
 
 const MenuMobile = () => {
   const router = useRouter();
@@ -25,6 +43,63 @@ const MenuMobile = () => {
   const locationNum = searchParams.get("locationNum") || LocationEnum.Apgujung;
   const { setMobileMode } = useMobileModeStore();
   const { isWebView, isClient } = usePlatform();
+  const [lastSelectedMenu, setLastSelectedMenu] = useState<MenuKey | null>(null);
+
+  // 현재 경로에 해당하는 메뉴 찾기
+  const getActiveMenuFromPath = (path: string): MenuKey | null => {
+    for (const [menuKey, paths] of Object.entries(MENU_PATHS)) {
+      if (paths.some((menuPath) => path === menuPath || path.startsWith(menuPath + "/"))) {
+        return menuKey as MenuKey;
+      }
+    }
+    return null;
+  };
+
+  // 현재 활성화된 메뉴 계산
+  const activeMenu = useMemo(() => {
+    const menuFromPath = getActiveMenuFromPath(pathname);
+    if (menuFromPath) {
+      return menuFromPath;
+    }
+    // 경로가 메뉴에 없으면 마지막 선택된 상태 유지
+    return lastSelectedMenu;
+  }, [pathname, lastSelectedMenu]);
+
+  // 마지막 선택된 메뉴를 localStorage에서 불러오기 및 저장
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem(STORAGE_KEY) as MenuKey | null;
+      if (stored) {
+        setLastSelectedMenu(stored);
+      }
+    }
+  }, []);
+
+  // 경로가 메뉴에 해당하면 저장
+  useEffect(() => {
+    const menuFromPath = getActiveMenuFromPath(pathname);
+    if (menuFromPath) {
+      setLastSelectedMenu(menuFromPath);
+      if (typeof window !== "undefined") {
+        localStorage.setItem(STORAGE_KEY, menuFromPath);
+      }
+    }
+  }, [pathname]);
+
+  // 메뉴가 선택되었는지 확인
+  const isActive = (menuKey: MenuKey): boolean => {
+    return activeMenu === menuKey;
+  };
+
+  // 아이콘 색상 클래스
+  const getIconColor = (menuKey: MenuKey): string => {
+    return isActive(menuKey) ? "text-black" : "text-gray-400";
+  };
+
+  // 텍스트 색상 클래스
+  const getTextColor = (menuKey: MenuKey): string => {
+    return isActive(menuKey) ? "text-black" : "text-gray-400";
+  };
 
   // 모바일 화면 크기를 감지하여 store 업데이트
   useEffect(() => {
@@ -51,10 +126,16 @@ const MenuMobile = () => {
     return null;
   }
 
-  // 웹뷰(앱)에서는 MenuMobile을 표시하지 않음
-  if (isWebView) {
+  // 특정 경로에서는 MenuMobile 숨김
+  const shouldHide = HIDDEN_PATHS.some((pattern) => pattern.test(pathname));
+  if (shouldHide) {
     return null;
   }
+
+  // 웹뷰(앱)에서는 MenuMobile을 표시하지 않음
+  // if (isWebView) {
+  //   return null;
+  // } 
 
   return (
     <div
@@ -67,23 +148,23 @@ const MenuMobile = () => {
         onClick={() => goTo(ROUTE.HOME)}
         className="flex flex-col items-center gap-1 p-2 hover:opacity-80"
       >
-        <Home className="w-6 h-6" />
-        <span className="text-xs text-[#333]">Home</span>
+        <Home className={clsx("w-6 h-6", getIconColor("home"))} />
+        <span className={clsx("text-xs", getTextColor("home"))}>Home</span>
       </button>
       <button
         onClick={() => goTo(ROUTE.TREATMENT_INFO)}
         className="flex flex-col items-center gap-1 p-2 hover:opacity-80"
       >
-        <Stethoscope className="w-6 h-6" />
-        <span className="text-xs text-[#333]">Procedure</span>
+        <Stethoscope className={clsx("w-6 h-6", getIconColor("procedure"))} />
+        <span className={clsx("text-xs", getTextColor("procedure"))}>Procedure</span>
       </button>
-     
+
       <button
         onClick={() => goTo("/community")}
         className="flex flex-col items-center gap-1 p-2 hover:opacity-80"
       >
-        <MessageSquareText size={20} />
-        <span className="text-xs text-[#333]">Community</span>
+        <MessageSquareText size={20} className={getIconColor("community")} />
+        <span className={clsx("text-xs", getTextColor("community"))}>Community</span>
       </button>
       {/* <button
         onClick={() => goTo(ROUTE.EVENT)}
@@ -99,18 +180,18 @@ const MenuMobile = () => {
         <MapPin className="w-6 h-6" />
         <span className="text-xs text-[#333]">Location</span>
       </button> */}
-            <button
+      <button
         onClick={() => goTo(ROUTE.HOSPITAL)}
         className="flex flex-col items-center gap-1 p-2 hover:opacity-80"
       >
-        <Hospital className="w-6 h-6" />
-        <span className="text-xs text-[#333]">Clinics</span>
+        <Hospital className={clsx("w-6 h-6", getIconColor("clinics"))} />
+        <span className={clsx("text-xs", getTextColor("clinics"))}>Clinics</span>
       </button>
       <div className="flex flex-col items-center gap-1 p-2 hover:opacity-80">
-          <div className="relative text-black">
-            <AuthClient iconColor={'black'} />
-          </div>
-        <span className="text-xs text-[#333]">My Page</span>
+        <div className="relative">
+          <AuthClient iconColor={isActive("mypage") ? "#000" : "#9ca3af"} />
+        </div>
+        <span className={clsx("text-xs", getTextColor("mypage"))}>My Page</span>
       </div>
 
       {/* <button

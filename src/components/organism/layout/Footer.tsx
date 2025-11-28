@@ -46,7 +46,7 @@ export const Footer = () => {
   };
 
   return (
-    <footer className="min-h-[200px] flex flex-col items-center gap-3 p-8 mt-8 bg-[#fdfcfc] text-center text-sm text-gray-600 pb-[calc(2rem+env(safe-area-inset-bottom))]">
+    <footer className="min-h-[200px] flex flex-col items-center gap-3 p-8 mt-8 bg-gray-300 text-center text-sm text-gray-600 pb-[calc(2rem+env(safe-area-inset-bottom))]">
             {/* <DeleteUserButton uid="109baff6-2d4a-4119-818d-e65fd9289a41" /> */}
       <div className="flex flex-wrap justify-center items-center gap-4">
         <span className="flex items-center gap-1">

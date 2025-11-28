@@ -45,7 +45,7 @@ export default async function HomePage({ searchParams }: CommunityPageProps) {
   // Posts 뷰
   return (
     <Suspense fallback={<div className="animate-pulse bg-gray-200 h-96 rounded-xl" />}>
-      {/* @ts-expect-error Async Server Component */}
+      {/* @ts-ignore - Async Server Component */}
       <PostsView topicId={topicId} tagId={tagId} language={language} />
     </Suspense>
   );

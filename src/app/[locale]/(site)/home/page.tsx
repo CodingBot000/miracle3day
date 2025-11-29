@@ -110,8 +110,13 @@ export default async function HomePage() {
             {t('hotIssueSubtitle')}
           </div>
         </div>
-        <QuestionsView isMainPage={true} />
-  
+        {/* 홈에서는 전체 영역 클릭 시 community로 이동 */}
+        <Link href="/community?view=questions" className="block w-full cursor-pointer">
+          <div className="pointer-events-none">
+            <QuestionsView isMainPage={true} />
+          </div>
+        </Link>
+
       </section>
           {/* <TreatmentProtocol /> */}
 

@@ -43,18 +43,23 @@ export const LanguageSwitcherNextIntl = ({ iconColor = 'black' }: LanguageSwitch
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Image
-          src="/icons/globe_language.svg"
-          alt="Select Language"
-          width={24}
-          height={24}
-          className={cn(
-            "cursor-pointer transition-all duration-300 ease-in-out hover:opacity-70",
-            iconColor === 'white' ? 'brightness-0 invert' : '',
-            isPending && 'opacity-50'
-          )}
+        <button
+          type="button"
+          className="bg-transparent border-none p-0 m-0 outline-none"
           aria-busy={isPending}
-        />
+        >
+          <Image
+            src="/icons/globe_language.svg"
+            alt="Select Language"
+            width={24}
+            height={24}
+            className={cn(
+              "cursor-pointer transition-all duration-300 ease-in-out hover:opacity-70",
+              iconColor === 'white' ? 'brightness-0 invert' : '',
+              isPending && 'opacity-50'
+            )}
+          />
+        </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[150px] z-[250]">
         {locales.map((loc) => (

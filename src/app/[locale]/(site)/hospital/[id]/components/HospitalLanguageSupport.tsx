@@ -1,5 +1,5 @@
 import { log } from '@/utils/logger';
-import { languages } from "@/constants/languages";
+import { languagesClinicAvailable } from "@/constants/languagesClinicAvailable";
 
 interface HospitalLanguageSupportProps {
   available_language: string[];
@@ -15,7 +15,7 @@ const HospitalLanguageSupport = ({ available_language }: HospitalLanguageSupport
       
       <div className="flex flex-wrap gap-3">
         {available_language && available_language.map((languageCode, index) => {
-          const language = languages.find(lang => lang.code === languageCode);
+          const language = languagesClinicAvailable.find(lang => lang.code === languageCode);
           return language ? (
             <span
               key={index}

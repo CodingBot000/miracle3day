@@ -2,11 +2,9 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import React, { useMemo } from "react";
+import React from "react";
 import { ROUTE } from "@/router";
-import { Button } from "@/components/ui/button";
-import ScrollDevicesIntroduce from "./components/ScrollDevicesIntroduce";
-import { useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 12 },
@@ -14,23 +12,9 @@ const fadeUp = {
 };
 
 export default function HeadSection() {
-  const locale = useLocale();
-  const isKorean = locale === 'ko';
-  
-  // 두 줄로 쪼갠 히어로 타이포
-  const heading = useMemo(() => {
-    if (isKorean) {
-      return [
-        "전문가가 엄선한 한국의 상위 미용 피부과/성형외과를",
-        "한 곳에서 비교하고 연결하세요."
-      ];
-    } else {
-      return [
-        "Connect with Korea's leading aesthetic dermatology clinics,",
-        "vetted by experts."
-      ];
-    }
-  }, [isKorean]);
+  const t = useTranslations("Home");
+
+  const heading = [t("headingLine1"), t("headingLine2")];
 
   return (
     <section className="w-full flex flex-col items-center gap-10 px-4 py-12">
@@ -55,7 +39,7 @@ export default function HeadSection() {
           variants={fadeUp}
           className="text-center text-sm md:text-base text-gray-500 mt-2"
         >
-          Consult with Korea&apos;s top doctors. Take our simple quiz to build your perfect treatment
+          {t("headingSubtitle")}
         </motion.p>
 
         {/* CTA buttons */}
@@ -64,26 +48,24 @@ export default function HeadSection() {
             href={ROUTE.RECOMMEND_ESTIMATE}
             className="flex-1 basis-0 min-w-0 min-h-[50px] h-[70px] px-3 sm:px-6 flex items-center justify-center rounded-[14px] bg-pink-400 text-white text-sm sm:text-base font-medium hover:bg-pink-500 transition-colors duration-200 shadow-sm text-center leading-tight"
           >
-            {locale === 'ko' ? '나만의 AI 매칭 시작' : 'Start My AI Beauty Match'}
+            {t("ctaAiMatch")}
           </Link>
 
           <Link
             href={ROUTE.TREATMENT_PROTOCOL}
             className="flex-1 basis-0 min-w-0 min-h-[50px] h-[70px] px-3 sm:px-6 flex items-center justify-center rounded-[14px] bg-orange-400 text-white text-sm sm:text-base font-medium hover:bg-orange-500 transition-colors duration-200 shadow-sm text-center leading-tight"
           >
-            {locale === 'ko' ? '시술/클리닉 보기' : 'View Treatments/Clinics'}
+            {t("ctaTreatments")}
           </Link>
         </div>
-        
+
       </motion.div>
-      {/* <Link 
+      {/* <Link
           href={ROUTE.AI_ANALYSIS_CAMERA_PAGE}
             className="flex-1 min-h-[50px], h-[70px] px-6 flex items-center justify-center rounded-[14px] bg-orange-400 text-white font-medium hover:bg-orange-500 transition-colors duration-200 shadow-sm"
           >
-              
-                {locale === 'ko' ? 'AI 피부 분석 (카메라)' : 'AI Skin Analysis (Camera)'}
-              
-            </Link> */}
+            {t("ctaAiAnalysis")}
+          </Link> */}
   {/* <Link
                 href="/hospital"
 

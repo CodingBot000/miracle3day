@@ -88,7 +88,23 @@
     "heroTitle": "Youthful Skin, Expert Care",
     "heroSubtitle": "Confused about anti-aging treatments? We've got you covered",
     "hotIssueTitle": "Today's Hot Issue",
-    "hotIssueSubtitle": "Curious about what others think? Join in and see a variety of opinions from different people!"
+    "hotIssueSubtitle": "Curious about what others think? Join in and see a variety of opinions from different people!",
+    "headingLine1": "Connect with Korea's leading aesthetic dermatology clinics,",
+    "headingLine2": "vetted by experts.",
+    "headingSubtitle": "Consult with Korea's top doctors. Take our simple quiz to build your perfect treatment",
+    "ctaAiMatch": "Start My AI Beauty Match",
+    "ctaTreatments": "View Treatments/Clinics",
+    "ctaAiAnalysis": "AI Skin Analysis (Camera)",
+    "kbeautySectionTitle": "Explore K-Beauty",
+    "whyKoreaTitle": "Why Korea?",
+    "whyKoreaDescription": "7 reasons why Korean aesthetic dermatology leads the world",
+    "whyKoreaCta": "Learn More",
+    "generationGuideTitle": "Generation Guide",
+    "generationGuideDescription": "Expert skincare tips tailored for every generation",
+    "generationGuideCta": "Read Guide",
+    "kbeautyLinksTitle": "K-Beauty Links",
+    "kbeautyLinksDescription": "20+ curated resources from shopping to communities",
+    "kbeautyLinksCta": "Explore"
   },
   "Navigation": {
     "home": "Home",
@@ -104,19 +120,27 @@
       "title": "Primary Treatment",
       "summary": "The most standard, widely used option for this concern.",
       "detail": "A primary treatment is the main, clinically proven solution commonly chosen first. It generally offers a strong balance of efficacy and safety.",
-      "examples": ["Forehead lines → Botox", "Skin laxity → Ultherapy / Thermage"]
+      "examples": [
+        "Forehead lines → Botox",
+        "Skin laxity → Ultherapy / Thermage"
+      ]
     },
     "alternative": {
       "title": "Alternative / Complementary",
       "summary": "Options to replace or support the primary treatment.",
       "detail": "\"Alternative\" provides a similar outcome with a different method. \"Complementary\" fills what the primary cannot fully address (e.g., volume, texture).",
-      "examples": ["After Botox, add filler for deep grooves", "Combine toning with gentle fractional for texture"]
+      "examples": [
+        "After Botox, add filler for deep grooves",
+        "Combine toning with gentle fractional for texture"
+      ]
     },
     "combo": {
       "title": "Recommended Combination",
       "summary": "Pairing treatments to boost synergy and longevity.",
       "detail": "By addressing multiple layers (skin, muscle, fat) together, combinations can improve overall results and durability. Avoid stacking the same energy type too often.",
-      "examples": ["Ultherapy → Botox → Filler (sequence over weeks)"]
+      "examples": [
+        "Ultherapy → Botox → Filler (sequence over weeks)"
+      ]
     }
   },
   "KBeauty": {
@@ -136,13 +160,6 @@
         "title": "Why Korean Medical Aesthetics Leads the World",
         "subtitle": "The Secret Behind K-Beauty That the World is Watching",
         "tagline": "The answer to 'that skin' you've been searching for is in Korea",
-        "intro": {
-          "paragraph1": "The reason for visiting Korea is gradually shifting from K-pop concerts to 'dermatology appointments'.",
-          "paragraph2": "In 2024, **1.17 million foreign patients** visited Korea. More than half of them came for dermatology.",
-          "paragraph3": "What were they looking for? BTS's glowing skin? BLACKPINK's transparent radiance?",
-          "paragraph4": "The answer wasn't simply 'good genetics'.",
-          "paragraph5": "**Korea has a 'beauty ecosystem' that exists nowhere else in the world.**"
-        },
         "cta": {
           "text": "Find Korean Treatments for Your Skin",
           "link": "/consultation"
@@ -214,6 +231,12 @@
           "link": "/consultation"
         }
       }
+    },
+    "common": {
+      "readMore": "Read More",
+      "backToTop": "Back to Top",
+      "share": "Share",
+      "relatedContent": "Related Content"
     }
   }
 }

@@ -1,0 +1,42 @@
+{
+  "Common": {
+    "submit": "제출",
+    "cancel": "취소",
+    "confirm": "확인",
+    "loading": "로딩 중...",
+    "error": "오류가 발생했습니다",
+    "back": "뒤로",
+    "next": "다음",
+    "save": "저장",
+    "delete": "삭제",
+    "edit": "수정",
+    "search": "검색",
+    "login": "로그인",
+    "logout": "로그아웃",
+    "register": "회원가입",
+    "readMore": "더 읽기",
+    "backToTop": "맨 위로",
+    "share": "공유하기",
+    "relatedContent": "관련 컨텐츠",
+    "seeAllClinics": "전체 보기",
+    "exampleLabel": "예시: ",
+    "close": "닫기",
+    "viewMore": "더보기",
+    "progress": "진행률",
+    "post": "작성",
+    "posting": "작성 중...",
+    "reply": "답글",
+    "anonymous": "익명",
+    "user": "사용자",
+    "votes": "표",
+    "peopleVoted": "명이 투표했습니다",
+    "characters": "자"
+  },
+  "Auth": {
+    "loginRequired": "로그인이 필요해요",
+    "loginRequiredMessage": "로그인 해야만 이용할 수 있는 서비스입니다. 로그인/회원가입 페이지로 이동할까요?",
+    "goToLogin": "로그인/회원가입 페이지로",
+    "signInToContinue": "로그인하여 계속하기",
+    "useGoogleAccount": "Google 계정으로 클리닉을 탐색하고 예약하세요."
+  }
+}

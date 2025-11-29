@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(xargs sed:*)"
+      "Bash(xargs sed:*)",
+      "Bash(node -e \"JSON.parse(require('fs').readFileSync('/Users/switch/Development/WebBeauty/beauty_proejcts/complete/beauty-main/src/messages/zh-CN.json', 'utf8'))\":*)",
+      "Bash(node -e:*)",
+      "Bash(npx tsc:*)"
     ],
     "deny": [],
     "ask": []

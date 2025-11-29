@@ -4,11 +4,14 @@ import { useEffect, useState } from 'react';
 import QuestionCard from './QuestionCard';
 import { useLocale } from 'next-intl';
 import { log } from '@/utils/logger';
+import { usePathname } from 'next/navigation';
 
 export default function QuestionList({ topic, category, format, filter, isMainPage = false }: { topic?: string, category?: string, format?: string, filter?: string, isMainPage?: boolean }) {
   log.debug('=== QuestionList 렌더링됨 ===');
   log.debug('받은 filter prop:', filter);
 
+  const pathname = usePathname();
+  const isHome = pathname === "/home";
   const locale = useLocale();
   const [questions, setQuestions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -26,7 +29,7 @@ export default function QuestionList({ topic, category, format, filter, isMainPa
     }
 
     try {
-      const limit = isMainPage ? '1' : '10';
+      const limit = isHome ? '1' : '10';
       const params = new URLSearchParams({
         lang: locale,
         page: pageNum.toString(),
@@ -112,7 +115,7 @@ export default function QuestionList({ topic, category, format, filter, isMainPa
       ))}
 
       {/* Load More 버튼 */}
-      {hasMore && !isMainPage && (
+      {hasMore && !isHome && (
         <div className="flex justify-center py-6">
           <button
             onClick={handleLoadMore}

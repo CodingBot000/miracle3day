@@ -1,0 +1,831 @@
+{
+  "meta": {
+    "language": "en",
+    "lastUpdated": "2025-01-08"
+  },
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "sections": "Content"
+  },
+  "sections": {
+    "section1": {
+      "id": "overview",
+      "slug": "why-k-beauty-is-best",
+      "title": "Why Korean Medical Aesthetics Leads the World",
+      "subtitle": "The Secret Behind K-Beauty That the World is Watching",
+      "tagline": "The answer to 'that skin' you've been searching for is in Korea",
+      "intro": {
+        "paragraph1": "The reason for visiting Korea is gradually shifting from K-pop concerts to 'dermatology appointments'.",
+        "paragraph2": "In 2024, **1.17 million foreign patients** visited Korea. More than half of them came for dermatology.",
+        "paragraph3": "What were they looking for? BTS's glowing skin? BLACKPINK's transparent radiance?",
+        "paragraph4": "The answer wasn't simply 'good genetics'.",
+        "paragraph5": "**Korea has a 'beauty ecosystem' that exists nowhere else in the world.**"
+      },
+      "mainPoints": {
+        "point1": {
+          "title": "A Country Where Beauty Became Daily Life",
+          "subtitle": "In Korea, dermatology clinics are as common as dental clinics",
+          "content": [
+            "\"I'm getting laser toning during lunch break\"",
+            "\"Getting filler this weekend and back to work Monday\"",
+            "These conversations aren't awkward here. Beauty treatments are no longer for 'special occasions', but **daily maintenance**.",
+            "As a result, Korea records **13.5 cosmetic procedures per 1,000 people**. This is the highest level in the world."
+          ],
+          "image": "/images/k-beauty/section1-overview/lunch-dermatology.jpg"
+        },
+        "point2": {
+          "title": "Innovation Born from Demand",
+          "subtitle": "Technology evolved through competition",
+          "content": [
+            "In Seoul's Gangnam district alone, there are **over 500 dermatology and plastic surgery clinics**. What did this competition create?",
+            "**Competition in adopting latest equipment** - Ultherapy, Shrink, Thermage, Pico laser... The first market to adopt new equipment",
+            "**Standardization of customized combination treatments** - Your skin needs this 3-treatment combination",
+            "**Reasonable pricing** - Price stabilization through competition. 30-50% cheaper premium treatments compared to global standards"
+          ],
+          "image": "/images/k-beauty/section1-overview/advanced-equipment.jpg"
+        },
+        "point3": {
+          "title": "Zero Downtime Culture",
+          "subtitle": "Fast recovery, fast return to daily life",
+          "content": [
+            "Koreans don't wait. \"Can I get treated today and go to work tomorrow?\" This question changed Korean medical aesthetics.",
+            "**Evolution of non-surgical lifting** (HIFU, RF)",
+            "**Daily laser toning** (Pico, Genesis)",
+            "**Innovation in skin boosters** (Rejuran, Skin Botox)",
+            "All Korean-style solutions born for 'fast recovery'."
+          ],
+          "image": "/images/k-beauty/section1-overview/zero-downtime.jpg",
+          "stats": {
+            "stat1": "87% of Korean dermatologists utilize combined equipment and injection strategies. (Annals of Dermatology, 2025)"
+          }
+        },
+        "point4": {
+          "title": "Global Trust Created by K-Culture",
+          "subtitle": "Aspiration created by culture",
+          "content": [
+            "\"How does BLACKPINK have such skin?\" \"What's the secret to actor Son Seok-gu's youthful look?\"",
+            "People around the world wondered. And when COVID ended, they came to Korea for answers.",
+            "Because they learned that the skin they admired in K-dramas was actually achievable in Korea."
+          ],
+          "image": "/images/k-beauty/section1-overview/kpop-stage.jpg",
+          "stats": {
+            "year2009": "About 10,000",
+            "year2024": "1.17 million",
+            "growth": "117x increase"
+          }
+        }
+      },
+      "statistics": {
+        "title": "K-Beauty by the Numbers",
+        "data": {
+          "patients": {
+            "value": "1.17 Million",
+            "label": "Foreign patients who visited Korea in 2024 (All-time high)"
+          },
+          "dermatology": {
+            "value": "56.6%",
+            "label": "Percentage of foreign patients visiting dermatology (Overwhelming #1)"
+          },
+          "growth": {
+            "value": "117x",
+            "label": "Growth rate of foreign dermatology patients compared to 2009"
+          },
+          "price": {
+            "value": "30-50%",
+            "label": "Cheaper premium treatments compared to developed countries"
+          },
+          "frequency": {
+            "value": "13.5 per 1,000",
+            "label": "Cosmetic procedures per capita (World's highest)"
+          },
+          "clinics": {
+            "value": "500+",
+            "label": "Dermatology & plastic surgery clinics in Gangnam"
+          }
+        },
+        "image": "/images/k-beauty/section1-overview/statistics-infographic.jpg"
+      },
+      "conclusion": {
+        "title": "Ultimately, why Korea is the world's best can be explained in one sentence",
+        "quote": "The country that made beauty a **lifestyle**, not medicine",
+        "points": [
+          "Demand created supply,",
+          "Competition advanced technology,",
+          "And culture convinced the world."
+        ],
+        "closingLine": "The secret to 'that skin' you've been searching for. It's your turn to discover it in Korea.",
+        "image": "/images/k-beauty/section1-overview/satisfied-patients.jpg"
+      },
+      "cta": {
+        "text": "Find Korean Treatments for Your Skin",
+        "link": "/consultation"
+      }
+    },
+    "section2": {
+      "id": "skincare",
+      "slug": "k-skincare-secret",
+      "title": "The Secret of K-Skincare",
+      "subtitle": "The Revolution Created by the 10-Step Routine",
+      "tagline": "The Korean skincare philosophy the world is following",
+      "intro": {
+        "paragraph1": "In 2015, the New York Times introduced Korean skincare like this: **\"10 steps to perfect skin\"**",
+        "paragraph2": "The world was amazed. \"10 steps for skincare?\"",
+        "paragraph3": "But soon understood. For Koreans, skincare isn't about 'applying products', it's **'time to communicate with your skin'**."
+      },
+      "mainPoints": {
+        "point1": {
+          "title": "The Art of Segmentation",
+          "subtitle": "10 steps is not complexity, it's precision",
+          "content": [
+            "Western skincare: Cleanser -> Moisturizer -> Sunscreen (3 steps)",
+            "Korean skincare: A meticulous 10-step journey",
+            "This is not 'complexity' but **'precision'**.",
+            "Each step addresses different layers of skin and different concerns. This is **the secret to 'Glass Skin'**."
+          ],
+          "tenSteps": [
+            "Step 1: Oil Cleanser (Remove makeup)",
+            "Step 2: Foam Cleanser (Double cleanse)",
+            "Step 3: Exfoliator (2-3 times per week)",
+            "Step 4: Toner (pH balancing)",
+            "Step 5: Essence (Hydration)",
+            "Step 6: Serum/Ampoule (Intensive care)",
+            "Step 7: Sheet Mask (2-3 times per week)",
+            "Step 8: Eye Cream (Eye area care)",
+            "Step 9: Moisturizer (Seal in moisture)",
+            "Step 10: Sunscreen (AM) / Night Cream (PM)"
+          ],
+          "image": "/images/k-beauty/section2-skincare/ten-step-routine.jpg"
+        },
+        "point2": {
+          "title": "Treasury of Innovative Ingredients",
+          "subtitle": "The magic of fermentation and biotech",
+          "content": [
+            "Korean cosmetics ingredient lists are amazing.",
+            "**The Magic of Fermentation** - Galactomyces, Bifida Ferment Lysate, Korean herbal fermentation",
+            "**Biotechnology** - Peptide complexes, EGF, Stem cell culture, Niacinamide",
+            "**Natural Ingredients** - Centella Asiatica, Propolis, Snail Mucin, Birch Sap",
+            "\"Korean cosmetics ingredient lists read like scientific papers\" - Vogue, 2023"
+          ],
+          "image": "/images/k-beauty/section2-skincare/fermented-ingredients.jpg"
+        },
+        "point3": {
+          "title": "Glass Skin: Philosophy of Transparency",
+          "subtitle": "Not covering, but glowing",
+          "content": [
+            "Western makeup: Coverage",
+            "Korean makeup: Glow",
+            "**\"Glass Skin\"** is not just a trend. It's a Korean skin philosophy.",
+            "**3 Elements of Glass Skin**",
+            "1. **Transparency** - Clear, clean skin texture",
+            "2. **Dewiness** - Moist, not dry radiance",
+            "3. **Smoothness** - Minimized pores and blemishes"
+          ],
+          "image": "/images/k-beauty/section2-skincare/glass-skin-closeup.jpg"
+        },
+        "point4": {
+          "title": "Value Revolution",
+          "subtitle": "Same ingredients, 1/10 the price",
+          "content": [
+            "This is the real reason K-Beauty conquered the world.",
+            "Vitamin C Serum: Luxury $120 vs K-Beauty $15 (8x difference)",
+            "Retinol Cream: Luxury $180 vs K-Beauty $25 (7x difference)",
+            "**But ingredient concentration and quality are similar or better.**",
+            "Why possible? Large-scale production infrastructure, fierce domestic competition, fast product turnover, minimal brand marketing costs"
+          ],
+          "image": "/images/k-beauty/section2-skincare/price-comparison.jpg"
+        },
+        "point5": {
+          "title": "Rapid Trend Reflection",
+          "subtitle": "SNS trend to product launch: 3 months",
+          "content": [
+            "Korean cosmetics market speed is unbelievable.",
+            "January: Influencer introduces 'dewy makeup'",
+            "February: 10 brands plan 'dewy lines'",
+            "March: 50 products launched",
+            "April: Global spread",
+            "Thanks to this, consumers **always have access to the latest trend products.**"
+          ],
+          "image": "/images/k-beauty/section2-skincare/social-trends.jpg"
+        }
+      },
+      "conclusion": {
+        "title": "K-Skincare goes beyond just 'good cosmetics'",
+        "quote": "It's a **philosophy** toward skin, a **ritual** of self-care, a **belief** that inner health reflects outward",
+        "points": [
+          "Does 10 steps seem like a lot?",
+          "For Koreans, this is not 'hassle',",
+          "**It's meditation time for myself, twice a day.**"
+        ],
+        "closingLine": "Your skin is also waiting for such time.",
+        "image": "/images/k-beauty/section2-skincare/morning-ritual.jpg"
+      },
+      "cta": {
+        "text": "Find Your Skin Type Routine",
+        "link": "/consultation"
+      }
+    },
+    "section3": {
+      "id": "dermatology",
+      "slug": "dermatology-treatments",
+      "title": "Why Korean Dermatology is Different",
+      "subtitle": "Lunchtime Miracle",
+      "tagline": "Korea's non-surgical revolution creating glowing skin without downtime",
+      "intro": {
+        "paragraph1": "\"I have a toning appointment at 12:30. I'll be back at the office by 1:30.\"",
+        "paragraph2": "This conversation is natural only in Korea.",
+        "paragraph3": "In the West, dermatology is for skin cancer screening, acne treatment, and serious skin conditions.",
+        "paragraph4": "In Korea, dermatology is a **beauty management center you visit weekly**, a lunchtime routine, a place for prevention and improvement simultaneously.",
+        "paragraph5": "This difference made Korean dermatology the world's best."
+      },
+      "mainPoints": {
+        "point1": {
+          "title": "The Art of Non-Surgery",
+          "subtitle": "You can look 10 years younger without a scalpel",
+          "content": [
+            "This is the philosophy of Korean dermatology.",
+            "**HIFU (High-Intensity Focused Ultrasound)** - Ultherapy, Shrink: Collagen regeneration, non-surgical lifting, almost no downtime",
+            "**RF (Radiofrequency)** - Thermage, Inmode: Elasticity improvement, pore reduction, layer-by-layer targeting",
+            "**Laser Toning** - Pico laser, Genesis: Pigment improvement, skin tone evening, monthly maintenance",
+            "87% of Korean dermatologists use combined equipment and injection strategies. (Annals of Dermatology, 2025)"
+          ],
+          "image": "/images/k-beauty/section3-dermatology/equipment-display.jpg"
+        },
+        "point2": {
+          "title": "Skin Booster Revolution",
+          "subtitle": "USA 1-2 types vs Korea 10+ types",
+          "content": [
+            "Korea is a paradise for skin boosters.",
+            "**Hyaluronic Acid Based** - Restylane, Belotero: Immediate hydration",
+            "**Biostimulatory Ingredients** - Rejuran (PN), Skin Botox, Exosome: Stem cell-derived components",
+            "**Korea's Differentiation** - Customized combinations by patient skin type, protocol changes based on season and skin condition, synergy with device treatments"
+          ],
+          "image": "/images/k-beauty/section3-dermatology/skin-boosters.jpg"
+        },
+        "point3": {
+          "title": "Standardization of Combined Protocols",
+          "subtitle": "Your skin needs this 3-treatment combination",
+          "content": [
+            "Single treatments are rare in Korea. Most combine **2-3 treatments strategically**.",
+            "**Lifting Package**: HIFU (deep layer) -> RF (middle layer) -> Thread lifting (surface)",
+            "**Pigment & Tone Package**: Pico laser -> Toning -> Vitamin iontophoresis -> Skin booster",
+            "**Pore & Texture Package**: Laser + Peeling + Regeneration booster",
+            "All systematized into **4-6 week programs**."
+          ],
+          "image": "/images/k-beauty/section3-dermatology/ai-consultation.jpg"
+        },
+        "point4": {
+          "title": "Fast Recovery = High Accessibility",
+          "subtitle": "Why lunchtime treatments are possible",
+          "content": [
+            "Koreans don't want long downtimes. So Korean dermatology focused on **minimizing recovery time**.",
+            "Laser Toning: No downtime, makeup immediately",
+            "Pico Laser: Slight redness, makeup next day",
+            "HIFU: Slight swelling, immediate return to daily life",
+            "Skin Booster: Tiny needle marks, makeup next day",
+            "\"Friday evening treatment, Monday back to work\" - Korean's standard schedule"
+          ],
+          "image": "/images/k-beauty/section3-dermatology/recovery-timeline.jpg"
+        },
+        "point5": {
+          "title": "Expertise and Safety",
+          "subtitle": "Specialist-centered system",
+          "content": [
+            "Another strength of Korean dermatology: **Specialist-centered system**",
+            "Most treatments performed directly by board-certified dermatologists",
+            "Low dependence on nurses and technicians",
+            "Strict medical law regulations (only medical professionals can perform)",
+            "Continuous education: Domestic and international conferences, latest equipment training, clinical experience sharing culture",
+            "All this ensures **high safety and effectiveness**."
+          ],
+          "image": "/images/k-beauty/section3-dermatology/certificates-wall.jpg"
+        }
+      },
+      "statistics": {
+        "title": "Korean Dermatology by the Numbers",
+        "data": {
+          "foreignPatients": {
+            "value": "1.17 Million",
+            "label": "2024 foreign patients - 56.6% dermatology (#1)"
+          },
+          "growth": {
+            "value": "117x",
+            "label": "Foreign dermatology patient growth vs 2009"
+          },
+          "ulthera": {
+            "value": "40%",
+            "label": "Ultherapy price - cheaper than USA"
+          },
+          "pico": {
+            "value": "50%",
+            "label": "Pico Laser - cheaper than Europe"
+          }
+        },
+        "image": "/images/k-beauty/section3-dermatology/statistics-charts.jpg"
+      },
+      "conclusion": {
+        "title": "Why Korean dermatology treatments are special is simple",
+        "quote": "**It's maintenance, not surgery**, **It's daily life, not special occasions**, **It's enhancing, not hiding**",
+        "points": [
+          "This philosophy created:",
+          "The world's most diverse non-surgical options",
+          "Fastest equipment adoption",
+          "Most precise combined protocols",
+          "Shortest downtime"
+        ],
+        "closingLine": "And above all, it made the Korean dream of 'glowing skin even while aging' a reality. Your skin deserves to dream that dream too.",
+        "image": "/images/k-beauty/section3-dermatology/post-treatment.jpg"
+      },
+      "cta": {
+        "text": "Get Dermatology Treatment Consultation",
+        "link": "/consultation"
+      }
+    },
+    "section4": {
+      "id": "plastic-surgery",
+      "slug": "plastic-surgery-philosophy",
+      "title": "K-Plastic Surgery Philosophy: The Aesthetics of Naturalness",
+      "subtitle": "We Don't Erase Your Face",
+      "tagline": "Why Korean plastic surgery is different from the world - The philosophy of naturalness",
+      "intro": {
+        "paragraph1": "Hollywood plastic surgery: \"A completely new face\"",
+        "paragraph2": "Korean plastic surgery: **\"The face you should have had\"**",
+        "paragraph3": "This difference explains everything.",
+        "paragraph4": "What foreigners visiting Korean plastic surgery clinics say most: \"I don't want to look different. I want to look like the best version of myself.\"",
+        "paragraph5": "Korean plastic surgery philosophy is clear: **\"Preserve your identity while maximizing beauty\"**"
+      },
+      "mainPoints": {
+        "point1": {
+          "title": "Naturalness First",
+          "subtitle": "If it looks like you had surgery, it's a failure",
+          "content": [
+            "This is the unwritten rule of Korean plastic surgery.",
+            "Western surgery: Dramatic changes, striking effects, 'plastic beauty' style accepted",
+            "Korean surgery: **Subtle improvements**, 'always been pretty' feeling, harmony and balance first",
+            "**Real Example: Rhinoplasty**",
+            "Western style: High prominent bridge, angular tip, strong impression",
+            "Korean style: Height matching facial proportions, soft curves, natural tip, **\"Was that always their nose?\" feeling**",
+            "\"Korean plastic surgery's goal is not 'looking beautiful' but 'being beautiful as if you never had surgery'\" - Seoul National University Hospital Plastic Surgery Professor"
+          ],
+          "image": "/images/k-beauty/section4-plastic-surgery/natural-enhancement.jpg"
+        },
+        "point2": {
+          "title": "The Science of Looking Young",
+          "subtitle": "Age is just a number",
+          "content": [
+            "Koreans' obsession with looking young is world-famous. And plastic surgery is the tool to achieve it.",
+            "**Core of Creating Youthful Look**",
+            "**Soft Contours**: Angular jaw -> Soft V-line, cheekbone reduction, overall facial curves",
+            "**Volume Redistribution**: Sunken areas -> Filler/fat grafting, sagging areas -> Lifting",
+            "**Combined with Skin**: Post-surgery dermatology care essential, laser + lifting + filler combination",
+            "20s: Preventive care / 30s: Early lifting + volume supplementation / 40s: Mid-stage lifting + skin regeneration / 50s: Comprehensive facial rejuvenation"
+          ],
+          "image": "/images/k-beauty/section4-plastic-surgery/age-diversity.jpg"
+        },
+        "point3": {
+          "title": "The Art of Millimeters",
+          "subtitle": "1mm changes the impression",
+          "content": [
+            "Korean plastic surgery precision is world-class.",
+            "**Pursuing the Golden Ratio**",
+            "**Facial Thirds**: Hairline-eyebrows / eyebrows-nose tip / nose tip-chin = 1:1:1",
+            "**Facial Fifths**: Divide ear-to-ear width into 5 for ideal eye and nose positioning",
+            "**E-line**: Line connecting nose tip and chin, lips slightly inside",
+            "**Korea's Differentiation**: 3D CT scan for bone structure analysis, AI simulation for result prediction, millimeter-level adjustments"
+          ],
+          "image": "/images/k-beauty/section4-plastic-surgery/golden-ratio.jpg"
+        },
+        "point4": {
+          "title": "Innovation in Facial Contouring",
+          "subtitle": "Area where Korea is world-leading",
+          "content": [
+            "Double jaw surgery, cheekbone reduction, chin contouring... Korea is the **global standard** in this field.",
+            "**Square Jaw Reduction**: Shaving bone to create soft lines, Korea's specialized technique",
+            "**Cheekbone Reduction**: Correcting protruding cheekbones, reducing facial width, improving frontal and side profiles",
+            "**Double Jaw Surgery**: Repositioning upper and lower jaw bones, improving both occlusion and aesthetics",
+            "**Chin Contouring**: T-osteotomy, sliding, creating short and slim chin",
+            "**Safety**: Nerve damage minimization technology, 3D navigation system, tens of thousands of cases annually"
+          ],
+          "image": "/images/k-beauty/section4-plastic-surgery/contour-surgery.jpg"
+        },
+        "point5": {
+          "title": "Integrated Care System",
+          "subtitle": "Surgery is the start, care creates results",
+          "content": [
+            "Real differentiation of Korean plastic surgery: **Post-care system**",
+            "**Immediately Post-surgery (1 week)**: Swelling management, cold compress, compression therapy, disinfection and dressing",
+            "**2-4 weeks**: Swelling reduction laser, bruise removal treatment, scar management begins",
+            "**1-3 months**: Skin regeneration laser, skin booster injections, contour refinement",
+            "**3-6 months**: Final result confirmation, maintenance plan, regular checkups",
+            "**Collaboration with Dermatology**: Plastic surgery (structural change) -> Dermatology (skin improvement) -> Perfect harmony",
+            "Thanks to this system: 30% shorter recovery time, minimized scars, **natural results with no 'surgery look'**"
+          ],
+          "image": "/images/k-beauty/section4-plastic-surgery/recovery-program.jpg"
+        }
+      },
+      "statistics": {
+        "title": "K-Plastic Surgery by the Numbers",
+        "data": {
+          "ratio": {
+            "value": "13.5 per 1,000",
+            "label": "Per capita surgery ratio (World #1)"
+          },
+          "nose": {
+            "value": "50%",
+            "label": "Rhinoplasty price - cheaper than USA"
+          },
+          "satisfaction": {
+            "value": "95%",
+            "label": "Foreign patient satisfaction (very satisfied + satisfied)"
+          },
+          "revision": {
+            "value": "8-12%",
+            "label": "Revision rate (Global average 15-20%)"
+          }
+        },
+        "image": "/images/k-beauty/section4-plastic-surgery/statistics-data.jpg"
+      },
+      "conclusion": {
+        "title": "Why Korean plastic surgery is different in one sentence",
+        "quote": "**Not changing you, but completing you**",
+        "points": [
+          "It is:",
+          "Delicacy that **preserves facial identity**",
+          "**Precision** down to millimeters",
+          "**Integrated care** combined with dermatology",
+          "**Clinical experience** accumulated over decades"
+        ],
+        "closingLine": "In Korea, plastic surgery is not 'becoming someone else' but **'finding who you should have been'**. Your original beauty is also waiting. To be discovered in Korea.",
+        "image": "/images/k-beauty/section4-plastic-surgery/new-beginning.jpg"
+      },
+      "cta": {
+        "text": "Get Facial Analysis & Consultation",
+        "link": "/consultation"
+      }
+    },
+    "section5": {
+      "id": "science",
+      "slug": "science-and-rd",
+      "title": "Beauty Created by Science",
+      "subtitle": "The Language of Beauty is Now Science",
+      "tagline": "K-Beauty's credibility built on R&D and clinical research",
+      "intro": {
+        "paragraph1": "\"This cream contains 3 years of research.\" \"This treatment protocol went through 200 clinical trials.\"",
+        "paragraph2": "Where does K-Beauty and K-Medical aesthetics' confidence come from? **From science.**",
+        "paragraph3": "Korea approaches beauty not with intuition but with **science**. Speaks not with marketing but with **data**. Proves not with experience but with **clinical trials**.",
+        "paragraph4": "This is why the world trusts Korea."
+      },
+      "mainPoints": {
+        "point1": {
+          "title": "Center of Dermatological Research",
+          "subtitle": "K-Beauty starts in the laboratory",
+          "content": [
+            "Korean beauty research is world-class.",
+            "**Academic Activity Indicators**: 1,200+ annual dermatology SCI papers, 800+ plastic surgery, 500+ cosmetics science",
+            "**Major Research Institutions**: Seoul National University Dermatology Research Institute, Yonsei University Skin Life Science Research Institute, Ajou University Skin Aging Research Center",
+            "**Corporate R&D**: Amorepacific Technology Research Institute, LG Household & Health Care R&D, Cosmax R&D Center",
+            "**Research Topics**: Skin barrier function, skin microbiome, aging mechanisms, pigmentation, wound healing, regenerative medicine",
+            "\"Korea ranks 3rd globally in dermatology research paper publications after USA and Japan\" - PubMed data"
+          ],
+          "image": "/images/k-beauty/section5-science/research-lab.jpg"
+        },
+        "point2": {
+          "title": "Application of Biotechnology",
+          "subtitle": "Meeting of natural and cutting-edge",
+          "content": [
+            "Korean beauty's strength: **Biotechnology**",
+            "**Magic of Fermentation**: Reduced molecule size for increased skin absorption, increased active ingredient concentration, reduced irritation",
+            "**Representative Fermented Ingredients**: Galactomyces ferment filtrate (tone improvement), Bifida ferment lysate (barrier strengthening), Lactobacillus ferment (moisturizing)",
+            "**Innovation in Herbal Fermentation**: Ginseng ferment extract, rice ferment filtrate, green tea fermentation",
+            "**Stem Cell Technology**: Plant stem cell culture, growth factor extraction, exosome isolation technology"
+          ],
+          "image": "/images/k-beauty/section5-science/biotech-lab.jpg"
+        },
+        "point3": {
+          "title": "Combination of Advanced Equipment and AI",
+          "subtitle": "Reading your skin in numbers",
+          "content": [
+            "Korean dermatology now utilizes **AI and big data**.",
+            "**AI Skin Diagnosis**: Skin tone, pigmentation, pore size, wrinkle depth, skin moisture, elasticity, sensitivity analysis",
+            "**AI's Role**: Data collection -> Analysis -> Diagnosis -> Prescription -> Prediction",
+            "**Equipment Evolution**: Visual -> Wood's lamp -> Skin microscope -> 3D scanning -> AI integrated diagnosis system",
+            "**Big Data Utilization**: 1 million+ patient data accumulated, treatment effectiveness statistical analysis, optimal protocols by skin type"
+          ],
+          "image": "/images/k-beauty/section5-science/ai-diagnosis.jpg"
+        },
+        "point4": {
+          "title": "Rigorous Clinical Trials",
+          "subtitle": "No launch without proven efficacy",
+          "content": [
+            "Korean cosmetics and treatments undergo **thorough verification**.",
+            "**Cosmetics Clinical Trials (MFDS Standards)**",
+            "Whitening products: 8-week clinical, 20+ subjects, pigmentation improvement proof required",
+            "Anti-wrinkle: 12-week clinical, 20+ subjects, wrinkle depth measurement required",
+            "**Treatment Protocol Research**: Literature review -> Pilot test -> Data collection -> Protocol establishment -> Large-scale application -> Paper publication",
+            "**Annals of Dermatology 2025**: HIFU + injection combination treatment effectiveness analysis, 87% patient satisfaction"
+          ],
+          "image": "/images/k-beauty/section5-science/clinical-trial.jpg"
+        },
+        "point5": {
+          "title": "Global Collaboration Network",
+          "subtitle": "Researching with the world",
+          "content": [
+            "Korean beauty research is **international**.",
+            "**International Collaboration Cases**",
+            "ISAPS (International Society of Aesthetic Plastic Surgery): 15% Korean members, regular academic exchange",
+            "IMCAS (International Master Course on Aging Science): Separate Korean sessions",
+            "AAD (American Academy of Dermatology): Active Korean researcher participation",
+            "**Corporate Collaboration**: Korea-France cosmetic ingredients, Korea-Japan equipment technology, Korea-USA bio materials",
+            "**University Exchange**: Seoul National University-Harvard, Yonsei-UCLA, Sungkyunkwan-Tsinghua",
+            "**Knowledge Sharing Culture**: Regular international conferences, overseas medical professional training, English paper publication"
+          ],
+          "image": "/images/k-beauty/section5-science/global-network.jpg"
+        }
+      },
+      "statistics": {
+        "title": "R&D Investment Status",
+        "data": {
+          "investment": {
+            "value": "$900M",
+            "label": "Annual total R&D investment (2024)"
+          },
+          "patents": {
+            "value": "150,000+",
+            "label": "Cumulative patents (Asia #1)"
+          },
+          "researchers": {
+            "value": "20,000+",
+            "label": "Total R&D personnel"
+          },
+          "facilities": {
+            "value": "365+",
+            "label": "Research facilities (corporate+university+government)"
+          }
+        },
+        "image": "/images/k-beauty/section5-science/investment-chart.jpg"
+      },
+      "conclusion": {
+        "title": "Beauty created by science",
+        "quote": "This is how K-Beauty convinced the world",
+        "points": [
+          "\"Why does it work?\" -> **\"Look at this data\"**",
+          "\"Is it safe?\" -> **\"Look at these clinical results\"**",
+          "\"Can I trust it?\" -> **\"Read this paper\"**"
+        ],
+        "closingLine": "Korea transformed beauty **from emotion to science**. The result: World-recognized effectiveness, data-proven safety, sustainable innovation. Your beauty also becomes science now. In Korea.",
+        "image": "/images/k-beauty/section5-science/research-team.jpg"
+      },
+      "cta": {
+        "text": "Get Scientific Skin Analysis",
+        "link": "/consultation"
+      }
+    },
+    "section6": {
+      "id": "culture",
+      "slug": "k-culture-impact",
+      "title": "K-Culture That Changed World Beauty",
+      "subtitle": "BTS Asked, and the World Answered",
+      "tagline": "The global beauty revolution created by K-Culture",
+      "intro": {
+        "paragraph1": "In 2020, a teenage girl in Paris searched: **\"How to get BTS skin\"**",
+        "paragraph2": "That year, the same search term: Increased 570% in USA, 820% in Europe, 1,200% in Southeast Asia",
+        "paragraph3": "In 2025, that girl: Uses 10 Korean cosmetics, does skincare while watching K-dramas, saving up for Korean dermatology appointments.",
+        "paragraph4": "**This is the beauty revolution created by K-Culture.**"
+      },
+      "mainPoints": {
+        "point1": {
+          "title": "New Beauty Standards Created by K-pop",
+          "subtitle": "Men wear cosmetics too?",
+          "content": [
+            "K-pop changed the world's beauty concepts.",
+            "**K-Beauty Icons**: Girls' Generation (skin radiance), BTS (global skincare revolution), BLACKPINK (Glass Skin symbol)",
+            "**What K-pop Changed**",
+            "**Normalization of Male Beauty**: \"Men wearing cosmetics?\" -> \"Men should take care of their skin too\"",
+            "Result: Male cosmetics market growing 7% annually, 70% of teenage males use skincare products",
+            "**Globalization of Glow Makeup**: Coverage -> Glow, Matte -> Dewy"
+          ],
+          "image": "/images/k-beauty/section6-culture/idol-makeup.jpg"
+        },
+        "point2": {
+          "title": "Aspiration Created by K-Dramas",
+          "subtitle": "Is that actress's skin real?",
+          "content": [
+            "K-dramas showed Korean beauty as **everyday life**.",
+            "**Representative Cases**",
+            "**Crash Landing on You (2019)**: Son Ye-jin's skin inquiries flooded, global search \"Son Ye-jin skincare routine\"",
+            "**Itaewon Class (2020)**: Kim Da-mi's natural makeup, no-makeup makeup trend",
+            "**The Glory (2023)**: Song Hye-kyo's youthful look, \"Song Hye-kyo treatment\" search increased 1000%",
+            "**COVID Period (2020-2022)**: K-drama viewing increased 1,860% -> K-Beauty sales increased 340% -> Medical tourism waiting list increased 200%"
+          ],
+          "image": "/images/k-beauty/section6-culture/drama-scenes.jpg"
+        },
+        "point3": {
+          "title": "SNS Influencer Spread",
+          "subtitle": "Starting with unboxing!",
+          "content": [
+            "K-Beauty went **viral through SNS**.",
+            "**Platform-specific Influence**",
+            "YouTube: \"Korean Skincare Routine\" 1 billion+ views",
+            "Instagram: #kbeauty 15 million+ posts",
+            "TikTok: K-Beauty video total views 20 billion+",
+            "**Viral Formula**: Before/After, ASMR elements, Unboxing, Routine disclosure, Honest reviews",
+            "**Global Influencer Network**: Korea -> USA/Europe -> Local language -> Global consumers"
+          ],
+          "image": "/images/k-beauty/section6-culture/beauty-influencer.jpg"
+        },
+        "point4": {
+          "title": "Iconization of Korean Wave Stars",
+          "subtitle": "If my favorite idol uses it...",
+          "content": [
+            "Korean Wave stars are **living advertisements**.",
+            "**Brand Ambassador Effect**",
+            "**BTS x Mediheal**: 340% global sales increase after ambassador contract, worldwide sold out",
+            "**BLACKPINK x Chanel/Dior**: Lisa MAC, Jennie Chanel Beauty, Rose YSL Beauty",
+            "**Son Heung-min x Dr.Jart+**: Male beauty normalization, successful European market entry",
+            "**Ripple Effect**: 1 star mention -> 24-hour SNS spread -> 1,000% product search increase -> Order surge -> Sold out -> Greater buzz"
+          ],
+          "image": "/images/k-beauty/section6-culture/star-ambassador.jpg"
+        },
+        "point5": {
+          "title": "Perfect Timing Created by COVID",
+          "subtitle": "Stuck at home, what to do? Watch K-dramas...",
+          "content": [
+            "COVID **exploded** K-Culture.",
+            "**2020-2022 Timeline**",
+            "2020 First Half: Global lockdown, OTT consumption surge, Netflix K-content boom",
+            "2020 Second Half: Crash Landing on You - Squid Game hit, K-pop online concerts",
+            "2021: \"Might as well do skincare at home\", YouTube tutorials exploded",
+            "2022: Borders open, **Korea-bound flight bookings surge**, medical tourism waiting list record high",
+            "**2019 vs 2024**: Foreign patients 490K -> 1.17M (2.4x), K-Beauty sales $8B -> $18.9B (2.4x)"
+          ],
+          "image": "/images/k-beauty/section6-culture/home-selfcare.jpg"
+        }
+      },
+      "statistics": {
+        "title": "Cultural Impact by the Numbers",
+        "data": {
+          "hallyu": {
+            "value": "$13B",
+            "label": "Annual Korean Wave economic effect"
+          },
+          "export": {
+            "value": "$8.3B",
+            "label": "K-Beauty global cosmetics export (2024)"
+          },
+          "medical": {
+            "value": "$470M",
+            "label": "Foreign patient treatment revenue"
+          },
+          "social": {
+            "value": "15M+",
+            "label": "#kbeauty hashtag posts"
+          }
+        },
+        "image": "/images/k-beauty/section6-culture/economic-impact.jpg"
+      },
+      "conclusion": {
+        "title": "The miracle created by K-Culture is this",
+        "quote": "**Music created curiosity, dramas created aspiration, SNS created spread, COVID created opportunity, and products created satisfaction**",
+        "points": [
+          "The result:",
+          "Korean beauty is now the **global standard**",
+          "K-Beauty is a **category** itself",
+          "Glass Skin is the **universal goal**"
+        ],
+        "closingLine": "The world no longer asks \"What is K-Beauty?\" Instead they ask **\"Which K-Beauty is right for my skin?\"** This is the revolution created by culture. And this revolution continues.",
+        "image": "/images/k-beauty/section6-culture/global-unity.jpg"
+      },
+      "cta": {
+        "text": "Start My K-Beauty Journey",
+        "link": "/consultation"
+      }
+    },
+    "section7": {
+      "id": "lifestyle",
+      "slug": "beauty-lifestyle",
+      "title": "The Korean Beauty Lifestyle",
+      "subtitle": "Beauty is the Korean Language",
+      "tagline": "The philosophy of beauty woven into daily life",
+      "intro": {
+        "paragraph1": "Ask a Korean: \"How many skincare steps did you do today?\"",
+        "paragraph2": "10 steps? 5 steps? Or \"Only 3 because I'm busy\"?",
+        "paragraph3": "This question is natural only in Korea.",
+        "paragraph4": "In Korea, beauty is: Not preparation for special occasions but **daily ritual**, Not luxury but **essential care**, Not hobby but **lifestyle**",
+        "paragraph5": "This is the real secret of Korean beauty. **It's the culture itself.**"
+      },
+      "mainPoints": {
+        "point1": {
+          "title": "Aspiration for Youthfulness",
+          "subtitle": "How old are you? Wow you don't look it!",
+          "content": [
+            "This is what Koreans most want to hear.",
+            "**Roots of Youthful Look Culture**",
+            "**Confucian Background**: Age = Authority, but appearance should be young = **\"Experienced yet youthful\" is the ideal**",
+            "**Modern Social Pressure**: Age discrimination in job market, anxiety about losing competitiveness with age",
+            "**Youthful Look = Health Indicator**: Elastic skin, glow, bright tone, fewer wrinkles, vitality -> All signals of health",
+            "**Investment for Youthful Look**: Monthly cosmetics 15-20만원, Annual dermatology $1,500-3,000, Lifetime about $100K (ages 20-60)",
+            "**This is perceived as 'investment' not 'luxury'**"
+          ],
+          "image": "/images/k-beauty/section7-lifestyle/age-groups.jpg"
+        },
+        "point2": {
+          "title": "Skin-First Philosophy: Glow from Within",
+          "subtitle": "Good skin beats good makeup",
+          "content": [
+            "Korean beauty priority: 1. **Skin care** (overwhelming #1) 2. Hair care 3. Makeup 4. Fashion",
+            "**Why Skin-First**",
+            "**Cultural**: \"Appearance reflects inner state\", Healthy skin = Healthy lifestyle",
+            "**Practical**: Makeup washes off but skin is permanent, Good skin = Makeup looks better",
+            "**Investment ROI**: Good cosmetics (daily effect) vs Dermatology treatment (months) vs Lifestyle change (lifetime)",
+            "-> Koreans prefer long-term investment"
+          ],
+          "image": "/images/k-beauty/section7-lifestyle/natural-skin.jpg"
+        },
+        "point3": {
+          "title": "Daily Dermatology: Lunch Toning",
+          "subtitle": "Dermatology = Convenience store?",
+          "content": [
+            "In Korea, this is completely normal: \"Getting toning after lunch and back\"",
+            "**Accessibility**: Gangnam district 2-3 dermatology clinics per km, Walk-in same-day treatments available, Average wait 10-20 minutes",
+            "**Daily Treatment Culture**:",
+            "20s: Laser toning, Aqua peel (monthly)",
+            "30s: Toning + Lifting, Skin booster (1-2x monthly)",
+            "40s+: Combined lifting, Regeneration therapy, Filler/Botox (2x+ monthly)",
+            "**Affordable Cost**: Single treatment $50-150, Package discounts, Membership, **\"Skip a few coffees...\"**"
+          ],
+          "image": "/images/k-beauty/section7-lifestyle/clinic-waiting.jpg"
+        },
+        "point4": {
+          "title": "Detailed Routine: Even 10 Steps is Not Enough",
+          "subtitle": "Only 3 steps today, no time",
+          "content": [
+            "For Koreans, 3 steps is the **\"abbreviated version\"**.",
+            "**Seasonal Routine Example**",
+            "**Spring (Dry+Fine dust)**: Water cleanse -> Calming toner -> Hydration essence -> Moisture cream -> Sunscreen -> Dust blocker",
+            "**Summer (Oil+UV)**: Light fresh texture, UV care strengthening",
+            "**Fall (Prepare for dryness)**: Moisture boost, nutrition supply, exfoliation",
+            "**Winter (Extreme dryness)**: Add oil products, night cream, frequent moisture packs",
+            "**Ultimate Customization**: Koreans change products by season, combine by skin condition, use different AM/PM routines, **listen to their skin daily**"
+          ],
+          "image": "/images/k-beauty/section7-lifestyle/product-collection.jpg"
+        },
+        "point5": {
+          "title": "Democratization of Beauty Information",
+          "subtitle": "Must read 100 reviews first",
+          "content": [
+            "Korean beauty product purchase process is thorough.",
+            "**Information Channels**: Hwahae app (ingredient analysis, tens of thousands of reviews), Olive Young reviews (verified purchasers), Naver blogs (long-term reviews), YouTube (unboxing, tutorials)",
+            "**Thorough Analysis**: Ingredient analysis -> Read 100+ reviews -> Blog reviews -> YouTube -> Compare similar products -> Price comparison",
+            "-> Average 3-7 days to purchase decision"
+          ],
+          "image": "/images/k-beauty/section7-lifestyle/review-search.jpg"
+        }
+      },
+      "statistics": {
+        "title": "Korean Beauty Life by the Numbers",
+        "data": {
+          "time": {
+            "value": "243 hours",
+            "label": "Annual total skincare time"
+          },
+          "money": {
+            "value": "$180",
+            "label": "Monthly average cosmetics spending"
+          },
+          "products": {
+            "value": "23",
+            "label": "Average skincare products owned"
+          },
+          "visits": {
+            "value": "12-36",
+            "label": "Annual dermatology visit frequency"
+          }
+        },
+        "image": "/images/k-beauty/section7-lifestyle/daily-stats.jpg"
+      },
+      "conclusion": {
+        "title": "For Koreans, beauty is",
+        "quote": "Morning ritual, evening meditation, time for self-care, investment in the future",
+        "points": [
+          "**It's not simply about looking pretty.**",
+          "It is:",
+          "**A way to love yourself**",
+          "**A way to age gracefully**",
+          "**A way to live each day radiantly**"
+        ],
+        "closingLine": "The real reason the world is enthusiastic about Korean beauty is not because the products are good. **It's because the attitude toward beauty is beautiful.** You can also experience this beautiful culture. Start with 10-step skincare tonight. 25 minutes for yourself. That's the beginning of all change.",
+        "image": "/images/k-beauty/section7-lifestyle/everyday-beauty.jpg"
+      },
+      "cta": {
+        "text": "Start My K-Beauty Routine",
+        "link": "/consultation"
+      }
+    }
+  },
+  "common": {
+    "readMore": "Read More",
+    "backToTop": "Back to Top",
+    "share": "Share",
+    "relatedContent": "Related Content"
+  }
+}

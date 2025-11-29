@@ -16,7 +16,7 @@ interface Section {
 }
 
 export default function KBeautyIndexPage() {
-  const t = useTranslations('KBeauty');
+  const t = useTranslations();
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const sections: Section[] = [
@@ -165,7 +165,7 @@ export default function KBeautyIndexPage() {
                       transition-transform duration-300
                       ${isHovered ? 'translate-x-2' : ''}
                     `}>
-                      <span>{t('navigation.sections')}</span>
+                      <span>{t('common.readMore')}</span>
                       <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>

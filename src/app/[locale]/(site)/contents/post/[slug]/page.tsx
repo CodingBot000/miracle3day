@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
-import { getTranslations } from 'next-intl/server';
-import { findSectionBySlug } from '@/content/kBeautySections';
+import { getLocale } from 'next-intl/server';
+import { getKBeautyContent } from '@/locales/content-locale';
 import SectionHero from '@/components/k-beauty/SectionHero';
 import SectionContent from '@/components/k-beauty/SectionContent';
 import TransparentHeaderWrapper from '@/components/layout/TransparentHeaderWrapper';
@@ -27,60 +27,61 @@ export async function generateStaticParams() {
   return slugs.map((slug) => ({ slug }));
 }
 
+// Helper type for section data
+type SectionData = {
+  id: string;
+  slug: string;
+  title: string;
+  subtitle: string;
+  tagline: string;
+  intro?: KBeautySection['intro'];
+  mainPoints?: KBeautySection['mainPoints'];
+  statistics?: KBeautySection['statistics'];
+  conclusion?: KBeautySection['conclusion'];
+  cta?: KBeautySection['cta'];
+};
+
 // Generate metadata for SEO
 export async function generateMetadata({ params }: Props) {
   const { slug } = params;
-  const t = await getTranslations('KBeauty');
-  const sectionId = findSectionBySlug(slug);
+  const locale = await getLocale();
+  const content = getKBeautyContent(locale);
 
-  if (!sectionId) {
-    return {
-      title: 'Not Found',
-    };
-  }
-
-  // Find section by slug in sections
+  // Find section by slug
   const sectionKeys = ['section1', 'section2', 'section3', 'section4', 'section5', 'section6', 'section7'] as const;
   let sectionKey: string | null = null;
-  let section: KBeautySection | null = null;
+  let sectionData: SectionData | null = null;
 
   for (const key of sectionKeys) {
-    const sectionSlug = t.raw(`sections.${key}.slug`) as string;
-    if (sectionSlug === slug) {
+    const section = content.sections[key] as SectionData;
+    if (section.slug === slug) {
       sectionKey = key;
-      section = {
-        id: t.raw(`sections.${key}.id`) as string,
-        slug: sectionSlug,
-        title: t.raw(`sections.${key}.title`) as string,
-        subtitle: t.raw(`sections.${key}.subtitle`) as string,
-        tagline: t.raw(`sections.${key}.tagline`) as string,
-        intro: t.raw(`sections.${key}.intro`) as KBeautySection['intro'],
-        cta: t.raw(`sections.${key}.cta`) as KBeautySection['cta'],
-      };
+      sectionData = section;
       break;
     }
   }
 
-  if (!section || !sectionKey) {
+  if (!sectionData || !sectionKey) {
     return {
       title: 'Not Found',
     };
   }
 
   return {
-    title: `${section.title || ''} | K-Beauty Guide`,
-    description: section.tagline || '',
+    title: `${sectionData.title || ''} | K-Beauty Guide`,
+    description: sectionData.tagline || '',
     openGraph: {
-      title: section.title || '',
-      description: section.tagline || '',
-      images: [section.intro ? `/images/k-beauty/${sectionKey}/hero.jpg` : ''],
+      title: sectionData.title || '',
+      description: sectionData.tagline || '',
+      images: [sectionData.intro ? `/images/k-beauty/${sectionKey}/hero.jpg` : ''],
     },
   };
 }
 
 export default async function KBeautySectionPage({ params }: Props) {
   const { slug } = params;
-  const t = await getTranslations('KBeauty');
+  const locale = await getLocale();
+  const content = getKBeautyContent(locale);
 
   // Find section by slug
   const sectionKeys = ['section1', 'section2', 'section3', 'section4', 'section5', 'section6', 'section7'] as const;
@@ -88,20 +89,20 @@ export default async function KBeautySectionPage({ params }: Props) {
   let section: KBeautySection | null = null;
 
   for (const key of sectionKeys) {
-    const sectionSlug = t.raw(`sections.${key}.slug`) as string;
-    if (sectionSlug === slug) {
+    const sectionData = content.sections[key] as SectionData;
+    if (sectionData.slug === slug) {
       sectionKey = key;
       section = {
-        id: t.raw(`sections.${key}.id`) as string,
-        slug: sectionSlug,
-        title: t.raw(`sections.${key}.title`) as string,
-        subtitle: t.raw(`sections.${key}.subtitle`) as string,
-        tagline: t.raw(`sections.${key}.tagline`) as string,
-        intro: t.raw(`sections.${key}.intro`) as KBeautySection['intro'],
-        mainPoints: t.raw(`sections.${key}.mainPoints`) as KBeautySection['mainPoints'],
-        statistics: t.raw(`sections.${key}.statistics`) as KBeautySection['statistics'],
-        conclusion: t.raw(`sections.${key}.conclusion`) as KBeautySection['conclusion'],
-        cta: t.raw(`sections.${key}.cta`) as KBeautySection['cta'],
+        id: sectionData.id,
+        slug: sectionData.slug,
+        title: sectionData.title,
+        subtitle: sectionData.subtitle,
+        tagline: sectionData.tagline,
+        intro: sectionData.intro,
+        mainPoints: sectionData.mainPoints,
+        statistics: sectionData.statistics,
+        conclusion: sectionData.conclusion,
+        cta: sectionData.cta,
       };
       break;
     }

@@ -118,14 +118,13 @@ export default function SearchPanel({ onClose }: { onClose: () => void }) {
             </div>
           )}
           <div className={styles.hospitalCardGridStyle}>
-            {results.hospitals.map(({ thumbnail_url, imageurls, name, id_unique, id_uuid, location, searchkey }) => (
+            {results.hospitals.map(({ thumbnail_url, name, id_uuid, location }) => (
               <div key={id_uuid}>
                 <HospitalCard
                   alt={name}
                   name={name}
                   href={ROUTE.HOSPITAL_DETAIL("") + id_uuid}
                   src={thumbnail_url || "/hospital/hospitalimg/hospital_default.png"}
-                  searchKey={searchkey}
                   locationNum={location}
                 />
               </div>

@@ -45,14 +45,13 @@ export default function LocationHospitalClient() {
   return (
     <div className={styles.hospitalCardGridStyle}>
       {data
-        ? data.map(({ imageurls, name, id_unique, id_uuid, searchkey }) => (
+        ? data.map(({ imageurls, name, id_uuid }) => (
             <article key={id_uuid} className="w-full px-2">
               <HospitalCard
                 alt={name}
                 name={name}
                 href={ROUTE.HOSPITAL_DETAIL("") + id_uuid}
                 src={imageurls[0]}
-                searchKey={searchkey}
                 locationNum={locationParam}
               />
             </article>

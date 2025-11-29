@@ -11,7 +11,7 @@ export default function QuestionList({ topic, category, format, filter, isMainPa
   log.debug('받은 filter prop:', filter);
 
   const pathname = usePathname();
-  const isHome = pathname === "/home";
+  const isHome = pathname.endsWith('/home');
   const locale = useLocale();
   const [questions, setQuestions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);

@@ -5,6 +5,8 @@ import { LocationEnum } from "@/constants";
 import { useRouter } from "next/navigation";
 import HospitalListCard from "./HospitalListCard";
 import { ROUTE } from "@/router";
+import { useHospitalGoogleSnapshots } from "@/hooks/useHospitalGoogleSnapshots";
+import { useMemo } from "react";
 
 interface HospitalListNewDesignProps {
   initialData: HospitalData[];
@@ -14,6 +16,15 @@ interface HospitalListNewDesignProps {
 const HospitalListNewDesign = ({ initialData }: HospitalListNewDesignProps) => {
   const hospitals = Array.isArray(initialData) ? initialData : [];
   const router = useRouter();
+
+  // 병원 ID 목록 추출
+  const hospitalIds = useMemo(
+    () => hospitals.map((h) => h.id_uuid).filter(Boolean) as string[],
+    [hospitals]
+  );
+
+  // Google 리뷰 스냅샷 bulk fetch
+  const { data: googleSnapshots } = useHospitalGoogleSnapshots(hospitalIds);
 
   // Hospital data received successfully with show field
 
@@ -59,14 +70,18 @@ const HospitalListNewDesign = ({ initialData }: HospitalListNewDesignProps) => {
 
           {/* Clinic List */}
           <div className="space-y-8 md:space-y-12">
-            {hospitals.map((hospital, index) => (
-              <HospitalListCard 
-                key={hospital.id_uuid} 
-                hospital={hospital}
-                 href={ROUTE.HOSPITAL_DETAIL("") + hospital.id_uuid}
-                showCategories={index === 0} 
-              />
-            ))}
+            {hospitals.map((hospital) => {
+              const snapshot = googleSnapshots?.[hospital.id_uuid!];
+              return (
+                <HospitalListCard
+                  key={hospital.id_uuid}
+                  hospital={hospital}
+                  href={ROUTE.HOSPITAL_DETAIL("") + hospital.id_uuid}
+                  googleRating={snapshot?.rating}
+                  googleReviewCount={snapshot?.userRatingCount}
+                />
+              );
+            })}
             
           </div>
         </div>

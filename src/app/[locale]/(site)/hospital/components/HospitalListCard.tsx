@@ -2,41 +2,32 @@
 
 import { HospitalData } from "@/app/models/hospitalData.dto";
 import { findRegionByKey, REGIONS } from "@/constants";
-import { ROUTE } from "@/router";
 import { Link } from "@/i18n/routing";
-import Image from "next/image";
 import { ReviewStats } from "@/components/molecules/ReviewStats";
-import { useGooglePlaceReviews } from "@/hooks/useGooglePlaceReviews";
 import { useLocale } from "next-intl";
 
 interface HospitalListCardProps {
   hospital: HospitalData;
-    href: string;
-  showCategories?: boolean;
+  href: string;
   showTreatmentInfo?: boolean;
+  // Google 리뷰 데이터는 props로 전달받음 (API 호출 제거)
+  googleRating?: number | null;
+  googleReviewCount?: number | null;
 }
 
-const HospitalListCard = ({ hospital, href, showCategories = false, showTreatmentInfo = false }: HospitalListCardProps) => {
+const HospitalListCard = ({
+  hospital,
+  href,
+  showTreatmentInfo = false,
+  googleRating,
+  googleReviewCount,
+}: HospitalListCardProps) => {
   // Language hook
   const language = useLocale() as 'ko' | 'en';
 
-  // Google Places 리뷰 가져오기
-  const { data: googleReviewsData } = useGooglePlaceReviews(hospital.searchkey || '');
-  const categories = [
-    { label: "Laser toning", bgColor: "#F5F5F7" },
-    { label: "acne scar", bgColor: "#F5F5F7" },
-    { label: "treatment", bgColor: "#F5F5F7" },
-    { label: "botox", bgColor: "#F5F5F7" }
-  ];
-
-  // log.debug('hospital.name_en:' , hospital.name_en );
-  // log.debug('hospital.thumbnail_url :', hospital.thumbnail_url );
-  // log.debug('hospital.imageurls?[0] :', hospital.imageurls?[0] : "") ;
-
   const region = findRegionByKey(REGIONS, parseInt(hospital.location!, 10));
-  return (
-    
 
+  return (
     <Link href={href} className="block">
       <div className="space-y-4 md:space-y-6">
         {/* Hospital Card */}
@@ -64,59 +55,38 @@ const HospitalListCard = ({ hospital, href, showCategories = false, showTreatmen
               <h3 className="text-base md:text-lg lg:text-xl xl:text-2xl font-normal text-black leading-tight">
                 {language === 'ko' ? hospital.name : hospital.name_en}
               </h3>
-              {/* <div className="flex items-center gap-2 text-xs text-gray-500">
-                <span className="font-bold">{language === 'ko' ? '도로명 주소' : 'Road Name'}:</span>
-                <span>{language === 'ko' ? hospital.address_full_road : hospital.address_full_road_en}</span>
-              </div>
 
-              <div className="flex items-center gap-2 text-xs text-gray-500">
-                <span className="font-bold">{language === 'ko' ? '지번 주소' : 'Lot number address'}:</span>
-                <span>{language === 'ko' ? hospital.address_full_jibun : hospital.address_full_jibun_en}</span>
-              </div>
-               */}
-               {/* 구글 별점 통계 표시 */}
-               {googleReviewsData && (
+              {/* 구글 별점 통계 표시 */}
+              {googleRating != null && (
                 <ReviewStats
-                  rating={googleReviewsData.rating}
-                  userRatingCount={googleReviewsData.userRatingCount}
+                  rating={googleRating}
+                  userRatingCount={googleReviewCount ?? 0}
                   language={language}
                   size={16}
                   className="mt-1"
                 />
               )}
-               <div className="flex items-center gap-2 text-xs text-gray-500">
+
+              <div className="flex items-center gap-2 text-xs text-gray-500">
                 <span className="font-bold">{language === 'ko' ? '위치' : 'Location'} :</span>
                 <span>{language === 'ko' ? region?.label.ko : region?.label.en}</span>
-              </div>   
+              </div>
+
               <p className="text-sm md:text-base lg:text-lg text-gray-500">
-                
               </p>
+
               {showTreatmentInfo && (
                 <p className="text-sm md:text-base lg:text-lg text-gray-500">
                   {/* Laser toning, acne scar treatment */}
                 </p>
               )}
+
               <p className="text-sm md:text-base lg:text-lg text-gray-500">
                 {/* ★4.8 (120+ reviews) */}
               </p>
             </div>
           </div>
         </div>
-
-        {/* Categories (only show for first item) */}
-        {/* {showCategories && (
-          <div className="flex items-center gap-2 flex-wrap">
-            {categories.map((category, index) => (
-              <span
-                key={index}
-                className="px-2 py-1.5 md:px-3 md:py-2 rounded-md text-xs md:text-sm text-gray-500"
-                style={{ backgroundColor: category.bgColor }}
-              >
-                {category.label}
-              </span>
-            ))}
-          </div>
-        )} */}
       </div>
     </Link>
   );

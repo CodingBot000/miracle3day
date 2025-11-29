@@ -30,6 +30,7 @@ export interface HospitalGoogleReview {
   author_photo_url: string | null;
   rating: number | null;
   review_text: string | null;
+  review_text_i18n: Record<string, string> | null; // 다국어 리뷰 텍스트
   publish_time: Date | null;
   inserted_at: Date;
   updated_at: Date;
@@ -59,6 +60,41 @@ export async function getSnapshot(idUuidHospital: string): Promise<HospitalGoogl
   `;
 
   return await one<HospitalGoogleSnapshot>(sql, [idUuidHospital]);
+}
+
+/**
+ * Get snapshots for multiple hospitals (bulk fetch)
+ */
+export async function getSnapshotsByHospitalIds(
+  hospitalIds: string[]
+): Promise<Map<string, { rating: number | null; userRatingCount: number | null }>> {
+  if (hospitalIds.length === 0) {
+    return new Map();
+  }
+
+  const sql = `
+    SELECT
+      id_uuid_hospital,
+      rating,
+      user_rating_count
+    FROM public.hospital_google_snapshot
+    WHERE id_uuid_hospital = ANY($1)
+  `;
+
+  const rows = await q<{ id_uuid_hospital: string; rating: number | null; user_rating_count: number | null }>(
+    sql,
+    [hospitalIds]
+  );
+
+  const result = new Map<string, { rating: number | null; userRatingCount: number | null }>();
+  for (const row of rows) {
+    result.set(row.id_uuid_hospital, {
+      rating: row.rating,
+      userRatingCount: row.user_rating_count,
+    });
+  }
+
+  return result;
 }
 
 /**
@@ -147,6 +183,7 @@ export async function getReviews(idUuidHospital: string, limit: number = 5): Pro
       author_photo_url,
       rating,
       review_text,
+      review_text_i18n,
       publish_time,
       inserted_at,
       updated_at,

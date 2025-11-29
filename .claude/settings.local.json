@@ -4,7 +4,10 @@
       "Bash(xargs sed:*)",
       "Bash(node -e \"JSON.parse(require('fs').readFileSync('/Users/switch/Development/WebBeauty/beauty_proejcts/complete/beauty-main/src/messages/zh-CN.json', 'utf8'))\":*)",
       "Bash(node -e:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(npm install:*)",
+      "Bash(npx ts-node:*)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []

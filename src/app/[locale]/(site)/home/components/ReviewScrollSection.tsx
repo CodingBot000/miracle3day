@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import ReviewCardForHome from '@/components/molecules/card/ReviewCardForHome';
 import { ReviewDataFromGoogleMap } from '@/app/models/reviewData.dto';
-import { useTranslatedGoogleReviews, getTargetLanguage } from '@/hooks/useTranslatedGoogleReviews';
+import { useLocale } from 'next-intl';
 
 type ApiReview = {
   id: number;
@@ -37,18 +37,19 @@ function convertToReviewFormat(apiReview: ApiReview): ReviewDataFromGoogleMap {
 }
 
 export default function ReviewScrollSection() {
+  const locale = useLocale();
   const [reviews, setReviews] = useState<ApiReview[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Load data
+  // Load data with locale
   useEffect(() => {
     let mounted = true;
     // log.debug('[ReviewScrollSection] Starting to fetch reviews...');
 
     (async () => {
       try {
-        const res = await fetch('/api/places/random-reviews?limit=10', { cache: 'no-store' });
+        const res = await fetch(`/api/places/random-reviews?limit=10&lang=${locale}`, { cache: 'no-store' });
         // log.debug('[ReviewScrollSection] Response status:', res.status);
 
         if (!res.ok) {
@@ -80,24 +81,12 @@ export default function ReviewScrollSection() {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [locale]);
 
-  // Convert to ReviewDataFromGoogleMap format
-  const convertedReviews = useMemo(() => {
+  // Convert to ReviewDataFromGoogleMap format (이미 API에서 다국어 처리됨)
+  const displayReviews = useMemo(() => {
     return (reviews ?? []).map(convertToReviewFormat);
   }, [reviews]);
-
-  // Get browser language and translate reviews
-  const targetLang = getTargetLanguage();
-  const { data: translatedReviews } = useTranslatedGoogleReviews({
-    hospitalId: 'random-reviews', // Unique identifier for cache
-    targetLang,
-    reviews: convertedReviews,
-    enabled: !loading && convertedReviews.length > 0,
-  });
-
-  // Use translated reviews if available, otherwise use original
-  const displayReviews = translatedReviews ?? convertedReviews;
 
   // Double the list for infinite loop
   const doubled = useMemo(

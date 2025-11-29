@@ -3,11 +3,10 @@
 import { log } from '@/utils/logger';
 
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { HospitalDetailMainOutput } from "@/app/api/hospital/[id]/main/main.dto";
 // import Image from "next/image";;
 import { useRouter } from "next/navigation";
-import HospitalContactInfo from "./HospitalContactInfo";
 import HospitalLocation from "./HospitalLocation";
 import HospitalDoctorList from "./HospitalDoctorList";
 import HospitalAmenities from "./HospitalAmenities";
@@ -21,11 +20,10 @@ import HospitalYouTubePreview from "./HospitalYouTubePreview";
 import TreatmentProductList from "@/components/organism/layout/TreatmentProductList";
 import { useTreatmentProducts } from "@/hooks/useTreatmentProducts";
 import ReviewSection from "@/components/template/ReviewSection";
-import { useHospitalGoogleReviews } from "@/hooks/useHospitalGoogleReviews";
 import { ReviewStats } from "@/components/molecules/ReviewStats";
-import { useTranslatedGoogleReviews, getTargetLanguage } from "@/hooks/useTranslatedGoogleReviews";
+import { useMultilingualGoogleReviews, Review } from "@/hooks/useMultilingualGoogleReviews";
 import { Skeleton } from "@/components/ui/skeleton";
-import InstagramFeed from "@/components/organism/sns/InstagramFeed";
+import { ReviewDataFromGoogleMap } from "@/app/models/reviewData.dto";
 
 interface HospitalDetailNewDesignProps {
   hospitalData: HospitalDetailMainOutput;
@@ -39,29 +37,36 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
   log.debug('HospitalDetailNewDesign hospitalData:', hospitalData);
   const { hospital_info, hospital_details, doctors, business_hours } = hospitalData;
 
-  // Google Places 리뷰 가져오기 (DB 캐시 우선)
-  const { data: googleReviewsData, isLoading: isLoadingGoogleReviews } = useHospitalGoogleReviews(hospital_info.id_uuid);
-
-  // 브라우저 언어로 리뷰 번역
-  const targetLang = getTargetLanguage();
-  const reviews = googleReviewsData?.reviews ?? [];
-
-  const {
-    data: translatedReviews,
-    isLoading: isLoadingTranslation,
-    isFetching: isFetchingTranslation,
-  } = useTranslatedGoogleReviews({
-    hospitalId: hospital_info.id_uuid,
-    targetLang,
-    reviews,
-    enabled: !!googleReviewsData && reviews.length > 0,
-  });
+  // Google Places 리뷰 가져오기 (DB 캐시 - 다국어 지원)
+  const { data: googleReviewsData, isLoading: isLoadingGoogleReviews } = useMultilingualGoogleReviews(
+    hospital_info.id_uuid,
+    { locale }
+  );
 
   // Treatment Products 가져오기
   const { data: treatmentProducts = [], isLoading: isLoadingProducts } = useTreatmentProducts(hospital_info.id_uuid);
 
-  // 번역 완료 여부 확인
-  const showReviewSkeleton = isLoadingGoogleReviews || isLoadingTranslation || isFetchingTranslation;
+  // 리뷰 로딩 상태
+  const showReviewSkeleton = isLoadingGoogleReviews;
+
+  // DB에서 받은 리뷰를 ReviewDataFromGoogleMap 형식으로 변환
+  const displayReviews = useMemo((): ReviewDataFromGoogleMap[] => {
+    if (!googleReviewsData?.reviews) return [];
+    return googleReviewsData.reviews.map((review: Review): ReviewDataFromGoogleMap => ({
+      rating: review.rating ?? null,
+      publishTime: review.publishTime ?? null,
+      authorAttribution: {
+        displayName: review.authorName,
+        photoUri: review.authorPhotoUrl,
+        uri: review.authorProfileUrl,
+      },
+      sourceLanguage: null,
+      text: {
+        text: review.reviewText,
+        languageCode: locale,
+      },
+    }));
+  }, [googleReviewsData?.reviews, locale]);
 
   const handleBackClick = () => {
     router.back();
@@ -166,16 +171,16 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
         </section>
       )}
 
-      {/* 번역 완료 후 리뷰 표시 */}
-      {!showReviewSkeleton && translatedReviews && translatedReviews.length > 0 && (
+      {/* 리뷰 표시 */}
+      {!showReviewSkeleton && displayReviews.length > 0 && (
         <ReviewSection
-          reviews={translatedReviews}
+          reviews={displayReviews}
           isLoading={false}
         />
       )}
 
       {/* 리뷰 없음 */}
-      {!showReviewSkeleton && (!translatedReviews || translatedReviews.length === 0) && (
+      {!showReviewSkeleton && displayReviews.length === 0 && (
         <section className="py-8 border-b-8 border-gray-50">
           <div className="px-4">
             <div className="text-sm text-gray-600">No reviews yet.</div>

@@ -40,7 +40,7 @@ export default function PollQuestion({ question }: PollQuestionProps) {
   const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
-  const isHome = pathname === "/home";
+  const isHome = pathname.endsWith('/home');
   const { requireLogin, loginModal } = useLoginGuard();
 
   // 다국어 텍스트 추출 헬퍼

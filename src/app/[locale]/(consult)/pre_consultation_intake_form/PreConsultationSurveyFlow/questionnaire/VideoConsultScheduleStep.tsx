@@ -1,15 +1,23 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Plus, X } from 'lucide-react';
+import { Plus, X, Calendar, Clock } from 'lucide-react';
 import { useLocale } from 'next-intl';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import { ko } from 'date-fns/locale/ko';
+import { enUS } from 'date-fns/locale/en-US';
+import 'react-datepicker/dist/react-datepicker.css';
+
+// Register locales
+registerLocale('ko', ko);
+registerLocale('en', enUS);
 
 export interface VideoConsultTimeSlot {
   rank: number;
   date: string; // 'YYYY-MM-DD'
   startTime: string; // 'HH:mm'
-  endTime: string; // 'HH:mm'
 }
 
 interface VideoConsultScheduleStepProps {
@@ -23,7 +31,7 @@ const VideoConsultScheduleStep: React.FC<VideoConsultScheduleStepProps> = ({ dat
   // Initialize with one empty slot
   const [slots, setSlots] = useState<VideoConsultTimeSlot[]>(
     data.videoConsultSlots || [
-      { rank: 1, date: '', startTime: '', endTime: '' }
+      { rank: 1, date: '', startTime: '' }
     ]
   );
 
@@ -42,14 +50,58 @@ const VideoConsultScheduleStep: React.FC<VideoConsultScheduleStepProps> = ({ dat
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slots]);
 
-  const handleSlotChange = (rank: number, field: keyof VideoConsultTimeSlot, value: string) => {
+  // Convert string date to Date object
+  const parseDate = (dateStr: string): Date | null => {
+    if (!dateStr) return null;
+    const [year, month, day] = dateStr.split('-').map(Number);
+    return new Date(year, month - 1, day);
+  };
+
+  // Convert Date object to string
+  const formatDate = (date: Date | null): string => {
+    if (!date) return '';
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  // Convert string time to Date object for time picker
+  const parseTime = (timeStr: string): Date | null => {
+    if (!timeStr) return null;
+    const [hours, minutes] = timeStr.split(':').map(Number);
+    const date = new Date();
+    date.setHours(hours, minutes, 0, 0);
+    return date;
+  };
+
+  // Convert Date object to time string
+  const formatTime = (date: Date | null): string => {
+    if (!date) return '';
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
+  };
+
+  const handleDateChange = (rank: number, date: Date | null) => {
     setSlots(prevSlots =>
       prevSlots.map(slot =>
-        slot.rank === rank ? { ...slot, [field]: value } : slot
+        slot.rank === rank ? { ...slot, date: formatDate(date) } : slot
       )
     );
+    clearError(rank);
+  };
 
-    // Clear error for this slot when user makes changes
+  const handleTimeChange = (rank: number, time: Date | null) => {
+    setSlots(prevSlots =>
+      prevSlots.map(slot =>
+        slot.rank === rank ? { ...slot, startTime: formatTime(time) } : slot
+      )
+    );
+    clearError(rank);
+  };
+
+  const clearError = (rank: number) => {
     if (errors[rank]) {
       setErrors(prev => {
         const newErrors = { ...prev };
@@ -61,7 +113,7 @@ const VideoConsultScheduleStep: React.FC<VideoConsultScheduleStepProps> = ({ dat
 
   const addSlot = () => {
     if (slots.length < 3) {
-      setSlots([...slots, { rank: slots.length + 1, date: '', startTime: '', endTime: '' }]);
+      setSlots([...slots, { rank: slots.length + 1, date: '', startTime: '' }]);
     }
   };
 
@@ -81,27 +133,83 @@ const VideoConsultScheduleStep: React.FC<VideoConsultScheduleStepProps> = ({ dat
     }
   };
 
-  const validateSlot = (slot: VideoConsultTimeSlot): string | null => {
-    if (!slot.date || !slot.startTime || !slot.endTime) {
-      return locale === 'ko'
-        ? '날짜, 시작 시간, 종료 시간을 모두 입력해주세요'
-        : 'Please fill in date, start time, and end time';
-    }
-
-    if (slot.startTime >= slot.endTime) {
-      return locale === 'ko'
-        ? '시작 시간은 종료 시간보다 이전이어야 합니다'
-        : 'Start time must be before end time';
-    }
-
-    return null;
-  };
-
-  // Get minimum date (today)
-  const today = new Date().toISOString().split('T')[0];
+  // Get minimum date (tomorrow - same day booking not allowed)
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  tomorrow.setHours(0, 0, 0, 0);
 
   return (
     <div className="space-y-6">
+      <style jsx global>{`
+        .react-datepicker {
+          font-family: inherit;
+          border: 1px solid #e5e7eb;
+          border-radius: 0.5rem;
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .react-datepicker__header {
+          background-color: #fff;
+          border-bottom: 1px solid #e5e7eb;
+          padding-top: 0.5rem;
+        }
+        .react-datepicker__current-month {
+          font-weight: 600;
+          color: #111827;
+        }
+        .react-datepicker__day-name {
+          color: #6b7280;
+        }
+        .react-datepicker__day {
+          color: #111827;
+          border-radius: 0.375rem;
+        }
+        .react-datepicker__day:hover {
+          background-color: #fce7f3;
+        }
+        .react-datepicker__day--selected {
+          background-color: #fb718f !important;
+          color: white !important;
+        }
+        .react-datepicker__day--keyboard-selected {
+          background-color: #fce7f3;
+        }
+        .react-datepicker__day--disabled {
+          color: #d1d5db;
+        }
+        .react-datepicker__time-container {
+          border-left: 1px solid #e5e7eb;
+        }
+        .react-datepicker__time-list-item {
+          height: auto !important;
+          padding: 8px 10px !important;
+        }
+        .react-datepicker__time-list-item:hover {
+          background-color: #fce7f3 !important;
+        }
+        .react-datepicker__time-list-item--selected {
+          background-color: #fb718f !important;
+        }
+        .react-datepicker-wrapper {
+          width: 100%;
+        }
+        .react-datepicker__input-container {
+          width: 100%;
+        }
+        .react-datepicker__input-container input {
+          width: 100%;
+          padding: 0.5rem 0.75rem 0.5rem 2.5rem;
+          border: 1px solid #e5e7eb;
+          border-radius: 0.375rem;
+          font-size: 0.875rem;
+          line-height: 1.25rem;
+          outline: none;
+        }
+        .react-datepicker__input-container input:focus {
+          border-color: #fb718f;
+          box-shadow: 0 0 0 2px rgba(251, 113, 143, 0.2);
+        }
+      `}</style>
+
       <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
         <p className="text-sm text-blue-800">
           {locale === 'ko'
@@ -110,7 +218,7 @@ const VideoConsultScheduleStep: React.FC<VideoConsultScheduleStepProps> = ({ dat
         </p>
       </div>
 
-      {slots.map((slot, index) => (
+      {slots.map((slot) => (
         <div key={slot.rank} className="p-4 border border-gray-200 rounded-lg space-y-4">
           <div className="flex items-center justify-between">
             <Label className="text-lg font-semibold text-gray-800">
@@ -130,48 +238,46 @@ const VideoConsultScheduleStep: React.FC<VideoConsultScheduleStepProps> = ({ dat
             )}
           </div>
 
-          <div className="grid grid-cols-1 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Date Picker */}
             <div>
-              <Label htmlFor={`date-${slot.rank}`} className="text-sm text-gray-700 mb-2 block">
+              <Label className="text-sm text-gray-700 mb-2 block">
                 {locale === 'ko' ? '날짜' : 'Date'}
                 <span className="text-red-500 ml-1">*</span>
               </Label>
-              <Input
-                id={`date-${slot.rank}`}
-                type="date"
-                min={today}
-                value={slot.date}
-                onChange={(e) => handleSlotChange(slot.rank, 'date', e.target.value)}
-                className="w-full"
-              />
-            </div>
-
-            {/* Time Pickers */}
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <Label htmlFor={`start-${slot.rank}`} className="text-sm text-gray-700 mb-2 block">
-                  {locale === 'ko' ? '시작 시간' : 'Start Time'}
-                  <span className="text-red-500 ml-1">*</span>
-                </Label>
-                <Input
-                  id={`start-${slot.rank}`}
-                  type="time"
-                  value={slot.startTime}
-                  onChange={(e) => handleSlotChange(slot.rank, 'startTime', e.target.value)}
+              <div className="relative">
+                <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 z-10 pointer-events-none" />
+                <DatePicker
+                  selected={parseDate(slot.date)}
+                  onChange={(date) => handleDateChange(slot.rank, date)}
+                  minDate={tomorrow}
+                  locale={locale === 'ko' ? 'ko' : 'en'}
+                  dateFormat={locale === 'ko' ? 'yyyy년 MM월 dd일' : 'MMM dd, yyyy'}
+                  placeholderText={locale === 'ko' ? '날짜 선택' : 'Select date'}
                   className="w-full"
                 />
               </div>
-              <div>
-                <Label htmlFor={`end-${slot.rank}`} className="text-sm text-gray-700 mb-2 block">
-                  {locale === 'ko' ? '종료 시간' : 'End Time'}
-                  <span className="text-red-500 ml-1">*</span>
-                </Label>
-                <Input
-                  id={`end-${slot.rank}`}
-                  type="time"
-                  value={slot.endTime}
-                  onChange={(e) => handleSlotChange(slot.rank, 'endTime', e.target.value)}
+            </div>
+
+            {/* Time Picker */}
+            <div>
+              <Label className="text-sm text-gray-700 mb-2 block">
+                {locale === 'ko' ? '시간' : 'Time'}
+                <span className="text-red-500 ml-1">*</span>
+              </Label>
+              <div className="relative">
+                <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 z-10 pointer-events-none" />
+                <DatePicker
+                  selected={parseTime(slot.startTime)}
+                  onChange={(time) => handleTimeChange(slot.rank, time)}
+                  showTimeSelect
+                  showTimeSelectOnly
+                  timeIntervals={30}
+                  timeCaption={locale === 'ko' ? '시간' : 'Time'}
+                  dateFormat="HH:mm"
+                  timeFormat="HH:mm"
+                  locale={locale === 'ko' ? 'ko' : 'en'}
+                  placeholderText={locale === 'ko' ? '시간 선택' : 'Select time'}
                   className="w-full"
                 />
               </div>

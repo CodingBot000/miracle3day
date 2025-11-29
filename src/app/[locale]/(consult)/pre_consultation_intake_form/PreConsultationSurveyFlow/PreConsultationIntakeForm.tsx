@@ -1,6 +1,7 @@
-import React, { isValidElement, useState } from 'react';
+import React, { isValidElement, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight, Heart, Star, FileText } from 'lucide-react';
+import { useConsultFormStorage } from '../../common/formStorage';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
@@ -45,6 +46,7 @@ import BudgetStep from './questionnaire/BudgetStep';
 import { StepData } from '../../models/recommend_estimate.dto';
 import UserInfo from './questionnaire/UserInfoStep';
 import VideoConsultScheduleStep from './questionnaire/VideoConsultScheduleStep';
+import UploadImageStep from './questionnaire/UploadImageStep';
 
 interface StepComponentProps {
   data: StepData;
@@ -59,8 +61,27 @@ const PreConsultationIntakeForm: React.FC = () => {
   const [formData, setFormData] = useState<Record<string, StepData>>({});
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [isValideSendForm, setIsValideSendForm] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   const { toast } = useToast();
+  const { loadStoredData, saveData, clearData } = useConsultFormStorage('preConsult');
+
+  // 컴포넌트 마운트 시 저장된 데이터 불러오기
+  useEffect(() => {
+    const stored = loadStoredData();
+    if (stored && Object.keys(stored).length > 0) {
+      setFormData(stored);
+      log.debug('Loaded stored form data:', stored);
+    }
+    setIsInitialized(true);
+  }, [loadStoredData]);
+
+  // formData 변경 시 자동 저장 (초기화 완료 후에만)
+  useEffect(() => {
+    if (isInitialized && Object.keys(formData).length > 0) {
+      saveData(formData);
+    }
+  }, [formData, saveData, isInitialized]);
 
   // 현재 스텝의 유효성을 실시간으로 확인
   const isCurrentStepValid = () => {
@@ -122,8 +143,12 @@ const PreConsultationIntakeForm: React.FC = () => {
   };
 
   const handleSubmit = () => {
+    log.debug('handleSubmit called - currentStep:', currentStep);
+    log.debug('handleSubmit - preConsultationSteps.length:', preConsultationSteps.length);
+    log.debug('handleSubmit - stepId:', preConsultationSteps[currentStep].id);
     const currentStepData = formData[preConsultationSteps[currentStep].id] || {};
-    log.debug('currentStepData', currentStepData);
+    log.debug('handleSubmit - currentStepData:', currentStepData);
+    log.debug('handleSubmit - validation result:', validateStepData(preConsultationSteps[currentStep].id, currentStepData));
     if (!validateStepData(preConsultationSteps[currentStep].id, currentStepData)) {
       setIsValideSendForm(false);
       // log.debug('validateStepData currentStepData::', currentStepData);
@@ -167,6 +192,8 @@ const PreConsultationIntakeForm: React.FC = () => {
         return TreatmentExpBeforeStep as React.ComponentType<StepComponentProps>;
       case USER_INFO:
         return UserInfo as React.ComponentType<StepComponentProps>;
+      case UPLOAD_PHOTO:
+        return UploadImageStep as React.ComponentType<StepComponentProps>;
       case VIDEO_CONSULT_SCHEDULE:
         return VideoConsultScheduleStep as React.ComponentType<StepComponentProps>;
       // case DEMOGRAPHICS_BASIC:
@@ -174,7 +201,7 @@ const PreConsultationIntakeForm: React.FC = () => {
       // case VISIT_PATHS:
       //   return VisitPathStep as React.ComponentType<StepComponentProps>;
       default:
-        return SkinTypeStep as React.ComponentType<StepComponentProps>;
+        throw new Error(`Unknown step: ${curStepId}`);
     }
   }, [currentStep]);
   return (
@@ -356,6 +383,9 @@ const PreConsultationIntakeForm: React.FC = () => {
         formData={formData}
         onSubmissionComplete={(allStepData) => {
           setIsPreviewOpen(false);
+
+          // 제출 완료 시 저장된 폼 데이터 삭제
+          clearData();
 
           // Generate recommendations
           try {

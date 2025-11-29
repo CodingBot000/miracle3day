@@ -171,7 +171,7 @@ const BeautyQuestionnaire: React.FC = () => {
       case VISIT_PATHS:
         return VisitPathStep as React.ComponentType<StepComponentProps>;
       default:
-        return SkinTypeStep as React.ComponentType<StepComponentProps>;
+        throw new Error(`Unknown step: ${curStepId}`);
     }
   }, [currentStep]);
 

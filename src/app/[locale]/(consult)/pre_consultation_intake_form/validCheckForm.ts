@@ -100,20 +100,18 @@ export const validateStepData = (stepId: string, data: StepData): boolean => {
       );
     case UPLOAD_PHOTO:
       // 파일이 업로드되었는지 확인
-      return !!(
-        data.uploadImage?.uploadedImage || data.uploadImage?.imageFile
-      );
+      return true;
+      // return !!(
+      //   data.uploadImage?.uploadedImage || data.uploadImage?.imageFile
+      // );
     case VIDEO_CONSULT_SCHEDULE:
       // Validate that at least one complete slot is filled
       const slots = data.videoConsultSlots;
       if (!slots || slots.length === 0) return false;
 
-      // Check if at least the first slot is completely filled
+      // Check if at least the first slot is completely filled (date and startTime only)
       const firstSlot = slots[0];
-      if (!firstSlot.date || !firstSlot.startTime || !firstSlot.endTime) return false;
-
-      // Validate that start time is before end time
-      if (firstSlot.startTime >= firstSlot.endTime) return false;
+      if (!firstSlot.date || !firstSlot.startTime) return false;
 
       return true;
     default:

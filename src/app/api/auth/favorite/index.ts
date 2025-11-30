@@ -27,9 +27,11 @@ const buildApiUrl = (path: string) => {
     return `${envBase}${normalizedPath}`;
   }
 
-  const vercelUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : undefined;
+  const vercelUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : undefined;
 
   if (vercelUrl) {
     return `${vercelUrl}${normalizedPath}`;

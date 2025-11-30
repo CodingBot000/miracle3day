@@ -3,6 +3,8 @@
  * GET /api/gamification/badges - Get all badge definitions
  */
 
+export const dynamic = 'force-dynamic';
+
 import { NextRequest, NextResponse } from 'next/server';
 import { getAllBadges, getUserBadges } from '@/services/badges';
 

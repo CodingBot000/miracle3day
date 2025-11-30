@@ -20,10 +20,10 @@ export interface TermItem {
 
 export const terms: TermItem[] = [
   { id: 'age', label: 'Age 14 or older', required: true },
-  { id: 'service', label: 'Terms of Service', required: true, url: { ko: '/contents/signup_terms/terms_of_use_ko.html', en: '/contents/signup_terms/terms_of_use_en.html' } },
-  { id: 'location', label: 'Terms and Conditions of Location-based Services', required: true, url: { ko: '/contents/signup_terms/terms_and_conditions_of_LBS_BeautyWell_MimoTok_ko.html', en: '/contents/signup_terms/terms_and_conditions_of_LBS_BeautyWell_Mimotok_en.html' } },
-  { id: 'privacy', label: 'Collection and Use of Personal Information', required: true, url: { ko: '/contents/signup_terms/privacy_collection_and_use_MimoTok_ko.html', en: '/contents/signup_terms/privacy_collection_and_use_MimoTok_en.html' } },
-  { id: 'marketing', label: 'Leverage marketing and advertising', required: false, url: { ko: '/contents/signup_terms/leverage_marketing_and_advertising_ko.html', en: '/contents/signup_terms/leverage_marketing_and_advertising_en.html' } },
+  { id: 'service', label: 'Terms of Service', required: true, url: { ko: '/static/signup_terms/terms_of_use_ko.html', en: '/static/signup_terms/terms_of_use_en.html' } },
+  { id: 'location', label: 'Terms and Conditions of Location-based Services', required: true, url: { ko: '/static/signup_terms/terms_and_conditions_of_LBS_BeautyWell_MimoTok_ko.html', en: '/static/signup_terms/terms_and_conditions_of_LBS_BeautyWell_Mimotok_en.html' } },
+  { id: 'privacy', label: 'Collection and Use of Personal Information', required: true, url: { ko: '/static/signup_terms/privacy_collection_and_use_MimoTok_ko.html', en: '/static/signup_terms/privacy_collection_and_use_MimoTok_en.html' } },
+  { id: 'marketing', label: 'Leverage marketing and advertising', required: false, url: { ko: '/static/signup_terms/leverage_marketing_and_advertising_ko.html', en: '/static/signup_terms/leverage_marketing_and_advertising_en.html' } },
 ];
 
 export type TSnsType = typeof SNS_FACEBOOK | typeof SNS_GOOGLE | typeof SNS_APPLE;

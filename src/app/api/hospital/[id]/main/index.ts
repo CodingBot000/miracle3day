@@ -4,21 +4,45 @@ import {
   HospitalDetailMainOutput,
 } from './main.dto';
 
-const API_BASE =
-  process.env.NEXT_PUBLIC_API_ROUTE ||
-  process.env.INTERNAL_API_BASE_URL ||
-  '';
+const buildApiUrl = (path: string) => {
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  const envBase =
+    process.env.NEXT_PUBLIC_API_ROUTE &&
+    process.env.NEXT_PUBLIC_API_ROUTE.trim().length > 0
+      ? process.env.NEXT_PUBLIC_API_ROUTE.replace(/\/$/, '')
+      : undefined;
+
+  if (typeof window !== 'undefined') {
+    if (envBase && !envBase.includes('localhost')) {
+      return `${envBase}${normalizedPath}`;
+    }
+    return `${window.location.origin}${normalizedPath}`;
+  }
+
+  if (envBase) {
+    return `${envBase}${normalizedPath}`;
+  }
+
+  const vercelUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : undefined;
+
+  if (vercelUrl) {
+    return `${vercelUrl}${normalizedPath}`;
+  }
+
+  return `http://localhost:3000${normalizedPath}`;
+};
 
 export const getHospitalMainAPI = async ({
   id,
 }: HospitalDetailMainInputDto): Promise<HospitalDetailMainOutput> => {
-  const url = `${API_BASE}/api/hospital/${id}/main`;
+  const url = buildApiUrl(`/api/hospital/${id}/main`);
 
   const data = await fetchUtils<HospitalDetailMainOutput>({
     url,
     fetchOptions: {
       cache: 'no-cache',
-      credentials: 'include',
     },
   });
 

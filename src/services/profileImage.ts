@@ -1,9 +1,33 @@
 import { STORAGE_MEMBER } from "@/constants/tables";
 
-const API_BASE =
-  process.env.NEXT_PUBLIC_API_ROUTE ||
-  process.env.INTERNAL_API_BASE_URL ||
-  "";
+const getApiBase = () => {
+  const envBase =
+    process.env.NEXT_PUBLIC_API_ROUTE &&
+    process.env.NEXT_PUBLIC_API_ROUTE.trim().length > 0
+      ? process.env.NEXT_PUBLIC_API_ROUTE.replace(/\/$/, '')
+      : undefined;
+
+  if (typeof window !== 'undefined') {
+    if (envBase && !envBase.includes('localhost')) {
+      return envBase;
+    }
+    return window.location.origin;
+  }
+
+  if (envBase) {
+    return envBase;
+  }
+
+  const vercelUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : undefined;
+
+  if (vercelUrl) {
+    return vercelUrl;
+  }
+
+  return 'http://localhost:3000';
+};
 
 export interface UploadProfileImageParams {
   file: File;
@@ -28,7 +52,7 @@ export const uploadProfileImage = async ({
 
     // Delete existing files in the user's folder
     const listRes = await fetch(
-      `${API_BASE}/api/storage/s3/list?bucket=${encodeURIComponent(
+      `${getApiBase()}/api/storage/s3/list?bucket=${encodeURIComponent(
         STORAGE_MEMBER
       )}&prefix=${encodeURIComponent(folderPath)}`,
       { cache: 'no-store' }
@@ -48,7 +72,7 @@ export const uploadProfileImage = async ({
         .map((name) => `${folderPath}/${name}`);
 
       if (filesToDelete.length > 0) {
-        const removeRes = await fetch(`${API_BASE}/api/storage/s3/remove`, {
+        const removeRes = await fetch(`${getApiBase()}/api/storage/s3/remove`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ bucket: STORAGE_MEMBER, paths: filesToDelete }),
@@ -60,7 +84,7 @@ export const uploadProfileImage = async ({
       }
     }
 
-    const signRes = await fetch(`${API_BASE}/api/storage/s3/sign-upload`, {
+    const signRes = await fetch(`${getApiBase()}/api/storage/s3/sign-upload`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -93,7 +117,7 @@ export const uploadProfileImage = async ({
 
     const storagePath = `${STORAGE_MEMBER}/${filePath}`;
 
-    const patchRes = await fetch(`${API_BASE}/api/auth/member/avatar`, {
+    const patchRes = await fetch(`${getApiBase()}/api/auth/member/avatar`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ path: storagePath }),

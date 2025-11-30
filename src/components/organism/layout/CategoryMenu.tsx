@@ -6,10 +6,10 @@ import { useState } from "react";
 import CategoryDepth1 from "./CategoryDepth1";
 import CategoryDepth2 from "./CategoryDepth2";
 import CategoryDepth3 from "./CategoryDepth3";
-import { SKIN_BEAUTY_CATEGORIES } from "@/app/[locale]/(site)/contents/category/skinBeautyCategories";
-import { PLASTIC_SURGERY_CATEGORIES } from "@/app/[locale]/(site)/contents/category/plasticSurgeryCategories";
-import { CATEGORY_ICONS } from "@/app/[locale]/(site)/contents/menuIconData";
-import { CategoryNode } from "@/app/[locale]/(site)/contents/category/categoryNode";
+import { SKIN_BEAUTY_CATEGORIES } from "@/app/[locale]/(site)/(pages)/contents/category/skinBeautyCategories";
+import { PLASTIC_SURGERY_CATEGORIES } from "@/app/[locale]/(site)/(pages)/contents/category/plasticSurgeryCategories";
+import { CATEGORY_ICONS } from "@/app/[locale]/(site)/(pages)/contents/menuIconData";
+import { CategoryNode } from "@/app/[locale]/(site)/(pages)/contents/category/categoryNode";
 import { useRouter } from "@/i18n/routing";
 
 const toIconList = (nodes: CategoryNode[], icons: any) =>

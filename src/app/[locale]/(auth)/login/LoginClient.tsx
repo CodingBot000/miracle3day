@@ -2,10 +2,13 @@
 
 import { useLocale } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
+import { usePlatform, useWebViewBridge } from '@/hooks/usePlatform';
 
 export default function LoginClient() {
   const searchParams = useSearchParams();
   const locale = useLocale();
+  const { isAndroidWebView } = usePlatform();
+  const { callNativeFunction } = useWebViewBridge();
 
   // Get redirect URL from query params (default to home page)
   const redirectUrl = searchParams.get('redirect') || '/';
@@ -13,6 +16,16 @@ export default function LoginClient() {
   const handleGoogleLogin = () => {
     // Pass redirect URL as state parameter to OAuth flow
     const oauthUrl = `/api/auth/google/start?state=${encodeURIComponent(redirectUrl)}`;
+
+    // Android WebView에서는 Chrome Custom Tabs 사용 (Google OAuth 정책)
+    if (isAndroidWebView && window.AndroidBridge?.openGoogleLogin) {
+      // 전체 URL 생성 (Android에서 절대 경로 필요)
+      const fullUrl = `${window.location.origin}${oauthUrl}`;
+      callNativeFunction('openGoogleLogin', fullUrl);
+      return;
+    }
+
+    // 일반 브라우저는 기존 방식
     window.location.href = oauthUrl;
   };
 

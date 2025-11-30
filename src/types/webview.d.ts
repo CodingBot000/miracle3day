@@ -78,6 +78,17 @@ interface AndroidBridge {
    * 커스텀 이벤트 전송
    */
   sendEvent(eventName: string, data?: any): void;
+
+  /**
+   * Chrome Custom Tabs로 Google 로그인 열기
+   * WebView에서 Google OAuth가 차단되므로 Chrome Custom Tabs 사용
+   */
+  openGoogleLogin(url: string): void;
+
+  /**
+   * Chrome Custom Tabs로 외부 URL 열기 (범용)
+   */
+  openInCustomTab(url: string): void;
 }
 
 interface Window {

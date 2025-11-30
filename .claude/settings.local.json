@@ -8,7 +8,9 @@
       "Bash(npm install:*)",
       "Bash(npx ts-node:*)",
       "Bash(cat:*)",
-      "Bash(npx:*)"
+      "Bash(npx:*)",
+      "Bash(npm run build:*)",
+      "Bash(ls:*)"
     ],
     "deny": [],
     "ask": []

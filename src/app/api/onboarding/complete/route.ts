@@ -38,20 +38,18 @@ export async function POST(req: Request) {
     const body = await req.json();
     const userId = session.auth.id_uuid;
 
-    // 기존 회원 정보 업데이트
+    // 기존 회원 정보 업데이트 (nickname은 consent/accept에서 이미 생성됨)
     await q(
       `UPDATE ${TABLE_MEMBERS}
-       SET nickname = $1,
-           id_country = $2,
-           birth_date = $3,
-           gender = $4,
-           secondary_email = $5,
-           phone_country_code = $6,
-           phone_number = $7,
+       SET id_country = $1,
+           birth_date = $2,
+           gender = $3,
+           secondary_email = $4,
+           phone_country_code = $5,
+           phone_number = $6,
            updated_at = now()
-       WHERE id_uuid = $8`,
+       WHERE id_uuid = $7`,
       [
-        body.nickname || null,
         body.id_country || null,
         body.birth_date || null,
         body.gender || null,

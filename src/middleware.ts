@@ -47,7 +47,7 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    // 정적 파일, api, _next 제외한 모든 경로
-    '/((?!api|_next|_vercel|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|lottie|mp4|webm|ogg|mp3|wav|pdf)$).*)',
+    // 정적 파일, api, _next, static 폴더 제외한 모든 경로
+    '/((?!api|_next|_vercel|static|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|lottie|mp4|webm|ogg|mp3|wav|pdf|html)$).*)',
   ],
 };

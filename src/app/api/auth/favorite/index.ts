@@ -8,11 +8,41 @@ import {
 
 import { InfinityScrollInputDto } from "@/types/infinite";
 
+const buildApiUrl = (path: string) => {
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  const envBase =
+    process.env.NEXT_PUBLIC_API_ROUTE &&
+    process.env.NEXT_PUBLIC_API_ROUTE.trim().length > 0
+      ? process.env.NEXT_PUBLIC_API_ROUTE.replace(/\/$/, '')
+      : undefined;
+
+  if (typeof window !== 'undefined') {
+    if (envBase && !envBase.includes('localhost')) {
+      return `${envBase}${normalizedPath}`;
+    }
+    return `${window.location.origin}${normalizedPath}`;
+  }
+
+  if (envBase) {
+    return `${envBase}${normalizedPath}`;
+  }
+
+  const vercelUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : undefined;
+
+  if (vercelUrl) {
+    return `${vercelUrl}${normalizedPath}`;
+  }
+
+  return `http://localhost:3000${normalizedPath}`;
+};
+
 export const getAllFavoriteAPI = async ({
   pageParam = 0,
 }: InfinityScrollInputDto) => {
   const res = await fetchUtils<GetFavoriteOutputDto>({
-    url: `${process.env.NEXT_PUBLIC_API_ROUTE}/api/auth/favorite?&pageParam=${pageParam}`,
+    url: buildApiUrl(`/api/auth/favorite?&pageParam=${pageParam}`),
     fetchOptions: {
       cache: "no-cache",
     },
@@ -31,18 +61,11 @@ export const getFavoriteAPI = async ({
   }
 
   const res = await fetchUtils<GetFavoriteOutputDto[]>({
-    url: `${
-      process.env.NEXT_PUBLIC_API_ROUTE
-    }/api/auth/favorite?${queryParams.toString()}`,
+    url: buildApiUrl(`/api/auth/favorite?${queryParams.toString()}`),
   });
 
   return res;
 };
-
-const API_BASE =
-  process.env.NEXT_PUBLIC_API_ROUTE ||
-  process.env.INTERNAL_API_BASE_URL ||
-  'http://localhost:3000';
 
 export const postFavoriteAPI = async ({
   id_hospital,
@@ -50,7 +73,7 @@ export const postFavoriteAPI = async ({
   const body = JSON.stringify({ id_hospital });
 
   const res = await fetchUtils<{ redirect: string }>({
-    url: `${API_BASE}/api/auth/favorite`,
+    url: buildApiUrl('/api/auth/favorite'),
     fetchOptions: {
       credentials: 'include',
       method: "POST",
@@ -67,7 +90,7 @@ export const deleteFavoriteAPI = async ({
   const body = JSON.stringify({ id_hospital });
 
   const res = await fetchUtils({
-    url: `${API_BASE}/api/auth/favorite`,
+    url: buildApiUrl('/api/auth/favorite'),
     fetchOptions: {
       credentials: 'include',
       method: "DELETE",

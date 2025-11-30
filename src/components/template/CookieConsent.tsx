@@ -55,7 +55,7 @@ export default function CookieConsent() {
           계속 이용 시 쿠키 사용에 동의하는 것으로 간주됩니다. <br />
           자세한 내용은{' '}
           <Link
-            href="/cookie-policy"
+            href="/legal/cookie-policy"
             className="text-blue-600 underline hover:text-blue-800"
           >
             쿠키 정책

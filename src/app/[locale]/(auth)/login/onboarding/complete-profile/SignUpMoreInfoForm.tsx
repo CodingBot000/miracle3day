@@ -10,6 +10,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { NationModal } from '@/components/template/modal/NationModal';
 import { CountryCode } from '@/app/models/country-code.dto';
+import { findCountry } from '@/constants/country';
 
 const initialForm = {
   id_country: '',
@@ -18,7 +19,6 @@ const initialForm = {
   secondary_email: '',
   phone_country_code: '',
   phone_number: '',
-  nickname: '',
 };
 
 // 18세 이상 제한을 위한 날짜 계산
@@ -70,10 +70,7 @@ export default function SignUpMoreInfoForm() {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
   const [isSignedIn, setIsSignedIn] = useState(false);
-  const [form, setForm] = useState({
-    ...initialForm,
-    nickname: '',
-  });
+  const [form, setForm] = useState(initialForm);
   const [birthDate, setBirthDate] = useState<Date | null>(null);
   const [nation, setNation] = useState<CountryCode | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -113,6 +110,48 @@ export default function SignUpMoreInfoForm() {
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
+
+  // 기존 프로필 데이터 조회 및 폼 채우기
+  useEffect(() => {
+    if (!isSignedIn) return;
+
+    const fetchProfile = async () => {
+      try {
+        const res = await fetch('/api/onboarding/profile');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.profile) {
+            const profile = data.profile;
+
+            // 폼 데이터 설정
+            setForm((prev) => ({
+              ...prev,
+              gender: profile.gender || '',
+              secondary_email: profile.secondary_email || '',
+              phone_number: profile.phone_number ? profile.phone_number.replace(/^\+\d+/, '') : '',
+            }));
+
+            // 생년월일 설정
+            if (profile.birth_date) {
+              setBirthDate(new Date(profile.birth_date));
+            }
+
+            // 국가 설정
+            if (profile.id_country) {
+              const country = findCountry(profile.id_country);
+              if (country) {
+                setNation(country);
+              }
+            }
+          }
+        }
+      } catch (err) {
+        console.error('Failed to fetch profile:', err);
+      }
+    };
+
+    fetchProfile();
+  }, [isSignedIn]);
 
 
 
@@ -230,16 +269,6 @@ export default function SignUpMoreInfoForm() {
       </div>
 
       <div className="flex flex-col gap-4">
-        <div className="space-y-1">
-          <Label className="text-sm font-medium text-slate-600">Nickname</Label>
-          <input
-            type="text"
-            value={form.nickname}
-            onChange={handleChange('nickname')}
-            className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2 text-sm"
-          />
-        </div>
-
         <div className="space-y-1">
           <Label htmlFor="nationality">Nationality</Label>
           <NationModal

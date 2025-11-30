@@ -9,7 +9,7 @@ import { Link } from "@/i18n/routing";
 import { ROUTE } from "@/router";
 import Image from "next/image";
 import SeeAllLink from "./SeeAllLink";
-import LocationHospitalClient from "@/app/deprecated/LocationHospitalClient";
+
 import DiagnosticIntro from "./components/DiagnosticIntro";
 import RecommendEventList from "./components/recommend";
 import { Smile } from "lucide-react";

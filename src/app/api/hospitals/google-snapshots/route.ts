@@ -35,10 +35,8 @@ export async function POST(request: NextRequest) {
     const snapshotsMap = await getSnapshotsByHospitalIds(hospitalIds);
 
     // Convert Map to plain object for JSON serialization
-    const snapshots: Record<string, { rating: number | null; userRatingCount: number | null }> = {};
-    for (const [id, data] of snapshotsMap) {
-      snapshots[id] = data;
-    }
+    const snapshots: Record<string, { rating: number | null; userRatingCount: number | null }> =
+      Object.fromEntries(snapshotsMap);
 
     return NextResponse.json(
       { snapshots },

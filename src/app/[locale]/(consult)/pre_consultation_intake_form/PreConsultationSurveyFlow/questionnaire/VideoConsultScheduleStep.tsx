@@ -140,6 +140,7 @@ const VideoConsultScheduleStep: React.FC<VideoConsultScheduleStepProps> = ({ dat
 
   return (
     <div className="space-y-6">
+      {/* eslint-disable-next-line react/no-unknown-property */}
       <style jsx global>{`
         .react-datepicker {
           font-family: inherit;

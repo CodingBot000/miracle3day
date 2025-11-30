@@ -55,13 +55,13 @@ const SubmissionModal: React.FC<SubmissionModalProps> = ({
                   Your preferred date and time have been sent to the clinic for review.
                 </p>
                 <p className="text-sm text-gray-600">
-                  Once the clinic confirms your appointment, you'll receive a notification via your provided contact method, and you can also check the confirmed schedule on your My Page.
+                  Once the clinic confirms your appointment, you&apos;ll receive a notification via your provided contact method, and you can also check the confirmed schedule on your My Page.
                 </p>
                 <p className="text-sm text-gray-600">
                   A video consultation link will be sent to you 30 minutes before your confirmed appointment time.
                 </p>
                 <p className="text-sm text-gray-600 pt-2 border-t border-gray-200 mt-2">
-                  Video consultations are available in English and Korean only, with a maximum duration of 10 minutes. If you have difficulty speaking or understanding English or Korean, please use the clinic's chat feature instead.
+                  Video consultations are available in English and Korean only, with a maximum duration of 10 minutes. If you have difficulty speaking or understanding English or Korean, please use the clinic&apos;s chat feature instead.
                 </p>
               </div>
               <Button

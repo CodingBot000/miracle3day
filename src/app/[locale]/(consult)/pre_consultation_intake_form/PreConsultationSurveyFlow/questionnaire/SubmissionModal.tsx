@@ -34,7 +34,7 @@ const SubmissionModal: React.FC<SubmissionModalProps> = ({
               </div>
               <div className="text-center space-y-2">
                 <h3 className="text-lg font-semibold text-gray-900">
-                  Submitting Your Consultation
+                  Submitting Your Reservation
                 </h3>
                 <p className="text-sm text-gray-600">
                   Please wait while we process your information...
@@ -47,15 +47,21 @@ const SubmissionModal: React.FC<SubmissionModalProps> = ({
               <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center">
                 <CheckCircle className="w-8 h-8 text-white" />
               </div>
-              <div className="text-center space-y-2">
+             <div className="text-center space-y-2">
                 <h3 className="text-lg font-semibold text-gray-900">
-                  Consultation Submitted Successfully!
+                  Consultation Request Submitted!
                 </h3>
                 <p className="text-sm text-gray-600">
-                  Thank you for your submission.
+                  Your preferred date and time have been sent to the clinic for review.
                 </p>
                 <p className="text-sm text-gray-600">
-                  Experience the pinnacle of Korean dermatology—personalized elegance, guided by our advanced algorithm.
+                  Once the clinic confirms your appointment, you'll receive a notification via your provided contact method, and you can also check the confirmed schedule on your My Page.
+                </p>
+                <p className="text-sm text-gray-600">
+                  A video consultation link will be sent to you 30 minutes before your confirmed appointment time.
+                </p>
+                <p className="text-sm text-gray-600 pt-2 border-t border-gray-200 mt-2">
+                  Video consultations are available in English and Korean only, with a maximum duration of 10 minutes. If you have difficulty speaking or understanding English or Korean, please use the clinic's chat feature instead.
                 </p>
               </div>
               <Button

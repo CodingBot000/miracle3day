@@ -1,5 +1,7 @@
 "use client";
 
+import { clearFormData } from '@/app/[locale]/(consult)/common/formStorage';
+
 type LogoutActionProps = {
   label?: string;
 };
@@ -7,6 +9,10 @@ type LogoutActionProps = {
 export default function LogoutAction({ label = "Logout" }: LogoutActionProps) {
   const handleLogout = async () => {
     try {
+      // 로그아웃 시 저장된 폼 데이터 삭제
+      clearFormData('preConsult');
+      clearFormData('recommendEstimate');
+
       await fetch('/api/auth/logout', { method: 'POST' });
       window.location.href = '/';
     } catch (error) {

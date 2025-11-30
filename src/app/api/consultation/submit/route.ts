@@ -63,6 +63,9 @@ export async function POST(request: NextRequest) {
     // Image paths
     const imagePaths = data.imagePaths || [];
 
+    // Hospital ID (optional)
+    const idUuidHospital = data.hospitalId || null;
+
     // Get logged-in user's member UUID
     let idUuidMember = null;
     try {
@@ -88,11 +91,11 @@ export async function POST(request: NextRequest) {
         priorities, treatment_goals, past_treatments,
         past_treatments_side_effect_desc, anything_else,
         visit_path, visit_path_other, image_paths,
-        race, id_uuid_member
+        race, id_uuid_member, id_uuid_hospital
       ) VALUES (
         $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13,
         $14, $15, $16, $17, $18, $19, $20, $21, $22, $23,
-        $24, $25, $26, $27, $28, $29
+        $24, $25, $26, $27, $28, $29, $30
       )
       RETURNING id_uuid
     `;
@@ -101,14 +104,21 @@ export async function POST(request: NextRequest) {
       submissionId, formVersion, submissionType,
       privateFirstName, privateLastName, privateEmail,
       privateAgeRange, privateGender, country, phoneNumber,
-      messengers, skinTypes, budgetRanges,
-      skinConcerns, skinConcernsOther,
-      treatmentAreas, treatmentAreasOther,
-      medicalConditions, medicalConditionsOther,
-      priorities, treatmentGoals, pastTreatments,
+      JSON.stringify(messengers), // jsonb 타입
+      skinTypes, budgetRanges,
+      skinConcerns, // text[] 배열 타입
+      skinConcernsOther,
+      treatmentAreas, // text[] 배열 타입
+      treatmentAreasOther,
+      medicalConditions, // text[] 배열 타입
+      medicalConditionsOther,
+      priorities, // text[] 배열 타입
+      treatmentGoals, // text[] 배열 타입
+      pastTreatments, // text[] 배열 타입
       pastTreatmentsSideEffectDesc, anythingElse,
-      visitPath, visitPathOther, imagePaths,
-      race, idUuidMember
+      visitPath, visitPathOther,
+      imagePaths, // text[] 배열 타입
+      race, idUuidMember, idUuidHospital
     ];
 
     log.debug('=== Consultation Submit Params ===');

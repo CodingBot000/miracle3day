@@ -64,7 +64,7 @@ const PreConsultationIntakeForm: React.FC = () => {
   const [isInitialized, setIsInitialized] = useState(false);
 
   const { toast } = useToast();
-  const { loadStoredData, saveData, clearData } = useConsultFormStorage('preConsult');
+  const { loadStoredData, saveData } = useConsultFormStorage('preConsult');
 
   // 컴포넌트 마운트 시 저장된 데이터 불러오기
   useEffect(() => {
@@ -383,9 +383,6 @@ const PreConsultationIntakeForm: React.FC = () => {
         formData={formData}
         onSubmissionComplete={(allStepData) => {
           setIsPreviewOpen(false);
-
-          // 제출 완료 시 저장된 폼 데이터 삭제
-          clearData();
 
           // Generate recommendations
           try {

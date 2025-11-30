@@ -22,7 +22,7 @@ import { USER_INFO, BUDGET,
           VIDEO_CONSULT_SCHEDULE
      } from '@/constants/pre_consult_steps';
 import SubmissionModal from './SubmissionModal';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { fbqTrack } from '@/utils/metapixel';
 import { MessengerInput } from '@/components/atoms/input/InputMessengerFields';
 import { log } from '@/utils/logger';
@@ -40,6 +40,8 @@ const PreviewReport: React.FC<PreviewReportProps> =
   {
   const locale = useLocale();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const hospitalId = searchParams.get('hospitalId');
   const [isSubmissionModalOpen, setIsSubmissionModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
@@ -52,15 +54,15 @@ const PreviewReport: React.FC<PreviewReportProps> =
     setIsSubmitting(true);
     setIsCompleted(false);
 
-    log.debug("tempPass", tempPass);
-    if (tempPass) {
-      // API 없이 바로 완료 처리 (임시)
-      setIsCompleted(true);
-      setIsSubmitting(false);
-      fbqTrack("Submit_diagnosis_click", { finalSubmit: "success" });
-      // SubmissionModal에서 onComplete 호출 시 handleSubmissionComplete가 실행됨
-      return;
-    }
+    // log.debug("tempPass", tempPass);
+    // if (tempPass) {
+    //   // API 없이 바로 완료 처리 (임시)
+    //   setIsCompleted(true);
+    //   setIsSubmitting(false);
+    //   fbqTrack("Submit_diagnosis_click", { finalSubmit: "success" });
+    //   // SubmissionModal에서 onComplete 호출 시 handleSubmissionComplete가 실행됨
+    //   return;
+    // }
 
     try {
       // 모든 스텝의 데이터를 합치기
@@ -132,7 +134,8 @@ const PreviewReport: React.FC<PreviewReportProps> =
           ...allStepData,
           imagePaths,
           submissionId, // UUID를 API로 전달
-          submissionType: 'video_consult' // 영상상담용 문진임을 표시
+          submissionType: 'video_consult', // 영상상담용 문진임을 표시
+          hospitalId: hospitalId || undefined // 병원 ID 전달
         })
       });
 
@@ -160,6 +163,7 @@ const PreviewReport: React.FC<PreviewReportProps> =
             submissionId: result.submissionId,
             slots: allStepData.videoConsultSlots,
             userTimezone: allStepData.videoConsultTimezone,
+            hospitalId: hospitalId || undefined // 병원 ID 전달
           })
         });
 
@@ -188,15 +192,20 @@ const PreviewReport: React.FC<PreviewReportProps> =
     setIsSubmissionModalOpen(false);
     setIsCompleted(false);
     onOpenChange(false);
-    
+
     // 모든 스텝의 데이터를 합치기
     const allStepData = Object.values(formData).reduce((acc, stepData) => {
       return { ...acc, ...stepData };
     }, {});
-    
+
     // 부모 컴포넌트에 완료된 데이터 전달
     if (onSubmissionComplete) {
       onSubmissionComplete(allStepData);
+    }
+
+    // 병원 상세페이지로 리다이렉트
+    if (hospitalId) {
+      router.push(`/${locale}/hospital/${hospitalId}`);
     }
   };
 
@@ -350,20 +359,20 @@ const PreviewReport: React.FC<PreviewReportProps> =
           </div>
         );
 
-      case VISIT_PATHS:
-        const visitPath = data.visitPath;
-        const visitPathLabel = (questions as any).visitPaths?.find((path: any) => path.id === visitPath?.visitPath)?.label || visitPath?.visitPath;
-        return (
-          <div className="space-y-2">
-            <p><strong>Referral Source:</strong> {visitPathLabel}</p>
-            {visitPath?.otherPath && visitPath.visitPath === 'other' && (
-              <div className="mt-2 p-3 rounded-md">
-                <p><strong>Other Referral Source:</strong></p>
-                <p className="text-gray-700 whitespace-pre-wrap">{visitPath.otherPath}</p>
-              </div>
-            )}
-          </div>
-        );
+      // case VISIT_PATHS:
+      //   const visitPath = data.visitPath;
+      //   const visitPathLabel = (questions as any).visitPaths?.find((path: any) => path.id === visitPath?.visitPath)?.label || visitPath?.visitPath;
+      //   return (
+      //     <div className="space-y-2">
+      //       <p><strong>Referral Source:</strong> {visitPathLabel}</p>
+      //       {visitPath?.otherPath && visitPath.visitPath === 'other' && (
+      //         <div className="mt-2 p-3 rounded-md">
+      //           <p><strong>Other Referral Source:</strong></p>
+      //           <p className="text-gray-700 whitespace-pre-wrap">{visitPath.otherPath}</p>
+      //         </div>
+      //       )}
+      //     </div>
+      //   );
 
       case VIDEO_CONSULT_SCHEDULE:
         const videoConsultSlots = data.videoConsultSlots;
@@ -402,8 +411,8 @@ const PreviewReport: React.FC<PreviewReportProps> =
         }
         return (
           <div className="space-y-2">
-            <p><strong>First Name:</strong> {userInfo.firstName}</p>
-            <p><strong>Last Name:</strong> {userInfo.lastName}</p>
+            {/* <p><strong>First Name:</strong> {userInfo.firstName}</p>
+            <p><strong>Last Name:</strong> {userInfo.lastName}</p> */}
             <p><strong>Age Range:</strong> {userInfo.ageRange}</p>
             <p><strong>Gender:</strong> {userInfo.gender}</p>
             <p><strong>Email:</strong> {userInfo.email}</p>
@@ -464,7 +473,7 @@ const PreviewReport: React.FC<PreviewReportProps> =
       <DialogContent className="max-w-2xl">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-center mb-4">
-            Preview Your Consultation Request
+            Preview Your Reservation Request
           </DialogTitle>
         </DialogHeader>
         <ScrollArea className="max-h-[70vh]">

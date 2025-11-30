@@ -5,6 +5,7 @@ import { findRegionByKey, REGIONS } from "@/constants";
 import { Link } from "@/i18n/routing";
 import { ReviewStats } from "@/components/molecules/ReviewStats";
 import { useLocale } from "next-intl";
+import { Map, MapPin } from "lucide-react";
 
 interface HospitalListCardProps {
   hospital: HospitalData;
@@ -68,7 +69,8 @@ const HospitalListCard = ({
               )}
 
               <div className="flex items-center gap-2 text-xs text-gray-500">
-                <span className="font-bold">{language === 'ko' ? '위치' : 'Location'} :</span>
+                <MapPin size="15" />
+                {/* <span className="font-bold">{language === 'ko' ? '위치' : 'Location'} :</span> */}
                 <span>{language === 'ko' ? region?.label.ko : region?.label.en}</span>
               </div>
 

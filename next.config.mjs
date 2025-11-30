@@ -28,7 +28,7 @@ const nextConfig = {
       "img-src 'self' blob: data: https: http:",
       "font-src 'self' https://fonts.gstatic.com data:",
       "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://maps.googleapis.com https://*.googleapis.com https://beauty-bucket-public.s3.us-west-2.amazonaws.com wss: ws:",
-      "frame-src 'self' https://www.google.com https://maps.google.com",
+      "frame-src 'self' https://www.google.com https://maps.google.com https://*.daily.co",
       "object-src 'none'",
       "base-uri 'self'",
       "form-action 'self'",

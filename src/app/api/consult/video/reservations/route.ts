@@ -7,13 +7,11 @@ interface TimeSlot {
   rank: number;
   date: string; // 'YYYY-MM-DD'
   startTime: string; // 'HH:mm'
-  endTime: string; // 'HH:mm'
 }
 
 interface RequestedSlot {
   rank: number;
   start: string; // ISO timestamp in UTC
-  end: string; // ISO timestamp in UTC
   sourceTimezone: string;
 }
 
@@ -79,7 +77,8 @@ export async function POST(request: NextRequest) {
 
     // Parse request body
     const body = await request.json();
-    const { submissionId, slots, userTimezone } = body;
+    const { submissionId, slots, userTimezone, hospitalId } = body;
+    const idUuidHospital = hospitalId || null;
 
     // Validate required fields
     if (!submissionId || !Array.isArray(slots) || slots.length === 0 || !userTimezone) {
@@ -91,9 +90,9 @@ export async function POST(request: NextRequest) {
 
     // Validate each slot
     for (const slot of slots) {
-      if (!slot.date || !slot.startTime || !slot.endTime) {
+      if (!slot.date || !slot.startTime) {
         return NextResponse.json(
-          { error: 'Each slot must have date, startTime, and endTime' },
+          { error: 'Each slot must have date and startTime' },
           { status: 400 }
         );
       }
@@ -103,12 +102,10 @@ export async function POST(request: NextRequest) {
     const requestedSlots: RequestedSlot[] = slots.map((slot: TimeSlot) => {
       try {
         const startUtc = convertLocalToUtc(slot.date, slot.startTime, userTimezone);
-        const endUtc = convertLocalToUtc(slot.date, slot.endTime, userTimezone);
 
         return {
           rank: slot.rank,
           start: startUtc,
-          end: endUtc,
           sourceTimezone: userTimezone,
         };
       } catch (error) {
@@ -128,17 +125,19 @@ export async function POST(request: NextRequest) {
       INSERT INTO consult_video_reservations (
         id_uuid_submission,
         id_uuid_member,
+        id_uuid_hospital,
         requested_slots,
         user_timezone,
         status,
         status_changed_at
-      ) VALUES ($1, $2, $3, $4, 'requested', now())
+      ) VALUES ($1, $2, $3, $4, $5, 'requested', now())
       RETURNING id_uuid
     `;
 
     const params = [
       submissionId,
       idUuidMember,
+      idUuidHospital,
       JSON.stringify(requestedSlots),
       userTimezone,
     ];
@@ -164,6 +163,65 @@ export async function POST(request: NextRequest) {
 
   } catch (error: any) {
     console.error('POST /api/consult/video/reservations error:', error);
+    return NextResponse.json(
+      { error: error.message || 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}
+
+/**
+ * GET - 로그인 유저의 영상상담 예약 목록 조회
+ * consultation_submissions.submission_type = 'video_consult'인 것만 조회
+ */
+export async function GET() {
+  try {
+    // Check authentication
+    const userResult = await getUserAPIServer();
+    if (!userResult?.userInfo?.id_uuid) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
+
+    const idUuidMember = userResult.userInfo.id_uuid;
+
+    // 영상상담 예약 목록 조회 (consultation_submissions와 JOIN하여 video_consult만 필터링)
+    const sql = `
+      SELECT
+        cvr.id_uuid,
+        cvr.id_uuid_submission,
+        cvr.id_uuid_hospital,
+        cvr.requested_slots,
+        cvr.user_timezone,
+        cvr.status,
+        cvr.status_changed_at,
+        cvr.created_at,
+        h.name,
+        h.name_en,
+        cs.submission_type
+      FROM consult_video_reservations cvr
+      LEFT JOIN hospital h ON cvr.id_uuid_hospital = h.id_uuid
+      LEFT JOIN consultation_submissions cs ON cvr.id_uuid_submission = cs.id_uuid
+      WHERE cvr.id_uuid_member = $1
+        AND (cs.submission_type = 'video_consult' OR cs.submission_type IS NULL)
+      ORDER BY cvr.created_at DESC
+    `;
+
+    const result = await q(sql, [idUuidMember]);
+
+    log.debug('=== Video Reservations List ===');
+    log.debug('idUuidMember:', idUuidMember);
+    log.debug('count:', result?.length || 0);
+
+    return NextResponse.json({
+      success: true,
+      reservations: result || [],
+    }, { status: 200 });
+
+  } catch (error: any) {
+    console.error('GET /api/consult/video/reservations error:', error);
     return NextResponse.json(
       { error: error.message || 'Internal server error' },
       { status: 500 }

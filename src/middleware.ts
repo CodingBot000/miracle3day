@@ -1,60 +1,53 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
+import createIntlMiddleware from 'next-intl/middleware';
+import { routing } from '@/i18n/routing';
 import { log } from '@/utils/logger';
 
+// next-intl 미들웨어 생성
+const intlMiddleware = createIntlMiddleware(routing);
+
+// 인증이 필요한 경로 (locale prefix 없이)
 const AUTH_REQUIRED_PATHS = [
-  "/user",
-  "/gamification/quize",
-  "/withdrawal",
+  '/user',
+  '/gamification/quize',
+  '/withdrawal',
 ];
 
 function isAuthRequiredPath(pathname: string) {
-  return AUTH_REQUIRED_PATHS.some((p) => pathname.startsWith(p));
+  // locale prefix 제거 후 체크 (예: /en/user -> /user)
+  const pathWithoutLocale = pathname.replace(/^\/(en|ko|ja|zh-CN|zh-TW)/, '');
+  return AUTH_REQUIRED_PATHS.some((p) => pathWithoutLocale.startsWith(p));
 }
 
 export async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
   log.debug('[middleware] path:', path);
 
+  // 1. 인증 체크 (locale prefix 상관없이)
   if (isAuthRequiredPath(path)) {
     log.debug('[middleware] auth required path detected:', path);
     const sessionCookie = req.cookies.get('app_session');
     log.debug('[middleware] session cookie exists:', !!sessionCookie);
+
     if (!sessionCookie) {
-      log.debug("middleware: redirect unauthenticated user to login");
-      const redirectRes = NextResponse.redirect(new URL("/api/auth/google/start", req.url));
-      return ensureLangCookie(req, redirectRes);
+      log.debug('middleware: redirect unauthenticated user to login');
+      return NextResponse.redirect(new URL('/api/auth/google/start', req.url));
     }
     log.debug('[middleware] auth check passed, continuing');
-  } else {
-    log.debug('[middleware] public path, passing through:', path);
   }
 
-  const response = NextResponse.next();
-  // pathname을 헤더에 추가하여 layout에서 사용할 수 있게 함
+  // 2. next-intl 미들웨어 실행 (locale 감지, 리다이렉트 등)
+  const response = intlMiddleware(req);
+
+  // 3. pathname 헤더 추가 (기존 로직 유지)
   response.headers.set('x-pathname', path);
-  return ensureLangCookie(req, response);
+
+  return response;
 }
 
 export const config = {
   matcher: [
-    "/((?!_next/static|_next/image|favicon.png|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|lottie)$).*)",
+    // 정적 파일, api, _next 제외한 모든 경로
+    '/((?!api|_next|_vercel|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|lottie|mp4|webm|ogg|mp3|wav|pdf)$).*)',
   ],
 };
-
-/**
- * 다국어 쿠키(lang) 세팅 헬퍼
- */
-function ensureLangCookie(req: NextRequest, res: NextResponse) {
-  if (req.cookies.get("lang")) return res;
-
-  const al = (req.headers.get("accept-language") || "").toLowerCase();
-  const lang = al.startsWith("ko") ? "ko" : "en";
-
-  res.cookies.set("lang", lang, {
-    path: "/",
-    maxAge: 60 * 60 * 24 * 365,
-    sameSite: "lax",
-  });
-
-  return res;
-}

@@ -1,0 +1,98 @@
+{
+  "Metadata": {
+    "title": "Mimotok - 韩国皮肤科·整形医院预约平台",
+    "description": "预约韩国知名皮肤科和整形医院的优质医美项目"
+  },
+  "Home": {
+    "heroTitle": "年轻肌肤，专业护理",
+    "heroSubtitle": "对抗衰老项目感到困惑？我们为您解答",
+    "hotIssueTitle": "今日热点话题",
+    "hotIssueSubtitle": "好奇其他人怎么想？加入讨论，看看不同人的各种观点！",
+    "headingLine1": "与韩国顶尖的医美皮肤科诊所建立联系，",
+    "headingLine2": "专家精选。",
+    "headingSubtitle": "与韩国顶级医生咨询。通过简单的测试，找到最适合您的治疗方案",
+    "ctaAiMatch": "开始AI智能匹配",
+    "ctaTreatments": "查看项目/诊所",
+    "ctaAiAnalysis": "AI皮肤分析（相机）",
+    "kbeautySectionTitle": "探索K-Beauty",
+    "whyKoreaTitle": "为什么选择韩国？",
+    "whyKoreaDescription": "韩国医美皮肤科引领世界的7个理由",
+    "whyKoreaCta": "了解更多",
+    "generationGuideTitle": "世代指南",
+    "generationGuideDescription": "为每个世代量身定制的专业护肤建议",
+    "generationGuideCta": "阅读指南",
+    "kbeautyLinksTitle": "K-Beauty链接",
+    "kbeautyLinksDescription": "从购物到社区的20多个精选资源",
+    "kbeautyLinksCta": "探索"
+  },
+  "Navigation": {
+    "home": "首页",
+    "treatments": "项目",
+    "clinics": "诊所",
+    "about": "关于",
+    "contact": "联系",
+    "mypage": "我的",
+    "sections": "内容"
+  },
+  "Comment": {
+    "comments": "评论",
+    "writeComment": "请写下您的评论。",
+    "postComment": "发表评论",
+    "loginToComment": "发表评论需要登录。",
+    "loginRequiredToComment": "请登录后评论",
+    "noCommentsYet": "暂无评论。成为第一个分享想法的人吧！",
+    "shareYourThoughts": "分享您的想法...",
+    "replyTo": "回复 {name}...",
+    "deletedComment": "已删除的评论",
+    "confirmDelete": "确定要删除此评论吗？",
+    "commentPosted": "评论发布成功！",
+    "commentDeleted": "评论已删除",
+    "failedToPost": "评论发布失败",
+    "failedToDelete": "评论删除失败"
+  },
+  "Poll": {
+    "pollResults": "投票结果",
+    "loginToVote": "请登录后投票"
+  },
+  "ImageCompression": {
+    "compressing": "正在压缩图片...",
+    "completed": "图片压缩完成",
+    "error": "图片压缩时发生错误",
+    "processing": "图片处理中",
+    "optimizing": "正在将图片压缩到最佳大小，请稍候。",
+    "compressionDone": "图片压缩已完成。",
+    "timeoutError": "部分图片未能在规定时间内完成压缩。请检查网络后重试。",
+    "generalError": "图片压缩时发生错误。请重试。",
+    "processingNote": "处理时间可能因图片大小和网络状况而异。"
+  },
+  "TreatmentProduct": {
+    "priceDisclaimer": "显示的价格仅供参考，可能与实际价格有所不同。请通过咨询确认准确价格。"
+  },
+  "DailyQuestion": {
+    "minCharacters": "答案至少需要10个字符",
+    "minCharsNote": "(最少10个字符)",
+    "shareExperience": "分享您的经验和建议... (最少10个字符)",
+    "registering": "注册中...",
+    "submitAnswer": "提交答案 (+{points}积分)"
+  },
+  "Tooltips": {
+    "primary": {
+      "title": "主要项目",
+      "summary": "针对此问题最标准、最广泛使用的选择。",
+      "detail": "主要项目是经过临床验证的主要解决方案，通常是首选。它通常在效果和安全性之间取得良好平衡。",
+      "examples": ["额头纹 → Botox", "皮肤松弛 → Ultherapy / Thermage"]
+    },
+    "alternative": {
+      "title": "替代 / 辅助项目",
+      "summary": "替代或支持主要项目的选择。",
+      "detail": "「替代」用不同的方法提供类似的效果。「辅助」补充主要项目无法完全解决的问题（如体积、质感等）。",
+      "examples": ["Botox后，用Filler填充深层纹路", "结合嫩肤与温和的Fractional改善质感"]
+    },
+    "combo": {
+      "title": "推荐组合",
+      "summary": "组合项目以增强协同效果和持久性。",
+      "detail": "通过同时处理多个层次（皮肤、肌肉、脂肪），组合可以改善整体效果和持久性。避免频繁叠加相同能量类型的项目。",
+      "examples": ["Ultherapy → Botox → Filler（数周内依次进行）"]
+    }
+  }
+}

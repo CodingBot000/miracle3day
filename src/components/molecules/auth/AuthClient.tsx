@@ -3,9 +3,8 @@
 import { ROUTE } from "@/router";
 import { User as UserIcon } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
+import { Link, useRouter } from "@/i18n/routing";
 import { useCallback, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import LoginRequiredModal from "@/components/template/modal/LoginRequiredModal";
 import { useUserStore } from "@/stores/useUserStore";
 

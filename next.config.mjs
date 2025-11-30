@@ -1,5 +1,8 @@
 import path from "path";
 import { fileURLToPath } from "url";
+import createNextIntlPlugin from 'next-intl/plugin';
+
+const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,7 +20,31 @@ const nextConfig = {
     missingSuspenseWithCSRBailout: false,
   },
   async headers() {
+    // CSP 설정 - 개발/프로덕션 환경에서 'unsafe-eval' 허용
+    const cspHeader = [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://maps.googleapis.com https://maps.gstatic.com",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "img-src 'self' blob: data: https: http:",
+      "font-src 'self' https://fonts.gstatic.com data:",
+      "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://maps.googleapis.com https://*.googleapis.com https://beauty-bucket-public.s3.us-west-2.amazonaws.com wss: ws:",
+      "frame-src 'self' https://www.google.com https://maps.google.com https://*.daily.co",
+      "object-src 'none'",
+      "base-uri 'self'",
+      "form-action 'self'",
+    ].join('; ');
+
     return [
+      {
+        // 모든 페이지에 CSP 헤더 적용
+        source: "/:path*",
+        headers: [
+          {
+            key: "Content-Security-Policy",
+            value: cspHeader,
+          },
+        ],
+      },
       {
         // matching all API routes
         source: "/api/:path*",
@@ -85,4 +112,4 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+export default withNextIntl(nextConfig);

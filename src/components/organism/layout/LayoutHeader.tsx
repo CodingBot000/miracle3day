@@ -1,13 +1,12 @@
 "use client"
 // import Auth from "@/components/molecules/auth";
 import Logo from "@/components/molecules/Logo";
-import LanguageSelector from "./LanguageSelector";
+import LanguageSwitcherNextIntl from "./LanguageSwitcherNextIntl";
 import BackButton from "./BackButton";
 
 import { useState, useEffect } from "react";
 import { Search, MessageSquareText, MessageCircle } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, usePathname } from "@/i18n/routing";
 import SearchPanel from "./SearchPanel";
 import AuthClient from "@/components/molecules/auth/AuthClient";
 import { useHeader } from "@/contexts/HeaderContext";
@@ -140,7 +139,7 @@ const LayoutHeader = () => {
                   </button>
                 </div> */}
                 <div>
-                  <LanguageSelector iconColor={isTransparentMode && !isScrolled ? 'white' : 'black'} />
+                  <LanguageSwitcherNextIntl iconColor={isTransparentMode && !isScrolled ? 'white' : 'black'} />
                 </div>
               </div>
               {!isMobileMode && (

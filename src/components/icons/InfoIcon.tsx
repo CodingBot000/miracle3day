@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import TooltipInfo from '@/components/atoms/TooltipInfo';
+import TooltipInfo, { type TooltipKey } from '@/components/atoms/TooltipInfo';
 
-export function InfoIcon({ locale, kind }: { locale: 'en' | 'ko'; kind: 'primary' | 'alternative' | 'combo' }) {
+export function InfoIcon({ kind }: { kind: TooltipKey }) {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -32,7 +32,7 @@ export function InfoIcon({ locale, kind }: { locale: 'en' | 'ko'; kind: 'primary
       {/* Click 시 표시되는 레이어 */}
       {isOpen && (
         <div className="absolute z-50 left-0 top-full mt-2 p-3 bg-white shadow-lg rounded-xl min-w-[200px]">
-          <TooltipInfo locale={locale} kind={kind} />
+          <TooltipInfo kind={kind} />
         </div>
       )}
     </div>

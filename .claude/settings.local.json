@@ -1,24 +1,14 @@
 {
   "permissions": {
     "allow": [
-      "Bash(tree:*)",
-      "Bash(sed:*)",
-      "Bash(mkdir:*)",
-      "Bash(ls:*)",
-      "Bash(npm run build:*)",
-      "Bash(find:*)",
-      "Bash(npm run dev:*)",
-      "Bash(git mv:*)",
-      "Bash(npm run lint:*)",
-      "Bash(psql:*)",
-      "Bash(python3:*)",
-      "Bash(rm:*)",
+      "Bash(xargs sed:*)",
+      "Bash(node -e \"JSON.parse(require('fs').readFileSync('/Users/switch/Development/WebBeauty/beauty_proejcts/complete/beauty-main/src/messages/zh-CN.json', 'utf8'))\":*)",
+      "Bash(node -e:*)",
+      "Bash(npx tsc:*)",
       "Bash(npm install:*)",
-      "Bash(npm uninstall:*)",
-      "Bash(npm i:*)",
-      "WebFetch(domain:docs.anthropic.com)",
-      "WebFetch(domain:docs.claude.com)",
-      "WebFetch(domain:code.claude.com)"
+      "Bash(npx ts-node:*)",
+      "Bash(cat:*)",
+      "Bash(npx:*)"
     ],
     "deny": [],
     "ask": []

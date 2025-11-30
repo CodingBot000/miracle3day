@@ -1,21 +1,21 @@
 "use client";
 
 import { TreatmentProductData } from "@/app/models/treatmentProduct.dto";
-import { useCookieLanguage } from "@/hooks/useCookieLanguage";
-import { getKRWToUSD } from "@/app/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/utils/helpers";
+import { useLocale } from "next-intl";
+import { getKRWToUSD } from "@/app/[locale]/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/utils/helpers";
 
 interface TreatmentProductCardProps {
   product: TreatmentProductData;
 }
 
 const TreatmentProductCard = ({ product }: TreatmentProductCardProps) => {
-  const { language } = useCookieLanguage();
+  const locale = useLocale();
 
-  const nameText = language === 'ko' ? product.name.ko : product.name.en;
-  const unitText = language === 'ko' ? product.unit.ko : product.unit.en;
+  const nameText = locale === 'ko' ? product.name.ko : product.name.en;
+  const unitText = locale === 'ko' ? product.unit.ko : product.unit.en;
 
-  // Format price based on language
-  const formattedPrice = language === 'ko'
+  // Format price based on locale
+  const formattedPrice = locale === 'ko'
     ? product.price.toLocaleString('ko-KR')
     : Math.round(product.price * getKRWToUSD()).toLocaleString('en-US');
 
@@ -41,7 +41,7 @@ const TreatmentProductCard = ({ product }: TreatmentProductCardProps) => {
             </p>
           )}
           <p className="text-sm font-bold text-gray-900">
-            {language === 'ko' ? '₩' : '$'} {formattedPrice}
+            {locale === 'ko' ? '₩' : '$'} {formattedPrice}
           </p>
         </div>
       </div>

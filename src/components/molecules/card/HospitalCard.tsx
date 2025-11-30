@@ -3,9 +3,8 @@
 import { findRegionByKey, REGIONS } from "@/constants";
 import Link from "next/link";
 import Image from "next/image";
-import { useGooglePlaceReviews } from "@/hooks/useGooglePlaceReviews";
 import { ReviewStats } from "@/components/molecules/ReviewStats";
-import { useCookieLanguage } from "@/hooks/useCookieLanguage";
+import { useLocale } from "next-intl";
 
 interface HospitalCardProps {
   src: string;
@@ -14,7 +13,9 @@ interface HospitalCardProps {
   name: string;
   href: string;
   locationNum?: string;
-  searchKey?: string | null;
+  // Google 리뷰 데이터는 props로 전달받음 (API 호출 제거)
+  googleRating?: number | null;
+  googleReviewCount?: number | null;
 }
 
 export const HospitalCard = ({
@@ -23,10 +24,11 @@ export const HospitalCard = ({
   name,
   href,
   locationNum,
-  searchKey,
+  googleRating,
+  googleReviewCount,
   onSelect,
 }: HospitalCardProps) => {
-  const { language } = useCookieLanguage();
+  const locale = useLocale() as 'ko' | 'en';
   const locationKey =
     typeof locationNum === "string" && locationNum.length > 0
       ? Number.parseInt(locationNum, 10)
@@ -35,9 +37,6 @@ export const HospitalCard = ({
     typeof locationKey === "number" && Number.isFinite(locationKey)
       ? findRegionByKey(REGIONS, locationKey)
       : undefined;
-
-  // Google Places 리뷰 가져오기
-  const { data: googleReviewsData } = useGooglePlaceReviews(searchKey || '');
 
   return (
     <article onClick={() => onSelect && onSelect(name)}>
@@ -56,11 +55,11 @@ export const HospitalCard = ({
               </h3>
 
               {/* Google 리뷰 평점 통계 */}
-              {googleReviewsData && (
+              {googleRating != null && (
                 <ReviewStats
-                  rating={googleReviewsData.rating}
-                  userRatingCount={googleReviewsData.userRatingCount}
-                  language={language}
+                  rating={googleRating}
+                  userRatingCount={googleReviewCount ?? 0}
+                  language={locale}
                   size={16}
                   className="mt-1"
                 />

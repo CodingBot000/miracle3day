@@ -1,0 +1,42 @@
+{
+  "Common": {
+    "submit": "提交",
+    "cancel": "取消",
+    "confirm": "确认",
+    "loading": "加载中...",
+    "error": "发生错误",
+    "back": "返回",
+    "next": "下一步",
+    "save": "保存",
+    "delete": "删除",
+    "edit": "编辑",
+    "search": "搜索",
+    "login": "登录",
+    "logout": "退出",
+    "register": "注册",
+    "readMore": "查看更多",
+    "backToTop": "返回顶部",
+    "share": "分享",
+    "relatedContent": "相关内容",
+    "seeAllClinics": "查看所有诊所",
+    "exampleLabel": "例如: ",
+    "close": "关闭",
+    "viewMore": "查看更多",
+    "progress": "进度",
+    "post": "发布",
+    "posting": "发布中...",
+    "reply": "回复",
+    "anonymous": "匿名",
+    "user": "用户",
+    "votes": "票",
+    "peopleVoted": "人已投票",
+    "characters": "字符"
+  },
+  "Auth": {
+    "loginRequired": "需要登录",
+    "loginRequiredMessage": "使用此服务需要登录。是否前往登录/注册页面？",
+    "goToLogin": "前往登录/注册",
+    "signInToContinue": "请登录以继续",
+    "useGoogleAccount": "使用Google账号探索诊所并预约项目。"
+  }
+}

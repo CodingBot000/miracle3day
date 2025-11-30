@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { CommunityCategory, TopicId, PostTagId } from '@/app/models/communityData.dto';
 import { toast } from 'sonner';
-import { useCookieLanguage } from '@/hooks/useCookieLanguage';
+import { useLocale } from 'next-intl';
 import { handleNotifications } from '@/utils/notificationHandler';
 import LevelUpModal from '@/components/gamification/LevelUpModal';
 import type { LevelUpNotification } from '@/types/badge';
@@ -31,7 +31,7 @@ export default function WriteForm({
   postId,
 }: WriteFormProps) {
   const router = useRouter();
-  const { language } = useCookieLanguage();
+  const locale = useLocale();
   const [title, setTitle] = useState(initialData?.title || '');
   const [content, setContent] = useState(initialData?.content || '');
   const [topicId, setTopicId] = useState<string>(initialData?.topic_id || '');
@@ -138,7 +138,7 @@ export default function WriteForm({
           <option value="">-- Select a topic --</option>
           {topicCategories.map((category) => (
             <option key={category.id} value={category.id}>
-              {category.icon && `${category.icon} `}{typeof category.name === 'string' ? category.name : (category.name as any)?.[language] || (category.name as any)?.ko || ''}
+              {category.icon && `${category.icon} `}{typeof category.name === 'string' ? category.name : (category.name as any)?.[locale] || (category.name as any)?.ko || ''}
             </option>
           ))}
         </select>
@@ -158,7 +158,7 @@ export default function WriteForm({
           <option value="">-- No tag (optional) --</option>
           {tagCategories.map((category) => (
             <option key={category.id} value={category.id}>
-              {category.icon && `${category.icon} `}{typeof category.name === 'string' ? category.name : (category.name as any)?.[language] || (category.name as any)?.ko || ''}
+              {category.icon && `${category.icon} `}{typeof category.name === 'string' ? category.name : (category.name as any)?.[locale] || (category.name as any)?.ko || ''}
             </option>
           ))}
         </select>

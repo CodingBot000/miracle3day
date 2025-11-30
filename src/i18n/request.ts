@@ -1,0 +1,42 @@
+import { getRequestConfig } from 'next-intl/server';
+import { routing } from './routing';
+
+// 정적 import로 모든 locale 파일 로드
+import koCommon from '@/locales/ko/common.json';
+import koHome from '@/locales/ko/home.json';
+import koWhykbeauty from '@/locales/ko/whykbeauty.json';
+
+import enCommon from '@/locales/en/common.json';
+import enHome from '@/locales/en/home.json';
+import enWhykbeauty from '@/locales/en/whykbeauty.json';
+
+import jaCommon from '@/locales/ja/common.json';
+import jaHome from '@/locales/ja/home.json';
+
+import zhCNCommon from '@/locales/zh-CN/common.json';
+import zhCNHome from '@/locales/zh-CN/home.json';
+
+import zhTWCommon from '@/locales/zh-TW/common.json';
+import zhTWHome from '@/locales/zh-TW/home.json';
+
+const messages: Record<string, Record<string, unknown>> = {
+  ko: { ...koCommon, ...koHome, ...koWhykbeauty },
+  en: { ...enCommon, ...enHome, ...enWhykbeauty },
+  ja: { ...jaCommon, ...jaHome, ...enWhykbeauty }, // whykbeauty는 en fallback
+  'zh-CN': { ...zhCNCommon, ...zhCNHome, ...enWhykbeauty }, // whykbeauty는 en fallback
+  'zh-TW': { ...zhTWCommon, ...zhTWHome, ...enWhykbeauty }, // whykbeauty는 en fallback
+};
+
+export default getRequestConfig(async ({ requestLocale }) => {
+  let locale = await requestLocale;
+
+  // 유효하지 않은 locale이면 기본값 사용
+  if (!locale || !routing.locales.includes(locale as any)) {
+    locale = routing.defaultLocale;
+  }
+
+  return {
+    locale,
+    messages: messages[locale] || messages.en,
+  };
+});

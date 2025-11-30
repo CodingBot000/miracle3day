@@ -30,10 +30,10 @@ npm run lint
 ### Tech Stack
 - **Framework**: Next.js 14 with App Router
 - **Language**: TypeScript
-- **Database**: Supabase (PostgreSQL)
+- **Database**: AWS lighsail (PostgreSQL)
 - **State Management**: Zustand + React Query (TanStack Query)
 - **Styling**: Tailwind CSS + SCSS modules + Material UI
-- **Authentication**: Supabase Auth with multiple providers (Email/SMS OTP, Apple, Google, Kakao, Naver)
+- **Authentication**: Auth with  Google (iron-session )
 
 ### Directory Structure
 - `/src/app/` - Next.js app router pages and API routes

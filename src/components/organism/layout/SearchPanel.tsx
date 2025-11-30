@@ -11,7 +11,7 @@ import { EventCard, HospitalCard, ReviewCard } from "@/components/molecules/card
 import { ROUTE } from "@/router";
 import { Skeleton } from "@/components/ui/skeleton";
 import { daysYMDFormat } from "@/utils/days";
-import { styles } from "@/app/(site)/home/style/homeStyleSet.tailwind";
+import { styles } from "@/app/[locale]/(site)/home/style/homeStyleSet.tailwind";
 import { ProductCard } from "@/components/molecules/card/ProductCard";
 
 export default function SearchPanel({ onClose }: { onClose: () => void }) {
@@ -118,14 +118,13 @@ export default function SearchPanel({ onClose }: { onClose: () => void }) {
             </div>
           )}
           <div className={styles.hospitalCardGridStyle}>
-            {results.hospitals.map(({ thumbnail_url, imageurls, name, id_unique, id_uuid, location, searchkey }) => (
+            {results.hospitals.map(({ thumbnail_url, name, id_uuid, location }) => (
               <div key={id_uuid}>
                 <HospitalCard
                   alt={name}
                   name={name}
                   href={ROUTE.HOSPITAL_DETAIL("") + id_uuid}
                   src={thumbnail_url || "/hospital/hospitalimg/hospital_default.png"}
-                  searchKey={searchkey}
                   locationNum={location}
                 />
               </div>

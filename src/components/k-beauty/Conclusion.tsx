@@ -2,7 +2,7 @@ import ImageWithCaption from './ImageWithCaption';
 import { KBeautyConclusion } from '@/types/kBeauty';
 
 interface Props {
-  conclusion: KBeautyConclusion;
+  conclusion?: KBeautyConclusion | { title: string; quote: string; points: string[]; closingLine: string; image: string };
   sectionKey: string;
 }
 

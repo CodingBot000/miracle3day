@@ -1,15 +1,14 @@
 'use client';
 
 import { Delete, Headset } from "lucide-react";
-// import { LanguageSelector } from "@/components/organism/layout/LanguageSelector";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import dynamic from "next/dynamic";
 import { useState } from "react";
-import { useCookieLanguage } from "@/hooks/useCookieLanguage";
+import { useLocale } from "next-intl";
 import TermsHtmlModal from "@/components/template/modal/TermsHtmlModal";
-import { terms } from "@/app/(auth)/terms/TermsClient";
+import { terms } from "@/app/[locale]/(auth)/terms/TermsClient";
 
-const LanguageSelector = dynamic(() => import("@/components/organism/layout/LanguageSelector"), {
+const LanguageSwitcherNextIntl = dynamic(() => import("@/components/organism/layout/LanguageSwitcherNextIntl"), {
   ssr: false,
 });
 
@@ -17,8 +16,7 @@ export const Footer = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalSrc, setModalSrc] = useState<string | undefined>(undefined);
   const [modalTitle, setModalTitle] = useState<string>('View');
-  const { language } = useCookieLanguage();
-  const locale = language === 'ko' ? 'ko' : 'en';
+  const locale = useLocale() as 'ko' | 'en';
 
   const openModal = (src: string | undefined, title: string) => {
     if (!src) return;
@@ -50,7 +48,7 @@ export const Footer = () => {
             {/* <DeleteUserButton uid="109baff6-2d4a-4119-818d-e65fd9289a41" /> */}
       <div className="flex flex-wrap justify-center items-center gap-4">
         <span className="flex items-center gap-1">
-          <LanguageSelector /> Language
+          <LanguageSwitcherNextIntl /> Language
         </span>
 
         <Link href="/support/customer-support" className="flex items-center gap-1 hover:underline">

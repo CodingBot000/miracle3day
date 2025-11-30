@@ -7,7 +7,7 @@
 //   "Hongdae",
 // ] as const;
 
-import { CategoryNode, CategoryNodeRegion } from "@/app/(site)/contents/category/categoryNode";
+import { CategoryNode, CategoryNodeRegion } from "@/app/[locale]/(site)/contents/category/categoryNode";
 
 
 export enum LocationEnum {

@@ -3,16 +3,16 @@
 import { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
-import { useCookieLanguage } from '@/hooks/useCookieLanguage';
+import { useLocale, useTranslations } from 'next-intl';
 import { usePlatform } from '@/hooks/usePlatform';
 
 const COOKIE_NAME = 'cookie_consent';
 
 export default function CookieConsent() {
   const [show, setShow] = useState(false);
-  const { language } = useCookieLanguage();
+  const locale = useLocale();
+  const t = useTranslations('Common');
   const { isWebView, isClient } = usePlatform();
-  const locale = language === 'ko' ? 'ko' : 'en';
 
   useEffect(() => {
     // 플랫폼 감지가 완료될 때까지 대기
@@ -87,28 +87,30 @@ export default function CookieConsent() {
     },
   };
 
+  const currentLocale = locale === 'ko' ? 'ko' : 'en';
+
   return (
     <div
       className="fixed bottom-20 right-6 z-50 max-w-sm w-[90%] sm:w-80 bg-white border border-gray-200 shadow-lg rounded-xl p-4 text-sm text-gray-800 animate-fadeIn"
       role="dialog"
       aria-live="polite"
     >
-      <div className="mb-3 leading-relaxed">{text[locale].message}</div>
+      <div className="mb-3 leading-relaxed">{text[currentLocale].message}</div>
 
       <div className="flex flex-wrap gap-2 justify-end">
         <button
           onClick={rejectCookies}
           className="px-3 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md"
-          aria-label={text[locale].reject}
+          aria-label={text[currentLocale].reject}
         >
-          {text[locale].reject}
+          {text[currentLocale].reject}
         </button>
         <button
           onClick={acceptAllCookies}
           className="px-3 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-md"
-          aria-label={text[locale].accept}
+          aria-label={text[currentLocale].accept}
         >
-          {text[locale].accept}
+          {text[currentLocale].accept}
         </button>
       </div>
     </div>

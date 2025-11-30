@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { TreatmentProductData, GroupedTreatmentProducts, TreatmentGroup } from "@/app/models/treatmentProduct.dto";
 import TreatmentProductCard from "@/components/molecules/card/TreatmentProductCard";
-import { useCookieLanguage } from "@/hooks/useCookieLanguage";
+import { useLocale, useTranslations } from "next-intl";
 import { Sparkles, ChevronDown, ChevronUp } from "lucide-react";
 
 interface TreatmentProductListProps {
@@ -11,7 +11,9 @@ interface TreatmentProductListProps {
 }
 
 const TreatmentProductList = ({ products }: TreatmentProductListProps) => {
-  const { language } = useCookieLanguage();
+  const locale = useLocale();
+  const t = useTranslations("TreatmentProduct");
+  const tCommon = useTranslations("Common");
   const [isExpanded, setIsExpanded] = useState(false);
 
   // Group products by department and level1
@@ -67,7 +69,7 @@ const TreatmentProductList = ({ products }: TreatmentProductListProps) => {
     });
 
     return result;
-  }, [products, language]);
+  }, [products, locale]);
 
   // Calculate counts for each department and total
   const productCounts = useMemo(() => {
@@ -108,7 +110,7 @@ const TreatmentProductList = ({ products }: TreatmentProductListProps) => {
           >
             <span className="text-sm text-gray-600">
               {/* {isExpanded ? "Close" : "View"} */}
-              {isExpanded ? (language === 'ko' ? "닫기" : "Close") : (language === 'ko' ? "더보기" : "View More")}
+              {isExpanded ? (locale === 'ko' ? "닫기" : "Close") : (locale === 'ko' ? "더보기" : "View More")}
 
             </span>
             {isExpanded ? (
@@ -120,7 +122,7 @@ const TreatmentProductList = ({ products }: TreatmentProductListProps) => {
         </div>
         <div className="mx-4 md:mx-auto md:max-w-[700px] p-3 bg-amber-50 border border-amber-200 rounded-lg">
           <p className="text-sm text-amber-800 font-medium">
-            ⚠️ {language === 'ko' ? "표기된 가격은 참고용이며 실제 가격과 차이가 있을 수 있습니다. 정확한건 상담을 통해 확인해주세요." : "The prices shown are for reference only and may differ from the actual prices. Please confirm the exact prices through a consultation."}
+            ⚠️ {locale === 'ko' ? "표기된 가격은 참고용이며 실제 가격과 차이가 있을 수 있습니다. 정확한건 상담을 통해 확인해주세요." : "The prices shown are for reference only and may differ from the actual prices. Please confirm the exact prices through a consultation."}
           </p>
         </div>
         {/* Preview Mode (Collapsed) - Show only department and level1 titles */}
@@ -141,7 +143,7 @@ const TreatmentProductList = ({ products }: TreatmentProductListProps) => {
                 {/* Level1 titles only - no products */}
                 <div className="flex flex-wrap gap-2 pl-2">
                   {deptGroup.groups.map((group, groupIndex) => {
-                    const level1Text = language === 'ko' ? group.groupTitle.ko : group.groupTitle.en;
+                    const level1Text = locale === 'ko' ? group.groupTitle.ko : group.groupTitle.en;
                     return (
                       <div
                         key={groupIndex}
@@ -176,7 +178,7 @@ const TreatmentProductList = ({ products }: TreatmentProductListProps) => {
                   </div>
 
                   {deptGroup.groups.map((group, groupIndex) => {
-                    const level1Text = language === 'ko' ? group.groupTitle.ko : group.groupTitle.en;
+                    const level1Text = locale === 'ko' ? group.groupTitle.ko : group.groupTitle.en;
 
                     return (
                       <div key={groupIndex} className="space-y-2">

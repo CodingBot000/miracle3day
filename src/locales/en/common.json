@@ -1,0 +1,42 @@
+{
+  "Common": {
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "back": "Back",
+    "next": "Next",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search",
+    "login": "Sign In",
+    "logout": "Sign Out",
+    "register": "Sign Up",
+    "readMore": "Read More",
+    "backToTop": "Back to Top",
+    "share": "Share",
+    "relatedContent": "Related Content",
+    "seeAllClinics": "See All Clinics",
+    "exampleLabel": "ex: ",
+    "close": "Close",
+    "viewMore": "View More",
+    "progress": "Progress",
+    "post": "Post",
+    "posting": "Posting...",
+    "reply": "Reply",
+    "anonymous": "Anonymous",
+    "user": "User",
+    "votes": "votes",
+    "peopleVoted": "people voted",
+    "characters": "characters"
+  },
+  "Auth": {
+    "loginRequired": "Login Required",
+    "loginRequiredMessage": "You must be logged in to use this service. Would you like to go to the login/signup page?",
+    "goToLogin": "Go to Login/Signup",
+    "signInToContinue": "Sign in to continue",
+    "useGoogleAccount": "Use your Google account to explore clinics and book treatments."
+  }
+}

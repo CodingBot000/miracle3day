@@ -2,7 +2,7 @@
 "use client";
 
 import React from "react";
-import { useCookieLanguage } from "@/hooks/useCookieLanguage";
+import { useTranslations } from "next-intl";
 
 export type ImageCompressionModalStatus = "idle" | "compressing" | "done" | "error";
 
@@ -28,48 +28,39 @@ const ImageCompressionModal: React.FC<ImageCompressionModalProps> = ({
   hasTimeoutError,
   onClose,
 }) => {
-  const { language: lang } = useCookieLanguage(); // 예: "ko" | "en"
+  const t = useTranslations('ImageCompression');
+  const tCommon = useTranslations('Common');
 
   if (!open) return null;
-
-  const isKo = lang === "ko";
 
   const progress =
     totalCount > 0 ? Math.round((processedCount / totalCount) * 100) : 0;
 
   const title = (() => {
     if (status === "compressing") {
-      return isKo ? "이미지 압축 중..." : "Compressing images...";
+      return t('compressing');
     }
     if (status === "done" && !hasTimeoutError) {
-      return isKo ? "이미지 압축 완료" : "Image compression completed";
+      return t('completed');
     }
     if (status === "error" || hasTimeoutError) {
-      return isKo ? "이미지 압축 중 오류 발생" : "Error during image compression";
+      return t('error');
     }
-    return isKo ? "이미지 처리" : "Image processing";
+    return t('processing');
   })();
 
   const description = (() => {
     if (status === "compressing") {
-      return isKo
-        ? "이미지를 최적화된 크기로 압축하고 있어요. 잠시만 기다려 주세요."
-        : "We are compressing your images to an optimized size. Please wait a moment.";
+      return t('optimizing');
     }
     if (status === "done" && !hasTimeoutError) {
-      return isKo
-        ? "이미지 압축이 완료되었습니다."
-        : "Image compression has been completed.";
+      return t('compressionDone');
     }
     if (hasTimeoutError) {
-      return isKo
-        ? "일부 이미지 압축이 일정 시간 내에 완료되지 않았어요. 네트워크 상태를 확인한 뒤 다시 시도해 주세요."
-        : "Some images could not be compressed within the time limit. Please check your network and try again.";
+      return t('timeoutError');
     }
     if (status === "error") {
-      return isKo
-        ? "이미지 압축 중 오류가 발생했습니다. 다시 시도해 주세요."
-        : "An error occurred while compressing images. Please try again.";
+      return t('generalError');
     }
     return "";
   })();
@@ -84,7 +75,7 @@ const ImageCompressionModal: React.FC<ImageCompressionModalProps> = ({
           <div className="mb-4">
             <div className="flex justify-between text-xs text-gray-500 mb-1">
               <span>
-                {isKo ? "진행률" : "Progress"}: {processedCount}/{totalCount}
+                {tCommon('progress')}: {processedCount}/{totalCount}
               </span>
               <span>{progress}%</span>
             </div>
@@ -103,15 +94,13 @@ const ImageCompressionModal: React.FC<ImageCompressionModalProps> = ({
             onClick={onClose}
             className="mt-4 inline-flex w-full items-center justify-center rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
           >
-            {isKo ? "닫기" : "Close"}
+            {tCommon('close')}
           </button>
         )}
 
         {status === "compressing" && (
           <div className="mt-2 text-[11px] text-gray-400">
-            {isKo
-              ? "이미지 크기와 네트워크 상태에 따라 시간이 조금 걸릴 수 있어요."
-              : "Processing time may vary depending on image size and network conditions."}
+            {t('processingNote')}
           </div>
         )}
       </div>

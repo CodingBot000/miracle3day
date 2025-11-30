@@ -51,9 +51,9 @@ export interface KBeautySection {
   title: string;
   subtitle: string;
   tagline: string;
-  intro: KBeautyIntro;
-  mainPoints: Record<string, KBeautyMainPoint>;
+  intro?: KBeautyIntro;
+  mainPoints?: Record<string, KBeautyMainPoint>;
   statistics?: KBeautyStatistics;
-  conclusion: KBeautyConclusion;
-  cta: KBeautyCTA;
+  conclusion?: KBeautyConclusion;
+  cta?: KBeautyCTA;
 }

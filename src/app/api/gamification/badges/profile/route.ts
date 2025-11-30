@@ -3,6 +3,8 @@
  * GET /api/gamification/badges/profile - Get user's complete badge profile
  */
 
+export const dynamic = 'force-dynamic';
+
 import { NextRequest, NextResponse } from 'next/server';
 import { getUserProfile } from '@/services/badges';
 

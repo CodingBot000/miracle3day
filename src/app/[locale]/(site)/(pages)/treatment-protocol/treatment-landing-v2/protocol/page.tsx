@@ -338,6 +338,7 @@ export default function ProtocolPage() {
 
   const { areas, content } = topicDetail;
 
+  console.log('[ProtocolPage] rendering with content:', content);
   return (
     <div className="py-6 space-y-5 min-h-screen bg-gradient-to-br from-[#FDF5F0] via-white to-[#F8E8E0]">
       {/* Header */}

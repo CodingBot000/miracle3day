@@ -284,6 +284,11 @@ export default function ProtocolPage() {
     log.debug('Contact for treatment:', treatment.id);
   }, []);
 
+  const handleRecommend = React.useCallback((treatment: any) => {
+    console.log('Recommend clicked:', treatment);
+    // TODO: 구현 예정
+  }, []);
+
   const handleAreaChange = React.useCallback((newAreaId: string) => {
     if (!topic_id) return;
     const params = new URLSearchParams({
@@ -469,8 +474,9 @@ export default function ProtocolPage() {
                     }
                   }}
                   locale={locale}
-                  onBook={(treatment) => log.debug('Book treatment:', treatment.id)}
-                  onContact={(treatment) => log.debug('Contact for treatment:', treatment.id)}
+                  onBook={handleBook}
+                  onContact={handleContact}
+                  onShowRecommend={handleRecommend}
                   buildInfoLine={buildInfoLine}
                 />
               ))}
@@ -537,8 +543,9 @@ export default function ProtocolPage() {
                     }
                   }}
                   locale={locale}
-                  onBook={(treatment) => log.debug('Book treatment:', treatment.id)}
-                  onContact={(treatment) => log.debug('Contact for treatment:', treatment.id)}
+                  onBook={handleBook}
+                  onContact={handleContact}
+                  onShowRecommend={handleRecommend}
                   buildInfoLine={buildInfoLine}
                 />
               ))}
@@ -605,8 +612,9 @@ export default function ProtocolPage() {
                     }
                   }}
                   locale={locale}
-                  onBook={(treatment) => log.debug('Book treatment:', treatment.id)}
-                  onContact={(treatment) => log.debug('Contact for treatment:', treatment.id)}
+                  onBook={handleBook}
+                  onContact={handleContact}
+                  onShowRecommend={handleRecommend}
                   buildInfoLine={buildInfoLine}
                 />
               ))}

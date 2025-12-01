@@ -5,13 +5,14 @@ import type { Category, Treatment } from "@/constants/treatment/types";
 import TreatmentDetailCard from "./TreatmentDetailCard";
 
 export default function CategorySection({
-  category, locale, onSelect, onBook, onContact, buildInfoLine
+  category, locale, onSelect, onBook, onContact, onShowRecommend, buildInfoLine
 }: {
   category: Category;
   locale: "ko" | "en";
   onSelect: (t: Treatment) => void;
   onBook: (t: Treatment) => void;
   onContact: () => void;
+  onShowRecommend: (t: Treatment) => void;
   buildInfoLine: (t: Treatment, locale: "ko" | "en") => string;
 }) {
   return (
@@ -29,6 +30,7 @@ export default function CategorySection({
             locale={locale}
             onBook={() => onBook(t)}
             onContact={() => onContact()}
+            onShowRecommend={() => onShowRecommend(t)}
             buildInfoLine={buildInfoLine}
           />
         ))}

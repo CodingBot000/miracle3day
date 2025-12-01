@@ -89,6 +89,7 @@ export interface TreatmentDetailCardProps {
   className?: string;
   onBook?: (data: Treatment) => void;
   onContact?: (data: Treatment) => void;
+  onShowRecommend?: (data: Treatment) => void;
   buildInfoLine?: (t: Treatment, locale: "ko" | "en") => string;
 }
 
@@ -98,6 +99,7 @@ export default function TreatmentDetailCard({
   className,
   onBook,
   onContact,
+  onShowRecommend,
   buildInfoLine,
 }: TreatmentDetailCardProps) {
   const [isExpanded, setIsExpanded] = React.useState(false);
@@ -155,7 +157,7 @@ export default function TreatmentDetailCard({
         )}
         </div>
 
-      {(onBook || onContact) && (
+      {(onBook || onContact || onShowRecommend) && (
         <div className="mt-5 flex gap-2">
           {onBook && (
             <button
@@ -173,6 +175,15 @@ export default function TreatmentDetailCard({
               className="rounded-xl bg-gray-900 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-800"
             >
               {locale === "ko" ? "문의" : "Contact"}
+            </button>
+          )}
+          {onShowRecommend && (
+            <button
+              type="button"
+              onClick={() => onShowRecommend?.(data)}
+              className="rounded-xl border border-[#8B4513] bg-gradient-to-br from-[#FDF5F0] to-[#F8E8E0] px-3 py-2 text-sm font-medium text-[#8B4513] shadow-sm hover:from-[#F8E8E0] hover:to-[#FDF5F0]"
+            >
+              {locale === "ko" ? "추천 병원" : "Recommend"}
             </button>
           )}
         </div>

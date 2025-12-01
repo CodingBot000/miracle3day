@@ -285,9 +285,15 @@ export default function ProtocolPage() {
   }, []);
 
   const handleRecommend = React.useCallback((treatment: any) => {
-    console.log('Recommend clicked:', treatment);
-    // TODO: 구현 예정
-  }, []);
+    // 병원 페이지로 이동하면서 시술 정보를 query param으로 전달
+    const params = new URLSearchParams({
+      treatmentId: treatment.id,
+      treatmentNameKo: treatment.name?.ko || '',
+      treatmentNameEn: treatment.name?.en || '',
+    });
+
+    router.push(`/hospital?${params.toString()}`);
+  }, [router]);
 
   const handleAreaChange = React.useCallback((newAreaId: string) => {
     if (!topic_id) return;

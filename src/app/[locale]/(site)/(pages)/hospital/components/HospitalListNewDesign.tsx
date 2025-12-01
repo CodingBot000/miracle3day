@@ -7,13 +7,24 @@ import HospitalListCard from "./HospitalListCard";
 import { ROUTE } from "@/router";
 import { useHospitalGoogleSnapshots } from "@/hooks/useHospitalGoogleSnapshots";
 import { useMemo } from "react";
+import { useLocale } from "next-intl";
+
+// Fallback 메시지 (시술 기반 검색 결과가 없을 때)
+const FALLBACK_MESSAGES: Record<string, string> = {
+  ko: "선택하신 시술을 명시적으로 제공하는 병원이 현재 없습니다. 하지만 병원과 상담시 가능할 수 있습니다. 상담은 무료이니 아래 가능성 높은 병원들에서 상담해 보시길 권장드립니다.",
+  en: "Unfortunately, there are no hospitals that currently offer the specific procedure you selected. However, it may be available through consultation with a hospital. Since consultations are free, we recommend reaching out to the highly recommended hospitals below.",
+  ja: "お選びになられた施術を明示的に提供している病院は現在ございません。ただし、病院とのコンサルテーションを通じて対応可能な場合があります。コンサルテーションは無料ですので、以下の可能性の高い病院でのご相談をお勧めします。",
+  "zh-CN": "目前没有医院明确提供您所选的治疗项目。但是通过与医院的咨询，可能有解决方案。咨询是免费的，我们建议您咨询以下可能性较大的医院。",
+  "zh-TW": "目前沒有醫院明確提供您所選的治療項目。但是通過與醫院的諮詢，可能有解決方案。諮詢是免費的，我們建議您諮詢以下可能性較大的醫院。",
+};
 
 interface HospitalListNewDesignProps {
   initialData: HospitalData[];
-
+  isFallback?: boolean;
 }
 
-const HospitalListNewDesign = ({ initialData }: HospitalListNewDesignProps) => {
+const HospitalListNewDesign = ({ initialData, isFallback = false }: HospitalListNewDesignProps) => {
+  const locale = useLocale();
   const hospitals = Array.isArray(initialData) ? initialData : [];
   const router = useRouter();
 
@@ -67,6 +78,15 @@ const HospitalListNewDesign = ({ initialData }: HospitalListNewDesignProps) => {
           <h1 className="text-sm md:text-base text-gray-500 leading-[26.6px]">
             Korean dermatology clinics with services for international patients
           </h1>
+
+          {/* Fallback 메시지 */}
+          {isFallback && (
+            <div className="p-4 bg-amber-50 border border-amber-200 rounded-lg">
+              <p className="text-sm text-amber-800 leading-relaxed">
+                {FALLBACK_MESSAGES[locale] || FALLBACK_MESSAGES.en}
+              </p>
+            </div>
+          )}
 
           {/* Clinic List */}
           <div className="space-y-8 md:space-y-12">

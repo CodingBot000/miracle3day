@@ -119,8 +119,9 @@ export default function TreatmentProtocol() {
         </div>
       </section>
 
+{/* 임시로 선택지 막아놓음. 성형외과 시술이 현재 없음 */ }
       {/* Category Tabs */}
-      <section className="flex justify-center gap-4 px-4">
+      {/* <section className="flex justify-center gap-4 px-4">
         <button
           onClick={() => handleCategoryChange('skin')}
           className={`
@@ -162,7 +163,10 @@ export default function TreatmentProtocol() {
             {locale === 'ko' ? '외과 수술' : 'Surgical Procedures'}
           </span>
         </button>
-      </section>
+      </section> */}
+
+
+
       {/* <header className="flex flex-col sm:flex-row sm:items-center gap-3 justify-between">
         <div>
           <h1 className="text-2xl font-extrabold">Treatment Catalog </h1> 

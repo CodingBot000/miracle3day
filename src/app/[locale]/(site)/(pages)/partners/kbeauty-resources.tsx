@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { ExternalLink, ShoppingBag, BookOpen, Users, Globe, Building2 } from 'lucide-react';
+import { usePlatform, useWebViewBridge } from '@/hooks/usePlatform';
 
 // 타입 정의
 type Category = 'all' | 'shopping' | 'education' | 'community' | 'official';
@@ -404,12 +405,12 @@ export default function KBeautyResources() {
         </p>
 
         {/* 언어 선택 */}
-        <div className="flex justify-center gap-2 mt-6">
+        <div className="flex justify-center gap-1 mt-4 md:gap-2 md:mt-6">
           {(['en', 'ja', 'zh', 'ko'] as Language[]).map((lang) => (
             <button
               key={lang}
               onClick={() => setSelectedLanguage(lang)}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-2 py-1 text-xs rounded-md font-medium transition-colors md:px-4 md:py-2 md:text-sm md:rounded-lg ${
                 selectedLanguage === lang
                   ? 'bg-pink-600 text-white'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -443,7 +444,7 @@ export default function KBeautyResources() {
       )}
 
       {/* 카테고리 필터 */}
-      <div className="flex flex-wrap justify-center gap-3 mb-10">
+      <div className="flex flex-wrap justify-center gap-1.5 mb-6 md:gap-3 md:mb-10">
         <CategoryButton
           active={selectedCategory === 'all'}
           onClick={() => setSelectedCategory('all')}
@@ -516,13 +517,13 @@ function CategoryButton({
   return (
     <button
       onClick={onClick}
-      className={`flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium transition-all ${
+      className={`flex items-center gap-1 px-2.5 py-1.5 text-xs rounded-md font-medium transition-all md:gap-2 md:px-5 md:py-2.5 md:text-sm md:rounded-lg ${
         active
           ? 'bg-pink-600 text-white shadow-lg shadow-pink-200'
-          : 'bg-white text-gray-700 border-2 border-gray-200 hover:border-pink-300 hover:bg-pink-50'
+          : 'bg-white text-gray-700 border border-gray-200 hover:border-pink-300 hover:bg-pink-50 md:border-2'
       }`}
     >
-      <Icon className="w-5 h-5" />
+      <Icon className="w-3.5 h-3.5 md:w-5 md:h-5" />
       <span>{label}</span>
     </button>
   );
@@ -540,6 +541,26 @@ function ResourceCard({
 }) {
   const Icon = categoryIcons[resource.category as keyof typeof categoryIcons];
   const t = translations[language];
+  const { isWebView } = usePlatform();
+  const { callNativeFunction } = useWebViewBridge();
+
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const url = resource.url;
+
+    if (isWebView) {
+      // 웹뷰일 경우 네이티브 브릿지로 외부 브라우저 열기 시도
+      try {
+        callNativeFunction('openExternalBrowser', url);
+      } catch {
+        // 브릿지 실패 시 일반 방식으로 열기
+        window.open(url, '_blank', 'noopener,noreferrer');
+      }
+    } else {
+      // 일반 웹에서는 새 탭에서 열기
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+  };
 
   return (
     <div className={`group relative bg-white rounded-xl border-2 transition-all hover:shadow-xl hover:-translate-y-1 flex flex-col ${
@@ -594,8 +615,7 @@ function ResourceCard({
         {/* 방문 버튼 */}
         <a
           href={resource.url}
-          target="_blank"
-          rel="noopener noreferrer"
+          onClick={handleLinkClick}
           className="mt-auto inline-flex items-center gap-2 w-full justify-center px-4 py-2.5 bg-gradient-to-r from-pink-500 to-pink-600 text-white rounded-lg font-medium hover:from-pink-600 hover:to-pink-700 transition-all shadow-md hover:shadow-lg"
         >
           <span>{t.visit}</span>

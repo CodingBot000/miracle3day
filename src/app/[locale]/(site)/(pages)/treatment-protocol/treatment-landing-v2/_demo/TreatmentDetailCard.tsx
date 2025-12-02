@@ -159,7 +159,8 @@ export default function TreatmentDetailCard({
 
       {(onBook || onContact || onShowRecommend) && (
         <div className="mt-5 flex gap-2">
-          {onBook && (
+          {/* 임시로 가림 주석  삭제하지말것  */}
+          {/* {onBook && (
             <button
               type="button"
               onClick={() => onBook?.(data)}
@@ -176,7 +177,7 @@ export default function TreatmentDetailCard({
             >
               {locale === "ko" ? "문의" : "Contact"}
             </button>
-          )}
+          )} */}
           {onShowRecommend && (
             <button
               type="button"

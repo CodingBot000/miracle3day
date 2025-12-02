@@ -1,11 +1,10 @@
+@import './_variables.scss';
+@import './_mixins.scss';
+@import './_animation.scss';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import './_variables.scss';
-@import './_mixins.scss';
-@import './_reset.scss';
-@import './_animation.scss';
 
 // 커스텀 Tailwind 확장
 @layer base {
@@ -210,36 +209,37 @@
  
 
 
-.badge-only,
-.badge-purchase,
-.badge-booking,
-.badge-timeout {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  font-weight: 600;
-  height: 16px;
-  border-radius: 2px;
-  padding: 0 4px;
-}
+// .badge-only,
+// .badge-purchase,
+// .badge-booking,
+// .badge-timeout {
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   font-size: 10px;
+//   font-weight: 600;
+//   height: 16px;
+//   border-radius: 2px;
+//   padding: 0 4px;
+// }
 
-.badge-only {
-  background-color: #ea9ec0;
-  color: white;
-}
+// .badge-only {
+//   background-color: #ea9ec0;
+//   color: white;
+// }
 
-.badge-purchase {
-  background-color: #6b7280;
-  color: white;
-}
+// .badge-purchase {
+//   background-color: #6b7280;
+//   color: white;
+// }
 
-.badge-booking {
-  background-color: #4caf50;
-  color: white;
-}
+// .badge-booking {
+//   background-color: #4caf50;
+//   color: white;
+// }
 
-.badge-timeout {
-  background-color: #e60058;
-  color: white;
-}
+// .badge-timeout {
+//   background-color: #e60058;
+//   color: white;
+// }
+

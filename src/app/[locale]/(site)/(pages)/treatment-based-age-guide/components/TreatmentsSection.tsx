@@ -112,8 +112,9 @@ export function TreatmentsSection({ title, treatments }: TreatmentsSectionProps)
           const formattedCost = formatTreatmentCost(treatment, locale);
 
           return (
-            <div key={treatment.id} className="bg-white/70 rounded-xl overflow-hidden border border-gray-200/50 shadow-sm hover:shadow-md transition-shadow">
-              {treatment.imageUrl && (
+            <div key={treatment.id} className="bg-white/70 rounded-xl overflow-hidden border-2 border-black shadow-sm hover:shadow-md transition-shadow">
+              { /* 적절한 이미지 확보가 안되서  임시 주석.삭제하지말것. */ }
+              {/* {treatment.imageUrl && (
                 <div className="relative h-48 w-full">
                   <Image
                     src={treatment.imageUrl}
@@ -123,7 +124,7 @@ export function TreatmentsSection({ title, treatments }: TreatmentsSectionProps)
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 </div>
-              )}
+              )} */}
               <div className="p-6">
                 <h4 className="font-bold text-lg text-gray-800 mb-3">
                   {treatment.name}

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
+import { Info } from 'lucide-react';
 import TooltipInfo, { type TooltipKey } from '@/components/atoms/TooltipInfo';
 
 export function InfoIcon({ kind }: { kind: TooltipKey }) {
@@ -99,9 +100,9 @@ export function InfoIcon({ kind }: { kind: TooltipKey }) {
       <button
         aria-label="info"
         onClick={() => setIsOpen(true)}
-        className="size-5 bg-green-500 rounded-full border flex items-center justify-center text-white text-xs hover:bg-green-600 transition-colors"
+        className="size-5 rounded-full flex items-center justify-center text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-colors"
       >
-        i
+        <Info className="size-4" />
       </button>
 
       {/* 화면 중앙 모달로 표시 */}

@@ -3,10 +3,9 @@
 
 import { log } from '@/utils/logger';
 import * as React from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { useTopicList, useSurgeryProtocols } from "@/hooks/useTreatmentData";
 import type { TopicWithAreas, Locale } from "@/app/models/treatmentData.dto";
-import { useLocale } from "next-intl";
 import LottieLoading from "@/components/atoms/LottieLoading";
 
 import TopicCard from "./_demo/TopicCard";
@@ -31,7 +30,8 @@ const STORAGE_KEY = 'treatment-protocol-category';
 
 export default function TreatmentProtocol() {
   const router = useRouter();
-  const locale = useLocale() as 'ko' | 'en';
+  const params = useParams();
+  const locale = (params.locale as 'ko' | 'en') || 'en';
 
   // Initialize category from localStorage or default to 'skin'
   const [category, setCategory] = React.useState<'skin' | 'surgery'>(() => {

@@ -1,4 +1,5 @@
 import LayoutHeaderNormal from "@/components/organism/layout/LayoutHeaderNormal";
+import MenuMobile from "@/components/organism/layout/MenuMobile";
 
 export default function PagesLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -6,8 +7,12 @@ export default function PagesLayout({ children }: { children: React.ReactNode })
       <LayoutHeaderNormal />
 
       <main className="flex-1 w-full relative pt-[88px]">
-        {children}
+        <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8">
+          {children}
+        </div>
       </main>
+
+      <MenuMobile />
     </>
   );
 }

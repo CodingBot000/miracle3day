@@ -27,7 +27,7 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: 'Metadata' });
 
   return {
-    metadataBase: new URL('https://www.mimotok.com'),
+    metadataBase: new URL('https://mimotok.com'),
     title: {
       default: t('title'),
       template: `%s | Mimotok`,
@@ -55,7 +55,7 @@ export async function generateMetadata({
       siteName: 'MimoTok',
       title: t('title'),
       description: t('description'),
-      url: `https://www.mimotok.com/${locale}`,
+      url: `https://mimotok.com/${locale}`,
       locale: locale,
       alternateLocale: ['en', 'ko', 'ja', 'zh-CN', 'zh-TW'].filter(l => l !== locale),
       images: [
@@ -74,13 +74,13 @@ export async function generateMetadata({
       images: ['/mimotok_preview.png'],
     },
     alternates: {
-      canonical: `https://www.mimotok.com/${locale}`,
+      canonical: `https://mimotok.com/${locale}`,
       languages: {
-        en: 'https://www.mimotok.com/en',
-        ko: 'https://www.mimotok.com/ko',
-        ja: 'https://www.mimotok.com/ja',
-        'zh-CN': 'https://www.mimotok.com/zh-CN',
-        'zh-TW': 'https://www.mimotok.com/zh-TW',
+        en: 'https://mimotok.com/en',
+        ko: 'https://mimotok.com/ko',
+        ja: 'https://mimotok.com/ja',
+        'zh-CN': 'https://mimotok.com/zh-CN',
+        'zh-TW': 'https://mimotok.com/zh-TW',
       },
     },
   };

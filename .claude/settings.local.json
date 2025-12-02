@@ -15,7 +15,8 @@
       "Bash(do mv \"$dir\" \"(pages)/\")",
       "Bash(done)",
       "Bash(find:*)",
-      "Bash(npm uninstall:*)"
+      "Bash(npm uninstall:*)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []

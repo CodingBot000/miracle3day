@@ -169,7 +169,7 @@ export default async function PostDetailPage({
 
   // Get language from cookie (클라이언트에서 'lang' 쿠키로 저장함)
   const languageCookie = cookieStore.get('lang');
-  const language = (languageCookie?.value as 'ko' | 'en') || 'ko';
+  const language = (languageCookie?.value as 'ko' | 'en') || 'en';
 
   const getDisplayName = (name: string | { en: string; ko: string } | null | undefined): string | null => {
     if (!name) return null;

@@ -3,10 +3,9 @@
 
 import { log } from '@/utils/logger';
 import * as React from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { useTopicList, useSurgeryProtocols } from "@/hooks/useTreatmentData";
 import type { TopicWithAreas, Locale } from "@/app/models/treatmentData.dto";
-import { useLocale } from "next-intl";
 import LottieLoading from "@/components/atoms/LottieLoading";
 
 import TopicCard from "./_demo/TopicCard";
@@ -31,7 +30,8 @@ const STORAGE_KEY = 'treatment-protocol-category';
 
 export default function TreatmentProtocol() {
   const router = useRouter();
-  const locale = useLocale() as 'ko' | 'en';
+  const params = useParams();
+  const locale = (params.locale as 'ko' | 'en') || 'en';
 
   // Initialize category from localStorage or default to 'skin'
   const [category, setCategory] = React.useState<'skin' | 'surgery'>(() => {
@@ -119,8 +119,9 @@ export default function TreatmentProtocol() {
         </div>
       </section>
 
+{/* 임시로 선택지 막아놓음. 성형외과 시술이 현재 없음 */ }
       {/* Category Tabs */}
-      <section className="flex justify-center gap-4 px-4">
+      {/* <section className="flex justify-center gap-4 px-4">
         <button
           onClick={() => handleCategoryChange('skin')}
           className={`
@@ -162,7 +163,10 @@ export default function TreatmentProtocol() {
             {locale === 'ko' ? '외과 수술' : 'Surgical Procedures'}
           </span>
         </button>
-      </section>
+      </section> */}
+
+
+
       {/* <header className="flex flex-col sm:flex-row sm:items-center gap-3 justify-between">
         <div>
           <h1 className="text-2xl font-extrabold">Treatment Catalog </h1> 

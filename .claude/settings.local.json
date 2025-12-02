@@ -14,7 +14,9 @@
       "Bash(for dir in aboutus ai care-categories category chat community contents event gamification hospital legal mobile partners procedure support treatment-based-age-guide treatment-protocol treatments_info user)",
       "Bash(do mv \"$dir\" \"(pages)/\")",
       "Bash(done)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []

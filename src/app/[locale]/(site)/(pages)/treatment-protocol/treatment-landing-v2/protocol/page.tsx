@@ -48,16 +48,14 @@ function SequenceTimeline({ steps, locale, stepCount }: SequenceTimelineProps) {
   }
 
   return (
-    <div className="rounded-3xl border border-white/60 bg-gradient-to-br from-white/75 via-white/65 to-white/55 p-6 shadow-[0_18px_40px_rgba(212,165,154,0.18)] backdrop-blur-xl md:p-8">
-      <div className="border-l-4 border-[#d4a59a] pl-4">
-
-        <h3 className="mt-1 text-2xl font-semibold text-[#6b4e44]">
+    <div className="rounded-2xl border border-white/60 bg-gradient-to-br from-white/75 via-white/65 to-white/55 p-3 shadow-[0_18px_40px_rgba(212,165,154,0.18)] backdrop-blur-xl md:p-4">
+      <div className="border-l-4 border-[#d4a59a] pl-3">
+        <h3 className="text-base font-semibold text-[#6b4e44] md:text-lg">
           {locale === "ko" ? "시술 순서" : "Treatment Plan"}
         </h3>
- 
       </div>
 
-      <ol className="mt-8 space-y-6">
+      <ol className="mt-3 space-y-2">
         {sortedSteps.map((step, index) => {
           const waitMin = step.timing?.waitMinDays ?? null;
           const waitMax = step.timing?.waitMaxDays ?? null;
@@ -65,19 +63,19 @@ function SequenceTimeline({ steps, locale, stepCount }: SequenceTimelineProps) {
 
           return (
             <li key={step.order}>
-              <div className="flex gap-4 rounded-2xl border border-white/60 bg-white/70 p-5 shadow-[0_16px_30px_rgba(212,165,154,0.16)] backdrop-blur-xl md:gap-6 md:p-6">
+              <div className="flex gap-2 rounded-xl border border-white/60 bg-white/70 p-2.5 shadow-[0_16px_30px_rgba(212,165,154,0.16)] backdrop-blur-xl md:gap-3 md:p-3">
                 {showStepNumber && (
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl border-4 border-white/70 bg-[#d4a59a] text-xl font-semibold text-white shadow-[0_8px_16px_rgba(212,165,154,0.35)]">
+                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border-2 border-white/70 bg-[#d4a59a] text-xs font-semibold text-white shadow-[0_8px_16px_rgba(212,165,154,0.35)] md:h-7 md:w-7 md:text-sm">
                     {index + 1}
                   </div>
                 )}
-                <div className="flex-1 space-y-2">
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <p className="text-lg font-semibold text-[#6b4e44]">
+                <div className="flex-1 space-y-1">
+                  <div className="flex flex-wrap items-center justify-between gap-1">
+                    <p className="text-sm font-semibold text-[#6b4e44] md:text-base">
                       {getTitleByLocale(step.title, locale)}
                     </p>
                     {step.timing?.afterWeeks && (
-                      <span className="rounded-full bg-white/70 px-3 py-1 text-xs font-medium text-[#a88f84] shadow-inner">
+                      <span className="rounded-full bg-white/70 px-2 py-0.5 text-[10px] font-medium text-[#a88f84] shadow-inner md:text-xs">
                         {locale === "ko"
                           ? `${step.timing.afterWeeks}주 후`
                           : `~${step.timing.afterWeeks} weeks later`}
@@ -86,7 +84,7 @@ function SequenceTimeline({ steps, locale, stepCount }: SequenceTimelineProps) {
                   </div>
 
                   {hasWaitInfo && (
-                    <p className="text-xs text-[#a88f84]">
+                    <p className="text-[10px] text-[#a88f84] md:text-xs">
                       {locale === "ko"
                         ? `다음 단계까지 ${waitMin ?? ""}${
                             waitMax !== null ? `~${waitMax}` : ""
@@ -98,7 +96,7 @@ function SequenceTimeline({ steps, locale, stepCount }: SequenceTimelineProps) {
                   )}
 
                   {step.note && (
-                    <p className="text-sm leading-relaxed text-[#8b7266]">
+                    <p className="text-xs leading-relaxed text-[#8b7266] md:text-sm">
                       {step.note}
                     </p>
                   )}
@@ -131,7 +129,7 @@ function BenefitsBlock({ benefits, locale }: BenefitsProps) {
 
   if (!hasInputs && !resultText) {
     return (
-      <div className="rounded-3xl border border-white/60 bg-gradient-to-br from-white/75 via-white/65 to-white/55 p-6 text-[#8b7266] shadow-[0_18px_40px_rgba(212,165,154,0.18)] backdrop-blur-xl md:p-8">
+      <div className="rounded-2xl border border-white/60 bg-gradient-to-br from-white/75 via-white/65 to-white/55 p-3 text-xs text-[#8b7266] shadow-[0_18px_40px_rgba(212,165,154,0.18)] backdrop-blur-xl md:p-4 md:text-sm">
         {locale === "ko"
           ? "등록된 효과 정보가 없습니다."
           : "No benefits available."}
@@ -140,22 +138,21 @@ function BenefitsBlock({ benefits, locale }: BenefitsProps) {
   }
 
   return (
-    <div className="rounded-3xl border border-white/60 bg-gradient-to-br from-white/75 via-white/65 to-white/55 p-6 shadow-[0_18px_40px_rgba(212,165,154,0.18)] backdrop-blur-xl md:p-8">
-      <div className="border-l-4 border-[#d4a59a] pl-4">
-
-        <h3 className="mt-1 text-2xl font-semibold text-[#6b4e44]">
+    <div className="rounded-2xl border border-white/60 bg-gradient-to-br from-white/75 via-white/65 to-white/55 p-3 shadow-[0_18px_40px_rgba(212,165,154,0.18)] backdrop-blur-xl md:p-4">
+      <div className="border-l-4 border-[#d4a59a] pl-3">
+        <h3 className="text-base font-semibold text-[#6b4e44] md:text-lg">
           {locale === "ko" ? "효과 & 결과" : "Benefits & Result"}
         </h3>
-        <p className="mt-1 text-sm text-[#8b7266]">
+        <p className="text-[10px] text-[#8b7266] md:text-xs">
           {locale === "ko"
             ? "어떤 변화를 기대할 수 있을까요?"
             : "What positive changes to expect"}
         </p>
       </div>
 
-      <div className="mt-8 space-y-6">
+      <div className="mt-3 space-y-1">
         {hasInputs && (
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-2 md:grid-cols-2">
             {inputs.map((input, index) => {
               const emoji =
                 (input.meta && typeof input.meta.emoji === "string"
@@ -165,17 +162,14 @@ function BenefitsBlock({ benefits, locale }: BenefitsProps) {
               return (
                 <div
                   key={index}
-                  className="group relative overflow-hidden rounded-2xl border border-white/60 bg-white/70 p-5 shadow-[0_14px_30px_rgba(212,165,154,0.16)] backdrop-blur-xl transition-transform duration-300 hover:-translate-y-1 md:p-6"
+                  className="group relative overflow-hidden rounded-xl border border-white/60 bg-white/70 p-2.5 shadow-[0_14px_30px_rgba(212,165,154,0.16)] backdrop-blur-xl transition-transform duration-300 hover:-translate-y-1 md:p-3"
                 >
                   <div className="absolute -top-6 -right-6 h-20 w-20 rounded-full bg-[#d4a59a]/20 blur-2xl" />
-                  <div className="flex items-center gap-3">
-                    <span className="text-3xl drop-shadow-sm">{emoji}</span>
-                    <div>
-                      
-                      <p className="mt-1 text-base font-semibold text-[#6b4e44]">
-                        {pickLocale(input.title, locale)}
-                      </p>
-                    </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xl drop-shadow-sm md:text-2xl">{emoji}</span>
+                    <p className="text-sm font-semibold text-[#6b4e44] md:text-base">
+                      {pickLocale(input.title, locale)}
+                    </p>
                   </div>
                 </div>
               );
@@ -183,19 +177,19 @@ function BenefitsBlock({ benefits, locale }: BenefitsProps) {
           </div>
         )}
 
-        <div className="flex justify-center text-xl text-[#d4a59a] drop-shadow-sm md:text-4xl">
+        <div className="flex justify-center py-0.5 text-xl text-[#d4a59a] drop-shadow-sm md:text-4xl">
           ↓
         </div>
 
-        <div className="rounded-3xl border border-white/60 bg-white/70 p-6 text-center shadow-[0_18px_36px_rgba(212,165,154,0.2)] backdrop-blur-xl md:p-8">
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#a88f84]">
+        <div className="rounded-xl border border-white/60 bg-white/70 p-3 text-center shadow-[0_18px_36px_rgba(212,165,154,0.2)] backdrop-blur-xl md:p-4">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#a88f84] md:text-xs">
             {locale === "ko" ? "결과" : "Result"}
           </p>
-          <p className="mt-3 text-2xl font-semibold text-[#6b4e44] md:text-3xl">
+          <p className="mt-1 text-base font-semibold text-[#6b4e44] md:text-lg">
             {resultText}
           </p>
           {result?.meta?.description && (
-            <p className="mt-2 text-sm text-[#8b7266]">
+            <p className="mt-1 text-[10px] text-[#8b7266] md:text-xs">
               {String(result.meta.description)}
             </p>
           )}
@@ -215,7 +209,7 @@ function CautionsBlock({ cautions, locale }: CautionsProps) {
 
   if (!text) {
     return (
-      <div className="rounded-3xl border border-white/60 bg-gradient-to-br from-white/75 via-white/65 to-white/55 p-6 text-[#8b7266] shadow-[0_18px_40px_rgba(212,165,154,0.18)] backdrop-blur-xl md:p-8">
+      <div className="rounded-2xl border border-white/60 bg-gradient-to-br from-white/75 via-white/65 to-white/55 p-3 text-xs text-[#8b7266] shadow-[0_18px_40px_rgba(212,165,154,0.18)] backdrop-blur-xl md:p-4 md:text-sm">
         {locale === "ko"
           ? "등록된 주의사항이 없습니다."
           : "No cautions available."}
@@ -224,24 +218,24 @@ function CautionsBlock({ cautions, locale }: CautionsProps) {
   }
 
   return (
-    <div className="rounded-3xl border border-white/60 bg-gradient-to-br from-white/75 via-white/65 to-white/55 p-6 shadow-[0_18px_40px_rgba(212,165,154,0.18)] backdrop-blur-xl md:p-8">
-      <div className="border-l-4 border-[#d4a59a] pl-4">
-        <p className="text-xs uppercase tracking-[0.3em] text-[#a88f84]">
+    <div className="rounded-2xl border border-white/60 bg-gradient-to-br from-white/75 via-white/65 to-white/55 p-3 shadow-[0_18px_40px_rgba(212,165,154,0.18)] backdrop-blur-xl md:p-4">
+      <div className="border-l-4 border-[#d4a59a] pl-3">
+        <p className="text-[10px] uppercase tracking-[0.3em] text-[#a88f84] md:text-xs">
           {locale === "ko" ? "Important Notes" : "Important Notes"}
         </p>
-        <h3 className="mt-1 text-2xl font-semibold text-[#6b4e44]">
+        <h3 className="text-base font-semibold text-[#6b4e44] md:text-lg">
           {locale === "ko" ? "주의사항" : "Cautions"}
         </h3>
-        <p className="mt-1 text-sm text-[#8b7266]">
+        <p className="text-[10px] text-[#8b7266] md:text-xs">
           {locale === "ko"
             ? "시술 전 꼭 확인해주세요"
             : "Please review before the treatment"}
         </p>
       </div>
 
-      <div className="mt-6 flex gap-4">
-        <span className="mt-1 text-3xl drop-shadow-sm">⚠️</span>
-        <p className="text-sm leading-relaxed text-[#8b7266] md:text-base">
+      <div className="mt-2 flex gap-2">
+        <span className="text-xl drop-shadow-sm md:text-2xl">⚠️</span>
+        <p className="text-xs leading-relaxed text-[#8b7266] md:text-sm">
           {text}
         </p>
       </div>
@@ -283,6 +277,17 @@ export default function ProtocolPage() {
   const handleContact = React.useCallback((treatment: any) => {
     log.debug('Contact for treatment:', treatment.id);
   }, []);
+
+  const handleRecommend = React.useCallback((treatment: any) => {
+    // 병원 페이지로 이동하면서 시술 정보를 query param으로 전달
+    const params = new URLSearchParams({
+      treatmentId: treatment.id,
+      treatmentNameKo: treatment.name?.ko || '',
+      treatmentNameEn: treatment.name?.en || '',
+    });
+
+    router.push(`/hospital?${params.toString()}`);
+  }, [router]);
 
   const handleAreaChange = React.useCallback((newAreaId: string) => {
     if (!topic_id) return;
@@ -338,6 +343,7 @@ export default function ProtocolPage() {
 
   const { areas, content } = topicDetail;
 
+  console.log('[ProtocolPage] rendering with content:', content);
   return (
     <div className="py-6 space-y-5 min-h-screen bg-gradient-to-br from-[#FDF5F0] via-white to-[#F8E8E0]">
       {/* Header */}
@@ -387,9 +393,9 @@ export default function ProtocolPage() {
       </div>
 
       {/* Treatment Content */}
-      <div className="space-y-10">
-        <div className="rounded-3xl border border-white/40 bg-gradient-to-br from-[#fff5f0] via-[#fff9f5] to-[#fde6dc] p-6 shadow-[0_25px_55px_rgba(212,165,154,0.18)] backdrop-blur-xl md:p-10">
-          <div className="space-y-10">
+      <div className="space-y-5">
+        <div className="rounded-2xl border border-white/40 bg-gradient-to-br from-[#fff5f0] via-[#fff9f5] to-[#fde6dc] p-4 shadow-[0_25px_55px_rgba(212,165,154,0.18)] backdrop-blur-xl md:p-6">
+          <div className="space-y-4">
             {content.sequence?.length ? (
               <SequenceTimeline
                 steps={content.sequence}
@@ -412,7 +418,7 @@ export default function ProtocolPage() {
         {/* Primary Treatments */}
         {content.primary_treatments.length > 0 && (
           <div>
-            <h2 className="text-xl font-bold text-[#8B4513] mb-4">
+            <h2 className="text-xl font-bold text-[#8B4513] mb-4 flex items-center gap-2">
               {locale === 'ko' ? '대표 시술' : 'Primary Treatments'} <InfoIcon kind="primary" />
             </h2>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -468,8 +474,9 @@ export default function ProtocolPage() {
                     }
                   }}
                   locale={locale}
-                  onBook={(treatment) => log.debug('Book treatment:', treatment.id)}
-                  onContact={(treatment) => log.debug('Contact for treatment:', treatment.id)}
+                  onBook={handleBook}
+                  onContact={handleContact}
+                  onShowRecommend={handleRecommend}
                   buildInfoLine={buildInfoLine}
                 />
               ))}
@@ -480,7 +487,7 @@ export default function ProtocolPage() {
         {/* Alternative Treatments */}
         {content.alt_treatments.length > 0 && (
           <div>
-            <h2 className="text-xl font-bold text-[#8B4513] mb-4">
+            <h2 className="text-xl font-bold text-[#8B4513] mb-4 flex items-center gap-2">
               {locale === 'ko' ? '대체/보완 시술' : 'Alternative Treatments'} <InfoIcon kind="alternative" />
             </h2>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -536,8 +543,9 @@ export default function ProtocolPage() {
                     }
                   }}
                   locale={locale}
-                  onBook={(treatment) => log.debug('Book treatment:', treatment.id)}
-                  onContact={(treatment) => log.debug('Contact for treatment:', treatment.id)}
+                  onBook={handleBook}
+                  onContact={handleContact}
+                  onShowRecommend={handleRecommend}
                   buildInfoLine={buildInfoLine}
                 />
               ))}
@@ -548,7 +556,7 @@ export default function ProtocolPage() {
         {/* Combo Treatments */}
         {content.combo_treatments.length > 0 && (
           <div>
-            <h2 className="text-xl font-bold text-[#8B4513] mb-4">
+            <h2 className="text-xl font-bold text-[#8B4513] mb-4 flex items-center gap-2">
               {locale === 'ko' ? '병합 권장 시술' : 'Combination Treatments'} <InfoIcon kind="combo" />
             </h2>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -604,8 +612,9 @@ export default function ProtocolPage() {
                     }
                   }}
                   locale={locale}
-                  onBook={(treatment) => log.debug('Book treatment:', treatment.id)}
-                  onContact={(treatment) => log.debug('Contact for treatment:', treatment.id)}
+                  onBook={handleBook}
+                  onContact={handleContact}
+                  onShowRecommend={handleRecommend}
                   buildInfoLine={buildInfoLine}
                 />
               ))}

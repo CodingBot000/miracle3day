@@ -16,9 +16,10 @@ export default function LoginClient() {
   const handleGoogleLogin = () => {
     // Pass redirect URL as state parameter to OAuth flow
     const oauthUrl = `/api/auth/google/start?state=${encodeURIComponent(redirectUrl)}`;
-
+    console.log('Login handleGoogleLogin oauthUrl:', oauthUrl);
     // Android WebView에서는 Chrome Custom Tabs 사용 (Google OAuth 정책)
     if (isAndroidWebView && window.AndroidBridge?.openGoogleLogin) {
+      console.log('Login handleGoogleLogin oauthUrl androidWebView');
       // 전체 URL 생성 (Android에서 절대 경로 필요)
       const fullUrl = `${window.location.origin}${oauthUrl}`;
       callNativeFunction('openGoogleLogin', fullUrl);

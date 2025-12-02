@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
-import KBeautyResources from '@/components/kbeauty-resources';
+import KBeautyResources from './kbeauty-resources';
+
 
 // SEO Metadata
 export const metadata: Metadata = {

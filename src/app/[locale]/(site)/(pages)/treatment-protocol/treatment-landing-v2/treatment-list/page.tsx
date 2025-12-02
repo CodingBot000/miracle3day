@@ -1,4 +1,9 @@
-
+ export default function TreatmentListPage() {
+    return (
+      <div>Treatment List Page - Under Construction</div>
+    );
+  }
+ 
 
 // "use client";
 

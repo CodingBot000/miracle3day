@@ -19,6 +19,6 @@ export default function robots(): MetadataRoute.Robots {
         '/admin/',
       ],
     },
-    sitemap: 'https://www.mimotok.com/sitemap.xml',
+    sitemap: 'https://mimotok.com/sitemap.xml',
   };
 }

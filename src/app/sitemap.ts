@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 import { locales } from '@/i18n/routing';
 
-const baseUrl = 'https://www.mimotok.com';
+const baseUrl = 'https://mimotok.com';
 
 // 공개 정적 페이지 (route group 제외, 실제 URL 경로)
 // 인증 필요 페이지, 내부용 페이지, deprecated 페이지 제외

@@ -169,10 +169,10 @@ export default function RecommendationResultPage() {
         output={recommendationOutput}
         formData={formData || undefined}
         onFindClinics={() => {
-          window.open('https://www.mimotok.com/hospital', '_blank', 'noopener,noreferrer');
+          window.open('https://mimotok.com/hospital', '_blank', 'noopener,noreferrer');
         }}
         onConsult={() => {
-          window.open('https://www.mimotok.com/hospital', '_blank', 'noopener,noreferrer');
+          window.open('https://mimotok.com/hospital', '_blank', 'noopener,noreferrer');
         }}
       />
     </div>

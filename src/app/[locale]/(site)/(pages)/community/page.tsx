@@ -14,10 +14,10 @@ interface CommunityPageProps {
   }
 }
 
-export default async function HomePage({ searchParams }: CommunityPageProps) {
+export default async function CommunityHomePage({ searchParams }: CommunityPageProps) {
   const cookieStore = cookies();
   const languageCookie = cookieStore.get('lang');
-  const language = (languageCookie?.value as 'ko' | 'en') || 'ko';
+  const language = (languageCookie?.value as 'ko' | 'en') || 'en';
 
   // 기본값: posts
   const currentView = searchParams?.view || 'posts';

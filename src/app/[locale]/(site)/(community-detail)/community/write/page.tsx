@@ -1,5 +1,4 @@
 import { redirect } from 'next/navigation';
-import { cookies } from "next/headers";
 import WriteForm from '@/components/molecules/WriteForm';
 import type { CommunityCategory } from '@/app/models/communityData.dto';
 import {
@@ -19,15 +18,18 @@ async function getCategories(): Promise<CommunityCategory[]> {
   return rows as CommunityCategory[];
 }
 
-export default async function WritePage() {
-
-  
-  const userId = await requireUserId();                 // ✅ 세션에서 보안적으로 추출
-  const member = await findMemberByUserId(userId);      // (원하면 생략 가능)
+export default async function WritePage({
+  searchParams,
+}: {
+  searchParams: { defaultTopic?: string; defaultTag?: string }
+}) {
+  const userId = await requireUserId();
+  const member = await findMemberByUserId(userId);
 
   if (!member) {
     redirect("/login");
   }
+
   const categories = await getCategories();
   const authorNameSnapshot =
     (member['nickname'] as string | undefined)?.trim() ??
@@ -35,6 +37,10 @@ export default async function WritePage() {
     null;
   const authorAvatarSnapshot =
     (member['avatar'] as string | undefined)?.trim() ?? null;
+
+  // URL params에서 기본값 가져오기
+  const defaultTopic = searchParams.defaultTopic || undefined;
+  const defaultTag = searchParams.defaultTag || undefined;
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -44,6 +50,8 @@ export default async function WritePage() {
           authorNameSnapshot={authorNameSnapshot}
           authorAvatarSnapshot={authorAvatarSnapshot}
           categories={categories}
+          defaultTopic={defaultTopic}
+          defaultTag={defaultTag}
         />
       </div>
     </div>

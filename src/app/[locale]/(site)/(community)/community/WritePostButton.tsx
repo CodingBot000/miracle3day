@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useLoginGuard } from '@/hooks/useLoginGuard'
 
 interface WritePostButtonProps {
@@ -9,6 +9,7 @@ interface WritePostButtonProps {
 
 export default function WritePostButton({ isAuthenticated }: WritePostButtonProps) {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const { requireLogin, loginModal } = useLoginGuard()
 
   const handleClick = () => {
@@ -16,7 +17,18 @@ export default function WritePostButton({ isAuthenticated }: WritePostButtonProp
       return
     }
 
-    router.push('/community/write')
+    // 현재 선택된 토픽과 태그를 URL params로 전달
+    const currentTopic = searchParams.get('topic')
+    const currentTag = searchParams.get('tag')
+
+    const params = new URLSearchParams()
+    if (currentTopic) params.set('defaultTopic', currentTopic)
+    if (currentTag) params.set('defaultTag', currentTag)
+
+    const queryString = params.toString()
+    const writeUrl = queryString ? `/community/write?${queryString}` : '/community/write'
+
+    router.push(writeUrl)
   }
 
   return (

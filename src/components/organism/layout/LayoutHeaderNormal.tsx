@@ -1,7 +1,7 @@
 "use client"
 
 import Logo from "@/components/molecules/Logo";
-import BackButton from "./BackButton";
+import BackButton from "../../common/BackButton";
 
 import { useState, useEffect } from "react";
 import { Link, usePathname } from "@/i18n/routing";

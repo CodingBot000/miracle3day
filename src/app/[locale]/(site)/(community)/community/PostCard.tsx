@@ -13,7 +13,7 @@ interface PostCardProps {
   formattedDate: string;
   commentCount: number;
   likeCount: number;
-  language: 'en' | 'ko';
+  language: 'en' | 'ko'  | 'ja' | 'zh-CN' | 'zh-TW';
   onClickPost: (event: MouseEvent<HTMLAnchorElement>, postId: number) => void;
 }
 
@@ -28,7 +28,7 @@ export default function PostCard({
 }: PostCardProps) {
   return (
     <div
-      className="block p-6 !border-2 !border-solid !border-gray-200 rounded-lg hover:!border-pink-300 hover:shadow-md transition-all bg-white"
+      className="block px-5 py-3 !border-2 !border-solid !border-gray-200 rounded-lg hover:!border-pink-300 hover:shadow-md transition-all bg-white"
     >
       <Link
         href={`/community/post/${post.id}`}
@@ -50,32 +50,34 @@ export default function PostCard({
                 {typeof post.tag.name === 'string' ? post.tag.name : post.tag.name[language]}
               </span>
             )}
-          </div>
-          {/* 작성자, 날짜 */}
-          <div className="flex items-center gap-2 text-sm text-gray-500 mb-3">
-            <div className="flex items-center gap-2">
-              <div className="h-6 w-6 overflow-hidden rounded-full bg-gray-200">
-                <img
-                  src={authorPresentation.avatar}
-                  alt={authorPresentation.name}
-                  className="h-full w-full object-cover"
-                  loading="lazy"
-                />
+
+            {/* 작성자, 날짜 */}
+            <div className="flex items-center gap-2 text-sm text-gray-500 mb-1 ml-auto">
+              <div className="flex items-center gap-2">
+                <div className="h-6 w-6 overflow-hidden rounded-full bg-gray-200">
+                  <img
+                    src={authorPresentation.avatar}
+                    alt={authorPresentation.name}
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
+                <span className="text-xs">{authorPresentation.name}</span>
               </div>
-              <span className="text-xs">{authorPresentation.name}</span>
+              <span>·</span>
+              <span className="text-xs">{formattedDate}</span>
             </div>
-            <span>·</span>
-            <span className="text-xs">{formattedDate}</span>
           </div>
+          
 
           {/* 제목과 내용 */}
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+          <h3 className="text-lg font-semibold text-gray-900">
             {post.title}
           </h3>
           <p className="text-gray-600 line-clamp-2 mb-3">{post.content}</p>
 
           {/* 통계: 조회수, 댓글, 좋아요 */}
-          <div className="flex items-center gap-4 text-sm text-gray-500 mt-auto pt-3 border-t border-gray-100">
+          <div className="flex items-center gap-4 text-sm text-gray-500 mt-auto pt-2 border-t border-gray-100">
             <div className="flex items-center gap-1">
               <span>👁</span>
               <span>{post.view_count}</span>

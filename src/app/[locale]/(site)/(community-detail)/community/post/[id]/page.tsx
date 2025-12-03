@@ -6,7 +6,6 @@ import { sessionOptions } from "@/lib/session";
 import CommentSection from '@/components/molecules/CommentSection';
 import { Member, CommunityPost, CommunityComment } from '@/app/models/communityData.dto';
 import PostNotFoundFallback from './PostNotFoundFallback';
-import SetCommunityHeader from '@/app/[locale]/(site)/(community)/community/SetCommunityHeader';
 import {
   TABLE_COMMUNITY_POSTS,
   TABLE_COMMUNITY_COMMENTS,
@@ -197,13 +196,15 @@ export default async function PostDetailPage({
 
   return (
     <div className="max-w-4xl mx-auto">
-      <SetCommunityHeader>
-        <div className="mt-4">
+      {/* Topic badge */}
+      {/* {topicName && (
+        <div className="mb-4">
           <span className="inline-flex px-4 py-2 rounded-full bg-blue-50 text-blue-700 text-sm font-medium">
-            {topicName ?? 'Community'}
+            {topicName}
           </span>
         </div>
-      </SetCommunityHeader>
+      )} */}
+
       <div className="bg-white rounded-lg shadow-lg p-8">
         <PostDetailCard
           post={post}

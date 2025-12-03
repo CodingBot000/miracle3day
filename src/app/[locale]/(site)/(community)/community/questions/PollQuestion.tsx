@@ -187,14 +187,14 @@ export default function PollQuestion({ question }: PollQuestionProps) {
   return (
     <div>
       <div className="flex items-center gap-1.5 sm:gap-2 mb-2 sm:mb-3 flex-wrap">
-        <span className="bg-green-100 text-green-800 text-xs sm:text-sm font-bold px-2 sm:px-3 py-0.5 sm:py-1 rounded-full">
+        <span className="bg-green-100 text-green-400 text-xs sm:text-sm font-bold px-2 sm:px-3 py-0.5 sm:py-1 rounded-full">
           {locale === 'ko' ? '📊 QUICK POLL' : '📊 QUICK POLL'}
         </span>
-        <span className="bg-yellow-100 text-yellow-800 text-xs sm:text-sm font-bold px-2 sm:px-3 py-0.5 sm:py-1 rounded-full">
+        <span className="bg-yellow-100 text-yellow-400 text-xs sm:text-sm font-bold px-2 sm:px-3 py-0.5 sm:py-1 rounded-full">
           +{question.points_reward} pts
         </span>
         {voted && (
-          <span className="bg-blue-100 text-blue-800 text-xs sm:text-sm font-bold px-2 sm:px-3 py-0.5 sm:py-1 rounded-full">
+          <span className="bg-blue-100 text-blue-400 text-xs sm:text-sm font-bold px-2 sm:px-3 py-0.5 sm:py-1 rounded-full">
             ✓ {locale === 'ko' ? '투표완료' : 'Voted'}
           </span>
         )}

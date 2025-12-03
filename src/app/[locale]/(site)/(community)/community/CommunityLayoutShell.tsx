@@ -2,9 +2,13 @@
 
 import { createContext, useCallback, useContext, useMemo, useState, useEffect, useRef, type ReactNode } from 'react'
 import type { CommunityCategory } from '@/app/models/communityData.dto'
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useLocale } from 'next-intl'
+import Logo from '@/components/molecules/Logo'
+import { useLoginGuard } from '@/hooks/useLoginGuard'
+import { toast } from 'sonner'
+import { Share2 } from 'lucide-react'
 
 type CommunityHeaderContextValue = {
   setHeaderContent: (content: ReactNode | null) => void
@@ -33,15 +37,26 @@ export default function CommunityLayoutShell({
 }: CommunityLayoutShellProps) {
   const [headerContent, setHeaderContentState] = useState<ReactNode | null>(null)
   const searchParams = useSearchParams()
+  const router = useRouter()
   const locale = useLocale()
   const currentView = searchParams.get('view') || 'posts'
   const currentTopic = searchParams.get('topic')
   const currentTag = searchParams.get('tag')
 
-  const topicsRef = useRef<HTMLDivElement>(null)
-  const tagsRef = useRef<HTMLDivElement>(null)
+  // Refs
+  const filtersRef = useRef<HTMLDivElement>(null)
+  const topicsScrollRef = useRef<HTMLDivElement>(null)
+  const tagsScrollRef = useRef<HTMLDivElement>(null)
+  const stickyTopicsScrollRef = useRef<HTMLDivElement>(null)
+  const stickyTagsScrollRef = useRef<HTMLDivElement>(null)
+
+  // States
+  const [showStickyFilters, setShowStickyFilters] = useState(false)
   const [showTopicsFade, setShowTopicsFade] = useState(false)
   const [showTagsFade, setShowTagsFade] = useState(false)
+
+  // Login guard for Write button
+  const { requireLogin, loginModal } = useLoginGuard()
 
   const setHeaderContent = useCallback((content: ReactNode | null) => {
     setHeaderContentState(content)
@@ -56,8 +71,6 @@ export default function CommunityLayoutShell({
   const getText = (jsonbField: any): string => {
     if (!jsonbField) return ''
     if (typeof jsonbField === 'string') return jsonbField
-
-    // JSONB 객체에서 현재 언어로 추출
     return jsonbField[locale] || jsonbField.ko || jsonbField.en || ''
   }
 
@@ -73,16 +86,30 @@ export default function CommunityLayoutShell({
     return `/community?${urlParams.toString()}`
   }
 
+  // Intersection Observer - 필터 가시성 감지
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setShowStickyFilters(!entry.isIntersecting)
+      },
+      { threshold: 0, rootMargin: '-120px 0px 0px 0px' }
+    )
+
+    if (filtersRef.current) {
+      observer.observe(filtersRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
+
   // 스크롤 가능 여부 확인
   useEffect(() => {
     const checkScroll = () => {
-      if (topicsRef.current) {
-        const hasScroll = topicsRef.current.scrollWidth > topicsRef.current.clientWidth
-        setShowTopicsFade(hasScroll)
+      if (topicsScrollRef.current) {
+        setShowTopicsFade(topicsScrollRef.current.scrollWidth > topicsScrollRef.current.clientWidth)
       }
-      if (tagsRef.current) {
-        const hasScroll = tagsRef.current.scrollWidth > tagsRef.current.clientWidth
-        setShowTagsFade(hasScroll)
+      if (tagsScrollRef.current) {
+        setShowTagsFade(tagsScrollRef.current.scrollWidth > tagsScrollRef.current.clientWidth)
       }
     }
 
@@ -94,259 +121,268 @@ export default function CommunityLayoutShell({
   const topicCategories = categories.filter(cat => cat.category_type === 'topic')
   const tagCategories = categories.filter(cat => cat.category_type === 'free')
 
-  // Daily Questions용 필터 정의
-  const DAILY_QUESTION_FILTERS = [
-    { value: 'all', label: { en: 'All', ko: '전체' }, icon: '📋' },
-    { value: 'trending', label: { en: 'Trending', ko: '인기' }, icon: '🔥' },
-    { value: 'seasonal', label: { en: 'Seasonal', ko: '계절' }, icon: '🌸' },
-    { value: 'urgent', label: { en: 'Urgent', ko: '긴급' }, icon: '⚡' },
-    { value: 'beginner', label: { en: 'Beginner', ko: '초보' }, icon: '🌟' }
-  ]
+  // Write Post 핸들러
+  const handleWritePost = () => {
+    if (!requireLogin()) return
+
+    const params = new URLSearchParams()
+    if (currentTopic) params.set('defaultTopic', currentTopic)
+    if (currentTag) params.set('defaultTag', currentTag)
+
+    const queryString = params.toString()
+    router.push(queryString ? `/community/write?${queryString}` : '/community/write')
+  }
+
+  // Share 핸들러
+  const handleShare = async () => {
+    const url = window.location.href
+    try {
+      await navigator.clipboard.writeText(url)
+      const messages: Record<string, string> = {
+        ko: '공유 가능한 주소를 클립보드에 복사했습니다.',
+        en: 'Shareable link copied to clipboard.',
+        ja: '共有可能なリンクをクリップボードにコピーしました。',
+        'zh-CN': '已将可分享的链接复制到剪贴板。',
+        'zh-TW': '已將可分享的連結複製到剪貼簿。',
+      }
+      toast.success(messages[locale] || messages.en)
+    } catch (err) {
+      console.error('Failed to copy URL:', err)
+    }
+  }
+
+  // 필터 버튼 렌더링 함수 (중복 제거)
+  const renderTopicButtons = (compact = false) => (
+    <>
+      <Link
+        href={buildUrl({ tag: currentTag })}
+        className={`flex-shrink-0 px-3 py-1.5 rounded-full text-sm whitespace-nowrap ${
+          !currentTopic
+            ? 'bg-pink-600 text-white'
+            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+        } ${compact ? 'text-xs' : ''}`}
+      >
+        {locale === 'ko' ? '전체' : 'All'}
+      </Link>
+      {topicCategories.map(topic => (
+        <Link
+          key={topic.id}
+          href={buildUrl({ topic: topic.id, tag: currentTag })}
+          className={`flex-shrink-0 px-3 py-1.5 rounded-full text-sm whitespace-nowrap ${
+            currentTopic === topic.id
+              ? 'bg-pink-600 text-white'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          } ${compact ? 'text-xs' : ''}`}
+        >
+          {getText(topic.name)}
+        </Link>
+      ))}
+    </>
+  )
+
+  const renderTagButtons = (compact = false) => (
+    <>
+      <Link
+        href={buildUrl({ topic: currentTopic })}
+        className={`flex-shrink-0 px-3 py-1.5 rounded-full text-sm whitespace-nowrap ${
+          !currentTag
+            ? 'bg-pink-600 text-white'
+            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+        } ${compact ? 'text-xs' : ''}`}
+      >
+        {locale === 'ko' ? '전체' : 'All'}
+      </Link>
+      {tagCategories.map(tag => (
+        <Link
+          key={tag.id}
+          href={buildUrl({ topic: currentTopic, tag: tag.id })}
+          className={`flex-shrink-0 px-3 py-1.5 rounded-full text-sm whitespace-nowrap ${
+            currentTag === tag.id
+              ? 'bg-pink-600 text-white'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          } ${compact ? 'text-xs' : ''}`}
+        >
+          {getText(tag.name)}
+        </Link>
+      ))}
+    </>
+  )
+
+  const scrollStyle = {
+    scrollbarWidth: 'none' as const,
+    msOverflowStyle: 'none' as const,
+    WebkitOverflowScrolling: 'touch' as const,
+  }
 
   return (
     <CommunityHeaderContext.Provider value={contextValue}>
-      <div className="min-h-full bg-gray-50 py-8 sm:py-10">
-        <div className="max-w-[1200px] mx-auto bg-white shadow-sm rounded-xl border border-gray-100">
-          <header className="border-b border-gray-100 px-6 py-4">
-            {/* <Link href="/community">
-              <h1 className="text-xl font-semibold text-gray-900">Beauty Community</h1>
-            </Link> */}
-
-            {headerContent ?? (
-              <div className="mt-6">
-                {/* 탭 네비게이션 */}
-                <div className="flex gap-2 border-b border-gray-200 mb-6">
+      <div className="min-h-screen bg-gray-50">
+        {/* 고정 헤더 */}
+        <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+          {/* 메인 헤더 row */}
+          <div className="max-w-[1200px] mx-auto px-4 py-3">
+            <div className="flex items-center justify-between">
+              {/* 왼쪽: 로고 + 탭 */}
+              <div className="flex items-center gap-6">
+                <Logo />
+                <nav className="flex items-center gap-1">
                   <Link
                     href="/community?view=posts"
-                    className={`px-6 py-3 ${
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                       currentView === 'posts'
-                        ? 'text-pink-600 border-b-2 border-pink-600 font-semibold'
-                        : 'text-gray-600 hover:text-gray-900'
+                        ? 'bg-pink-50 text-pink-600'
+                        : 'text-gray-600 hover:bg-gray-100'
                     }`}
                   >
-                    {locale === 'ko' ? '📝 게시판' : '📝 Posts'}
+                    {locale === 'ko' ? '게시판' : 'Posts'}
                   </Link>
                   <Link
                     href="/community?view=questions"
-                    className={`px-6 py-3 ${
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                       currentView === 'questions'
-                        ? 'text-pink-600 border-b-2 border-pink-600 font-semibold'
-                        : 'text-gray-600 hover:text-gray-900'
+                        ? 'bg-pink-50 text-pink-600'
+                        : 'text-gray-600 hover:bg-gray-100'
                     }`}
                   >
-                    {locale === 'ko' ? '💬 데일리 질문' : '💬 Daily Questions'}
+                    {locale === 'ko' ? '데일리 질문' : 'Daily-Q'}
                   </Link>
-                </div>
+                </nav>
+              </div>
 
-                {/* Topics 필터 - Horizontal Scroll (Posts 탭에서만 표시) */}
-                {currentView === 'posts' && (
+              {/* 오른쪽: Write Post + Share 버튼 */}
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleWritePost}
+                  className="bg-pink-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-pink-700 transition-colors"
+                >
+                  {locale === 'ko' ? '글쓰기' : 'Write'}
+                </button>
+                <button
+                  type="button"
+                  onClick={handleShare}
+                  className="p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors"
+                  aria-label="Share"
+                >
+                  <Share2 className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Sticky 필터 (스크롤 시 표시) */}
+          {showStickyFilters && currentView === 'posts' && (
+            <div className="border-t border-gray-100 bg-white/95 backdrop-blur-sm">
+              <div className="max-w-[1200px] mx-auto px-4 py-2 space-y-2">
+                {/* Topics */}
+                <div className="flex items-center gap-3">
+                  <span className="text-xs font-semibold text-gray-500 w-14 flex-shrink-0">TOPICS</span>
+                  <div
+                    ref={stickyTopicsScrollRef}
+                    className="flex gap-1.5 overflow-x-auto scrollbar-hide"
+                    style={scrollStyle}
+                  >
+                    {renderTopicButtons(true)}
+                  </div>
+                </div>
+                {/* Tags */}
+                <div className="flex items-center gap-3">
+                  <span className="text-xs font-semibold text-gray-500 w-14 flex-shrink-0">TAGS</span>
+                  <div
+                    ref={stickyTagsScrollRef}
+                    className="flex gap-1.5 overflow-x-auto scrollbar-hide"
+                    style={scrollStyle}
+                  >
+                    {renderTagButtons(true)}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </header>
+
+        {/* 메인 콘텐츠 */}
+        <div className="max-w-[1200px] mx-auto px-4 py-6">
+          {headerContent ?? (
+            <>
+              {/* 원본 필터 영역 (Intersection Observer 감지 대상) */}
+              {currentView === 'posts' && (
+                <div ref={filtersRef} className="bg-white rounded-xl border border-gray-100 p-4 mb-6">
+                  {/* Topics */}
                   <div className="mb-4">
                     <h3 className="text-sm font-semibold text-gray-700 mb-2">
                       {locale === 'ko' ? '🎨 주제' : '🎨 TOPICS'}
                     </h3>
                     <div className="relative">
                       <div
-                        ref={topicsRef}
+                        ref={topicsScrollRef}
                         className="flex gap-2 overflow-x-auto scrollbar-hide scroll-smooth"
-                        style={{
-                          scrollbarWidth: 'none',
-                          msOverflowStyle: 'none',
-                          WebkitOverflowScrolling: 'touch'
-                        }}
+                        style={scrollStyle}
                       >
-                        <Link
-                          href={buildUrl({ tag: currentTag })}
-                          className={`flex-shrink-0 px-4 py-2 rounded-full text-sm whitespace-nowrap ${
-                            !currentTopic
-                              ? 'bg-pink-600 text-white'
-                              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                          }`}
-                        >
-                          {locale === 'ko' ? '전체' : 'All'}
-                        </Link>
-                        {topicCategories.map(topic => (
-                          <Link
-                            key={topic.id}
-                            href={buildUrl({ topic: topic.id, tag: currentTag })}
-                            className={`flex-shrink-0 px-4 py-2 rounded-full text-sm whitespace-nowrap ${
-                              currentTopic === topic.id
-                                ? 'bg-pink-600 text-white'
-                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                            }`}
-                          >
-                            {getText(topic.name)}
-                          </Link>
-                        ))}
-                        {/* 여백 추가 - 마지막 항목 일부가 보이도록 */}
+                        {renderTopicButtons()}
                         <div className="flex-shrink-0 w-4" />
                       </div>
-
-                      {/* Fade Gradient - 오른쪽 */}
                       {showTopicsFade && (
-                        <div
-                          className="absolute top-0 right-0 h-full w-12 pointer-events-none bg-gradient-to-l from-white to-transparent"
-                        />
+                        <div className="absolute top-0 right-0 h-full w-12 pointer-events-none bg-gradient-to-l from-white to-transparent" />
                       )}
                     </div>
                   </div>
-                )}
 
-                {/* Daily Questions - Topics + Filters (Questions 탭에서만 표시) */}
-                {currentView === 'questions' && (
-                  <>
-                    {/* Topics 필터 - Daily Questions에도 표시 */}
-                    <div className="mb-4">
-                      <h3 className="text-sm font-semibold text-gray-700 mb-2">
-                        {locale === 'ko' ? '🎨 주제' : '🎨 TOPICS'}
-                      </h3>
-                      <div className="relative">
-                        <div
-                          ref={topicsRef}
-                          className="flex gap-2 overflow-x-auto scrollbar-hide scroll-smooth"
-                          style={{
-                            scrollbarWidth: 'none',
-                            msOverflowStyle: 'none',
-                            WebkitOverflowScrolling: 'touch'
-                          }}
-                        >
-                          <Link
-                            href={buildUrl({ tag: currentTag, filter: searchParams.get('filter') })}
-                            className={`flex-shrink-0 px-4 py-2 rounded-full text-sm whitespace-nowrap ${
-                              !currentTopic
-                                ? 'bg-pink-600 text-white'
-                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                            }`}
-                          >
-                            {locale === 'ko' ? '전체' : 'All'}
-                          </Link>
-                          {topicCategories.map(topic => (
-                            <Link
-                              key={topic.id}
-                              href={buildUrl({ topic: topic.id, tag: currentTag, filter: searchParams.get('filter') })}
-                              className={`flex-shrink-0 px-4 py-2 rounded-full text-sm whitespace-nowrap ${
-                                currentTopic === topic.id
-                                  ? 'bg-pink-600 text-white'
-                                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                              }`}
-                            >
-                              {getText(topic.name)}
-                            </Link>
-                          ))}
-                          {/* 여백 추가 - 마지막 항목 일부가 보이도록 */}
-                          <div className="flex-shrink-0 w-4" />
-                        </div>
-
-                        {/* Fade Gradient - 오른쪽 */}
-                        {showTopicsFade && (
-                          <div
-                            className="absolute top-0 right-0 h-full w-12 pointer-events-none bg-gradient-to-l from-white to-transparent"
-                          />
-                        )}
-                      </div>
-                    </div>
-
-                    {/* 필터 - Daily Questions 전용 */}
-                    <div className="mb-6">
-                      <h3 className="text-sm font-semibold text-gray-700 mb-2">
-                        {locale === 'ko' ? '🏷️ 필터' : '🏷️ FILTERS'}
-                      </h3>
-                      <div className="relative">
-                        <div
-                          ref={tagsRef}
-                          className="flex gap-2 overflow-x-auto scrollbar-hide scroll-smooth"
-                          style={{
-                            scrollbarWidth: 'none',
-                            msOverflowStyle: 'none',
-                            WebkitOverflowScrolling: 'touch'
-                          }}
-                        >
-                          {DAILY_QUESTION_FILTERS.map(filter => (
-                            <Link
-                              key={filter.value}
-                              href={buildUrl({ topic: currentTopic, filter: filter.value === 'all' ? undefined : filter.value })}
-                              className={`flex-shrink-0 px-4 py-2 rounded-full text-sm whitespace-nowrap ${
-                                (filter.value === 'all' && !searchParams.get('filter')) || searchParams.get('filter') === filter.value
-                                  ? 'bg-pink-600 text-white'
-                                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                              }`}
-                            >
-                              {filter.icon} {getText(filter.label)}
-                            </Link>
-                          ))}
-                          {/* 여백 추가 - 마지막 항목 일부가 보이도록 */}
-                          <div className="flex-shrink-0 w-4" />
-                        </div>
-
-                        {/* Fade Gradient - 오른쪽 */}
-                        {showTagsFade && (
-                          <div
-                            className="absolute top-0 right-0 h-full w-12 pointer-events-none bg-gradient-to-l from-white to-transparent"
-                          />
-                        )}
-                      </div>
-                    </div>
-                  </>
-                )}
-
-                {/* Tags 필터 - Horizontal Scroll (Posts 탭에서만 표시) */}
-                {currentView === 'posts' && (
-                  <div className="mb-6">
+                  {/* Tags */}
+                  <div>
                     <h3 className="text-sm font-semibold text-gray-700 mb-2">
                       {locale === 'ko' ? '📂 태그' : '📂 TAGS'}
                     </h3>
                     <div className="relative">
                       <div
-                        ref={tagsRef}
+                        ref={tagsScrollRef}
                         className="flex gap-2 overflow-x-auto scrollbar-hide scroll-smooth"
-                        style={{
-                          scrollbarWidth: 'none',
-                          msOverflowStyle: 'none',
-                          WebkitOverflowScrolling: 'touch'
-                        }}
+                        style={scrollStyle}
                       >
-                        <Link
-                          href={buildUrl({ topic: currentTopic })}
-                          className={`flex-shrink-0 px-4 py-2 rounded-full text-sm whitespace-nowrap ${
-                            !currentTag
-                              ? 'bg-pink-600 text-white'
-                              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                          }`}
-                        >
-                          {locale === 'ko' ? '전체' : 'All'}
-                        </Link>
-                        {tagCategories.map(tag => (
-                          <Link
-                            key={tag.id}
-                            href={buildUrl({ topic: currentTopic, tag: tag.id })}
-                            className={`flex-shrink-0 px-4 py-2 rounded-full text-sm whitespace-nowrap ${
-                              currentTag === tag.id
-                                ? 'bg-pink-600 text-white'
-                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                            }`}
-                          >
-                            {getText(tag.name)}
-                          </Link>
-                        ))}
-                        {/* 여백 추가 */}
+                        {renderTagButtons()}
                         <div className="flex-shrink-0 w-4" />
                       </div>
-
-                      {/* Fade Gradient - 오른쪽 */}
                       {showTagsFade && (
-                        <div
-                          className="absolute top-0 right-0 h-full w-12 pointer-events-none bg-gradient-to-l from-white to-transparent"
-                        />
+                        <div className="absolute top-0 right-0 h-full w-12 pointer-events-none bg-gradient-to-l from-white to-transparent" />
                       )}
                     </div>
                   </div>
-                )}
-              </div>
-            )}
-          </header>
-          <div className="px-6 py-6">
-            {children}
+                </div>
+              )}
+
+              {/* Questions 탭일 때 필터 */}
+              {currentView === 'questions' && (
+                <div ref={filtersRef} className="bg-white rounded-xl border border-gray-100 p-4 mb-6">
+                  <div className="mb-4">
+                    <h3 className="text-sm font-semibold text-gray-700 mb-2">
+                      {locale === 'ko' ? '🎨 주제' : '🎨 TOPICS'}
+                    </h3>
+                    <div className="relative">
+                      <div
+                        ref={topicsScrollRef}
+                        className="flex gap-2 overflow-x-auto scrollbar-hide scroll-smooth"
+                        style={scrollStyle}
+                      >
+                        {renderTopicButtons()}
+                        <div className="flex-shrink-0 w-4" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+
+          {/* Children */}
+          <div className="bg-white rounded-xl border border-gray-100">
+            <div className="p-6">
+              {children}
+            </div>
           </div>
         </div>
+
+        {/* Login Modal */}
+        {loginModal}
       </div>
     </CommunityHeaderContext.Provider>
   )

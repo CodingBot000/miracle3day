@@ -2,7 +2,7 @@ import Link from 'next/link';
 import LikeButton from '@/components/atoms/button/LikeButton';
 import ReportButton from '@/components/atoms/button/ReportButton';
 import { CommunityPost } from '@/app/models/communityData.dto';
-import { ANONYMOUS_FALLBACK } from '@/app/[locale]/(site)/(community)/community/utils';
+import { ANONYMOUS_FALLBACK } from '@/utils/community';
 
 export interface PostDetailData {
   post: CommunityPost & {
@@ -50,7 +50,6 @@ export default function PostDetailCard({
   isAuthenticated,
   language,
 }: PostDetailData) {
-  console.log('PostDetailCard language:', language);
   const topicName =
     post.topic_is_active === false ? null : getDisplayName(post.topic_name, language);
   const tagName =
@@ -71,12 +70,12 @@ export default function PostDetailCard({
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">
           {topicName && (
-            <span className="bg-blue-100 text-white px-3 py-1 rounded-full text-sm">
+            <span className="bg-blue-100 text-white px-3 py-1 rounded-full text-sm md:text-base">
               {post.topic_icon && `${post.topic_icon} `}{topicName}
             </span>
           )}
           {tagName && (
-            <span className="bg-green-100 text-white px-3 py-1 rounded-full text-sm">
+            <span className="bg-green-100 text-white px-3 py-1 rounded-full text-sm md:text-base">
               {post.tag_icon && `${post.tag_icon} `}{tagName}
             </span>
           )}
@@ -94,7 +93,7 @@ export default function PostDetailCard({
       </div>
       {/* 작성자, 날짜 */}
       <div className="flex items-center gap-3 text-gray-500 text-sm mb-4">
-        <span className="block h-9 w-9 overflow-hidden rounded-full bg-gray-200">
+        <span className="block h-7 w-7 overflow-hidden rounded-full bg-gray-200">
           <img
             src={authorAvatar}
             alt={authorName}
@@ -106,9 +105,9 @@ export default function PostDetailCard({
         <span>·</span>
         <span>{formattedCreatedAt}</span>
       </div>
-      <h1 className="text-xl md:text-3xl font-bold mb-4">{post.title}</h1>
-      <div className="prose max-w-none mb-3">
-        <p className="whitespace-pre-wrap">{post.content}</p>
+      <h1 className="text-xl md:text-2xl font-bold mb-1">{post.title}</h1>
+      <div className="prose max-w-none mb-2">
+        <p className="whitespace-pre-wrap text-sm md:text-base">{post.content}</p>
       </div>
       <div className="flex items-center justify-between pt-4 border-t">
         <div className="flex items-center gap-4">
@@ -118,11 +117,11 @@ export default function PostDetailCard({
             initialCount={likeCount}
             isAuthenticated={isAuthenticated}
           />
-          <div className="flex items-center gap-1 text-gray-500">
+          <div className="flex items-center gap-1 text-xs md:text-sm  text-gray-500">
             <span>👁</span>
             <span>{viewCount}</span>
           </div>
-          <div className="flex items-center gap-1 text-gray-500">
+          <div className="flex items-center gap-1 text-xs md:text-sm  text-gray-500">
             <span>💬</span>
             <span>{commentCount}</span>
           </div>

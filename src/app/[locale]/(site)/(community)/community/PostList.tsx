@@ -95,7 +95,7 @@ export default function PostList({ posts, isAuthenticated }: PostListProps) {
                 formattedDate={formattedDate}
                 commentCount={commentCount}
                 likeCount={likeCount}
-                language={locale as 'ko' | 'en'}
+                language={locale as 'ko' | 'en' | 'ja' | 'zh-CN' | 'zh-TW'}
                 onClickPost={handleClick}
               />
             )

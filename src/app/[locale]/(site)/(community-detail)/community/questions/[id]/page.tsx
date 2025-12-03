@@ -106,16 +106,7 @@ export default async function QuestionDetailPage({
   const colors = typeColors[question.id_category as keyof typeof typeColors] || typeColors.open;
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-6">
-      {/* 뒤로가기 */}
-      <Link
-        href={`/community/questions${question.id_category ? `?type=${question.id_category}` : ''}`}
-        className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6"
-      >
-        <span>←</span>
-        <span>{language === 'ko' ? '질문 목록으로' : 'Question List'}</span>
-      </Link>
-
+    <div className="max-w-4xl mx-auto">
       {/* 질문 카드 */}
       <div className={`${colors.bg} border-l-4 ${colors.border} rounded-xl p-6 mb-6 shadow-md`}>
         {/* 배지 */}
@@ -150,7 +141,6 @@ export default async function QuestionDetailPage({
         {/* 상황 설명 */}
         {question.situation_context && (
           <div className="bg-white/50 border-l-4 border-orange-500 p-4 rounded-lg mt-4">
-            {/* <div className="font-bold text-orange-800 text-sm mb-2">📍 상황</div> */}
             <div className="text-gray-700 leading-relaxed whitespace-pre-line">
               {getLocalizedText(question.situation_context, language)}
             </div>

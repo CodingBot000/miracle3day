@@ -196,9 +196,9 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
       <HospitalLanguageSupport available_language={hospital_details.available_languages}/>
       
               {/* Youtube Video */}
-              {hospital_details.youtube && (
+              {/* {hospital_details.youtube && (
               <HospitalYouTubePreview youtube={hospital_details.youtube} />
-              )}
+              )} */}
 
       {/* <InstagramFeed feedId="bccc1448-efd4-4895-af05-a47a57c4531d" /> */}
 

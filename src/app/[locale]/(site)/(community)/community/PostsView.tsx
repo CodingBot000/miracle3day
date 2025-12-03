@@ -66,7 +66,7 @@ export default async function PostsView({ topicId, tagId, language }: PostsViewP
       {/* Posts 목록 */}
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold">{headerLabel}</h2>
-        <WritePostButton isAuthenticated={isAuthenticated} />
+        {/* <WritePostButton isAuthenticated={isAuthenticated} /> */}
       </div>
 
       <div className="bg-white rounded-lg shadow">

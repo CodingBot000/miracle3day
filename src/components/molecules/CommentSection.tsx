@@ -169,7 +169,7 @@ export default function CommentSection({
     <>
       {loginModal}
       <div className="mt-8 pt-8 border-t">
-        <h3 className="text-sm md:text-3xl font-semibold mb-2">
+        <h3 className="text-sm md:text-base font-semibold mb-2">
           {totalComments} {t('comments')}
         </h3>
 
@@ -193,7 +193,7 @@ export default function CommentSection({
           </div>
         ) : (
           <div className="mb-6 p-6 bg-gray-50 rounded-lg text-center">
-            <p className="text-gray-600 mb-4">
+            <p className="text-gray-600 mb-4 text-base md:text-lg">
               {t('loginToComment')}
             </p>
             <button

@@ -83,7 +83,7 @@ export default function LikeButton({
       <button
         onClick={handleToggleLike}
         disabled={isLoading}
-        className={`flex items-center gap-1 px-3 py-1 rounded-full transition-colors ${
+        className={`flex items-center text-xs md:text-sm gap-1 px-3 py-1 rounded-full transition-colors ${
           isLiked
             ? 'bg-red-100 text-red-600 hover:bg-red-200'
             : 'bg-gray-100 text-gray-600 hover:bg-gray-200'

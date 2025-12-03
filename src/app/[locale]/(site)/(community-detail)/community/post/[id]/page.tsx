@@ -197,13 +197,13 @@ export default async function PostDetailPage({
   return (
     <div className="max-w-4xl mx-auto">
       {/* Topic badge */}
-      {topicName && (
+      {/* {topicName && (
         <div className="mb-4">
           <span className="inline-flex px-4 py-2 rounded-full bg-blue-50 text-blue-700 text-sm font-medium">
             {topicName}
           </span>
         </div>
-      )}
+      )} */}
 
       <div className="bg-white rounded-lg shadow-lg p-8">
         <PostDetailCard

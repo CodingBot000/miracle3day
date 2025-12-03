@@ -1,7 +1,7 @@
 "use client"
 
 import Logo from "@/components/molecules/Logo";
-import BackButton from "../../common/BackButton";
+import BackButton from "@/components/common/BackButton";
 
 import { useState, useEffect } from "react";
 import { Link, usePathname } from "@/i18n/routing";
@@ -9,15 +9,12 @@ import { Link, usePathname } from "@/i18n/routing";
 import { useHeader } from "@/contexts/HeaderContext";
 import { useMobileModeStore } from "@/stores/useMobileModeStore";
 
-const LayoutHeaderNormal = () => {
+const LayoutHeadeerCommunity = () => {
  
   const [scrollPosition, setScrollPosition] = useState(0);
   const { isTransparentMode } = useHeader();
   const { isMobileMode } = useMobileModeStore();
   const pathname = usePathname();
-
-  // Check if current page is home
-  const isHomePage = pathname === '/' || pathname === '/home';
 
   // Check if current page is auth (login, terms, etc.)
   const isAuthPage = pathname?.startsWith('/auth') ?? false;
@@ -138,4 +135,4 @@ const LayoutHeaderNormal = () => {
   );
 };
 
-export default LayoutHeaderNormal;
+export default LayoutHeadeerCommunity;

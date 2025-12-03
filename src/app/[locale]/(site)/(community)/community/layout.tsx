@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { getCommunityCategories } from '@/app/api/community/getPosts'
 import CommunityLayoutShell from './CommunityLayoutShell'
+import LayoutHeaderNormal from '@/components/organism/layout/LayoutHeaderNormal'
+import LayoutHeadeerCommunity from './LayoutHeaderCommunity'
 
 export const metadata: Metadata = {
   title: 'Beauty Community',
@@ -22,8 +24,11 @@ export default async function CommunityLayout({
   }
 
   return (
-    <CommunityLayoutShell categories={categories}>
-      {children}
-    </CommunityLayoutShell>
+    <>
+      <LayoutHeadeerCommunity />
+      <CommunityLayoutShell categories={categories}>
+        {children}
+      </CommunityLayoutShell>
+    </>
   )
 }

@@ -2,7 +2,7 @@
 // import Auth from "@/components/molecules/auth";
 import Logo from "@/components/molecules/Logo";
 import LanguageSwitcherNextIntl from "./LanguageSwitcherNextIntl";
-import BackButton from "./BackButton";
+import BackButton from "../../common/BackButton";
 
 import { useState, useEffect } from "react";
 import { Search, MessageSquareText, MessageCircle } from "lucide-react";

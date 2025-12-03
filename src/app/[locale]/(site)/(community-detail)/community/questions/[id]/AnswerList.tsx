@@ -13,7 +13,7 @@ interface AnswerListProps {
 export default function AnswerList({ answers, questionId, currentUserUuid }: AnswerListProps) {
   const [answersList, setAnswersList] = useState(answers);
   const locale = useLocale();
-  
+
   if (!answersList || answersList.length === 0) {
     return (
       <div className="text-center py-12">

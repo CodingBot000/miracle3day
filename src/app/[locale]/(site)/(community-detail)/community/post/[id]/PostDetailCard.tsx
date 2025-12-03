@@ -2,7 +2,7 @@ import Link from 'next/link';
 import LikeButton from '@/components/atoms/button/LikeButton';
 import ReportButton from '@/components/atoms/button/ReportButton';
 import { CommunityPost } from '@/app/models/communityData.dto';
-import { ANONYMOUS_FALLBACK } from '@/app/[locale]/(site)/(community)/community/utils';
+import { ANONYMOUS_FALLBACK } from '@/utils/community';
 
 export interface PostDetailData {
   post: CommunityPost & {
@@ -50,7 +50,6 @@ export default function PostDetailCard({
   isAuthenticated,
   language,
 }: PostDetailData) {
-  console.log('PostDetailCard language:', language);
   const topicName =
     post.topic_is_active === false ? null : getDisplayName(post.topic_name, language);
   const tagName =

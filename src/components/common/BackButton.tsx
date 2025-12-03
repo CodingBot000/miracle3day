@@ -1,47 +1,41 @@
-"use client";
+"use client"
 
-import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
-import clsx from "clsx";
+import { useRouter } from "next/navigation";
+import { usePlatform, useWebViewBridge } from "@/hooks/usePlatform";
 
-type Size = "sm" | "md" | "lg" | number;
+interface BackButtonProps {
+  iconColor?: 'white' | 'black';
+}
 
-export default function BackButton({
-  size = "md",          // 버튼 크기 (sm | md | lg | 숫자 px)
-  strokeWidth = 2.5,    // 아이콘 선 굵기
-  className,
-}: {
-  size?: Size;
-  strokeWidth?: number;
-  className?: string;
-}) {
+const BackButton = ({ iconColor = 'black' }: BackButtonProps) => {
   const router = useRouter();
+  const { isAndroidWebView } = usePlatform();
+  const { callNativeFunction } = useWebViewBridge();
 
-  // 미리 정의된 텍스트 크기 매핑
-  const iconSize =
-    typeof size === "number"
-      ? size
-      : size === "sm"
-      ? 18
-      : size === "lg"
-      ? 28
-      : 22; // md 기본값
+  const handleBack = () => {
+    // Android WebView에서는 네이티브 뒤로가기 호출
+    if (isAndroidWebView && window.AndroidBridge?.goBack) {
+      callNativeFunction('goBack');
+      return;
+    }
+
+    // 일반 브라우저는 router.back() 사용
+    router.back();
+  };
 
   return (
     <button
-      onClick={() => router.back()}
-      aria-label="뒤로가기"
-      className={clsx(
-        "inline-flex items-center justify-center rounded-full hover:bg-gray-100",
-        "text-gray-700 transition-colors",
-        className
-      )}
-      style={{
-        width: iconSize + 12,  // 터치 영역 확보
-        height: iconSize + 12,
-      }}
+      onClick={handleBack}
+      className={`flex items-center gap-2 transition-colors duration-300 ${
+        iconColor === 'white' ? 'text-white' : 'text-black'
+      }`}
+      aria-label="Go back"
     >
-      <ArrowLeft size={iconSize} strokeWidth={strokeWidth} />
+      <ArrowLeft size={20} />
+      {/* <span className="text-sm font-medium">Back</span> */}
     </button>
   );
-}
+};
+
+export default BackButton;

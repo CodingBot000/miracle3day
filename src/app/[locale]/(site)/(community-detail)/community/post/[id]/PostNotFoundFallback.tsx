@@ -8,7 +8,7 @@ export default function PostNotFoundFallback() {
   const router = useRouter()
 
   useEffect(() => {
-    toast.error('Post not found PostNotFoundFallback')
+    toast.error('Post not found')
 
     const timeoutId = window.setTimeout(() => {
       if (window.history.length > 1) {

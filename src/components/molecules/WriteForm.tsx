@@ -21,6 +21,9 @@ interface WriteFormProps {
     is_anonymous?: boolean;
   };
   postId?: number;
+  // URL params에서 전달받은 기본값 (새 글 작성 시 사용)
+  defaultTopic?: string;
+  defaultTag?: string;
 }
 
 export default function WriteForm({
@@ -29,13 +32,16 @@ export default function WriteForm({
   categories,
   initialData,
   postId,
+  defaultTopic,
+  defaultTag,
 }: WriteFormProps) {
   const router = useRouter();
   const locale = useLocale();
   const [title, setTitle] = useState(initialData?.title || '');
   const [content, setContent] = useState(initialData?.content || '');
-  const [topicId, setTopicId] = useState<string>(initialData?.topic_id || '');
-  const [postTag, setPostTag] = useState<string>(initialData?.post_tag || '');
+  // initialData가 있으면 (수정 모드) 그 값을 사용, 없으면 defaultTopic/defaultTag 사용
+  const [topicId, setTopicId] = useState<string>(initialData?.topic_id || defaultTopic || '');
+  const [postTag, setPostTag] = useState<string>(initialData?.post_tag || defaultTag || '');
   const [isAnonymous, setIsAnonymous] = useState(initialData?.is_anonymous || false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [levelUp, setLevelUp] = useState<LevelUpNotification | null>(null);
@@ -107,11 +113,14 @@ export default function WriteForm({
           }
         }
 
-        if (data?.post?.id) {
-          router.push(`/community/post/${data.post.id}`);
-        } else {
-          router.push('/community');
-        }
+        // 작성 완료 후 해당 토픽의 리스트 페이지로 이동
+        // 사용자가 작성한 글이 바로 보이도록 함
+        const redirectParams = new URLSearchParams();
+        redirectParams.set('view', 'posts');
+        if (topicId) redirectParams.set('topic', topicId);
+        if (postTag) redirectParams.set('tag', postTag);
+
+        router.push(`/community?${redirectParams.toString()}`)
       }
     } catch (error) {
       console.error('Error submitting post:', error);

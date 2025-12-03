@@ -1,5 +1,4 @@
 import { redirect } from 'next/navigation';
-import { cookies } from "next/headers";
 import WriteForm from '@/components/molecules/WriteForm';
 import type { CommunityCategory } from '@/app/models/communityData.dto';
 import {
@@ -25,14 +24,12 @@ export default async function EditPage({
 }: {
   params: { id: string };
 }) {
-  const userId = await requireUserId();                 // ✅ 세션에서 보안적으로 추출
-  const member = await findMemberByUserId(userId);      // (원하면 생략 가능)
+  const userId = await requireUserId();
+  const member = await findMemberByUserId(userId);
 
   if (!member) {
     redirect("/login");
   }
-
- 
 
   const memberUuid =
     (member['uuid'] as string | undefined) ??

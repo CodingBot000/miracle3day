@@ -8,29 +8,29 @@ import { getPollQuestionById, getPollOptionsWithVotes, getUserPollVote } from '@
 import { getPollComments } from '@/services/pollComments';
 import { findMemberByUserId } from '@/app/api/auth/getUser/member.helper';
 
-export default async function PollResultsPage({ 
-  params 
-}: { 
+export default async function PollResultsPage({
+  params
+}: {
   params: Promise<{ id: string }> | { id: string }
 }) {
   // Next.js 15+에서는 params가 Promise일 수 있음
   const resolvedParams = await Promise.resolve(params);
   const questionId = parseInt(resolvedParams.id);
-  
+
   if (!Number.isFinite(questionId) || questionId <= 0) {
     notFound();
-    return; // TypeScript를 위한 return (실제로는 실행되지 않음)
+    return;
   }
 
   // 병렬로 데이터 fetch
   const [question, options] = await Promise.all([
     getPollQuestionById(questionId),
-    getPollOptionsWithVotes(questionId, null), // 초기 로드는 memberUuid 없이
+    getPollOptionsWithVotes(questionId, null),
   ]);
 
   if (!question) {
     notFound();
-    return; // TypeScript를 위한 return (실제로는 실행되지 않음)
+    return;
   }
 
   // 사용자 인증 확인
@@ -41,12 +41,12 @@ export default async function PollResultsPage({
   let userVote = null;
   let memberUuid: string | null = null;
   let isAuthenticated = false;
-  
+
   if (auth && auth.status === 'active' && auth.id_uuid) {
     isAuthenticated = true;
     const member = await findMemberByUserId(auth.id_uuid);
     memberUuid = member?.uuid || member?.id_uuid || auth.id_uuid;
-    
+
     // 사용자 투표 정보 가져오기
     if (memberUuid) {
       userVote = await getUserPollVote(questionId, memberUuid);
@@ -89,19 +89,19 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     // Next.js 15+에서는 params가 Promise일 수 있음
     const resolvedParams = await Promise.resolve(params);
     const questionId = parseInt(resolvedParams.id);
-    
+
     if (!Number.isFinite(questionId) || questionId <= 0) {
       return { title: 'Poll Not Found - MimoTok Community' };
     }
 
     const question = await getPollQuestionById(questionId);
-    
+
     if (!question) {
       return { title: 'Poll Not Found - MimoTok Community' };
     }
 
-    const title = typeof question.title === 'string' 
-      ? question.title 
+    const title = typeof question.title === 'string'
+      ? question.title
       : question.title?.en || 'Poll Results';
 
     return {
@@ -115,4 +115,3 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     return { title: 'Poll Results - MimoTok Community' };
   }
 }
-

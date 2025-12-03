@@ -13,6 +13,7 @@ import { MobileAnalysisLoadingScreen } from '@/app/[locale]/(consult)/common/ana
 
 const RESULT_STORAGE_KEY = 'recommendation_result';
 const FORM_DATA_STORAGE_KEY = 'recommendation_form_data';
+const SUBMISSION_ID_STORAGE_KEY = 'recommendation_submission_id';
 
 export default function RecommendationResultPage() {
   const router = useRouter();
@@ -21,11 +22,13 @@ export default function RecommendationResultPage() {
   const [showDataLostModal, setShowDataLostModal] = useState(false);
   const [recommendationOutput, setRecommendationOutput] = useState<RecommendationOutput | null>(null);
   const [formData, setFormData] = useState<Record<string, any> | null>(null);
+  const [submissionId, setSubmissionId] = useState<string | null>(null);
 
   useEffect(() => {
     // sessionStorage에서 데이터 가져오기
     const storedResult = sessionStorage.getItem(RESULT_STORAGE_KEY);
     const storedFormData = sessionStorage.getItem(FORM_DATA_STORAGE_KEY);
+    const storedSubmissionId = sessionStorage.getItem(SUBMISSION_ID_STORAGE_KEY);
 
     if (!storedResult) {
       // 데이터가 없으면 모달 표시
@@ -43,6 +46,7 @@ export default function RecommendationResultPage() {
       const timer = setTimeout(() => {
         setRecommendationOutput(parsedResult);
         setFormData(parsedFormData);
+        setSubmissionId(storedSubmissionId);
         setIsLoading(false);
 
         // sessionStorage는 브라우저 탭이 닫힐 때까지 유지 (새로고침해도 유지됨)
@@ -168,6 +172,7 @@ export default function RecommendationResultPage() {
       <RecommendationResult
         output={recommendationOutput}
         formData={formData || undefined}
+        submissionId={submissionId || undefined}
         onFindClinics={() => {
           window.open('https://mimotok.com/hospital', '_blank', 'noopener,noreferrer');
         }}

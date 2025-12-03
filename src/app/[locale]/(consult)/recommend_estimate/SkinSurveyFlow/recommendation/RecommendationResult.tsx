@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLocale } from 'next-intl';
@@ -17,6 +17,7 @@ import { AlertCircle, Sparkles, Info, RotateCcw, Home } from 'lucide-react';
 export interface RecommendationResultProps {
   output: RecommendationOutput;
   formData?: Record<string, any>;
+  submissionId?: string;
   onFindClinics?: () => void;
   onConsult?: () => void;
 }
@@ -37,6 +38,7 @@ const staggerContainer = {
 const RecommendationResult: React.FC<RecommendationResultProps> = ({
   output,
   formData,
+  submissionId,
   onFindClinics,
   onConsult,
 }) => {
@@ -45,6 +47,56 @@ const RecommendationResult: React.FC<RecommendationResultProps> = ({
   const [viewMode, setViewMode] = useState<'card' | 'timeline'>('card');
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [isTimelineInfoOpen, setIsTimelineInfoOpen] = useState(false);
+
+  // 저장 중복 방지를 위한 ref
+  const hasSavedRef = useRef(false);
+
+  // 결과를 DB에 저장 (컴포넌트 마운트 시 1회)
+  useEffect(() => {
+    const saveRecommendationResult = async () => {
+      // 이미 저장했거나, submissionId가 없으면 스킵
+      if (hasSavedRef.current || !submissionId) {
+        return;
+      }
+
+      hasSavedRef.current = true;
+
+      try {
+        // 세션 ID 생성 또는 가져오기
+        let sessionId = sessionStorage.getItem('recommendation_session_id');
+        if (!sessionId) {
+          sessionId = crypto.randomUUID();
+          sessionStorage.setItem('recommendation_session_id', sessionId);
+        }
+
+        const response = await fetch('/api/consultation/recommendation-result', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            idUuidConsultSubmissions: submissionId,
+            recommendationOutput: output,
+            formData: formData,
+            sessionId: sessionId,
+          }),
+        });
+
+        if (!response.ok) {
+          const error = await response.json();
+          console.error('Failed to save recommendation result:', error);
+        } else {
+          const result = await response.json();
+          console.log('Recommendation result saved successfully:', result.id);
+        }
+      } catch (error) {
+        // Silent fail - 저장 실패해도 사용자에게 알림 없음
+        console.error('Error saving recommendation result:', error);
+      }
+    };
+
+    saveRecommendationResult();
+  }, [submissionId, output, formData]);
 
   const handleRetry = () => {
     router.replace('/recommend_estimate');

@@ -1,11 +1,12 @@
 import { redirect } from 'next/navigation';
 import { cookies } from "next/headers";
+import { getLocale } from 'next-intl/server';
 import { getIronSession } from "iron-session";
 import { sessionOptions } from "@/lib/session";
 import CommentSection from '@/components/molecules/CommentSection';
 import { Member, CommunityPost, CommunityComment } from '@/app/models/communityData.dto';
 import PostNotFoundFallback from './PostNotFoundFallback';
-import SetCommunityHeader from '@/app/[locale]/(site)/(pages)/community/SetCommunityHeader';
+import SetCommunityHeader from '@/app/[locale]/(site)/(community)/community/SetCommunityHeader';
 import {
   TABLE_COMMUNITY_POSTS,
   TABLE_COMMUNITY_COMMENTS,
@@ -167,9 +168,9 @@ export default async function PostDetailPage({
   const nextViewCount =
     viewRows[0]?.view_count ?? (post.view_count ?? 0) + 1;
 
-  // Get language from cookie (클라이언트에서 'lang' 쿠키로 저장함)
-  const languageCookie = cookieStore.get('lang');
-  const language = (languageCookie?.value as 'ko' | 'en') || 'en';
+  // Get language from next-intl
+  const locale = await getLocale();
+  const language = (locale === 'ko' ? 'ko' : 'en') as 'ko' | 'en';
 
   const getDisplayName = (name: string | { en: string; ko: string } | null | undefined): string | null => {
     if (!name) return null;

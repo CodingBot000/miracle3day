@@ -1,5 +1,5 @@
 import { log } from '@/utils/logger';
-import { cookies } from "next/headers";
+import { getLocale } from 'next-intl/server';
 import { Suspense } from 'react';
 import QuestionsView from './QuestionsView';
 import PostsView from './PostsView';
@@ -15,9 +15,8 @@ interface CommunityPageProps {
 }
 
 export default async function CommunityHomePage({ searchParams }: CommunityPageProps) {
-  const cookieStore = cookies();
-  const languageCookie = cookieStore.get('lang');
-  const language = (languageCookie?.value as 'ko' | 'en') || 'en';
+  const locale = await getLocale();
+  const language = (locale === 'ko' ? 'ko' : 'en') as 'ko' | 'en';
 
   // 기본값: posts
   const currentView = searchParams?.view || 'posts';

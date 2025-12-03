@@ -29,7 +29,7 @@ import WhyKoreaButton from "./components/WhyKoreaButton";
 import AgeGuideCTA from "@/app/[locale]/(site)/(pages)/treatment-based-age-guide/components/AgeGuideCTA";
 import ReviewScrollSection from "./components/ReviewScrollSection";
 import BeautyPartners from "@/app/[locale]/(site)/(pages)/partners/BeautyPartners";
-import QuestionsView from "@/app/[locale]/(site)/(pages)/community/QuestionsView";
+import QuestionsView from "@/app/[locale]/(site)/(community)/community/QuestionsView";
 import HeadSection from "./HeadSection";
 import { motion } from "framer-motion";
 import KBeautyGuideSection from "./components/KBeautyGuideSeciont";

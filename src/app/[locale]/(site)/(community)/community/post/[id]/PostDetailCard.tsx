@@ -2,7 +2,7 @@ import Link from 'next/link';
 import LikeButton from '@/components/atoms/button/LikeButton';
 import ReportButton from '@/components/atoms/button/ReportButton';
 import { CommunityPost } from '@/app/models/communityData.dto';
-import { ANONYMOUS_FALLBACK } from '@/app/[locale]/(site)/(pages)/community/utils';
+import { ANONYMOUS_FALLBACK } from '@/app/[locale]/(site)/(community)/community/utils';
 
 export interface PostDetailData {
   post: CommunityPost & {

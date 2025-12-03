@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { cookies } from 'next/headers';
+import { getLocale } from 'next-intl/server';
 import Link from 'next/link';
 import AnswerList from './AnswerList';
 import AnswerForm from './AnswerForm';
@@ -67,9 +68,9 @@ export default async function QuestionDetailPage({
   const sessionCookie = cookieStore.get("app_session");
   const isAuthenticated = !!sessionCookie;
 
-  // Get language from cookie
-  const langCookie = cookieStore.get("lang");
-  const language = langCookie?.value || 'en';
+  // Get language from next-intl
+  const locale = await getLocale();
+  const language = locale === 'ko' ? 'ko' : 'en';
 
   // Get current user UUID for edit permissions
   let currentUserUuid: string | null = null;

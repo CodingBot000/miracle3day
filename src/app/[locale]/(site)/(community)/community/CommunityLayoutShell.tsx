@@ -7,6 +7,8 @@ import Link from 'next/link'
 import { useLocale } from 'next-intl'
 import Logo from '@/components/molecules/Logo'
 import { useLoginGuard } from '@/hooks/useLoginGuard'
+import { toast } from 'sonner'
+import { Share2 } from 'lucide-react'
 
 type CommunityHeaderContextValue = {
   setHeaderContent: (content: ReactNode | null) => void
@@ -131,6 +133,24 @@ export default function CommunityLayoutShell({
     router.push(queryString ? `/community/write?${queryString}` : '/community/write')
   }
 
+  // Share 핸들러
+  const handleShare = async () => {
+    const url = window.location.href
+    try {
+      await navigator.clipboard.writeText(url)
+      const messages: Record<string, string> = {
+        ko: '공유 가능한 주소를 클립보드에 복사했습니다.',
+        en: 'Shareable link copied to clipboard.',
+        ja: '共有可能なリンクをクリップボードにコピーしました。',
+        'zh-CN': '已将可分享的链接复制到剪贴板。',
+        'zh-TW': '已將可分享的連結複製到剪貼簿。',
+      }
+      toast.success(messages[locale] || messages.en)
+    } catch (err) {
+      console.error('Failed to copy URL:', err)
+    }
+  }
+
   // 필터 버튼 렌더링 함수 (중복 제거)
   const renderTopicButtons = (compact = false) => (
     <>
@@ -229,14 +249,24 @@ export default function CommunityLayoutShell({
                 </nav>
               </div>
 
-              {/* 오른쪽: Write Post 버튼 */}
-              <button
-                type="button"
-                onClick={handleWritePost}
-                className="bg-pink-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-pink-700 transition-colors"
-              >
-                {locale === 'ko' ? '글쓰기' : 'Write'}
-              </button>
+              {/* 오른쪽: Write Post + Share 버튼 */}
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleWritePost}
+                  className="bg-pink-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-pink-700 transition-colors"
+                >
+                  {locale === 'ko' ? '글쓰기' : 'Write'}
+                </button>
+                <button
+                  type="button"
+                  onClick={handleShare}
+                  className="p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors"
+                  aria-label="Share"
+                >
+                  <Share2 className="w-5 h-5" />
+                </button>
+              </div>
             </div>
           </div>
 

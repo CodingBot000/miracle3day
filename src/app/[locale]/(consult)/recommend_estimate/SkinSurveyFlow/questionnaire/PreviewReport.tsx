@@ -26,6 +26,8 @@ import { MessengerInput } from '@/components/atoms/input/InputMessengerFields';
 import { log } from '@/utils/logger';
 import { recommendTreatments, RecommendationOutput } from './questionScript/matching';
 
+const SUBMISSION_ID_STORAGE_KEY = 'recommendation_submission_id';
+
 interface PreviewReportProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -145,6 +147,10 @@ const PreviewReport: React.FC<PreviewReportProps> =
         throw new Error(result.error || 'Submission failed');
       }
       log.debug('Submission successful:', result);
+
+      // submissionId를 sessionStorage에 저장 (결과 페이지에서 사용)
+      sessionStorage.setItem(SUBMISSION_ID_STORAGE_KEY, result.submissionId);
+
       setIsCompleted(true);
       fbqTrack("Submit_diagnosis_click", { finalSubmit: "success" });
     } catch (error) {

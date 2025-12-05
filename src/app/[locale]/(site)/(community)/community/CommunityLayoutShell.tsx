@@ -136,11 +136,11 @@ export default function CommunityLayoutShell({
     <>
       <Link
         href={buildUrl({ tag: currentTag })}
-        className={`flex-shrink-0 px-3 py-1.5 rounded-full text-sm whitespace-nowrap ${
+        className={`flex-shrink-0 px-2.5 py-1 rounded-full text-xs whitespace-nowrap ${
           !currentTopic
             ? 'bg-pink-600 text-white'
             : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-        } ${compact ? 'text-xs' : ''}`}
+        }`}
       >
         {locale === 'ko' ? '전체' : 'All'}
       </Link>
@@ -148,11 +148,11 @@ export default function CommunityLayoutShell({
         <Link
           key={topic.id}
           href={buildUrl({ topic: topic.id, tag: currentTag })}
-          className={`flex-shrink-0 px-3 py-1.5 rounded-full text-sm whitespace-nowrap ${
+          className={`flex-shrink-0 px-2.5 py-1 rounded-full text-xs whitespace-nowrap ${
             currentTopic === topic.id
               ? 'bg-pink-600 text-white'
               : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-          } ${compact ? 'text-xs' : ''}`}
+          }`}
         >
           {getText(topic.name)}
         </Link>
@@ -164,11 +164,11 @@ export default function CommunityLayoutShell({
     <>
       <Link
         href={buildUrl({ topic: currentTopic })}
-        className={`flex-shrink-0 px-3 py-1.5 rounded-full text-sm whitespace-nowrap ${
+        className={`flex-shrink-0 px-2.5 py-1 rounded-full text-xs whitespace-nowrap ${
           !currentTag
             ? 'bg-pink-600 text-white'
             : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-        } ${compact ? 'text-xs' : ''}`}
+        }`}
       >
         {locale === 'ko' ? '전체' : 'All'}
       </Link>
@@ -176,11 +176,11 @@ export default function CommunityLayoutShell({
         <Link
           key={tag.id}
           href={buildUrl({ topic: currentTopic, tag: tag.id })}
-          className={`flex-shrink-0 px-3 py-1.5 rounded-full text-sm whitespace-nowrap ${
+          className={`flex-shrink-0 px-2.5 py-1 rounded-full text-xs whitespace-nowrap ${
             currentTag === tag.id
               ? 'bg-pink-600 text-white'
               : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-          } ${compact ? 'text-xs' : ''}`}
+          }`}
         >
           {getText(tag.name)}
         </Link>
@@ -277,16 +277,16 @@ export default function CommunityLayoutShell({
             <>
               {/* 원본 필터 영역 (Intersection Observer 감지 대상) */}
               {currentView === 'posts' && (
-                <div ref={filtersRef} className="bg-white rounded-xl border border-gray-100 p-4 mb-6">
+                <div ref={filtersRef} className="bg-white rounded-xl border border-gray-100 p-3 mb-4">
                   {/* Topics */}
-                  <div className="mb-4">
-                    <h3 className="text-sm font-semibold text-gray-700 mb-2">
-                      {locale === 'ko' ? '🎨 주제' : '🎨 TOPICS'}
+                  <div className="mb-2">
+                    <h3 className="text-xs font-semibold text-gray-500 mb-1.5">
+                      {locale === 'ko' ? '주제' : 'TOPICS'}
                     </h3>
                     <div className="relative">
                       <div
                         ref={topicsScrollRef}
-                        className="flex gap-2 overflow-x-auto scrollbar-hide scroll-smooth"
+                        className="flex gap-1.5 overflow-x-auto scrollbar-hide scroll-smooth"
                         style={scrollStyle}
                       >
                         {renderTopicButtons()}
@@ -300,13 +300,13 @@ export default function CommunityLayoutShell({
 
                   {/* Tags */}
                   <div>
-                    <h3 className="text-sm font-semibold text-gray-700 mb-2">
-                      {locale === 'ko' ? '📂 태그' : '📂 TAGS'}
+                    <h3 className="text-xs font-semibold text-gray-500 mb-1.5">
+                      {locale === 'ko' ? '태그' : 'TAGS'}
                     </h3>
                     <div className="relative">
                       <div
                         ref={tagsScrollRef}
-                        className="flex gap-2 overflow-x-auto scrollbar-hide scroll-smooth"
+                        className="flex gap-1.5 overflow-x-auto scrollbar-hide scroll-smooth"
                         style={scrollStyle}
                       >
                         {renderTagButtons()}
@@ -322,15 +322,15 @@ export default function CommunityLayoutShell({
 
               {/* Questions 탭일 때 필터 */}
               {currentView === 'questions' && (
-                <div ref={filtersRef} className="bg-white rounded-xl border border-gray-100 p-4 mb-6">
-                  <div className="mb-4">
-                    <h3 className="text-sm font-semibold text-gray-700 mb-2">
-                      {locale === 'ko' ? '🎨 주제' : '🎨 TOPICS'}
+                <div ref={filtersRef} className="bg-white rounded-xl border border-gray-100 p-3 mb-4">
+                  <div className="mb-2">
+                    <h3 className="text-xs font-semibold text-gray-500 mb-1.5">
+                      {locale === 'ko' ? '주제' : 'TOPICS'}
                     </h3>
                     <div className="relative">
                       <div
                         ref={topicsScrollRef}
-                        className="flex gap-2 overflow-x-auto scrollbar-hide scroll-smooth"
+                        className="flex gap-1.5 overflow-x-auto scrollbar-hide scroll-smooth"
                         style={scrollStyle}
                       >
                         {renderTopicButtons()}
@@ -345,7 +345,7 @@ export default function CommunityLayoutShell({
 
           {/* Children */}
           <div className="bg-white rounded-xl border border-gray-100">
-            <div className="p-6">
+            <div className="p-4">
               {children}
             </div>
           </div>

@@ -59,6 +59,9 @@ export interface Member {
     comment_count?: number
     like_count?: number
 
+    // Images
+    images?: string[]
+
     // State
     is_deleted: boolean
     is_pinned?: boolean

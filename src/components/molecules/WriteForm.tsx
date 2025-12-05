@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, type ChangeEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import type { CommunityCategory, TopicId, PostTagId } from '@/app/models/communityData.dto';
 import { toast } from 'sonner';
@@ -8,6 +8,12 @@ import { useLocale } from 'next-intl';
 import { handleNotifications } from '@/utils/notificationHandler';
 import LevelUpModal from '@/components/gamification/LevelUpModal';
 import type { LevelUpNotification } from '@/types/badge';
+import { compressMultipleImages } from '@/utils/imageCompression';
+
+interface SelectedImage {
+  file: File;
+  preview: string;
+}
 
 interface WriteFormProps {
   authorNameSnapshot?: string | null;
@@ -19,6 +25,7 @@ interface WriteFormProps {
     topic_id?: TopicId;
     post_tag?: PostTagId;
     is_anonymous?: boolean;
+    images?: string[];
   };
   postId?: number;
   // URL params에서 전달받은 기본값 (새 글 작성 시 사용)
@@ -45,9 +52,122 @@ export default function WriteForm({
   const [isAnonymous, setIsAnonymous] = useState(initialData?.is_anonymous || false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [levelUp, setLevelUp] = useState<LevelUpNotification | null>(null);
+  const [selectedImages, setSelectedImages] = useState<SelectedImage[]>([]);
+  const [existingImages, setExistingImages] = useState<string[]>(initialData?.images || []);
+  const [isCompressing, setIsCompressing] = useState(false);
+
+  const MAX_IMAGES = 5;
+  const availableSlots = MAX_IMAGES - existingImages.length - selectedImages.length;
 
   const topicCategories = categories.filter(c => c.category_type === 'topic');
   const tagCategories = categories.filter(c => c.category_type === 'free');
+
+  // Image selection handler
+  const handleImageSelect = async (e: ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
+
+    const toProcess = files.slice(0, availableSlots);
+    if (toProcess.length === 0) {
+      toast.error(`Maximum ${MAX_IMAGES} images allowed`);
+      return;
+    }
+
+    setIsCompressing(true);
+    try {
+      const { results, errors } = await compressMultipleImages(toProcess, 'community_posting');
+
+      if (errors.length > 0) {
+        toast.error(`Failed to compress ${errors.length} image(s)`);
+      }
+
+      const newImages = results.map(r => ({
+        file: r.compressedFile,
+        preview: URL.createObjectURL(r.compressedFile),
+      }));
+
+      setSelectedImages(prev => [...prev, ...newImages]);
+    } catch (error) {
+      console.error('Image compression error:', error);
+      toast.error('Failed to process images');
+    } finally {
+      setIsCompressing(false);
+      // Reset file input
+      e.target.value = '';
+    }
+  };
+
+  // Remove selected image (before upload)
+  const handleRemoveSelectedImage = (indexToRemove: number) => {
+    setSelectedImages(prev => {
+      const newImages = prev.filter((_, idx) => idx !== indexToRemove);
+      URL.revokeObjectURL(prev[indexToRemove].preview);
+      return newImages;
+    });
+  };
+
+  // Delete existing image (already uploaded - for edit mode)
+  const handleDeleteExistingImage = async (imagePath: string) => {
+    if (!postId) return;
+    if (!confirm('Delete this image?')) return;
+
+    try {
+      const response = await fetch(
+        `/api/community/posts/${postId}/images?path=${encodeURIComponent(imagePath)}`,
+        { method: 'DELETE' }
+      );
+
+      if (!response.ok) throw new Error('Failed to delete image');
+
+      setExistingImages(prev => prev.filter(p => p !== imagePath));
+      toast.success('Image deleted');
+    } catch (error) {
+      console.error('Delete image error:', error);
+      toast.error('Failed to delete image');
+    }
+  };
+
+  // Delete all existing images (for edit mode)
+  const handleDeleteAllImages = async () => {
+    if (!postId) return;
+    if (!confirm('Delete all images?')) return;
+
+    try {
+      const response = await fetch(`/api/community/posts/${postId}/images`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) throw new Error('Failed to delete images');
+
+      setExistingImages([]);
+      toast.success('All images deleted');
+    } catch (error) {
+      console.error('Delete all images error:', error);
+      toast.error('Failed to delete images');
+    }
+  };
+
+  // Upload images after post creation
+  const uploadImages = async (targetPostId: number) => {
+    if (selectedImages.length === 0) return;
+
+    const formData = new FormData();
+    selectedImages.forEach(img => {
+      formData.append('images', img.file);
+    });
+
+    const response = await fetch(`/api/community/posts/${targetPostId}/images`, {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      console.error('Failed to upload images');
+    }
+
+    // Cleanup previews
+    selectedImages.forEach(img => URL.revokeObjectURL(img.preview));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -85,6 +205,11 @@ export default function WriteForm({
           throw new Error(message || 'Failed to update post');
         }
 
+        // Upload new images if any
+        if (selectedImages.length > 0) {
+          await uploadImages(postId);
+        }
+
         const data = await response.json();
         if (data?.post?.id) {
           router.push(`/community/post/${data.post.id}`);
@@ -104,6 +229,12 @@ export default function WriteForm({
         }
 
         const data = await response.json();
+        const newPostId = data?.id || data?.post?.id;
+
+        // Upload images after post creation
+        if (newPostId && selectedImages.length > 0) {
+          await uploadImages(newPostId);
+        }
 
         // Handle badge notifications (only for create, not edit)
         if (data?.notifications) {
@@ -215,6 +346,97 @@ export default function WriteForm({
           className="w-full p-4 border rounded-lg resize-none h-64 focus:outline-none focus:ring-2 focus:ring-blue-500"
           required
         />
+      </div>
+
+      {/* Image Upload Section */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Images (Optional, max {MAX_IMAGES})
+        </label>
+
+        {/* Existing Images (Edit Mode) */}
+        {existingImages.length > 0 && (
+          <div className="mb-4">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm text-gray-600">
+                Attached Images ({existingImages.length}/{MAX_IMAGES})
+              </span>
+              <button
+                type="button"
+                onClick={handleDeleteAllImages}
+                className="text-red-500 text-xs hover:underline"
+              >
+                Delete All
+              </button>
+            </div>
+            <div className="flex gap-2 flex-wrap">
+              {existingImages.map((imageUrl, idx) => (
+                <div key={idx} className="relative w-20 h-20 group">
+                  <img
+                    src={imageUrl}
+                    alt={`Image ${idx + 1}`}
+                    className="w-full h-full object-cover rounded-lg"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteExistingImage(imageUrl)}
+                    className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 text-white rounded-full text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Selected Images (Not uploaded yet) */}
+        {selectedImages.length > 0 && (
+          <div className="mb-4">
+            <span className="text-sm text-gray-600 block mb-2">
+              New Images ({selectedImages.length})
+            </span>
+            <div className="flex gap-2 flex-wrap">
+              {selectedImages.map((img, idx) => (
+                <div key={idx} className="relative w-20 h-20 group">
+                  <img
+                    src={img.preview}
+                    alt={`Preview ${idx + 1}`}
+                    className="w-full h-full object-cover rounded-lg"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveSelectedImage(idx)}
+                    className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 text-white rounded-full text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* File Input */}
+        {availableSlots > 0 && (
+          <div className="flex items-center gap-2">
+            <label
+              className={`px-4 py-2 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 text-sm ${
+                isCompressing ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
+            >
+              {isCompressing ? 'Processing...' : `Add Images (${availableSlots} left)`}
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handleImageSelect}
+                disabled={isCompressing || availableSlots <= 0}
+                className="hidden"
+              />
+            </label>
+          </div>
+        )}
       </div>
 
       <div className="flex justify-end gap-2">

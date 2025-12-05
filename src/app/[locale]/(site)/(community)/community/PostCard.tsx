@@ -3,6 +3,7 @@
 import { MouseEvent } from 'react';
 import { Link } from '@/i18n/routing';
 import type { CommunityPost } from '@/app/models/communityData.dto';
+import { getTopicBadgeClass, getTagBadgeClass } from './utils';
 
 interface PostCardProps {
   post: CommunityPost;
@@ -43,12 +44,12 @@ export default function PostCard({
             {/* 카테고리 뱃지 + 작성자 + 날짜 */}
             <div className="flex items-center gap-2 mb-1 text-xs text-gray-500">
               {post.topic && (
-                <span className="bg-blue-300 text-blue-700 px-1.5 py-0.5 rounded text-xs">
+                <span className={`${getTopicBadgeClass(post.topic.id)} px-1.5 py-0.5 rounded text-xs`}>
                   {typeof post.topic.name === 'string' ? post.topic.name : post.topic.name[language]}
                 </span>
               )}
               {post.tag && (
-                <span className="bg-green-300 text-green-700 px-1.5 py-0.5 rounded text-xs">
+                <span className={`${getTagBadgeClass(post.tag.id)} px-1.5 py-0.5 rounded text-xs`}>
                   {typeof post.tag.name === 'string' ? post.tag.name : post.tag.name[language]}
                 </span>
               )}

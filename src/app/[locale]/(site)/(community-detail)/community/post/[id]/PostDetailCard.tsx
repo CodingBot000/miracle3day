@@ -6,6 +6,7 @@ import LikeButton from '@/components/atoms/button/LikeButton';
 import ReportButton from '@/components/atoms/button/ReportButton';
 import { CommunityPost } from '@/app/models/communityData.dto';
 import { ANONYMOUS_FALLBACK } from '@/utils/community';
+import { getTopicBadgeClass, getTagBadgeClass } from '@/app/[locale]/(site)/(community)/community/utils';
 
 // Image Gallery Component with Modal (images are already full URLs)
 function ImageGallery({ images }: { images: string[] }) {
@@ -156,13 +157,13 @@ export default function PostDetailCard({
       {/* 카테고리 뱃지 + Edit 버튼 */}
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">
-          {topicName && (
-            <span className="bg-blue-100 text-white px-3 py-1 rounded-full text-sm md:text-base">
+          {topicName && post.topic_id && (
+            <span className={`${getTopicBadgeClass(post.topic_id)} px-3 py-1 rounded-full text-sm md:text-base`}>
               {post.topic_icon && `${post.topic_icon} `}{topicName}
             </span>
           )}
-          {tagName && (
-            <span className="bg-green-100 text-white px-3 py-1 rounded-full text-sm md:text-base">
+          {tagName && post.post_tag && (
+            <span className={`${getTagBadgeClass(post.post_tag)} px-3 py-1 rounded-full text-sm md:text-base`}>
               {post.tag_icon && `${post.tag_icon} `}{tagName}
             </span>
           )}

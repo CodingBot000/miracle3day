@@ -36,7 +36,7 @@ module.exports = {
   				DEFAULT: '#3498db'
   			},
   			yellow: '#fbc400',
-  			purple: '#8f8ffe',
+  			// 커스텀 보라색이 필요하면 'custom-purple': '#8f8ffe' 로 추가
   			turquoise: '#1abc9c',
   			kakao: '#fedd35',
   			naver: '#1ec800',

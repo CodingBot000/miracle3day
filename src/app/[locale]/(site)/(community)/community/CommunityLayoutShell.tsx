@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { useLocale } from 'next-intl'
 import Logo from '@/components/molecules/Logo'
 import { useLoginGuard } from '@/hooks/useLoginGuard'
+import { getFilterButtonClass } from './utils'
 
 type CommunityHeaderContextValue = {
   setHeaderContent: (content: ReactNode | null) => void
@@ -136,10 +137,8 @@ export default function CommunityLayoutShell({
     <>
       <Link
         href={buildUrl({ tag: currentTag })}
-        className={`flex-shrink-0 px-2.5 py-1 rounded-full text-xs whitespace-nowrap ${
-          !currentTopic
-            ? 'bg-pink-600 text-white'
-            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+        className={`flex-shrink-0 px-2.5 py-1 rounded-full text-xs whitespace-nowrap transition-colors ${
+          getFilterButtonClass(null, !currentTopic, 'topic')
         }`}
       >
         {locale === 'ko' ? '전체' : 'All'}
@@ -148,10 +147,8 @@ export default function CommunityLayoutShell({
         <Link
           key={topic.id}
           href={buildUrl({ topic: topic.id, tag: currentTag })}
-          className={`flex-shrink-0 px-2.5 py-1 rounded-full text-xs whitespace-nowrap ${
-            currentTopic === topic.id
-              ? 'bg-pink-600 text-white'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          className={`flex-shrink-0 px-2.5 py-1 rounded-full text-xs whitespace-nowrap transition-colors ${
+            getFilterButtonClass(topic.id, currentTopic === topic.id, 'topic')
           }`}
         >
           {getText(topic.name)}
@@ -164,10 +161,8 @@ export default function CommunityLayoutShell({
     <>
       <Link
         href={buildUrl({ topic: currentTopic })}
-        className={`flex-shrink-0 px-2.5 py-1 rounded-full text-xs whitespace-nowrap ${
-          !currentTag
-            ? 'bg-pink-600 text-white'
-            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+        className={`flex-shrink-0 px-2.5 py-1 rounded-full text-xs whitespace-nowrap transition-colors ${
+          getFilterButtonClass(null, !currentTag, 'free')
         }`}
       >
         {locale === 'ko' ? '전체' : 'All'}
@@ -176,10 +171,8 @@ export default function CommunityLayoutShell({
         <Link
           key={tag.id}
           href={buildUrl({ topic: currentTopic, tag: tag.id })}
-          className={`flex-shrink-0 px-2.5 py-1 rounded-full text-xs whitespace-nowrap ${
-            currentTag === tag.id
-              ? 'bg-pink-600 text-white'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          className={`flex-shrink-0 px-2.5 py-1 rounded-full text-xs whitespace-nowrap transition-colors ${
+            getFilterButtonClass(tag.id, currentTag === tag.id, 'free')
           }`}
         >
           {getText(tag.name)}

@@ -154,7 +154,7 @@ const LayoutHeader = () => {
 
       {/* Bottom Section - Back Button (fixed 40px height) */}
       {!isAuthPage && (
-        <div className="h-[30px] flex items-center px-4 border-t border-gray-200/20">
+        <div className="h-[30px] flex items-center px-4">
           <div className="w-full max-w-[1080px] mx-auto">
           {!isHomePage && (
             <BackButton iconColor={isTransparentMode && !isScrolled ? 'white' : 'black'} />

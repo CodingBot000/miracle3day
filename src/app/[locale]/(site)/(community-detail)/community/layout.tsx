@@ -1,8 +1,10 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { useLocale } from 'next-intl'
 import { useCallback, type ReactNode } from 'react'
+import { toast } from 'sonner'
+import { Share2 } from 'lucide-react'
 
 interface CommunityDetailLayoutProps {
   children: ReactNode
@@ -10,7 +12,12 @@ interface CommunityDetailLayoutProps {
 
 export default function CommunityDetailLayout({ children }: CommunityDetailLayoutProps) {
   const router = useRouter()
+  const pathname = usePathname()
   const locale = useLocale()
+
+  // write, edit 페이지에서는 Share 버튼 숨김
+  const isWriteOrEditPage = pathname?.includes('/write') || pathname?.includes('/edit')
+  const showShareButton = !isWriteOrEditPage
 
   const handleBack = useCallback(() => {
     // 1. 먼저 window.close() 시도 (Android 웹뷰에서 동작)
@@ -29,11 +36,29 @@ export default function CommunityDetailLayout({ children }: CommunityDetailLayou
     }, 100)
   }, [router])
 
+  // Share 핸들러
+  const handleShare = useCallback(async () => {
+    const url = window.location.href
+    try {
+      await navigator.clipboard.writeText(url)
+      const messages: Record<string, string> = {
+        ko: '공유 가능한 주소를 클립보드에 복사했습니다.',
+        en: 'Shareable link copied to clipboard.',
+        ja: '共有可能なリンクをクリップボードにコピーしました。',
+        'zh-CN': '已将可分享的链接复制到剪贴板。',
+        'zh-TW': '已將可分享的連結複製到剪貼簿。',
+      }
+      toast.success(messages[locale] || messages.en)
+    } catch (err) {
+      console.error('Failed to copy URL:', err)
+    }
+  }, [locale])
+
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header with back button */}
+      {/* Header with back button and share */}
       <header className="sticky top-0 z-10 bg-white border-b border-gray-200">
-        <div className="max-w-4xl mx-auto px-4 py-3 flex items-center">
+        <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
           <button
             type="button"
             onClick={handleBack}
@@ -49,10 +74,17 @@ export default function CommunityDetailLayout({ children }: CommunityDetailLayou
             >
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
-            {/* <span className="font-medium">
-              {locale === 'ko' ? '뒤로가기' : 'Back'}
-            </span> */}
           </button>
+          {showShareButton && (
+            <button
+              type="button"
+              onClick={handleShare}
+              className="p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors"
+              aria-label="Share"
+            >
+              <Share2 className="w-5 h-5" />
+            </button>
+          )}
         </div>
       </header>
 

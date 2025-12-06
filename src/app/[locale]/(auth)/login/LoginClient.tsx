@@ -1,32 +1,73 @@
 "use client";
 
+import { useEffect, useState } from 'react';
 import { useLocale } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
-import { usePlatform, useWebViewBridge } from '@/hooks/usePlatform';
+import { usePlatform } from '@/hooks/usePlatform';
 
 export default function LoginClient() {
   const searchParams = useSearchParams();
   const locale = useLocale();
   const { isAndroidWebView } = usePlatform();
-  const { callNativeFunction } = useWebViewBridge();
+  const [isLoading, setIsLoading] = useState(false);
 
   // Get redirect URL from query params (default to home page)
   const redirectUrl = searchParams.get('redirect') || '/';
 
+  // Android WebView용 Google 토큰 콜백 등록
+  useEffect(() => {
+    if (!isAndroidWebView) return;
+
+    // Google 로그인 성공 시 호출되는 콜백
+    (window as any).onGoogleToken = async (idToken: string) => {
+      console.log('onGoogleToken called, sending to server...');
+      setIsLoading(true);
+      try {
+        const res = await fetch('/api/auth/google/token', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ idToken, redirectUrl }),
+          credentials: 'include',
+        });
+        const data = await res.json();
+        console.log('Token API response:', data);
+
+        if (data.success && data.redirectUrl) {
+          window.location.href = data.redirectUrl;
+        } else {
+          console.error('Login failed:', data.error);
+          setIsLoading(false);
+        }
+      } catch (error) {
+        console.error('Token exchange error:', error);
+        setIsLoading(false);
+      }
+    };
+
+    // Google 로그인 실패 시 호출되는 콜백
+    (window as any).onGoogleError = (errorMessage: string) => {
+      console.error('Google login error:', errorMessage);
+      setIsLoading(false);
+    };
+
+    return () => {
+      delete (window as any).onGoogleToken;
+      delete (window as any).onGoogleError;
+    };
+  }, [isAndroidWebView, redirectUrl]);
+
   const handleGoogleLogin = () => {
-    // Pass redirect URL as state parameter to OAuth flow
-    const oauthUrl = `/api/auth/google/start?state=${encodeURIComponent(redirectUrl)}`;
-    console.log('Login handleGoogleLogin oauthUrl:', oauthUrl);
-    // Android WebView에서는 Chrome Custom Tabs 사용 (Google OAuth 정책)
-    if (isAndroidWebView && window.AndroidBridge?.openGoogleLogin) {
-      console.log('Login handleGoogleLogin oauthUrl androidWebView');
-      // 전체 URL 생성 (Android에서 절대 경로 필요)
-      const fullUrl = `${window.location.origin}${oauthUrl}`;
-      callNativeFunction('openGoogleLogin', fullUrl);
+    // Android WebView에서는 네이티브 Google Sign-In 사용
+    if (isAndroidWebView && window.AndroidBridge?.requestGoogleLogin) {
+      console.log('Android WebView: requesting native Google login');
+      setIsLoading(true);
+      window.AndroidBridge.requestGoogleLogin();
       return;
     }
 
-    // 일반 브라우저는 기존 방식
+    // 일반 브라우저는 기존 OAuth 리다이렉트 방식
+    const oauthUrl = `/api/auth/google/start?state=${encodeURIComponent(redirectUrl)}`;
+    console.log('Browser: redirecting to OAuth URL:', oauthUrl);
     window.location.href = oauthUrl;
   };
 
@@ -41,9 +82,10 @@ export default function LoginClient() {
       <button
         type="button"
         onClick={handleGoogleLogin}
-        className="mt-8 flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
+        disabled={isLoading}
+        className="mt-8 flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-3 text-sm font-medium text-white transition hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        Continue with Google
+        {isLoading ? (locale === 'ko' ? '로그인 중...' : 'Signing in...') : 'Continue with Google'}
       </button>
     </div>
   );

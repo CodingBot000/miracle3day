@@ -1,10 +1,13 @@
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
 import * as jose from "jose";
 import { getIronSession } from "iron-session";
 import { sessionOptions } from "@/lib/session";
 import { q } from "@/lib/db";
 import { TABLE_MEMBERS, TABLE_MEMBER_SOCIAL_ACCOUNTS } from "@/constants/tables";
+import { decryptOAuthState } from "@/lib/oauth";
+
+// Base URL for redirects (uses APP_URL env var, falls back to req.url)
+const getBaseUrl = (reqUrl: string) => process.env.APP_URL || new URL(reqUrl).origin;
 
 type TermsAgreements = {
   [key: string]: {
@@ -36,16 +39,23 @@ async function exchangeToken(code: string, verifier: string) {
 export async function GET(req: Request) {
   const url = new URL(req.url);
   const code = url.searchParams.get("code");
-  const state = url.searchParams.get("state");
+  const encryptedState = url.searchParams.get("state");
 
-  const cookieStore = await cookies();
-  const savedState = cookieStore.get("oidc_state")?.value;
-  const verifier = cookieStore.get("pkce_verifier")?.value;
-  const redirectUrl = cookieStore.get("auth_redirect")?.value || "/";
+  const baseUrl = getBaseUrl(req.url);
 
-  if (!code || !state || state !== savedState || !verifier) {
-    return NextResponse.redirect(new URL("/auth/error", req.url));
+  // Decrypt state from URL parameter (no cookies needed)
+  const stateData = encryptedState ? decryptOAuthState(encryptedState) : null;
+
+  if (!code || !stateData) {
+    console.error("OAuth callback failed:", {
+      code: !!code,
+      stateDecrypted: !!stateData,
+    });
+    return NextResponse.redirect(new URL("/login?error=oauth_failed", baseUrl));
   }
+
+  const { verifier, redirect: redirectUrl, nonce } = stateData;
+  console.log("OAuth callback - state decoded from URL:", { nonce, redirectUrl });
 
   try {
     const token = await exchangeToken(code, verifier);
@@ -91,7 +101,7 @@ export async function GET(req: Request) {
       const termsAgreementsData = termsAgreements[0]?.terms_agreements as TermsAgreements | null;
       
       if (!termsAgreementsData) {
-        const res = NextResponse.redirect(new URL("/terms", req.url));
+        const res = NextResponse.redirect(new URL("/terms", baseUrl));
         const session = await getIronSession(req, res, sessionOptions) as any;
         session.auth = {
           provider,
@@ -111,7 +121,7 @@ export async function GET(req: Request) {
       );
       
       if (hasUnagreeRequired) {
-        const res = NextResponse.redirect(new URL("/terms", req.url));
+        const res = NextResponse.redirect(new URL("/terms", baseUrl));
         const session = await getIronSession(req, res, sessionOptions) as any;
         session.auth = {
           provider,
@@ -125,7 +135,7 @@ export async function GET(req: Request) {
         return res;
       }
       // 기존 회원 - 바로 active 상태로 설정하고 원래 페이지로 이동
-      const res = NextResponse.redirect(new URL(redirectUrl, req.url));
+      const res = NextResponse.redirect(new URL(redirectUrl, baseUrl));
       const session = await getIronSession(req, res, sessionOptions) as any;
 
       session.auth = {
@@ -141,7 +151,7 @@ export async function GET(req: Request) {
       return res;
     } else {
       // 신규 회원 - pending 상태로 약관 동의 페이지로
-      const res = NextResponse.redirect(new URL("/terms", req.url));
+      const res = NextResponse.redirect(new URL("/terms", baseUrl));
       const session = await getIronSession(req, res, sessionOptions) as any;
 
       session.auth = {
@@ -157,6 +167,6 @@ export async function GET(req: Request) {
     }
   } catch (error) {
     console.error("OAuth callback error:", error);
-    return NextResponse.redirect(new URL("/auth/error", req.url));
+    return NextResponse.redirect(new URL("/login?error=oauth_failed", baseUrl));
   }
 }

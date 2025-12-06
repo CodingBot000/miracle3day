@@ -3,16 +3,22 @@
 import { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
-import { useLocale, useTranslations } from 'next-intl';
 import { usePlatform } from '@/hooks/usePlatform';
 
 const COOKIE_NAME = 'cookie_consent';
 
 export default function CookieConsent() {
   const [show, setShow] = useState(false);
-  const locale = useLocale();
-  const t = useTranslations('Common');
+  const [locale, setLocale] = useState<string>('en');
   const { isWebView, isClient } = usePlatform();
+
+  // 클라이언트에서 locale 감지
+  useEffect(() => {
+    const pathLocale = window.location.pathname.split('/')[1];
+    if (['ko', 'en', 'ja', 'zh-CN', 'zh-TW'].includes(pathLocale)) {
+      setLocale(pathLocale);
+    }
+  }, []);
 
   useEffect(() => {
     // 플랫폼 감지가 완료될 때까지 대기

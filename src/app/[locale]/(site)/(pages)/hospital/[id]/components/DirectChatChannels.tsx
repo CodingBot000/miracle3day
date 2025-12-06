@@ -7,6 +7,7 @@ import { parseSNSUrl, type SNSPlatform } from "@/utils/snsUtils";
 import CopyAlertModal from "@/components/template/modal/CopyAlertModal";
 import { useLocale } from "next-intl";
 import { MessageCircle } from "lucide-react";
+import { useHospitalTouchpointTracking } from "@/hooks/useHospitalTouchpointTracking";
 
 interface DirectChatChannelsProps {
   hospitalDetails: HospitalDetailInfo;
@@ -27,6 +28,9 @@ const DirectChatChannels = ({ hospitalDetails }: DirectChatChannelsProps) => {
   const [showCopyModal, setShowCopyModal] = useState(false);
   const [copiedText, setCopiedText] = useState('');
   const [copyMessage, setCopyMessage] = useState('');
+
+  // 터치포인트 추적 훅
+  const { trackEvent } = useHospitalTouchpointTracking(hospitalDetails.id_uuid_hospital);
 
   const isKorean = locale === 'ko';
 
@@ -140,6 +144,12 @@ const DirectChatChannels = ({ hospitalDetails }: DirectChatChannelsProps) => {
         setCopiedText(parsed.displayValue);
         setCopyMessage(parsed.message || (isKorean ? labels.ko.copySuccess : labels.en.copySuccess));
         setShowCopyModal(true);
+
+        // 추적: ID 복사
+        trackEvent('external_link_click', {
+          channel: channel.id,
+          action_type: 'copy_id',
+        });
       } catch (err) {
         console.error('복사 실패:', err);
       }
@@ -148,6 +158,14 @@ const DirectChatChannels = ({ hospitalDetails }: DirectChatChannelsProps) => {
       if (channel.platform === 'instagram') {
         const username = parsed.url.split('instagram.com/')[1]?.replace('/', '');
         if (username) {
+          // 추적: Instagram 앱 리다이렉트 시도
+          trackEvent('external_link_click', {
+            channel: channel.id,
+            link_url: parsed.url,
+            action_type: 'link_click',
+            app_redirect_attempt: true,
+          });
+
           const appUrl = `instagram://user?username=${username}`;
           const appLink = document.createElement('a');
           appLink.href = appUrl;
@@ -160,6 +178,13 @@ const DirectChatChannels = ({ hospitalDetails }: DirectChatChannelsProps) => {
           return;
         }
       }
+
+      // 추적: 링크 클릭
+      trackEvent('external_link_click', {
+        channel: channel.id,
+        link_url: parsed.url,
+        action_type: 'link_click',
+      });
 
       // 일반 SNS는 새 창에서 열기
       window.open(parsed.url, '_blank');
@@ -174,6 +199,12 @@ const DirectChatChannels = ({ hospitalDetails }: DirectChatChannelsProps) => {
       setCopiedText(parsed.displayValue || channel.value);
       setCopyMessage(isKorean ? labels.ko.copySuccess : labels.en.copySuccess);
       setShowCopyModal(true);
+
+      // 추적: ID 복사
+      trackEvent('external_link_click', {
+        channel: channel.id,
+        action_type: 'copy_id',
+      });
     } catch (err) {
       console.error('복사 실패:', err);
     }

@@ -80,10 +80,19 @@ interface AndroidBridge {
   sendEvent(eventName: string, data?: any): void;
 
   /**
-   * Chrome Custom Tabs로 Google 로그인 열기
-   * WebView에서 Google OAuth가 차단되므로 Chrome Custom Tabs 사용
+   * 네이티브 Google Sign-In 요청
+   * Google Credential Manager API를 사용하여 로그인
+   * 성공 시 window.onGoogleToken(idToken) 호출
+   * 실패 시 window.onGoogleError(errorMessage) 호출
    */
-  openGoogleLogin(url: string): void;
+  requestGoogleLogin(): void;
+
+  /**
+   * Chrome Custom Tabs로 Google 로그인 열기 (deprecated)
+   * WebView에서 Google OAuth가 차단되므로 Chrome Custom Tabs 사용
+   * @deprecated requestGoogleLogin() 사용 권장
+   */
+  openGoogleLogin?(url: string): void;
 
   /**
    * Chrome Custom Tabs로 외부 URL 열기 (범용)
@@ -107,4 +116,14 @@ interface Window {
       };
     };
   };
+
+  /**
+   * Google 로그인 성공 콜백 (Android 네이티브에서 호출)
+   */
+  onGoogleToken?: (idToken: string) => void;
+
+  /**
+   * Google 로그인 실패 콜백 (Android 네이티브에서 호출)
+   */
+  onGoogleError?: (errorMessage: string) => void;
 }

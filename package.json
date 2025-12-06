@@ -65,6 +65,7 @@
     "dayjs": "^1.11.12",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.6.3",
+    "google-auth-library": "^10.5.0",
     "he": "^1.2.0",
     "iron-session": "^8.0.4",
     "jose": "^6.1.0",

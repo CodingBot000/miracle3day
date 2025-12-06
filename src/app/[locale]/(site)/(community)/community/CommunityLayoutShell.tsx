@@ -7,8 +7,7 @@ import Link from 'next/link'
 import { useLocale } from 'next-intl'
 import Logo from '@/components/molecules/Logo'
 import { useLoginGuard } from '@/hooks/useLoginGuard'
-import { toast } from 'sonner'
-import { Share2 } from 'lucide-react'
+import { getFilterButtonClass } from './utils'
 
 type CommunityHeaderContextValue = {
   setHeaderContent: (content: ReactNode | null) => void
@@ -133,34 +132,14 @@ export default function CommunityLayoutShell({
     router.push(queryString ? `/community/write?${queryString}` : '/community/write')
   }
 
-  // Share 핸들러
-  const handleShare = async () => {
-    const url = window.location.href
-    try {
-      await navigator.clipboard.writeText(url)
-      const messages: Record<string, string> = {
-        ko: '공유 가능한 주소를 클립보드에 복사했습니다.',
-        en: 'Shareable link copied to clipboard.',
-        ja: '共有可能なリンクをクリップボードにコピーしました。',
-        'zh-CN': '已将可分享的链接复制到剪贴板。',
-        'zh-TW': '已將可分享的連結複製到剪貼簿。',
-      }
-      toast.success(messages[locale] || messages.en)
-    } catch (err) {
-      console.error('Failed to copy URL:', err)
-    }
-  }
-
   // 필터 버튼 렌더링 함수 (중복 제거)
   const renderTopicButtons = (compact = false) => (
     <>
       <Link
         href={buildUrl({ tag: currentTag })}
-        className={`flex-shrink-0 px-3 py-1.5 rounded-full text-sm whitespace-nowrap ${
-          !currentTopic
-            ? 'bg-pink-600 text-white'
-            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-        } ${compact ? 'text-xs' : ''}`}
+        className={`flex-shrink-0 px-2.5 py-1 rounded-full text-xs whitespace-nowrap transition-colors ${
+          getFilterButtonClass(null, !currentTopic, 'topic')
+        }`}
       >
         {locale === 'ko' ? '전체' : 'All'}
       </Link>
@@ -168,11 +147,9 @@ export default function CommunityLayoutShell({
         <Link
           key={topic.id}
           href={buildUrl({ topic: topic.id, tag: currentTag })}
-          className={`flex-shrink-0 px-3 py-1.5 rounded-full text-sm whitespace-nowrap ${
-            currentTopic === topic.id
-              ? 'bg-pink-600 text-white'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-          } ${compact ? 'text-xs' : ''}`}
+          className={`flex-shrink-0 px-2.5 py-1 rounded-full text-xs whitespace-nowrap transition-colors ${
+            getFilterButtonClass(topic.id, currentTopic === topic.id, 'topic')
+          }`}
         >
           {getText(topic.name)}
         </Link>
@@ -184,11 +161,9 @@ export default function CommunityLayoutShell({
     <>
       <Link
         href={buildUrl({ topic: currentTopic })}
-        className={`flex-shrink-0 px-3 py-1.5 rounded-full text-sm whitespace-nowrap ${
-          !currentTag
-            ? 'bg-pink-600 text-white'
-            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-        } ${compact ? 'text-xs' : ''}`}
+        className={`flex-shrink-0 px-2.5 py-1 rounded-full text-xs whitespace-nowrap transition-colors ${
+          getFilterButtonClass(null, !currentTag, 'free')
+        }`}
       >
         {locale === 'ko' ? '전체' : 'All'}
       </Link>
@@ -196,11 +171,9 @@ export default function CommunityLayoutShell({
         <Link
           key={tag.id}
           href={buildUrl({ topic: currentTopic, tag: tag.id })}
-          className={`flex-shrink-0 px-3 py-1.5 rounded-full text-sm whitespace-nowrap ${
-            currentTag === tag.id
-              ? 'bg-pink-600 text-white'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-          } ${compact ? 'text-xs' : ''}`}
+          className={`flex-shrink-0 px-2.5 py-1 rounded-full text-xs whitespace-nowrap transition-colors ${
+            getFilterButtonClass(tag.id, currentTag === tag.id, 'free')
+          }`}
         >
           {getText(tag.name)}
         </Link>
@@ -249,24 +222,14 @@ export default function CommunityLayoutShell({
                 </nav>
               </div>
 
-              {/* 오른쪽: Write Post + Share 버튼 */}
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={handleWritePost}
-                  className="bg-pink-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-pink-700 transition-colors"
-                >
-                  {locale === 'ko' ? '글쓰기' : 'Write'}
-                </button>
-                <button
-                  type="button"
-                  onClick={handleShare}
-                  className="p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors"
-                  aria-label="Share"
-                >
-                  <Share2 className="w-5 h-5" />
-                </button>
-              </div>
+              {/* 오른쪽: Write Post 버튼 */}
+              <button
+                type="button"
+                onClick={handleWritePost}
+                className="bg-pink-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-pink-700 transition-colors"
+              >
+                {locale === 'ko' ? '글쓰기' : 'Write'}
+              </button>
             </div>
           </div>
 
@@ -307,16 +270,16 @@ export default function CommunityLayoutShell({
             <>
               {/* 원본 필터 영역 (Intersection Observer 감지 대상) */}
               {currentView === 'posts' && (
-                <div ref={filtersRef} className="bg-white rounded-xl border border-gray-100 p-4 mb-6">
+                <div ref={filtersRef} className="bg-white rounded-xl border border-gray-100 p-3 mb-4">
                   {/* Topics */}
-                  <div className="mb-4">
-                    <h3 className="text-sm font-semibold text-gray-700 mb-2">
-                      {locale === 'ko' ? '🎨 주제' : '🎨 TOPICS'}
+                  <div className="mb-2">
+                    <h3 className="text-xs font-semibold text-gray-500 mb-1.5">
+                      {locale === 'ko' ? '주제' : 'TOPICS'}
                     </h3>
                     <div className="relative">
                       <div
                         ref={topicsScrollRef}
-                        className="flex gap-2 overflow-x-auto scrollbar-hide scroll-smooth"
+                        className="flex gap-1.5 overflow-x-auto scrollbar-hide scroll-smooth"
                         style={scrollStyle}
                       >
                         {renderTopicButtons()}
@@ -330,13 +293,13 @@ export default function CommunityLayoutShell({
 
                   {/* Tags */}
                   <div>
-                    <h3 className="text-sm font-semibold text-gray-700 mb-2">
-                      {locale === 'ko' ? '📂 태그' : '📂 TAGS'}
+                    <h3 className="text-xs font-semibold text-gray-500 mb-1.5">
+                      {locale === 'ko' ? '태그' : 'TAGS'}
                     </h3>
                     <div className="relative">
                       <div
                         ref={tagsScrollRef}
-                        className="flex gap-2 overflow-x-auto scrollbar-hide scroll-smooth"
+                        className="flex gap-1.5 overflow-x-auto scrollbar-hide scroll-smooth"
                         style={scrollStyle}
                       >
                         {renderTagButtons()}
@@ -352,15 +315,15 @@ export default function CommunityLayoutShell({
 
               {/* Questions 탭일 때 필터 */}
               {currentView === 'questions' && (
-                <div ref={filtersRef} className="bg-white rounded-xl border border-gray-100 p-4 mb-6">
-                  <div className="mb-4">
-                    <h3 className="text-sm font-semibold text-gray-700 mb-2">
-                      {locale === 'ko' ? '🎨 주제' : '🎨 TOPICS'}
+                <div ref={filtersRef} className="bg-white rounded-xl border border-gray-100 p-3 mb-4">
+                  <div className="mb-2">
+                    <h3 className="text-xs font-semibold text-gray-500 mb-1.5">
+                      {locale === 'ko' ? '주제' : 'TOPICS'}
                     </h3>
                     <div className="relative">
                       <div
                         ref={topicsScrollRef}
-                        className="flex gap-2 overflow-x-auto scrollbar-hide scroll-smooth"
+                        className="flex gap-1.5 overflow-x-auto scrollbar-hide scroll-smooth"
                         style={scrollStyle}
                       >
                         {renderTopicButtons()}
@@ -375,7 +338,7 @@ export default function CommunityLayoutShell({
 
           {/* Children */}
           <div className="bg-white rounded-xl border border-gray-100">
-            <div className="p-6">
+            <div className="p-4">
               {children}
             </div>
           </div>

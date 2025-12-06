@@ -75,6 +75,7 @@ export default async function EditPage({
             topic_id: post.topic_id,
             post_tag: post.post_tag,
             is_anonymous: post.is_anonymous,
+            images: post.images || [],
           }}
           postId={post.id}
         />

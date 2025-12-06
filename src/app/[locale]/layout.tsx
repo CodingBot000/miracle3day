@@ -119,6 +119,33 @@ export default async function LocaleLayout({
         <Script id="runtime-env" strategy="beforeInteractive">
           {`(function(){function d(){if(window.APP_ENV?.inWebView){return{inWebView:true,platform:window.APP_ENV.platform}}const u=navigator.userAgent;if(u.includes('MyAppWebView/1.0 (Android)'))return{inWebView:true,platform:'android'};if(u.includes('MyAppWebView/1.0 (iOS)'))return{inWebView:true,platform:'ios'};return{inWebView:false,platform:/Android/i.test(u)?'android':/iPhone|iPad|iPod/i.test(u)?'ios':'web'}}window.RUNTIME_ENV=d();document.documentElement.dataset.inWebview=String(window.RUNTIME_ENV.inWebView);document.documentElement.dataset.platform=window.RUNTIME_ENV.platform;})();`}
         </Script>
+        <Script id="android-google-login" strategy="beforeInteractive">
+          {`
+            window.onGoogleToken = async function(idToken) {
+              try {
+                const res = await fetch('/api/auth/google/token', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ idToken, redirectUrl: window.location.pathname })
+                });
+                const data = await res.json();
+                if (data.success) {
+                  window.location.href = data.redirectUrl || '/';
+                } else {
+                  console.error('Google login failed:', data.error);
+                  if (window.AndroidBridge?.onLoginError) {
+                    window.AndroidBridge.onLoginError(data.error || 'Login failed');
+                  }
+                }
+              } catch (error) {
+                console.error('Google token verification error:', error);
+                if (window.AndroidBridge?.onLoginError) {
+                  window.AndroidBridge.onLoginError(error.message || 'Network error');
+                }
+              }
+            };
+          `}
+        </Script>
       </head>
       <body className={inter.className + ' min-h-screen flex flex-col overflow-x-hidden'}>
         {/* GA4 스크립트 삽입 */}

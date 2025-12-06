@@ -8,6 +8,7 @@ export const sessionOptions: SessionOptions = {
     // HTTPS 환경이면 secure: true (ngrok, production 포함)
     secure: process.env.NODE_ENV === "production" || process.env.APP_URL?.startsWith("https://"),
     sameSite: "lax",
+    maxAge: 60 * 60 * 24 * 365, // 1년 (초 단위)
   },
 };
 

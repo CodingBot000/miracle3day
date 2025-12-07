@@ -1,4 +1,4 @@
-import type { TreatmentRoot, TreatmentAttributes } from '@/app/models/treatmentData.dto';
+import type { TreatmentRoot, TreatmentAttributes } from '@/models/treatmentData.dto';
 
 /**
  * Helper utilities for safely accessing TreatmentRoot JSONB attributes

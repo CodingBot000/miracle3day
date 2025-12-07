@@ -3,7 +3,7 @@ import { fetchUtils } from "@/utils/fetch";
 import {
   HospitalDetailReviewInputDto,
   HospitalDetailReviewOutDto,
-} from "@/app/models/reviewData.dto";
+} from "@/models/reviewData.dto";
 
 // 병원기준 Review라 여기서 나오는 모든 리뷰는 병원이 동일하다 
 export const getHospitalReviewListByHospitalIdAPI = async ({

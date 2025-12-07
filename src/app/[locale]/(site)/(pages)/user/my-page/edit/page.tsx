@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { NationModal } from "@/components/template/modal/NationModal";
-import { CountryCode } from "@/app/models/country-code.dto";
+import { CountryCode } from "@/models/country-code.dto";
 import { createStorageCompat } from "@/lib/storageCompat";
 import { useUserStore } from "@/stores/useUserStore";
 import { findCountry } from "@/constants/country";

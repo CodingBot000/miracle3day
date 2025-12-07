@@ -1,4 +1,4 @@
-import { HospitalDetailInfo } from "@/app/models/hospitalData.dto";
+import { HospitalDetailInfo } from "@/models/hospitalData.dto";
 import Image from "next/image";
 import React, { useState } from "react";
 import { parseSNSUrl, type SNSPlatform } from "@/utils/snsUtils";

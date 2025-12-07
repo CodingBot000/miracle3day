@@ -9,7 +9,7 @@ import { useState } from "react";
 import { MessageCircle, Video } from "lucide-react";
 import { useLocale } from "next-intl";
 import { useLoginGuard } from "@/hooks/useLoginGuard";
-import { HospitalDetailInfo } from "@/app/models/hospitalData.dto";
+import { HospitalDetailInfo } from "@/models/hospitalData.dto";
 import DirectChatChannels from "./DirectChatChannels";
 
 interface HospitalConsultationButtonProps {

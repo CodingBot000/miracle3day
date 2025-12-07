@@ -26,7 +26,7 @@ import {
         DEMOGRAPHICS_BASIC
       } from '@/constants/estimate_steps';
 import { isValidEmail } from '@/utils/validators';
-import { CountryCode, CountryInputDto } from '@/app/models/country-code.dto';
+import { CountryCode, CountryInputDto } from '@/models/country-code.dto';
 import { MessengerInput } from '@/components/atoms/input/InputMessengerFields';
 import { log } from '@/utils/logger';
 import { validateStepData, getValidationMessage } from '../validCheckForm';

@@ -6,7 +6,7 @@ import { useLocale } from "next-intl";
 import { ChevronLeft, Calendar, MapPin, Video, CheckCircle, XCircle, Hourglass, PlayCircle, RefreshCw, AlertCircle, UserX } from "lucide-react";
 import Link from "next/link";
 import LottieLoading from "@/components/atoms/LottieLoading";
-import { VideoReservationStatus } from "@/constants/reservation";
+import { VideoReservationStatus } from "@/models/videoConsultReservation.dto";
 
 interface RequestedSlot {
   rank: number;

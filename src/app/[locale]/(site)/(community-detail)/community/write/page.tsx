@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import WriteForm from '@/components/molecules/WriteForm';
-import type { CommunityCategory } from '@/app/models/communityData.dto';
+import type { CommunityCategory } from '@/models/communityData.dto';
 import {
   TABLE_COMMUNITY_CATEGORIES,
 } from '@/constants/tables';

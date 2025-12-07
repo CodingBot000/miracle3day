@@ -16,7 +16,8 @@
       "Bash(done)",
       "Bash(find:*)",
       "Bash(npm uninstall:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(npm cache clean:*)"
     ],
     "deny": [],
     "ask": []

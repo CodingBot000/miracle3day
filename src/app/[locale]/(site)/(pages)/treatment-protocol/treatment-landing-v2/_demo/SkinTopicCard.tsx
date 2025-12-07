@@ -1,6 +1,6 @@
 import * as React from "react";
 import Image from "next/image";
-import type { TopicWithAreas, Locale } from "@/app/models/treatmentData.dto";
+import type { TopicWithAreas, Locale } from "@/models/treatmentData.dto";
 import { TOPIC_IMAGES } from "@/app/[locale]/(site)/(pages)/treatment-protocol/treatment-landing-v2/category_images";
 
 interface SkinTopicCardProps {

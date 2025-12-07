@@ -5,7 +5,7 @@ import ScrollTop from "@/components/atoms/ScrollTop";
 import HospitalDetailNewDesign from "./components/HospitalDetailNewDesign";
 import { TABLE_DOCTOR, TABLE_HOSPITAL, TABLE_HOSPITAL_BUSINESS_HOUR, TABLE_HOSPITAL_DETAIL, TABLE_HOSPITAL_TREATMENT } from "@/constants/tables";
 import { q, one } from "@/lib/db";
-import { DoctorData } from "@/app/models/hospitalData.dto";
+import { DoctorData } from "@/models/hospitalData.dto";
 
 type Props = {
   params: { id: string };

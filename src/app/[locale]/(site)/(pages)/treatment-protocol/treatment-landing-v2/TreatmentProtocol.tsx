@@ -5,7 +5,7 @@ import { log } from '@/utils/logger';
 import * as React from "react";
 import { useRouter, useParams } from "next/navigation";
 import { useTopicList, useSurgeryProtocols } from "@/hooks/useTreatmentData";
-import type { TopicWithAreas, Locale } from "@/app/models/treatmentData.dto";
+import type { TopicWithAreas, Locale } from "@/models/treatmentData.dto";
 import LottieLoading from "@/components/atoms/LottieLoading";
 
 import TopicCard from "./_demo/TopicCard";

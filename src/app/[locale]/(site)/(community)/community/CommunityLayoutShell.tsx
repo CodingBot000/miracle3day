@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useCallback, useContext, useMemo, useState, useEffect, useRef, type ReactNode } from 'react'
-import type { CommunityCategory } from '@/app/models/communityData.dto'
+import type { CommunityCategory } from '@/models/communityData.dto'
 import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useLocale } from 'next-intl'

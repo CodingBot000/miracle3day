@@ -7,8 +7,8 @@ import { useOptimistic } from "react";
 import { favoriteActions } from "./actions";
 import { useGetUser } from "@/hooks/useGetUser";
 import { AlertModal } from "@/components/template/modal/Modal";
+import { ModalOverlay } from "@/components/template/modal/ModalOverlay";
 import useModal from "@/hooks/useModal";
-import { ModalOverlay } from "@/components/organism/layout/ModalOverlay";
 import Button from "@/components/atoms/button/Button";
 import { ROUTE } from "@/router";
 

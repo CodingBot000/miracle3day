@@ -1,4 +1,4 @@
-import { HospitalInfo } from "@/app/models/hospitalData.dto";
+import { HospitalInfo } from "@/models/hospitalData.dto";
 
 export type MapPlatform = "google" | "naver" | "kakao";
 

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { CountryCode } from '@/app/models/country-code.dto';
+import { CountryCode } from '@/models/country-code.dto';
 import { NationModal } from '@/components/template/modal/nations';
 import InputPhoneNumber from '@/components/atoms/input/InputPhoneNumber';
 import InputMessengerFields from '@/components/atoms/input/InputMessengerFields';

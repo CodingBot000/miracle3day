@@ -1,6 +1,6 @@
 import { TABLE_HOSPITAL } from "@/constants/tables";
 import { query } from "@/lib/db";
-import type { HospitalData } from "@/app/models/hospitalData.dto";
+import type { HospitalData } from "@/models/hospitalData.dto";
 
 export async function GET(req: Request) {
   try {

@@ -1,6 +1,6 @@
 'use client';
 
-import { DoctorData } from "@/app/models/hospitalData.dto";
+import { DoctorData } from "@/models/hospitalData.dto";
 import { useLocale } from "next-intl";
 import DoctorCard from "./DoctorCard";
 

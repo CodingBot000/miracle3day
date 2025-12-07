@@ -1,6 +1,6 @@
 "use client";
 
-import { HospitalData } from "@/app/models/hospitalData.dto";
+import { HospitalData } from "@/models/hospitalData.dto";
 import { findRegionByKey, REGIONS } from "@/constants";
 import { Link } from "@/i18n/routing";
 import { ReviewStats } from "@/components/molecules/ReviewStats";

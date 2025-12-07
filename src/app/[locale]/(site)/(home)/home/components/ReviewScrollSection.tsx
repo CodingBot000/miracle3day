@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import ReviewCardForHome from '@/components/molecules/card/ReviewCardForHome';
-import { ReviewDataFromGoogleMap } from '@/app/models/reviewData.dto';
+import { ReviewDataFromGoogleMap } from '@/models/reviewData.dto';
 import { useLocale } from 'next-intl';
 
 type ApiReview = {

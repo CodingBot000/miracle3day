@@ -9,7 +9,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { NationModal } from '@/components/template/modal/NationModal';
-import { CountryCode } from '@/app/models/country-code.dto';
+import { CountryCode } from '@/models/country-code.dto';
 import { findCountry } from '@/constants/country';
 
 const initialForm = {

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { TABLE_TREATMENT_INFO, TABLE_HOSPITAL_TREATMENT } from '@/constants/tables';
-import { TreatmentProductData } from '@/app/models/treatmentProduct.dto';
+import { TreatmentProductData } from '@/models/treatmentProduct.dto';
 
 export async function GET(
   request: NextRequest,

@@ -6,7 +6,7 @@ import type {
   CommunityPost,
   CommunityPostsDTO,
   CountRow,
-} from '@/app/models/communityData.dto';
+} from '@/models/communityData.dto';
 
 export async function getCommunityPostsDTO(
   topicId?: string,      // ← 파라미터 이름도 변경

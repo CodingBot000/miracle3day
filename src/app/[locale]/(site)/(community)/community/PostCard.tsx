@@ -2,7 +2,7 @@
 
 import { MouseEvent } from 'react';
 import { Link } from '@/i18n/routing';
-import type { CommunityPost } from '@/app/models/communityData.dto';
+import type { CommunityPost } from '@/models/communityData.dto';
 import { getTopicBadgeClass, getTagBadgeClass } from './utils';
 
 interface PostCardProps {

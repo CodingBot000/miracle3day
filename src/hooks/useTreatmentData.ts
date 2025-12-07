@@ -5,8 +5,8 @@ import {
   TreatmentCategoryResponse,
   TopicListResponse,
   TopicDetailResponse
-} from '@/app/models/treatmentData.dto';
-import type { SurgeryProtocolsResponse, SurgeryProtocol } from '@/app/models/surgeryData.dto';
+} from '@/models/treatmentData.dto';
+import type { SurgeryProtocolsResponse, SurgeryProtocol } from '@/models/surgeryData.dto';
 
 export const useTreatmentCareProtocols = (params?: GetTreatmentCareProtocolsParams) => {
   return useQuery({

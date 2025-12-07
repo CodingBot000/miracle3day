@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import CountryCodeSelector from "./CountryCodeSelector"
-import { CountryCode } from "@/app/models/country-code.dto"
+import { CountryCode } from "@/models/country-code.dto"
 
 export type MessengerType = "instagram" | "line" | "kakaotalk" | "whatsapp" | "tiktok" | "wechat"
 

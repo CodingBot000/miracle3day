@@ -30,7 +30,7 @@ import {
        VIDEO_CONSULT_SCHEDULE
       } from '@/constants/pre_consult_steps';
 import { isValidEmail } from '@/utils/validators';
-import { CountryCode, CountryInputDto } from '@/app/models/country-code.dto';
+import { CountryCode, CountryInputDto } from '@/models/country-code.dto';
 import { log } from '@/utils/logger';
 import { validateStepData, getValidationMessage } from '../validCheckForm';
 

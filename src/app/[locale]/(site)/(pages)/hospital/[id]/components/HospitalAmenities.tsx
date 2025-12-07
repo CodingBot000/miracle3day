@@ -1,4 +1,4 @@
-import { HospitalDetailInfo } from "@/app/models/hospitalData.dto";
+import { HospitalDetailInfo } from "@/models/hospitalData.dto";
 
 interface HospitalAmenitiesProps {
   hospitalDetails: HospitalDetailInfo;

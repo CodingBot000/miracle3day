@@ -2,7 +2,7 @@
 
 import { useState, type ChangeEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import type { CommunityCategory, TopicId, PostTagId } from '@/app/models/communityData.dto';
+import type { CommunityCategory, TopicId, PostTagId } from '@/models/communityData.dto';
 import { toast } from 'sonner';
 import { useLocale } from 'next-intl';
 import { handleNotifications } from '@/utils/notificationHandler';

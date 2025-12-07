@@ -1,6 +1,6 @@
 "use client";
 
-import { HospitalData } from "@/app/models/hospitalData.dto";
+import { HospitalData } from "@/models/hospitalData.dto";
 import { LocationEnum } from "@/constants";
 import { useRouter } from "next/navigation";
 import HospitalListCard from "./HospitalListCard";

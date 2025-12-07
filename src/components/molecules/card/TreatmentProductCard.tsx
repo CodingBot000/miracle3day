@@ -1,6 +1,6 @@
 "use client";
 
-import { TreatmentProductData } from "@/app/models/treatmentProduct.dto";
+import { TreatmentProductData } from "@/models/treatmentProduct.dto";
 import { useLocale } from "next-intl";
 import { getKRWToUSD } from "@/app/[locale]/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/utils/helpers";
 

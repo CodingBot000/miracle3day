@@ -1,5 +1,5 @@
-import { HospitalData } from "@/app/models/hospitalData.dto";
-import { SurgeryInfo } from "@/app/models/surgeryInfo.dto";
+import { HospitalData } from "@/models/hospitalData.dto";
+import { SurgeryInfo } from "@/models/surgeryInfo.dto";
 
 // export interface SurgeryInfo {
 //   id: number;

@@ -5,7 +5,7 @@ import { Metadata } from "next";
 import HospitalListNewDesign from "./components/HospitalListNewDesign";
 import { TABLE_HOSPITAL } from "@/constants/tables";
 import { q } from "@/lib/db";
-import type { HospitalData } from "@/app/models/hospitalData.dto";
+import type { HospitalData } from "@/models/hospitalData.dto";
 
 type Props = {
   searchParams: {

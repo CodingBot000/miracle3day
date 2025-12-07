@@ -1,5 +1,5 @@
 import { fetchUtils } from "@/utils/fetch";
-import { HospitalOutputDto } from "@/app/models/hospitalData.dto";
+import { HospitalOutputDto } from "@/models/hospitalData.dto";
 
 const buildApiUrl = (path: string) => {
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;

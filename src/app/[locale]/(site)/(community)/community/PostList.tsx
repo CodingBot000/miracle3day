@@ -2,7 +2,7 @@
 
 import { MouseEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import type { CommunityPost } from '@/app/models/communityData.dto';
+import type { CommunityPost } from '@/models/communityData.dto';
 import { ANONYMOUS_FALLBACK } from './utils';
 import { useLoginGuard } from '@/hooks/useLoginGuard';
 import { useLocale } from 'next-intl';

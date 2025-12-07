@@ -113,7 +113,7 @@ export default function CompleteStep() {
         {/* Header */}
         <header className="flex justify-center py-6">
             <Image
-              src="/logo/logo_mimotok.svg"
+              src="/admin/logo/logo_mimotok.svg"
               alt="logo"
               width={0}  // dummy
               height={0} // dummy

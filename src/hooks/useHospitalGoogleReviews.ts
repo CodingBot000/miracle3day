@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { GooglePlaceReviewsResponse, ReviewDataFromGoogleMap } from '@/app/models/reviewData.dto';
+import { GooglePlaceReviewsResponse, ReviewDataFromGoogleMap } from '@/models/reviewData.dto';
 
 // ============================================================================
 // Types

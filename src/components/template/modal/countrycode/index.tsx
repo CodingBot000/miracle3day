@@ -6,7 +6,7 @@ import useModal from "@/hooks/useModal";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Search } from "lucide-react";
-import { CountryCode } from "@/app/models/country-code.dto";
+import { CountryCode } from "@/models/country-code.dto";
 
 interface CountryCodeModalProps {
   nation: string;

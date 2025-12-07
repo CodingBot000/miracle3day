@@ -1,6 +1,6 @@
 import { FavoriteItem } from "@/app/api/auth/favorite/favorite.dto";
-import { BusinessHourData, DoctorData, HospitalDetailInfo, HospitalInfo } from "@/app/models/hospitalData.dto";
-import { TreatmentData } from "@/app/models/treatmentData.dto";
+import { BusinessHourData, DoctorData, HospitalDetailInfo, HospitalInfo } from "@/models/hospitalData.dto";
+import { TreatmentData } from "@/models/treatmentData.dto";
 
 export interface HospitalDetailMainInputDto {
   id: string;

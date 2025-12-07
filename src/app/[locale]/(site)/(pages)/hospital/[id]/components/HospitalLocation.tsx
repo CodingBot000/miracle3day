@@ -1,6 +1,6 @@
 "use client";
 
-import { HospitalInfo } from "@/app/models/hospitalData.dto";
+import { HospitalInfo } from "@/models/hospitalData.dto";
 import { MapComponent } from "@/components/common/MapComponent";
 import ZoomableImageMap from "@/components/common/ZoomableImageMap";
 import { useEffect, useState } from "react";

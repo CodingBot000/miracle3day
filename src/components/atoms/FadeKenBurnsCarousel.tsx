@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion, Variants } from "framer-motion";
 import clsx from "clsx";
 
 type Props = {
@@ -45,20 +45,20 @@ export default function FadeKenBurnsCarousel({
   };
 
   // Ken Burns: 느린 줌(1.0 → 1.06) + 페이드(0.8s)
-  const variants = useMemo(
+  const variants: Variants = useMemo(
     () => ({
       enter: { opacity: 0, scale: prefersReducedMotion ? 1 : 1.0 },
       center: {
         opacity: 1,
         scale: prefersReducedMotion ? 1 : 1.06,
         transition: {
-          opacity: { duration: 0.8, ease: "easeInOut" },
-          scale: { duration: intervalMs / 1000, ease: "linear" },
+          opacity: { duration: 0.8, ease: "easeInOut" as const },
+          scale: { duration: intervalMs / 1000, ease: "linear" as const },
         },
       },
       exit: {
         opacity: 0,
-        transition: { duration: 0.8, ease: "easeInOut" },
+        transition: { duration: 0.8, ease: "easeInOut" as const },
       },
     }),
     [intervalMs, prefersReducedMotion]

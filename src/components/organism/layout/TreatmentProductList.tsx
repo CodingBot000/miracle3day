@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { TreatmentProductData, GroupedTreatmentProducts, TreatmentGroup } from "@/app/models/treatmentProduct.dto";
+import { TreatmentProductData, GroupedTreatmentProducts, TreatmentGroup } from "@/models/treatmentProduct.dto";
 import TreatmentProductCard from "@/components/molecules/card/TreatmentProductCard";
 import { useLocale, useTranslations } from "next-intl";
 import { Sparkles, ChevronDown, ChevronUp } from "lucide-react";

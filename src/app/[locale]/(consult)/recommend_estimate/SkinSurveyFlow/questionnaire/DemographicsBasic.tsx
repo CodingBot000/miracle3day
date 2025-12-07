@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { CountryCode } from '@/app/models/country-code.dto';
+import { CountryCode } from '@/models/country-code.dto';
 import { NationModal } from '@/components/template/modal/nations';
 import { questions } from '@/app/[locale]/(consult)/recommend_estimate/estimate/form-definition_questions';
 import { useLocale } from 'next-intl';

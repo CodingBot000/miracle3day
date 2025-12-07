@@ -63,7 +63,7 @@ export default function DailyConsultPage() {
         log.debug("[Daily] Initializing room:", { roomName, userName, role });
 
         // 1) Create or get existing room
-        const roomRes = await fetch("/admin/mobile/consult-daily/api/create-room", {
+        const roomRes = await fetch("/api/admin/video-consult/daily-co/create-room", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ reservationId }),
@@ -83,7 +83,7 @@ export default function DailyConsultPage() {
         log.debug("[Daily] Room ready:", roomData);
 
         // 2) Create meeting token with role-based permissions
-        const tokenRes = await fetch("/admin/mobile/consult-daily/api/create-token", {
+        const tokenRes = await fetch("/api/admin/video-consult/daily-co/create-token", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

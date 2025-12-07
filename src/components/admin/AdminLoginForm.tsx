@@ -33,13 +33,20 @@ export default function AdminLoginForm() {
         body: JSON.stringify({ email, password }),
       });
 
+      const json = await res.json();
+
+      // Rate Limit 에러 처리 (429)
+      if (res.status === 429) {
+        setError(`⏱️ ${json.error}`);
+        return;
+      }
+
       if (!res.ok) {
         // 로그인 실패 처리 (에러 메시지 표시 등)
         setError("아이디 또는 비밀번호를 확인해주세요.");
         return;
       }
 
-      const json = await res.json();
       if (json.ok) {
         // 성공: 서버가 HttpOnly 쿠키로 세션을 이미 심었다.
         // 클라이언트에서는 /admin 으로 라우팅만 하면 된다.

@@ -3,8 +3,37 @@ import { cookies } from "next/headers";
 import { pool } from "@/lib/db";
 import { issueSession, COOKIE_NAME } from "@/lib/admin/auth";
 import argon2 from "argon2";
+import rateLimit from "@/lib/rate-limit";
+
+// Rate limiter 생성 (1분에 5번)
+const limiter = rateLimit({
+  interval: 60 * 1000, // 1분 = 60,000ms
+});
 
 export async function POST(req: NextRequest) {
+  // ============================================
+  // Rate Limiting 체크
+  // ============================================
+  const ip = req.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
+             req.headers.get('x-real-ip') ||
+             'unknown';
+
+  try {
+    await limiter.check(5, ip); // IP당 1분에 5번만 허용
+  } catch {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: '로그인 시도 횟수가 너무 많습니다. 1분 후 다시 시도해주세요.',
+        code: 'RATE_LIMIT_EXCEEDED'
+      },
+      { status: 429 }
+    );
+  }
+
+  // ============================================
+  // 기존 로그인 로직
+  // ============================================
   const { email, password } = await req.json();
   console.log("[AUTH-LOGIN DEBUG] Step1 received credentials", { email, password });
 

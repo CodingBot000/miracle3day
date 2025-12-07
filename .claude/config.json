@@ -1,7 +1,10 @@
 {
   "safe_mode": false,
   "confirm_shell_commands": false,
+  "defaultMode": "bypassPermissions",
   "security": {
-    "allowWrite": "always"
+    "allowWrite": "always",
+    "allowRead": "always",
+    "allowExecute": "always"
   }
 }

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
-import { ChevronLeft, Calendar, MapPin, Video, CheckCircle, XCircle, Hourglass, PlayCircle, RefreshCw, AlertCircle, UserX } from "lucide-react";
+import { ChevronLeft, Calendar, MapPin, Video, CheckCircle, XCircle, Hourglass, PlayCircle, RefreshCw, AlertCircle, UserX, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import LottieLoading from "@/components/atoms/LottieLoading";
 import { VideoReservationStatus } from "@/models/videoConsultReservation.dto";
@@ -26,6 +26,10 @@ interface Reservation_Video_Consult {
   hospital_name: string | null;
   hospital_name_en: string | null;
   submission_type: string | null;
+  // Daily.co
+  meeting_room_id?: string | null;
+  // Zoom
+  zoom_join_url?: string | null;
 }
 
 const STATUS_CONFIG: Record<VideoReservationStatus, {
@@ -239,15 +243,44 @@ export default function ReservationListPage() {
 
                     {/* Actions */}
                     <div className="mt-3 pt-3 border-t flex flex-wrap gap-2">
-                      {/* Join Video Consultation Button */}
+                      {/* Join Video Consultation Buttons */}
                       {reservation.status === 'approved' ? (
-                        <Link
-                          href={`/${locale}/mobile/consult-daily/${reservation.id_uuid}?role=patient`}
-                          className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium"
-                        >
-                          <PlayCircle className="w-4 h-4" />
-                          {locale === 'ko' ? '화상상담 입장' : 'Join Consultation'}
-                        </Link>
+                        <>
+                          {/* Daily.co 링크 */}
+                          {reservation.meeting_room_id && (
+                            <Link
+                              href={`/${locale}/mobile/consult-daily/${reservation.id_uuid}?role=patient`}
+                              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+                            >
+                              <PlayCircle className="w-4 h-4" />
+                              {locale === 'ko' ? 'Daily.co 입장' : 'Join (Daily.co)'}
+                            </Link>
+                          )}
+
+                          {/* Zoom 링크 */}
+                          {reservation.zoom_join_url && (
+                            <a
+                              href={reservation.zoom_join_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium"
+                            >
+                              <ExternalLink className="w-4 h-4" />
+                              {locale === 'ko' ? 'Zoom 입장' : 'Join (Zoom)'}
+                            </a>
+                          )}
+
+                          {/* 둘 다 없을 경우 기본 버튼 */}
+                          {!reservation.meeting_room_id && !reservation.zoom_join_url && (
+                            <Link
+                              href={`/${locale}/mobile/consult-daily/${reservation.id_uuid}?role=patient`}
+                              className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium"
+                            >
+                              <PlayCircle className="w-4 h-4" />
+                              {locale === 'ko' ? '화상상담 입장' : 'Join Consultation'}
+                            </Link>
+                          )}
+                        </>
                       ) : (
                         <button
                           disabled

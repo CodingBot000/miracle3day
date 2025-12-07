@@ -112,6 +112,9 @@ export async function GET(request: NextRequest) {
       vr.hospital_notes,
       vr.user_notes,
       vr.meeting_room_id,
+      vr.zoom_meeting_id,
+      vr.zoom_join_url,
+      vr.zoom_meeting_password,
       cs.private_first_name,
       cs.private_last_name,
       cs.private_email,
@@ -169,6 +172,9 @@ export async function GET(request: NextRequest) {
       hospital_notes: row.hospital_notes,
       user_notes: row.user_notes,
       meeting_room_id: row.meeting_room_id,
+      zoom_meeting_id: row.zoom_meeting_id,
+      zoom_join_url: row.zoom_join_url,
+      zoom_meeting_password: row.zoom_meeting_password,
       earliest_requested_start: earliestStart,
     };
   });

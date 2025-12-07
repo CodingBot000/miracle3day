@@ -83,6 +83,11 @@ export interface VideoReservationListItem {
   // Daily.co 화상상담 관련
   meeting_room_id?: string | null;
 
+  // Zoom 화상상담 관련
+  zoom_meeting_id?: string | null;
+  zoom_join_url?: string | null;
+  zoom_meeting_password?: string | null;
+
   // 파생필드 (프론트 계산용)
   earliest_requested_start?: string | null;
   preferred_date_label?: string;

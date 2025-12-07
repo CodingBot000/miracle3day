@@ -1,25 +1,16 @@
 {
   "permissions": {
     "allow": [
-      "Bash(xargs sed:*)",
-      "Bash(node -e \"JSON.parse(require('fs').readFileSync('/Users/switch/Development/WebBeauty/beauty_proejcts/complete/beauty-main/src/messages/zh-CN.json', 'utf8'))\":*)",
-      "Bash(node -e:*)",
-      "Bash(npx tsc:*)",
-      "Bash(npm install:*)",
-      "Bash(npx ts-node:*)",
-      "Bash(cat:*)",
-      "Bash(npx:*)",
-      "Bash(npm run build:*)",
-      "Bash(ls:*)",
-      "Bash(for dir in aboutus ai care-categories category chat community contents event gamification hospital legal mobile partners procedure support treatment-based-age-guide treatment-protocol treatments_info user)",
-      "Bash(do mv \"$dir\" \"(pages)/\")",
-      "Bash(done)",
-      "Bash(find:*)",
-      "Bash(npm uninstall:*)",
-      "Bash(curl:*)",
-      "Bash(npm cache clean:*)"
+      "Bash",
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep",
+      "Task",
+      "TodoWrite",
+      "NotebookEdit"
     ],
-    "deny": [],
-    "ask": []
+    "deny": []
   }
 }

@@ -20,20 +20,42 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  // 2. Get hospital ID from admin table
+  // 2. Get admin info (hospital ID and email) from admin table
+  console.log('[VIDEO-RESERVATIONS] Session sub:', session.sub);
+
   const { rows: adminRows } = await pool.query(
-    `SELECT id_uuid_hospital FROM admin WHERE id = $1`,
+    `SELECT id_uuid_hospital, email FROM admin WHERE id = $1`,
     [session.sub]
   );
 
-  if (adminRows.length === 0 || !adminRows[0].id_uuid_hospital) {
+  console.log('[VIDEO-RESERVATIONS] Admin rows:', adminRows);
+
+  if (adminRows.length === 0) {
+    console.error('[VIDEO-RESERVATIONS] ❌ Admin account not found for id:', session.sub);
+    return NextResponse.json(
+      { error: 'Admin account not found' },
+      { status: 400 }
+    );
+  }
+
+  const admin = adminRows[0];
+  const isSuperAdmin = admin.email === process.env.SUPER_ADMIN_EMAIL;
+
+  console.log('[VIDEO-RESERVATIONS] Admin email:', admin.email);
+  console.log('[VIDEO-RESERVATIONS] SUPER_ADMIN_EMAIL env:', process.env.SUPER_ADMIN_EMAIL);
+  console.log('[VIDEO-RESERVATIONS] Is super admin:', isSuperAdmin);
+  console.log('[VIDEO-RESERVATIONS] Hospital ID:', admin.id_uuid_hospital);
+
+  // If not super admin and no hospital ID, return error
+  if (!isSuperAdmin && !admin.id_uuid_hospital) {
+    console.error('[VIDEO-RESERVATIONS] ❌ Not super admin and no hospital ID');
     return NextResponse.json(
       { error: 'No hospital associated with this account' },
       { status: 400 }
     );
   }
 
-  const hospitalId = adminRows[0].id_uuid_hospital;
+  const hospitalId = admin.id_uuid_hospital;
 
   // 3. Parse query parameters
   const { searchParams } = new URL(request.url);
@@ -48,8 +70,16 @@ export async function GET(request: NextRequest) {
     : [];
 
   // 4. Build SQL query
-  let whereClause = `WHERE vr.id_uuid_hospital = $1 AND cs.submission_type = 'video_consult'`;
-  const queryParams: (string | string[])[] = [hospitalId];
+  let whereClause: string;
+  const queryParams: (string | string[])[] = [];
+
+  // SUPER_ADMIN sees all reservations, regular admin sees only their hospital's
+  if (isSuperAdmin) {
+    whereClause = `WHERE cs.submission_type = 'video_consult'`;
+  } else {
+    whereClause = `WHERE vr.id_uuid_hospital = $1 AND cs.submission_type = 'video_consult'`;
+    queryParams.push(hospitalId);
+  }
 
   if (statusFilter.length > 0) {
     queryParams.push(statusFilter);

@@ -3,7 +3,7 @@ import { cookies } from 'next/headers';
 
 export default async function Page() {
   // Get base URL for server-side fetch
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3500';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
 
   // Get session cookie for server-side request
   const cookieStore = await cookies();

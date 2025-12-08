@@ -102,14 +102,14 @@ export default function AdminPageClient({
 
       <button
         onClick={handleReservationDashBoard}
-         className={`w-full font-medium py-3 px-4 rounded-lg transition-colors duration-200 bg-yellow-500 text-white`}
+        className="w-full font-medium py-3 px-4 rounded-lg transition-colors duration-200 bg-orange-500 hover:bg-orange-600 text-white"
       >
         예약정보 보기
 {/* /Users/switch/Documents/웹개발요청/complete/beauty-main/src/app/hospital/[id]/reservation/ReservationClient.tsx */}
       </button>
       <button
         onClick={handleReservationVideoConsultDashBoard}
-         className={`w-full font-medium py-3 px-4 rounded-lg transition-colors duration-200 bg-yellow-500 text-white`}
+        className="w-full font-medium py-3 px-4 rounded-lg transition-colors duration-200 bg-amber-600 hover:bg-amber-700 text-white"
       >
         화상상담 예약정보 보기
 

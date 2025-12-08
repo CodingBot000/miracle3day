@@ -1,5 +1,5 @@
 import React, { isValidElement, useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ChevronLeft, ChevronRight, Heart, Star, FileText } from 'lucide-react';
 import { useConsultFormStorage } from '../../common/formStorage';
 import { Button } from '@/components/ui/button';
@@ -58,6 +58,7 @@ interface StepComponentProps {
 const PreConsultationIntakeForm: React.FC = () => {
   const router = useRouter();
   const locale = useLocale();
+  const searchParams = useSearchParams();
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState<Record<string, StepData>>({});
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
@@ -66,6 +67,9 @@ const PreConsultationIntakeForm: React.FC = () => {
 
   const { toast } = useToast();
   const { loadStoredData, saveData } = useConsultFormStorage('preConsult');
+
+  // Get returnUrl from query parameter, default to home if not provided
+  const returnUrl = searchParams.get('returnUrl') || `/${locale}`;
 
   // 컴포넌트 마운트 시 저장된 데이터 불러오기
   useEffect(() => {
@@ -382,6 +386,7 @@ const PreConsultationIntakeForm: React.FC = () => {
         showSendFormButton={isValideSendForm}
         onOpenChange={setIsPreviewOpen}
         formData={formData}
+        returnUrl={returnUrl}
         onSubmissionComplete={(allStepData) => {
           setIsPreviewOpen(false);
 

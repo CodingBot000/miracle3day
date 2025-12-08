@@ -4,9 +4,9 @@ import { motion, Variants } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { ROUTE } from "@/router";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import DiagnosticIntro from "./components/DiagnosticIntro";
 import LoginRequiredModal from "@/components/template/modal/LoginRequiredModal";
 
@@ -18,10 +18,12 @@ const fadeUp: Variants = {
 export default function HeadSection() {
   const t = useTranslations("Home");
   const router = useRouter();
+  const locale = useLocale();
+  const pathname = usePathname();
   const [showLoginModal, setShowLoginModal] = useState(false);
 
   const heading = [t("headingLine1"), t("headingLine2")];
-
+  console.log('qq qq HeadSection pathname:', pathname);
   const handleVideoConsultationClick = async (e: React.MouseEvent) => {
     e.preventDefault();
 
@@ -31,7 +33,7 @@ export default function HeadSection() {
       if (res.ok) {
         const data = await res.json();
         if (data.auth && data.auth.status === 'active') {
-          router.push('/pre_consultation_intake_form');
+          router.push(`/${locale}/pre_consultation_intake_form?returnUrl=${encodeURIComponent(pathname)}`);
           return;
         }
       }
@@ -45,7 +47,8 @@ export default function HeadSection() {
 
   const handleLoginConfirm = () => {
     setShowLoginModal(false);
-    router.push(`/login?redirect=${encodeURIComponent('/pre_consultation_intake_form')}`);
+    const formUrl = `/${locale}/pre_consultation_intake_form?returnUrl=${encodeURIComponent(pathname)}`;
+    router.push(`/login?redirect=${encodeURIComponent(formUrl)}`);
   };
 
   return (
@@ -114,7 +117,7 @@ export default function HeadSection() {
   </div>
 
   <Link
-    href="/pre_consultation_intake_form"
+    href={`/${locale}/pre_consultation_intake_form?returnUrl=${encodeURIComponent(pathname)}`}
     onClick={handleVideoConsultationClick}
     className="w-full px-4 sm:px-6 py-4 sm:py-6 flex items-center justify-between rounded-[14px] bg-gradient-to-br from-green-50 to-teal-50 border-2 border-green-400 hover:border-green-500 hover:shadow-md transition-all duration-200 relative overflow-hidden group"
   >

@@ -32,11 +32,12 @@ interface PreviewReportProps {
   onOpenChange: (open: boolean) => void;
   showSendFormButton: boolean;
   formData: Record<string, any>;
+  returnUrl?: string;
   onSubmissionComplete?: (formData: Record<string, any>) => void;
 }
 
-const PreviewReport: React.FC<PreviewReportProps> = 
-({ open, onOpenChange, formData, showSendFormButton, onSubmissionComplete }) => 
+const PreviewReport: React.FC<PreviewReportProps> =
+({ open, onOpenChange, formData, showSendFormButton, returnUrl, onSubmissionComplete }) =>
   {
   const locale = useLocale();
   const router = useRouter();
@@ -203,9 +204,14 @@ const PreviewReport: React.FC<PreviewReportProps> =
       onSubmissionComplete(allStepData);
     }
 
-    // 병원 상세페이지로 리다이렉트
-    if (hospitalId) {
-      router.push(`/${locale}/hospital/${hospitalId}`);
+    // 리다이렉트 우선순위: returnUrl > hospitalId > 홈
+    // router.replace()를 사용해서 히스토리에서 문진 페이지를 제거
+    if (returnUrl) {
+      router.replace(returnUrl);
+    } else if (hospitalId) {
+      router.replace(`/${locale}/hospital/${hospitalId}`);
+    } else {
+      router.replace(`/${locale}`);
     }
   };
 

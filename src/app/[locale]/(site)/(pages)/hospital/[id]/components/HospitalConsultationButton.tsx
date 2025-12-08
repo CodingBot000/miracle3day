@@ -147,7 +147,9 @@ const HospitalConsultationButton = ({ hospitalId, hospitalDetails }: HospitalCon
       }
 
       // 3. Navigate to video consultation form with hospital ID
-      router.push(`/pre_consultation_intake_form?hospitalId=${hospitalId}`);
+      // router.push(`/pre_consultation_intake_form?hospitalId=${hospitalId}`);
+      router.push(`/${locale}/pre_consultation_intake_form?returnUrl=${encodeURIComponent(`/${locale}/hospital/${hospitalId}`)}`);
+
     } catch (err: any) {
       console.error("Error starting video consultation:", err);
       setError(locale === 'ko' ? labels.ko.videoConsultationError : labels.en.videoConsultationError);

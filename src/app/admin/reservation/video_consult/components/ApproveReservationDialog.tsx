@@ -22,6 +22,8 @@ import {
   formatSlotDisplay,
 } from '@/lib/admin/dateUtils';
 
+type VideoPlatform = 'zoom' | 'daily';
+
 interface ApproveReservationDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -40,6 +42,7 @@ export function ApproveReservationDialog({
   const [endTime, setEndTime] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [selectedPlatform, setSelectedPlatform] = useState<VideoPlatform>('zoom');
 
   const { minDate, maxDate } = getDateRangeFromSlots(
     reservation.requested_slots,
@@ -73,18 +76,20 @@ export function ApproveReservationDialog({
       const confirmedStart = convertLocalToUtc(date, startTime, 'Asia/Seoul');
       const confirmedEnd = convertLocalToUtc(date, endTime, 'Asia/Seoul');
 
-      const res = await fetch(
-        `/api/admin/video-reservations/${reservation.id_uuid}`,
-        {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            action: 'approve',
-            confirmedStart,
-            confirmedEnd,
-          }),
-        }
-      );
+      // 선택된 플랫폼에 따라 API 엔드포인트 결정
+      const apiEndpoint = selectedPlatform === 'zoom'
+        ? `/api/admin/video-reservations-zoom/${reservation.id_uuid}`
+        : `/api/admin/video-reservations/${reservation.id_uuid}`;
+
+      const res = await fetch(apiEndpoint, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'approve',
+          confirmedStart,
+          confirmedEnd,
+        }),
+      });
 
       if (!res.ok) {
         const data = await res.json();
@@ -144,6 +149,58 @@ export function ApproveReservationDialog({
                   </div>
                 );
               })}
+            </div>
+          </div>
+
+          {/* Platform Selection */}
+          <div>
+            <Label className="text-sm font-medium">화상상담 플랫폼 선택</Label>
+            <div className="mt-2 space-y-2">
+              {/* Zoom 옵션 (기본값) */}
+              <label className="flex items-center p-3 border-2 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                <input
+                  type="radio"
+                  name="platform"
+                  value="zoom"
+                  checked={selectedPlatform === 'zoom'}
+                  onChange={(e) => setSelectedPlatform(e.target.value as VideoPlatform)}
+                  className="w-4 h-4 text-green-600 focus:ring-green-500"
+                />
+                <div className="ml-3 flex-1">
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium text-gray-900">Zoom</span>
+                    <span className="px-2 py-0.5 text-xs font-medium bg-green-100 text-green-700 rounded">
+                      권장
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-0.5">
+                    외부 링크 방식 • 안정적 • 모든 기기 지원
+                  </p>
+                </div>
+              </label>
+
+              {/* Daily.co 옵션 */}
+              <label className="flex items-center p-3 border-2 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                <input
+                  type="radio"
+                  name="platform"
+                  value="daily"
+                  checked={selectedPlatform === 'daily'}
+                  onChange={(e) => setSelectedPlatform(e.target.value as VideoPlatform)}
+                  className="w-4 h-4 text-blue-600 focus:ring-blue-500"
+                />
+                <div className="ml-3 flex-1">
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium text-gray-900">Daily.co</span>
+                    <span className="px-2 py-0.5 text-xs font-medium bg-blue-100 text-blue-700 rounded">
+                      임베디드
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-0.5">
+                    사이트 내 임베디드 • 테스트용
+                  </p>
+                </div>
+              </label>
             </div>
           </div>
 

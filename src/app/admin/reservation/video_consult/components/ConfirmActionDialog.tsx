@@ -39,14 +39,17 @@ export function ConfirmActionDialog({
     setError(null);
 
     try {
-      const res = await fetch(
-        `/api/admin/video-reservations/${reservation.id_uuid}`,
-        {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action }),
-        }
-      );
+      // zoom_meeting_id가 있으면 Zoom API, 아니면 Daily.co API 사용
+      const isZoom = !!reservation.zoom_meeting_id;
+      const apiEndpoint = isZoom
+        ? `/api/admin/video-reservations-zoom/${reservation.id_uuid}`
+        : `/api/admin/video-reservations/${reservation.id_uuid}`;
+
+      const res = await fetch(apiEndpoint, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action }),
+      });
 
       if (!res.ok) {
         const data = await res.json();

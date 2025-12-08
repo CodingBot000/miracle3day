@@ -278,6 +278,9 @@ export function VideoConsultReservationAdminPage({
                       확정 일시
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      플랫폼
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       화상상담
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -325,23 +328,60 @@ export function VideoConsultReservationAdminPage({
                           ? formatDateTime(reservation.confirmed_start_at)
                           : '-'}
                       </td>
+                      {/* 플랫폼 배지 */}
+                      <td className="px-4 py-4 whitespace-nowrap">
+                        {reservation.zoom_meeting_id && (
+                          <span className="px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded">
+                            Zoom
+                          </span>
+                        )}
+                        {reservation.meeting_room_id && !reservation.zoom_meeting_id && (
+                          <span className="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-700 rounded">
+                            Daily.co
+                          </span>
+                        )}
+                        {!reservation.zoom_meeting_id && !reservation.meeting_room_id && (
+                          <span className="text-gray-400">-</span>
+                        )}
+                      </td>
+                      {/* 화상상담 입장 버튼 */}
                       <td
                         className="px-4 py-4 whitespace-nowrap"
                         onClick={(e) => e.stopPropagation()}
                       >
                         {reservation.status === 'approved' && (
-                          <AdminVideoConsultJoinButton
-                            meetingRoomId={reservation.meeting_room_id}
-                            doctorDisplayName="Doctor"
-                            disabled={!reservation.meeting_room_id}
-                            disabledReason={
-                              !reservation.meeting_room_id
-                                ? '화상상담 방이 아직 생성되지 않았습니다'
-                                : undefined
-                            }
-                            className="text-xs px-2 py-1"
-                            openInNewTab={true}
-                          />
+                          <div className="flex gap-1">
+                            {/* Zoom 링크 */}
+                            {reservation.zoom_join_url && (
+                              <a
+                                href={reservation.zoom_join_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+                              >
+                                Zoom 입장
+                              </a>
+                            )}
+                            {/* Daily.co 링크 */}
+                            {reservation.meeting_room_id && !reservation.zoom_meeting_id && (
+                              <AdminVideoConsultJoinButton
+                                meetingRoomId={reservation.meeting_room_id}
+                                doctorDisplayName="Doctor"
+                                disabled={!reservation.meeting_room_id}
+                                disabledReason={
+                                  !reservation.meeting_room_id
+                                    ? '화상상담 방이 아직 생성되지 않았습니다'
+                                    : undefined
+                                }
+                                className="text-xs px-2 py-1"
+                                openInNewTab={true}
+                              />
+                            )}
+                            {/* 둘 다 없을 경우 */}
+                            {!reservation.zoom_join_url && !reservation.meeting_room_id && (
+                              <span className="text-xs text-gray-400">준비중</span>
+                            )}
+                          </div>
                         )}
                       </td>
                       <td

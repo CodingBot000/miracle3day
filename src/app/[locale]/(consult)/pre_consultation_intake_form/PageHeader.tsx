@@ -4,6 +4,8 @@ import Image from 'next/image';
 import { useLocale } from 'next-intl';
 import ProgressIndicator from './PreConsultationSurveyFlow/ProgressIndicator';
 import LanguageSwitcherNextIntl from '@/components/organism/layout/LanguageSwitcherNextIntl';
+import { pageHeader } from './pre_consultation_intake/form-definition_pre_con_base';
+import { getLocalizedText } from '@/utils/i18n';
 
 interface PageHeaderProps {
   currentStep: number;
@@ -11,16 +13,8 @@ interface PageHeaderProps {
   onBack?: () => void;
 }
 
-const translations = {
-  en: 'PreConsultation Intake Form',
-  ko: '사전 상담 정보 양식',
-  ja: '事前相談情報フォーム',
-  'zh-CN': '咨询前信息表',
-  'zh-TW': '諮詢前資訊表',
-};
-
 const PageHeader: React.FC<PageHeaderProps> = ({ currentStep, totalSteps, onBack }) => {
-  const locale = useLocale() as keyof typeof translations;
+  const locale = useLocale();
   return (
     <div className="bg-white sticky top-0 z-50 h-[60px]">
       <div className="max-w-4xl mx-auto px-4 py-3 h-full">
@@ -41,7 +35,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({ currentStep, totalSteps, onBack
             )}
           </div>
           <h1 className="absolute left-1/2 -translate-x-1/2 text-xl font-semibold text-gray-900">
-            {translations[locale] || translations.en}
+            {getLocalizedText(pageHeader.ph1, locale)}
           </h1>
           <div className="flex items-center">
             <LanguageSwitcherNextIntl />

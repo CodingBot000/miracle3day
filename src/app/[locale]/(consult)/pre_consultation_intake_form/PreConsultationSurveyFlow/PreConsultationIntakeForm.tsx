@@ -12,6 +12,7 @@ import { RecommendationOutput } from '@/app/[locale]/(consult)/pre_consultation_
 import { recommendTreatments } from '@/app/[locale]/(consult)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching';
 import { preConsultationSteps } from '@/app/[locale]/(consult)/pre_consultation_intake_form/pre_consultation_intake/form-definition_pre_con_steps';
 import { questions } from '@/app/[locale]/(consult)/pre_consultation_intake_form/pre_consultation_intake/form-definition_pre_con_questions';
+import { intakeForm } from '@/app/[locale]/(consult)/pre_consultation_intake_form/pre_consultation_intake/form-definition_pre_con_base';
 import { useLocale } from 'next-intl';
 import { getLocalizedText } from '@/utils/i18n';
 
@@ -100,10 +101,10 @@ const PreConsultationIntakeForm: React.FC = () => {
       setIsValideSendForm(false);
       toast({
         variant: "destructive",
-        title: "Please make a required selection",
+        title: getLocalizedText(intakeForm.pcif1, locale),
         description: getValidationMessage(preConsultationSteps[currentStep].id),
-      
-      }); 
+
+      });
       return;
     }
 
@@ -157,7 +158,7 @@ const PreConsultationIntakeForm: React.FC = () => {
       // log.debug('validateStepData launch toast message: ', getValidationMessage(preConsultationSteps[currentStep].id));
       toast({
         variant: "destructive",
-        title: "Please make a required selection",
+        title: getLocalizedText(intakeForm.pcif1, locale),
         description: getValidationMessage(preConsultationSteps[currentStep].id),
       });
       return;
@@ -313,15 +314,15 @@ const PreConsultationIntakeForm: React.FC = () => {
                     }
                   `}
                 >
-                  <span translate="no">Next</span>
+                  <span translate="no">{getLocalizedText(intakeForm.pcif2, locale)}</span>
                 </Button>
               </>
             ) : currentStep === preConsultationSteps.length - 1 ? (
-              <Button onClick={handleSubmit} 
+              <Button onClick={handleSubmit}
                 className="w-full h-12 px-4 rounded-lg text-white flex items-center justify-center"
                 style={{ backgroundColor: '#FB718F' }}
               >
-                Submit
+                {getLocalizedText(intakeForm.pcif3, locale)}
               </Button>
             ) : (
               <>
@@ -346,7 +347,7 @@ const PreConsultationIntakeForm: React.FC = () => {
                     flex items-center justify-center
                   "
                 >
-                  Previous
+                  {getLocalizedText(intakeForm.pcif4, locale)}
                 </Button>
                 <Button 
                   onClick={(e) => {
@@ -366,7 +367,7 @@ const PreConsultationIntakeForm: React.FC = () => {
                     }
                   `}
                 >
-                  <span translate="no">Next</span>
+                  <span translate="no">{getLocalizedText(intakeForm.pcif2, locale)}</span>
                 </Button>
               </>
             )}

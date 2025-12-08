@@ -16,10 +16,8 @@ import {
   VideoConsultTimeSlot,
 } from '@/models/videoConsultReservation.dto';
 import {
-  convertUtcToLocal,
-  convertLocalToUtc,
-  getDateRangeFromSlots,
   formatSlotDisplay,
+  DEFAULT_CONSULTATION_DURATION_MINUTES,
 } from '@/lib/admin/dateUtils';
 
 type VideoPlatform = 'zoom' | 'daily';
@@ -37,35 +35,22 @@ export function ApproveReservationDialog({
   reservation,
   onSuccess,
 }: ApproveReservationDialogProps) {
-  const [date, setDate] = useState('');
-  const [startTime, setStartTime] = useState('');
-  const [endTime, setEndTime] = useState('');
+  const [selectedSlotIndex, setSelectedSlotIndex] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedPlatform, setSelectedPlatform] = useState<VideoPlatform>('zoom');
 
-  const { minDate, maxDate } = getDateRangeFromSlots(
-    reservation.requested_slots,
-    'Asia/Seoul'
-  );
-
-  // Initialize with first slot
+  // Reset to first slot when dialog opens
   useEffect(() => {
-    if (open && reservation.requested_slots.length > 0) {
-      const firstSlot = reservation.requested_slots[0];
-      const localStart = convertUtcToLocal(firstSlot.start, 'Asia/Seoul');
-      const localEnd = convertUtcToLocal(firstSlot.end, 'Asia/Seoul');
-
-      setDate(localStart.date);
-      setStartTime(localStart.time);
-      setEndTime(localEnd.time);
+    if (open) {
+      setSelectedSlotIndex(0);
       setError(null);
     }
-  }, [open, reservation.requested_slots]);
+  }, [open]);
 
   const handleSubmit = async () => {
-    if (!date || !startTime || !endTime) {
-      setError('날짜와 시간을 모두 입력해주세요.');
+    if (reservation.requested_slots.length === 0) {
+      setError('선택할 수 있는 시간이 없습니다.');
       return;
     }
 
@@ -73,8 +58,15 @@ export function ApproveReservationDialog({
     setError(null);
 
     try {
-      const confirmedStart = convertLocalToUtc(date, startTime, 'Asia/Seoul');
-      const confirmedEnd = convertLocalToUtc(date, endTime, 'Asia/Seoul');
+      const selectedSlot = reservation.requested_slots[selectedSlotIndex];
+      const confirmedStart = selectedSlot.start;
+
+      // Calculate end time if not provided
+      const confirmedEnd = selectedSlot.end
+        ? selectedSlot.end
+        : new Date(new Date(selectedSlot.start).getTime() +
+            (reservation.consultation_duration_minutes || DEFAULT_CONSULTATION_DURATION_MINUTES) * 60 * 1000
+          ).toISOString();
 
       // 선택된 플랫폼에 따라 API 엔드포인트 결정
       const apiEndpoint = selectedPlatform === 'zoom'
@@ -105,45 +97,51 @@ export function ApproveReservationDialog({
     }
   };
 
-  const selectSlot = (slot: VideoConsultTimeSlot) => {
-    const localStart = convertUtcToLocal(slot.start, 'Asia/Seoul');
-    const localEnd = convertUtcToLocal(slot.end, 'Asia/Seoul');
-
-    setDate(localStart.date);
-    setStartTime(localStart.time);
-    setEndTime(localEnd.time);
-  };
-
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
           <DialogTitle>예약 승인</DialogTitle>
           <DialogDescription>
-            상담 일시를 확정하고 예약을 승인합니다.
+            고객이 요청한 희망 시간 중 하나를 선택하여 예약을 승인합니다.
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4 py-4">
           {/* Customer requested slots */}
           <div>
-            <Label className="text-sm font-medium">고객 희망 시간</Label>
-            <div className="mt-2 space-y-2 max-h-40 overflow-y-auto">
+            <Label className="text-sm font-medium">고객 희망 시간 선택</Label>
+            <div className="mt-2 space-y-2 max-h-60 overflow-y-auto">
               {reservation.requested_slots.map((slot, index) => {
                 const display = formatSlotDisplay(
                   slot,
-                  reservation.user_timezone
+                  reservation.user_timezone,
+                  reservation.consultation_duration_minutes || DEFAULT_CONSULTATION_DURATION_MINUTES
                 );
+                const isSelected = selectedSlotIndex === index;
                 return (
                   <div
                     key={index}
-                    className="p-2 border rounded cursor-pointer hover:bg-gray-50"
-                    onClick={() => selectSlot(slot)}
+                    className={`p-3 border-2 rounded-lg cursor-pointer transition-all ${
+                      isSelected
+                        ? 'border-blue-500 bg-blue-50'
+                        : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
+                    }`}
+                    onClick={() => setSelectedSlotIndex(index)}
                   >
-                    <div className="text-sm font-medium">
-                      {index + 1}순위: {display.kstTime}
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className={`w-6 h-6 flex items-center justify-center text-xs font-medium rounded-full ${
+                        index === 0
+                          ? 'bg-blue-500 text-white'
+                          : index === 1
+                          ? 'bg-green-500 text-white'
+                          : 'bg-purple-500 text-white'
+                      }`}>
+                        {slot.rank || index + 1}
+                      </span>
+                      <span className="text-sm font-medium">{display.kstTime}</span>
                     </div>
-                    <div className="text-xs text-gray-500">
+                    <div className="text-xs text-gray-500 ml-8">
                       고객 시간: {display.userTime} ({reservation.user_timezone})
                     </div>
                   </div>
@@ -201,44 +199,6 @@ export function ApproveReservationDialog({
                   </p>
                 </div>
               </label>
-            </div>
-          </div>
-
-          {/* Date/Time inputs */}
-          <div className="grid grid-cols-1 gap-4">
-            <div>
-              <Label htmlFor="date">확정 날짜 (KST)</Label>
-              <input
-                id="date"
-                type="date"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-                min={minDate}
-                max={maxDate}
-                className="mt-1 w-full border rounded px-3 py-2"
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              <div>
-                <Label htmlFor="startTime">시작 시간</Label>
-                <input
-                  id="startTime"
-                  type="time"
-                  value={startTime}
-                  onChange={(e) => setStartTime(e.target.value)}
-                  className="mt-1 w-full border rounded px-3 py-2"
-                />
-              </div>
-              <div>
-                <Label htmlFor="endTime">종료 시간</Label>
-                <input
-                  id="endTime"
-                  type="time"
-                  value={endTime}
-                  onChange={(e) => setEndTime(e.target.value)}
-                  className="mt-1 w-full border rounded px-3 py-2"
-                />
-              </div>
             </div>
           </div>
 

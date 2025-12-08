@@ -3,7 +3,7 @@
 export type VideoConsultTimeSlot = {
   rank: number;
   start: string;          // ISO string (UTC)
-  end: string;            // ISO string (UTC)
+  end?: string;           // ISO string (UTC) - optional, can be calculated from duration
   sourceTimezone: string; // e.g. "America/Los_Angeles" or "Asia/Seoul"
 };
 
@@ -71,6 +71,8 @@ export interface VideoReservationListItem {
   // 병원/멤버 관련
   id_uuid_hospital: string | null;
   id_uuid_member: string | null;
+  hospital_name?: string | null;      // SUPER_ADMIN일 때만 조회
+  hospital_name_en?: string | null;   // SUPER_ADMIN일 때만 조회
 
   // 기타
   cancel_reason_code?: string | null;

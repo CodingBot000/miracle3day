@@ -24,9 +24,12 @@ import { RejectReservationDialog } from './components/RejectReservationDialog';
 import { ConfirmActionDialog } from './components/ConfirmActionDialog';
 import { ReservationDetailDrawer } from './components/ReservationDetailDrawer';
 import { AdminVideoConsultJoinButton } from '@/components/admin/video-consult/AdminVideoConsultJoinButton';
+import { PreferredTimesCell } from './components/PreferredTimesCell';
+import { MobileCardList } from './components/MobileCardList';
 
 interface VideoConsultReservationAdminPageProps {
   initialData: VideoReservationListResponse | null;
+  isSuperAdmin: boolean;
 }
 
 const DEFAULT_STATUS_FILTER: VideoReservationStatus[] = [
@@ -47,6 +50,7 @@ const ALL_STATUSES: VideoReservationStatus[] = [
 
 export function VideoConsultReservationAdminPage({
   initialData,
+  isSuperAdmin,
 }: VideoConsultReservationAdminPageProps) {
   const [reservations, setReservations] = useState<VideoReservationListItem[]>(
     initialData?.items || []
@@ -58,6 +62,7 @@ export function VideoConsultReservationAdminPage({
     useState<VideoReservationStatus[]>(DEFAULT_STATUS_FILTER);
   const [sort, setSort] = useState<VideoReservationSortOption>('status');
   const [isLoading, setIsLoading] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   // Dialog states
   const [selectedReservation, setSelectedReservation] =
@@ -101,6 +106,17 @@ export function VideoConsultReservationAdminPage({
   useEffect(() => {
     fetchReservations();
   }, [fetchReservations]);
+
+  // Media query for mobile detection
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 768px)');
+    setIsMobile(mediaQuery.matches);
+
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mediaQuery.addEventListener('change', handler);
+
+    return () => mediaQuery.removeEventListener('change', handler);
+  }, []);
 
   const handleStatusFilterChange = (status: VideoReservationStatus) => {
     setStatusFilter((prev) =>
@@ -243,18 +259,32 @@ export function VideoConsultReservationAdminPage({
         </div>
       </div>
 
-      {/* Table */}
-      <div className="bg-white rounded-lg shadow overflow-hidden">
-        {isLoading ? (
-          <div className="flex items-center justify-center py-12">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-          </div>
-        ) : reservations.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-12">
-            <p className="text-gray-500">예약이 없습니다.</p>
-          </div>
-        ) : (
-          <>
+      {/* Content */}
+      {isLoading ? (
+        <div className="flex items-center justify-center py-12 bg-white rounded-lg shadow">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+        </div>
+      ) : isMobile ? (
+        /* Mobile Card List */
+        <MobileCardList
+          reservations={reservations}
+          isSuperAdmin={isSuperAdmin}
+          onApprove={openApproveDialog}
+          onChangeRequest={openChangeRequestDialog}
+          onReject={openRejectDialog}
+          onComplete={openCompleteDialog}
+          onNoShow={openNoShowDialog}
+          onViewDetail={openDetailDrawer}
+        />
+      ) : (
+        /* Desktop Table */
+        <div className="bg-white rounded-lg shadow overflow-hidden">
+          {reservations.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-12">
+              <p className="text-gray-500">예약이 없습니다.</p>
+            </div>
+          ) : (
+            <>
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
@@ -271,6 +301,11 @@ export function VideoConsultReservationAdminPage({
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       국적
                     </th>
+                    {isSuperAdmin && (
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        병원
+                      </th>
+                    )}
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       희망 일시 (KST)
                     </th>
@@ -320,8 +355,19 @@ export function VideoConsultReservationAdminPage({
                       <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
                         {reservation.country || '-'}
                       </td>
-                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {getPreferredDateLabel(reservation)}
+                      {isSuperAdmin && (
+                        <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {reservation.id_uuid_hospital
+                            ? (reservation.hospital_name || '병원명 없음')
+                            : <span className="text-gray-500 italic">랜딩 페이지</span>
+                          }
+                        </td>
+                      )}
+                      <td className="px-4 py-4 whitespace-nowrap">
+                        <PreferredTimesCell
+                          slots={reservation.requested_slots}
+                          earliestStart={reservation.earliest_requested_start}
+                        />
                       </td>
                       <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
                         {reservation.confirmed_start_at
@@ -396,7 +442,7 @@ export function VideoConsultReservationAdminPage({
                               className="text-blue-600 border-blue-600 hover:bg-blue-50"
                               onClick={() => openApproveDialog(reservation)}
                             >
-                              승인
+                              요청 확인
                             </Button>
                           )}
                           {canRequestChange(reservation.status) && (
@@ -478,8 +524,9 @@ export function VideoConsultReservationAdminPage({
               </div>
             </div>
           </>
-        )}
-      </div>
+          )}
+        </div>
+      )}
 
       {/* Dialogs */}
       {selectedReservation && (

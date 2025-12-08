@@ -20,6 +20,7 @@ import {
   convertLocalToUtc,
   getDateRangeFromSlots,
   formatSlotDisplay,
+  DEFAULT_CONSULTATION_DURATION_MINUTES,
 } from '@/lib/admin/dateUtils';
 
 interface ChangeRequestDialogProps {
@@ -164,7 +165,8 @@ export function ChangeRequestDialog({
               {reservation.requested_slots.map((slot, index) => {
                 const display = formatSlotDisplay(
                   slot,
-                  reservation.user_timezone
+                  reservation.user_timezone,
+                  reservation.consultation_duration_minutes || DEFAULT_CONSULTATION_DURATION_MINUTES
                 );
                 return (
                   <div key={index} className="p-2 border rounded bg-gray-50">

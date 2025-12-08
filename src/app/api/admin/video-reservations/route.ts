@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { readSession } from '@/lib/admin/auth';
 import { pool } from '@/lib/db';
+import { TABLE_HOSPITAL } from '@/constants/tables';
 import {
   VideoReservationListItem,
   VideoReservationListResponse,
@@ -151,12 +152,15 @@ export async function GET(request: NextRequest) {
       cs.private_gender,
       cs.private_age_range,
       cs.country,
+      ${isSuperAdmin ? 'h.name as hospital_name,' : ''}
+      ${isSuperAdmin ? 'h.name_en as hospital_name_en,' : ''}
       (
         SELECT MIN((slot->>'start')::timestamptz)
         FROM jsonb_array_elements(vr.requested_slots) AS slot
       ) as earliest_start
     FROM consult_video_reservations vr
     JOIN consultation_submissions cs ON cs.id_uuid = vr.id_uuid_submission
+    ${isSuperAdmin ? `LEFT JOIN ${TABLE_HOSPITAL} h ON vr.id_uuid_hospital = h.id_uuid` : ''}
     ${whereClause}
     ORDER BY ${orderByClause}
     LIMIT $${queryParams.length + 1} OFFSET $${queryParams.length + 2}

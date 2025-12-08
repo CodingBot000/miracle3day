@@ -13,7 +13,11 @@ import {
   STATUS_LABELS,
   STATUS_COLORS,
 } from '@/models/videoConsultReservation.dto';
-import { formatDateTime, formatSlotDisplay } from '@/lib/admin/dateUtils';
+import {
+  formatDateTime,
+  formatSlotDisplay,
+  DEFAULT_CONSULTATION_DURATION_MINUTES,
+} from '@/lib/admin/dateUtils';
 import { AdminVideoConsultJoinButton } from '@/components/admin/video-consult/AdminVideoConsultJoinButton';
 
 interface ReservationDetailDrawerProps {
@@ -97,7 +101,8 @@ export function ReservationDetailDrawer({
               {reservation.requested_slots.map((slot, index) => {
                 const display = formatSlotDisplay(
                   slot,
-                  reservation.user_timezone
+                  reservation.user_timezone,
+                  reservation.consultation_duration_minutes || DEFAULT_CONSULTATION_DURATION_MINUTES
                 );
                 return (
                   <div key={index} className="bg-gray-50 rounded p-2">
@@ -124,7 +129,8 @@ export function ReservationDetailDrawer({
                   {reservation.hospital_proposed_slots.map((slot, index) => {
                     const display = formatSlotDisplay(
                       slot,
-                      reservation.user_timezone
+                      reservation.user_timezone,
+                      reservation.consultation_duration_minutes || DEFAULT_CONSULTATION_DURATION_MINUTES
                     );
                     return (
                       <div

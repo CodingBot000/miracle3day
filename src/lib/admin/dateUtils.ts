@@ -3,6 +3,11 @@
  */
 
 /**
+ * Default consultation duration in minutes
+ */
+export const DEFAULT_CONSULTATION_DURATION_MINUTES = 30;
+
+/**
  * Convert local date/time to UTC ISO string
  * @param date - Local date string (YYYY-MM-DD)
  * @param time - Local time string (HH:mm)
@@ -229,39 +234,67 @@ export function getDateRangeFromSlots(
 }
 
 /**
+ * Get day of week in Korean
+ * @param date - Date object
+ * @returns Korean day of week (월, 화, 수, 목, 금, 토, 일)
+ */
+function getKoreanDayOfWeek(date: Date): string {
+  const days = ['일', '월', '화', '수', '목', '금', '토'];
+  return days[date.getDay()];
+}
+
+/**
  * Format slot for display (showing both user timezone and KST)
- * @param slot - Time slot object
+ * @param slot - Time slot object (end is optional, will be calculated from duration if missing)
  * @param userTimezone - User's timezone
+ * @param durationMinutes - Duration in minutes (default: 30)
  * @returns Formatted string showing both timezones
  */
 export function formatSlotDisplay(
-  slot: { start: string; end: string } | null | undefined,
-  userTimezone: string
+  slot: { start: string; end?: string } | null | undefined,
+  userTimezone: string,
+  durationMinutes: number = DEFAULT_CONSULTATION_DURATION_MINUTES
 ): { userTime: string; kstTime: string } {
   const defaultResult = { userTime: '-', kstTime: '-' };
 
-  if (!slot || !slot.start || !slot.end) {
+  if (!slot || !slot.start) {
     return defaultResult;
   }
 
-  // Validate dates
+  // Validate start date
   const startDate = new Date(slot.start);
-  const endDate = new Date(slot.end);
-
-  if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+  if (isNaN(startDate.getTime())) {
     return defaultResult;
   }
 
   try {
+    // Calculate end time if not provided
+    let endIso: string;
+    if (slot.end) {
+      const endDate = new Date(slot.end);
+      if (isNaN(endDate.getTime())) {
+        return defaultResult;
+      }
+      endIso = slot.end;
+    } else {
+      // Calculate end time from start + duration
+      const endDate = new Date(startDate.getTime() + durationMinutes * 60 * 1000);
+      endIso = endDate.toISOString();
+    }
+
     const userStart = convertUtcToLocal(slot.start, userTimezone);
-    const userEnd = convertUtcToLocal(slot.end, userTimezone);
+    const userEnd = convertUtcToLocal(endIso, userTimezone);
 
     const kstStart = convertUtcToLocal(slot.start, 'Asia/Seoul');
-    const kstEnd = convertUtcToLocal(slot.end, 'Asia/Seoul');
+    const kstEnd = convertUtcToLocal(endIso, 'Asia/Seoul');
+
+    // Get day of week for KST date
+    const kstDayOfWeek = getKoreanDayOfWeek(kstStart.dateTime);
+    const userDayOfWeek = getKoreanDayOfWeek(userStart.dateTime);
 
     return {
-      userTime: `${userStart.date} ${userStart.time} - ${userEnd.time}`,
-      kstTime: `${kstStart.date} ${kstStart.time} - ${kstEnd.time} (KST)`,
+      userTime: `${userStart.date} (${userDayOfWeek}) ${userStart.time} - ${userEnd.time}`,
+      kstTime: `${kstStart.date} (${kstDayOfWeek}) ${kstStart.time} - ${kstEnd.time} (KST)`,
     };
   } catch {
     return defaultResult;

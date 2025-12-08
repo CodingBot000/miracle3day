@@ -157,6 +157,13 @@ const UserInfo: React.FC<UserInfoStepProps> = ({ data, onDataChange }) => {
 
       {/* Messenger Fields */}
       <div className="space-y-3">
+        <Label className="text-gray-700 font-medium">
+          {locale === 'ko'
+              ? '실시간 소통 가능한 메신저 앱을 최소 1개 이상 알려주세요. (예: WhatsApp, Instagram DM, Line, KakaoTalk)'
+              : "Please provide at least one instant messaging app for communication. (e.g., WhatsApp, Instagram DM, Line, KakaoTalk)."
+              }
+          </Label>
+
         <InputMessengerFields
           value={userInfo.messengers || []}
           onChange={(messengerInputs) => {

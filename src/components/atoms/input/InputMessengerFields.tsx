@@ -109,8 +109,6 @@ export default function InputMessengerFields({ value = [], onChange }: InputMess
 
   return (
     <div className="space-y-3">
-      <Label className="text-gray-700 font-medium">Please provide at least one messaging app for real-time communication (e.g., WhatsApp, Instagram DM, KakaoTalk).</Label>
-
       <div className="space-y-3">
         {messengerInputs.map((row, index) => (
           <div key={index} className="grid grid-cols-1 sm:grid-cols-12 gap-1">

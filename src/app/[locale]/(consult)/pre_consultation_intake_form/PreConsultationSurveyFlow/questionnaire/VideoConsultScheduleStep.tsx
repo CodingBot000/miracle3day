@@ -9,6 +9,8 @@ import DatePicker, { registerLocale } from 'react-datepicker';
 import { ko } from 'date-fns/locale/ko';
 import { enUS } from 'date-fns/locale/en-US';
 import 'react-datepicker/dist/react-datepicker.css';
+import { questions } from '@/app/[locale]/(consult)/pre_consultation_intake_form/pre_consultation_intake/form-definition_pre_con_questions';
+import { getLocalizedText } from '@/utils/i18n';
 
 // Register locales
 registerLocale('ko', ko);
@@ -27,6 +29,7 @@ interface VideoConsultScheduleStepProps {
 
 const VideoConsultScheduleStep: React.FC<VideoConsultScheduleStepProps> = ({ data, onDataChange }) => {
   const locale = useLocale();
+  const scheduleData = questions.consultSchedule;
 
   // Initialize with one empty slot
   const [slots, setSlots] = useState<VideoConsultTimeSlot[]>(
@@ -211,19 +214,17 @@ const VideoConsultScheduleStep: React.FC<VideoConsultScheduleStepProps> = ({ dat
         }
       `}</style>
 
-      <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+      <div className="p-2 bg-blue-50 border border-blue-200 rounded-lg">
         <p className="text-sm text-blue-800">
-          {locale === 'ko'
-            ? '최대 3개의 희망 시간을 선택해 주세요. 병원에서 가능한 시간으로 확정해 드립니다.'
-            : 'Select up to 3 preferred time slots. The clinic will confirm the best available time.'}
+          {getLocalizedText(scheduleData.infoMessage, locale)}
         </p>
       </div>
 
       {slots.map((slot) => (
-        <div key={slot.rank} className="p-4 border border-gray-200 rounded-lg space-y-4">
+        <div key={slot.rank} className="p-3 border border-gray-200 rounded-lg">
           <div className="flex items-center justify-between">
-            <Label className="text-lg font-semibold text-gray-800">
-              {locale === 'ko' ? `희망 시간 ${slot.rank}` : `Preferred Time Slot ${slot.rank}`}
+            <Label className="text-base md:text-lg font-semibold text-gray-800">
+              {getLocalizedText(scheduleData.slotLabel, locale)} {slot.rank}
               {slot.rank === 1 && <span className="text-red-500 ml-1">*</span>}
             </Label>
             {slots.length > 1 && (
@@ -242,8 +243,8 @@ const VideoConsultScheduleStep: React.FC<VideoConsultScheduleStepProps> = ({ dat
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Date Picker */}
             <div>
-              <Label className="text-sm text-gray-700 mb-2 block">
-                {locale === 'ko' ? '날짜' : 'Date'}
+              <Label className="text-xs md:text-sm text-gray-700 mb-2 block">
+                {getLocalizedText(scheduleData.dateLabel, locale)}
                 <span className="text-red-500 ml-1">*</span>
               </Label>
               <div className="relative">
@@ -254,7 +255,7 @@ const VideoConsultScheduleStep: React.FC<VideoConsultScheduleStepProps> = ({ dat
                   minDate={tomorrow}
                   locale={locale === 'ko' ? 'ko' : 'en'}
                   dateFormat={locale === 'ko' ? 'yyyy년 MM월 dd일' : 'MMM dd, yyyy'}
-                  placeholderText={locale === 'ko' ? '날짜 선택' : 'Select date'}
+                  placeholderText={getLocalizedText(scheduleData.datePlaceholder, locale)}
                   className="w-full"
                 />
               </div>
@@ -262,8 +263,8 @@ const VideoConsultScheduleStep: React.FC<VideoConsultScheduleStepProps> = ({ dat
 
             {/* Time Picker */}
             <div>
-              <Label className="text-sm text-gray-700 mb-2 block">
-                {locale === 'ko' ? '시간' : 'Time'}
+              <Label className="text-xs md:text-sm text-gray-700 mb-2 block">
+                {getLocalizedText(scheduleData.timeLabel, locale)}
                 <span className="text-red-500 ml-1">*</span>
               </Label>
               <div className="relative">
@@ -274,11 +275,11 @@ const VideoConsultScheduleStep: React.FC<VideoConsultScheduleStepProps> = ({ dat
                   showTimeSelect
                   showTimeSelectOnly
                   timeIntervals={30}
-                  timeCaption={locale === 'ko' ? '시간' : 'Time'}
+                  timeCaption={getLocalizedText(scheduleData.timeCaption, locale)}
                   dateFormat="HH:mm"
                   timeFormat="HH:mm"
                   locale={locale === 'ko' ? 'ko' : 'en'}
-                  placeholderText={locale === 'ko' ? '시간 선택' : 'Select time'}
+                  placeholderText={getLocalizedText(scheduleData.timePlaceholder, locale)}
                   className="w-full"
                 />
               </div>
@@ -301,13 +302,13 @@ const VideoConsultScheduleStep: React.FC<VideoConsultScheduleStepProps> = ({ dat
           className="w-full border-dashed border-2 border-gray-300 hover:border-gray-400 text-gray-600"
         >
           <Plus className="w-4 h-4 mr-2" />
-          {locale === 'ko' ? '시간 추가하기' : 'Add Another Time Slot'}
+          {getLocalizedText(scheduleData.addSlotButton, locale)}
         </Button>
       )}
 
       {/* Timezone info */}
       <div className="text-sm text-gray-500 text-center">
-        {locale === 'ko' ? '시간대' : 'Timezone'}: {userTimezone}
+        {getLocalizedText(scheduleData.timezoneLabel, locale)}: {userTimezone}
       </div>
     </div>
   );

@@ -1013,4 +1013,94 @@ demographicsBasic: [
       }
     }
   ],
+
+  // ─────────────────────────────────────────────────────────
+  // UPLOAD PHOTO
+  // ─────────────────────────────────────────────────────────
+  uploadPhoto: {
+    instructions: [
+      {
+        ko: "상담받고 싶은 부위에 초점을 맞춘 사진을 업로드해주세요.",
+        en: "Please upload photos focusing on the area(s) you'd like to consult about."
+      },
+      {
+        ko: "전체 얼굴 평가를 원하시면 정면 사진을 제공해주세요. 얼굴이 이미지 높이의 최소 60%를 차지하도록 해주세요.",
+        en: "If you'd like a full-face evaluation, please provide a front-facing photo. Make sure your face occupies at least 60% of the image height."
+      }
+    ],
+    uploadArea: {
+      title: {
+        ko: "클릭하거나 이미지를 드래그 앤 드롭하여 업로드하세요",
+        en: "Click or drag & drop images to upload"
+      },
+      subtitle: {
+        ko: "최대 10MB까지 업로드 가능합니다.",
+        en: "You can upload up to 10MB."
+      }
+    },
+    skipButton: {
+      ko: "이 단계 건너뛰기",
+      en: "Skip this step"
+    },
+    privacyNotice: {
+      ko: "모든 이미지는 안전하게 저장되며, 진단 목적 외에는 사용되지 않습니다.",
+      en: "All images are securely stored, and will not be used for any purpose other than diagnosis."
+    },
+    errors: {
+      invalidFileType: {
+        ko: "이미지 파일만 업로드 가능합니다",
+        en: "Only image files are allowed"
+      },
+      fileSizeExceeded: {
+        ko: "파일 크기는 10MB 이하여야 합니다",
+        en: "File size must be less than 10MB"
+      },
+      allowedFormats: {
+        ko: "PNG, JPG, JPEG 파일만 업로드 가능합니다",
+        en: "Only PNG and JPG, JPEG files can be uploaded"
+      }
+    }
+  },
+
+  // ─────────────────────────────────────────────────────────
+  // VIDEO CONSULTATION SCHEDULE
+  // ─────────────────────────────────────────────────────────
+  consultSchedule: {
+    infoMessage: {
+      ko: "최대 3개의 희망 시간을 선택해 주세요. 병원에서 가능한 시간으로 확정해 드립니다.",
+      en: "Select up to 3 preferred time slots. The clinic will confirm the best available time."
+    },
+    slotLabel: {
+      ko: "희망 시간",
+      en: "Preferred Time Slot"
+    },
+    dateLabel: {
+      ko: "날짜",
+      en: "Date"
+    },
+    datePlaceholder: {
+      ko: "날짜 선택",
+      en: "Select date"
+    },
+    timeLabel: {
+      ko: "시간",
+      en: "Time"
+    },
+    timeCaption: {
+      ko: "시간",
+      en: "Time"
+    },
+    timePlaceholder: {
+      ko: "시간 선택",
+      en: "Select time"
+    },
+    addSlotButton: {
+      ko: "시간 추가하기",
+      en: "Add Another Time Slot"
+    },
+    timezoneLabel: {
+      ko: "시간대",
+      en: "Timezone"
+    }
+  },
 };

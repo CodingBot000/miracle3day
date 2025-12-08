@@ -2,6 +2,9 @@ import React from 'react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Loader2, CheckCircle } from 'lucide-react';
+import { submitModal } from '@/app/[locale]/(consult)/pre_consultation_intake_form/pre_consultation_intake/form-definition_pre_con_preview_result';
+import { useLocale } from 'next-intl';
+import { getLocalizedText } from '@/utils/i18n';
 
 interface SubmissionModalProps {
   open: boolean;
@@ -18,9 +21,11 @@ const SubmissionModal: React.FC<SubmissionModalProps> = ({
   isCompleted,
   onComplete
 }) => {
+  const locale = useLocale();
+
   return (
     <Dialog open={open} onOpenChange={() => {}}>
-      <DialogContent 
+      <DialogContent
         className="max-w-md [&>button]:hidden"
         onPointerDownOutside={(e) => e.preventDefault()}
         onEscapeKeyDown={(e) => e.preventDefault()}
@@ -34,10 +39,10 @@ const SubmissionModal: React.FC<SubmissionModalProps> = ({
               </div>
               <div className="text-center space-y-2">
                 <h3 className="text-lg font-semibold text-gray-900">
-                  Submitting Your Reservation
+                  {getLocalizedText(submitModal.submitting.title, locale)}
                 </h3>
                 <p className="text-sm text-gray-600">
-                  Please wait while we process your information...
+                  {getLocalizedText(submitModal.submitting.desc, locale)}
                 </p>
               </div>
             </>
@@ -49,26 +54,26 @@ const SubmissionModal: React.FC<SubmissionModalProps> = ({
               </div>
              <div className="text-center space-y-2">
                 <h3 className="text-lg font-semibold text-gray-900">
-                  Consultation Request Submitted!
+                  {getLocalizedText(submitModal.completed.title, locale)}
                 </h3>
                 <p className="text-sm text-gray-600">
-                  Your preferred date and time have been sent to the clinic for review.
+                  {getLocalizedText(submitModal.completed.desc1, locale)}
                 </p>
                 <p className="text-sm text-gray-600">
-                  Once the clinic confirms your appointment, you&apos;ll receive a notification via your provided contact method, and you can also check the confirmed schedule on your My Page.
+                  {getLocalizedText(submitModal.completed.desc2, locale)}
                 </p>
                 <p className="text-sm text-gray-600">
-                  A video consultation link will be sent to you 30 minutes before your confirmed appointment time.
+                  {getLocalizedText(submitModal.completed.desc3, locale)}
                 </p>
                 <p className="text-sm text-gray-600 pt-2 border-t border-gray-200 mt-2">
-                  Video consultations are available in English and Korean only, with a maximum duration of 10 minutes. If you have difficulty speaking or understanding English or Korean, please use the clinic&apos;s chat feature instead.
+                  {getLocalizedText(submitModal.completed.desc4, locale)}
                 </p>
               </div>
               <Button
                 onClick={onComplete}
                 className="bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 text-white px-6 py-2 rounded-full"
               >
-                Confirm
+                {getLocalizedText(submitModal.confirmButton, locale)}
               </Button>
             </>
           ) : null}

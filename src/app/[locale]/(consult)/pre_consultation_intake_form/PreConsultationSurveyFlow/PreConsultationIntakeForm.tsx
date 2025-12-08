@@ -384,71 +384,71 @@ const PreConsultationIntakeForm: React.FC = () => {
         onSubmissionComplete={(allStepData) => {
           setIsPreviewOpen(false);
 
-          // Generate recommendations
-          try {
-            log.debug("=== Form Data for Recommendations ===");
-            log.debug(allStepData);
+          // // Generate recommendations
+          // try {
+          //   log.debug("=== Form Data for Recommendations ===");
+          //   log.debug(allStepData);
 
-            // Extract nested data structures
-            const skinConcernsData = allStepData.skinConcerns?.concerns || [];
-            const treatmentAreasData = allStepData.treatmentAreas?.treatmentAreas || [];
-            const priorityOrderData = allStepData.priorityOrder?.priorityOrder || [];
-            const pastTreatmentsData = allStepData.pastTreatments?.pastTreatments || ["none"];
-            const healthConditionsData = allStepData.healthConditions?.healthConditions || ["none"];
-            const userInfoData = allStepData.userInfo || {};
+          //   // Extract nested data structures
+          //   const skinConcernsData = allStepData.skinConcerns?.concerns || [];
+          //   const treatmentAreasData = allStepData.treatmentAreas?.treatmentAreas || [];
+          //   const priorityOrderData = allStepData.priorityOrder?.priorityOrder || [];
+          //   const pastTreatmentsData = allStepData.pastTreatments?.pastTreatments || ["none"];
+          //   const healthConditionsData = allStepData.healthConditions?.healthConditions || ["none"];
+          //   const userInfoData = allStepData.userInfo || {};
 
-            log.debug("=== Extracted Data ===");
-            log.debug("skinConcernsData:", skinConcernsData);
-            log.debug("treatmentAreasData:", treatmentAreasData);
-            log.debug("priorityOrderData:", priorityOrderData);
-            log.debug("budget:", allStepData.budget);
-            log.debug("goals:", allStepData.goals);
-            log.debug("pastTreatmentsData:", pastTreatmentsData);
-            log.debug("healthConditionsData:", healthConditionsData);
+          //   log.debug("=== Extracted Data ===");
+          //   log.debug("skinConcernsData:", skinConcernsData);
+          //   log.debug("treatmentAreasData:", treatmentAreasData);
+          //   log.debug("priorityOrderData:", priorityOrderData);
+          //   log.debug("budget:", allStepData.budget);
+          //   log.debug("goals:", allStepData.goals);
+          //   log.debug("pastTreatmentsData:", pastTreatmentsData);
+          //   log.debug("healthConditionsData:", healthConditionsData);
 
-            // Map skinConcerns to include tier information
-            const skinConcerns = skinConcernsData.map((concernId: string) => {
-              const concernDef = questions.skinConcerns.find(c => c.id === concernId);
-              return {
-                id: concernId as any,
-                tier: concernDef?.tier as 1 | 2 | 3 | 4 | undefined,
-              };
-            });
+          //   // Map skinConcerns to include tier information
+          //   const skinConcerns = skinConcernsData.map((concernId: string) => {
+          //     const concernDef = questions.skinConcerns.find(c => c.id === concernId);
+          //     return {
+          //       id: concernId as any,
+          //       tier: concernDef?.tier as 1 | 2 | 3 | 4 | undefined,
+          //     };
+          //   });
 
-            const algorithmInput = {
-              skinTypeId: allStepData.skinType || "combination",
-              ageGroup: userInfoData.ageRange,
-              gender: userInfoData.gender,
-              skinConcerns: skinConcerns,
-              treatmentGoals: allStepData.goals || [],
-              treatmentAreas: treatmentAreasData,
-              budgetRangeId: allStepData.budget || "1000-5000",
-              priorityId: priorityOrderData[0] || "effectiveness",
-              pastTreatments: pastTreatmentsData,
-              medicalConditions: healthConditionsData,
-            };
+          //   const algorithmInput = {
+          //     skinTypeId: allStepData.skinType || "combination",
+          //     ageGroup: userInfoData.ageRange,
+          //     gender: userInfoData.gender,
+          //     skinConcerns: skinConcerns,
+          //     treatmentGoals: allStepData.goals || [],
+          //     treatmentAreas: treatmentAreasData,
+          //     budgetRangeId: allStepData.budget || "1000-5000",
+          //     priorityId: priorityOrderData[0] || "effectiveness",
+          //     pastTreatments: pastTreatmentsData,
+          //     medicalConditions: healthConditionsData,
+          //   };
 
-            log.debug("=== Algorithm Input ===");
-            log.debug(algorithmInput);
+          //   log.debug("=== Algorithm Input ===");
+          //   log.debug(algorithmInput);
 
-            const output = recommendTreatments(algorithmInput);
+          //   const output = recommendTreatments(algorithmInput);
 
-            log.debug("=== Recommendation Output ===");
-            log.debug("Recommendations count:", output.recommendations.length);
-            log.debug("Total KRW:", output.totalPriceKRW);
-            log.debug("Total USD:", output.totalPriceUSD);
-            log.debug("Recommendations:", output.recommendations);
-            log.debug("Excluded:", output.excluded);
-            log.debug("Full output:", output);
+          //   log.debug("=== Recommendation Output ===");
+          //   log.debug("Recommendations count:", output.recommendations.length);
+          //   log.debug("Total KRW:", output.totalPriceKRW);
+          //   log.debug("Total USD:", output.totalPriceUSD);
+          //   log.debug("Recommendations:", output.recommendations);
+          //   log.debug("Excluded:", output.excluded);
+          //   log.debug("Full output:", output);
 
-          } catch (error) {
-            log.error("Failed to generate recommendations:", error);
-            toast({
-              variant: "destructive",
-              title: "Error generating recommendations",
-              description: "Please try again",
-            });
-          }
+          // } catch (error) {
+          //   log.error("Failed to generate recommendations:", error);
+          //   toast({
+          //     variant: "destructive",
+          //     title: "Error generating recommendations",
+          //     description: "Please try again",
+          //   });
+          // }
         }}
       />
 

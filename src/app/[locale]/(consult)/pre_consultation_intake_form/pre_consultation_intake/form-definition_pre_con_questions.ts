@@ -964,6 +964,53 @@ demographicsBasic: [
           }
         }
       ]
+    },
+    {
+      "id": "email",
+      "type": "text_input",
+      "required": true,
+      "title": {
+        "ko": "이메일 주소",
+        "en": "Email Address"
+      },
+      "helperText": {
+        "ko": "필요시 상담관련 정보를 보내드리기 위해 사용됩니다.",
+        "en": "Used to send you consultation-related information if necessary."
+      },
+      "placeholder": {
+        "ko": "이메일 주소를 입력하세요",
+        "en": "Enter your email address"
+      }
+    },
+    {
+      "id": "messenger",
+      "type": "messenger_input",
+      "required": true,
+      "title": {
+        "ko": "메신저 앱",
+        "en": "Messenger App"
+      },
+      "helperText": {
+        "ko": "실시간 소통 가능한 메신저 앱을 최소 1개 이상 알려주세요. (예: WhatsApp, Instagram DM, Line, KakaoTalk)",
+        "en": "Please provide at least one instant messaging app for communication. (e.g., WhatsApp, Instagram DM, Line, KakaoTalk)."
+      }
+    },
+    {
+      "id": "phone_number",
+      "type": "phone_input",
+      "required": false,
+      "title": {
+        "ko": "전화번호 (선택)",
+        "en": "Phone Number (Optional)"
+      },
+      "helperText": {
+        "ko": "원활한 상담을 위해 전화번호를 입력해 주시는 것을 권장합니다. 가능한 메신저로 먼저 연락드리며 차선으로 SMS를 이용합니다.",
+        "en": "We recommend providing your phone number for smoother communication and consultation. We will primarily reach out via messenger and use SMS as a secondary option."
+      },
+      "placeholder": {
+        "ko": "전화번호 입력 (숫자만)",
+        "en": "Enter phone number (numbers only)"
+      }
     }
   ],
 };

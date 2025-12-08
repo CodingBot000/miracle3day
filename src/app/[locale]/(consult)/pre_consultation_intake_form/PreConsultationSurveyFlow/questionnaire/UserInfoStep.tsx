@@ -21,6 +21,9 @@ const ageGroupQuestion = questions.demographicsBasic.find(q => q.id === 'age_gro
 const genderQuestion = questions.demographicsBasic.find(q => q.id === 'gender');
 const ethnicBackgroundQuestion = questions.demographicsBasic.find(q => q.id === 'ethnic_background');
 const conuntryOfResidenceQuestion = questions.demographicsBasic.find(q => q.id === 'country_of_residence');
+const emailQuestion = questions.demographicsBasic.find(q => q.id === 'email');
+const messengerQuestion = questions.demographicsBasic.find(q => q.id === 'messenger');
+const phoneNumberQuestion = questions.demographicsBasic.find(q => q.id === 'phone_number');
 
 
 const UserInfo: React.FC<UserInfoStepProps> = ({ data, onDataChange }) => {
@@ -126,7 +129,7 @@ const UserInfo: React.FC<UserInfoStepProps> = ({ data, onDataChange }) => {
       {/* Email */}
       <div className="space-y-2">
         <Label htmlFor="email" className="text-gray-700 font-medium">
-          {locale === 'ko' ? '이메일 주소' : 'Email Address'}
+          {getLocalizedText(emailQuestion?.title, locale) || 'Email Address'}
         </Label>
         <Input
           id="email"
@@ -138,7 +141,7 @@ const UserInfo: React.FC<UserInfoStepProps> = ({ data, onDataChange }) => {
               ? "border-rose-400 focus:border-rose-500 focus:ring-rose-500/20"
               : "border-rose-200 focus:border-rose-400 focus:ring-rose-400/20"
           }`}
-          placeholder={locale === 'ko' ? '이메일 주소를 입력하세요' : 'Enter your email address'}
+          placeholder={getLocalizedText(emailQuestion?.placeholder, locale) || 'Enter your email address'}
           aria-invalid={hasEmailError}
           aria-describedby={hasEmailError ? "email-error" : undefined}
         />
@@ -148,9 +151,7 @@ const UserInfo: React.FC<UserInfoStepProps> = ({ data, onDataChange }) => {
           </p>
         ) : (
           <p className="text-sm text-gray-500">
-            {locale === 'ko'
-              ? '필요시 상담관련 정보를 보내드리기 위해 사용됩니다.'
-              : "Used to send you consultation-related information if necessary."}
+            {getLocalizedText(emailQuestion?.helperText, locale)}
           </p>
         )}
       </div>
@@ -158,11 +159,8 @@ const UserInfo: React.FC<UserInfoStepProps> = ({ data, onDataChange }) => {
       {/* Messenger Fields */}
       <div className="space-y-3">
         <Label className="text-gray-700 font-medium">
-          {locale === 'ko'
-              ? '실시간 소통 가능한 메신저 앱을 최소 1개 이상 알려주세요. (예: WhatsApp, Instagram DM, Line, KakaoTalk)'
-              : "Please provide at least one instant messaging app for communication. (e.g., WhatsApp, Instagram DM, Line, KakaoTalk)."
-              }
-          </Label>
+          {getLocalizedText(messengerQuestion?.helperText, locale)}
+        </Label>
 
         <InputMessengerFields
           value={userInfo.messengers || []}
@@ -181,18 +179,16 @@ const UserInfo: React.FC<UserInfoStepProps> = ({ data, onDataChange }) => {
       {/* Phone Number */}
       <div className="space-y-2">
         <Label htmlFor="phoneNumber" className="text-gray-700 font-medium">
-          {locale === 'ko' ? '전화번호 (선택)' : 'Phone Number (Optional)'}
+          {getLocalizedText(phoneNumberQuestion?.title, locale) || 'Phone Number (Optional)'}
         </Label>
         <Label htmlFor="phoneNumber_desc" className="text-gray-600 font-sm">
-          {locale === 'ko'
-            ? '원활한 상담을 위해 전화번호를 입력해 주시는 것을 권장합니다. 가능한 메신저로 먼저 연락드리며 차선으로 SMS를 이용합니다.'
-            : 'We recommend providing your phone number for smoother communication and consultation. We will primarily reach out via messenger and use SMS as a secondary option.'}
+          {getLocalizedText(phoneNumberQuestion?.helperText, locale)}
         </Label>
         <InputPhoneNumber
           id="phoneNumber"
           value={userInfo.phoneNumber}
           onChange={(value) => handleChange('phoneNumber', value)}
-          placeholder={locale === 'ko' ? '전화번호 입력 (숫자만)' : 'Enter phone number (numbers only)'}
+          placeholder={getLocalizedText(phoneNumberQuestion?.placeholder, locale) || 'Enter phone number (numbers only)'}
           phonePrefix={phonePrefix}
         />
       </div>

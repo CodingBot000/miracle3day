@@ -4,6 +4,9 @@ import { TABLE_TREATMENT_INFO } from '@/constants/tables';
 import { pool } from '@/lib/db';
 import { log } from "@/utils/logger";
 
+// Force dynamic rendering - this route requires database access
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   const apiStartTime = Date.now();
   log.info("Treatment Categories API 시작:", new Date().toISOString());

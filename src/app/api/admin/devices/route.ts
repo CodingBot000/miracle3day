@@ -3,6 +3,8 @@ import { pool } from '@/lib/db';
 import { Device } from '@/models/admin/devices.dto';
 import { log } from "@/utils/logger";
 
+// Force dynamic rendering - this route requires database access
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   const apiStartTime = Date.now();

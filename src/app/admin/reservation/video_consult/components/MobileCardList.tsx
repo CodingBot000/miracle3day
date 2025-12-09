@@ -21,6 +21,7 @@ interface MobileCardListProps {
   onComplete: (res: VideoReservationListItem) => void;
   onNoShow: (res: VideoReservationListItem) => void;
   onViewDetail: (res: VideoReservationListItem) => void;
+  onUndoApproval: (reservationId: string) => void;
 }
 
 export function MobileCardList({
@@ -32,6 +33,7 @@ export function MobileCardList({
   onComplete,
   onNoShow,
   onViewDetail,
+  onUndoApproval,
 }: MobileCardListProps) {
   const [expandedSlots, setExpandedSlots] = useState<Record<string, boolean>>({});
 
@@ -221,57 +223,72 @@ export function MobileCardList({
             )}
 
             {/* 액션 버튼들 */}
-            <div className="flex flex-wrap gap-2" onClick={(e) => e.stopPropagation()}>
-              {canApprove(res.status) && (
+            <div className="space-y-2" onClick={(e) => e.stopPropagation()}>
+              {/* 승인 취소 버튼 (approved 상태일 때만) */}
+              {res.status === 'approved' && (
                 <Button
                   size="sm"
                   variant="outline"
-                  className="flex-1 text-blue-600 border-blue-600 hover:bg-blue-50"
-                  onClick={() => onApprove(res)}
+                  className="w-full text-red-600 border-2 border-red-600 hover:bg-red-50 font-semibold"
+                  onClick={() => onUndoApproval(res.id_uuid)}
                 >
-                  요청 확인
+                  승인 취소
                 </Button>
               )}
-              {canRequestChange(res.status) && (
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="flex-1 text-orange-600 border-orange-600 hover:bg-orange-50"
-                  onClick={() => onChangeRequest(res)}
-                >
-                  변경요청
-                </Button>
-              )}
-              {canReject(res.status) && (
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="flex-1 text-red-600 border-red-600 hover:bg-red-50"
-                  onClick={() => onReject(res)}
-                >
-                  거부
-                </Button>
-              )}
-              {canMarkComplete(res.status) && (
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="flex-1 text-green-600 border-green-600 hover:bg-green-50"
-                  onClick={() => onComplete(res)}
-                >
-                  완료
-                </Button>
-              )}
-              {canMarkNoShow(res.status) && (
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="flex-1 text-gray-600 border-gray-600 hover:bg-gray-50"
-                  onClick={() => onNoShow(res)}
-                >
-                  노쇼
-                </Button>
-              )}
+
+              {/* 기타 액션 버튼들 */}
+              <div className="flex flex-wrap gap-2">
+                {canApprove(res.status) && (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="flex-1 text-blue-600 border-blue-600 hover:bg-blue-50"
+                    onClick={() => onApprove(res)}
+                  >
+                    요청 확인
+                  </Button>
+                )}
+                {canRequestChange(res.status) && (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="flex-1 text-orange-600 border-orange-600 hover:bg-orange-50"
+                    onClick={() => onChangeRequest(res)}
+                  >
+                    변경요청
+                  </Button>
+                )}
+                {canReject(res.status) && (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="flex-1 text-red-600 border-red-600 hover:bg-red-50"
+                    onClick={() => onReject(res)}
+                  >
+                    거부
+                  </Button>
+                )}
+                {canMarkComplete(res.status) && (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="flex-1 text-green-600 border-green-600 hover:bg-green-50"
+                    onClick={() => onComplete(res)}
+                  >
+                    완료
+                  </Button>
+                )}
+                {canMarkNoShow(res.status) && (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="flex-1 text-gray-600 border-gray-600 hover:bg-gray-50"
+                    onClick={() => onNoShow(res)}
+                  >
+                    노쇼
+                  </Button>
+                )}
+              </div>
             </div>
           </div>
         ))

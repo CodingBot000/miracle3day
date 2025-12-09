@@ -18,6 +18,7 @@ import type {
  * - reject: 거부 + Zoom 미팅 삭제 (있으면)
  * - mark_no_show: 노쇼 + Zoom 미팅 삭제
  * - request_change: 시간 변경 제안 (Zoom 미팅은 유지)
+ * - undo_approval: 승인 취소 + Zoom 미팅 삭제 + 이전 상태로 복귀
  */
 export async function PATCH(
   req: NextRequest,
@@ -32,29 +33,45 @@ export async function PATCH(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // 2. Get hospital ID from admin table
+    // 2. Get hospital ID and email from admin table
     const { rows: adminRows } = await pool.query(
-      `SELECT id_uuid_hospital FROM admin WHERE id = $1`,
+      `SELECT id_uuid_hospital, email FROM admin WHERE id = $1`,
       [session.sub]
     );
 
-    if (adminRows.length === 0 || !adminRows[0].id_uuid_hospital) {
+    if (adminRows.length === 0) {
+      return NextResponse.json(
+        { error: 'Admin account not found' },
+        { status: 400 }
+      );
+    }
+
+    const admin = adminRows[0];
+    const isSuperAdmin = admin.email === process.env.SUPER_ADMIN_EMAIL;
+
+    // If not super admin and no hospital ID, return error
+    if (!isSuperAdmin && !admin.id_uuid_hospital) {
       return NextResponse.json(
         { error: 'No hospital associated with this account' },
         { status: 400 }
       );
     }
 
-    const hospitalId = adminRows[0].id_uuid_hospital;
+    const hospitalId = admin.id_uuid_hospital;
 
     // 3. Parse request body
     const body: VideoReservationPatchBody = await req.json();
 
     // 4. 기존 예약 정보 조회
+    // SUPER_ADMIN은 모든 예약 조회 가능, 일반 admin은 자신의 병원 예약만 조회
+    const whereClause = isSuperAdmin
+      ? 'WHERE id_uuid = $1'
+      : 'WHERE id_uuid = $1 AND id_uuid_hospital = $2';
+    const queryParams = isSuperAdmin ? [id] : [id, hospitalId];
+
     const { rows: [reservation] } = await pool.query(
-      `SELECT * FROM consult_video_reservations
-       WHERE id_uuid = $1 AND id_uuid_hospital = $2`,
-      [id, hospitalId]
+      `SELECT * FROM consult_video_reservations ${whereClause}`,
+      queryParams
     );
 
     if (!reservation) {
@@ -90,6 +107,30 @@ export async function PATCH(
         });
 
         // 2. DB 업데이트 (승인 + Zoom 정보 저장)
+        const updateWhereClause = isSuperAdmin
+          ? 'WHERE id_uuid = $7'
+          : 'WHERE id_uuid = $7 AND id_uuid_hospital = $8';
+        const updateParams = isSuperAdmin
+          ? [
+              body.confirmedStart,
+              body.confirmedEnd,
+              body.consultationDurationMinutes || 30,
+              meeting.id.toString(),
+              meeting.join_url,
+              meeting.password,
+              id,
+            ]
+          : [
+              body.confirmedStart,
+              body.confirmedEnd,
+              body.consultationDurationMinutes || 30,
+              meeting.id.toString(),
+              meeting.join_url,
+              meeting.password,
+              id,
+              hospitalId,
+            ];
+
         await pool.query(
           `UPDATE consult_video_reservations
            SET status = 'approved',
@@ -102,17 +143,8 @@ export async function PATCH(
                zoom_meeting_password = $6,
                status_changed_at = NOW(),
                updated_at = NOW()
-           WHERE id_uuid = $7 AND id_uuid_hospital = $8`,
-          [
-            body.confirmedStart,
-            body.confirmedEnd,
-            body.consultationDurationMinutes || 30,
-            meeting.id.toString(),
-            meeting.join_url,
-            meeting.password,
-            id,
-            hospitalId,
-          ]
+           ${updateWhereClause}`,
+          updateParams
         );
 
         return NextResponse.json({
@@ -142,13 +174,18 @@ export async function PATCH(
         }
 
         // 2. DB 상태 업데이트
+        const completedWhereClause = isSuperAdmin
+          ? 'WHERE id_uuid = $1'
+          : 'WHERE id_uuid = $1 AND id_uuid_hospital = $2';
+        const completedParams = isSuperAdmin ? [id] : [id, hospitalId];
+
         await pool.query(
           `UPDATE consult_video_reservations
            SET status = 'completed',
                status_changed_at = NOW(),
                updated_at = NOW()
-           WHERE id_uuid = $1 AND id_uuid_hospital = $2`,
-          [id, hospitalId]
+           ${completedWhereClause}`,
+          completedParams
         );
 
         return NextResponse.json({
@@ -181,6 +218,13 @@ export async function PATCH(
         }
 
         // 2. DB 상태 업데이트
+        const rejectWhereClause = isSuperAdmin
+          ? 'WHERE id_uuid = $3'
+          : 'WHERE id_uuid = $3 AND id_uuid_hospital = $4';
+        const rejectParams = isSuperAdmin
+          ? [body.cancelReasonCode || null, body.cancelReasonText || null, id]
+          : [body.cancelReasonCode || null, body.cancelReasonText || null, id, hospitalId];
+
         await pool.query(
           `UPDATE consult_video_reservations
            SET status = 'rejected',
@@ -188,13 +232,8 @@ export async function PATCH(
                cancel_reason_text = $2,
                status_changed_at = NOW(),
                updated_at = NOW()
-           WHERE id_uuid = $3 AND id_uuid_hospital = $4`,
-          [
-            body.cancelReasonCode || null,
-            body.cancelReasonText || null,
-            id,
-            hospitalId,
-          ]
+           ${rejectWhereClause}`,
+          rejectParams
         );
 
         return NextResponse.json({
@@ -222,6 +261,11 @@ export async function PATCH(
         }
 
         // 2. DB 상태 업데이트
+        const noShowWhereClause = isSuperAdmin
+          ? 'WHERE id_uuid = $1'
+          : 'WHERE id_uuid = $1 AND id_uuid_hospital = $2';
+        const noShowParams = isSuperAdmin ? [id] : [id, hospitalId];
+
         await pool.query(
           `UPDATE consult_video_reservations
            SET status = 'no_show',
@@ -229,8 +273,8 @@ export async function PATCH(
                no_show_marked_at = NOW(),
                status_changed_at = NOW(),
                updated_at = NOW()
-           WHERE id_uuid = $1 AND id_uuid_hospital = $2`,
-          [id, hospitalId]
+           ${noShowWhereClause}`,
+          noShowParams
         );
 
         return NextResponse.json({
@@ -254,23 +298,84 @@ export async function PATCH(
         }
 
         // 시간 변경 제안 (Zoom 미팅은 유지)
+        const changeWhereClause = isSuperAdmin
+          ? 'WHERE id_uuid = $2'
+          : 'WHERE id_uuid = $2 AND id_uuid_hospital = $3';
+        const changeParams = isSuperAdmin
+          ? [JSON.stringify(body.hospitalProposedSlots), id]
+          : [JSON.stringify(body.hospitalProposedSlots), id, hospitalId];
+
         await pool.query(
           `UPDATE consult_video_reservations
            SET status = 'needs_change',
                hospital_proposed_slots = $1,
                status_changed_at = NOW(),
                updated_at = NOW()
-           WHERE id_uuid = $2 AND id_uuid_hospital = $3`,
-          [
-            JSON.stringify(body.hospitalProposedSlots),
-            id,
-            hospitalId,
-          ]
+           ${changeWhereClause}`,
+          changeParams
         );
 
         return NextResponse.json({
           success: true,
           message: 'Change requested',
+        });
+      }
+
+      case 'undo_approval': {
+        // Allowed from: approved only
+        if (currentStatus !== 'approved') {
+          return NextResponse.json(
+            { error: '승인된 예약만 취소할 수 있습니다.' },
+            { status: 400 }
+          );
+        }
+
+        // 1. 이전 상태 판단 (hospital_proposed_slots가 있으면 needs_change, 없으면 requested)
+        const previousStatus: VideoReservationStatus =
+          reservation.hospital_proposed_slots &&
+          (Array.isArray(reservation.hospital_proposed_slots)
+            ? reservation.hospital_proposed_slots.length > 0
+            : Object.keys(reservation.hospital_proposed_slots).length > 0)
+            ? 'needs_change'
+            : 'requested';
+
+        // 2. Zoom 미팅 삭제 (있으면)
+        if (reservation.zoom_meeting_id) {
+          try {
+            await deleteZoomMeeting(reservation.zoom_meeting_id);
+          } catch (error) {
+            console.error('[Zoom] Failed to delete meeting:', error);
+            // 404는 무시하고 계속 진행 (이미 삭제된 경우)
+          }
+        }
+
+        // 3. DB 업데이트 - 승인 관련 정보 모두 삭제
+        const undoWhereClause = isSuperAdmin
+          ? 'WHERE id_uuid = $2'
+          : 'WHERE id_uuid = $2 AND id_uuid_hospital = $3';
+        const undoParams = isSuperAdmin ? [previousStatus, id] : [previousStatus, id, hospitalId];
+
+        await pool.query(
+          `UPDATE consult_video_reservations
+           SET status = $1,
+               confirmed_start_at = NULL,
+               confirmed_end_at = NULL,
+               consultation_duration_minutes = NULL,
+               zoom_meeting_id = NULL,
+               zoom_join_url = NULL,
+               zoom_meeting_password = NULL,
+               meeting_room_id = NULL,
+               meeting_provider = NULL,
+               status_changed_at = NOW(),
+               updated_at = NOW()
+           ${undoWhereClause}`,
+          undoParams
+        );
+
+        return NextResponse.json({
+          success: true,
+          message: '승인이 취소되었습니다.',
+          previousStatus,
         });
       }
 

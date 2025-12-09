@@ -124,6 +124,9 @@ export type VideoReservationPatchBody =
     }
   | {
       action: "mark_no_show";
+    }
+  | {
+      action: "undo_approval";
     };
 
 // Status display labels (Korean)

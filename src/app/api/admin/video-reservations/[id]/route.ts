@@ -24,22 +24,39 @@ export async function GET(
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  // 2. Get hospital ID from admin table
+  // 2. Get hospital ID and email from admin table
   const { rows: adminRows } = await pool.query(
-    `SELECT id_uuid_hospital FROM admin WHERE id = $1`,
+    `SELECT id_uuid_hospital, email FROM admin WHERE id = $1`,
     [session.sub]
   );
 
-  if (adminRows.length === 0 || !adminRows[0].id_uuid_hospital) {
+  if (adminRows.length === 0) {
+    return NextResponse.json(
+      { error: 'Admin account not found' },
+      { status: 400 }
+    );
+  }
+
+  const admin = adminRows[0];
+  const isSuperAdmin = admin.email === process.env.SUPER_ADMIN_EMAIL;
+
+  // If not super admin and no hospital ID, return error
+  if (!isSuperAdmin && !admin.id_uuid_hospital) {
     return NextResponse.json(
       { error: 'No hospital associated with this account' },
       { status: 400 }
     );
   }
 
-  const hospitalId = adminRows[0].id_uuid_hospital;
+  const hospitalId = admin.id_uuid_hospital;
 
   // 3. Fetch reservation detail
+  // SUPER_ADMIN은 모든 예약 조회 가능, 일반 admin은 자신의 병원 예약만 조회
+  const whereClause = isSuperAdmin
+    ? 'WHERE vr.id_uuid = $1'
+    : 'WHERE vr.id_uuid = $1 AND vr.id_uuid_hospital = $2';
+  const queryParams = isSuperAdmin ? [id] : [id, hospitalId];
+
   const query = `
     SELECT
       vr.id_uuid,
@@ -72,10 +89,10 @@ export async function GET(
       cs.country
     FROM consult_video_reservations vr
     JOIN consultation_submissions cs ON cs.id_uuid = vr.id_uuid_submission
-    WHERE vr.id_uuid = $1 AND vr.id_uuid_hospital = $2
+    ${whereClause}
   `;
 
-  const { rows } = await pool.query(query, [id, hospitalId]);
+  const { rows } = await pool.query(query, queryParams);
 
   if (rows.length === 0) {
     return NextResponse.json(
@@ -146,29 +163,46 @@ export async function PATCH(
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  // 2. Get hospital ID from admin table
+  // 2. Get hospital ID and email from admin table
   const { rows: adminRows } = await pool.query(
-    `SELECT id_uuid_hospital FROM admin WHERE id = $1`,
+    `SELECT id_uuid_hospital, email FROM admin WHERE id = $1`,
     [session.sub]
   );
 
-  if (adminRows.length === 0 || !adminRows[0].id_uuid_hospital) {
+  if (adminRows.length === 0) {
+    return NextResponse.json(
+      { error: 'Admin account not found' },
+      { status: 400 }
+    );
+  }
+
+  const admin = adminRows[0];
+  const isSuperAdmin = admin.email === process.env.SUPER_ADMIN_EMAIL;
+
+  // If not super admin and no hospital ID, return error
+  if (!isSuperAdmin && !admin.id_uuid_hospital) {
     return NextResponse.json(
       { error: 'No hospital associated with this account' },
       { status: 400 }
     );
   }
 
-  const hospitalId = adminRows[0].id_uuid_hospital;
+  const hospitalId = admin.id_uuid_hospital;
 
   // 3. Parse request body
   const body: VideoReservationPatchBody = await request.json();
 
   // 4. Get current reservation status
+  // SUPER_ADMIN은 모든 예약 조회 가능, 일반 admin은 자신의 병원 예약만 조회
+  const statusWhereClause = isSuperAdmin
+    ? 'WHERE id_uuid = $1'
+    : 'WHERE id_uuid = $1 AND id_uuid_hospital = $2';
+  const statusQueryParams = isSuperAdmin ? [id] : [id, hospitalId];
+
   const { rows: currentRows } = await pool.query(
     `SELECT status FROM consult_video_reservations
-     WHERE id_uuid = $1 AND id_uuid_hospital = $2`,
-    [id, hospitalId]
+     ${statusWhereClause}`,
+    statusQueryParams
   );
 
   if (currentRows.length === 0) {
@@ -231,6 +265,28 @@ export async function PATCH(
         // dailyRoom.url = "https://your-domain.daily.co/abc123xyz"
 
         // DB 업데이트 (meeting 정보 포함)
+        const updateWhereClause = isSuperAdmin
+          ? 'WHERE id_uuid = $6'
+          : 'WHERE id_uuid = $6 AND id_uuid_hospital = $7';
+        const updateParams = isSuperAdmin
+          ? [
+              body.confirmedStart,
+              body.confirmedEnd,
+              body.consultationDurationMinutes,
+              dailyRoom.name,        // meeting_room_id
+              dailyRoom.url,         // meeting_join_url (유저/병원 동일)
+              id,
+            ]
+          : [
+              body.confirmedStart,
+              body.confirmedEnd,
+              body.consultationDurationMinutes,
+              dailyRoom.name,        // meeting_room_id
+              dailyRoom.url,         // meeting_join_url (유저/병원 동일)
+              id,
+              hospitalId,
+            ];
+
         const updateQuery = `
           UPDATE consult_video_reservations
           SET
@@ -244,19 +300,11 @@ export async function PATCH(
             meeting_join_url_hospital = $5,
             status_changed_at = NOW(),
             updated_at = NOW()
-          WHERE id_uuid = $6 AND id_uuid_hospital = $7
+          ${updateWhereClause}
           RETURNING *
         `;
 
-        await pool.query(updateQuery, [
-          body.confirmedStart,
-          body.confirmedEnd,
-          body.consultationDurationMinutes,
-          dailyRoom.name,        // meeting_room_id
-          dailyRoom.url,         // meeting_join_url (유저/병원 동일)
-          id,
-          hospitalId,
-        ]);
+        await pool.query(updateQuery, updateParams);
         break;
       }
 
@@ -274,6 +322,13 @@ export async function PATCH(
           );
         }
 
+        const rejectWhereClause = isSuperAdmin
+          ? 'WHERE id_uuid = $3'
+          : 'WHERE id_uuid = $3 AND id_uuid_hospital = $4';
+        const rejectParams = isSuperAdmin
+          ? [body.cancelReasonCode || null, body.cancelReasonText || null, id]
+          : [body.cancelReasonCode || null, body.cancelReasonText || null, id, hospitalId];
+
         const updateQuery = `
           UPDATE consult_video_reservations
           SET
@@ -282,16 +337,11 @@ export async function PATCH(
             cancel_reason_text = $2,
             status_changed_at = NOW(),
             updated_at = NOW()
-          WHERE id_uuid = $3 AND id_uuid_hospital = $4
+          ${rejectWhereClause}
           RETURNING *
         `;
 
-        await pool.query(updateQuery, [
-          body.cancelReasonCode || null,
-          body.cancelReasonText || null,
-          id,
-          hospitalId,
-        ]);
+        await pool.query(updateQuery, rejectParams);
         break;
       }
 
@@ -309,6 +359,13 @@ export async function PATCH(
           );
         }
 
+        const changeWhereClause = isSuperAdmin
+          ? 'WHERE id_uuid = $2'
+          : 'WHERE id_uuid = $2 AND id_uuid_hospital = $3';
+        const changeParams = isSuperAdmin
+          ? [JSON.stringify(body.hospitalProposedSlots), id]
+          : [JSON.stringify(body.hospitalProposedSlots), id, hospitalId];
+
         const updateQuery = `
           UPDATE consult_video_reservations
           SET
@@ -316,15 +373,11 @@ export async function PATCH(
             hospital_proposed_slots = $1,
             status_changed_at = NOW(),
             updated_at = NOW()
-          WHERE id_uuid = $2 AND id_uuid_hospital = $3
+          ${changeWhereClause}
           RETURNING *
         `;
 
-        await pool.query(updateQuery, [
-          JSON.stringify(body.hospitalProposedSlots),
-          id,
-          hospitalId,
-        ]);
+        await pool.query(updateQuery, changeParams);
         break;
       }
 
@@ -337,17 +390,22 @@ export async function PATCH(
           );
         }
 
+        const completedWhereClause = isSuperAdmin
+          ? 'WHERE id_uuid = $1'
+          : 'WHERE id_uuid = $1 AND id_uuid_hospital = $2';
+        const completedParams = isSuperAdmin ? [id] : [id, hospitalId];
+
         const updateQuery = `
           UPDATE consult_video_reservations
           SET
             status = 'completed',
             status_changed_at = NOW(),
             updated_at = NOW()
-          WHERE id_uuid = $1 AND id_uuid_hospital = $2
+          ${completedWhereClause}
           RETURNING *
         `;
 
-        await pool.query(updateQuery, [id, hospitalId]);
+        await pool.query(updateQuery, completedParams);
         break;
       }
 
@@ -360,6 +418,11 @@ export async function PATCH(
           );
         }
 
+        const noShowWhereClause = isSuperAdmin
+          ? 'WHERE id_uuid = $1'
+          : 'WHERE id_uuid = $1 AND id_uuid_hospital = $2';
+        const noShowParams = isSuperAdmin ? [id] : [id, hospitalId];
+
         const updateQuery = `
           UPDATE consult_video_reservations
           SET
@@ -368,11 +431,78 @@ export async function PATCH(
             no_show_marked_at = NOW(),
             status_changed_at = NOW(),
             updated_at = NOW()
-          WHERE id_uuid = $1 AND id_uuid_hospital = $2
+          ${noShowWhereClause}
           RETURNING *
         `;
 
-        await pool.query(updateQuery, [id, hospitalId]);
+        await pool.query(updateQuery, noShowParams);
+        break;
+      }
+
+      case 'undo_approval': {
+        // Allowed from: approved only
+        if (currentStatus !== 'approved') {
+          return NextResponse.json(
+            { error: '승인된 예약만 취소할 수 있습니다.' },
+            { status: 400 }
+          );
+        }
+
+        // 1. 현재 예약 정보 조회 (hospital_proposed_slots 확인 필요)
+        const detailWhereClause = isSuperAdmin
+          ? 'WHERE id_uuid = $1'
+          : 'WHERE id_uuid = $1 AND id_uuid_hospital = $2';
+        const detailQueryParams = isSuperAdmin ? [id] : [id, hospitalId];
+
+        const { rows: detailRows } = await pool.query(
+          `SELECT hospital_proposed_slots FROM consult_video_reservations ${detailWhereClause}`,
+          detailQueryParams
+        );
+
+        if (detailRows.length === 0) {
+          return NextResponse.json(
+            { error: 'Reservation not found' },
+            { status: 404 }
+          );
+        }
+
+        const reservation = detailRows[0];
+
+        // 2. 이전 상태 판단 (hospital_proposed_slots가 있으면 needs_change, 없으면 requested)
+        const previousStatus: VideoReservationStatus =
+          reservation.hospital_proposed_slots &&
+          (Array.isArray(reservation.hospital_proposed_slots)
+            ? reservation.hospital_proposed_slots.length > 0
+            : Object.keys(reservation.hospital_proposed_slots).length > 0)
+            ? 'needs_change'
+            : 'requested';
+
+        // 3. Daily.co room은 자동 만료되므로 별도 삭제 불필요
+
+        // 4. DB 업데이트 - 승인 관련 정보 모두 삭제
+        const undoWhereClause = isSuperAdmin
+          ? 'WHERE id_uuid = $2'
+          : 'WHERE id_uuid = $2 AND id_uuid_hospital = $3';
+        const undoParams = isSuperAdmin ? [previousStatus, id] : [previousStatus, id, hospitalId];
+
+        const updateQuery = `
+          UPDATE consult_video_reservations
+          SET
+            status = $1,
+            confirmed_start_at = NULL,
+            confirmed_end_at = NULL,
+            consultation_duration_minutes = NULL,
+            meeting_room_id = NULL,
+            meeting_provider = NULL,
+            meeting_join_url_user = NULL,
+            meeting_join_url_hospital = NULL,
+            status_changed_at = NOW(),
+            updated_at = NOW()
+          ${undoWhereClause}
+          RETURNING *
+        `;
+
+        await pool.query(updateQuery, undoParams);
         break;
       }
 

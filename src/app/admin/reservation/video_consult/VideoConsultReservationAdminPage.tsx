@@ -89,6 +89,7 @@ export function VideoConsultReservationAdminPage({
 
       const res = await fetch(`/api/admin/video-reservations?${params}`, {
         cache: 'no-store',
+        credentials: 'include',
       });
 
       if (res.ok) {
@@ -166,6 +167,69 @@ export function VideoConsultReservationAdminPage({
   const openDetailDrawer = (reservation: VideoReservationListItem) => {
     setSelectedReservation(reservation);
     setDetailDrawerOpen(true);
+  };
+
+  const handleUndoApproval = async (reservationId: string) => {
+    const confirmed = window.confirm(
+      '승인을 취소하시겠습니까?\n\n' +
+      '확정된 시간과 화상 미팅이 삭제되고,\n' +
+      '승인 전 상태로 되돌아갑니다.'
+    );
+
+    if (!confirmed) return;
+
+    const reservation = reservations.find((r) => r.id_uuid === reservationId);
+    if (!reservation) return;
+
+    const isZoom = !!reservation.zoom_meeting_id;
+    const apiUrl = isZoom
+      ? `/api/admin/video-reservations-zoom/${reservationId}`
+      : `/api/admin/video-reservations/${reservationId}`;
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ action: 'undo_approval' }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || '승인 취소 실패');
+      }
+
+      const result = await response.json();
+
+      // 리스트 즉시 업데이트
+      setReservations((prev) =>
+        prev.map((res) =>
+          res.id_uuid === reservationId
+            ? {
+                ...res,
+                status: result.previousStatus,
+                confirmed_start_at: null,
+                confirmed_end_at: null,
+                consultation_duration_minutes: null,
+                zoom_meeting_id: null,
+                zoom_join_url: null,
+                zoom_meeting_password: null,
+                meeting_room_id: null,
+                meeting_provider: null,
+                status_changed_at: new Date().toISOString(),
+              }
+            : res
+        )
+      );
+
+      alert(
+        `승인이 취소되었습니다.\n` +
+        `상태: ${result.previousStatus === 'needs_change' ? '변경 요청' : '요청됨'}`
+      );
+    } catch (error: any) {
+      console.error(error);
+      alert(`승인 취소 실패: ${error.message}`);
+    }
   };
 
   const totalPages = Math.ceil(totalCount / pageSize);
@@ -275,6 +339,7 @@ export function VideoConsultReservationAdminPage({
           onComplete={openCompleteDialog}
           onNoShow={openNoShowDialog}
           onViewDetail={openDetailDrawer}
+          onUndoApproval={handleUndoApproval}
         />
       ) : (
         /* Desktop Table */
@@ -465,6 +530,16 @@ export function VideoConsultReservationAdminPage({
                               onClick={() => openRejectDialog(reservation)}
                             >
                               거부
+                            </Button>
+                          )}
+                          {reservation.status === 'approved' && (
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="text-red-600 border-red-600 hover:bg-red-50 font-semibold"
+                              onClick={() => handleUndoApproval(reservation.id_uuid)}
+                            >
+                              승인 취소
                             </Button>
                           )}
                           {canMarkComplete(reservation.status) && (

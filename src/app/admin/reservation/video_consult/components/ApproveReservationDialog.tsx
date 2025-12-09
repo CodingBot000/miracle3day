@@ -76,6 +76,7 @@ export function ApproveReservationDialog({
       const res = await fetch(apiEndpoint, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({
           action: 'approve',
           confirmedStart,

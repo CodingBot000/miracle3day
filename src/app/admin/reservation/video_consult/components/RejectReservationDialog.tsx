@@ -48,6 +48,7 @@ export function RejectReservationDialog({
         {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
           body: JSON.stringify({
             action: 'reject',
             cancelReasonCode: reasonCode || null,

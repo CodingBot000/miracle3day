@@ -124,6 +124,7 @@ export function ChangeRequestDialog({
         {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
           body: JSON.stringify({
             action: 'request_change',
             hospitalProposedSlots,

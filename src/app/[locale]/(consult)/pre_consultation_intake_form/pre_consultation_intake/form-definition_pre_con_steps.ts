@@ -147,8 +147,8 @@ export const preConsultationSteps = [
       en: "What matters most to you?"
     },
     subtitle: {
-      ko: "우선순위를 순위대로 나열하세요 (드래그하여 재정렬)",
-      en: "Rank your priorities (drag to reorder)"
+      ko: "우선순위를 순위대로 나열하세요 ",
+      en: "Rank your priorities"
     },
     component: PrioriotyFactorStep,
     optional: true,

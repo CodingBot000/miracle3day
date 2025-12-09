@@ -143,8 +143,8 @@ export const steps = [
       en: "What matters most to you?"
     },
     subtitle: {
-      ko: "우선순위를 정렬하세요 (드래그하여 순서 변경)",
-      en: "Rank your priorities (drag to reorder)"
+      ko: "우선순위를 정렬하세요",
+      en: "Rank your priorities"
     },
     // component: PrioriotyFactorStep,
     optional: true,

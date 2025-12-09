@@ -54,7 +54,24 @@ export default function HeadSection() {
   return (
     <section className="w-full flex flex-col items-center gap-10 px-4 py-12">
       {/* Heading */}
-      <motion.div
+      <div
+        className="w-full max-w-screen-xl flex flex-col items-center"
+      >
+        {heading.map((line, i) => (
+          <div
+            key={i}
+            className="text-center text-2xl md:text-4xl font-bold tracking-tight"
+          >
+            {line}
+          </div>
+        ))}
+
+        <div
+          className="text-center text-sm md:text-base text-gray-500 mt-2"
+        >
+          {t("headingSubtitle")}
+        </div>
+      {/* <motion.div
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.6 }}
@@ -75,7 +92,7 @@ export default function HeadSection() {
           className="text-center text-sm md:text-base text-gray-500 mt-2"
         >
           {t("headingSubtitle")}
-        </motion.p>
+        </motion.p> */}
 
         {/* CTA buttons */}
 <div className="mt-6 w-full max-w-2xl mx-auto flex flex-col gap-3">
@@ -86,7 +103,7 @@ export default function HeadSection() {
       className="flex-1 relative min-h-[64px] sm:min-h-[70px] px-4 sm:px-6 py-3 sm:py-4 flex flex-col items-center justify-center rounded-[14px] bg-gradient-to-br from-pink-400 to-pink-500 text-white font-medium hover:from-pink-500 hover:to-pink-600 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 group overflow-hidden"
     >
       {/* AI 뱃지 */}
-      <div className="absolute top-2 right-2 bg-white/20 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-0.5 rounded-full border border-white/30">
+      <div className="absolute top-2 right-2 bg-white/40 backdrop-blur-sm text-white text-[12px] font-bold px-2 py-0.3 rounded-full border border-white/30">
         AI
       </div>
       
@@ -126,7 +143,7 @@ export default function HeadSection() {
       FREE
     </div>
 
-    <div className="flex flex-col gap-1 sm:gap-2 text-left flex-1 pr-2">
+    <div className="flex flex-col gap-1 sm:gap-2 text-left flex-1 pr-1">
       <div className="text-gray-900 text-xl sm:text-2xl md:text-3xl  font-extrabold">
         {t("ctaVideoConsultant")}
       </div>
@@ -135,7 +152,7 @@ export default function HeadSection() {
       </div>
     </div>
 
-    <div className="flex-shrink-0 ml-2 sm:ml-4">
+    <div className="flex-shrink-0 ml-1 sm:ml-2">
       <Image
         src="/doctors/illust_video_consult.png"
         alt="Video Consultation"
@@ -147,7 +164,7 @@ export default function HeadSection() {
   </Link>
 </div>
 
-      </motion.div>
+      </div>
       {/* <Link
           href={ROUTE.AI_ANALYSIS_CAMERA_PAGE}
             className="flex-1 min-h-[50px], h-[70px] px-6 flex items-center justify-center rounded-[14px] bg-orange-400 text-white font-medium hover:bg-orange-500 transition-colors duration-200 shadow-sm"

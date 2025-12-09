@@ -32,10 +32,10 @@ export default function KBeautyGuideSection() {
   ];
 
   return (
-    <section className="bg-stone-50 py-12 lg:py-16">
+    <section className="py-1 lg:py-4">
       <div className="max-w-6xl mx-auto px-4">
         {/* Section Header */}
-        <div className="text-center mb-8 lg:mb-10">
+        <div className="text-center mb-4 md:mb-10">
           <div className="text-center text-2xl md:text-4xl font-bold tracking-tight">
             {t('kbeautySectionTitle')}
           </div>
@@ -48,12 +48,12 @@ export default function KBeautyGuideSection() {
               key={index}
               href={card.href}
               className="group block bg-white rounded-2xl border border-gray-100 shadow-lg
-                         p-6 transition-all duration-200
+                         px-6 py-3 transition-all duration-200
                          hover:shadow-md hover:border-orange-200
                          lg:flex-1"
             >
               {/* Icon + Title Row */}
-              <div className="flex items-center gap-3 mb-3">
+              <div className="flex items-center gap-2">
                 <div className="flex items-center justify-center w-10 h-10 rounded-full bg-orange-50 text-orange-500">
                   {card.icon}
                 </div>
@@ -63,7 +63,7 @@ export default function KBeautyGuideSection() {
               </div>
 
               {/* Description */}
-              <p className="text-gray-500 text-base md:text-lg font-semibold leading-relaxed mb-4">
+              <p className="text-gray-500 text-base md:text-lg font-semibold leading-relaxed mb-1">
                 {card.description}
               </p>
 

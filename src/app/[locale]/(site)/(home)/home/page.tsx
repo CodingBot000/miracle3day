@@ -100,9 +100,9 @@ export default async function HomePage() {
           <HeadSection />
 {/* <UploadTestViaServer /> */}
           {/* <MiddleSection1 /> */}
-          <section className="w-full flex flex-col items-center px-4 py-12">
+          <section className="w-full flex flex-col items-center px-4 md:py-4 rounded-lg mt-10">
         {/* Heading */}
-        <div className="text-center">
+        <div className="text-center mb-6">
           <div className="text-2xl md:text-4xl font-bold tracking-tight">
             {t('hotIssueTitle')}
           </div>

@@ -10,10 +10,10 @@ import { useTranslations, useLocale } from "next-intl";
 import DiagnosticIntro from "./components/DiagnosticIntro";
 import LoginRequiredModal from "@/components/template/modal/LoginRequiredModal";
 
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 12 },
-  show:   { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" as const } }
-};
+// const fadeUp: Variants = {
+//   hidden: { opacity: 0, y: 12 },
+//   show:   { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" as const } }
+// };
 
 export default function HeadSection() {
   const t = useTranslations("Home");
@@ -23,7 +23,7 @@ export default function HeadSection() {
   const [showLoginModal, setShowLoginModal] = useState(false);
 
   const heading = [t("headingLine1"), t("headingLine2")];
-  console.log('qq qq HeadSection pathname:', pathname);
+  // console.log('qq qq HeadSection pathname:', pathname);
   const handleVideoConsultationClick = async (e: React.MouseEvent) => {
     e.preventDefault();
 
@@ -52,7 +52,7 @@ export default function HeadSection() {
   };
 
   return (
-    <section className="w-full flex flex-col items-center gap-10 px-4 py-12">
+    <section className="w-full flex flex-col items-center gap-10 px-4 mt-8">
       {/* Heading */}
       <div
         className="w-full max-w-screen-xl flex flex-col items-center"

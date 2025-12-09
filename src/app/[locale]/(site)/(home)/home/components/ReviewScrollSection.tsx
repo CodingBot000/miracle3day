@@ -138,7 +138,7 @@ export default function ReviewScrollSection() {
       <section className="w-full pt-8 md:pt-12 h-[350px] md:h-[450px]">
         <div className="w-full -mx-4 sm:-mx-6 lg:-mx-8">
           <div className="px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl md:text-3xl font-semibold mb-3">Customer Reviews</h2>
+            <h2 className="text-2xl md:text-3xl font-semibold mb-4 md:mb-10">Customer Reviews</h2>
           </div>
 
           <div className="w-full overflow-x-auto overflow-y-hidden">
@@ -177,7 +177,7 @@ export default function ReviewScrollSection() {
       <section className="w-full pt-8 md:pt-12 h-[350px] md:h-[450px]">
         <div className="w-full -mx-4 sm:-mx-6 lg:-mx-8">
           <div className="px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl md:text-3xl font-semibold mb-3">Customer Reviews</h2>
+            <h2 className="text-2xl md:text-3xl font-semibold mb-4 md:mb-10">Customer Reviews</h2>
             <div className="text-center py-8">
               <p className="text-red-600 mb-2">Failed to load reviews</p>
               <p className="text-sm text-gray-500">{error}</p>
@@ -209,7 +209,7 @@ export default function ReviewScrollSection() {
   return (
     <section className="w-full pt-8 md:pt-12 h-[350px] md:h-[450px]">
       <div className="w-full -mx-4 sm:-mx-6 lg:-mx-8">
-        <div className="px-4 sm:px-6 lg:px-8 mb-3">
+        <div className="px-4 sm:px-6 lg:px-8 mb-4 md:mb-10">
           <h2 className="text-2xl md:text-3xl font-semibold">
             Customer Reviews Top {reviews.length} reviews
           </h2>

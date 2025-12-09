@@ -1,0 +1,11 @@
+# public/robots.txt
+User-agent: *
+Disallow: /admin/
+Disallow: /api/admin/
+
+# 혹시 모를 다른 admin 경로들도
+Disallow: /admin
+Disallow: /*admin*
+
+# 허용할 경로
+Allow: /

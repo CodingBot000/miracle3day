@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { getCommunityCategories, getCommunityPostsDTO } from '@/app/api/community/getPosts';
-import type { CommunityCategory } from '@/app/models/communityData.dto';
+import type { CommunityCategory } from '@/models/communityData.dto';
 import PostList from './PostList';
 import WritePostButton from './WritePostButton';
 

@@ -184,10 +184,10 @@ export class YouCamSkinAnalysis {
 
         const uploadResponse = await fetch(uploadUrl, {
           method: 'PUT',
-          body: imageData,
+          body: new Uint8Array(imageData),
           headers: {
             'Content-Type': requiredHeaders['Content-Type'] || contentType,
-            'Content-Length': requiredHeaders['Content-Length'] || imageData.byteLength.toString(),
+            'Content-Length': requiredHeaders['Content-Length'] || imageData.length.toString(),
           },
         });
 

@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Upload, X } from 'lucide-react';
+import { questions } from '@/app/[locale]/(consult)/pre_consultation_intake_form/pre_consultation_intake/form-definition_pre_con_questions';
+import { useLocale } from 'next-intl';
+import { getLocalizedText } from '@/utils/i18n';
 
 interface UploadImageStepProps {
   data: any;
@@ -10,6 +13,8 @@ interface UploadImageStepProps {
 }
 
 const UploadImageStep: React.FC<UploadImageStepProps> = ({ data, onDataChange, onSkip }) => {
+  const locale = useLocale();
+  const uploadPhotoData = questions.uploadPhoto;
   const uploadImage = data.uploadImage || {};
   const [isDragging, setIsDragging] = useState(false);
   const [uploadedImage, setUploadedImage] = useState<string | null>(uploadImage.uploadedImage || null);
@@ -18,21 +23,21 @@ const UploadImageStep: React.FC<UploadImageStepProps> = ({ data, onDataChange, o
   const handleFile = useCallback((file: File) => {
     // 파일 타입 검증
     if (!file.type.startsWith('image/')) {
-      alert('Only image files are allowed');
+      alert(getLocalizedText(uploadPhotoData.errors.invalidFileType, locale));
       return;
     }
 
     // 파일 크기 검증 (10MB)
     const maxSize = 10 * 1024 * 1024; // 10MB
     if (file.size > maxSize) {
-      alert('File size must be less than 10MB');
+      alert(getLocalizedText(uploadPhotoData.errors.fileSizeExceeded, locale));
       return;
     }
 
     // 지원되는 파일 형식 검증
     const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg'];
     if (!allowedTypes.includes(file.type)) {
-      alert('Only PNG and JPG, JPEG files can be uploaded');
+      alert(getLocalizedText(uploadPhotoData.errors.allowedFormats, locale));
       return;
     }
 
@@ -118,8 +123,9 @@ const UploadImageStep: React.FC<UploadImageStepProps> = ({ data, onDataChange, o
           Please post a picture to diagnose your skin
         </Label> */}
         <ul className="list-disc list-inside text-sm text-red-400 mb-1 space-y-1">
-          <li>Please upload photos focusing on the area(s) you’d like to consult about.</li>
-          <li>If you’d like a full-face evaluation, please provide a front-facing photo. Make sure your face occupies at least 60% of the image height.</li>
+          {uploadPhotoData.instructions.map((instruction, index) => (
+            <li key={index}>{getLocalizedText(instruction, locale)}</li>
+          ))}
         </ul>
 
       </div>
@@ -173,10 +179,10 @@ const UploadImageStep: React.FC<UploadImageStepProps> = ({ data, onDataChange, o
             </div>
             <div>
               <p className="text-lg font-medium text-gray-900 mb-2">
-                Click or drag & drop images to upload
+                {getLocalizedText(uploadPhotoData.uploadArea.title, locale)}
               </p>
               <p className="text-sm text-gray-600">
-                You can upload up to 10MB.
+                {getLocalizedText(uploadPhotoData.uploadArea.subtitle, locale)}
               </p>
             </div>
           </div>
@@ -191,14 +197,14 @@ const UploadImageStep: React.FC<UploadImageStepProps> = ({ data, onDataChange, o
             variant="ghost"
             className="text-red-500 font-bold hover:text-gray-700 text-sm underline"
           >
-            Skip this step
+            {getLocalizedText(uploadPhotoData.skipButton, locale)}
           </Button>
         </div>
       )}
 
       {/* Privacy Notice */}
       <div className="text-xs text-gray-500 leading-relaxed">
-        All images are securely stored, and will not be used for any purpose other than diagnosis.
+        {getLocalizedText(uploadPhotoData.privacyNotice, locale)}
       </div>
     </div>
   );

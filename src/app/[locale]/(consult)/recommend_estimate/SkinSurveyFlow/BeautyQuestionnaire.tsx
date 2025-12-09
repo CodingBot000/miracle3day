@@ -25,9 +25,7 @@ import {
         AGE_RANGE,
         DEMOGRAPHICS_BASIC
       } from '@/constants/estimate_steps';
-import { isValidEmail } from '@/utils/validators';
-import { CountryCode, CountryInputDto } from '@/app/models/country-code.dto';
-import { MessengerInput } from '@/components/atoms/input/InputMessengerFields';
+
 import { log } from '@/utils/logger';
 import { validateStepData, getValidationMessage } from '../validCheckForm';
 import SkinTypeStep from './questionnaire/SkinTypeStep';

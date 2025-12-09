@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSurgeryDetail, useSurgeryCategories } from "@/hooks/useTreatmentData";
-import type { Locale } from "@/app/models/surgeryData.dto";
+import type { Locale } from "@/models/surgeryData.dto";
 import { useLocale } from "next-intl";
 import LottieLoading from "@/components/atoms/LottieLoading";
 import { ArrowLeft } from "lucide-react";

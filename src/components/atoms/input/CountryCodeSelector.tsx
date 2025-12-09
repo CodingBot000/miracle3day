@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Search } from 'lucide-react';
 import { country } from '@/constants/country';
-import { CountryCode } from '@/app/models/country-code.dto';
+import { CountryCode } from '@/models/country-code.dto';
 
 interface CountryCodeSelectorProps {
   selectedCountry?: CountryCode;

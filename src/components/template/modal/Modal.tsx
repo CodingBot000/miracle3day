@@ -85,17 +85,25 @@ export const ConfirmModal = ({
 interface AlertModalProps {
   open: boolean;
   onCancel: () => void;
+  onConfirm?: () => void;
   children: ReactNode;
   className?: string;
   title?: string;
+  showCancelButton?: boolean;
+  cancelText?: string;
+  confirmText?: string;
 }
 
 export const AlertModal = ({
   open,
   onCancel,
+  onConfirm,
   children,
   className,
   title,
+  showCancelButton,
+  cancelText = '취소',
+  confirmText = '확인',
 }: AlertModalProps) => {
   return (
     <ModalBase
@@ -104,8 +112,15 @@ export const AlertModal = ({
       title={title}
       className={className || "max-w-sm sm:rounded-xl animate-in fade-in-0 zoom-in-95"}
       footer={
-        <div className="flex justify-center">
-          <Button onClick={onCancel}>확인</Button>
+        <div className="flex justify-center gap-4">
+          {showCancelButton && (
+            <Button variant="outline" onClick={onCancel}>
+              {cancelText}
+            </Button>
+          )}
+          <Button onClick={onConfirm || onCancel}>
+            {confirmText}
+          </Button>
         </div>
       }
     >

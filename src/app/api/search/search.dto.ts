@@ -8,10 +8,10 @@
 //   id_surgeries: string[];
 
 // import { EventDetailData } from "../event/[id]/event.dto";
-import { EventDetailData } from "@/app/models/eventDetailData.dto";
-import { HospitalData } from "@/app/models/hospitalData.dto";
+import { EventDetailData } from "@/models/eventDetailData.dto";
+import { HospitalData } from "@/models/hospitalData.dto";
 // import { ReviewData } from "../hospital/[id]/review/review";
-import { ReviewData } from "@/app/models/reviewData.dto";
+import { ReviewData } from "@/models/reviewData.dto";
  
 // }
 export interface SearchItem {

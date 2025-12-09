@@ -12,7 +12,7 @@ import {
   SequenceStep,
   TreatmentAttributes,
   AreaDetailContent,
-} from "@/app/models/treatmentData.dto";
+} from "@/models/treatmentData.dto";
 
 type RawProtocolRow = {
   id: string;

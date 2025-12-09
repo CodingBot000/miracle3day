@@ -211,7 +211,7 @@ export const steps = [
     //     en: "Upload a photo for more accurate analysis (Optional)"
     //   },
       // subtitle: {
-      //   ko: "png, jpg, jpeg 파일만 가능합니다. 이 단계는 건너뛸 수 있습니다. 건너뛰시라면 파일 첨부 없이 다음버튼을 눌러주세요.",
+      //   ko: "png, jpg, jpeg 파일만 가능합니다. 이 단계는 건너뛸 수 있습니다. 건너뛰시려면 파일 첨부 없이 다음버튼을 눌러주세요.",
       //   en: "Only png, jpg, and jpeg files are supported.\nThis step is optional — if you'd like to skip it, simply proceed without uploading a file."
       // },
     //   component: UploadImageStep,

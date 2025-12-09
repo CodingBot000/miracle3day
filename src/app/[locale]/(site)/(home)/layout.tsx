@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import MainContent from "@/components/layout/MainContent";
 import MenuMobile from "@/components/organism/layout/MenuMobile";
 
-const LayoutHeader = dynamic(() => import("@/components/organism/layout/LayoutHeader"), {
+const LayoutHeaderHome = dynamic(() => import("@/components/organism/layout/LayoutHeaderHome"), {
   ssr: false,
 });
 
@@ -11,7 +11,7 @@ export default function HomeLayout({ children }: { children: React.ReactNode }) 
   return (
     <>
       <Suspense fallback={<div>Loading header...</div>}>
-        <LayoutHeader />
+        <LayoutHeaderHome />
       </Suspense>
 
       <main className="flex-1 w-full relative">

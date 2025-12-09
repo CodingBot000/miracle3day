@@ -9,7 +9,7 @@ import { useState } from "react";
 import { MessageCircle, Video } from "lucide-react";
 import { useLocale } from "next-intl";
 import { useLoginGuard } from "@/hooks/useLoginGuard";
-import { HospitalDetailInfo } from "@/app/models/hospitalData.dto";
+import { HospitalDetailInfo } from "@/models/hospitalData.dto";
 import DirectChatChannels from "./DirectChatChannels";
 
 interface HospitalConsultationButtonProps {
@@ -147,7 +147,9 @@ const HospitalConsultationButton = ({ hospitalId, hospitalDetails }: HospitalCon
       }
 
       // 3. Navigate to video consultation form with hospital ID
-      router.push(`/pre_consultation_intake_form?hospitalId=${hospitalId}`);
+      // router.push(`/pre_consultation_intake_form?hospitalId=${hospitalId}`);
+      router.push(`/${locale}/pre_consultation_intake_form?returnUrl=${encodeURIComponent(`/${locale}/hospital/${hospitalId}`)}`);
+
     } catch (err: any) {
       console.error("Error starting video consultation:", err);
       setError(locale === 'ko' ? labels.ko.videoConsultationError : labels.en.videoConsultationError);

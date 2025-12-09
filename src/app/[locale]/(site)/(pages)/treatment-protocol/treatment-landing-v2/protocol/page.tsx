@@ -7,7 +7,7 @@ import * as React from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useTopicDetail } from "@/hooks/useTreatmentData";
-import type { Benefits, Locale, SequenceStep, SequenceTitle, LocalizedText } from "@/app/models/treatmentData.dto";
+import type { Benefits, Locale, SequenceStep, SequenceTitle, LocalizedText } from "@/models/treatmentData.dto";
 import { useLocale } from "next-intl";
 import TreatmentDetailCard from "../_demo/TreatmentDetailCard";
 import { buildInfoLine } from "@/constants/treatment/types";

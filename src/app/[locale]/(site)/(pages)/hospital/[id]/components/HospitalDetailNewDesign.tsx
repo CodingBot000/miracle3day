@@ -23,7 +23,7 @@ import ReviewSection from "@/components/template/ReviewSection";
 import { ReviewStats } from "@/components/molecules/ReviewStats";
 import { useMultilingualGoogleReviews, Review } from "@/hooks/useMultilingualGoogleReviews";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ReviewDataFromGoogleMap } from "@/app/models/reviewData.dto";
+import { ReviewDataFromGoogleMap } from "@/models/reviewData.dto";
 
 interface HospitalDetailNewDesignProps {
   hospitalData: HospitalDetailMainOutput;

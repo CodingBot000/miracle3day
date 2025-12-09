@@ -1,4 +1,4 @@
-import { CountryCode } from "@/app/models/country-code.dto";
+import { CountryCode } from "@/models/country-code.dto";
 
 export function findCountry(value: string | number): CountryCode | undefined {
   return country.find((item) =>

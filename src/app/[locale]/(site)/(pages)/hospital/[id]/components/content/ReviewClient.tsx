@@ -5,7 +5,7 @@ import { log } from '@/utils/logger';
 
 import { getHospitalReviewListByHospitalIdAPI } from "@/app/api/hospital/[id]/review";
 // import { HospitalDetailReviewOutDto } from "@/app/api/hospital/[id]/review/review";
-import { HospitalDetailReviewOutDto } from "@/app/models/reviewData.dto";
+import { HospitalDetailReviewOutDto } from "@/models/reviewData.dto";
 import { ReviewCard } from "@/components/molecules/card";
 import { InfinityItemList } from "@/components/template/InfinityItemList";
 import { NoData } from "@/components/template/NoData";

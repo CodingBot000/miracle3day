@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { TreatmentProductData } from '@/app/models/treatmentProduct.dto';
+import { TreatmentProductData } from '@/models/treatmentProduct.dto';
 
 interface TreatmentProductsResponse {
   products: TreatmentProductData[];

@@ -1,5 +1,5 @@
 import React, { isValidElement, useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ChevronLeft, ChevronRight, Heart, Star, FileText } from 'lucide-react';
 import { useConsultFormStorage } from '../../common/formStorage';
 import { Button } from '@/components/ui/button';
@@ -12,6 +12,7 @@ import { RecommendationOutput } from '@/app/[locale]/(consult)/pre_consultation_
 import { recommendTreatments } from '@/app/[locale]/(consult)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching';
 import { preConsultationSteps } from '@/app/[locale]/(consult)/pre_consultation_intake_form/pre_consultation_intake/form-definition_pre_con_steps';
 import { questions } from '@/app/[locale]/(consult)/pre_consultation_intake_form/pre_consultation_intake/form-definition_pre_con_questions';
+import { intakeForm } from '@/app/[locale]/(consult)/pre_consultation_intake_form/pre_consultation_intake/form-definition_pre_con_base';
 import { useLocale } from 'next-intl';
 import { getLocalizedText } from '@/utils/i18n';
 
@@ -30,7 +31,7 @@ import {
        VIDEO_CONSULT_SCHEDULE
       } from '@/constants/pre_consult_steps';
 import { isValidEmail } from '@/utils/validators';
-import { CountryCode, CountryInputDto } from '@/app/models/country-code.dto';
+import { CountryCode, CountryInputDto } from '@/models/country-code.dto';
 import { log } from '@/utils/logger';
 import { validateStepData, getValidationMessage } from '../validCheckForm';
 
@@ -57,6 +58,7 @@ interface StepComponentProps {
 const PreConsultationIntakeForm: React.FC = () => {
   const router = useRouter();
   const locale = useLocale();
+  const searchParams = useSearchParams();
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState<Record<string, StepData>>({});
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
@@ -65,6 +67,9 @@ const PreConsultationIntakeForm: React.FC = () => {
 
   const { toast } = useToast();
   const { loadStoredData, saveData } = useConsultFormStorage('preConsult');
+
+  // Get returnUrl from query parameter, default to home if not provided
+  const returnUrl = searchParams.get('returnUrl') || `/${locale}`;
 
   // 컴포넌트 마운트 시 저장된 데이터 불러오기
   useEffect(() => {
@@ -100,10 +105,10 @@ const PreConsultationIntakeForm: React.FC = () => {
       setIsValideSendForm(false);
       toast({
         variant: "destructive",
-        title: "Please make a required selection",
+        title: getLocalizedText(intakeForm.pcif1, locale),
         description: getValidationMessage(preConsultationSteps[currentStep].id),
-      
-      }); 
+
+      });
       return;
     }
 
@@ -157,7 +162,7 @@ const PreConsultationIntakeForm: React.FC = () => {
       // log.debug('validateStepData launch toast message: ', getValidationMessage(preConsultationSteps[currentStep].id));
       toast({
         variant: "destructive",
-        title: "Please make a required selection",
+        title: getLocalizedText(intakeForm.pcif1, locale),
         description: getValidationMessage(preConsultationSteps[currentStep].id),
       });
       return;
@@ -313,15 +318,15 @@ const PreConsultationIntakeForm: React.FC = () => {
                     }
                   `}
                 >
-                  <span translate="no">Next</span>
+                  <span translate="no">{getLocalizedText(intakeForm.pcif2, locale)}</span>
                 </Button>
               </>
             ) : currentStep === preConsultationSteps.length - 1 ? (
-              <Button onClick={handleSubmit} 
+              <Button onClick={handleSubmit}
                 className="w-full h-12 px-4 rounded-lg text-white flex items-center justify-center"
                 style={{ backgroundColor: '#FB718F' }}
               >
-                Submit
+                {getLocalizedText(intakeForm.pcif3, locale)}
               </Button>
             ) : (
               <>
@@ -346,7 +351,7 @@ const PreConsultationIntakeForm: React.FC = () => {
                     flex items-center justify-center
                   "
                 >
-                  Previous
+                  {getLocalizedText(intakeForm.pcif4, locale)}
                 </Button>
                 <Button 
                   onClick={(e) => {
@@ -366,7 +371,7 @@ const PreConsultationIntakeForm: React.FC = () => {
                     }
                   `}
                 >
-                  <span translate="no">Next</span>
+                  <span translate="no">{getLocalizedText(intakeForm.pcif2, locale)}</span>
                 </Button>
               </>
             )}
@@ -381,74 +386,75 @@ const PreConsultationIntakeForm: React.FC = () => {
         showSendFormButton={isValideSendForm}
         onOpenChange={setIsPreviewOpen}
         formData={formData}
+        returnUrl={returnUrl}
         onSubmissionComplete={(allStepData) => {
           setIsPreviewOpen(false);
 
-          // Generate recommendations
-          try {
-            log.debug("=== Form Data for Recommendations ===");
-            log.debug(allStepData);
+          // // Generate recommendations
+          // try {
+          //   log.debug("=== Form Data for Recommendations ===");
+          //   log.debug(allStepData);
 
-            // Extract nested data structures
-            const skinConcernsData = allStepData.skinConcerns?.concerns || [];
-            const treatmentAreasData = allStepData.treatmentAreas?.treatmentAreas || [];
-            const priorityOrderData = allStepData.priorityOrder?.priorityOrder || [];
-            const pastTreatmentsData = allStepData.pastTreatments?.pastTreatments || ["none"];
-            const healthConditionsData = allStepData.healthConditions?.healthConditions || ["none"];
-            const userInfoData = allStepData.userInfo || {};
+          //   // Extract nested data structures
+          //   const skinConcernsData = allStepData.skinConcerns?.concerns || [];
+          //   const treatmentAreasData = allStepData.treatmentAreas?.treatmentAreas || [];
+          //   const priorityOrderData = allStepData.priorityOrder?.priorityOrder || [];
+          //   const pastTreatmentsData = allStepData.pastTreatments?.pastTreatments || ["none"];
+          //   const healthConditionsData = allStepData.healthConditions?.healthConditions || ["none"];
+          //   const userInfoData = allStepData.userInfo || {};
 
-            log.debug("=== Extracted Data ===");
-            log.debug("skinConcernsData:", skinConcernsData);
-            log.debug("treatmentAreasData:", treatmentAreasData);
-            log.debug("priorityOrderData:", priorityOrderData);
-            log.debug("budget:", allStepData.budget);
-            log.debug("goals:", allStepData.goals);
-            log.debug("pastTreatmentsData:", pastTreatmentsData);
-            log.debug("healthConditionsData:", healthConditionsData);
+          //   log.debug("=== Extracted Data ===");
+          //   log.debug("skinConcernsData:", skinConcernsData);
+          //   log.debug("treatmentAreasData:", treatmentAreasData);
+          //   log.debug("priorityOrderData:", priorityOrderData);
+          //   log.debug("budget:", allStepData.budget);
+          //   log.debug("goals:", allStepData.goals);
+          //   log.debug("pastTreatmentsData:", pastTreatmentsData);
+          //   log.debug("healthConditionsData:", healthConditionsData);
 
-            // Map skinConcerns to include tier information
-            const skinConcerns = skinConcernsData.map((concernId: string) => {
-              const concernDef = questions.skinConcerns.find(c => c.id === concernId);
-              return {
-                id: concernId as any,
-                tier: concernDef?.tier as 1 | 2 | 3 | 4 | undefined,
-              };
-            });
+          //   // Map skinConcerns to include tier information
+          //   const skinConcerns = skinConcernsData.map((concernId: string) => {
+          //     const concernDef = questions.skinConcerns.find(c => c.id === concernId);
+          //     return {
+          //       id: concernId as any,
+          //       tier: concernDef?.tier as 1 | 2 | 3 | 4 | undefined,
+          //     };
+          //   });
 
-            const algorithmInput = {
-              skinTypeId: allStepData.skinType || "combination",
-              ageGroup: userInfoData.ageRange,
-              gender: userInfoData.gender,
-              skinConcerns: skinConcerns,
-              treatmentGoals: allStepData.goals || [],
-              treatmentAreas: treatmentAreasData,
-              budgetRangeId: allStepData.budget || "1000-5000",
-              priorityId: priorityOrderData[0] || "effectiveness",
-              pastTreatments: pastTreatmentsData,
-              medicalConditions: healthConditionsData,
-            };
+          //   const algorithmInput = {
+          //     skinTypeId: allStepData.skinType || "combination",
+          //     ageGroup: userInfoData.ageRange,
+          //     gender: userInfoData.gender,
+          //     skinConcerns: skinConcerns,
+          //     treatmentGoals: allStepData.goals || [],
+          //     treatmentAreas: treatmentAreasData,
+          //     budgetRangeId: allStepData.budget || "1000-5000",
+          //     priorityId: priorityOrderData[0] || "effectiveness",
+          //     pastTreatments: pastTreatmentsData,
+          //     medicalConditions: healthConditionsData,
+          //   };
 
-            log.debug("=== Algorithm Input ===");
-            log.debug(algorithmInput);
+          //   log.debug("=== Algorithm Input ===");
+          //   log.debug(algorithmInput);
 
-            const output = recommendTreatments(algorithmInput);
+          //   const output = recommendTreatments(algorithmInput);
 
-            log.debug("=== Recommendation Output ===");
-            log.debug("Recommendations count:", output.recommendations.length);
-            log.debug("Total KRW:", output.totalPriceKRW);
-            log.debug("Total USD:", output.totalPriceUSD);
-            log.debug("Recommendations:", output.recommendations);
-            log.debug("Excluded:", output.excluded);
-            log.debug("Full output:", output);
+          //   log.debug("=== Recommendation Output ===");
+          //   log.debug("Recommendations count:", output.recommendations.length);
+          //   log.debug("Total KRW:", output.totalPriceKRW);
+          //   log.debug("Total USD:", output.totalPriceUSD);
+          //   log.debug("Recommendations:", output.recommendations);
+          //   log.debug("Excluded:", output.excluded);
+          //   log.debug("Full output:", output);
 
-          } catch (error) {
-            log.error("Failed to generate recommendations:", error);
-            toast({
-              variant: "destructive",
-              title: "Error generating recommendations",
-              description: "Please try again",
-            });
-          }
+          // } catch (error) {
+          //   log.error("Failed to generate recommendations:", error);
+          //   toast({
+          //     variant: "destructive",
+          //     title: "Error generating recommendations",
+          //     description: "Please try again",
+          //   });
+          // }
         }}
       />
 

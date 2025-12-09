@@ -3,7 +3,7 @@ import { fetchUtils } from "@/utils/fetch";
 import {
   HospitalDetailInfoInputDto,
   HospitalDetailInfoOutDto,
-} from "@/app/models/hospitalData.dto";
+} from "@/models/hospitalData.dto";
 
 export const getHospitalInfoAPI = async ({
   id,

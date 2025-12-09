@@ -4,7 +4,7 @@ import { getLocale } from 'next-intl/server';
 import { getIronSession } from "iron-session";
 import { sessionOptions } from "@/lib/session";
 import CommentSection from '@/components/molecules/CommentSection';
-import { Member, CommunityPost, CommunityComment } from '@/app/models/communityData.dto';
+import { Member, CommunityPost, CommunityComment } from '@/models/communityData.dto';
 import PostNotFoundFallback from './PostNotFoundFallback';
 import {
   TABLE_COMMUNITY_POSTS,

@@ -6,7 +6,7 @@ import { log } from '@/utils/logger';
 import { useEffect, useMemo, useState } from "react";
 import { ROUTE } from "@/router";
 import { getHospitalBeautyAPI } from "@/app/api/home/hospital";
-import { HospitalOutputDto } from "@/app/models/hospitalData.dto";
+import { HospitalOutputDto } from "@/models/hospitalData.dto";
 import { HospitalCard } from "@/components/molecules/card/HospitalCard";
 
 export default function ClinicListForHome() {

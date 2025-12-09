@@ -8,6 +8,7 @@ import { Link, usePathname } from "@/i18n/routing";
 
 import { useHeader } from "@/contexts/HeaderContext";
 import { useMobileModeStore } from "@/stores/useMobileModeStore";
+import { HEADER_HEIGHT } from "@/constants/common";
 
 const LayoutHeaderNormal = () => {
  
@@ -70,7 +71,7 @@ const LayoutHeaderNormal = () => {
   }, [isTransparentMode]);
 
   // 헤더 높이 (158px)를 기준으로 스크롤 진행도 계산 (0~1)
-  const HEADER_HEIGHT = 158;
+  
   const scrollProgress = isTransparentMode
     ? Math.min(scrollPosition / HEADER_HEIGHT, 1)
     : 1;

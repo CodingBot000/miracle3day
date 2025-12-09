@@ -1,6 +1,6 @@
 import { q } from "@/lib/db";
 import { TABLE_SURGERY_CARE_PROTOCOLS } from "@/constants/tables";
-import type { SurgeryCategory } from "@/app/models/surgeryData.dto";
+import type { SurgeryCategory } from "@/models/surgeryData.dto";
 
 export const dynamic = "force-dynamic";
 

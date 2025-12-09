@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import { useLocale } from "next-intl";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import Cookies from "js-cookie";
+import { introModal } from "./pre_consultation_intake/form-definition_pre_con_base";
+import { getLocalizedText } from "@/utils/i18n";
 
 const INTRO_COOKIE_KEY = "pre_consultation_intro_hidden";
 
@@ -41,20 +43,16 @@ export default function PreConsultationIntakeFormPage() {
           <div className="flex flex-col space-y-4">
             <div className="p-3 text-sm text-blue-800 rounded-lg bg-blue-50" role="alert">
               <span className="font-medium">
-                {locale === 'ko' ? "안내 사항" : "Introductory Message"}
+                {getLocalizedText(introModal.pg1, locale)}
               </span>
             </div>
             <div className="text-gray-700">
               <p className="mb-4 whitespace-pre-line text-sm">
-                {locale === 'ko'
-                  ? "본 사전 문진은 원활한 화상상담 예약을 위해 필요한 기본 정보를 확인하는 절차입니다.\n화상상담은 신청일 기준 약 1주일 후부터 가능하며,\n문진 마지막 단계에서 상담 가능한 날짜와 시간을 선택하실 수 있습니다."
-                  : "This pre-consultation questionnaire helps us collect the essential information needed to schedule your video consultation.\nVideo consultations are available approximately one week after your request.\nAt the final step, you will be able to select your preferred consultation dates and times."}
+                {getLocalizedText(introModal.pg2, locale)}
               </p>
-              
+
               <p className="text-sm">
-                {locale === 'ko'
-                  ? "문진 작성을 완료한 후, 화상 상담 일정을 예약하실 수 있습니다. 감사합니다!"
-                  : "After completing the intake form, you can schedule your video consultation. Thank you!"}
+                {getLocalizedText(introModal.pg3, locale)}
               </p>
 
             </div>
@@ -68,13 +66,11 @@ export default function PreConsultationIntakeFormPage() {
                 className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
               />
               <span className="text-sm text-gray-600">
-                {locale === 'ko' ? "다시 보지 않기" : "Don't show again"}
+                {getLocalizedText(introModal.pg4, locale)}
               </span>
             </label>
               <label className="text-sm text-gray-400">
-                {locale === 'ko'
-                  ? "안내문의 주요 사항에 변경이 있을 경우 다시 보여질 수 있습니다."
-                  : "This notice may be shown again if any key information is updated."}
+                {getLocalizedText(introModal.pg5, locale)}
               </label>
 
             {/* 확인 버튼 */}
@@ -82,7 +78,7 @@ export default function PreConsultationIntakeFormPage() {
               onClick={handleConfirm}
               className="w-full py-3 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium"
             >
-              {locale === 'ko' ? "확인" : "Confirm"}
+              {getLocalizedText(introModal.pg6, locale)}
             </button>
           </div>
         </DialogContent>

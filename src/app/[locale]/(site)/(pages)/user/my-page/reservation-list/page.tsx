@@ -3,10 +3,35 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
-import { ChevronLeft, Calendar, MapPin, Video, CheckCircle, XCircle, Hourglass, PlayCircle, RefreshCw, AlertCircle, UserX } from "lucide-react";
+import { ChevronLeft, Calendar, MapPin, Video, CheckCircle, XCircle, Hourglass, PlayCircle, RefreshCw, AlertCircle, UserX, ExternalLink, Ban, MessageSquare } from "lucide-react";
 import Link from "next/link";
 import LottieLoading from "@/components/atoms/LottieLoading";
-import { VideoReservationStatus } from "@/constants/reservation";
+import { VideoReservationStatus, VideoConsultTimeSlot } from "@/models/videoConsultReservation.dto";
+import { HospitalProposalModal } from "./components/HospitalProposalModal";
+import { CancellationModal } from "./components/CancellationModal";
+
+// Import locale files
+import enTranslations from '@/locales/en/reservation.json';
+import koTranslations from '@/locales/ko/reservation.json';
+import jaTranslations from '@/locales/ja/reservation.json';
+import zhCNTranslations from '@/locales/zh-CN/reservation.json';
+import zhTWTranslations from '@/locales/zh-TW/reservation.json';
+
+// Map locale to translations
+const getTranslations = (locale: string) => {
+  switch (locale) {
+    case 'ko':
+      return koTranslations;
+    case 'ja':
+      return jaTranslations;
+    case 'zh-CN':
+      return zhCNTranslations;
+    case 'zh-TW':
+      return zhTWTranslations;
+    default:
+      return enTranslations;
+  }
+};
 
 interface RequestedSlot {
   rank: number;
@@ -26,47 +51,50 @@ interface Reservation_Video_Consult {
   hospital_name: string | null;
   hospital_name_en: string | null;
   submission_type: string | null;
+  // Daily.co
+  meeting_room_id?: string | null;
+  // Zoom
+  zoom_join_url?: string | null;
+  // Hospital proposed slots (for needs_change status)
+  hospital_proposed_slots?: VideoConsultTimeSlot[] | null;
 }
 
+// Status config - colors and icons only (labels come from locale files)
 const STATUS_CONFIG: Record<VideoReservationStatus, {
-  label: { en: string; ko: string };
   color: string;
   icon: typeof Hourglass;
 }> = {
   requested: {
-    label: { en: 'Pending', ko: '대기중' },
     color: 'bg-yellow-100 text-yellow-800',
     icon: Hourglass,
   },
   approved: {
-    label: { en: 'Approved', ko: '승인됨' },
     color: 'bg-green-100 text-green-800',
     icon: CheckCircle,
   },
   rejected: {
-    label: { en: 'Rejected', ko: '거부됨' },
     color: 'bg-red-100 text-red-800',
     icon: XCircle,
   },
   needs_change: {
-    label: { en: 'Change Requested', ko: '변경요청' },
     color: 'bg-orange-100 text-orange-800',
     icon: AlertCircle,
   },
   rescheduled: {
-    label: { en: 'Rescheduled', ko: '재요청됨' },
     color: 'bg-purple-100 text-purple-800',
     icon: RefreshCw,
   },
   completed: {
-    label: { en: 'Completed', ko: '완료' },
     color: 'bg-blue-100 text-blue-800',
     icon: CheckCircle,
   },
   no_show: {
-    label: { en: 'No Show', ko: '노쇼' },
     color: 'bg-gray-100 text-gray-800',
     icon: UserX,
+  },
+  cancelled: {
+    color: 'bg-gray-200 text-gray-700',
+    icon: Ban,
   },
 };
 
@@ -77,43 +105,63 @@ export default function ReservationListPage() {
   const router = useRouter();
   const locale = useLocale();
 
-  useEffect(() => {
-    const fetchReservations = async () => {
-      try {
-        const response = await fetch("/api/consult/video/reservations");
-        const data = await response.json();
+  // Modal states
+  const [proposalModalOpen, setProposalModalOpen] = useState(false);
+  const [cancelModalOpen, setCancelModalOpen] = useState(false);
+  const [selectedReservation, setSelectedReservation] = useState<Reservation_Video_Consult | null>(null);
 
-        if (!response.ok) {
-          if (response.status === 401) {
-            router.push("/login?redirect=/user/my-page/reservation-list");
-            return;
-          }
-          throw new Error(data.error || 'Failed to fetch reservations');
+  // Get translations from locale files
+  const t = getTranslations(locale);
+
+  const fetchReservations = async () => {
+    try {
+      const response = await fetch("/api/consult/video/reservations");
+      const data = await response.json();
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          router.push("/login?redirect=/user/my-page/reservation-list");
+          return;
         }
-
-        setReservations(data.reservations || []);
-      } catch (err: any) {
-        console.error("[ReservationListPage] Error:", err);
-        setError(err.message);
-      } finally {
-        setIsLoading(false);
+        throw new Error(data.error || 'Failed to fetch reservations');
       }
-    };
 
+      setReservations(data.reservations || []);
+    } catch (err: any) {
+      console.error("[ReservationListPage] Error:", err);
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchReservations();
   }, [router]);
+
+  const handleRefresh = () => {
+    setIsLoading(true);
+    fetchReservations();
+  };
 
   const formatDateTime = (isoString: string, timezone: string) => {
     try {
       const date = new Date(isoString);
-      return new Intl.DateTimeFormat(locale === 'ko' ? 'ko-KR' : 'en-US', {
+      const localeMap: Record<string, string> = {
+        en: 'en-US',
+        ko: 'ko-KR',
+        ja: 'ja-JP',
+        'zh-CN': 'zh-CN',
+        'zh-TW': 'zh-TW',
+      };
+      return new Intl.DateTimeFormat(localeMap[locale] || 'en-US', {
         timeZone: timezone,
         year: 'numeric',
         month: 'short',
         day: 'numeric',
         hour: '2-digit',
         minute: '2-digit',
-        hour12: locale !== 'ko',
+        hour12: locale !== 'ko' && locale !== 'ja',
       }).format(date);
     } catch {
       return isoString;
@@ -123,7 +171,14 @@ export default function ReservationListPage() {
   const formatDate = (isoString: string) => {
     try {
       const date = new Date(isoString);
-      return new Intl.DateTimeFormat(locale === 'ko' ? 'ko-KR' : 'en-US', {
+      const localeMap: Record<string, string> = {
+        en: 'en-US',
+        ko: 'ko-KR',
+        ja: 'ja-JP',
+        'zh-CN': 'zh-CN',
+        'zh-TW': 'zh-TW',
+      };
+      return new Intl.DateTimeFormat(localeMap[locale] || 'en-US', {
         year: 'numeric',
         month: 'short',
         day: 'numeric',
@@ -138,6 +193,16 @@ export default function ReservationListPage() {
       return reservation.hospital_name;
     }
     return reservation.hospital_name_en || reservation.hospital_name || 'Hospital not specified';
+  };
+
+  const handleRespondToProposal = (reservation: Reservation_Video_Consult) => {
+    setSelectedReservation(reservation);
+    setProposalModalOpen(true);
+  };
+
+  const handleCancelReservation = (reservation: Reservation_Video_Consult) => {
+    setSelectedReservation(reservation);
+    setCancelModalOpen(true);
   };
 
   if (isLoading) {
@@ -160,7 +225,7 @@ export default function ReservationListPage() {
             <ChevronLeft className="w-6 h-6" />
           </button>
           <h1 className="text-lg font-bold ml-2">
-            Video Consultation Reservations
+            {t.reservationList.title}
           </h1>
         </div>
 
@@ -178,9 +243,9 @@ export default function ReservationListPage() {
           {reservations.length === 0 ? (
             <div className="text-center py-12 text-gray-500">
               <Video className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-              <p>No reservations yet</p>
+              <p>{t.reservationList.noReservations}</p>
               <p className="text-sm mt-2">
-                Book a video consultation from the hospital detail page
+                {t.reservationList.bookHint}
               </p>
             </div>
           ) : (
@@ -188,6 +253,11 @@ export default function ReservationListPage() {
               {reservations.map((reservation) => {
                 const statusConfig = STATUS_CONFIG[reservation.status] || STATUS_CONFIG.requested;
                 const StatusIcon = statusConfig.icon;
+                const statusLabel = t.status[reservation.status as keyof typeof t.status] || reservation.status;
+
+                // Check if actions are allowed
+                const canCancel = reservation.status !== 'completed' && reservation.status !== 'cancelled' && reservation.status !== 'rejected';
+                const needsResponse = reservation.status === 'needs_change';
 
                 return (
                   <div
@@ -204,14 +274,24 @@ export default function ReservationListPage() {
                       </div>
                       <span className={`px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${statusConfig.color}`}>
                         <StatusIcon className="w-3 h-3" />
-                        {statusConfig.label[locale as 'en' | 'ko'] || statusConfig.label.en}
+                        {statusLabel}
                       </span>
                     </div>
+
+                    {/* Needs Change Alert */}
+                    {needsResponse && (
+                      <div className="mb-3 p-3 bg-orange-50 border border-orange-200 rounded-lg flex items-start gap-2">
+                        <MessageSquare className="w-5 h-5 text-orange-600 flex-shrink-0 mt-0.5" />
+                        <div className="text-sm text-orange-800">
+                          {t.reservationList.needsChangeAlert}
+                        </div>
+                      </div>
+                    )}
 
                     {/* Requested Slots */}
                     <div className="mb-3">
                       <p className="text-sm text-gray-600 mb-2">
-                        Requested Times:
+                        {t.reservationList.requestedTimes}:
                       </p>
                       <div className="space-y-1">
                         {reservation.requested_slots?.map((slot, index) => (
@@ -229,7 +309,7 @@ export default function ReservationListPage() {
                     {/* Meta Info */}
                     <div className="flex items-center justify-between text-xs text-gray-500 pt-3 border-t">
                       <span>
-                        Requested: {formatDate(reservation.created_at)}
+                        {t.reservationList.createdAt}: {formatDate(reservation.created_at)}
                       </span>
                       <span className="flex items-center gap-1">
                         <MapPin className="w-3 h-3" />
@@ -239,22 +319,62 @@ export default function ReservationListPage() {
 
                     {/* Actions */}
                     <div className="mt-3 pt-3 border-t flex flex-wrap gap-2">
-                      {/* Join Video Consultation Button */}
-                      {reservation.status === 'approved' ? (
-                        <Link
-                          href={`/${locale}/mobile/consult-daily/${reservation.id_uuid}?role=patient`}
-                          className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium"
+                      {/* Respond to Proposal Button (needs_change status) */}
+                      {needsResponse && (
+                        <button
+                          onClick={() => handleRespondToProposal(reservation)}
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors text-sm font-medium"
                         >
-                          <PlayCircle className="w-4 h-4" />
-                          {locale === 'ko' ? '화상상담 입장' : 'Join Consultation'}
-                        </Link>
-                      ) : (
+                          <MessageSquare className="w-4 h-4" />
+                          {t.reservationList.respondToProposal}
+                        </button>
+                      )}
+
+                      {/* Join Video Consultation Buttons */}
+                      {reservation.status === 'approved' ? (
+                        <>
+                          {/* Daily.co 링크 */}
+                          {reservation.meeting_room_id && (
+                            <Link
+                              href={`/${locale}/mobile/consult-daily/${reservation.id_uuid}?role=patient`}
+                              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+                            >
+                              <PlayCircle className="w-4 h-4" />
+                              {t.reservationList.joinDailyco}
+                            </Link>
+                          )}
+
+                          {/* Zoom 링크 */}
+                          {reservation.zoom_join_url && (
+                            <a
+                              href={reservation.zoom_join_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium"
+                            >
+                              <ExternalLink className="w-4 h-4" />
+                              {t.reservationList.joinZoom}
+                            </a>
+                          )}
+
+                          {/* 둘 다 없을 경우 기본 버튼 */}
+                          {!reservation.meeting_room_id && !reservation.zoom_join_url && (
+                            <Link
+                              href={`/${locale}/mobile/consult-daily/${reservation.id_uuid}?role=patient`}
+                              className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium"
+                            >
+                              <PlayCircle className="w-4 h-4" />
+                              {t.reservationList.joinConsultation}
+                            </Link>
+                          )}
+                        </>
+                      ) : reservation.status !== 'needs_change' && (
                         <button
                           disabled
                           className="inline-flex items-center gap-2 px-4 py-2 bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed text-sm font-medium"
                         >
                           <PlayCircle className="w-4 h-4" />
-                          {locale === 'ko' ? '화상상담 입장' : 'Join Consultation'}
+                          {t.reservationList.joinConsultation}
                         </button>
                       )}
 
@@ -265,8 +385,19 @@ export default function ReservationListPage() {
                           className="inline-flex items-center gap-2 px-4 py-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition-colors text-sm font-medium"
                         >
                           <MapPin className="w-4 h-4" />
-                          View Hospital
+                          {t.reservationList.viewHospital}
                         </Link>
+                      )}
+
+                      {/* Cancel Button */}
+                      {canCancel && (
+                        <button
+                          onClick={() => handleCancelReservation(reservation)}
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors text-sm font-medium"
+                        >
+                          <Ban className="w-4 h-4" />
+                          {t.reservationList.cancelReservation}
+                        </button>
                       )}
                     </div>
                   </div>
@@ -276,6 +407,27 @@ export default function ReservationListPage() {
           )}
         </div>
       </div>
+
+      {/* Modals */}
+      {selectedReservation && (
+        <>
+          <HospitalProposalModal
+            open={proposalModalOpen}
+            onOpenChange={setProposalModalOpen}
+            reservation={selectedReservation}
+            locale={locale}
+            onSuccess={handleRefresh}
+          />
+
+          <CancellationModal
+            open={cancelModalOpen}
+            onOpenChange={setCancelModalOpen}
+            reservation={selectedReservation}
+            locale={locale}
+            onSuccess={handleRefresh}
+          />
+        </>
+      )}
     </div>
   );
 }

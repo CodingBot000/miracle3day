@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react';
-import { CommunityComment, Member } from '@/app/models/communityData.dto';
+import { CommunityComment, Member } from '@/models/communityData.dto';
 import CommentItem from './CommentItem';
 import { toast } from 'sonner';
 import { useTranslations } from 'next-intl';

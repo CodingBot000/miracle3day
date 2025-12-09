@@ -4,6 +4,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Card } from '@/components/ui/card';
 import { preConsultationSteps } from '@/app/[locale]/(consult)/pre_consultation_intake_form/pre_consultation_intake/form-definition_pre_con_steps';
 import { questions } from '@/app/[locale]/(consult)/pre_consultation_intake_form/pre_consultation_intake/form-definition_pre_con_questions';
+import { previewReport } from '@/app/[locale]/(consult)/pre_consultation_intake_form/pre_consultation_intake/form-definition_pre_con_preview_result';
 import { getBudgetRangeById } from '@/app/[locale]/(consult)/recommend_estimate/estimate/datamapper';
 import { Button } from '@/components/ui/button';
 import { useLocale } from 'next-intl';
@@ -17,8 +18,7 @@ import { USER_INFO, BUDGET,
         TREATMENT_EXPERIENCE_BEFORE,
          TREATMENT_GOALS,
           UPLOAD_PHOTO,
-          VISIT_PATHS,
-          AGE_RANGE,
+      
           VIDEO_CONSULT_SCHEDULE
      } from '@/constants/pre_consult_steps';
 import SubmissionModal from './SubmissionModal';
@@ -32,11 +32,12 @@ interface PreviewReportProps {
   onOpenChange: (open: boolean) => void;
   showSendFormButton: boolean;
   formData: Record<string, any>;
+  returnUrl?: string;
   onSubmissionComplete?: (formData: Record<string, any>) => void;
 }
 
-const PreviewReport: React.FC<PreviewReportProps> = 
-({ open, onOpenChange, formData, showSendFormButton, onSubmissionComplete }) => 
+const PreviewReport: React.FC<PreviewReportProps> =
+({ open, onOpenChange, formData, showSendFormButton, returnUrl, onSubmissionComplete }) =>
   {
   const locale = useLocale();
   const router = useRouter();
@@ -180,7 +181,7 @@ const PreviewReport: React.FC<PreviewReportProps> =
       fbqTrack("Submit_diagnosis_click", { finalSubmit: "success" });
     } catch (error) {
       console.error('Submission error:', error);
-      alert(`Failed to submit consultation. Please try again. error:${error}`);
+      alert(`${getLocalizedText(previewReport.errorSubmitFailed, locale)}${error}`);
       setIsSubmissionModalOpen(false);
     } finally {
       setIsSubmitting(false);
@@ -203,15 +204,20 @@ const PreviewReport: React.FC<PreviewReportProps> =
       onSubmissionComplete(allStepData);
     }
 
-    // 병원 상세페이지로 리다이렉트
-    if (hospitalId) {
-      router.push(`/${locale}/hospital/${hospitalId}`);
+    // 리다이렉트 우선순위: returnUrl > hospitalId > 홈
+    // router.replace()를 사용해서 히스토리에서 문진 페이지를 제거
+    if (returnUrl) {
+      router.replace(returnUrl);
+    } else if (hospitalId) {
+      router.replace(`/${locale}/hospital/${hospitalId}`);
+    } else {
+      router.replace(`/${locale}`);
     }
   };
 
 
   const getStepSummary = (stepId: string, data: any) => {
-    if (!data) return 'Not yet entered';
+    if (!data) return getLocalizedText(previewReport.notYetEntered, locale);
 
     switch (stepId) {
         case UPLOAD_PHOTO:
@@ -220,15 +226,15 @@ const PreviewReport: React.FC<PreviewReportProps> =
           <div className="space-y-2">
             {uploadImage?.uploadedImage ? (
               <div>
-                <p><strong>Uploaded Image:</strong> {uploadImage.imageFileName || 'Unknown file'}</p>
-                <img 
-                  src={uploadImage.uploadedImage} 
-                  alt="Uploaded skin image" 
+                <p><strong>{getLocalizedText(previewReport.labels.uploadedImage, locale)}:</strong> {uploadImage.imageFileName || 'Unknown file'}</p>
+                <img
+                  src={uploadImage.uploadedImage}
+                  alt="Uploaded skin image"
                   className="max-w-xs max-h-48 rounded-lg border border-gray-200 mt-2"
                 />
               </div>
             ) : (
-              <p><strong>Image:</strong> No image uploaded</p>
+              <p><strong>{getLocalizedText(previewReport.labels.noImageUploaded, locale)}:</strong> {getLocalizedText(previewReport.labels.noImageUploadedValue, locale)}</p>
             )}
           </div>
         );
@@ -240,7 +246,7 @@ const PreviewReport: React.FC<PreviewReportProps> =
         ) || skinType;
         return (
           <div className="space-y-2">
-            <p><strong>Skin Type:</strong> {skinTypeLabel}</p>
+            <p><strong>{getLocalizedText(previewReport.labels.skinType, locale)}:</strong> {skinTypeLabel}</p>
           </div>
         );
 
@@ -254,10 +260,10 @@ const PreviewReport: React.FC<PreviewReportProps> =
         }).join(', ');
         return (
           <div className="space-y-2">
-            <p><strong>Skin Concerns:</strong> {skinConcernLabels}</p>
+            <p><strong>{getLocalizedText(previewReport.labels.skinConcerns, locale)}:</strong> {skinConcernLabels}</p>
             {skinConcerns?.moreConcerns && (
               <div className="mt-2 p-3 rounded-md">
-                <p><strong>Other Concerns:</strong></p>
+                <p><strong>{getLocalizedText(previewReport.labels.otherConcerns, locale)}:</strong></p>
                 <p className="text-gray-700 whitespace-pre-wrap">{skinConcerns.moreConcerns}</p>
               </div>
             )}
@@ -268,7 +274,7 @@ const PreviewReport: React.FC<PreviewReportProps> =
         const budgetRange = getBudgetRangeById(data.budget);
         return (
           <div className="space-y-2">
-            <p><strong>Budget Range:</strong> {budgetRange ? getLocalizedText(budgetRange.label, locale) : data.budget}</p>
+            <p><strong>{getLocalizedText(previewReport.labels.budgetRange, locale)}:</strong> {budgetRange ? getLocalizedText(budgetRange.label, locale) : data.budget}</p>
           </div>
         );
         case PREFERENCES:
@@ -281,10 +287,10 @@ const PreviewReport: React.FC<PreviewReportProps> =
         }).join(', ');
         return (
           <div className="space-y-2">
-            <p><strong>Treatment Areas:</strong> {treatmentAreaLabels}</p>
+            <p><strong>{getLocalizedText(previewReport.labels.treatmentAreas, locale)}:</strong> {treatmentAreaLabels}</p>
             {treatmentAreas?.otherAreas && (
               <div className="mt-2 p-3 rounded-md">
-                <p><strong>Other Treatment Areas:</strong></p>
+                <p><strong>{getLocalizedText(previewReport.labels.otherTreatmentAreas, locale)}:</strong></p>
                 <p className="text-gray-700 whitespace-pre-wrap">{treatmentAreas.otherAreas}</p>
               </div>
             )}
@@ -300,7 +306,7 @@ const PreviewReport: React.FC<PreviewReportProps> =
         }).join(' > ');
         return (
           <div className="space-y-2">
-            <p><strong>Priority Order:</strong> {priorityLabels}</p>
+            <p><strong>{getLocalizedText(previewReport.labels.priorityOrder, locale)}:</strong> {priorityLabels}</p>
           </div>
         );
       case TREATMENT_GOALS:
@@ -312,8 +318,8 @@ const PreviewReport: React.FC<PreviewReportProps> =
         }).join(', ');
         return (
           <div className="space-y-2">
-            <p><strong>Treatment Goals:</strong> {treatmentGoalLabels}</p>
-            
+            <p><strong>{getLocalizedText(previewReport.labels.treatmentGoals, locale)}:</strong> {treatmentGoalLabels}</p>
+
           </div>
         );
       case TREATMENT_EXPERIENCE_BEFORE:
@@ -326,15 +332,15 @@ const PreviewReport: React.FC<PreviewReportProps> =
         }).join(', ');
         return (
           <div className="space-y-2">
-            <p><strong>Previous Treatments:</strong> {pastTreatmentLabels}</p>
+            <p><strong>{getLocalizedText(previewReport.labels.previousTreatments, locale)}:</strong> {pastTreatmentLabels}</p>
             {pastTreatments?.sideEffects && (
               <div className="mt-2 p-3 rounded-md">
-                <p><strong>Treatment Side Effects:</strong></p>
+                <p><strong>{getLocalizedText(previewReport.labels.treatmentSideEffects, locale)}:</strong></p>
                 <p className="text-gray-700 whitespace-pre-wrap">{pastTreatments.sideEffects}</p>
               </div>
             )}
             {pastTreatments?.additionalNotes && (
-              <p><strong>Additional Notes:</strong> {pastTreatments.additionalNotes}</p>
+              <p><strong>{getLocalizedText(previewReport.labels.additionalNotes, locale)}:</strong> {pastTreatments.additionalNotes}</p>
             )}
           </div>
         );
@@ -349,10 +355,10 @@ const PreviewReport: React.FC<PreviewReportProps> =
         }).join(', ');
         return (
           <div className="space-y-2">
-            <p><strong>Health Conditions:</strong> {healthConditionLabels}</p>
+            <p><strong>{getLocalizedText(previewReport.labels.healthConditions, locale)}:</strong> {healthConditionLabels}</p>
             {healthConditions?.otherConditions && !healthConditions.healthConditions?.includes('none') && (
               <div className="mt-2 p-3 rounded-md">
-                <p><strong>Other Health Conditions:</strong></p>
+                <p><strong>{getLocalizedText(previewReport.labels.otherHealthConditions, locale)}:</strong></p>
                 <p className="text-gray-700 whitespace-pre-wrap">{healthConditions.otherConditions}</p>
               </div>
             )}
@@ -378,28 +384,28 @@ const PreviewReport: React.FC<PreviewReportProps> =
         const videoConsultSlots = data.videoConsultSlots;
         const userTimezone = data.videoConsultTimezone;
         if (!videoConsultSlots || videoConsultSlots.length === 0) {
-          return <p>No preferred time slots selected</p>;
+          return <p>{getLocalizedText(previewReport.labels.noPreferredTimeSlotsSelected, locale)}</p>;
         }
         return (
           <div className="space-y-3">
             <p className="font-semibold">
-              {locale === 'ko' ? '희망 상담 시간' : 'Preferred Consultation Times'}
+              {getLocalizedText(previewReport.labels.preferredConsultationTimes, locale)}
             </p>
             {videoConsultSlots.map((slot: any, index: number) => (
               <div key={index} className="p-3 bg-gray-50 rounded-md">
                 <p className="font-medium">
-                  {locale === 'ko' ? `희망 시간 ${slot.rank}` : `Preferred Time ${slot.rank}`}
+                  {getLocalizedText(previewReport.labels.preferredTimeSlot, locale)} {slot.rank}
                 </p>
                 <p className="text-sm text-gray-700">
-                  <strong>{locale === 'ko' ? '날짜' : 'Date'}:</strong> {slot.date}
+                  <strong>{getLocalizedText(previewReport.labels.date, locale)}:</strong> {slot.date}
                 </p>
                 <p className="text-sm text-gray-700">
-                  <strong>{locale === 'ko' ? '시간' : 'Time'}:</strong> {slot.startTime} - {slot.endTime}
+                  <strong>{getLocalizedText(previewReport.labels.time, locale)}:</strong> {slot.startTime} - {slot.endTime}
                 </p>
               </div>
             ))}
             <p className="text-xs text-gray-500">
-              {locale === 'ko' ? '시간대' : 'Timezone'}: {userTimezone}
+              {getLocalizedText(previewReport.labels.timezone, locale)}: {userTimezone}
             </p>
           </div>
         );
@@ -407,20 +413,20 @@ const PreviewReport: React.FC<PreviewReportProps> =
       case USER_INFO:
         const userInfo = data.userInfo;
         if (!userInfo) {
-          return <p>No personal information provided</p>;
+          return <p>{getLocalizedText(previewReport.labels.noPersonalInfoProvided, locale)}</p>;
         }
         return (
           <div className="space-y-2">
             {/* <p><strong>First Name:</strong> {userInfo.firstName}</p>
             <p><strong>Last Name:</strong> {userInfo.lastName}</p> */}
-            <p><strong>Age Range:</strong> {userInfo.ageRange}</p>
-            <p><strong>Gender:</strong> {userInfo.gender}</p>
-            <p><strong>Email:</strong> {userInfo.email}</p>
-            <p><strong>Nation</strong> {userInfo.country}</p>
-            <p><strong>Phone Number</strong> {userInfo.phoneNumber}</p>
+            <p><strong>{getLocalizedText(previewReport.labels.ageRange, locale)}:</strong> {userInfo.ageRange}</p>
+            <p><strong>{getLocalizedText(previewReport.labels.gender, locale)}:</strong> {userInfo.gender}</p>
+            <p><strong>{getLocalizedText(previewReport.labels.email, locale)}:</strong> {userInfo.email}</p>
+            <p><strong>{getLocalizedText(previewReport.labels.nation, locale)}:</strong> {userInfo.country}</p>
+            <p><strong>{getLocalizedText(previewReport.labels.phoneNumber, locale)}:</strong> {userInfo.phoneNumber}</p>
              {userInfo.messengers && userInfo.messengers.length > 0 && (
               <div>
-                <p><strong>Messengers:</strong></p>
+                <p><strong>{getLocalizedText(previewReport.labels.messengers, locale)}:</strong></p>
                 {userInfo.messengers.map((messenger: MessengerInput, index: number) => (
                   <p key={index} className="ml-4">• {messenger.type}: {messenger.value}</p>
                 ))}
@@ -430,7 +436,7 @@ const PreviewReport: React.FC<PreviewReportProps> =
         );
     
       default:
-        return 'No data available';
+        return getLocalizedText(previewReport.noDataAvailable, locale);
     }
   };
 
@@ -472,18 +478,18 @@ const PreviewReport: React.FC<PreviewReportProps> =
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-center mb-4">
-            Preview Your Reservation Request
+          <DialogTitle className="text-xl md:text-2xl font-bold text-center mb-4">
+            {getLocalizedText(previewReport.dialogTitle, locale)}
           </DialogTitle>
         </DialogHeader>
         <ScrollArea className="max-h-[70vh]">
-          <div className="space-y-6 p-4">
+          <div className="space-y-3 p-2">
             {preConsultationSteps.map((step) => (
-              <Card key={step.id} className="p-4">
-                <h3 className="text-lg font-medium text-gray-900 mb-3">
+              <Card key={step.id} className="p-1">
+                <h3 className="text-base md:text-lg font-medium text-gray-900 mb-2">
                   {getLocalizedText(step.title, locale)}
                 </h3>
-                <div className="text-gray-600">
+                <div className="text-sm md:text-base text-gray-600">
                   {getStepSummary(step.id, formData[step.id])}
                 </div>
               </Card>
@@ -492,12 +498,12 @@ const PreviewReport: React.FC<PreviewReportProps> =
         </ScrollArea>
         
         <div className="flex justify-end mt-4">
-          <Button 
+          <Button
             onClick={handleSubmit}
             disabled={!showSendFormButton}
             className="bg-gradient-to-r from-rose-400 to-pink-500 hover:from-rose-500 hover:to-pink-600 text-white"
           >
-            Send Form
+            {getLocalizedText(previewReport.submitButton, locale)}
           </Button>
         </div>
         

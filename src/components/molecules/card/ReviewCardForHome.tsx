@@ -1,6 +1,6 @@
 'use client';
 
-import { ReviewDataFromGoogleMap } from '@/app/models/reviewData.dto';
+import { ReviewDataFromGoogleMap } from '@/models/reviewData.dto';
 import Stars from '@/components/atoms/Stars';
 import { maskName } from '@/lib/utils';
 

@@ -7,6 +7,34 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Admin 페이지 보안 헤더
+const adminSecurityHeaders = [
+  {
+    key: 'X-Frame-Options',
+    value: 'DENY',
+  },
+  {
+    key: 'X-Content-Type-Options',
+    value: 'nosniff',
+  },
+  {
+    key: 'Referrer-Policy',
+    value: 'no-referrer',
+  },
+  {
+    key: 'Permissions-Policy',
+    value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()',
+  },
+  {
+    key: 'X-DNS-Prefetch-Control',
+    value: 'off',
+  },
+  {
+    key: 'Strict-Transport-Security',
+    value: 'max-age=63072000; includeSubDomains; preload',
+  },
+];
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 //   Supabase 시절 배경)
@@ -61,6 +89,16 @@ const nextConfig = {
               "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
           },
         ],
+      },
+      {
+        // Admin 페이지 보안 헤더
+        source: '/admin/:path*',
+        headers: adminSecurityHeaders,
+      },
+      {
+        // Admin API 보안 헤더
+        source: '/api/admin/:path*',
+        headers: adminSecurityHeaders,
       },
     ];
   },

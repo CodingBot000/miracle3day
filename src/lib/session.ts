@@ -1,5 +1,5 @@
 import { SessionOptions } from "iron-session";
-import { AuthOnlyDto } from "@/app/models/auth-only.dto";
+import { AuthOnlyDto } from "@/models/auth-only.dto";
 
 export const sessionOptions: SessionOptions = {
   password: process.env.SESSION_PASSWORD!,

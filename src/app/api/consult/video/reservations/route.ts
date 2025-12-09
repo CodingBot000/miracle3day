@@ -198,6 +198,8 @@ export async function GET() {
         cvr.status,
         cvr.status_changed_at,
         cvr.created_at,
+        cvr.meeting_room_id,
+        cvr.zoom_join_url,
         h.name,
         h.name_en,
         cs.submission_type

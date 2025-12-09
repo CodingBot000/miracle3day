@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Label } from '@/components/ui/label';
-import { CountryCode } from '@/app/models/country-code.dto';
+import { CountryCode } from '@/models/country-code.dto';
 import { NationModal } from '@/components/template/modal/nations';
 // import { demographicsBasicData } from '../../estimate/demographics-data';
 import { getLocalizedText } from '@/utils/i18n';

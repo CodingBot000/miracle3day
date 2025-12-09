@@ -1,6 +1,6 @@
-import { EventDetailData } from "@/app/models/eventDetailData.dto";
-import { HospitalData } from "@/app/models/hospitalData.dto";
-import { SurgeryInfo } from "@/app/models/surgeryInfo.dto";
+import { EventDetailData } from "@/models/eventDetailData.dto";
+import { HospitalData } from "@/models/hospitalData.dto";
+import { SurgeryInfo } from "@/models/surgeryInfo.dto";
 import {
   InfinityScrollInputDto,
   InfinityScrollOutputDto,

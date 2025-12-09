@@ -9,7 +9,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { country } from '@/constants/country';
 import CountrySelectModal from '@/components/template/modal/CountrySelectModal';
-import { CountryCode } from '@/app/models/country-code.dto';
+import { CountryCode } from '@/models/country-code.dto';
 import { useReservationStore } from '@/stores/useReservationStore';
 import { UserOutputDto } from '@/app/api/auth/getUser/getUser.dto';
 import { HospitalDetailMainOutput } from '@/app/api/hospital/[id]/main/main.dto';

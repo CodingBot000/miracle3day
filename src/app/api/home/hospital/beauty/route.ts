@@ -3,7 +3,7 @@ export const runtime = 'nodejs';
 
 import { TABLE_HOSPITAL } from "@/constants/tables";
 import { q } from "@/lib/db";
-import type { HospitalData } from "@/app/models/hospitalData.dto";
+import type { HospitalData } from "@/models/hospitalData.dto";
 
 // Fisher-Yates shuffle algorithm for randomizing array order
 function shuffleArray<T>(array: T[]): T[] {

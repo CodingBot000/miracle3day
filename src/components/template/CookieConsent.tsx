@@ -56,9 +56,9 @@ export default function CookieConsent() {
     ko: {
       message: (
         <>
-          이 웹사이트는 서비스 제공과 사용자 경험 향상을 위해 쿠키를 사용합니다. <br />
-          필수 쿠키는 항상 활성화되며, 분석 및 마케팅 쿠키는 귀하의 동의가 필요합니다. <br />
-          계속 이용 시 쿠키 사용에 동의하는 것으로 간주됩니다. <br />
+          이 웹사이트는 서비스 제공과 사용자 경험 향상을 위해 쿠키를 사용합니다. 
+          필수 쿠키는 항상 활성화되며, 분석 및 마케팅 쿠키는 귀하의 동의가 필요합니다. 
+          계속 이용 시 쿠키 사용에 동의하는 것으로 간주됩니다. 
           자세한 내용은{' '}
           <Link
             href="/legal/cookie-policy"
@@ -75,9 +75,9 @@ export default function CookieConsent() {
     en: {
       message: (
         <>
-          This website uses cookies to provide essential functionality and enhance your experience. <br />
-          Essential cookies are always active, while analytics and marketing cookies require your consent. <br />
-          By continuing to use the site, you agree to our cookie usage. <br />
+          This website uses cookies to provide essential functionality and enhance your experience. 
+          Essential cookies are always active, while analytics and marketing cookies require your consent. 
+          By continuing to use the site, you agree to our cookie usage. 
           For more details, see our{' '}
           <Link
             href="/legal/cookie-policy"
@@ -97,23 +97,23 @@ export default function CookieConsent() {
 
   return (
     <div
-      className="fixed bottom-20 right-6 z-50 max-w-sm w-[90%] sm:w-80 bg-white border border-gray-200 shadow-lg rounded-xl p-4 text-sm text-gray-800 animate-fadeIn"
+      className="fixed bottom-20 left-4 right-4 sm:left-auto sm:right-6 z-50 sm:max-w-sm bg-white border border-gray-200 shadow-lg rounded-xl p-3 sm:p-4 text-xs sm:text-sm text-gray-800 animate-fadeIn"
       role="dialog"
       aria-live="polite"
     >
-      <div className="mb-3 leading-relaxed">{text[currentLocale].message}</div>
+      <div className="mb-2 sm:mb-3 leading-relaxed text-xs sm:text-sm">{text[currentLocale].message}</div>
 
-      <div className="flex flex-wrap gap-2 justify-end">
+      <div className="flex flex-wrap gap-1.5 sm:gap-2 justify-end">
         <button
           onClick={rejectCookies}
-          className="px-3 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md"
+          className="px-2 py-1.5 sm:px-3 sm:py-2 text-xs sm:text-sm text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md"
           aria-label={text[currentLocale].reject}
         >
           {text[currentLocale].reject}
         </button>
         <button
           onClick={acceptAllCookies}
-          className="px-3 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-md"
+          className="px-2 py-1.5 sm:px-3 sm:py-2 text-xs sm:text-sm text-white bg-blue-600 hover:bg-blue-700 rounded-md"
           aria-label={text[currentLocale].accept}
         >
           {text[currentLocale].accept}

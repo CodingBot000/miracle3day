@@ -1,6 +1,6 @@
 import { fetchUtils } from "@/utils/fetch";
 import { LocationEnum } from "@/constants";
-import { HospitalByLocationInputDto, HospitalOutputDto,  } from "@/app/models/hospitalData.dto";
+import { HospitalByLocationInputDto, HospitalOutputDto,  } from "@/models/hospitalData.dto";
 
 export const getHospitalLocationAPI = async ({
   locationNum = LocationEnum.Apgujung,

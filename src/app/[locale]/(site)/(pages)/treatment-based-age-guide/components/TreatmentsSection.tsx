@@ -3,7 +3,8 @@ import Image from "next/image";
 
 import { Treatment } from '@/constants/treatment/antiaging-agebased';
 import { useLocale } from 'next-intl';
-import { krwToUsd } from '@/app/[locale]/(consult)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/utils/helpers';
+import { krwToUsdSync } from '@/utils/exchangeRate/converter-client';
+
 
 interface TreatmentsSectionProps {
   title: string;
@@ -79,8 +80,8 @@ function formatTreatmentCost(treatment: Treatment, language: string): string | n
   }
 
   // USD conversion for non-Korean languages
-  const fromUsd = krwToUsd(costFrom);
-  const toUsd = typeof costTo === 'number' ? krwToUsd(costTo) : null;
+  const fromUsd = krwToUsdSync(costFrom);
+  const toUsd = typeof costTo === 'number' ? krwToUsdSync(costTo) : null;
 
   const fromStr = fromUsd.toLocaleString('en-US', {
     style: 'currency',

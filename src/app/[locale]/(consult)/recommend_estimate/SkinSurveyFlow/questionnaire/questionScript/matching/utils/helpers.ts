@@ -1,7 +1,7 @@
 import { TreatmentKey, Candidate, AreaId, RecommendedItem } from '@/app/[locale]/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/types';
 import { META } from '@/app/[locale]/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/constants/treatmentMeta';
 import { PRICE_TABLE } from '@/app/[locale]/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching/constants/prices';
-import { getCurrentExchangeRate } from '@/utils/exchangeRateManager';
+import { getCurrentExchangeRate, krwToUsdSync } from '@/utils/exchangeRate/converter-client';
 
 /**
  * 동적 환율 가져오기
@@ -11,8 +11,7 @@ export const getKRWToUSD = (): number => getCurrentExchangeRate();
 /**
  * KRW를 USD로 변환
  */
-export const krwToUsd = (krw: number) => Math.round(krw * getKRWToUSD());
-
+export const krwToUsd = (krw: number) => krwToUsdSync(krw);
 /**
  * 레이저 시술 여부
  */
@@ -94,20 +93,10 @@ export function toRecommendedItems(cands: Candidate[]): RecommendedItem[] {
       key: c.key,
       label: META[c.key].label,
       priceKRW: krw,
-      priceUSD: krwToUsd(krw),
+      priceUSD: krwToUsdSync(krw),
       rationale: [c.why],
       ...(c.importance && { importance: c.importance }),
       ...(c.tier && { tier: c.tier }),
     } as any; // Type assertion to allow extra fields
   });
 }
-
-/**
- * USD 포맷
- */
-export const formatUSD = (usd: number) => `$${usd.toLocaleString("en-US")}`;
-
-/**
- * KRW 포맷
- */
-export const formatKRW = (krw: number) => `${krw.toLocaleString("ko-KR")}원`;

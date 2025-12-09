@@ -9,14 +9,12 @@
  *  - 출력 텍스트는 모두 영문, 주석은 한국어
  */
 
+import { getKRWToUSD, krwToUsdSync } from "@/utils/exchangeRate/converter";
+
 ///////////////////////////////
 // 상수/타입
 ///////////////////////////////
 
-import { getCurrentExchangeRate } from '@/utils/exchangeRateManager';
-
-// Dynamic exchange rate function - use this instead of constant
-export const getKRWToUSD = (): number => getCurrentExchangeRate();
 
 // 시술 키 (의뢰인이 제공한 목록 그대로 반영)
 export type TreatmentKey =
@@ -357,9 +355,6 @@ const inAreas = (t: TreatmentKey, selected: AreaId[]) => {
   return META[t].areas.some((a) => selected.includes(a));
 };
 
-const krwToUsd = (krw: number) => Math.round(krw * getKRWToUSD());
-const formatUSD = (usd: number) => `$${usd.toLocaleString("en-US")}`;
-const formatKRW = (krw: number) => `${krw.toLocaleString("ko-KR")}원`;
 
 ///////////////////////////////
 // 등가/대체 관계 목록
@@ -976,7 +971,7 @@ function toRecommendedItems(cands: Candidate[]): RecommendedItem[] {
       key: c.key,
       label: META[c.key].label,
       priceKRW: krw,
-      priceUSD: krwToUsd(krw),
+      priceUSD: krwToUsdSync(krw),
       rationale: [c.why],
     };
   });
@@ -1042,7 +1037,7 @@ export function recommendTreatments(input: RecommendInputs): RecommendationOutpu
   // 7) 결과 변환/합계
   const recommendations = toRecommendedItems(candidates);
   const totalPriceKRW = recommendations.reduce((acc, r) => acc + r.priceKRW, 0);
-  const totalPriceUSD = krwToUsd(totalPriceKRW);
+  const totalPriceUSD = krwToUsdSync(totalPriceKRW);
 
   // 8) 업셀/대안
   const upgradeSuggestions = buildUpgradeSuggestions(excluded, substitutions, priorityId, budgetUpper);

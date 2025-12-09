@@ -13,23 +13,55 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { AlertTriangle } from 'lucide-react';
-import { VideoReservationListItem } from '@/models/videoConsultReservation.dto';
+import { VideoReservationStatus } from '@/models/videoConsultReservation.dto';
+
+// Import locale files
+import enTranslations from '@/locales/en/reservation.json';
+import koTranslations from '@/locales/ko/reservation.json';
+import jaTranslations from '@/locales/ja/reservation.json';
+import zhCNTranslations from '@/locales/zh-CN/reservation.json';
+import zhTWTranslations from '@/locales/zh-TW/reservation.json';
+
+interface ReservationForModal {
+  id_uuid: string;
+  status: VideoReservationStatus;
+  hospital_name?: string | null;
+  hospital_name_en?: string | null;
+}
 
 interface CancellationModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  reservation: VideoReservationListItem;
-  translations: any; // Translation object from reservation.json
+  reservation: ReservationForModal;
+  locale: string;
   onSuccess: () => void;
 }
+
+// Map locale to translations
+const getTranslations = (locale: string) => {
+  switch (locale) {
+    case 'ko':
+      return koTranslations;
+    case 'ja':
+      return jaTranslations;
+    case 'zh-CN':
+      return zhCNTranslations;
+    case 'zh-TW':
+      return zhTWTranslations;
+    default:
+      return enTranslations;
+  }
+};
 
 export function CancellationModal({
   open,
   onOpenChange,
   reservation,
-  translations: t,
+  locale,
   onSuccess,
 }: CancellationModalProps) {
+  const t = getTranslations(locale);
+
   const [cancellationReason, setCancellationReason] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -38,6 +70,13 @@ export function CancellationModal({
   // Check if cancellation is allowed
   const canCancel = reservation.status !== 'completed' && reservation.status !== 'cancelled';
   const isApproved = reservation.status === 'approved';
+
+  const getHospitalName = () => {
+    if (locale === 'ko' && reservation.hospital_name) {
+      return reservation.hospital_name;
+    }
+    return reservation.hospital_name_en || reservation.hospital_name || '';
+  };
 
   const handleInitialSubmit = () => {
     if (!canCancel) {
@@ -77,7 +116,7 @@ export function CancellationModal({
       onSuccess();
     } catch (err) {
       setError(err instanceof Error ? err.message : t.cancellationModal.errorMessage);
-      setShowConfirm(false); // Go back to main form to show error
+      setShowConfirm(false);
     } finally {
       setIsLoading(false);
     }
@@ -141,9 +180,7 @@ export function CancellationModal({
             {isApproved && (
               <div className="flex items-start gap-2 bg-yellow-50 border border-yellow-200 p-3 rounded mt-2">
                 <AlertTriangle className="h-5 w-5 text-yellow-600 flex-shrink-0 mt-0.5" />
-                <span className="text-sm text-yellow-800">
-                  {t.cancellationModal.warningApproved}
-                </span>
+                <span className="text-sm text-yellow-800">{t.cancellationModal.warningApproved}</span>
               </div>
             )}
           </DialogDescription>
@@ -152,28 +189,19 @@ export function CancellationModal({
         <div className="space-y-4 py-4">
           {/* Reservation info summary */}
           <div className="bg-gray-50 p-4 rounded-lg text-sm space-y-2">
-            {reservation.hospital_name && (
+            {getHospitalName() && (
               <p>
-                <span className="font-semibold">{t.reservationList.hospitalName}:</span>{' '}
-                {reservation.hospital_name}
+                <span className="font-semibold">{t.reservationList.hospitalName}:</span> {getHospitalName()}
               </p>
             )}
             <p>
               <span className="font-semibold">{t.status[reservation.status as keyof typeof t.status] || reservation.status}</span>
             </p>
-            {reservation.confirmed_start_at && (
-              <p>
-                <span className="font-semibold">{t.reservationList.confirmedTime}:</span>{' '}
-                {new Date(reservation.confirmed_start_at).toLocaleString()}
-              </p>
-            )}
           </div>
 
           {/* Cancellation reason textarea */}
           <div className="space-y-2">
-            <Label htmlFor="cancellation-reason">
-              {t.cancellationModal.reasonLabel}
-            </Label>
+            <Label htmlFor="cancellation-reason">{t.cancellationModal.reasonLabel}</Label>
             <Textarea
               id="cancellation-reason"
               placeholder={t.cancellationModal.reasonPlaceholder}
@@ -183,14 +211,10 @@ export function CancellationModal({
               maxLength={500}
               className="resize-none"
             />
-            <p className="text-xs text-gray-500 text-right">
-              {cancellationReason.length} / 500
-            </p>
+            <p className="text-xs text-gray-500 text-right">{cancellationReason.length} / 500</p>
           </div>
 
-          {error && (
-            <div className="text-sm text-red-600 bg-red-50 p-3 rounded">{error}</div>
-          )}
+          {error && <div className="text-sm text-red-600 bg-red-50 p-3 rounded">{error}</div>}
         </div>
 
         <DialogFooter className="flex-col sm:flex-row gap-2">

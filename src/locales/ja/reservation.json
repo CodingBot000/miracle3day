@@ -56,8 +56,9 @@
     "loading": "キャンセル中..."
   },
   "reservationList": {
-    "title": "私のビデオカウンセリング",
-    "noReservations": "ビデオカウンセリングの予約がありません",
+    "title": "ビデオカウンセリング予約",
+    "noReservations": "予約がありません",
+    "bookHint": "病院詳細ページからビデオカウンセリングを予約してください",
     "loadingError": "予約の読み込みに失敗しました",
     "createdAt": "リクエスト日",
     "updatedAt": "最終更新",
@@ -70,9 +71,14 @@
     "respondToProposal": "提案に返信",
     "cancelReservation": "キャンセル",
     "joinMeeting": "ビデオ通話に参加",
+    "joinDailyco": "Daily.co参加",
+    "joinZoom": "Zoom参加",
+    "joinConsultation": "カウンセリング参加",
+    "viewHospital": "病院を見る",
     "meetingEnded": "ミーティング終了",
     "zoomMeeting": "Zoomミーティング",
-    "dailyMeeting": "Daily.coミーティング"
+    "dailyMeeting": "Daily.coミーティング",
+    "needsChangeAlert": "病院が代替時間を提案しました。返信してください。"
   },
   "actions": {
     "accept": "承認",

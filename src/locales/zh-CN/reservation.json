@@ -56,8 +56,9 @@
     "loading": "取消中..."
   },
   "reservationList": {
-    "title": "我的视频咨询",
-    "noReservations": "您没有视频咨询预约",
+    "title": "视频咨询预约",
+    "noReservations": "暂无预约",
+    "bookHint": "从医院详情页预约视频咨询",
     "loadingError": "加载预约失败",
     "createdAt": "请求日期",
     "updatedAt": "最后更新",
@@ -70,9 +71,14 @@
     "respondToProposal": "回应提案",
     "cancelReservation": "取消",
     "joinMeeting": "加入视频通话",
+    "joinDailyco": "加入 Daily.co",
+    "joinZoom": "加入 Zoom",
+    "joinConsultation": "加入咨询",
+    "viewHospital": "查看医院",
     "meetingEnded": "会议已结束",
     "zoomMeeting": "Zoom会议",
-    "dailyMeeting": "Daily.co会议"
+    "dailyMeeting": "Daily.co会议",
+    "needsChangeAlert": "医院提出了备选时间，请回复。"
   },
   "actions": {
     "accept": "接受",

@@ -56,10 +56,11 @@
     "loading": "Cancelling..."
   },
   "reservationList": {
-    "title": "My Video Consultations",
-    "noReservations": "You have no video consultation reservations",
+    "title": "Video Consultation Reservations",
+    "noReservations": "No reservations yet",
+    "bookHint": "Book a video consultation from the hospital detail page",
     "loadingError": "Failed to load reservations",
-    "createdAt": "Requested on",
+    "createdAt": "Requested",
     "updatedAt": "Last updated",
     "confirmedTime": "Confirmed Time",
     "requestedTimes": "Requested Times",
@@ -70,9 +71,14 @@
     "respondToProposal": "Respond to Proposal",
     "cancelReservation": "Cancel",
     "joinMeeting": "Join Video Call",
+    "joinDailyco": "Join (Daily.co)",
+    "joinZoom": "Join (Zoom)",
+    "joinConsultation": "Join Consultation",
+    "viewHospital": "View Hospital",
     "meetingEnded": "Meeting Ended",
     "zoomMeeting": "Zoom Meeting",
-    "dailyMeeting": "Daily.co Meeting"
+    "dailyMeeting": "Daily.co Meeting",
+    "needsChangeAlert": "The hospital has proposed alternative times. Please respond."
   },
   "actions": {
     "accept": "Accept",

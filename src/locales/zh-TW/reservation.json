@@ -56,8 +56,9 @@
     "loading": "取消中..."
   },
   "reservationList": {
-    "title": "我的視訊諮詢",
-    "noReservations": "您沒有視訊諮詢預約",
+    "title": "視訊諮詢預約",
+    "noReservations": "暫無預約",
+    "bookHint": "從醫院詳情頁預約視訊諮詢",
     "loadingError": "載入預約失敗",
     "createdAt": "請求日期",
     "updatedAt": "最後更新",
@@ -70,9 +71,14 @@
     "respondToProposal": "回應提案",
     "cancelReservation": "取消",
     "joinMeeting": "加入視訊通話",
+    "joinDailyco": "加入 Daily.co",
+    "joinZoom": "加入 Zoom",
+    "joinConsultation": "加入諮詢",
+    "viewHospital": "查看醫院",
     "meetingEnded": "會議已結束",
     "zoomMeeting": "Zoom會議",
-    "dailyMeeting": "Daily.co會議"
+    "dailyMeeting": "Daily.co會議",
+    "needsChangeAlert": "醫院提出了備選時間，請回覆。"
   },
   "actions": {
     "accept": "接受",

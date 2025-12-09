@@ -56,8 +56,9 @@
     "loading": "취소 중..."
   },
   "reservationList": {
-    "title": "내 화상 상담",
-    "noReservations": "화상 상담 예약이 없습니다",
+    "title": "화상상담 예약 목록",
+    "noReservations": "예약이 없습니다",
+    "bookHint": "병원 상세 페이지에서 화상상담을 예약하세요",
     "loadingError": "예약 목록을 불러오는데 실패했습니다",
     "createdAt": "요청일",
     "updatedAt": "최종 수정일",
@@ -70,9 +71,14 @@
     "respondToProposal": "제안에 응답",
     "cancelReservation": "취소",
     "joinMeeting": "화상 상담 입장",
+    "joinDailyco": "Daily.co 입장",
+    "joinZoom": "Zoom 입장",
+    "joinConsultation": "화상상담 입장",
+    "viewHospital": "병원 보기",
     "meetingEnded": "상담 종료",
     "zoomMeeting": "Zoom 미팅",
-    "dailyMeeting": "Daily.co 미팅"
+    "dailyMeeting": "Daily.co 미팅",
+    "needsChangeAlert": "병원에서 대체 시간을 제안했습니다. 응답해 주세요."
   },
   "actions": {
     "accept": "수락",

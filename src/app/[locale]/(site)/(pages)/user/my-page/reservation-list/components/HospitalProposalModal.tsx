@@ -12,33 +12,50 @@ import {
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
-import { VideoConsultTimeSlot, VideoReservationListItem } from '@/models/videoConsultReservation.dto';
-import { format } from 'date-fns';
-import { toZonedTime } from 'date-fns-tz';
-import { enUS, ko, ja, zhCN, zhTW } from 'date-fns/locale';
+import { VideoConsultTimeSlot } from '@/models/videoConsultReservation.dto';
+
+// Import locale files
+import enTranslations from '@/locales/en/reservation.json';
+import koTranslations from '@/locales/ko/reservation.json';
+import jaTranslations from '@/locales/ja/reservation.json';
+import zhCNTranslations from '@/locales/zh-CN/reservation.json';
+import zhTWTranslations from '@/locales/zh-TW/reservation.json';
+
+interface RequestedSlot {
+  rank: number;
+  start: string;
+  sourceTimezone: string;
+}
+
+interface ReservationForModal {
+  id_uuid: string;
+  requested_slots: RequestedSlot[];
+  user_timezone: string;
+  hospital_proposed_slots?: VideoConsultTimeSlot[] | null;
+  hospital_name?: string | null;
+}
 
 interface HospitalProposalModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  reservation: VideoReservationListItem;
+  reservation: ReservationForModal;
   locale: string;
-  translations: any; // Translation object from reservation.json
   onSuccess: () => void;
 }
 
-// Map locale to date-fns locale
-const getDateLocale = (locale: string) => {
+// Map locale to translations
+const getTranslations = (locale: string) => {
   switch (locale) {
     case 'ko':
-      return ko;
+      return koTranslations;
     case 'ja':
-      return ja;
+      return jaTranslations;
     case 'zh-CN':
-      return zhCN;
+      return zhCNTranslations;
     case 'zh-TW':
-      return zhTW;
+      return zhTWTranslations;
     default:
-      return enUS;
+      return enTranslations;
   }
 };
 
@@ -47,23 +64,38 @@ export function HospitalProposalModal({
   onOpenChange,
   reservation,
   locale,
-  translations: t,
   onSuccess,
 }: HospitalProposalModalProps) {
+  const t = getTranslations(locale);
+
   const [selectedRank, setSelectedRank] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [confirmAction, setConfirmAction] = useState<'accept' | 'reject' | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const dateLocale = getDateLocale(locale);
-
   // Format time slot for display
-  const formatTimeSlot = (slot: VideoConsultTimeSlot) => {
-    const startDate = toZonedTime(new Date(slot.start), slot.sourceTimezone);
-    const dateStr = format(startDate, 'PPP', { locale: dateLocale });
-    const timeStr = format(startDate, 'p', { locale: dateLocale });
-    return `${dateStr} ${timeStr}`;
+  const formatTimeSlot = (slot: RequestedSlot | VideoConsultTimeSlot) => {
+    try {
+      const date = new Date(slot.start);
+      const localeMap: Record<string, string> = {
+        en: 'en-US',
+        ko: 'ko-KR',
+        ja: 'ja-JP',
+        'zh-CN': 'zh-CN',
+        'zh-TW': 'zh-TW',
+      };
+      return new Intl.DateTimeFormat(localeMap[locale] || 'en-US', {
+        timeZone: slot.sourceTimezone,
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      }).format(date);
+    } catch {
+      return slot.start;
+    }
   };
 
   const handleAccept = () => {
@@ -130,7 +162,7 @@ export function HospitalProposalModal({
           </DialogHeader>
           <p className="text-sm text-red-600">{t.hospitalProposalModal.noProposalsError}</p>
           <DialogFooter>
-            <Button onClick={() => onOpenChange(false)}>{t.actions.close}</Button>
+            <Button onClick={() => onOpenChange(false)}>{t.hospitalProposalModal.cancelButton}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -196,14 +228,11 @@ export function HospitalProposalModal({
         <div className="space-y-6 py-4">
           {/* Display user's original requested times */}
           <div className="bg-gray-50 p-4 rounded-lg">
-            <h3 className="font-semibold text-sm mb-2">
-              {t.hospitalProposalModal.yourRequestedTimes}
-            </h3>
+            <h3 className="font-semibold text-sm mb-2">{t.hospitalProposalModal.yourRequestedTimes}</h3>
             <ul className="space-y-1 text-sm text-gray-700">
               {reservation.requested_slots.map((slot, idx) => (
                 <li key={idx}>
-                  {t.hospitalProposalModal.timeSlotLabel.replace('{{rank}}', String(slot.rank))}:{' '}
-                  {formatTimeSlot(slot)}
+                  {t.hospitalProposalModal.timeSlotLabel.replace('{{rank}}', String(slot.rank))}: {formatTimeSlot(slot)}
                 </li>
               ))}
             </ul>
@@ -211,9 +240,7 @@ export function HospitalProposalModal({
 
           {/* Display hospital's proposed times with radio selection */}
           <div>
-            <h3 className="font-semibold text-sm mb-3">
-              {t.hospitalProposalModal.hospitalProposedTimes}
-            </h3>
+            <h3 className="font-semibold text-sm mb-3">{t.hospitalProposalModal.hospitalProposedTimes}</h3>
             <RadioGroup
               value={selectedRank?.toString() || ''}
               onValueChange={(value) => setSelectedRank(parseInt(value, 10))}
@@ -230,10 +257,7 @@ export function HospitalProposalModal({
                     onClick={() => setSelectedRank(slot.rank)}
                   >
                     <RadioGroupItem value={slot.rank.toString()} id={`slot-${slot.rank}`} />
-                    <Label
-                      htmlFor={`slot-${slot.rank}`}
-                      className="flex-1 cursor-pointer text-sm"
-                    >
+                    <Label htmlFor={`slot-${slot.rank}`} className="flex-1 cursor-pointer text-sm">
                       <span className="font-medium">
                         {t.hospitalProposalModal.timeSlotLabel.replace('{{rank}}', String(slot.rank))}
                       </span>
@@ -245,9 +269,7 @@ export function HospitalProposalModal({
             </RadioGroup>
           </div>
 
-          {error && (
-            <div className="text-sm text-red-600 bg-red-50 p-3 rounded">{error}</div>
-          )}
+          {error && <div className="text-sm text-red-600 bg-red-50 p-3 rounded">{error}</div>}
         </div>
 
         <DialogFooter className="flex-col sm:flex-row gap-2">

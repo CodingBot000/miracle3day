@@ -174,7 +174,7 @@ export function formatDateTime(
  * @returns Object with minDate and maxDate (YYYY-MM-DD format in the given timezone)
  */
 export function getDateRangeFromSlots(
-  slots: Array<{ start: string; end: string }> | null | undefined,
+  slots: Array<{ start: string; end?: string }> | null | undefined,
   timezone: string = 'Asia/Seoul'
 ): { minDate: string; maxDate: string } {
   // Default to today if no slots or empty array

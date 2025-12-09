@@ -1,17 +1,13 @@
-import React, { isValidElement, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { ChevronLeft, ChevronRight, Heart, Star, FileText } from 'lucide-react';
+
 import { useConsultFormStorage } from '../../common/formStorage';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+
 import { useToast } from '@/hooks/use-toast';
 import PageHeader from '@/app/[locale]/(consult)/pre_consultation_intake_form/PageHeader';
 import PreviewReport from '@/app/[locale]/(consult)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/PreviewReport';
-import RecommendationResult from '@/app/[locale]/(consult)/recommend_estimate/SkinSurveyFlow/recommendation/RecommendationResult';
-import { RecommendationOutput } from '@/app/[locale]/(consult)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching/types';
-import { recommendTreatments } from '@/app/[locale]/(consult)/pre_consultation_intake_form/PreConsultationSurveyFlow/questionnaire/questionScript/matching';
 import { preConsultationSteps } from '@/app/[locale]/(consult)/pre_consultation_intake_form/pre_consultation_intake/form-definition_pre_con_steps';
-import { questions } from '@/app/[locale]/(consult)/pre_consultation_intake_form/pre_consultation_intake/form-definition_pre_con_questions';
 import { intakeForm } from '@/app/[locale]/(consult)/pre_consultation_intake_form/pre_consultation_intake/form-definition_pre_con_base';
 import { useLocale } from 'next-intl';
 import { getLocalizedText } from '@/utils/i18n';

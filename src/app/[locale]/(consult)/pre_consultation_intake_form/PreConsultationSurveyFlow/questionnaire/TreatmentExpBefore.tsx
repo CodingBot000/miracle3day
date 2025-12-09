@@ -165,7 +165,7 @@ const TreatmentExpBeforeStep: React.FC<TreatmentExpBeforeStepProps> = ({ data, o
       {/* Additional Notes */}
       <div>
         <Label className="text-lg font-medium text-gray-800 mb-4 block">
-          {locale === 'ko' ? "다른 사항이 있으신가요? (선택 사항)" : "Anything else you&apos;d like us to know? (Optional)"}
+          {locale === 'ko' ? "다른 사항이 있으신가요? (선택 사항)" : "Anything else you'd like us to know? (Optional)"}
         </Label>
         <Textarea
           value={pastTreatments.additionalNotes || ''}

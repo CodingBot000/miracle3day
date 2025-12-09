@@ -3,7 +3,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Button } from '@/components/ui/button';
 import { RecommendationOutput } from '@/app/[locale]/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching';
 import { Copy, Check, Mail, MessageSquare, Download } from 'lucide-react';
-import { getKRWtoUSD } from '@/utils/exchangeRate';
 import { krwToUsd } from '../questionnaire/questionScript/matching/utils/helpers';
 
 export interface ShareModalProps {

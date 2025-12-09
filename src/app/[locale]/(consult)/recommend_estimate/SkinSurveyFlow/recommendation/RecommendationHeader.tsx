@@ -2,6 +2,8 @@ import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Sparkles, DollarSign, Wallet, Users, TrendingUp, AlertTriangle } from 'lucide-react';
 import { questions } from '@/app/[locale]/(consult)/recommend_estimate/estimate/form-definition_questions';
+import { FitText } from '@/components/ui/FitText';
+import { formatKRW, formatUSD } from '@/utils/exchangeRate/converter-client';
 
 export interface RecommendationHeaderProps {
   totalPriceKRW: number;
@@ -22,22 +24,6 @@ const RecommendationHeader: React.FC<RecommendationHeaderProps> = ({
   budgetRangeId,
   budgetUpperLimit,
 }) => {
-  const formatKRW = (amount: number) => {
-    return new Intl.NumberFormat('ko-KR', {
-      style: 'currency',
-      currency: 'KRW',
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
-
-  const formatUSD = (amount: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
-
   const getBudgetLabel = (budgetId?: string) => {
     if (!budgetId) return null;
     const budgetRange = questions.budgetRanges.find(range => range.id === budgetId);
@@ -132,9 +118,9 @@ const RecommendationHeader: React.FC<RecommendationHeaderProps> = ({
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Investment (KRW)</p>
-              <p className="text-xl sm:text-2xl font-bold text-gray-900 mt-1 truncate">
+              <FitText className="font-bold text-gray-900 mt-1" minFontSize={14} maxFontSize={24}>
                 {formatKRW(totalPriceKRW)}
-              </p>
+              </FitText>
               <p className="text-sm text-gray-500 mt-0.5">Total Cost</p>
             </div>
           </div>
@@ -149,9 +135,9 @@ const RecommendationHeader: React.FC<RecommendationHeaderProps> = ({
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Investment (USD)</p>
-              <p className="text-xl sm:text-2xl font-bold text-gray-900 mt-1 truncate">
+              <FitText className="font-bold text-gray-900 mt-1" minFontSize={14} maxFontSize={24}>
                 {formatUSD(totalPriceUSD)}
-              </p>
+              </FitText>
               <p className="text-sm text-gray-500 mt-0.5">Approx. Value</p>
             </div>
           </div>

@@ -71,11 +71,17 @@ export default function RecommendationResultPage() {
     // 브라우저의 뒤로가기/앞으로가기 감지
     window.addEventListener('popstate', handleRouteChange);
 
-    // 컴포넌트 언마운트 시 (다른 페이지로 이동 시)
+    // 탭/창을 닫을 때만 정리 (HMR에서는 실행 안됨)
+    const handleBeforeUnload = () => {
+      handleRouteChange();
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
     return () => {
       window.removeEventListener('popstate', handleRouteChange);
-      // 페이지를 벗어날 때 정리
-      handleRouteChange();
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      // HMR/개발환경에서 컴포넌트 리마운트 시 데이터 유지를 위해
+      // cleanup에서 sessionStorage 삭제하지 않음
     };
   }, []);
 

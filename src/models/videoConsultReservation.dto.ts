@@ -14,7 +14,8 @@ export type VideoReservationStatus =
   | "needs_change"  // 병원이 날짜/시간 변경 제안
   | "rescheduled"   // 고객이 재제출한 상태
   | "completed"     // 상담 완료
-  | "no_show";      // 노쇼
+  | "no_show"       // 노쇼
+  | "cancelled";    // 취소됨 (patient or hospital)
 
 export const VIDEO_RESERVATION_STATUS = {
   REQUESTED: "requested",
@@ -138,6 +139,7 @@ export const STATUS_LABELS: Record<VideoReservationStatus, string> = {
   rescheduled: "재제출됨",
   completed: "완료",
   no_show: "노쇼",
+  cancelled: "취소됨",
 };
 
 // Status badge colors
@@ -149,6 +151,7 @@ export const STATUS_COLORS: Record<VideoReservationStatus, string> = {
   rescheduled: "bg-purple-100 text-purple-800",
   completed: "bg-green-100 text-green-800",
   no_show: "bg-gray-100 text-gray-800",
+  cancelled: "bg-gray-200 text-gray-700",
 };
 
 // Sort options

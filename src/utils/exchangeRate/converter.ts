@@ -170,7 +170,7 @@ export const formatUSD = (usd: number) => `$${usd.toLocaleString("en-US")}`;
 /**
  * KRW 포맷 (한국 원화)
  */
-export const formatKRW = (krw: number) => `${krw.toLocaleString("ko-KR")}원`;
+export const formatKRW = (krw: number) => `₩${krw.toLocaleString("ko-KR")}`;
 
 /**
  * JPY 포맷 (일본 엔화)

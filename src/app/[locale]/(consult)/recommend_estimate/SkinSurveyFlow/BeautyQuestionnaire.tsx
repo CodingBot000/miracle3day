@@ -332,29 +332,7 @@ const BeautyQuestionnaire: React.FC = () => {
                 >
                   Previous
                 </Button>
-                <Button
-                  onClick={handlePrevious}
-                  // className="w-25 h-12 px-4 rounded-lg border border-gray-300 bg-white text-gray-500 flex items-center justify-center"
-                  // style={{ 
-                  //   borderColor: '#E4E5E7',
-                  //   color: '#777777',
-                  //   fontFamily: 'Pretendard Variable',
-                  //   fontWeight: 600,
-                  //   fontSize: '16px',
-                  //   lineHeight: '140%'
-                  // }}
-                  className="
-                    h-12 px-4 rounded-lg
-                    border bg-white text-[#777777] border-[#E4E5E7]
-                    hover:bg-[#F7F7F8] hover:border-[#DADCE0] hover:text-[#555555]
-                    active:bg-[#F1F2F4] active:border-[#C9CCD1] active:text-[#444444]
-                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-200 focus-visible:ring-offset-1
-                    transition-colors duration-150
-                    flex items-center justify-center
-                  "
-                >
-                  Previous
-                </Button>
+                
               <Button onClick={handleSubmit} 
                 className="w-full h-12 px-4 rounded-lg text-white flex items-center justify-center"
                 style={{ backgroundColor: '#FB718F' }}

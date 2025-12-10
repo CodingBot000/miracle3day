@@ -15,7 +15,7 @@ const ExcludedSection: React.FC<ExcludedSectionProps> = ({
   excluded,
   upgradeSuggestions,
 }) => {
-  const t = useTranslations('recommend_treatment.Excluded');
+  const t = useTranslations('Excluded');
   const [isExpanded, setIsExpanded] = useState(false);
 
   if (excluded.length === 0 && upgradeSuggestions.length === 0) {

@@ -40,6 +40,9 @@ const TABLE_TREATMENT_CARE_PROTOCOLS = "treatment_care_protocols";
 const TABLE_SURGERY_CARE_PROTOCOLS = "surgery_care_protocols";
 const TABLE_TREATMENT_PRODUCT = "treatment_product";
 
+// FCM 푸시 관련
+const TABLE_PUSH_FCM_TOKENS = "push_fcm_tokens";
+const TABLE_PUSH_HISTORY = "push_history";
 
 // const TABLE_ADMIN = "admin";
 const TABLE_FEEDBACKS = "feedbacks";
@@ -107,6 +110,8 @@ export {
   TABLE_DEVICE_CATALOG,
   TABLE_TREATMENT_SELECTION,
   TABLE_CONSULTATION_SUBMISSIONS,
+  TABLE_PUSH_FCM_TOKENS,
+  TABLE_PUSH_HISTORY,
 
   STORAGE_IMAGES,
   STORAGE_HOSPITAL_IMG,

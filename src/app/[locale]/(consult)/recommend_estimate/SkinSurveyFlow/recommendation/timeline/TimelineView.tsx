@@ -11,7 +11,7 @@ export interface TimelineViewProps {
 }
 
 const TimelineView: React.FC<TimelineViewProps> = ({ recommendations }) => {
-  const t = useTranslations('recommend_treatment.TimelineView');
+  const t = useTranslations('TimelineView');
 
   // Calculate estimated duration based on treatment count
   // Assume average spacing of 2-4 weeks between treatments

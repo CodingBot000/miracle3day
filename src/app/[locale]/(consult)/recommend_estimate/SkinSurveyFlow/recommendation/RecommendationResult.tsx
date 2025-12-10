@@ -45,7 +45,7 @@ const RecommendationResult: React.FC<RecommendationResultProps> = ({
   onConsult,
 }) => {
   const router = useRouter();
-  const t = useTranslations('recommend_treatment.Result');
+  const t = useTranslations('Result');
   const [viewMode, setViewMode] = useState<'card' | 'timeline'>('card');
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [isTimelineInfoOpen, setIsTimelineInfoOpen] = useState(false);
@@ -109,7 +109,7 @@ const RecommendationResult: React.FC<RecommendationResultProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-rose-50/50 via-white to-purple-50/30 relative">
+    <div className="min-h-screen bg-gradient-to-b from-rose-50/50 via-white to-purple-50/30 relative overflow-x-hidden">
       {/* Decorative background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-pink-200/30 to-purple-200/30 rounded-full blur-3xl" />

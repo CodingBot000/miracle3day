@@ -27,7 +27,7 @@ const RecommendationHeader: React.FC<RecommendationHeaderProps> = ({
   budgetRangeId,
   budgetUpperLimit,
 }) => {
-  const t = useTranslations('recommend_treatment.Header');
+  const t = useTranslations('Header');
 
   const getBudgetLabel = (budgetId?: string) => {
     if (!budgetId) return null;

@@ -19,7 +19,7 @@ const ShareModal: React.FC<ShareModalProps> = ({
   onOpenChange,
   output,
 }) => {
-  const t = useTranslations('recommend_treatment.ShareModal');
+  const t = useTranslations('ShareModal');
   const [copied, setCopied] = useState(false);
 
   const formatKRW = (amount: number) => {

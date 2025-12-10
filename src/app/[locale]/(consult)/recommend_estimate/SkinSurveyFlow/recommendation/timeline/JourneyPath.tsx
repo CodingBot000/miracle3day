@@ -14,7 +14,7 @@ const JourneyPath: React.FC<JourneyPathProps> = ({
   totalSessions,
   estimatedDuration,
 }) => {
-  const t = useTranslations('recommend_treatment.JourneyPath');
+  const t = useTranslations('JourneyPath');
 
   return (
     <Card className="p-4 sm:p-6 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 border-0 shadow-lg rounded-2xl mb-6">

@@ -10,7 +10,7 @@ export interface ViewToggleProps {
 }
 
 const ViewToggle: React.FC<ViewToggleProps> = ({ currentView, onViewChange }) => {
-  const t = useTranslations('recommend_treatment.ViewToggle');
+  const t = useTranslations('ViewToggle');
 
   return (
     <div className="flex justify-center mt-8">

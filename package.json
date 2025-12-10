@@ -65,6 +65,7 @@
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.12",
     "embla-carousel-react": "^8.6.0",
+    "firebase-admin": "^13.6.0",
     "framer-motion": "^12.6.3",
     "geist": "^1.5.1",
     "google-auth-library": "^10.5.0",

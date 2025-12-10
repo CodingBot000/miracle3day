@@ -16,11 +16,13 @@
   }
 
   html {
-    @apply antialiased h-full;
+    @apply antialiased h-full overflow-x-hidden;
   }
 
   body {
-    @apply bg-white text-black leading-normal h-full;
+    @apply bg-white text-black leading-normal h-full overflow-x-hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   a {

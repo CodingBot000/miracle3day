@@ -17,7 +17,7 @@ const SUBMISSION_ID_STORAGE_KEY = 'recommendation_submission_id';
 
 export default function RecommendationResultPage() {
   const router = useRouter();
-  const t = useTranslations('recommend_treatment.DataLost');
+  const t = useTranslations('DataLost');
   const [isLoading, setIsLoading] = useState(true);
   const [showDataLostModal, setShowDataLostModal] = useState(false);
   const [recommendationOutput, setRecommendationOutput] = useState<RecommendationOutput | null>(null);
@@ -96,7 +96,7 @@ export default function RecommendationResultPage() {
   // 로딩 화면
   if (isLoading) {
     return (
-      <div className="fixed inset-0 z-50 min-h-screen bg-gradient-to-br from-[#FDF5F0] via-white to-[#F8E8E0]">
+      <div className="fixed inset-0 z-50 min-h-screen bg-gradient-to-br from-[#FDF5F0] via-white to-[#F8E8E0] overflow-hidden">
         <div className="flex flex-col justify-center items-center min-h-screen">
           {/* <DotLottieReact
             src="/lottie/analysis.lottie"
@@ -172,7 +172,7 @@ export default function RecommendationResultPage() {
 
   // 결과 화면
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white overflow-x-hidden">
       <RecommendationResult
         output={recommendationOutput}
         formData={formData || undefined}

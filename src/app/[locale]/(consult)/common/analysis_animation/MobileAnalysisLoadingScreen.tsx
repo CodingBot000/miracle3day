@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ANALYSIS_STEPS, SupportedLocale } from "./analysisSteps";
+import { ANALYSIS_STEPS, SupportedLocale } from "../../pre_consultation_intake_form/pre_consultation_intake/analysisSteps";
 import TreatmentAnalysisLoading from "./TreatmentAnalysisLoading";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 

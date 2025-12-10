@@ -5,7 +5,7 @@ import { log } from '@/utils/logger';
 
 import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ANALYSIS_STEPS, SupportedLocale } from "./analysisSteps";
+import { ANALYSIS_STEPS, SupportedLocale } from "../../pre_consultation_intake_form/pre_consultation_intake/analysisSteps";
 
 interface AnalysisProgressProps {
   locale?: SupportedLocale;           // "ko" | "en" (기본값 ko)

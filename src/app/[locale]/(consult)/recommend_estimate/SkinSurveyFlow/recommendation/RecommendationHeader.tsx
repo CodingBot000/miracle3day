@@ -1,9 +1,12 @@
+'use client';
+
 import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Sparkles, DollarSign, Wallet, Users, TrendingUp, AlertTriangle } from 'lucide-react';
 import { questions } from '@/app/[locale]/(consult)/recommend_estimate/estimate/form-definition_questions';
 import { FitText } from '@/components/ui/FitText';
 import { formatKRW, formatUSD } from '@/utils/exchangeRate/converter-client';
+import { useTranslations } from 'next-intl';
 
 export interface RecommendationHeaderProps {
   totalPriceKRW: number;
@@ -24,6 +27,8 @@ const RecommendationHeader: React.FC<RecommendationHeaderProps> = ({
   budgetRangeId,
   budgetUpperLimit,
 }) => {
+  const t = useTranslations('recommend_treatment.Header');
+
   const getBudgetLabel = (budgetId?: string) => {
     if (!budgetId) return null;
     const budgetRange = questions.budgetRanges.find(range => range.id === budgetId);
@@ -38,10 +43,10 @@ const RecommendationHeader: React.FC<RecommendationHeaderProps> = ({
       {/* Hero Title */}
       <div className="text-center space-y-3">
         <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-gray-900 via-purple-900 to-pink-900 bg-clip-text text-transparent">
-          Your Personalized Treatment Plan
+          {t('title')}
         </h1>
         <p className="text-gray-500 text-base sm:text-lg max-w-2xl mx-auto">
-          Based on your consultation, we&apos;ve curated the perfect combination of treatments
+          {t('subtitle')}
         </p>
       </div>
 
@@ -58,7 +63,7 @@ const RecommendationHeader: React.FC<RecommendationHeaderProps> = ({
                 <Wallet className="w-5 h-5 text-white" />
               </div>
               <div>
-                <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Your Budget</p>
+                <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">{t('yourBudget')}</p>
                 <p className={`font-semibold ${isWithinBudget ? 'text-emerald-900' : 'text-amber-900'}`}>
                   {budgetLabel}
                   {budgetUpperLimit && (
@@ -77,12 +82,12 @@ const RecommendationHeader: React.FC<RecommendationHeaderProps> = ({
               {isWithinBudget ? (
                 <>
                   <TrendingUp className="w-4 h-4" />
-                  Within Budget
+                  {t('withinBudget')}
                 </>
               ) : (
                 <>
                   <AlertTriangle className="w-4 h-4" />
-                  Over Budget
+                  {t('overBudget')}
                 </>
               )}
             </div>
@@ -100,11 +105,11 @@ const RecommendationHeader: React.FC<RecommendationHeaderProps> = ({
               <Sparkles className="w-5 h-5 text-white" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Treatments</p>
+              <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">{t('treatments')}</p>
               <p className="text-2xl sm:text-3xl font-bold text-gray-900 mt-1">
                 {treatmentCount}
               </p>
-              <p className="text-sm text-gray-500 mt-0.5">Recommended</p>
+              <p className="text-sm text-gray-500 mt-0.5">{t('recommended')}</p>
             </div>
           </div>
         </Card>
@@ -117,11 +122,11 @@ const RecommendationHeader: React.FC<RecommendationHeaderProps> = ({
               <DollarSign className="w-5 h-5 text-white" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Investment (KRW)</p>
+              <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">{t('investmentKRW')}</p>
               <FitText className="font-bold text-gray-900 mt-1" minFontSize={14} maxFontSize={24}>
                 {formatKRW(totalPriceKRW)}
               </FitText>
-              <p className="text-sm text-gray-500 mt-0.5">Total Cost</p>
+              <p className="text-sm text-gray-500 mt-0.5">{t('totalCost')}</p>
             </div>
           </div>
         </Card>
@@ -134,11 +139,11 @@ const RecommendationHeader: React.FC<RecommendationHeaderProps> = ({
               <DollarSign className="w-5 h-5 text-white" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Investment (USD)</p>
+              <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">{t('investmentUSD')}</p>
               <FitText className="font-bold text-gray-900 mt-1" minFontSize={14} maxFontSize={24}>
                 {formatUSD(totalPriceUSD)}
               </FitText>
-              <p className="text-sm text-gray-500 mt-0.5">Approx. Value</p>
+              <p className="text-sm text-gray-500 mt-0.5">{t('approxValue')}</p>
             </div>
           </div>
         </Card>
@@ -152,7 +157,7 @@ const RecommendationHeader: React.FC<RecommendationHeaderProps> = ({
               <Users className="w-5 h-5 text-white" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-gray-900 mb-1">Personalized for Your Skin Type</p>
+              <p className="text-sm font-semibold text-gray-900 mb-1">{t('personalizedSkinType')}</p>
               <p className="text-sm text-gray-600 leading-relaxed">
                 {ethnicityNote}
               </p>
@@ -169,7 +174,7 @@ const RecommendationHeader: React.FC<RecommendationHeaderProps> = ({
               <AlertTriangle className="w-5 h-5 text-white" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-gray-900 mb-2">Important Notes</p>
+              <p className="text-sm font-semibold text-gray-900 mb-2">{t('importantNotes')}</p>
               <ul className="space-y-2">
                 {notes.map((note, index) => (
                   <li key={index} className="flex items-start gap-2 text-sm text-gray-600">

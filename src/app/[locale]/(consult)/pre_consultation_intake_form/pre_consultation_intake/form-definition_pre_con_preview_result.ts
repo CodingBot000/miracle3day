@@ -314,7 +314,7 @@ export const submitModal = {
       ko: "병원에서 예약을 확정하면 제공하신 연락처로 알림을 받게 되며, 마이페이지에서도 확정된 일정을 확인하실 수 있습니다.",
       en: "Once the clinic confirms your appointment, you'll receive a notification via your provided contact method, and you can also check the confirmed schedule on your My Page.",
       ja: "クリニックが予約を確定すると、ご提供いただいた連絡先に通知が届き、マイページでも確定したスケジュールをご確認いただけます。",
-      "zh-CN": "诊所确认预约后，您将通过提供的联系方式收到通知，也可以在"我的页面"查看确认的时间表。",
+      "zh-CN": "诊所确认预约后，您将通过提供的联系方式收到通知，也可以在'我的页面'查看确认的时间表。",
       "zh-TW": "診所確認預約後，您將透過提供的聯絡方式收到通知，也可以在「我的頁面」查看確認的時間表。"
     },
     desc3: {

@@ -1,6 +1,9 @@
+'use client';
+
 import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Calendar, Target, Sparkles, ArrowDown } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export interface JourneyPathProps {
   totalSessions: number;
@@ -11,6 +14,8 @@ const JourneyPath: React.FC<JourneyPathProps> = ({
   totalSessions,
   estimatedDuration,
 }) => {
+  const t = useTranslations('recommend_treatment.JourneyPath');
+
   return (
     <Card className="p-4 sm:p-6 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 border-0 shadow-lg rounded-2xl mb-6">
       {/* Desktop: Horizontal Layout */}
@@ -21,8 +26,8 @@ const JourneyPath: React.FC<JourneyPathProps> = ({
             <Calendar className="w-5 h-5 text-white" />
           </div>
           <div>
-            <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Your Journey Starts</p>
-            <p className="text-lg font-bold text-gray-900">Session 1</p>
+            <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">{t('journeyStarts')}</p>
+            <p className="text-lg font-bold text-gray-900">{t('session1')}</p>
           </div>
         </div>
 
@@ -31,7 +36,7 @@ const JourneyPath: React.FC<JourneyPathProps> = ({
           <div className="flex-1 border-t-2 border-dashed border-purple-300" />
           <div className="px-4 py-2 bg-white rounded-full border border-purple-200 shadow-sm">
             <p className="text-sm font-semibold text-purple-700">
-              {totalSessions} {totalSessions === 1 ? 'Treatment' : 'Treatments'}
+              {totalSessions} {totalSessions === 1 ? t('treatment') : t('treatments')}
             </p>
           </div>
           <div className="flex-1 border-t-2 border-dashed border-purple-300" />
@@ -40,7 +45,7 @@ const JourneyPath: React.FC<JourneyPathProps> = ({
         {/* End */}
         <div className="flex items-center gap-3">
           <div className="text-right">
-            <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Expected Completion</p>
+            <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">{t('expectedCompletion')}</p>
             <p className="text-lg font-bold text-gray-900">{estimatedDuration}</p>
           </div>
           <div className="p-3 bg-gradient-to-br from-pink-500 to-rose-600 rounded-xl shadow-lg shadow-pink-500/25">
@@ -58,8 +63,8 @@ const JourneyPath: React.FC<JourneyPathProps> = ({
               <Calendar className="w-5 h-5 text-white" />
             </div>
             <div className="flex-1">
-              <p className="text-xs text-gray-500 font-medium">Journey Starts</p>
-              <p className="text-base font-bold text-gray-900">Session 1</p>
+              <p className="text-xs text-gray-500 font-medium">{t('journeyStartsMobile')}</p>
+              <p className="text-base font-bold text-gray-900">{t('session1')}</p>
             </div>
           </div>
 
@@ -70,7 +75,7 @@ const JourneyPath: React.FC<JourneyPathProps> = ({
               <div className="flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-purple-500" />
                 <p className="text-sm font-semibold text-purple-700">
-                  {totalSessions} {totalSessions === 1 ? 'Treatment' : 'Treatments'}
+                  {totalSessions} {totalSessions === 1 ? t('treatment') : t('treatments')}
                 </p>
               </div>
             </div>
@@ -84,7 +89,7 @@ const JourneyPath: React.FC<JourneyPathProps> = ({
               <Target className="w-5 h-5 text-white" />
             </div>
             <div className="flex-1">
-              <p className="text-xs text-gray-500 font-medium">Expected Completion</p>
+              <p className="text-xs text-gray-500 font-medium">{t('expectedCompletion')}</p>
               <p className="text-base font-bold text-gray-900">{estimatedDuration}</p>
             </div>
           </div>
@@ -94,8 +99,7 @@ const JourneyPath: React.FC<JourneyPathProps> = ({
       {/* Additional info */}
       <div className="mt-4 pt-4 border-t border-purple-100">
         <p className="text-xs text-gray-500 text-center leading-relaxed">
-          Timeline may vary based on individual response and clinic scheduling.
-          Consult with your provider for a personalized treatment schedule.
+          {t('disclaimer')}
         </p>
       </div>
     </Card>

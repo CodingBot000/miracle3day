@@ -1,9 +1,12 @@
+'use client';
+
 import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { RecommendedItem, ClimateWarning } from '@/app/[locale]/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching';
 import { Zap, Clock, Heart, Sparkles } from 'lucide-react';
 import ClimateWarningBanner from './ClimateWarningBanner';
+import { useTranslations } from 'next-intl';
 
 export interface TreatmentCardProps {
   treatment: RecommendedItem & {
@@ -15,6 +18,8 @@ export interface TreatmentCardProps {
 }
 
 const TreatmentCard: React.FC<TreatmentCardProps> = ({ treatment, tier, lang = 'en' }) => {
+  const t = useTranslations('recommend_treatment.TreatmentCard');
+
   // Default importance to 2 (Recommended) if not provided
   const importance = treatment.importance || 2;
   const formatKRW = (amount: number) => {
@@ -73,13 +78,13 @@ const TreatmentCard: React.FC<TreatmentCardProps> = ({ treatment, tier, lang = '
   const getTierLabel = (tier?: 1 | 2 | 3) => {
     switch (tier) {
       case 1:
-        return 'Dermatology';
+        return t('tiers.dermatology');
       case 2:
-        return 'Anti-Aging';
+        return t('tiers.antiAging');
       case 3:
-        return 'Facial Contouring';
+        return t('tiers.facialContouring');
       default:
-        return 'Other';
+        return t('tiers.other');
     }
   };
 
@@ -99,13 +104,13 @@ const TreatmentCard: React.FC<TreatmentCardProps> = ({ treatment, tier, lang = '
   const getImportanceLabel = (importance: 1 | 2 | 3) => {
     switch (importance) {
       case 1:
-        return 'Essential';
+        return t('importance.essential');
       case 2:
-        return 'Recommended';
+        return t('importance.recommended');
       case 3:
-        return 'Optional';
+        return t('importance.optional');
       default:
-        return 'Standard';
+        return t('importance.standard');
     }
   };
 
@@ -141,7 +146,7 @@ const TreatmentCard: React.FC<TreatmentCardProps> = ({ treatment, tier, lang = '
         <div className="space-y-2">
           {treatment.rationale && treatment.rationale.length > 0 && (
             <div>
-              <span className="text-sm font-medium text-gray-700">Why recommended:</span>
+              <span className="text-sm font-medium text-gray-700">{t('whyRecommended')}</span>
               <ul className="mt-1 space-y-1">
                 {treatment.rationale.map((reason, idx) => (
                   <li key={idx} className="text-sm text-gray-600 ml-2">
@@ -157,13 +162,13 @@ const TreatmentCard: React.FC<TreatmentCardProps> = ({ treatment, tier, lang = '
         <div className="pt-4 border-t border-gray-200">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600">Price</p>
+              <p className="text-sm text-gray-600">{t('price')}</p>
               <p className={`text-lg font-semibold ${colors.text}`}>
                 {formatKRW(treatment.priceKRW)}
               </p>
             </div>
             <div className="text-right">
-              <p className="text-sm text-gray-600">USD</p>
+              <p className="text-sm text-gray-600">{t('usd')}</p>
               <p className={`text-lg font-semibold ${colors.text}`}>
                 {formatUSD(treatment.priceUSD)}
               </p>

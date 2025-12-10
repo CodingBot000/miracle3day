@@ -7,7 +7,7 @@ import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { AlertTriangle, RotateCcw, Home } from 'lucide-react';
 import RecommendationResult from '../RecommendationResult';
 import { RecommendationOutput } from '@/app/[locale]/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching';
-import { useLocale } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import TreatmentAnalysisLoading from '@/app/[locale]/(consult)/common/analysis_animation/TreatmentAnalysisLoading';
 import { MobileAnalysisLoadingScreen } from '@/app/[locale]/(consult)/common/analysis_animation/MobileAnalysisLoadingScreen';
 
@@ -17,7 +17,7 @@ const SUBMISSION_ID_STORAGE_KEY = 'recommendation_submission_id';
 
 export default function RecommendationResultPage() {
   const router = useRouter();
-  const locale = useLocale();
+  const t = useTranslations('recommend_treatment.DataLost');
   const [isLoading, setIsLoading] = useState(true);
   const [showDataLostModal, setShowDataLostModal] = useState(false);
   const [recommendationOutput, setRecommendationOutput] = useState<RecommendationOutput | null>(null);
@@ -137,12 +137,10 @@ export default function RecommendationResultPage() {
             </div>
             <div className="text-center space-y-2">
               <h3 className="text-lg font-semibold text-gray-900">
-                {locale === 'ko' ? '데이터가 소실되었습니다' : 'Data has been lost'}
+                {t('title')}
               </h3>
               <p className="text-sm text-gray-600">
-                {locale === 'ko'
-                  ? '다시 문진을 작성하시기 바랍니다.'
-                  : 'Please fill out the questionnaire again.'}
+                {t('description')}
               </p>
             </div>
             <div className="flex flex-col w-full gap-3">
@@ -151,14 +149,14 @@ export default function RecommendationResultPage() {
                 className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white font-medium rounded-xl transition-all duration-200"
               >
                 <RotateCcw className="w-5 h-5" />
-                <span>{locale === 'ko' ? '다시 문진 작성하기' : 'Fill out questionnaire again'}</span>
+                <span>{t('retryButton')}</span>
               </button>
               <button
                 onClick={handleGoHome}
                 className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-white border-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50 text-gray-700 font-medium rounded-xl transition-all duration-200"
               >
                 <Home className="w-5 h-5" />
-                <span>{locale === 'ko' ? '홈으로 돌아가기' : 'Go to Home'}</span>
+                <span>{t('homeButton')}</span>
               </button>
             </div>
           </div>

@@ -1,0 +1,181 @@
+{
+  "Header": {
+    "title": "您的個人化治療方案",
+    "subtitle": "根據您的諮詢，我們精心策劃了完美的治療組合",
+    "yourBudget": "您的預算",
+    "withinBudget": "預算內",
+    "overBudget": "超出預算",
+    "treatments": "治療",
+    "recommended": "推薦",
+    "investmentKRW": "費用（韓元）",
+    "investmentUSD": "費用（美元）",
+    "totalCost": "總費用",
+    "approxValue": "約合",
+    "personalizedSkinType": "根據您的皮膚類型訂製",
+    "importantNotes": "重要提示"
+  },
+  "Result": {
+    "analysisComplete": "分析完成",
+    "noTreatmentsTitle": "暫無可用治療方案",
+    "noTreatmentsDesc": "根據您的選擇和當前狀況，我們暫時未能找到合適的治療方案。請查看以下詳情了解更多資訊。",
+    "whatIsTimeline": "什麼是時間線？",
+    "tryAgain": "重試",
+    "goToHome": "返回首頁"
+  },
+  "ActionButtons": {
+    "findClinics": "查找診所",
+    "shareResults": "分享結果",
+    "bookConsultation": "預約諮詢",
+    "ctaDescription": "準備好開始您的美容之旅了嗎？查找您附近的認證診所或預約諮詢，討論您的個人化治療方案。"
+  },
+  "ShareModal": {
+    "title": "分享您的結果",
+    "description": "與朋友分享您的個人化治療方案或保存以備後用",
+    "copied": "已複製！",
+    "copy": "複製",
+    "email": "郵件",
+    "sms": "簡訊",
+    "pdf": "PDF",
+    "privacyNote": "保持您的結果私密或與信賴的朋友和家人分享",
+    "shareTextTitle": "我的個人化治療方案",
+    "shareTextTotal": "總計：",
+    "emailSubject": "我的治療方案",
+    "pdfComingSoon": "PDF下載功能即將推出！"
+  },
+  "Excluded": {
+    "title": "已排除的治療",
+    "upgradeOpportunities": "升級機會",
+    "categories": {
+      "budgetConstraints": "預算限制",
+      "treatmentAreaMismatch": "治療部位不匹配",
+      "painSensitivity": "疼痛敏感",
+      "downtimeConcerns": "恢復期/康復顧慮",
+      "medicalRestrictions": "醫療限制",
+      "recentTreatmentConflicts": "與近期治療衝突",
+      "treatmentOptimization": "治療優化",
+      "other": "其他"
+    }
+  },
+  "TreatmentCard": {
+    "tiers": {
+      "dermatology": "皮膚科",
+      "antiAging": "抗衰老",
+      "facialContouring": "面部塑形",
+      "other": "其他"
+    },
+    "importance": {
+      "essential": "必需",
+      "recommended": "推薦",
+      "optional": "可選",
+      "standard": "標準"
+    },
+    "whyRecommended": "推薦理由：",
+    "price": "價格",
+    "usd": "美元"
+  },
+  "TierSection": {
+    "titles": {
+      "dermatology": "皮膚科治療",
+      "antiAging": "抗衰老治療",
+      "facialContouring": "面部塑形治療",
+      "other": "其他治療",
+      "treatments": "治療"
+    },
+    "descriptions": {
+      "dermatology": "皮膚健康和質感的基礎治療",
+      "antiAging": "針對衰老問題的進階治療",
+      "facialContouring": "面部塑形的專業治療",
+      "other": "其他補充治療"
+    }
+  },
+  "PriceBreakdown": {
+    "title": "總投資",
+    "krw": "韓元（KRW）",
+    "usd": "美元（USD）",
+    "note": "注意：",
+    "noteText": "價格基於平均市場價格估算。最終價格可能因診所和個人治療方案而異。"
+  },
+  "ClimateWarning": {
+    "uvRiskLevel": "紫外線風險等級",
+    "recommendation": "建議"
+  },
+  "ViewToggle": {
+    "cardView": "卡片視圖",
+    "timeline": "時間線"
+  },
+  "TimelineInfo": {
+    "title": "什麼是治療時間線？",
+    "subtitle": "了解您的個人化治療計劃",
+    "intro": "美容治療需要在療程之間留出適當的間隔。此時間線顯示您個人化治療方案的推薦順序和時間安排。",
+    "whyOrderMatters": "為什麼順序很重要？",
+    "skinRecoveryTitle": "皮膚恢復時間",
+    "skinRecoveryDesc": "您的皮膚需要治療之間的恢復時間",
+    "maximizeResultsTitle": "最大化效果",
+    "maximizeResultsDesc": "正確的順序確保最佳效果",
+    "minimizeSideEffectsTitle": "最小化副作用",
+    "minimizeSideEffectsDesc": "適當的間隔減少風險和併發症",
+    "treatmentCategories": "治療類別",
+    "dermatology": "皮膚科",
+    "dermatologyTreatments": "雷射美白、IPL、化學換膚",
+    "dermatologyDesc": "治療質地、色素沉著、毛孔、痤瘡",
+    "antiAging": "抗衰老",
+    "antiAgingTreatments": "肉毒桿菌、皮膚補水針、水光針",
+    "antiAgingDesc": "減少皺紋，增強彈性",
+    "facialContouring": "面部塑形",
+    "facialContouringTreatments": "填充劑、超音波刀、電波拉皮",
+    "facialContouringDesc": "增強體積、提升、面部輪廓",
+    "specialtyCare": "專業護理",
+    "specialtyCareTreatments": "身體治療、頭髮護理",
+    "specialtyCareDesc": "專業療程和治療",
+    "howToReadTitle": "如何閱讀時間線",
+    "howToRead1": "療程編號表示推薦的治療順序",
+    "howToRead2": "順序安排考慮了安全性和有效性",
+    "howToRead3": "您不需要所有治療 - 根據您的目標選擇",
+    "howToRead4": "不能同時進行多項治療",
+    "importantNotes": "重要提示",
+    "note1": "查看每個治療卡上的恢復期資訊",
+    "note2": "實際時間表會在醫生諮詢後調整",
+    "note3": "某些治療可以在一次療程中組合",
+    "note4": "根據您的預算和時間表選擇",
+    "needAdvice": "需要個人化建議？",
+    "adviceDesc": "預約免費諮詢，制定您的訂製治療方案。",
+    "gotIt": "知道了"
+  },
+  "TimelineView": {
+    "treatmentCategories": "治療類別",
+    "dermatology": "皮膚科",
+    "dermatologyDesc": "皮膚健康、痤瘡、色素沉著和質地治療",
+    "antiAging": "抗衰老",
+    "antiAgingDesc": "減少皺紋、提升和皮膚年輕化",
+    "facialContouring": "面部塑形",
+    "facialContouringDesc": "V型臉、下頜線和面部重塑療程",
+    "specialtyCare": "專業護理",
+    "specialtyCareDesc": "身體治療、頭髮護理和專業療程",
+    "journeyTitle": "您的美膚之旅",
+    "journeyDesc": "按照這個個人化時間線實現您的美容目標",
+    "duration": {
+      "singleSession": "單次療程",
+      "oneToTwoMonths": "1-2個月",
+      "twoToThreeMonths": "2-3個月",
+      "threeToFourMonths": "3-4個月"
+    }
+  },
+  "TimelineItem": {
+    "sessionPrice": "療程價格"
+  },
+  "JourneyPath": {
+    "journeyStarts": "您的旅程開始",
+    "journeyStartsMobile": "旅程開始",
+    "session1": "療程1",
+    "treatment": "治療",
+    "treatments": "治療",
+    "expectedCompletion": "預計完成",
+    "disclaimer": "時間線可能會根據個人反應和診所安排而有所不同。請諮詢您的醫生以獲得個人化的治療時間表。"
+  },
+  "DataLost": {
+    "title": "資料已遺失",
+    "description": "請重新填寫問卷。",
+    "retryButton": "重新填寫問卷",
+    "homeButton": "返回首頁"
+  }
+}

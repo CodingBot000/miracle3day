@@ -18,7 +18,7 @@ export interface TreatmentCardProps {
 }
 
 const TreatmentCard: React.FC<TreatmentCardProps> = ({ treatment, tier, lang = 'en' }) => {
-  const t = useTranslations('recommend_treatment.TreatmentCard');
+  const t = useTranslations('TreatmentCard');
 
   // Default importance to 2 (Recommended) if not provided
   const importance = treatment.importance || 2;

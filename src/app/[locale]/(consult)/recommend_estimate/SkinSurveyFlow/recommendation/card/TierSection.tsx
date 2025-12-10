@@ -11,7 +11,7 @@ export interface TierSectionProps {
 }
 
 const TierSection: React.FC<TierSectionProps> = ({ tier, treatments }) => {
-  const t = useTranslations('recommend_treatment.TierSection');
+  const t = useTranslations('TierSection');
 
   if (treatments.length === 0) return null;
 

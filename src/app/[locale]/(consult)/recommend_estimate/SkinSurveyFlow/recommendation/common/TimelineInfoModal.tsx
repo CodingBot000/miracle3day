@@ -11,7 +11,7 @@ export interface TimelineInfoModalProps {
 }
 
 const TimelineInfoModal: React.FC<TimelineInfoModalProps> = ({ isOpen, onClose }) => {
-  const t = useTranslations('recommend_treatment.TimelineInfo');
+  const t = useTranslations('TimelineInfo');
 
   // ESC 키로 모달 닫기
   useEffect(() => {

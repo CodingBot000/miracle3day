@@ -30,7 +30,7 @@ export default function ClimateWarningBanner({
   lang = 'en',
   className = ''
 }: ClimateWarningBannerProps) {
-  const t = useTranslations('recommend_treatment.ClimateWarning');
+  const t = useTranslations('ClimateWarning');
 
   if (!warning.show) return null;
 

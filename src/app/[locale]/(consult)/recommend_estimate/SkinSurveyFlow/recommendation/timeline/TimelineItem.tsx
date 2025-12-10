@@ -20,8 +20,8 @@ const TimelineItem: React.FC<TimelineItemProps> = ({
   isLast,
   tier,
 }) => {
-  const t = useTranslations('recommend_treatment.TimelineItem');
-  const tCard = useTranslations('recommend_treatment.TreatmentCard');
+  const t = useTranslations('TimelineItem');
+  const tCard = useTranslations('TreatmentCard');
 
   const formatKRW = (amount: number) => {
     return new Intl.NumberFormat('ko-KR', {

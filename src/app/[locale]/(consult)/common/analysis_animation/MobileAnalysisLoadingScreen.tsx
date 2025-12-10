@@ -50,8 +50,8 @@ export const MobileAnalysisLoadingScreen: React.FC<MobileAnalysisLoadingScreenPr
   return (
     <div
       className="
-        fixed inset-0 z-40 
-        
+        fixed inset-0 z-40
+        overflow-hidden
         bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900
         text-white
       "

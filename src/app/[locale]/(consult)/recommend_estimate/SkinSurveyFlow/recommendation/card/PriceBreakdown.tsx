@@ -11,7 +11,7 @@ export interface PriceBreakdownProps {
 }
 
 const PriceBreakdown: React.FC<PriceBreakdownProps> = ({ totalPriceKRW, totalPriceUSD }) => {
-  const t = useTranslations('recommend_treatment.PriceBreakdown');
+  const t = useTranslations('PriceBreakdown');
 
   const formatKRW = (amount: number) => {
     return new Intl.NumberFormat('ko-KR', {

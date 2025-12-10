@@ -1,4 +1,4 @@
-import { getMessaging } from '@/lib/firebase-admin';
+import { messaging } from '@/lib/firebase-admin';
 import { q } from '@/lib/db';
 import { TABLE_PUSH_FCM_TOKENS, TABLE_PUSH_HISTORY } from '@/constants/tables';
 import { PushType } from '@/models/fcm.dto';
@@ -195,7 +195,7 @@ export async function sendPushToMember(
     for (const [lang, fcmTokens] of Object.entries(tokensByLanguage)) {
       const message = getMessage(pushType, lang);
 
-      const response = await getMessaging().sendEachForMulticast({
+      const response = await messaging.sendEachForMulticast({
         tokens: fcmTokens,
         notification: {
           title: message.title,
@@ -297,7 +297,7 @@ export async function sendTransactionPush(
     for (const token of tokens) {
       const message = getMessage(pushType, token.preferred_language);
 
-      await getMessaging().send({
+      await messaging.send({
         token: token.fcm_token,
         notification: {
           title: message.title,

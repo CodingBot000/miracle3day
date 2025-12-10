@@ -3,6 +3,7 @@
 import React from 'react';
 import { AlertCircle, Sun, Check } from 'lucide-react';
 import { ClimateWarning } from '../../questionnaire/questionScript/matching/types';
+import { useTranslations } from 'next-intl';
 
 interface ClimateWarningBannerProps {
   warning: ClimateWarning;
@@ -29,6 +30,8 @@ export default function ClimateWarningBanner({
   lang = 'en',
   className = ''
 }: ClimateWarningBannerProps) {
+  const t = useTranslations('recommend_treatment.ClimateWarning');
+
   if (!warning.show) return null;
 
   const Icon = severityIcons[warning.severity];
@@ -60,7 +63,7 @@ export default function ClimateWarningBanner({
       <div className="mb-3">
         <div className="flex items-center gap-2 mb-1">
           <span className="text-xs font-medium">
-            {lang === 'ko' ? 'UV 위험도' : 'UV Risk Level'}
+            {t('uvRiskLevel')}
           </span>
           <span className="text-xs font-bold">
             {warning.uvRiskLevel}/5
@@ -84,7 +87,7 @@ export default function ClimateWarningBanner({
           <span className="text-base flex-shrink-0">💡</span>
           <div>
             <strong className="block mb-1">
-              {lang === 'ko' ? '권장사항' : 'Recommendation'}
+              {t('recommendation')}
             </strong>
             <p className="leading-relaxed opacity-90">
               {warning.recommendation[lang]}

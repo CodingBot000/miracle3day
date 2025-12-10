@@ -1,8 +1,11 @@
+'use client';
+
 import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { RecommendedItem } from '@/app/[locale]/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching';
 import { CheckCircle2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export interface TimelineItemProps {
   treatment: RecommendedItem;
@@ -17,6 +20,9 @@ const TimelineItem: React.FC<TimelineItemProps> = ({
   isLast,
   tier,
 }) => {
+  const t = useTranslations('recommend_treatment.TimelineItem');
+  const tCard = useTranslations('recommend_treatment.TreatmentCard');
+
   const formatKRW = (amount: number) => {
     return new Intl.NumberFormat('ko-KR', {
       style: 'currency',
@@ -49,13 +55,13 @@ const TimelineItem: React.FC<TimelineItemProps> = ({
   const getTierLabel = (tier?: 1 | 2 | 3) => {
     switch (tier) {
       case 1:
-        return 'Dermatology';
+        return tCard('tiers.dermatology');
       case 2:
-        return 'Anti-Aging';
+        return tCard('tiers.antiAging');
       case 3:
-        return 'Facial Contouring';
+        return tCard('tiers.facialContouring');
       default:
-        return 'Other';
+        return tCard('tiers.other');
     }
   };
 
@@ -109,14 +115,13 @@ const TimelineItem: React.FC<TimelineItemProps> = ({
             {/* Price */}
             <div className="pt-2 border-t border-gray-200">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Session Price</span>
+                <span className="text-sm text-gray-600">{t('sessionPrice')}</span>
                 <div className="text-right">
                   <div className="text-lg font-semibold text-gray-900">
-                  {formatUSD(treatment.priceUSD)}
-                    
+                    {formatUSD(treatment.priceUSD)}
                   </div>
                   <div className="text-sm text-gray-500">
-                  {formatKRW(treatment.priceKRW)}
+                    {formatKRW(treatment.priceKRW)}
                   </div>
                 </div>
               </div>

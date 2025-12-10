@@ -1,7 +1,9 @@
+'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useLocale } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { RecommendationOutput } from '@/app/[locale]/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching';
 import RecommendationHeader from './RecommendationHeader';
 import ViewToggle from './common/ViewToggle';
@@ -43,7 +45,7 @@ const RecommendationResult: React.FC<RecommendationResultProps> = ({
   onConsult,
 }) => {
   const router = useRouter();
-  const locale = useLocale();
+  const t = useTranslations('recommend_treatment.Result');
   const [viewMode, setViewMode] = useState<'card' | 'timeline'>('card');
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [isTimelineInfoOpen, setIsTimelineInfoOpen] = useState(false);
@@ -128,7 +130,7 @@ const RecommendationResult: React.FC<RecommendationResultProps> = ({
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-full shadow-lg shadow-emerald-500/25">
             <Sparkles className="w-4 h-4" />
-            <span className="text-sm font-medium">Analysis Complete</span>
+            <span className="text-sm font-medium">{t('analysisComplete')}</span>
           </div>
         </motion.div>
 
@@ -155,11 +157,10 @@ const RecommendationResult: React.FC<RecommendationResultProps> = ({
                 </div>
                 <div className="space-y-3">
                   <h3 className="text-2xl font-semibold text-gray-900">
-                    No Treatments Available
+                    {t('noTreatmentsTitle')}
                   </h3>
                   <p className="text-gray-600 max-w-md leading-relaxed">
-                    Based on your selections and current conditions, we couldn&apos;t find suitable treatments at this time.
-                    Please review the details below for more information.
+                    {t('noTreatmentsDesc')}
                   </p>
                 </div>
               </div>
@@ -190,7 +191,7 @@ const RecommendationResult: React.FC<RecommendationResultProps> = ({
                       className="sm:absolute sm:right-0 sm:top-1/2 sm:-translate-y-1/2 flex items-center gap-2 px-4 py-2.5 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-xl transition-colors duration-200 border border-blue-200 hover:border-blue-300 mt-3 sm:mt-0 mx-auto sm:mx-0"
                     >
                       <Info className="w-4 h-4" />
-                      <span className="text-sm font-medium">What is Timeline?</span>
+                      <span className="text-sm font-medium">{t('whatIsTimeline')}</span>
                     </motion.button>
                   )}
                 </AnimatePresence>
@@ -259,14 +260,14 @@ const RecommendationResult: React.FC<RecommendationResultProps> = ({
             className="flex-1 flex items-center justify-center gap-2 py-4 px-6 bg-white border-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50 text-gray-700 font-medium rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md"
           >
             <RotateCcw className="w-5 h-5" />
-            <span>{locale === 'ko' ? '다시하기' : 'Try Again'}</span>
+            <span>{t('tryAgain')}</span>
           </button>
           <button
             onClick={handleGoHome}
             className="flex-1 flex items-center justify-center gap-2 py-4 px-6 bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white font-medium rounded-2xl transition-all duration-200 shadow-lg shadow-rose-500/25 hover:shadow-xl hover:shadow-rose-500/30"
           >
             <Home className="w-5 h-5" />
-            <span>{locale === 'ko' ? '홈으로 가기' : 'Go to Home'}</span>
+            <span>{t('goToHome')}</span>
           </button>
         </motion.div>
 

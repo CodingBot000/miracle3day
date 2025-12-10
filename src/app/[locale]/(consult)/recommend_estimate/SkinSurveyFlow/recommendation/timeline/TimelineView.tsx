@@ -1,20 +1,25 @@
+'use client';
+
 import React from 'react';
 import { RecommendedItem } from '@/app/[locale]/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching';
 import TimelineItem from './TimelineItem';
 import JourneyPath from './JourneyPath';
+import { useTranslations } from 'next-intl';
 
 export interface TimelineViewProps {
   recommendations: RecommendedItem[];
 }
 
 const TimelineView: React.FC<TimelineViewProps> = ({ recommendations }) => {
+  const t = useTranslations('recommend_treatment.TimelineView');
+
   // Calculate estimated duration based on treatment count
   // Assume average spacing of 2-4 weeks between treatments
   const estimateDuration = (count: number): string => {
-    if (count === 1) return 'Single Session';
-    if (count <= 3) return '1-2 Months';
-    if (count <= 5) return '2-3 Months';
-    return '3-4 Months';
+    if (count === 1) return t('duration.singleSession');
+    if (count <= 3) return t('duration.oneToTwoMonths');
+    if (count <= 5) return t('duration.twoToThreeMonths');
+    return t('duration.threeToFourMonths');
   };
 
   const totalSessions = recommendations.length;
@@ -38,7 +43,7 @@ const TimelineView: React.FC<TimelineViewProps> = ({ recommendations }) => {
       {/* Tier Legend */}
       <div className="mb-8 p-5 bg-white rounded-2xl shadow-lg shadow-gray-200/50 border border-gray-100">
         <h4 className="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-4">
-          Treatment Categories
+          {t('treatmentCategories')}
         </h4>
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
           {/* Tier 1 - Dermatology */}
@@ -47,9 +52,9 @@ const TimelineView: React.FC<TimelineViewProps> = ({ recommendations }) => {
               {/* <span className="text-white font-bold text-xs">1</span> */}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="font-semibold text-blue-900 text-sm">Dermatology</p>
+              <p className="font-semibold text-blue-900 text-sm">{t('dermatology')}</p>
               <p className="text-xs text-blue-700 mt-0.5 leading-relaxed">
-                Skin health, acne, pigmentation & texture treatments
+                {t('dermatologyDesc')}
               </p>
             </div>
           </div>
@@ -60,9 +65,9 @@ const TimelineView: React.FC<TimelineViewProps> = ({ recommendations }) => {
               {/* <span className="text-white font-bold text-xs">2</span> */}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="font-semibold text-green-900 text-sm">Anti-Aging</p>
+              <p className="font-semibold text-green-900 text-sm">{t('antiAging')}</p>
               <p className="text-xs text-green-700 mt-0.5 leading-relaxed">
-                Wrinkle reduction, lifting & skin rejuvenation
+                {t('antiAgingDesc')}
               </p>
             </div>
           </div>
@@ -73,9 +78,9 @@ const TimelineView: React.FC<TimelineViewProps> = ({ recommendations }) => {
               {/* <span className="text-white font-bold text-xs">3</span> */}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="font-semibold text-pink-900 text-sm">Facial Contouring</p>
+              <p className="font-semibold text-pink-900 text-sm">{t('facialContouring')}</p>
               <p className="text-xs text-pink-700 mt-0.5 leading-relaxed">
-                V-line, jawline & facial reshaping procedures
+                {t('facialContouringDesc')}
               </p>
             </div>
           </div>
@@ -86,9 +91,9 @@ const TimelineView: React.FC<TimelineViewProps> = ({ recommendations }) => {
               {/* <span className="text-white font-bold text-xs">3</span> */}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="font-semibold text-gray-900 text-sm">Specialty Care</p>
+              <p className="font-semibold text-gray-900 text-sm">{t('specialtyCare')}</p>
               <p className="text-xs text-gray-700 mt-0.5 leading-relaxed">
-                Body treatments, hair care & specialized procedures
+                {t('specialtyCareDesc')}
               </p>
             </div>
           </div>
@@ -131,10 +136,10 @@ const TimelineView: React.FC<TimelineViewProps> = ({ recommendations }) => {
           </svg>
         </div>
         <h3 className="text-xl font-semibold text-gray-900 mb-2">
-          Your Journey to Beautiful Skin
+          {t('journeyTitle')}
         </h3>
         <p className="text-gray-600">
-          Follow this personalized timeline to achieve your aesthetic goals
+          {t('journeyDesc')}
         </p>
       </div>
     </div>

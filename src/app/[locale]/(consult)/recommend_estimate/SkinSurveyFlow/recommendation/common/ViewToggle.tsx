@@ -1,5 +1,8 @@
+'use client';
+
 import React from 'react';
 import { LayoutGrid, Calendar } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export interface ViewToggleProps {
   currentView: 'card' | 'timeline';
@@ -7,6 +10,8 @@ export interface ViewToggleProps {
 }
 
 const ViewToggle: React.FC<ViewToggleProps> = ({ currentView, onViewChange }) => {
+  const t = useTranslations('recommend_treatment.ViewToggle');
+
   return (
     <div className="flex justify-center mt-8">
       <div className="inline-flex p-1.5 bg-white rounded-2xl shadow-lg shadow-gray-200/50 border border-gray-100">
@@ -20,7 +25,7 @@ const ViewToggle: React.FC<ViewToggleProps> = ({ currentView, onViewChange }) =>
           `}
         >
           <LayoutGrid className="w-4 h-4" />
-          <span>Card View</span>
+          <span>{t('cardView')}</span>
         </button>
         <button
           onClick={() => onViewChange('timeline')}
@@ -32,7 +37,7 @@ const ViewToggle: React.FC<ViewToggleProps> = ({ currentView, onViewChange }) =>
           `}
         >
           <Calendar className="w-4 h-4" />
-          <span>Timeline</span>
+          <span>{t('timeline')}</span>
         </button>
       </div>
     </div>

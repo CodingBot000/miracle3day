@@ -13,66 +13,102 @@ export const questions = {
       id: "dry",
       label: {
         ko: "건성",
-        en: "Dry"
+        en: "Dry",
+        ja: "乾燥肌",
+        "zh-CN": "干性",
+        "zh-TW": "乾性"
       },
       description: {
         ko: "자주 당기는 느낌, 각질이 생길 수 있음",
-        en: "Often feels tight, may have flaky patches"
+        en: "Often feels tight, may have flaky patches",
+        ja: "つっぱり感があり、角質が出やすい",
+        "zh-CN": "经常感到紧绷，可能有脱皮",
+        "zh-TW": "經常感到緊繃，可能有脫皮"
       },
     },
     {
       id: "oily",
       label: {
         ko: "지성",
-        en: "Oily"
+        en: "Oily",
+        ja: "脂性肌",
+        "zh-CN": "油性",
+        "zh-TW": "油性"
       },
       description: {
         ko: "윤기가 나고 모공이 넓음",
-        en: "Shiny appearance, enlarged pores"
+        en: "Shiny appearance, enlarged pores",
+        ja: "テカリがあり、毛穴が目立つ",
+        "zh-CN": "有光泽，毛孔粗大",
+        "zh-TW": "有光澤，毛孔粗大"
       },
     },
     {
       id: "combination",
       label: {
         ko: "복합성",
-        en: "Combination"
+        en: "Combination",
+        ja: "混合肌",
+        "zh-CN": "混合性",
+        "zh-TW": "混合性"
       },
       description: {
         ko: "T존은 지성, 볼은 건성",
-        en: "Oily T-zone, dry cheeks"
+        en: "Oily T-zone, dry cheeks",
+        ja: "Tゾーンは脂性、頬は乾燥",
+        "zh-CN": "T区油性，脸颊干燥",
+        "zh-TW": "T區油性，臉頰乾燥"
       },
     },
     {
       id: "sensitive",
       label: {
         ko: "민감성",
-        en: "Sensitive"
+        en: "Sensitive",
+        ja: "敏感肌",
+        "zh-CN": "敏感性",
+        "zh-TW": "敏感性"
       },
       description: {
         ko: "쉽게 자극받고 제품에 반응함",
-        en: "Easily irritated, reactive to products"
+        en: "Easily irritated, reactive to products",
+        ja: "刺激を受けやすく、製品に反応しやすい",
+        "zh-CN": "容易受刺激，对产品敏感",
+        "zh-TW": "容易受刺激，對產品敏感"
       },
     },
     {
       id: "normal",
       label: {
         ko: "정상",
-        en: "Normal"
+        en: "Normal",
+        ja: "普通肌",
+        "zh-CN": "正常",
+        "zh-TW": "正常"
       },
       description: {
         ko: "균형 잡힌 상태, 문제가 거의 없음",
-        en: "Well-balanced, rarely problematic"
+        en: "Well-balanced, rarely problematic",
+        ja: "バランスの取れた状態で、ほとんど問題なし",
+        "zh-CN": "平衡状态，很少有问题",
+        "zh-TW": "平衡狀態，很少有問題"
       },
     },
     {
       id: "not_sure",
       label: {
         ko: "모르겠음",
-        en: "Not Sure"
+        en: "Not Sure",
+        ja: "わからない",
+        "zh-CN": "不确定",
+        "zh-TW": "不確定"
       },
       description: {
         ko: "내 피부 타입을 모르겠음",
-        en: "Not sure about my skin type"
+        en: "Not sure about my skin type",
+        ja: "自分の肌タイプがわからない",
+        "zh-CN": "不确定自己的皮肤类型",
+        "zh-TW": "不確定自己的皮膚類型"
       },
     },
   ],
@@ -86,11 +122,17 @@ export const questions = {
       id: "acne",
       label: {
         ko: "여드름 및 트러블",
-        en: "Acne & Breakouts"
+        en: "Acne & Breakouts",
+        ja: "ニキビ・肌荒れ",
+        "zh-CN": "痤疮和爆痘",
+        "zh-TW": "痤瘡和爆痘"
       },
       description: {
         ko: "활성 여드름, 염증이 있는 피부",
-        en: "Active pimples, inflamed skin"
+        en: "Active pimples, inflamed skin",
+        ja: "活発なニキビ、炎症のある肌",
+        "zh-CN": "活跃痘痘，发炎皮肤",
+        "zh-TW": "活躍痘痘，發炎皮膚"
       },
       tier: 1,
       category: "skin_condition",
@@ -99,11 +141,17 @@ export const questions = {
       id: "pigmentation",
       label: {
         ko: "기미 및 색소 침착",
-        en: "Dark Spots & Pigmentation"
+        en: "Dark Spots & Pigmentation",
+        ja: "シミ・色素沈着",
+        "zh-CN": "色斑和色素沉着",
+        "zh-TW": "色斑和色素沉著"
       },
       description: {
         ko: "피부 톤 불균형, 자외선 손상, 멜라스마",
-        en: "Uneven skin tone, sun damage, melasma"
+        en: "Uneven skin tone, sun damage, melasma",
+        ja: "肌トーンの不均衡、紫外線ダメージ、肝斑",
+        "zh-CN": "肤色不均，晒伤，黄褐斑",
+        "zh-TW": "膚色不均，曬傷，黃褐斑"
       },
       tier: 1,
       category: "skin_condition",
@@ -112,11 +160,17 @@ export const questions = {
       id: "pores",
       label: {
         ko: "모공 확대 / 거친 질감",
-        en: "Enlarged Pores / Rough Texture"
+        en: "Enlarged Pores / Rough Texture",
+        ja: "毛穴の開き・ざらつき",
+        "zh-CN": "毛孔粗大/粗糙质感",
+        "zh-TW": "毛孔粗大/粗糙質感"
       },
       description: {
         ko: "눈에 띄는 모공, 거친 표면",
-        en: "Visible pores, uneven surface"
+        en: "Visible pores, uneven surface",
+        ja: "目立つ毛穴、ざらついた表面",
+        "zh-CN": "明显毛孔，表面粗糙",
+        "zh-TW": "明顯毛孔，表面粗糙"
       },
       tier: 1,
       category: "skin_condition",
@@ -125,11 +179,17 @@ export const questions = {
       id: "redness",
       label: {
         ko: "홍조 및 민감성 피부",
-        en: "Redness & Sensitive Skin"
+        en: "Redness & Sensitive Skin",
+        ja: "赤ら顔・敏感肌",
+        "zh-CN": "泛红和敏感肌",
+        "zh-TW": "泛紅和敏感肌"
       },
       description: {
         ko: "쉽게 자극받고 반응하는 피부",
-        en: "Easily irritated, reactive skin"
+        en: "Easily irritated, reactive skin",
+        ja: "刺激を受けやすく、反応しやすい肌",
+        "zh-CN": "容易受刺激，反应性皮肤",
+        "zh-TW": "容易受刺激，反應性皮膚"
       },
       tier: 1,
       category: "skin_condition",
@@ -138,11 +198,17 @@ export const questions = {
       id: "scars",
       label: {
         ko: "흉터 (여드름 또는 기타)",
-        en: "Scars (Acne or Other)"
+        en: "Scars (Acne or Other)",
+        ja: "傷跡（ニキビ跡など）",
+        "zh-CN": "疤痕（痘疤或其他）",
+        "zh-TW": "疤痕（痘疤或其他）"
       },
       description: {
         ko: "질감이 있는 흉터, 색소 침착",
-        en: "Textured scars, discoloration"
+        en: "Textured scars, discoloration",
+        ja: "凹凸のある傷跡、色素沈着",
+        "zh-CN": "有质感的疤痕，变色",
+        "zh-TW": "有質感的疤痕，變色"
       },
       tier: 1,
       category: "skin_condition",
@@ -151,11 +217,17 @@ export const questions = {
       id: "dryness",
       label: {
         ko: "건조함 및 칙칙한 피부",
-        en: "Dryness & Dull Skin"
+        en: "Dryness & Dull Skin",
+        ja: "乾燥・くすみ",
+        "zh-CN": "干燥和暗沉",
+        "zh-TW": "乾燥和暗沉"
       },
       description: {
         ko: "수분 부족 및 윤기 부족",
-        en: "Lack of moisture and radiance"
+        en: "Lack of moisture and radiance",
+        ja: "水分不足と輝き不足",
+        "zh-CN": "缺乏水分和光泽",
+        "zh-TW": "缺乏水分和光澤"
       },
       tier: 1,
       category: "skin_condition",
@@ -166,11 +238,17 @@ export const questions = {
       id: "wrinkles",
       label: {
         ko: "주름 및 미세 주름",
-        en: "Fine Lines & Wrinkles"
+        en: "Fine Lines & Wrinkles",
+        ja: "シワ・小じわ",
+        "zh-CN": "细纹和皱纹",
+        "zh-TW": "細紋和皺紋"
       },
       description: {
         ko: "이마 주름, 눈가 주름, 웃음 주름",
-        en: "Forehead lines, crow's feet, smile lines"
+        en: "Forehead lines, crow's feet, smile lines",
+        ja: "額のシワ、目尻のシワ、笑いジワ",
+        "zh-CN": "额头纹、鱼尾纹、笑纹",
+        "zh-TW": "額頭紋、魚尾紋、笑紋"
       },
       tier: 2,
       category: "anti_aging",
@@ -179,11 +257,17 @@ export const questions = {
       id: "sagging",
       label: {
         ko: "처짐 및 탄력 손실",
-        en: "Sagging & Loss of Firmness"
+        en: "Sagging & Loss of Firmness",
+        ja: "たるみ・ハリの喪失",
+        "zh-CN": "下垂和失去紧致",
+        "zh-TW": "下垂和失去緊緻"
       },
       description: {
         ko: "느슨한 피부, 턱선 처짐",
-        en: "Loose skin, jowls"
+        en: "Loose skin, jowls",
+        ja: "たるんだ肌、フェイスラインのたるみ",
+        "zh-CN": "松弛皮肤，下颌线下垂",
+        "zh-TW": "鬆弛皮膚，下頜線下垂"
       },
       tier: 2,
       category: "anti_aging",
@@ -192,11 +276,17 @@ export const questions = {
       id: "volume_loss",
       label: {
         ko: "볼륨 손실",
-        en: "Volume Loss"
+        en: "Volume Loss",
+        ja: "ボリュームロス",
+        "zh-CN": "容量流失",
+        "zh-TW": "容量流失"
       },
       description: {
         ko: "들뜬 볼, 눈밑 함몰",
-        en: "Hollow cheeks, under-eye hollows"
+        en: "Hollow cheeks, under-eye hollows",
+        ja: "こけた頬、目の下のくぼみ",
+        "zh-CN": "凹陷脸颊，眼下凹陷",
+        "zh-TW": "凹陷臉頰，眼下凹陷"
       },
       tier: 2,
       category: "anti_aging",
@@ -207,11 +297,17 @@ export const questions = {
       id: "jawline_enhancement",
       label: {
         ko: "턱선 정의 (V라인)",
-        en: "Jawline Definition (V-line)"
+        en: "Jawline Definition (V-line)",
+        ja: "フェイスライン形成（Vライン）",
+        "zh-CN": "下颌线塑形（V型脸）",
+        "zh-TW": "下頜線塑形（V型臉）"
       },
       description: {
         ko: "턱선 윤곽 강화, 턱 폭 감소",
-        en: "Enhance jawline contour, reduce jaw width"
+        en: "Enhance jawline contour, reduce jaw width",
+        ja: "フェイスライン強調、顎幅の縮小",
+        "zh-CN": "增强下颌线轮廓，减少下颌宽度",
+        "zh-TW": "增強下頜線輪廓，減少下頜寬度"
       },
       tier: 3,
       category: "contouring",
@@ -220,11 +316,17 @@ export const questions = {
       id: "nose_enhancement",
       label: {
         ko: "코 성형",
-        en: "Nose Enhancement"
+        en: "Nose Enhancement",
+        ja: "鼻整形",
+        "zh-CN": "鼻部塑形",
+        "zh-TW": "鼻部塑形"
       },
       description: {
         ko: "비수술 코 리핑",
-        en: "Non-surgical nose refinement"
+        en: "Non-surgical nose refinement",
+        ja: "非手術的鼻整形",
+        "zh-CN": "非手术鼻部精修",
+        "zh-TW": "非手術鼻部精修"
       },
       tier: 3,
       category: "contouring",
@@ -233,11 +335,17 @@ export const questions = {
       id: "lip_enhancement",
       label: {
         ko: "입술 볼륨",
-        en: "Lip Enhancement"
+        en: "Lip Enhancement",
+        ja: "リップボリューム",
+        "zh-CN": "唇部塑形",
+        "zh-TW": "唇部塑形"
       },
       description: {
         ko: "볼륨 및 윤곽 추가",
-        en: "Add volume and definition"
+        en: "Add volume and definition",
+        ja: "ボリュームと輪郭を追加",
+        "zh-CN": "增加容量和轮廓",
+        "zh-TW": "增加容量和輪廓"
       },
       tier: 3,
       category: "contouring",
@@ -246,11 +354,17 @@ export const questions = {
       id: "double_chin",
       label: {
         ko: "이중턱 감소",
-        en: "Double Chin Reduction"
+        en: "Double Chin Reduction",
+        ja: "二重顎の削減",
+        "zh-CN": "双下巴减少",
+        "zh-TW": "雙下巴減少"
       },
       description: {
         ko: "턱밑 지방 감소",
-        en: "Reduce submental fat"
+        en: "Reduce submental fat",
+        ja: "顎下の脂肪を減少",
+        "zh-CN": "减少颏下脂肪",
+        "zh-TW": "減少頦下脂肪"
       },
       tier: 3,
       category: "contouring",
@@ -259,11 +373,17 @@ export const questions = {
       id: "cheek_contouring",
       label: {
         ko: "볼 볼륨 강화",
-        en: "Cheek Volume Enhancement"
+        en: "Cheek Volume Enhancement",
+        ja: "頬のボリュームアップ",
+        "zh-CN": "脸颊体积增强",
+        "zh-TW": "臉頰體積增強"
       },
       description: {
         ko: "볼에 볼륨 추가",
-        en: "Add fullness to cheeks"
+        en: "Add fullness to cheeks",
+        ja: "頬にボリュームを追加",
+        "zh-CN": "为脸颊增加丰满度",
+        "zh-TW": "為臉頰增加豐滿度"
       },
       tier: 3,
       category: "contouring",
@@ -272,11 +392,17 @@ export const questions = {
       id: "forehead_contouring",
       label: {
         ko: "이마 윤곽",
-        en: "Forehead Contouring"
+        en: "Forehead Contouring",
+        ja: "額の輪郭形成",
+        "zh-CN": "额头塑形",
+        "zh-TW": "額頭塑形"
       },
       description: {
         ko: "이마를 매끄럽고 형태 있게",
-        en: "Smooth and shape forehead"
+        en: "Smooth and shape forehead",
+        ja: "額を滑らかで形を整える",
+        "zh-CN": "平滑和塑造额头",
+        "zh-TW": "平滑和塑造額頭"
       },
       tier: 3,
       category: "contouring",
@@ -287,11 +413,17 @@ export const questions = {
       id: "other",
       label: {
         ko: "기타",
-        en: "Other"
+        en: "Other",
+        ja: "その他",
+        "zh-CN": "其他",
+        "zh-TW": "其他"
       },
       description: {
         ko: "구체적인 고민을 설명해주세요",
-        en: "Describe your specific concern"
+        en: "Describe your specific concern",
+        ja: "具体的なお悩みを説明してください",
+        "zh-CN": "描述您的具体问题",
+        "zh-TW": "描述您的具體問題"
       },
       tier: 4,
       category: "other",
@@ -306,11 +438,17 @@ export const questions = {
       id: "clear_skin",
       label: {
         ko: "맑고 건강한 피부",
-        en: "Clear & Healthy Skin"
+        en: "Clear & Healthy Skin",
+        ja: "クリアで健康な肌",
+        "zh-CN": "清透健康的皮肤",
+        "zh-TW": "清透健康的皮膚"
       },
       description: {
         ko: "여드름 치료, 흉터 감소, 피부 톤 균일화",
-        en: "Treat acne, reduce scars, even skin tone"
+        en: "Treat acne, reduce scars, even skin tone",
+        ja: "ニキビ治療、傷跡の軽減、肌トーンの均一化",
+        "zh-CN": "治疗痤疮，减少疤痕，均匀肤色",
+        "zh-TW": "治療痤瘡，減少疤痕，均勻膚色"
       },
       emoji: "✨",
     },
@@ -318,11 +456,17 @@ export const questions = {
       id: "radiant_glow",
       label: {
         ko: "윤기 있는 피부",
-        en: "Radiant Glow"
+        en: "Radiant Glow",
+        ja: "輝く肌",
+        "zh-CN": "光彩照人",
+        "zh-TW": "光彩照人"
       },
       description: {
         ko: "칙칙한 피부를 밝고 활기 있게",
-        en: "Brighten and revitalize dull skin"
+        en: "Brighten and revitalize dull skin",
+        ja: "くすんだ肌を明るく活気あるものに",
+        "zh-CN": "提亮和焕活暗沉肌肤",
+        "zh-TW": "提亮和煥活暗沉肌膚"
       },
       emoji: "💎",
     },
@@ -330,11 +474,17 @@ export const questions = {
       id: "anti_aging",
       label: {
         ko: "안티에이징 및 젊은 외모",
-        en: "Anti-Aging & Youthful Look"
+        en: "Anti-Aging & Youthful Look",
+        ja: "アンチエイジング・若々しい外見",
+        "zh-CN": "抗衰老和年轻外观",
+        "zh-TW": "抗衰老和年輕外觀"
       },
       description: {
         ko: "주름 감소, 탄력 개선",
-        en: "Reduce wrinkles, improve firmness"
+        en: "Reduce wrinkles, improve firmness",
+        ja: "シワの軽減、ハリの改善",
+        "zh-CN": "减少皱纹，改善紧致",
+        "zh-TW": "減少皺紋，改善緊緻"
       },
       emoji: "⏳",
     },
@@ -342,11 +492,17 @@ export const questions = {
       id: "texture_improvement",
       label: {
         ko: "부드러운 질감",
-        en: "Smooth Texture"
+        en: "Smooth Texture",
+        ja: "滑らかな質感",
+        "zh-CN": "光滑质感",
+        "zh-TW": "光滑質感"
       },
       description: {
         ko: "모공 정리, 피부 표면 개선",
-        en: "Refine pores, improve skin surface"
+        en: "Refine pores, improve skin surface",
+        ja: "毛穴を整え、肌表面を改善",
+        "zh-CN": "细化毛孔，改善皮肤表面",
+        "zh-TW": "細化毛孔，改善皮膚表面"
       },
       emoji: "🎨",
     },
@@ -354,11 +510,17 @@ export const questions = {
       id: "facial_contouring",
       label: {
         ko: "얼굴 윤곽 개선",
-        en: "Facial Enhancement"
+        en: "Facial Enhancement",
+        ja: "顔の輪郭改善",
+        "zh-CN": "面部轮廓改善",
+        "zh-TW": "面部輪廓改善"
       },
       description: {
         ko: "윤곽 정의, 비율 개선",
-        en: "Define features, improve proportions"
+        en: "Define features, improve proportions",
+        ja: "輪郭の定義、比率の改善",
+        "zh-CN": "定义轮廓，改善比例",
+        "zh-TW": "定義輪廓，改善比例"
       },
       emoji: "💆‍♀️",
     },
@@ -366,11 +528,17 @@ export const questions = {
       id: "recommendation",
       label: {
         ko: "추천만 해주세요",
-        en: "Just Give Me Recommendations"
+        en: "Just Give Me Recommendations",
+        ja: "おすすめだけください",
+        "zh-CN": "只需给我推荐",
+        "zh-TW": "只需給我推薦"
       },
       description: {
         ko: "필요한 것이 무엇인지 모르겠음",
-        en: "Not sure what I need"
+        en: "Not sure what I need",
+        ja: "何が必要かわからない",
+        "zh-CN": "不确定我需要什么",
+        "zh-TW": "不確定我需要什麼"
       },
       emoji: "🤖",
     },
@@ -384,77 +552,119 @@ export const questions = {
       id: "under-500",
       label: {
         ko: "$500 미만",
-        en: "Under $500"
+        en: "Under $500",
+        ja: "$500未満",
+        "zh-CN": "低于$500",
+        "zh-TW": "低於$500"
       },
       description: {
         ko: "기본 시술, 단일 세션",
-        en: "Basic treatments, single session"
+        en: "Basic treatments, single session",
+        ja: "基本施術、単回セッション",
+        "zh-CN": "基础治疗，单次疗程",
+        "zh-TW": "基礎治療，單次療程"
       },
     },
     {
       id: "500-1500",
       label: {
         ko: "$500 - $1,500",
-        en: "$500 - $1,500"
+        en: "$500 - $1,500",
+        ja: "$500 - $1,500",
+        "zh-CN": "$500 - $1,500",
+        "zh-TW": "$500 - $1,500"
       },
       description: {
         ko: "인기 시술 범위, 2-3회 세션",
-        en: "Popular treatment range, 2-3 sessions"
+        en: "Popular treatment range, 2-3 sessions",
+        ja: "人気の施術範囲、2-3回セッション",
+        "zh-CN": "热门治疗范围，2-3次疗程",
+        "zh-TW": "熱門治療範圍，2-3次療程"
       },
     },
     {
       id: "1500-3000",
       label: {
         ko: "$1,500 - $3,000",
-        en: "$1,500 - $3,000"
+        en: "$1,500 - $3,000",
+        ja: "$1,500 - $3,000",
+        "zh-CN": "$1,500 - $3,000",
+        "zh-TW": "$1,500 - $3,000"
       },
       description: {
         ko: "프리미엄 시술, 종합 케어",
-        en: "Premium treatments, comprehensive care"
+        en: "Premium treatments, comprehensive care",
+        ja: "プレミアム施術、総合ケア",
+        "zh-CN": "高级治疗，综合护理",
+        "zh-TW": "高級治療，綜合護理"
       },
     },
     {
       id: "3000-5000",
       label: {
         ko: "$3,000 - $5,000",
-        en: "$3,000 - $5,000"
+        en: "$3,000 - $5,000",
+        ja: "$3,000 - $5,000",
+        "zh-CN": "$3,000 - $5,000",
+        "zh-TW": "$3,000 - $5,000"
       },
       description: {
         ko: "고급 시술, 조합 치료",
-        en: "Advanced procedures, combination treatments"
+        en: "Advanced procedures, combination treatments",
+        ja: "高度な施術、複合治療",
+        "zh-CN": "高级疗程，组合治疗",
+        "zh-TW": "高級療程，組合治療"
       },
     },
     {
       id: "5000-10000",
       label: {
         ko: "$5,000 - $10,000",
-        en: "$5,000 - $10,000"
+        en: "$5,000 - $10,000",
+        ja: "$5,000 - $10,000",
+        "zh-CN": "$5,000 - $10,000",
+        "zh-TW": "$5,000 - $10,000"
       },
       description: {
         ko: "광범위한 변화 패키지",
-        en: "Extensive transformation packages"
+        en: "Extensive transformation packages",
+        ja: "広範囲の変化パッケージ",
+        "zh-CN": "大规模改造套餐",
+        "zh-TW": "大規模改造套餐"
       },
     },
     {
       id: "10000-plus",
       label: {
         ko: "$10,000 이상",
-        en: "$10,000+"
+        en: "$10,000+",
+        ja: "$10,000以上",
+        "zh-CN": "$10,000以上",
+        "zh-TW": "$10,000以上"
       },
       description: {
         ko: "VIP 종합 프로그램",
-        en: "VIP comprehensive programs"
+        en: "VIP comprehensive programs",
+        ja: "VIP総合プログラム",
+        "zh-CN": "VIP综合套餐",
+        "zh-TW": "VIP綜合套餐"
       },
     },
     {
       id: "flexible",
       label: {
         ko: "유연함 / 모든 옵션 보기",
-        en: "Flexible / Show All Options"
+        en: "Flexible / Show All Options",
+        ja: "柔軟/すべてのオプションを表示",
+        "zh-CN": "灵活/显示所有选项",
+        "zh-TW": "靈活/顯示所有選項"
       },
       description: {
         ko: "모든 가능한 옵션을 보고 싶음",
-        en: "I want to see all available options"
+        en: "I want to see all available options",
+        ja: "すべての利用可能なオプションを見たい",
+        "zh-CN": "我想查看所有可用选项",
+        "zh-TW": "我想查看所有可用選項"
       },
     },
   ],
@@ -467,11 +677,17 @@ export const questions = {
       id: 'blood_clotting',
       label: {
         ko: '혈액 응고 장애',
-        en: 'Blood Clotting Disorder'
+        en: 'Blood Clotting Disorder',
+        ja: '血液凝固障害',
+        "zh-CN": '凝血障碍',
+        "zh-TW": '凝血障礙'
       },
       description: {
         ko: '정상적인 혈액 응고에 영향을 주는 상태',
-        en: 'Conditions affecting normal blood clotting'
+        en: 'Conditions affecting normal blood clotting',
+        ja: '正常な血液凝固に影響する状態',
+        "zh-CN": '影响正常凝血的状况',
+        "zh-TW": '影響正常凝血的狀況'
       },
       emoji: '🩸'
     },
@@ -479,11 +695,17 @@ export const questions = {
       id: 'pregnant',
       label: {
         ko: '임신 중이거나 수유 중',
-        en: 'Pregnant or Breastfeeding'
+        en: 'Pregnant or Breastfeeding',
+        ja: '妊娠中または授乳中',
+        "zh-CN": '怀孕或哺乳中',
+        "zh-TW": '懷孕或哺乳中'
       },
       description: {
         ko: '현재 임신 중, 임신 계획 중, 또는 수유 중',
-        en: 'Currently pregnant, planning pregnancy, or breastfeeding'
+        en: 'Currently pregnant, planning pregnancy, or breastfeeding',
+        ja: '現在妊娠中、妊娠予定、または授乳中',
+        "zh-CN": '目前怀孕、计划怀孕或哺乳中',
+        "zh-TW": '目前懷孕、計劃懷孕或哺乳中'
       },
       emoji: '🤰'
     },
@@ -491,11 +713,17 @@ export const questions = {
       id: 'skin_allergy',
       label: {
         ko: '피부 알레르기 이력',
-        en: 'Skin Allergy History'
+        en: 'Skin Allergy History',
+        ja: '皮膚アレルギーの既往歴',
+        "zh-CN": '皮肤过敏史',
+        "zh-TW": '皮膚過敏史'
       },
       description: {
         ko: '알레르기성 피부 반응 이력',
-        en: 'History of allergic skin reactions'
+        en: 'History of allergic skin reactions',
+        ja: 'アレルギー性皮膚反応の既往',
+        "zh-CN": '过敏性皮肤反应史',
+        "zh-TW": '過敏性皮膚反應史'
       },
       emoji: '🌿'
     },
@@ -503,11 +731,17 @@ export const questions = {
       id: 'immunosuppressants',
       label: {
         ko: '면역 억제제 복용 중',
-        en: 'Taking Immunosuppressants'
+        en: 'Taking Immunosuppressants',
+        ja: '免疫抑制剤服用中',
+        "zh-CN": '服用免疫抑制剂',
+        "zh-TW": '服用免疫抑制劑'
       },
       description: {
         ko: '면역 체계를 억제하는 약물 복용 중',
-        en: 'On medications that suppress immune system'
+        en: 'On medications that suppress immune system',
+        ja: '免疫系を抑制する薬を服用中',
+        "zh-CN": '正在服用抑制免疫系统的药物',
+        "zh-TW": '正在服用抑制免疫系統的藥物'
       },
       emoji: '💊'
     },
@@ -515,11 +749,17 @@ export const questions = {
       id: 'skin_condition',
       label: {
         ko: '만성 피부 질환',
-        en: 'Chronic Skin Condition'
+        en: 'Chronic Skin Condition',
+        ja: '慢性皮膚疾患',
+        "zh-CN": '慢性皮肤病',
+        "zh-TW": '慢性皮膚病'
       },
       description: {
         ko: '아토피, 건선, 로제아 등',
-        en: 'Eczema, psoriasis, rosacea, etc.'
+        en: 'Eczema, psoriasis, rosacea, etc.',
+        ja: 'アトピー、乾癬、酒さなど',
+        "zh-CN": '湿疹、银屑病、酒渣鼻等',
+        "zh-TW": '濕疹、銀屑病、酒渣鼻等'
       },
       emoji: '🧴'
     },
@@ -527,11 +767,17 @@ export const questions = {
       id: 'antibiotics_or_steroids',
       label: {
         ko: '항생제 또는 스테로이드 복용 중',
-        en: 'Taking Antibiotics or Steroids'
+        en: 'Taking Antibiotics or Steroids',
+        ja: '抗生物質またはステロイド服用中',
+        "zh-CN": '服用抗生素或类固醇',
+        "zh-TW": '服用抗生素或類固醇'
       },
       description: {
         ko: '현재 항생제 또는 스테로이드 약물 복용 중',
-        en: 'Currently on antibiotics or steroid medications'
+        en: 'Currently on antibiotics or steroid medications',
+        ja: '現在抗生物質またはステロイド薬を服用中',
+        "zh-CN": '目前正在服用抗生素或类固醇药物',
+        "zh-TW": '目前正在服用抗生素或類固醇藥物'
       },
       emoji: '💉'
     },
@@ -539,11 +785,17 @@ export const questions = {
       id: 'keloid_tendency',
       label: {
         ko: '켈로이드 또는 비후성 흉터',
-        en: 'Keloid or Hypertrophic Scarring'
+        en: 'Keloid or Hypertrophic Scarring',
+        ja: 'ケロイドまたは肥厚性瘢痕',
+        "zh-CN": '瘢痕疙瘩或增生性疤痕',
+        "zh-TW": '瘢痕疙瘩或增生性疤痕'
       },
       description: {
         ko: '돌출된 흉터가 생기는 경향',
-        en: 'Tendency to form raised scars'
+        en: 'Tendency to form raised scars',
+        ja: '盛り上がった傷跡ができる傾向',
+        "zh-CN": '易形成隆起疤痕',
+        "zh-TW": '易形成隆起疤痕'
       },
       emoji: '🩹'
     },
@@ -551,11 +803,17 @@ export const questions = {
       id: 'none',
       label: {
         ko: '해당 없음',
-        en: 'None of the Above'
+        en: 'None of the Above',
+        ja: '該当なし',
+        "zh-CN": '以上都不是',
+        "zh-TW": '以上都不是'
       },
       description: {
         ko: '관련 건강 상태 없음',
-        en: 'No relevant medical conditions'
+        en: 'No relevant medical conditions',
+        ja: '関連する健康状態なし',
+        "zh-CN": '没有相关健康状况',
+        "zh-TW": '沒有相關健康狀況'
       },
       emoji: '✅'
     },
@@ -563,11 +821,17 @@ export const questions = {
       id: 'other',
       label: {
         ko: '기타',
-        en: 'Other'
+        en: 'Other',
+        ja: 'その他',
+        "zh-CN": '其他',
+        "zh-TW": '其他'
       },
       description: {
         ko: '텍스트 박스에 구체적으로 적어주세요',
-        en: 'Please specify in the text box'
+        en: 'Please specify in the text box',
+        ja: 'テキストボックスに具体的に記入してください',
+        "zh-CN": '请在文本框中具体说明',
+        "zh-TW": '請在文字方塊中具體說明'
       },
       emoji: '📝'
     }
@@ -583,7 +847,10 @@ export const questions = {
       id: "full-face", 
       label: {
         ko: "전체 얼굴",
-        en: "Full Face"
+        en: "Full Face",
+        ja: "顔全体",
+        "zh-CN": "全脸",
+        "zh-TW": "全臉"
       },
       emoji: "👤" 
     },
@@ -591,7 +858,10 @@ export const questions = {
       id: "upper-face", 
       label: {
         ko: "상안면 (이마, 눈)",
-        en: "Upper Face (Forehead, Eyes)"
+        en: "Upper Face (Forehead, Eyes)",
+        ja: "上顔面（額、目）",
+        "zh-CN": "上面部（额头、眼睛）",
+        "zh-TW": "上面部（額頭、眼睛）"
       },
       emoji: "👀" 
     },
@@ -599,7 +869,10 @@ export const questions = {
       id: "mid-face", 
       label: {
         ko: "중안면 (볼, 코)",
-        en: "Mid Face (Cheeks, Nose)"
+        en: "Mid Face (Cheeks, Nose)",
+        ja: "中顔面（頬、鼻）",
+        "zh-CN": "中面部（脸颊、鼻子）",
+        "zh-TW": "中面部（臉頰、鼻子）"
       },
       emoji: "😊" 
     },
@@ -607,7 +880,10 @@ export const questions = {
       id: "lower-face", 
       label: {
         ko: "하안면 (턱선, 턱)",
-        en: "Lower Face (Jawline, Chin)"
+        en: "Lower Face (Jawline, Chin)",
+        ja: "下顔面（フェイスライン、顎）",
+        "zh-CN": "下面部（下颌线、下巴）",
+        "zh-TW": "下面部（下頜線、下巴）"
       },
       emoji: "🦷" 
     },
@@ -615,7 +891,10 @@ export const questions = {
       id: "neck", 
       label: {
         ko: "목",
-        en: "Neck"
+        en: "Neck",
+        ja: "首",
+        "zh-CN": "颈部",
+        "zh-TW": "頸部"
       },
       emoji: "🦢" 
     },
@@ -627,55 +906,85 @@ export const questions = {
       id: "effectiveness",
       label: {
         ko: "효과",
-        en: "Effectiveness"
+        en: "Effectiveness",
+        ja: "効果",
+        "zh-CN": "效果",
+        "zh-TW": "效果"
       },
       description: {
         ko: "최고의 결과가 가장 중요함",
-        en: "Best results matter most"
+        en: "Best results matter most",
+        ja: "最高の結果が最も重要",
+        "zh-CN": "最好的结果最重要",
+        "zh-TW": "最好的結果最重要"
       },
     },
     {
       id: "price",
       label: {
         ko: "합리적인 가격",
-        en: "Affordable Price"
+        en: "Affordable Price",
+        ja: "リーズナブルな価格",
+        "zh-CN": "合理价格",
+        "zh-TW": "合理價格"
       },
       description: {
         ko: "예산에 맞는 옵션 선호",
-        en: "Budget-friendly options preferred"
+        en: "Budget-friendly options preferred",
+        ja: "予算に合ったオプションを希望",
+        "zh-CN": "偏好预算友好的选项",
+        "zh-TW": "偏好預算友好的選項"
       },
     },
     {
       id: "minimal_downtime",
       label: {
         ko: "최소 다운타임",
-        en: "Minimal Downtime"
+        en: "Minimal Downtime",
+        ja: "最小限のダウンタイム",
+        "zh-CN": "最小恢复期",
+        "zh-TW": "最小恢復期"
       },
       description: {
         ko: "빠른 회복이 중요함",
-        en: "Quick recovery is important"
+        en: "Quick recovery is important",
+        ja: "迅速な回復が重要",
+        "zh-CN": "快速恢复很重要",
+        "zh-TW": "快速恢復很重要"
       },
     },
     {
       id: "safety",
       label: {
         ko: "안전성 및 자연스러운 결과",
-        en: "Safety & Natural Results"
+        en: "Safety & Natural Results",
+        ja: "安全性と自然な結果",
+        "zh-CN": "安全性和自然效果",
+        "zh-TW": "安全性和自然效果"
       },
       description: {
         ko: "보수적이고 검증된 시술",
-        en: "Conservative, proven treatments"
+        en: "Conservative, proven treatments",
+        ja: "保守的で実証済みの施術",
+        "zh-CN": "保守且经过验证的治疗",
+        "zh-TW": "保守且經過驗證的治療"
       },
     },
     {
       id: "reviews",
       label: {
         ko: "높은 환자 평점",
-        en: "High Patient Reviews"
+        en: "High Patient Reviews",
+        ja: "高い患者評価",
+        "zh-CN": "患者高评价",
+        "zh-TW": "患者高評價"
       },
       description: {
         ko: "다른 사람들로부터 높은 평가",
-        en: "Highly rated by others"
+        en: "Highly rated by others",
+        ja: "他の人から高評価",
+        "zh-CN": "他人高度评价",
+        "zh-TW": "他人高度評價"
       },
     },
   ],
@@ -686,77 +995,119 @@ export const questions = {
       id: "never",
       label: {
         ko: "시술 경험 없음",
-        en: "Never Had Any Treatments"
+        en: "Never Had Any Treatments",
+        ja: "施術経験なし",
+        "zh-CN": "从未接受过治疗",
+        "zh-TW": "從未接受過治療"
       },
       description: {
         ko: "이번이 처음입니다",
-        en: "This will be my first time"
+        en: "This will be my first time",
+        ja: "今回が初めてです",
+        "zh-CN": "这是第一次",
+        "zh-TW": "這是第一次"
       },
     },
     {
       id: "injectables_recent",
       label: {
         ko: "주사 시술 (3개월 이내)",
-        en: "Injectables (within 3 months)"
+        en: "Injectables (within 3 months)",
+        ja: "注射施術（3ヶ月以内）",
+        "zh-CN": "注射治疗（3个月内）",
+        "zh-TW": "注射治療（3個月內）"
       },
       description: {
         ko: "최근 3개월 이내 보톡스, 필러 또는 유사 시술",
-        en: "Botox, Fillers, or similar within last 3 months"
+        en: "Botox, Fillers, or similar within last 3 months",
+        ja: "過去3ヶ月以内にボトックス、フィラーなど",
+        "zh-CN": "最近3个月内的肉毒杆菌、填充剂或类似治疗",
+        "zh-TW": "最近3個月內的肉毒桿菌、填充劑或類似治療"
       },
     },
     {
       id: "injectables_past",
       label: {
         ko: "주사 시술 (3개월 이상 전)",
-        en: "Injectables (more than 3 months ago)"
+        en: "Injectables (more than 3 months ago)",
+        ja: "注射施術（3ヶ月以上前）",
+        "zh-CN": "注射治疗（3个月以前）",
+        "zh-TW": "注射治療（3個月以前）"
       },
       description: {
         ko: "이전에 보톡스, 필러를 받았지만 최근은 아님",
-        en: "Had Botox, Fillers before but not recently"
+        en: "Had Botox, Fillers before but not recently",
+        ja: "以前にボトックス、フィラーを受けたが最近ではない",
+        "zh-CN": "以前接受过肉毒杆菌、填充剂但不是最近",
+        "zh-TW": "以前接受過肉毒桿菌、填充劑但不是最近"
       },
     },
     {
       id: "laser_recent",
       label: {
         ko: "레이저 시술 (2주 이내)",
-        en: "Laser Treatments (within 2 weeks)"
+        en: "Laser Treatments (within 2 weeks)",
+        ja: "レーザー施術（2週間以内）",
+        "zh-CN": "激光治疗（2周内）",
+        "zh-TW": "雷射治療（2週內）"
       },
       description: {
         ko: "최근 2주 이내 레이저 시술",
-        en: "Any laser procedure in last 2 weeks"
+        en: "Any laser procedure in last 2 weeks",
+        ja: "過去2週間以内のレーザー施術",
+        "zh-CN": "最近2周内的任何激光治疗",
+        "zh-TW": "最近2週內的任何雷射治療"
       },
     },
     {
       id: "laser_past",
       label: {
         ko: "레이저 시술 (2주 이상 전)",
-        en: "Laser Treatments (more than 2 weeks ago)"
+        en: "Laser Treatments (more than 2 weeks ago)",
+        ja: "レーザー施術（2週間以上前）",
+        "zh-CN": "激光治疗（2周以前）",
+        "zh-TW": "雷射治療（2週以前）"
       },
       description: {
         ko: "이전에 레이저 시술을 받은 적 있음",
-        en: "Had laser treatments before"
+        en: "Had laser treatments before",
+        ja: "以前にレーザー施術を受けた",
+        "zh-CN": "以前接受过激光治疗",
+        "zh-TW": "以前接受過雷射治療"
       },
     },
     {
       id: "other_treatments",
       label: {
         ko: "기타 미용 시술",
-        en: "Other Cosmetic Procedures"
+        en: "Other Cosmetic Procedures",
+        ja: "その他の美容施術",
+        "zh-CN": "其他美容疗程",
+        "zh-TW": "其他美容療程"
       },
       description: {
         ko: "화학적 필링, 마이크로니들링 등",
-        en: "Chemical peels, microneedling, etc."
+        en: "Chemical peels, microneedling, etc.",
+        ja: "ケミカルピーリング、マイクロニードリングなど",
+        "zh-CN": "化学换肤、微针等",
+        "zh-TW": "化學換膚、微針等"
       },
     },
     {
       id: "not_sure",
       label: {
         ko: "모르겠음 / 기억나지 않음",
-        en: "Not Sure / Can't Remember"
+        en: "Not Sure / Can't Remember",
+        ja: "わからない/覚えていない",
+        "zh-CN": "不确定/记不清",
+        "zh-TW": "不確定/記不清"
       },
       description: {
         ko: "세부 사항을 기억하지 못함",
-        en: "Don't recall the details"
+        en: "Don't recall the details",
+        ja: "詳細を覚えていない",
+        "zh-CN": "不记得细节",
+        "zh-TW": "不記得細節"
       },
     },
   ],
@@ -767,60 +1118,87 @@ demographicsBasic: [
       "required": false,
       "title": {
         "ko": "연령대",
-        "en": "Age group"
+        "en": "Age group",
+        "ja": "年齢層",
+        "zh-CN": "年龄段",
+        "zh-TW": "年齡段"
       },
       "helperText": {
         "ko": "연령대를 선택해주세요.\n정확한 시술 추천을 위해 간단히 참고합니다.",
-        "en": "Please select your age group.\nIt helps us provide more accurate recommendations."
+        "en": "Please select your age group.\nIt helps us provide more accurate recommendations.",
+        "ja": "年齢層を選択してください。\nより正確な施術のご提案に役立ちます。",
+        "zh-CN": "请选择您的年龄段。\n这有助于我们提供更准确的推荐。",
+        "zh-TW": "請選擇您的年齡段。\n這有助於我們提供更準確的推薦。"
       },
       "options": [
         {
           "value": "18_24",
           "label": {
             "ko": "18–24세",
-            "en": "18–24"
+            "en": "18–24",
+            "ja": "18–24歳",
+            "zh-CN": "18–24岁",
+            "zh-TW": "18–24歲"
           }
         },
         {
           "value": "25_34",
           "label": {
             "ko": "25–34세",
-            "en": "25–34"
+            "en": "25–34",
+            "ja": "25–34歳",
+            "zh-CN": "25–34岁",
+            "zh-TW": "25–34歲"
           }
         },
         {
           "value": "35_44",
           "label": {
             "ko": "35–44세",
-            "en": "35–44"
+            "en": "35–44",
+            "ja": "35–44歳",
+            "zh-CN": "35–44岁",
+            "zh-TW": "35–44歲"
           }
         },
         {
           "value": "45_54",
           "label": {
             "ko": "45–54세",
-            "en": "45–54"
+            "en": "45–54",
+            "ja": "45–54歳",
+            "zh-CN": "45–54岁",
+            "zh-TW": "45–54歲"
           }
         },
         {
           "value": "55_64",
           "label": {
             "ko": "55–64세",
-            "en": "55–64"
+            "en": "55–64",
+            "ja": "55–64歳",
+            "zh-CN": "55–64岁",
+            "zh-TW": "55–64歲"
           }
         },
         {
           "value": "65_plus",
           "label": {
             "ko": "65세 이상",
-            "en": "65+"
+            "en": "65+",
+            "ja": "65歳以上",
+            "zh-CN": "65岁以上",
+            "zh-TW": "65歲以上"
           }
         },
         {
           "value": "prefer_not_to_say",
           "label": {
             "ko": "답변하지 않음",
-            "en": "Prefer not to say"
+            "en": "Prefer not to say",
+            "ja": "回答しない",
+            "zh-CN": "不愿回答",
+            "zh-TW": "不願回答"
           }
         }
       ]
@@ -831,39 +1209,57 @@ demographicsBasic: [
       "required": false,
       "title": {
         "ko": "성별",
-        "en": "Gender"
+        "en": "Gender",
+        "ja": "性別",
+        "zh-CN": "性别",
+        "zh-TW": "性別"
       },
       "helperText": {
-        "ko": "성별을 선택해주세요.\n피부 타입과 반응이 성별에 따라 달라 정확도 향상에 도움이 됩니다.\n원치 않으시면 ‘답변하지 않음’을 선택하셔도 됩니다.",
-        "en": "Please select your gender.\nSkin characteristics can differ by gender, helping us personalize your recommendations.\nYou may choose “Prefer not to say.”"
+        "ko": "성별을 선택해주세요.\n피부 타입과 반응이 성별에 따라 달라 정확도 향상에 도움이 됩니다.\n원치 않으시면 '답변하지 않음'을 선택하셔도 됩니다.",
+        "en": "Please select your gender.\nSkin characteristics can differ by gender, helping us personalize your recommendations.\nYou may choose 'Prefer not to say.'",
+        "ja": "性別を選択してください。\n肌の特性は性別によって異なるため、より正確な推奨に役立ちます。\nご希望でない場合は「回答しない」を選択できます。",
+        "zh-CN": "请选择您的性别。\n皮肤特征可能因性别而异，这有助于我们提供个性化推荐。\n您可以选择'不愿回答'。",
+        "zh-TW": "請選擇您的性別。\n皮膚特徵可能因性別而異，這有助於我們提供個人化推薦。\n您可以選擇「不願回答」。"
       },
       "options": [
         {
           "value": "male",
           "label": {
             "ko": "남성",
-            "en": "Male"
+            "en": "Male",
+            "ja": "男性",
+            "zh-CN": "男性",
+            "zh-TW": "男性"
           }
         },
         {
           "value": "female",
           "label": {
             "ko": "여성",
-            "en": "Female"
+            "en": "Female",
+            "ja": "女性",
+            "zh-CN": "女性",
+            "zh-TW": "女性"
           }
         },
         {
           "value": "other",
           "label": {
             "ko": "기타",
-            "en": "Other"
+            "en": "Other",
+            "ja": "その他",
+            "zh-CN": "其他",
+            "zh-TW": "其他"
           }
         },
         {
           "value": "prefer_not_to_say",
           "label": {
             "ko": "답변하지 않음",
-            "en": "Prefer not to say"
+            "en": "Prefer not to say",
+            "ja": "回答しない",
+            "zh-CN": "不愿回答",
+            "zh-TW": "不願回答"
           }
         }
       ]
@@ -874,60 +1270,87 @@ demographicsBasic: [
       "required": false,
       "title": {
         "ko": "피부/인종 그룹",
-        "en": "Ethnic background / skin type group"
+        "en": "Ethnic background / skin type group",
+        "ja": "肌・人種グループ",
+        "zh-CN": "肤色/族裔群体",
+        "zh-TW": "膚色/族裔群體"
       },
       "helperText": {
-        "ko": "본인과 가장 가까운 피부·인종 그룹을 선택해주세요.\n피부 반응이 그룹별로 조금씩 달라 맞춤 추천에 도움이 됩니다.\n원치 않으시면 ‘답변하지 않음’을 선택하셔도 됩니다.",
-        "en": "Please choose the skin/ethnic group that best describes you.\nSkin responses can vary slightly across groups, helping us personalize your recommendations.\nYou may select “Prefer not to say.”"
+        "ko": "본인과 가장 가까운 피부·인종 그룹을 선택해주세요.\n피부 반응이 그룹별로 조금씩 달라 맞춤 추천에 도움이 됩니다.\n원치 않으시면 '답변하지 않음'을 선택하셔도 됩니다.",
+        "en": "Please choose the skin/ethnic group that best describes you.\nSkin responses can vary slightly across groups, helping us personalize your recommendations.\nYou may select 'Prefer not to say.'",
+        "ja": "ご自身に最も近い肌・人種グループを選択してください。\n肌の反応はグループごとに少しずつ異なり、パーソナライズされた推奨に役立ちます。\nご希望でない場合は「回答しない」を選択できます。",
+        "zh-CN": "请选择最符合您的肤色/族裔群体。\n不同群体的皮肤反应可能略有不同，这有助于我们提供个性化推荐。\n您可以选择'不愿回答'。",
+        "zh-TW": "請選擇最符合您的膚色/族裔群體。\n不同群體的皮膚反應可能略有不同，這有助於我們提供個人化推薦。\n您可以選擇「不願回答」。"
       },
       "options": [
         {
           "value": "asian",
           "label": {
             "ko": "동양 (Asian)",
-            "en": "Asian"
+            "en": "Asian",
+            "ja": "東洋系（Asian）",
+            "zh-CN": "亚洲人 (Asian)",
+            "zh-TW": "亞洲人 (Asian)"
           }
         },
         {
           "value": "white",
           "label": {
             "ko": "백인 (White / Caucasian)",
-            "en": "White (Caucasian)"
+            "en": "White (Caucasian)",
+            "ja": "白人（White / Caucasian）",
+            "zh-CN": "白人 (White / Caucasian)",
+            "zh-TW": "白人 (White / Caucasian)"
           }
         },
         {
           "value": "african",
           "label": {
             "ko": "흑인 (African / African-American)",
-            "en": "African / African-American"
+            "en": "African / African-American",
+            "ja": "黒人（African / African-American）",
+            "zh-CN": "非裔 (African / African-American)",
+            "zh-TW": "非裔 (African / African-American)"
           }
         },
         {
           "value": "hispanic",
           "label": {
             "ko": "히스패닉 (Hispanic / Latino)",
-            "en": "Hispanic / Latino"
+            "en": "Hispanic / Latino",
+            "ja": "ヒスパニック（Hispanic / Latino）",
+            "zh-CN": "西班牙裔 (Hispanic / Latino)",
+            "zh-TW": "西班牙裔 (Hispanic / Latino)"
           }
         },
         {
           "value": "middle_eastern",
           "label": {
             "ko": "중동 (Middle Eastern)",
-            "en": "Middle Eastern"
+            "en": "Middle Eastern",
+            "ja": "中東系（Middle Eastern）",
+            "zh-CN": "中东人 (Middle Eastern)",
+            "zh-TW": "中東人 (Middle Eastern)"
           }
         },
         {
           "value": "mixed",
           "label": {
             "ko": "혼합 (Mixed)",
-            "en": "Mixed"
+            "en": "Mixed",
+            "ja": "混合（Mixed）",
+            "zh-CN": "混合 (Mixed)",
+            "zh-TW": "混合 (Mixed)"
           }
         },
         {
           "value": "prefer_not_to_say",
           "label": {
             "ko": "답변하지 않음",
-            "en": "Prefer not to say"
+            "en": "Prefer not to say",
+            "ja": "回答しない",
+            "zh-CN": "不愿回答",
+            "zh-TW": "不願回答"
           }
         }
       ]
@@ -938,21 +1361,33 @@ demographicsBasic: [
       "required": false,
       "title": {
         "ko": "현재 거주 국가",
-        "en": "Current country of residence"
+        "en": "Current country of residence",
+        "ja": "現在の居住国",
+        "zh-CN": "当前居住国家",
+        "zh-TW": "當前居住國家"
       },
       "helperText": {
-        "ko": "현재 거주 중인 국가를 선택해주세요.\n국적이 아닌 ‘생활 중인 국가’ 기준이며, 기후·환경 차이가 시술 추천에 영향을 줄 수 있기 때문에 확인합니다.",
-        "en": "Please select the country you currently live in.\nThis refers to your place of residence (not nationality), and we ask because climate and environmental conditions can affect treatment recommendations."
+        "ko": "현재 거주 중인 국가를 선택해주세요.\n국적이 아닌 '생활 중인 국가' 기준이며, 기후·환경 차이가 시술 추천에 영향을 줄 수 있기 때문에 확인합니다.",
+        "en": "Please select the country you currently live in.\nThis refers to your place of residence (not nationality), and we ask because climate and environmental conditions can affect treatment recommendations.",
+        "ja": "現在お住まいの国を選択してください。\n国籍ではなく「居住している国」を基準とし、気候・環境の違いが施術推奨に影響する可能性があるため確認しています。",
+        "zh-CN": "请选择您目前居住的国家。\n这是指您的居住地（非国籍），我们询问是因为气候和环境条件可能会影响治疗建议。",
+        "zh-TW": "請選擇您目前居住的國家。\n這是指您的居住地（非國籍），我們詢問是因為氣候和環境條件可能會影響治療建議。"
       },
       "placeholder": {
         "ko": "거주 국가를 선택하세요",
-        "en": "Select your country"
+        "en": "Select your country",
+        "ja": "居住国を選択してください",
+        "zh-CN": "选择您的国家",
+        "zh-TW": "選擇您的國家"
       },
       "optionSource": {
         "type": "iso_3166_1_alpha_2",
         "note": {
           "ko": "프론트엔드에서 ISO 국가 코드 목록을 사용해 드롭다운을 구성하세요.",
-          "en": "Use the ISO country code list on the frontend to populate the dropdown."
+          "en": "Use the ISO country code list on the frontend to populate the dropdown.",
+          "ja": "フロントエンドでISO国コードリストを使用してドロップダウンを構成してください。",
+          "zh-CN": "在前端使用ISO国家代码列表填充下拉菜单。",
+          "zh-TW": "在前端使用ISO國家代碼清單填充下拉選單。"
         }
       },
       "extraOptions": [
@@ -960,7 +1395,10 @@ demographicsBasic: [
           "value": "prefer_not_to_say",
           "label": {
             "ko": "답변하지 않음",
-            "en": "Prefer not to say"
+            "en": "Prefer not to say",
+            "ja": "回答しない",
+            "zh-CN": "不愿回答",
+            "zh-TW": "不願回答"
           }
         }
       ]
@@ -971,15 +1409,24 @@ demographicsBasic: [
       "required": true,
       "title": {
         "ko": "이메일 주소",
-        "en": "Email Address"
+        "en": "Email Address",
+        "ja": "メールアドレス",
+        "zh-CN": "电子邮箱",
+        "zh-TW": "電子郵箱"
       },
       "helperText": {
         "ko": "필요시 상담관련 정보를 보내드리기 위해 사용됩니다.",
-        "en": "Used to send you consultation-related information if necessary."
+        "en": "Used to send you consultation-related information if necessary.",
+        "ja": "必要に応じて相談関連情報をお送りするために使用されます。",
+        "zh-CN": "用于在必要时向您发送咨询相关信息。",
+        "zh-TW": "用於在必要時向您發送諮詢相關資訊。"
       },
       "placeholder": {
         "ko": "이메일 주소를 입력하세요",
-        "en": "Enter your email address"
+        "en": "Enter your email address",
+        "ja": "メールアドレスを入力してください",
+        "zh-CN": "输入您的电子邮箱",
+        "zh-TW": "輸入您的電子郵箱"
       }
     },
     {
@@ -988,11 +1435,17 @@ demographicsBasic: [
       "required": true,
       "title": {
         "ko": "메신저 앱",
-        "en": "Messenger App"
+        "en": "Messenger App",
+        "ja": "メッセンジャーアプリ",
+        "zh-CN": "即时通讯软件",
+        "zh-TW": "即時通訊軟體"
       },
       "helperText": {
         "ko": "실시간 소통 가능한 메신저 앱을 최소 1개 이상 알려주세요. (예: WhatsApp, Instagram DM, Line, KakaoTalk)",
-        "en": "Please provide at least one instant messaging app for communication. (e.g., WhatsApp, Instagram DM, Line, KakaoTalk)."
+        "en": "Please provide at least one instant messaging app for communication. (e.g., WhatsApp, Instagram DM, Line, KakaoTalk).",
+        "ja": "リアルタイムで連絡可能なメッセンジャーアプリを最低1つ教えてください。（例：WhatsApp、Instagram DM、Line、KakaoTalk）",
+        "zh-CN": "请至少提供一个即时通讯软件。（例如：WhatsApp、Instagram DM、Line、KakaoTalk）",
+        "zh-TW": "請至少提供一個即時通訊軟體。（例如：WhatsApp、Instagram DM、Line、KakaoTalk）"
       }
     },
     {
@@ -1001,15 +1454,24 @@ demographicsBasic: [
       "required": false,
       "title": {
         "ko": "전화번호 (선택)",
-        "en": "Phone Number (Optional)"
+        "en": "Phone Number (Optional)",
+        "ja": "電話番号（任意）",
+        "zh-CN": "电话号码（可选）",
+        "zh-TW": "電話號碼（可選）"
       },
       "helperText": {
         "ko": "원활한 상담을 위해 전화번호를 입력해 주시는 것을 권장합니다. 가능한 메신저로 먼저 연락드리며 차선으로 SMS를 이용합니다.",
-        "en": "We recommend providing your phone number for smoother communication and consultation. We will primarily reach out via messenger and use SMS as a secondary option."
+        "en": "We recommend providing your phone number for smoother communication and consultation. We will primarily reach out via messenger and use SMS as a secondary option.",
+        "ja": "スムーズな相談のため、電話番号の入力をお勧めします。可能な限りメッセンジャーで先に連絡し、次善策としてSMSを利用します。",
+        "zh-CN": "我们建议您提供电话号码以便更顺畅的沟通和咨询。我们将主要通过即时通讯联系您，短信作为次要选项。",
+        "zh-TW": "我們建議您提供電話號碼以便更順暢的溝通和諮詢。我們將主要透過即時通訊聯絡您，簡訊作為次要選項。"
       },
       "placeholder": {
         "ko": "전화번호 입력 (숫자만)",
-        "en": "Enter phone number (numbers only)"
+        "en": "Enter phone number (numbers only)",
+        "ja": "電話番号を入力（数字のみ）",
+        "zh-CN": "输入电话号码（仅数字）",
+        "zh-TW": "輸入電話號碼（僅數字）"
       }
     }
   ],
@@ -1021,43 +1483,70 @@ demographicsBasic: [
     instructions: [
       {
         ko: "상담받고 싶은 부위에 초점을 맞춘 사진을 업로드해주세요.",
-        en: "Please upload photos focusing on the area(s) you'd like to consult about."
+        en: "Please upload photos focusing on the area(s) you'd like to consult about.",
+        ja: "相談したい部位に焦点を当てた写真をアップロードしてください。",
+        "zh-CN": "请上传聚焦于您想咨询的部位的照片。",
+        "zh-TW": "請上傳聚焦於您想諮詢的部位的照片。"
       },
       {
         ko: "전체 얼굴 평가를 원하시면 정면 사진을 제공해주세요. 얼굴이 이미지 높이의 최소 60%를 차지하도록 해주세요.",
-        en: "If you'd like a full-face evaluation, please provide a front-facing photo. Make sure your face occupies at least 60% of the image height."
+        en: "If you'd like a full-face evaluation, please provide a front-facing photo. Make sure your face occupies at least 60% of the image height.",
+        ja: "顔全体の評価をご希望の場合は、正面写真を提供してください。顔が画像の高さの最低60%を占めるようにしてください。",
+        "zh-CN": "如果您想要全脸评估，请提供正面照片。确保您的脸部至少占图像高度的60%。",
+        "zh-TW": "如果您想要全臉評估，請提供正面照片。確保您的臉部至少佔圖像高度的60%。"
       }
     ],
     uploadArea: {
       title: {
         ko: "클릭하거나 이미지를 드래그 앤 드롭하여 업로드하세요",
-        en: "Click or drag & drop images to upload"
+        en: "Click or drag & drop images to upload",
+        ja: "クリックまたは画像をドラッグ＆ドロップしてアップロード",
+        "zh-CN": "点击或拖放图片上传",
+        "zh-TW": "點擊或拖放圖片上傳"
       },
       subtitle: {
         ko: "최대 10MB까지 업로드 가능합니다.",
-        en: "You can upload up to 10MB."
+        en: "You can upload up to 10MB.",
+        ja: "最大10MBまでアップロード可能です。",
+        "zh-CN": "最多可上传10MB。",
+        "zh-TW": "最多可上傳10MB。"
       }
     },
     skipButton: {
       ko: "이 단계 건너뛰기",
-      en: "Skip this step"
+      en: "Skip this step",
+      ja: "このステップをスキップ",
+      "zh-CN": "跳过此步骤",
+      "zh-TW": "跳過此步驟"
     },
     privacyNotice: {
       ko: "모든 이미지는 안전하게 저장되며, 진단 목적 외에는 사용되지 않습니다.",
-      en: "All images are securely stored, and will not be used for any purpose other than diagnosis."
+      en: "All images are securely stored, and will not be used for any purpose other than diagnosis.",
+      ja: "すべての画像は安全に保存され、診断目的以外には使用されません。",
+      "zh-CN": "所有图片都会安全存储，不会用于诊断以外的任何目的。",
+      "zh-TW": "所有圖片都會安全儲存，不會用於診斷以外的任何目的。"
     },
     errors: {
       invalidFileType: {
         ko: "이미지 파일만 업로드 가능합니다",
-        en: "Only image files are allowed"
+        en: "Only image files are allowed",
+        ja: "画像ファイルのみアップロード可能です",
+        "zh-CN": "仅允许上传图片文件",
+        "zh-TW": "僅允許上傳圖片檔案"
       },
       fileSizeExceeded: {
         ko: "파일 크기는 10MB 이하여야 합니다",
-        en: "File size must be less than 10MB"
+        en: "File size must be less than 10MB",
+        ja: "ファイルサイズは10MB以下である必要があります",
+        "zh-CN": "文件大小必须小于10MB",
+        "zh-TW": "檔案大小必須小於10MB"
       },
       allowedFormats: {
         ko: "PNG, JPG, JPEG 파일만 업로드 가능합니다",
-        en: "Only PNG and JPG, JPEG files can be uploaded"
+        en: "Only PNG and JPG, JPEG files can be uploaded",
+        ja: "PNG、JPG、JPEGファイルのみアップロード可能です",
+        "zh-CN": "仅支持PNG和JPG、JPEG文件上传",
+        "zh-TW": "僅支援PNG和JPG、JPEG檔案上傳"
       }
     }
   },
@@ -1068,39 +1557,66 @@ demographicsBasic: [
   consultSchedule: {
     infoMessage: {
       ko: "최대 3개의 희망 시간을 선택해 주세요. 병원에서 가능한 시간으로 확정해 드립니다.",
-      en: "Select up to 3 preferred time slots. The clinic will confirm the best available time."
+      en: "Select up to 3 preferred time slots. The clinic will confirm the best available time.",
+      ja: "最大3つの希望時間を選択してください。クリニックが可能な時間を確定します。",
+      "zh-CN": "最多选择3个首选时间段。诊所将确认最佳可用时间。",
+      "zh-TW": "最多選擇3個首選時間段。診所將確認最佳可用時間。"
     },
     slotLabel: {
       ko: "희망 시간",
-      en: "Preferred Time Slot"
+      en: "Preferred Time Slot",
+      ja: "希望時間",
+      "zh-CN": "首选时间段",
+      "zh-TW": "首選時間段"
     },
     dateLabel: {
       ko: "날짜",
-      en: "Date"
+      en: "Date",
+      ja: "日付",
+      "zh-CN": "日期",
+      "zh-TW": "日期"
     },
     datePlaceholder: {
       ko: "날짜 선택",
-      en: "Select date"
+      en: "Select date",
+      ja: "日付を選択",
+      "zh-CN": "选择日期",
+      "zh-TW": "選擇日期"
     },
     timeLabel: {
       ko: "시간",
-      en: "Time"
+      en: "Time",
+      ja: "時間",
+      "zh-CN": "时间",
+      "zh-TW": "時間"
     },
     timeCaption: {
       ko: "시간",
-      en: "Time"
+      en: "Time",
+      ja: "時間",
+      "zh-CN": "时间",
+      "zh-TW": "時間"
     },
     timePlaceholder: {
       ko: "시간 선택",
-      en: "Select time"
+      en: "Select time",
+      ja: "時間を選択",
+      "zh-CN": "选择时间",
+      "zh-TW": "選擇時間"
     },
     addSlotButton: {
       ko: "시간 추가하기",
-      en: "Add Another Time Slot"
+      en: "Add Another Time Slot",
+      ja: "時間を追加",
+      "zh-CN": "添加另一个时间段",
+      "zh-TW": "新增另一個時間段"
     },
     timezoneLabel: {
       ko: "시간대",
-      en: "Timezone"
+      en: "Timezone",
+      ja: "タイムゾーン",
+      "zh-CN": "时区",
+      "zh-TW": "時區"
     }
   },
 };

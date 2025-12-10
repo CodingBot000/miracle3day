@@ -1,6 +1,9 @@
+'use client';
+
 import React from 'react';
 import { RecommendedItem } from '@/app/[locale]/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching';
 import TreatmentCard from './TreatmentCard';
+import { useTranslations } from 'next-intl';
 
 export interface TierSectionProps {
   tier: 1 | 2 | 3 | 4;
@@ -8,33 +11,35 @@ export interface TierSectionProps {
 }
 
 const TierSection: React.FC<TierSectionProps> = ({ tier, treatments }) => {
+  const t = useTranslations('recommend_treatment.TierSection');
+
   if (treatments.length === 0) return null;
 
   const getTierTitle = (tier: 1 | 2 | 3 | 4) => {
     switch (tier) {
       case 1:
-        return 'Dermatology Treatments';
+        return t('titles.dermatology');
       case 2:
-        return 'Anti-Aging Treatments';
+        return t('titles.antiAging');
       case 3:
-        return 'Facial Contouring Treatments';
+        return t('titles.facialContouring');
       case 4:
-        return 'Other Treatments';
+        return t('titles.other');
       default:
-        return 'Treatments';
+        return t('titles.treatments');
     }
   };
 
   const getTierDescription = (tier: 1 | 2 | 3 | 4) => {
     switch (tier) {
       case 1:
-        return 'Foundation treatments for skin health and texture';
+        return t('descriptions.dermatology');
       case 2:
-        return 'Advanced treatments for aging concerns';
+        return t('descriptions.antiAging');
       case 3:
-        return 'Specialized treatments for facial shaping';
+        return t('descriptions.facialContouring');
       case 4:
-        return 'Additional complementary treatments';
+        return t('descriptions.other');
       default:
         return '';
     }

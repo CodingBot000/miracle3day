@@ -1,6 +1,9 @@
+'use client';
+
 import React from 'react';
 import { Card } from '@/components/ui/card';
 import { DollarSign } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export interface PriceBreakdownProps {
   totalPriceKRW: number;
@@ -8,6 +11,8 @@ export interface PriceBreakdownProps {
 }
 
 const PriceBreakdown: React.FC<PriceBreakdownProps> = ({ totalPriceKRW, totalPriceUSD }) => {
+  const t = useTranslations('recommend_treatment.PriceBreakdown');
+
   const formatKRW = (amount: number) => {
     return new Intl.NumberFormat('ko-KR', {
       style: 'currency',
@@ -30,7 +35,7 @@ const PriceBreakdown: React.FC<PriceBreakdownProps> = ({ totalPriceKRW, totalPri
         {/* Header */}
         <div className="flex items-center space-x-2">
           <DollarSign className="w-5 h-5 text-rose-600" />
-          <h3 className="text-lg font-semibold text-rose-900">Total Investment</h3>
+          <h3 className="text-lg font-semibold text-rose-900">{t('title')}</h3>
         </div>
 
         {/* Divider */}
@@ -39,14 +44,14 @@ const PriceBreakdown: React.FC<PriceBreakdownProps> = ({ totalPriceKRW, totalPri
         {/* Price details */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-gray-700 font-medium">Korean Won (KRW)</span>
+            <span className="text-gray-700 font-medium">{t('krw')}</span>
             <span className="text-xl font-bold text-rose-900">
               {formatKRW(totalPriceKRW)}
             </span>
           </div>
 
           <div className="flex items-center justify-between">
-            <span className="text-gray-700 font-medium">US Dollar (USD)</span>
+            <span className="text-gray-700 font-medium">{t('usd')}</span>
             <span className="text-xl font-bold text-rose-900">
               {formatUSD(totalPriceUSD)}
             </span>
@@ -59,8 +64,7 @@ const PriceBreakdown: React.FC<PriceBreakdownProps> = ({ totalPriceKRW, totalPri
         {/* Note */}
         <div className="bg-white rounded-lg p-3">
           <p className="text-xs text-gray-600">
-            <span className="font-medium">Note:</span> Prices are estimates based on average market rates.
-            Final pricing may vary by clinic and individual treatment plans.
+            <span className="font-medium">{t('note')}</span> {t('noteText')}
           </p>
         </div>
       </div>

@@ -1,0 +1,181 @@
+{
+  "Header": {
+    "title": "Your Personalized Treatment Plan",
+    "subtitle": "Based on your consultation, we've curated the perfect combination of treatments",
+    "yourBudget": "Your Budget",
+    "withinBudget": "Within Budget",
+    "overBudget": "Over Budget",
+    "treatments": "Treatments",
+    "recommended": "Recommended",
+    "investmentKRW": "Investment (KRW)",
+    "investmentUSD": "Investment (USD)",
+    "totalCost": "Total Cost",
+    "approxValue": "Approx. Value",
+    "personalizedSkinType": "Personalized for Your Skin Type",
+    "importantNotes": "Important Notes"
+  },
+  "Result": {
+    "analysisComplete": "Analysis Complete",
+    "noTreatmentsTitle": "No Treatments Available",
+    "noTreatmentsDesc": "Based on your selections and current conditions, we couldn't find suitable treatments at this time. Please review the details below for more information.",
+    "whatIsTimeline": "What is Timeline?",
+    "tryAgain": "Try Again",
+    "goToHome": "Go to Home"
+  },
+  "ActionButtons": {
+    "findClinics": "Find Clinics",
+    "shareResults": "Share Results",
+    "bookConsultation": "Book Consultation",
+    "ctaDescription": "Ready to start your journey? Find qualified clinics near you or book a consultation to discuss your personalized treatment plan."
+  },
+  "ShareModal": {
+    "title": "Share Your Results",
+    "description": "Share your personalized treatment plan with friends or save it for later",
+    "copied": "Copied!",
+    "copy": "Copy",
+    "email": "Email",
+    "sms": "SMS",
+    "pdf": "PDF",
+    "privacyNote": "Keep your results private or share them with trusted friends and family",
+    "shareTextTitle": "My Personalized Treatment Plan",
+    "shareTextTotal": "Total:",
+    "emailSubject": "My Treatment Plan",
+    "pdfComingSoon": "PDF download feature coming soon!"
+  },
+  "Excluded": {
+    "title": "Excluded Treatments",
+    "upgradeOpportunities": "Upgrade Opportunities",
+    "categories": {
+      "budgetConstraints": "Budget Constraints",
+      "treatmentAreaMismatch": "Treatment Area Mismatch",
+      "painSensitivity": "Pain Sensitivity",
+      "downtimeConcerns": "Downtime/Recovery Concerns",
+      "medicalRestrictions": "Medical Restrictions",
+      "recentTreatmentConflicts": "Recent Treatment Conflicts",
+      "treatmentOptimization": "Treatment Optimization",
+      "other": "Other"
+    }
+  },
+  "TreatmentCard": {
+    "tiers": {
+      "dermatology": "Dermatology",
+      "antiAging": "Anti-Aging",
+      "facialContouring": "Facial Contouring",
+      "other": "Other"
+    },
+    "importance": {
+      "essential": "Essential",
+      "recommended": "Recommended",
+      "optional": "Optional",
+      "standard": "Standard"
+    },
+    "whyRecommended": "Why recommended:",
+    "price": "Price",
+    "usd": "USD"
+  },
+  "TierSection": {
+    "titles": {
+      "dermatology": "Dermatology Treatments",
+      "antiAging": "Anti-Aging Treatments",
+      "facialContouring": "Facial Contouring Treatments",
+      "other": "Other Treatments",
+      "treatments": "Treatments"
+    },
+    "descriptions": {
+      "dermatology": "Foundation treatments for skin health and texture",
+      "antiAging": "Advanced treatments for aging concerns",
+      "facialContouring": "Specialized treatments for facial shaping",
+      "other": "Additional complementary treatments"
+    }
+  },
+  "PriceBreakdown": {
+    "title": "Total Investment",
+    "krw": "Korean Won (KRW)",
+    "usd": "US Dollar (USD)",
+    "note": "Note:",
+    "noteText": "Prices are estimates based on average market rates. Final pricing may vary by clinic and individual treatment plans."
+  },
+  "ClimateWarning": {
+    "uvRiskLevel": "UV Risk Level",
+    "recommendation": "Recommendation"
+  },
+  "ViewToggle": {
+    "cardView": "Card View",
+    "timeline": "Timeline"
+  },
+  "TimelineInfo": {
+    "title": "What is Treatment Timeline?",
+    "subtitle": "Understanding your personalized treatment schedule",
+    "intro": "Cosmetic treatments require proper spacing between sessions. This timeline shows the recommended order and timing for your personalized treatment plan.",
+    "whyOrderMatters": "Why Does Order Matter?",
+    "skinRecoveryTitle": "Skin Recovery Time",
+    "skinRecoveryDesc": "Your skin needs healing time between treatments",
+    "maximizeResultsTitle": "Maximize Results",
+    "maximizeResultsDesc": "Proper sequencing ensures optimal effectiveness",
+    "minimizeSideEffectsTitle": "Minimize Side Effects",
+    "minimizeSideEffectsDesc": "Adequate spacing reduces risks and complications",
+    "treatmentCategories": "Treatment Categories",
+    "dermatology": "Dermatology",
+    "dermatologyTreatments": "Laser toning, IPL, Chemical peels",
+    "dermatologyDesc": "Treats texture, pigmentation, pores, acne",
+    "antiAging": "Anti-Aging",
+    "antiAgingTreatments": "Botox, Skin boosters, Rejuran",
+    "antiAgingDesc": "Reduces wrinkles, enhances elasticity",
+    "facialContouring": "Facial Contouring",
+    "facialContouringTreatments": "Fillers, Ulthera, Thermage",
+    "facialContouringDesc": "Enhances volume, lifting, facial contours",
+    "specialtyCare": "Specialty Care",
+    "specialtyCareTreatments": "Body treatments, hair care",
+    "specialtyCareDesc": "Specialized procedures & treatments",
+    "howToReadTitle": "How to Read the Timeline",
+    "howToRead1": "Session numbers indicate the recommended treatment order",
+    "howToRead2": "Order is arranged for safety and effectiveness",
+    "howToRead3": "You don't need all treatments - choose based on your goals",
+    "howToRead4": "Multiple treatments cannot be done simultaneously",
+    "importantNotes": "Important Notes",
+    "note1": "Check downtime info on each treatment card",
+    "note2": "Actual schedule adjusts after doctor consultation",
+    "note3": "Some treatments can be combined in one session",
+    "note4": "Choose based on your budget and schedule",
+    "needAdvice": "Need Personalized Advice?",
+    "adviceDesc": "Schedule a free consultation to create your customized treatment plan.",
+    "gotIt": "Got it"
+  },
+  "TimelineView": {
+    "treatmentCategories": "Treatment Categories",
+    "dermatology": "Dermatology",
+    "dermatologyDesc": "Skin health, acne, pigmentation & texture treatments",
+    "antiAging": "Anti-Aging",
+    "antiAgingDesc": "Wrinkle reduction, lifting & skin rejuvenation",
+    "facialContouring": "Facial Contouring",
+    "facialContouringDesc": "V-line, jawline & facial reshaping procedures",
+    "specialtyCare": "Specialty Care",
+    "specialtyCareDesc": "Body treatments, hair care & specialized procedures",
+    "journeyTitle": "Your Journey to Beautiful Skin",
+    "journeyDesc": "Follow this personalized timeline to achieve your aesthetic goals",
+    "duration": {
+      "singleSession": "Single Session",
+      "oneToTwoMonths": "1-2 Months",
+      "twoToThreeMonths": "2-3 Months",
+      "threeToFourMonths": "3-4 Months"
+    }
+  },
+  "TimelineItem": {
+    "sessionPrice": "Session Price"
+  },
+  "JourneyPath": {
+    "journeyStarts": "Your Journey Starts",
+    "journeyStartsMobile": "Journey Starts",
+    "session1": "Session 1",
+    "treatment": "Treatment",
+    "treatments": "Treatments",
+    "expectedCompletion": "Expected Completion",
+    "disclaimer": "Timeline may vary based on individual response and clinic scheduling. Consult with your provider for a personalized treatment schedule."
+  },
+  "DataLost": {
+    "title": "Data has been lost",
+    "description": "Please fill out the questionnaire again.",
+    "retryButton": "Fill out questionnaire again",
+    "homeButton": "Go to Home"
+  }
+}

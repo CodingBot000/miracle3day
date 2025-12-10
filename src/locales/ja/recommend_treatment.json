@@ -1,0 +1,181 @@
+{
+  "Header": {
+    "title": "あなた専用の施術プラン",
+    "subtitle": "カウンセリングに基づき、最適な施術の組み合わせをご提案します",
+    "yourBudget": "ご予算",
+    "withinBudget": "予算内",
+    "overBudget": "予算超過",
+    "treatments": "施術",
+    "recommended": "おすすめ",
+    "investmentKRW": "費用（KRW）",
+    "investmentUSD": "費用（USD）",
+    "totalCost": "合計費用",
+    "approxValue": "概算費用",
+    "personalizedSkinType": "あなたの肌タイプに合わせてカスタマイズ",
+    "importantNotes": "重要な注意事項"
+  },
+  "Result": {
+    "analysisComplete": "分析完了",
+    "noTreatmentsTitle": "利用可能な施術がありません",
+    "noTreatmentsDesc": "お選びいただいた条件と現在の状態に基づき、現時点で適切な施術が見つかりませんでした。詳細は以下をご確認ください。",
+    "whatIsTimeline": "タイムラインとは？",
+    "tryAgain": "もう一度試す",
+    "goToHome": "ホームへ"
+  },
+  "ActionButtons": {
+    "findClinics": "クリニックを探す",
+    "shareResults": "結果をシェア",
+    "bookConsultation": "相談予約",
+    "ctaDescription": "あなたの美容の旅を始める準備はできていますか？お近くの認定クリニックを探すか、カスタマイズされた施術プランについて相談予約をしましょう。"
+  },
+  "ShareModal": {
+    "title": "結果をシェア",
+    "description": "あなた専用の施術プランを友達とシェアするか、後で見るために保存しましょう",
+    "copied": "コピーしました！",
+    "copy": "コピー",
+    "email": "メール",
+    "sms": "SMS",
+    "pdf": "PDF",
+    "privacyNote": "結果を非公開にするか、信頼できる友人や家族とシェアしましょう",
+    "shareTextTitle": "私のパーソナライズ施術プラン",
+    "shareTextTotal": "合計：",
+    "emailSubject": "私の施術プラン",
+    "pdfComingSoon": "PDFダウンロード機能は近日公開予定です！"
+  },
+  "Excluded": {
+    "title": "除外された施術",
+    "upgradeOpportunities": "アップグレードの機会",
+    "categories": {
+      "budgetConstraints": "予算の制約",
+      "treatmentAreaMismatch": "施術部位の不一致",
+      "painSensitivity": "痛みへの敏感さ",
+      "downtimeConcerns": "ダウンタイム・回復に関する懸念",
+      "medicalRestrictions": "医療上の制限",
+      "recentTreatmentConflicts": "最近の施術との競合",
+      "treatmentOptimization": "施術の最適化",
+      "other": "その他"
+    }
+  },
+  "TreatmentCard": {
+    "tiers": {
+      "dermatology": "皮膚科",
+      "antiAging": "アンチエイジング",
+      "facialContouring": "顔の輪郭形成",
+      "other": "その他"
+    },
+    "importance": {
+      "essential": "必須",
+      "recommended": "推奨",
+      "optional": "任意",
+      "standard": "標準"
+    },
+    "whyRecommended": "推奨理由：",
+    "price": "料金",
+    "usd": "USD"
+  },
+  "TierSection": {
+    "titles": {
+      "dermatology": "皮膚科施術",
+      "antiAging": "アンチエイジング施術",
+      "facialContouring": "顔の輪郭形成施術",
+      "other": "その他の施術",
+      "treatments": "施術"
+    },
+    "descriptions": {
+      "dermatology": "肌の健康と質感のための基礎施術",
+      "antiAging": "老化に関する悩みのための高度な施術",
+      "facialContouring": "顔の形成のための専門施術",
+      "other": "追加の補完的な施術"
+    }
+  },
+  "PriceBreakdown": {
+    "title": "総費用",
+    "krw": "韓国ウォン（KRW）",
+    "usd": "米ドル（USD）",
+    "note": "注意：",
+    "noteText": "料金は平均的な市場価格に基づく概算です。最終的な料金はクリニックや個別の施術プランによって異なる場合があります。"
+  },
+  "ClimateWarning": {
+    "uvRiskLevel": "紫外線リスクレベル",
+    "recommendation": "推奨事項"
+  },
+  "ViewToggle": {
+    "cardView": "カードビュー",
+    "timeline": "タイムライン"
+  },
+  "TimelineInfo": {
+    "title": "施術タイムラインとは？",
+    "subtitle": "あなた専用の施術スケジュールを理解する",
+    "intro": "美容施術にはセッション間の適切な間隔が必要です。このタイムラインは、あなた専用の施術プランの推奨順序とタイミングを示しています。",
+    "whyOrderMatters": "なぜ順序が重要なのか？",
+    "skinRecoveryTitle": "肌の回復時間",
+    "skinRecoveryDesc": "施術間に肌の回復時間が必要です",
+    "maximizeResultsTitle": "結果を最大化",
+    "maximizeResultsDesc": "適切な順序により最適な効果が得られます",
+    "minimizeSideEffectsTitle": "副作用を最小限に",
+    "minimizeSideEffectsDesc": "適切な間隔によりリスクと合併症を軽減します",
+    "treatmentCategories": "施術カテゴリー",
+    "dermatology": "皮膚科",
+    "dermatologyTreatments": "レーザートーニング、IPL、ケミカルピーリング",
+    "dermatologyDesc": "質感、色素沈着、毛穴、ニキビの治療",
+    "antiAging": "アンチエイジング",
+    "antiAgingTreatments": "ボトックス、スキンブースター、リジュラン",
+    "antiAgingDesc": "シワの軽減、弾力性の向上",
+    "facialContouring": "顔の輪郭形成",
+    "facialContouringTreatments": "フィラー、ウルセラ、サーマージ",
+    "facialContouringDesc": "ボリューム増強、リフティング、顔の輪郭",
+    "specialtyCare": "専門ケア",
+    "specialtyCareTreatments": "ボディトリートメント、ヘアケア",
+    "specialtyCareDesc": "専門的な処置と施術",
+    "howToReadTitle": "タイムラインの見方",
+    "howToRead1": "セッション番号は推奨される施術の順序を示します",
+    "howToRead2": "順序は安全性と有効性のために配置されています",
+    "howToRead3": "すべての施術が必要というわけではありません - 目標に基づいて選択してください",
+    "howToRead4": "複数の施術を同時に行うことはできません",
+    "importantNotes": "重要な注意事項",
+    "note1": "各施術カードのダウンタイム情報を確認してください",
+    "note2": "実際のスケジュールは医師との相談後に調整されます",
+    "note3": "一部の施術は1回のセッションで組み合わせることができます",
+    "note4": "ご予算とスケジュールに基づいて選択してください",
+    "needAdvice": "個別のアドバイスが必要ですか？",
+    "adviceDesc": "無料相談を予約して、カスタマイズされた施術プランを作成しましょう。",
+    "gotIt": "了解しました"
+  },
+  "TimelineView": {
+    "treatmentCategories": "施術カテゴリー",
+    "dermatology": "皮膚科",
+    "dermatologyDesc": "肌の健康、ニキビ、色素沈着・質感の施術",
+    "antiAging": "アンチエイジング",
+    "antiAgingDesc": "シワの軽減、リフティング・肌の若返り",
+    "facialContouring": "顔の輪郭形成",
+    "facialContouringDesc": "Vライン、フェイスライン・顔の形成施術",
+    "specialtyCare": "専門ケア",
+    "specialtyCareDesc": "ボディトリートメント、ヘアケア・専門的な処置",
+    "journeyTitle": "美しい肌への旅",
+    "journeyDesc": "このパーソナライズされたタイムラインに従って、あなたの美容目標を達成しましょう",
+    "duration": {
+      "singleSession": "単回セッション",
+      "oneToTwoMonths": "1-2ヶ月",
+      "twoToThreeMonths": "2-3ヶ月",
+      "threeToFourMonths": "3-4ヶ月"
+    }
+  },
+  "TimelineItem": {
+    "sessionPrice": "セッション料金"
+  },
+  "JourneyPath": {
+    "journeyStarts": "あなたの旅の始まり",
+    "journeyStartsMobile": "旅の始まり",
+    "session1": "セッション1",
+    "treatment": "施術",
+    "treatments": "施術",
+    "expectedCompletion": "完了予定",
+    "disclaimer": "タイムラインは個人の反応やクリニックのスケジュールによって異なる場合があります。パーソナライズされた施術スケジュールについては、担当医にご相談ください。"
+  },
+  "DataLost": {
+    "title": "データが失われました",
+    "description": "もう一度アンケートにご記入ください。",
+    "retryButton": "アンケートに再記入",
+    "homeButton": "ホームへ"
+  }
+}

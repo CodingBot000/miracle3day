@@ -1,9 +1,12 @@
+'use client';
+
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { RecommendationOutput } from '@/app/[locale]/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching';
 import { Copy, Check, Mail, MessageSquare, Download } from 'lucide-react';
 import { krwToUsd } from '../questionnaire/questionScript/matching/utils/helpers';
+import { useTranslations } from 'next-intl';
 
 export interface ShareModalProps {
   open: boolean;
@@ -16,6 +19,7 @@ const ShareModal: React.FC<ShareModalProps> = ({
   onOpenChange,
   output,
 }) => {
+  const t = useTranslations('recommend_treatment.ShareModal');
   const [copied, setCopied] = useState(false);
 
   const formatKRW = (amount: number) => {
@@ -40,11 +44,11 @@ const ShareModal: React.FC<ShareModalProps> = ({
       .map((t, i) => `${i + 1}. ${t.label} - ${formatUSD(krwToUsd(t.priceKRW))}`)
       .join('\n');
 
-    return `My Personalized Treatment Plan
+    return `${t('shareTextTitle')}
 
 ${treatmentList}
 
-Total: ${formatUSD(output.totalPriceUSD)} (${formatKRW(output.totalPriceKRW)})`;
+${t('shareTextTotal')} ${formatUSD(output.totalPriceUSD)} (${formatKRW(output.totalPriceKRW)})`;
   };
 
   const handleCopyToClipboard = async () => {
@@ -70,16 +74,16 @@ Total: ${formatUSD(output.totalPriceUSD)} (${formatKRW(output.totalPriceKRW)})`;
 
   const handleDownloadPDF = () => {
     // This is a placeholder - actual PDF generation would require a library like jsPDF
-    alert('PDF download feature coming soon!');
+    alert(t('pdfComingSoon'));
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-light">Share Your Results</DialogTitle>
+          <DialogTitle className="text-2xl font-light">{t('title')}</DialogTitle>
           <DialogDescription>
-            Share your personalized treatment plan with friends or save it for later
+            {t('description')}
           </DialogDescription>
         </DialogHeader>
 
@@ -102,12 +106,12 @@ Total: ${formatUSD(output.totalPriceUSD)} (${formatKRW(output.totalPriceKRW)})`;
               {copied ? (
                 <>
                   <Check className="w-4 h-4 text-green-600" />
-                  <span>Copied!</span>
+                  <span>{t('copied')}</span>
                 </>
               ) : (
                 <>
                   <Copy className="w-4 h-4" />
-                  <span>Copy</span>
+                  <span>{t('copy')}</span>
                 </>
               )}
             </Button>
@@ -119,7 +123,7 @@ Total: ${formatUSD(output.totalPriceUSD)} (${formatKRW(output.totalPriceKRW)})`;
               className="flex items-center justify-center space-x-2"
             >
               <Mail className="w-4 h-4" />
-              <span>Email</span>
+              <span>{t('email')}</span>
             </Button>
 
             {/* SMS */}
@@ -129,7 +133,7 @@ Total: ${formatUSD(output.totalPriceUSD)} (${formatKRW(output.totalPriceKRW)})`;
               className="flex items-center justify-center space-x-2"
             >
               <MessageSquare className="w-4 h-4" />
-              <span>SMS</span>
+              <span>{t('sms')}</span>
             </Button>
 
             {/* Download PDF */}
@@ -139,14 +143,14 @@ Total: ${formatUSD(output.totalPriceUSD)} (${formatKRW(output.totalPriceKRW)})`;
               className="flex items-center justify-center space-x-2"
             >
               <Download className="w-4 h-4" />
-              <span>PDF</span>
+              <span>{t('pdf')}</span>
             </Button>
           </div>
 
           {/* Social media note */}
           <div className="pt-4 border-t border-gray-200">
             <p className="text-xs text-gray-600 text-center">
-              Keep your results private or share them with trusted friends and family
+              {t('privacyNote')}
             </p>
           </div>
         </div>

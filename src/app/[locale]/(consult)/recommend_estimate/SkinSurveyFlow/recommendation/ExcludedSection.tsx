@@ -1,7 +1,10 @@
+'use client';
+
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { ExcludedItem } from '@/app/[locale]/(consult)/recommend_estimate/SkinSurveyFlow/questionnaire/questionScript/matching';
 import { ChevronDown, AlertCircle, Lightbulb, XCircle } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export interface ExcludedSectionProps {
   excluded: ExcludedItem[];
@@ -12,6 +15,7 @@ const ExcludedSection: React.FC<ExcludedSectionProps> = ({
   excluded,
   upgradeSuggestions,
 }) => {
+  const t = useTranslations('recommend_treatment.Excluded');
   const [isExpanded, setIsExpanded] = useState(false);
 
   if (excluded.length === 0 && upgradeSuggestions.length === 0) {
@@ -24,19 +28,21 @@ const ExcludedSection: React.FC<ExcludedSectionProps> = ({
     const reason = item.reason.toLowerCase();
 
     if (reason.includes('budget') || reason.includes('price') || reason.includes('cost')) {
-      category = 'Budget Constraints';
+      category = 'budgetConstraints';
     } else if (reason.includes('area') || reason.includes('not relevant to selected')) {
-      category = 'Treatment Area Mismatch';
+      category = 'treatmentAreaMismatch';
     } else if (reason.includes('pain')) {
-      category = 'Pain Sensitivity';
+      category = 'painSensitivity';
     } else if (reason.includes('downtime') || reason.includes('recovery')) {
-      category = 'Downtime/Recovery Concerns';
+      category = 'downtimeConcerns';
     } else if (reason.includes('pregnancy') || reason.includes('blood clotting') || reason.includes('immunosuppression') || reason.includes('skin condition') || reason.includes('allergy') || reason.includes('keloid')) {
-      category = 'Medical Restrictions';
+      category = 'medicalRestrictions';
     } else if (reason.includes('in the last') || reason.includes('recent')) {
-      category = 'Recent Treatment Conflicts';
+      category = 'recentTreatmentConflicts';
     } else if (reason.includes('duplication') || reason.includes('removed to avoid')) {
-      category = 'Treatment Optimization';
+      category = 'treatmentOptimization';
+    } else {
+      category = 'other';
     }
 
     if (!acc[category]) {
@@ -48,14 +54,14 @@ const ExcludedSection: React.FC<ExcludedSectionProps> = ({
 
   const getCategoryIcon = (category: string) => {
     const icons: Record<string, string> = {
-      'Budget Constraints': '💰',
-      'Treatment Area Mismatch': '📍',
-      'Pain Sensitivity': '😣',
-      'Downtime/Recovery Concerns': '⏱️',
-      'Medical Restrictions': '⚕️',
-      'Recent Treatment Conflicts': '🕐',
-      'Treatment Optimization': '🔄',
-      'Other': '📋'
+      'budgetConstraints': '💰',
+      'treatmentAreaMismatch': '📍',
+      'painSensitivity': '😣',
+      'downtimeConcerns': '⏱️',
+      'medicalRestrictions': '⚕️',
+      'recentTreatmentConflicts': '🕐',
+      'treatmentOptimization': '🔄',
+      'other': '📋'
     };
     return icons[category] || '📋';
   };
@@ -73,7 +79,7 @@ const ExcludedSection: React.FC<ExcludedSectionProps> = ({
           </div>
           <div className="text-left">
             <span className="font-semibold text-gray-900">
-              Excluded Treatments
+              {t('title')}
             </span>
             <span className="ml-2 px-2.5 py-0.5 bg-gray-100 text-gray-600 text-sm font-medium rounded-full">
               {excluded.length}
@@ -93,7 +99,7 @@ const ExcludedSection: React.FC<ExcludedSectionProps> = ({
             <Card key={category} className="p-5 bg-white border-0 shadow-lg rounded-2xl overflow-hidden">
               <div className="flex items-center gap-3 mb-4">
                 <span className="text-xl">{getCategoryIcon(category)}</span>
-                <h4 className="font-semibold text-gray-900">{category}</h4>
+                <h4 className="font-semibold text-gray-900">{t(`categories.${category}`)}</h4>
                 <span className="px-2 py-0.5 bg-gray-100 text-gray-500 text-xs font-medium rounded-full">
                   {items.length}
                 </span>
@@ -124,7 +130,7 @@ const ExcludedSection: React.FC<ExcludedSectionProps> = ({
                 </div>
                 <div className="flex-1 min-w-0">
                   <h4 className="font-semibold text-gray-900 mb-3">
-                    Upgrade Opportunities
+                    {t('upgradeOpportunities')}
                   </h4>
                   <div className="space-y-3">
                     {upgradeSuggestions.map((suggestion, index) => (

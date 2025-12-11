@@ -406,10 +406,10 @@ export async function sendPushToAdmins(
 
     // 2. 각 관리자의 FCM 토큰 조회 및 푸시 전송
     for (const { email } of adminEmails) {
-      // 관리자의 member_id 조회
+      // 관리자의 member_id 조회 (authorized_ids에 있으면 role과 무관하게 푸시)
       const member = await q<{ id_uuid: string }>(
-        'SELECT id_uuid FROM members WHERE email = $1 AND role = $2',
-        [email, 'hospital_admin']
+        'SELECT id_uuid FROM members WHERE email = $1',
+        [email]
       );
 
       if (member.length === 0) {

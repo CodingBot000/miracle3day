@@ -134,6 +134,35 @@ export async function GET(req: Request) {
         await session.save();
         return res;
       }
+      // ✅ Admin 권한 체크 추가
+      const adminAccess = await q(
+        `SELECT a.id_uuid_hospital, h.name_en as hospital_name
+         FROM admin a
+         LEFT JOIN hospitals h ON h.id = a.id_uuid_hospital
+         WHERE $1 = ANY(a.authorized_ids)`,
+        [email]
+      );
+
+      let userRole: 'user' | 'hospital_admin' | 'super_admin' = 'user';
+      let hospitalAccess: Array<{ hospital_id: string; hospital_name?: string }> = [];
+
+      if (adminAccess.length > 0) {
+        // Gmail이 admin에 등록되어 있음 → 관리자 권한 부여
+        userRole = 'hospital_admin';
+        hospitalAccess = adminAccess.map(row => ({
+          hospital_id: row.id_uuid_hospital,
+          hospital_name: row.hospital_name,
+        }));
+
+        // members.role 업데이트
+        await q(
+          `UPDATE members SET role = $1 WHERE id_uuid = $2`,
+          ['hospital_admin', memberId]
+        );
+
+        console.log(`[Admin] Access granted for ${email}:`, hospitalAccess);
+      }
+
       // 기존 회원 - 바로 active 상태로 설정하고 원래 페이지로 이동
       const res = NextResponse.redirect(new URL(redirectUrl, baseUrl));
       const session = await getIronSession(req, res, sessionOptions) as any;
@@ -146,6 +175,8 @@ export async function GET(req: Request) {
         name: payload.name as string,
         status: "active",
         id_uuid: memberId,
+        role: userRole,
+        hospitalAccess,
       };
       await session.save();
       return res;

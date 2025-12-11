@@ -2,7 +2,7 @@
 
 import { UserOutputDto } from "@/app/api/auth/getUser/getUser.dto";
 import LogoutAction from "@/components/molecules/LogoutAction";
-import { Calendar, Camera, ChevronRight, MessageCircle } from "lucide-react";
+import { Calendar, Camera, ChevronRight, MessageCircle, Settings } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";;
 import { findCountry } from "@/constants/country";
@@ -200,6 +200,14 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
                 </Link>
               </div>
               
+              <div className="flex justify-between items-center p-4 border-t">
+                <span className="text-gray-600">Settings</span>
+                <Link href="/user/settings" className="flex items-center text-gray-400 hover:text-gray-600">
+                  <Settings className="w-5 h-5 mr-2" />
+                  <ChevronRight className="w-5 h-5" />
+                </Link>
+              </div>
+
               <div className="flex justify-between items-center p-4 border-t">
               <Link
                 href="/legal/cookie-policy"

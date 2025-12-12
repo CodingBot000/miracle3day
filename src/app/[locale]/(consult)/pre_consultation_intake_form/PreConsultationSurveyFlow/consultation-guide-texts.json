@@ -1,0 +1,147 @@
+{
+  "ko": {
+    "title": "언제 어디서든,",
+    "subtitle": "전문의와 1:1 화상상담",
+    "step1": {
+      "number": "STEP 1",
+      "title": "문진표 작성",
+      "description": "피부 타입, 고민 사항, 개선 목표 등을 입력해주세요",
+      "note": "(필요시 해당 부위 사진 첨부 가능)"
+    },
+    "step2": {
+      "number": "STEP 2",
+      "title": "상담 일정 선택",
+      "description": "희망하는 날짜와 시간을 최대 3개까지 선택해주세요",
+      "note": "당신이 세계 어디에 있든, 언제든 상담이 가능합니다"
+    },
+    "step3": {
+      "number": "STEP 3",
+      "title": "일정 확정",
+      "description": "의료진이 문진표를 검토하고 상담 일정을 확정합니다"
+    },
+    "step4": {
+      "number": "STEP 4",
+      "title": "1:1 화상상담 진행",
+      "description": "예약된 시간에 의료진과 실시간 상담을 통해",
+      "highlight": "당신만을 위한 맞춤 케어 플랜",
+      "suffix": "을 제안받으세요"
+    },
+    "cta": "바로 시작해요!"
+  },
+  "en": {
+    "title": "Anytime, Anywhere,",
+    "subtitle": "1:1 Video Consultation with Medical Professionals",
+    "step1": {
+      "number": "STEP 1",
+      "title": "Complete Medical Form",
+      "description": "Share your skin type, concerns, and improvement goals",
+      "note": "(Optional: Upload photos of the area)"
+    },
+    "step2": {
+      "number": "STEP 2",
+      "title": "Select Consultation Time",
+      "description": "Choose up to 3 preferred dates and times",
+      "note": "Consultations available worldwide, at your convenience"
+    },
+    "step3": {
+      "number": "STEP 3",
+      "title": "Confirmation",
+      "description": "Medical professionals review your form and confirm the appointment"
+    },
+    "step4": {
+      "number": "STEP 4",
+      "title": "Live Video Consultation",
+      "description": "Connect with medical professionals in real-time to receive",
+      "highlight": "Your Personalized Care Plan",
+      "suffix": ""
+    },
+    "cta": "Get Started!"
+  },
+  "ja": {
+    "title": "いつでもどこでも、",
+    "subtitle": "医療専門家との1:1ビデオ相談",
+    "step1": {
+      "number": "STEP 1",
+      "title": "問診票の作成",
+      "description": "肌タイプ、お悩み、改善目標などを入力してください",
+      "note": "(必要に応じて該当部位の写真添付可能)"
+    },
+    "step2": {
+      "number": "STEP 2",
+      "title": "相談日程の選択",
+      "description": "ご希望の日時を最大3つまで選択してください",
+      "note": "世界中どこにいても、いつでも相談可能です"
+    },
+    "step3": {
+      "number": "STEP 3",
+      "title": "日程確定",
+      "description": "医療スタッフが問診票を確認し、相談日程を確定します"
+    },
+    "step4": {
+      "number": "STEP 4",
+      "title": "1:1ビデオ相談の実施",
+      "description": "予約時間に医療スタッフとリアルタイム相談を通じて",
+      "highlight": "あなただけのカスタムケアプラン",
+      "suffix": "をご提案いたします"
+    },
+    "cta": "今すぐ始める！"
+  },
+  "zh-CN": {
+    "title": "随时随地，",
+    "subtitle": "与医疗专家1对1视频咨询",
+    "step1": {
+      "number": "STEP 1",
+      "title": "填写问诊表",
+      "description": "请输入您的皮肤类型、关注问题、改善目标等",
+      "note": "(可选：上传相关部位照片)"
+    },
+    "step2": {
+      "number": "STEP 2",
+      "title": "选择咨询时间",
+      "description": "请选择最多3个希望的日期和时间",
+      "note": "无论您身在世界何处，随时都可以咨询"
+    },
+    "step3": {
+      "number": "STEP 3",
+      "title": "确认日程",
+      "description": "医疗团队审核问诊表并确认咨询时间"
+    },
+    "step4": {
+      "number": "STEP 4",
+      "title": "1对1视频咨询",
+      "description": "在预约时间与医疗团队实时咨询，获得",
+      "highlight": "专属定制护理方案",
+      "suffix": ""
+    },
+    "cta": "立即开始！"
+  },
+  "zh-TW": {
+    "title": "隨時隨地，",
+    "subtitle": "與醫療專家1對1視訊諮詢",
+    "step1": {
+      "number": "STEP 1",
+      "title": "填寫問診表",
+      "description": "請輸入您的膚質類型、關注問題、改善目標等",
+      "note": "(可選：上傳相關部位照片)"
+    },
+    "step2": {
+      "number": "STEP 2",
+      "title": "選擇諮詢時間",
+      "description": "請選擇最多3個希望的日期和時間",
+      "note": "無論您身在世界何處，隨時都可以諮詢"
+    },
+    "step3": {
+      "number": "STEP 3",
+      "title": "確認日程",
+      "description": "醫療團隊審核問診表並確認諮詢時間"
+    },
+    "step4": {
+      "number": "STEP 4",
+      "title": "1對1視訊諮詢",
+      "description": "在預約時間與醫療團隊即時諮詢，獲得",
+      "highlight": "專屬客製化護理方案",
+      "suffix": ""
+    },
+    "cta": "立即開始！"
+  }
+}

@@ -114,7 +114,7 @@ export default function SettingsPage() {
       <h1 className="text-3xl font-bold mb-8">Settings</h1>
 
       {/* 사용자 정보 */}
-      <div className="bg-white rounded-lg shadow p-6 mb-6">
+      {/* <div className="bg-white rounded-lg shadow p-6 mb-6">
         <h2 className="text-xl font-semibold mb-4">My Profile</h2>
         <div className="flex items-center space-x-4">
           {auth.avatar && (
@@ -134,7 +134,7 @@ export default function SettingsPage() {
             )}
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* 관리자 전용 섹션 */}
       {auth.role === 'hospital_admin' && (

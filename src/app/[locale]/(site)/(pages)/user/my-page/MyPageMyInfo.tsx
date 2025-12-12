@@ -123,7 +123,7 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
         <div className="p-4">
           {/* Profile Image Section */}
           <div className="flex items-start justify-between mb-8">
-            <div className="flex items-center gap-4">
+            <div className="flex items-start gap-4">
               <div className="relative">
                 <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
                   <Image
@@ -178,7 +178,7 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
             <div className="bg-white rounded-lg shadow-sm">
               {renderProfileField("Gender", user?.userInfo?.gender ? (user.userInfo.gender === "male" ? "Male" : user.userInfo.gender === "female" ? "Female" : "Other") : null, !user?.userInfo?.gender)}
               {renderProfileField("Nationality", user?.userInfo?.id_country ? findCountry(user.userInfo.id_country)?.country_name : null, !user?.userInfo?.id_country)}
-              {renderProfileField("Phone Number Verification", "Phone Number Verification", false)}
+              {/* {renderProfileField("Phone Number Verification", "Phone Number Verification", false)} */}
               {renderProfileField("Email", user?.userInfo?.email, false)}
               {renderProfileField("Secondary Email", user?.userInfo?.secondary_email, false)}
               

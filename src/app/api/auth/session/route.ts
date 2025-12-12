@@ -25,19 +25,25 @@ export async function GET(req: Request) {
 
       // ✅ role이 hospital_admin이면 hospitalAccess 재조회
       if (member.role === 'hospital_admin') {
-        const adminAccess = await q(
-          `SELECT a.id_uuid_hospital, h.name_en as hospital_name
-           FROM admin a
-           LEFT JOIN hospitals h ON h.id = a.id_uuid_hospital
-           WHERE $1 = ANY(a.authorized_ids)`,
-          [session.auth.email]
-        );
+        try {
+          const adminAccess = await q(
+            `SELECT a.id_uuid_hospital, h.name_en as hospital_name
+             FROM admin a
+             LEFT JOIN hospital h ON h.id_uuid = a.id_uuid_hospital
+             WHERE $1 = ANY(a.authorized_ids)`,
+            [session.auth.email]
+          );
 
-        session.auth.role = 'hospital_admin';
-        session.auth.hospitalAccess = adminAccess.map((row: any) => ({
-          hospital_id: row.id_uuid_hospital,
-          hospital_name: row.hospital_name,
-        }));
+          session.auth.role = 'hospital_admin';
+          session.auth.hospitalAccess = adminAccess.map((row: any) => ({
+            hospital_id: row.id_uuid_hospital,
+            hospital_name: row.hospital_name,
+          }));
+        } catch (adminError) {
+          console.error('⚠️ Admin access refresh failed:', adminError);
+          session.auth.role = 'hospital_admin';
+          session.auth.hospitalAccess = [];
+        }
       } else {
         session.auth.role = member.role || 'user';
         session.auth.hospitalAccess = [];

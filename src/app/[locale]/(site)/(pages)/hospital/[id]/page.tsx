@@ -8,7 +8,7 @@ import { q, one } from "@/lib/db";
 import { DoctorData } from "@/models/hospitalData.dto";
 
 type Props = {
-  params: { id: string };
+  params: { id: string; locale: string };
   searchParams: { tab: string };
 };
 
@@ -95,23 +95,130 @@ async function getHospitalMainDirect(id_uuid: string) {
   }
 }
 
+// export async function generateMetadata(
+//   { params, searchParams: _searchParams }: Props,
+//   parent: ResolvingMetadata
+// ): Promise<Metadata> {
+//   log.debug(`HospitalDetailPage generateMetadata params.id: ${params?.id}`);
+
+//   const data = await getHospitalMainDirect(params?.id);
+
+//   const previousImages = (await parent).openGraph?.images || [];
+
+//   if (!data) {
+//     return { title: "Hospital Not Found" };
+//   }
+
+//   return {
+//     title: `${data.hospital_info.name} | Hospital Detail`,
+//     openGraph: {
+//       images: [...data.hospital_info.imageurls || [], ...previousImages],
+//     },
+//   };
+// }
+
 export async function generateMetadata(
   { params, searchParams: _searchParams }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  log.debug(`HospitalDetailPage generateMetadata params.id: ${params?.id}`);
-
+  const locale = params?.locale || 'en';
   const data = await getHospitalMainDirect(params?.id);
   const previousImages = (await parent).openGraph?.images || [];
-
+  
   if (!data) {
     return { title: "Hospital Not Found" };
   }
 
+  const info = data.hospital_info;
+  const details = data.hospital_details;
+  
+  // 병원명 (영어 우선)
+  const hospitalName = info.name_en || info.name;
+  
+  // 지역명
+  const district = info.address_gu_en || 'Seoul';
+  
+  // 지원 언어 변환
+  interface LanguageMap {
+    [key: string]: string;
+  }
+
+  const langMap: LanguageMap = {
+    'en-US': 'English',
+    'ja-JP': 'Japanese', 
+    'zh-TW': 'Chinese',
+    'zh-CN': 'Chinese',
+    'zh-HK': 'Cantonese',
+    'ko-KR': 'Korean',
+    'th-TH': 'Thai',
+    'vi-VN': 'Vietnamese'
+  };
+  
+  const languages: string = (details?.available_languages as string[] | undefined)
+    ?.map((lang: string) => langMap[lang] || lang)
+    ?.filter((v: string, i: number, a: string[]) => a.indexOf(v) === i)
+    ?.slice(0, 3)
+    ?.join(', ') || 'English';
+
+  // 의사 수
+  const doctorCount = data.doctors?.length || 0;
+  
+  // 역 근처 정보
+  const nearStation = info.directions_to_clinic_en || '';
+  
+  // 썸네일
+  const thumbnail = info.thumbnail_url || info.imageurls?.[0];
+
+  // SEO 타이틀 (60자 이내)
+  const title = `${hospitalName} ${district} - Reviews & Booking | ${languages}`;
+  
+  // SEO 설명 (155자 이내)
+  const description = `Book ${hospitalName} in ${district}, Seoul. ${doctorCount} doctors. ${nearStation ? nearStation + '.' : ''} ${languages} support. Korean dermatology & aesthetics at local prices.`;
+
+  // 키워드
+  const keywords = [
+    hospitalName,
+    `${hospitalName} reviews`,
+    `${district} dermatology`,
+    'Korean skin clinic',
+    'Seoul dermatology booking',
+    'Korea medical tourism',
+    'Korean beauty clinic',
+    'K-beauty treatments'
+  ];
+
   return {
-    title: `${data.hospital_info.name} | Hospital Detail`,
+    title,
+    description,
+    keywords,
     openGraph: {
-      images: [...data.hospital_info.imageurls || [], ...previousImages],
+      title: `${hospitalName} - Korean Beauty Clinic in ${district}`,
+      description,
+      images: thumbnail 
+        ? [{ url: thumbnail, width: 1200, height: 630 }, ...previousImages]
+        : previousImages,
+      type: 'website',
+      locale: locale,
+      siteName: 'Mimotok',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${hospitalName} | Mimotok`,
+      description,
+      images: thumbnail ? [thumbnail] : [],
+    },
+    alternates: {
+      canonical: `https://www.mimotok.com/en/hospital/${info.id_uuid}`,
+      languages: {
+        'en': `/en/hospital/${info.id_uuid}`,
+        'ko': `/ko/hospital/${info.id_uuid}`,
+        'ja': `/ja/hospital/${info.id_uuid}`,
+        'zh-TW': `/zh-TW/hospital/${info.id_uuid}`,
+      },
+    },
+    robots: {
+      index: true,
+      follow: true,
     },
   };
 }

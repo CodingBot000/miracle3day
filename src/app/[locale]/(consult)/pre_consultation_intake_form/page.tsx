@@ -1,6 +1,7 @@
 "use client";
 
 import PreConsultationIntakeForm from "./PreConsultationSurveyFlow/PreConsultationIntakeForm";
+import ConsultationGuidePage from "./PreConsultationSurveyFlow/ConsultationGuidePage";
 import { useState, useEffect } from "react";
 import { useLocale } from "next-intl";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -9,19 +10,38 @@ import { introModal } from "./pre_consultation_intake/form-definition_pre_con_ba
 import { getLocalizedText } from "@/utils/i18n";
 
 const INTRO_COOKIE_KEY = "pre_consultation_intro_hidden";
+const GUIDE_COOKIE_KEY = "pre_consultation_guide_seen";
 
 export default function PreConsultationIntakeFormPage() {
+  const [showGuide, setShowGuide] = useState(true);
   const [showIntroModal, setShowIntroModal] = useState(false);
   const [dontShowAgain, setDontShowAgain] = useState(false);
   const locale = useLocale();
 
   useEffect(() => {
-    // 쿠키 확인하여 모달 표시 여부 결정
+    // 가이드 페이지를 이미 봤는지 확인
+    const guideSeen = Cookies.get(GUIDE_COOKIE_KEY);
+    if (guideSeen) {
+      setShowGuide(false);
+      // 가이드를 이미 본 경우, 인트로 모달 체크
+      const introHidden = Cookies.get(INTRO_COOKIE_KEY);
+      if (!introHidden) {
+        setShowIntroModal(true);
+      }
+    }
+  }, []);
+
+  const handleGuideStart = () => {
+    // 가이드 페이지를 봤다고 쿠키 저장 (세션 동안만)
+    Cookies.set(GUIDE_COOKIE_KEY, "true");
+    setShowGuide(false);
+
+    // 인트로 모달 표시 여부 확인
     const introHidden = Cookies.get(INTRO_COOKIE_KEY);
     if (!introHidden) {
       setShowIntroModal(true);
     }
-  }, []);
+  };
 
   const handleConfirm = () => {
     if (dontShowAgain) {
@@ -30,6 +50,11 @@ export default function PreConsultationIntakeFormPage() {
     }
     setShowIntroModal(false);
   };
+
+  // 가이드 페이지 표시
+  if (showGuide) {
+    return <ConsultationGuidePage locale={locale} onStart={handleGuideStart} />;
+  }
 
   return (
     <div>

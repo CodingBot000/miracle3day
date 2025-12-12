@@ -5,12 +5,22 @@ export const sessionOptions: SessionOptions = {
   password: process.env.SESSION_PASSWORD!,
   cookieName: "app_session",
   cookieOptions: {
-    // HTTPS 환경이면 secure: true (ngrok, production 포함)
-    secure: process.env.NODE_ENV === "production" || process.env.APP_URL?.startsWith("https://"),
+    // secure flag는 요청 프로토콜에 따라 결정됨 (middleware에서 동적 설정)
+    // 기본값: production이면 true, 개발 환경이면 false
+    secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
     maxAge: 60 * 60 * 24 * 365, // 1년 (초 단위)
   },
 };
+
+// 요청별로 dynamic secure flag 설정 헬퍼
+export const getSessionOptions = (isSecure: boolean): SessionOptions => ({
+  ...sessionOptions,
+  cookieOptions: {
+    ...sessionOptions.cookieOptions,
+    secure: isSecure || process.env.NODE_ENV === "production",
+  },
+});
 
 declare module "iron-session" {
   interface IronSessionData {

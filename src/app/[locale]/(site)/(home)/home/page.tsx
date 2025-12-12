@@ -33,6 +33,16 @@ import QuestionsView from "@/app/[locale]/(site)/(community)/community/Questions
 import HeadSection from "./HeadSection";
 import { motion } from "framer-motion";
 import KBeautyGuideSection from "./components/KBeautyGuideSeciont";
+import { Metadata } from 'next';
+import { getHomeMetadata } from '@/lib/metadata/homeMetadata';
+
+export async function generateMetadata({ 
+  params 
+}: { 
+  params: { locale: string } 
+}): Promise<Metadata> {
+  return getHomeMetadata(params.locale);
+}
 
 export default async function HomePage() {
   // const bannerItem = await getBannerAPI();

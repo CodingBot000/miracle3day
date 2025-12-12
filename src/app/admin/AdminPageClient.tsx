@@ -48,6 +48,10 @@ export default function AdminPageClient({
     router.push(url);
   };
 
+  const handleManageAdminAccount = () => {
+    router.push('/admin/manage-admin-account');
+  }
+
   const handleSupportTreatmentInput = () => {
     // router.push('/admin/support-treatment-input');
     router.push('/admin/products/input');
@@ -81,20 +85,27 @@ export default function AdminPageClient({
     <div className='flex flex-col gap-4'>
       <button
         onClick={handleNavigateToUpload}
-        className={`w-full font-medium py-3 px-4 rounded-lg transition-colors duration-200 text-white ${
-          hasClinicInfo
-            ? 'bg-blue-600 hover:bg-blue-700'
-            : 'bg-green-600 hover:bg-green-700'
-        }`}
+        className="w-full font-medium py-3 px-4 rounded-lg transition-colors duration-200 border-2 border-black bg-white text-black hover:bg-gray-100"
       >
         {hasClinicInfo
           ? '병원정보보기'
-          : '병원정보입력하기'}
+          : '* 병원정보입력하기 *(필수)'}
       </button>
 
       <button
+        onClick={handleManageAdminAccount}
+        disabled={!hasClinicInfo}
+        className="w-full font-medium py-3 px-4 rounded-lg transition-colors duration-200 border-2 border-black bg-white text-black hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        {hasClinicInfo
+          ? '관리자계정관리 및 시작화면관리'
+          : '(병원정보 입력 후 이용 가능)관리자계정관리 및 시작화면관리'}
+      </button>    
+      
+      <button
         onClick={handleSupportTreatmentInput}
-         className={`w-full font-medium py-3 px-4 rounded-lg transition-colors duration-200 bg-purple-500 text-white`}
+        disabled={!hasClinicInfo}
+        className="w-full font-medium py-3 px-4 rounded-lg transition-colors duration-200 border-2 border-black bg-white text-black hover:bg-gray-100"
       >
         상품 정보 입력 하기 (제공 시술 정보 입력)
 {/* /Users/switch/Documents/웹개발요청/complete/beauty-main/src/app/hospital/[id]/reservation/ReservationClient.tsx */}
@@ -102,14 +113,16 @@ export default function AdminPageClient({
 
       <button
         onClick={handleReservationDashBoard}
-        className="w-full font-medium py-3 px-4 rounded-lg transition-colors duration-200 bg-orange-500 hover:bg-orange-600 text-white"
+        disabled={!hasClinicInfo}
+        className="w-full font-medium py-3 px-4 rounded-lg transition-colors duration-200 border-2 border-black bg-white text-black hover:bg-gray-100"
       >
         예약정보 보기
 {/* /Users/switch/Documents/웹개발요청/complete/beauty-main/src/app/hospital/[id]/reservation/ReservationClient.tsx */}
       </button>
       <button
         onClick={handleReservationVideoConsultDashBoard}
-        className="w-full font-medium py-3 px-4 rounded-lg transition-colors duration-200 bg-amber-600 hover:bg-amber-700 text-white"
+        disabled={!hasClinicInfo}
+        className="w-full font-medium py-3 px-4 rounded-lg transition-colors duration-200 border-2 border-black bg-white text-black hover:bg-gray-100"
       >
         화상상담 예약정보 보기
 
@@ -118,7 +131,8 @@ export default function AdminPageClient({
 
       <button
         onClick={handleChatMessages}
-        className="w-full font-medium py-3 px-4 rounded-lg transition-colors duration-200 bg-teal-600 hover:bg-teal-700 text-white relative"
+        disabled={!hasClinicInfo}
+        className="w-full font-medium py-3 px-4 rounded-lg transition-colors duration-200 border-2 border-black bg-white text-black hover:bg-gray-100 relative"
       >
         <span className="flex items-center justify-center gap-2">
           <span>환자 문의 채팅</span>
@@ -133,7 +147,8 @@ export default function AdminPageClient({
       {currentUser === process.env.NEXT_PUBLIC_SUPER_ADMIN! && (
         <button
           onClick={handleConsultationSubmissions}
-          className="w-full font-medium py-3 px-4 rounded-lg transition-colors duration-200 bg-purple-600 hover:bg-purple-700 text-white"
+          disabled={!hasClinicInfo}
+          className="w-full font-medium py-3 px-4 rounded-lg transition-colors duration-200 border-2 border-black bg-white text-black hover:bg-gray-100"
         >
           문진표 요청 조회하기
         </button>
@@ -142,7 +157,7 @@ export default function AdminPageClient({
       {isSuperAdmin && (
         <button
           onClick={handleCreateAccount}
-          className="w-full font-medium py-3 px-4 rounded-lg transition-colors duration-200 bg-indigo-600 hover:bg-indigo-700 text-white"
+          className="w-full font-medium py-3 px-4 rounded-lg transition-colors duration-200 border-2 border-black bg-white text-black hover:bg-gray-100"
         >
           병원 계정 신규 발급
         </button>

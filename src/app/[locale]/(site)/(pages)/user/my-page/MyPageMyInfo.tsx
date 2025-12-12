@@ -2,7 +2,7 @@
 
 import { UserOutputDto } from "@/app/api/auth/getUser/getUser.dto";
 import LogoutAction from "@/components/molecules/LogoutAction";
-import { Calendar, Camera, ChevronRight, MessageCircle } from "lucide-react";
+import { Calendar, Camera, ChevronRight, MessageCircle, Settings } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";;
 import { findCountry } from "@/constants/country";
@@ -27,7 +27,8 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
   const [avatarUrl, setAvatarUrl] = useState<string>(user?.userInfo?.avatar || "/default/profile_default.png");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { updateAvatar } = useUserStore();
-  
+  const [showSettings, setShowSettings] = useState<boolean>(false);
+
   log.debug("MyPageMyInfo user", user);
   log.debug("MyPageMyInfo user?.userInfo?.id_uuid:", user?.userInfo?.id_uuid);
 
@@ -38,6 +39,20 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
     document.body.style.overflow = 'auto';
     document.body.style.position = '';
     document.body.style.width = '';
+
+    // Settings 표시 조건 확인
+    const isDevelopment = process.env.NODE_ENV !== 'production';
+    const isWebView = typeof window !== 'undefined' && (
+      // Android WebView 감지
+      !!(window as any).Android ||
+      // iOS WebView 감지
+      !!(window as any).webkit?.messageHandlers
+    );
+
+    // 개발 모드이거나, production인데 웹뷰인 경우에만 Settings 표시
+    if (isDevelopment || isWebView) {
+      setShowSettings(true);
+    }
 
     return () => {
       // cleanup
@@ -123,7 +138,7 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
         <div className="p-4">
           {/* Profile Image Section */}
           <div className="flex items-start justify-between mb-8">
-            <div className="flex items-center gap-4">
+            <div className="flex items-start gap-4">
               <div className="relative">
                 <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
                   <Image
@@ -178,7 +193,7 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
             <div className="bg-white rounded-lg shadow-sm">
               {renderProfileField("Gender", user?.userInfo?.gender ? (user.userInfo.gender === "male" ? "Male" : user.userInfo.gender === "female" ? "Female" : "Other") : null, !user?.userInfo?.gender)}
               {renderProfileField("Nationality", user?.userInfo?.id_country ? findCountry(user.userInfo.id_country)?.country_name : null, !user?.userInfo?.id_country)}
-              {renderProfileField("Phone Number Verification", "Phone Number Verification", false)}
+              {/* {renderProfileField("Phone Number Verification", "Phone Number Verification", false)} */}
               {renderProfileField("Email", user?.userInfo?.email, false)}
               {renderProfileField("Secondary Email", user?.userInfo?.secondary_email, false)}
               
@@ -199,7 +214,17 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
                   <ChevronRight className="w-5 h-5" />
                 </Link>
               </div>
-              
+
+              {showSettings && (
+                <div className="flex justify-between items-center p-4 border-t">
+                  <span className="text-gray-600">Settings</span>
+                  <Link href="/user/settings" className="flex items-center text-gray-400 hover:text-gray-600">
+                    <Settings className="w-5 h-5 mr-2" />
+                    <ChevronRight className="w-5 h-5" />
+                  </Link>
+                </div>
+              )}
+
               <div className="flex justify-between items-center p-4 border-t">
               <Link
                 href="/legal/cookie-policy"

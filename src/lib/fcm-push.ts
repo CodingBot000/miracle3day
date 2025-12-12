@@ -373,3 +373,111 @@ async function savePushHistory(data: {
     console.error('[FCM] Failed to save push history', error);
   }
 }
+
+/**
+ * 특정 병원의 관리자들에게 푸시 알림 전송
+ */
+export async function sendPushToAdmins(
+  hospitalId: string,
+  notification: {
+    title: string;
+    body: string;
+    data?: Record<string, string>;
+  }
+): Promise<{ sent: number; failed: number }> {
+  try {
+    // 1. 병원 관리자 이메일 조회
+    const adminEmails = await q<{ email: string }>(
+      `SELECT UNNEST(authorized_ids) as email
+       FROM admin
+       WHERE id_uuid_hospital = $1`,
+      [hospitalId]
+    );
+
+    if (adminEmails.length === 0) {
+      console.log(`[FCM Admin] No admins found for hospital ${hospitalId}`);
+      return { sent: 0, failed: 0 };
+    }
+
+    console.log(`[FCM Admin] Found ${adminEmails.length} admin emails for hospital ${hospitalId}`);
+
+    let sent = 0;
+    let failed = 0;
+
+    // 2. 각 관리자의 FCM 토큰 조회 및 푸시 전송
+    for (const { email } of adminEmails) {
+      // 관리자의 member_id 조회 (authorized_ids에 있으면 role과 무관하게 푸시)
+      const member = await q<{ id_uuid: string }>(
+        'SELECT id_uuid FROM members WHERE email = $1',
+        [email]
+      );
+
+      if (member.length === 0) {
+        console.log(`[FCM Admin] Admin ${email} not found in members table`);
+        continue;
+      }
+
+      const memberId = member[0].id_uuid;
+
+      // FCM 토큰 조회
+      const tokens = await q<{ fcm_token: string }>(
+        `SELECT fcm_token
+         FROM ${TABLE_PUSH_FCM_TOKENS}
+         WHERE id_uuid_member = $1
+           AND is_active = true`,
+        [memberId]
+      );
+
+      console.log(`[FCM Admin] Found ${tokens.length} tokens for admin ${email}`);
+
+      // 각 토큰으로 푸시 전송
+      for (const { fcm_token } of tokens) {
+        try {
+          await messaging.send({
+            token: fcm_token,
+            notification: {
+              title: notification.title,
+              body: notification.body,
+            },
+            data: {
+              type: 'new_consultation',
+              ...notification.data,
+            },
+            android: {
+              priority: 'high',
+              notification: {
+                sound: 'default',
+                channelId: 'admin_notifications',
+              },
+            },
+          });
+
+          sent++;
+          console.log(`[FCM Admin] Push sent to admin ${email}`);
+        } catch (error) {
+          failed++;
+          console.error(`[FCM Admin] Failed to send push to admin ${email}:`, error);
+        }
+      }
+    }
+
+    console.log(`[FCM Admin] Push summary - Sent: ${sent}, Failed: ${failed}`);
+
+    // 발송 이력 저장
+    await savePushHistory({
+      pushType: 'new_consultation',
+      targetType: 'admin',
+      sentCount: sent + failed,
+      successCount: sent,
+      metadata: {
+        hospitalId,
+        notification,
+      },
+    });
+
+    return { sent, failed };
+  } catch (error) {
+    console.error('[FCM Admin] Error in sendPushToAdmins:', error);
+    return { sent: 0, failed: 0 };
+  }
+}

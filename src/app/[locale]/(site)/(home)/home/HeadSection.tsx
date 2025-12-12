@@ -150,6 +150,9 @@ export default function HeadSection() {
       <div className="text-gray-700 text-xs sm:text-sm font-normal leading-snug">
         {t("videoConsultantDesc")}
       </div>
+            <div className="text-gray-700 text-xs sm:text-sm font-bold leading-snug">
+        {t("urgency_cta")}
+      </div>
     </div>
 
     <div className="flex-shrink-0 ml-1 sm:ml-2">

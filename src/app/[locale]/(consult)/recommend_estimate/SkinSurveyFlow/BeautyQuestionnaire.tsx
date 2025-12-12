@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -61,6 +61,29 @@ const BeautyQuestionnaire: React.FC = () => {
   const [isNavigating, setIsNavigating] = useState(false);
   const { toast } = useToast();
 
+  // Browser History API - Android 뒤로가기 버튼 대응
+  useEffect(() => {
+    // 초기 상태 설정 (step 0)
+    window.history.replaceState({ step: 0 }, '', `#step-0`);
+
+    const handlePopState = (event: PopStateEvent) => {
+      if (event.state?.step !== undefined) {
+        // 히스토리에서 step 정보가 있으면 해당 step으로 이동
+        setCurrentStep(event.state.step);
+        window.scrollTo(0, 0);
+      } else {
+        // step 정보가 없으면 (step 0에서 뒤로가기) 페이지 나가기
+        router.replace('/');
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [router]);
+
   // 현재 스텝의 유효성을 실시간으로 확인
   const isCurrentStepValid = () => {
     const currentStepData = formData[steps[currentStep].id] || {};
@@ -69,25 +92,28 @@ const BeautyQuestionnaire: React.FC = () => {
 
   const handleNext = () => {
     const currentStepData = formData[steps[currentStep].id] || {};
-    
+
     log.debug('handleNext - currentStep:', currentStep);
     log.debug('handleNext - currentStepData:', currentStepData);
     log.debug('handleNext - validation result:', validateStepData(steps[currentStep].id, currentStepData));
-    
+
     if (!validateStepData(steps[currentStep].id, currentStepData)) {
       setIsValideSendForm(false);
       toast({
         variant: "destructive",
         title: "Please make a required selection",
         description: getValidationMessage(steps[currentStep].id),
-      
-      }); 
+
+      });
       return;
     }
 
     if (currentStep < steps.length - 1) {
-      log.debug('handleNext - moving to next step:', currentStep + 1);
-      setCurrentStep(currentStep + 1);
+      const nextStep = currentStep + 1;
+      log.debug('handleNext - moving to next step:', nextStep);
+      setCurrentStep(nextStep);
+      // 브라우저 히스토리에 상태 추가 (Android 뒤로가기 대응)
+      window.history.pushState({ step: nextStep }, '', `#step-${nextStep}`);
       // 스크롤을 즉시 최상단으로 이동
       window.scrollTo(0, 0);
     }
@@ -97,18 +123,20 @@ const BeautyQuestionnaire: React.FC = () => {
     // 0단계(이미지 업로드)에서만 Skip 버튼이 표시되므로
     // 이미지 없이 다음 단계로 이동
     if (currentStep === 0) {
-      setCurrentStep(currentStep + 1);
+      const nextStep = currentStep + 1;
+      setCurrentStep(nextStep);
+      // 브라우저 히스토리에 상태 추가 (Android 뒤로가기 대응)
+      window.history.pushState({ step: nextStep }, '', `#step-${nextStep}`);
       window.scrollTo(0, 0);
     }
   };
-  
+
   const handlePrevious = () => {
     if (currentStep > 0) {
-      setCurrentStep(currentStep - 1);
-      // 스크롤을 즉시 최상단으로 이동
-      window.scrollTo(0, 0);
+      // 브라우저 히스토리 뒤로가기 (popstate 이벤트가 처리)
+      window.history.back();
     } else {
-      // 루트로 이동 (뒤로가기 히스토리에서 제거)
+      // step 0에서 뒤로가기 = 페이지 나가기
       router.replace('/');
     }
   };

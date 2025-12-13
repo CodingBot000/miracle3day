@@ -64,7 +64,7 @@ const HospitalListNewDesign = ({ initialData, isFallback = false }: HospitalList
           </svg>
         </button>
         <p className="text-sm md:text-base text-gray-700 font-medium">
-          Awsome Korean Premium Clinics For You
+          Awesome Korean Premium Clinics For You
         </p>
       </div>
 

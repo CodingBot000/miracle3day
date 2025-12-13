@@ -177,14 +177,14 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
           </div>
 
           {/* Badge Section */}
-          {user?.userInfo?.id_uuid && (
+          {/* {user?.userInfo?.id_uuid && (
             <div className="mb-8">
               <BadgeSection
                 userUuid={user.userInfo.id_uuid}
                 currentPoints={point}
               />
             </div>
-          )}
+          )} */}
 
           {/* Info List */}
           <div className="space-y-6">

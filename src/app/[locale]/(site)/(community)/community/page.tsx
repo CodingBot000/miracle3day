@@ -31,9 +31,9 @@ export default async function CommunityHomePage({ searchParams }: CommunityPageP
   if (currentView === 'questions') {
     return (
       <>
-        <Suspense fallback={<div className="animate-pulse bg-gray-200 h-32 rounded-xl mb-6" />}>
+        {/* <Suspense fallback={<div className="animate-pulse bg-gray-200 h-32 rounded-xl mb-6" />}>
           <DailyMission />
-        </Suspense>
+        </Suspense> */}
         <Suspense fallback={<div className="animate-pulse bg-gray-200 h-96 rounded-xl" />}>
           <QuestionsView />
         </Suspense>

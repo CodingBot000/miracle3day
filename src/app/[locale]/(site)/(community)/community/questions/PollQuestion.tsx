@@ -246,11 +246,11 @@ export default function PollQuestion({ question }: PollQuestionProps) {
                 {/* 투표 결과는 항상 표시 (로그인 여부 무관) */}
                 <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
                   <span className="text-gray-500 text-xs sm:text-sm hidden sm:inline">
-                    <span className="blur-sm">{option.vote_count}</span> {locale === 'ko' ? '표' : 'votes'}
+                    <span className={voted ? '' : 'blur-sm'}>{option.vote_count}</span> {locale === 'ko' ? '표' : 'votes'}
                   </span>
                   {totalVotes > 0 && (
                     <span className={`font-bold text-xs sm:text-lg ${isSelected ? 'text-green-700' : 'text-gray-600'}`}>
-                      <span className="blur-sm">{percentage}</span>%
+                      <span className={voted ? '' : 'blur-sm'}>{percentage}</span>%
                     </span>
                   )}
                 </div>

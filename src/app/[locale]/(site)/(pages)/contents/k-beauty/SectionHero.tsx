@@ -1,5 +1,4 @@
 import Image from "next/image";
-import BackButton from "@/components/common/BackButton";
 
 
 interface Props {

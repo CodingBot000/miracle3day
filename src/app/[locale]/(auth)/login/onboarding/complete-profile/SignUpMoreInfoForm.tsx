@@ -1,7 +1,7 @@
 'use client';
 
 import { log } from '@/utils/logger';
-import { useRouter } from 'next/navigation';
+import { useNavigation } from '@/hooks/useNavigation';
 import React, { useCallback, useEffect, useState } from 'react';
 import type { ChangeEvent } from 'react';
 import DatePicker from 'react-datepicker';
@@ -67,7 +67,7 @@ const CustomInput = React.forwardRef<HTMLInputElement, any>(
 CustomInput.displayName = 'CustomInput';
 
 export default function SignUpMoreInfoForm() {
-  const router = useRouter();
+  const { navigate, goBack } = useNavigation();
   const [user, setUser] = useState<any>(null);
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [form, setForm] = useState(initialForm);
@@ -92,11 +92,11 @@ export default function SignUpMoreInfoForm() {
           setIsSignedIn(true);
         } else {
           log.debug('Auth check failed, redirecting to login. Auth data:', data.auth);
-          router.replace('/api/auth/google/start');
+          navigate('/api/auth/google/start', { replace: true });
           return;
         }
       } else {
-        router.replace('/api/auth/google/start');
+        navigate('/api/auth/google/start', { replace: true });
         return;
       }
     } catch (err) {
@@ -105,7 +105,7 @@ export default function SignUpMoreInfoForm() {
     } finally {
       setCheckingAgreement(false);
     }
-  }, [router]);
+  }, [navigate]);
 
   useEffect(() => {
     checkAuth();
@@ -240,7 +240,7 @@ export default function SignUpMoreInfoForm() {
         <div className="flex items-center gap-3 mb-4">
           <button
             type="button"
-            onClick={() => router.back()}
+            onClick={() => goBack()}
             className="flex items-center justify-center w-8 h-8 rounded-lg hover:bg-slate-100 transition-colors"
             aria-label="Go back"
           >

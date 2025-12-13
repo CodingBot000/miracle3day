@@ -5,7 +5,6 @@ import ReactDOM from "react-dom";
 import { Input } from "@/components/ui/input";
 import { getSearchAPI } from "@/app/api/search";
 import { SearchItem } from "@/app/api/search/search.dto";
-import { useRouter } from "next/navigation";
 import { X } from "lucide-react";
 import { EventCard, HospitalCard, ReviewCard } from "@/components/molecules/card";
 import { ROUTE } from "@/router";
@@ -19,7 +18,6 @@ export default function SearchPanel({ onClose }: { onClose: () => void }) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchItem>();
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
   
   const recommendedKeywords = [
     "Botox", "Ulthera", "Hair Transplantation", "Laser Lifting",

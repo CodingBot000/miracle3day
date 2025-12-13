@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-import { useRouter } from "next/navigation";
 import { FiVideo } from "react-icons/fi";
+import { useNavigation } from "@/hooks/useNavigation";
 
 interface ConsultationButtonProps {
   reservationId: string;
@@ -24,14 +24,14 @@ export default function ConsultationButton({
   className = "",
   variant = "primary"
 }: ConsultationButtonProps) {
-  const router = useRouter();
+  const { navigate } = useNavigation();
 
   const handleJoinConsultation = () => {
     const query = new URLSearchParams();
     query.set("role", role);
     if (userName) query.set("name", userName);
 
-    router.push(`/mobile/consult/${reservationId}?${query.toString()}`);
+    navigate(`/mobile/consult/${reservationId}?${query.toString()}`);
   };
 
   const baseClasses = "inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed";

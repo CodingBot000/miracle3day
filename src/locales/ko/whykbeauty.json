@@ -118,8 +118,7 @@
         "image": "/images/k-beauty/section1-overview/satisfied-patients.jpg"
       },
       "cta": {
-        "text": "내 피부에 맞는 한국 시술 찾기",
-        "link": "/consultation"
+        "text": "내 피부에 맞는 한국 시술 찾기"
       }
     },
     "section2": {
@@ -221,8 +220,7 @@
         "image": "/images/k-beauty/section2-skincare/morning-ritual.jpg"
       },
       "cta": {
-        "text": "내 피부 타입 맞춤 루틴 찾기",
-        "link": "/consultation"
+        "text": "내 피부 타입 맞춤 루틴 찾기"
       }
     },
     "section3": {
@@ -321,7 +319,7 @@
             "label": "피코 레이저 - 유럽 대비 저렴"
           }
         },
-        "image": "/images/k-beauty/section3-dermatology/statistics-charts.jpg"
+        "image": ""
       },
       "conclusion": {
         "title": "한국 피부과 시술이 특별한 이유는 간단합니다",
@@ -337,8 +335,7 @@
         "image": "/images/k-beauty/section3-dermatology/post-treatment.jpg"
       },
       "cta": {
-        "text": "내게 맞는 피부과 시술 상담받기",
-        "link": "/consultation"
+        "text": "내게 맞는 피부과 시술 상담받기"
       }
     },
     "section4": {
@@ -459,8 +456,7 @@
         "image": "/images/k-beauty/section4-plastic-surgery/new-beginning.jpg"
       },
       "cta": {
-        "text": "내 얼굴 분석 및 맞춤 상담 받기",
-        "link": "/consultation"
+        "text": "내 얼굴 분석 및 맞춤 상담 받기"
       }
     },
     "section5": {
@@ -576,8 +572,7 @@
         "image": "/images/k-beauty/section5-science/research-team.jpg"
       },
       "cta": {
-        "text": "과학적 피부 분석 받아보기",
-        "link": "/consultation"
+        "text": "과학적 피부 분석 받아보기"
       }
     },
     "section6": {
@@ -696,8 +691,7 @@
         "image": "/images/k-beauty/section6-culture/global-unity.jpg"
       },
       "cta": {
-        "text": "나도 K-뷰티 시작하기",
-        "link": "/consultation"
+        "text": "나도 K-뷰티 시작하기"
       }
     },
     "section7": {
@@ -778,7 +772,7 @@
             "🔍 **철저한 분석**: 성분 분석 → 리뷰 100개+ 읽기 → 블로그 후기 → 유튜브 → 비슷한 제품 비교 → 가격 비교",
             "→ 구매 결정까지 평균 3-7일"
           ],
-          "image": "/images/k-beauty/section7-lifestyle/review-search.jpg"
+          "image": ""
         }
       },
       "statistics": {
@@ -817,8 +811,7 @@
         "image": "/images/k-beauty/section7-lifestyle/everyday-beauty.jpg"
       },
       "cta": {
-        "text": "나만의 K-뷰티 루틴 시작하기",
-        "link": "/consultation"
+        "text": "나만의 K-뷰티 루틴 시작하기"
       }
     }
   },

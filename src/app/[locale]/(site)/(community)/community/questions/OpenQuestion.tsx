@@ -1,11 +1,11 @@
 'use client';
 
 import { useLocale } from 'next-intl';
-import { useRouter } from 'next/navigation';
+import { useNavigation } from '@/hooks/useNavigation';
 
 export default function OpenQuestion({ question }: { question: any }) {
   // log.debug('OpenQuestion question', question);
-  const router = useRouter();
+  const { navigate } = useNavigation();
   const locale = useLocale();
 
   // 다국어 텍스트 추출 헬퍼
@@ -16,11 +16,11 @@ export default function OpenQuestion({ question }: { question: any }) {
   };
 
   const handleAnswer = () => {
-    router.push(`/community/questions/${question.id}`);
+    navigate(`/community/questions/${question.id}`);
   };
 
   const handleViewAnswers = () => {
-    router.push(`/community/questions/${question.id}#answers`);
+    navigate(`/community/questions/${question.id}#answers`);
   };
 
   return (

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import PollResultsChart from './PollResultsChart';
 import PollCommentSection from './PollCommentSection';
-import BackButton from '@/components/common/BackButton';
+import { BackButton } from '@/components/BackButton';
 import { useLocale, useTranslations } from 'next-intl';
 import type { PollQuestion, PollOption, PollVote } from '@/services/poll';
 import type { PollComment } from '@/services/pollComments';

@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation';
 import { getLocale } from 'next-intl/server';
 import { getKBeautyContent } from '@/locales/content-locale';
-import SectionHero from '@/components/k-beauty/SectionHero';
-import SectionContent from '@/components/k-beauty/SectionContent';
+import SectionHero from '../../k-beauty/SectionHero';
+import SectionContent from '../../k-beauty/SectionContent';
 import TransparentHeaderWrapper from '@/components/layout/TransparentHeaderWrapper';
 import type { KBeautySection } from '@/types/kBeauty';
 
@@ -138,7 +138,7 @@ export default async function KBeautySectionPage({ params }: Props) {
         style={{ zIndex: 1 }}
       >
         <TransparentHeaderWrapper>
-          <div className="bg-white">
+          <div className="bg-white pb-20 lg:pb-32">
 
             <SectionHero
               title={section.title || ''}

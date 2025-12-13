@@ -42,7 +42,7 @@ export interface KBeautyConclusion {
 
 export interface KBeautyCTA {
   text: string;
-  link: string;
+
 }
 
 export interface KBeautySection {

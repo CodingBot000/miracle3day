@@ -4,9 +4,10 @@ import { motion, Variants } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import React, { useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { useNavigation } from "@/hooks/useNavigation";
+import { usePathname } from "next/navigation";
 import { ROUTE } from "@/router";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import DiagnosticIntro from "./components/DiagnosticIntro";
 import LoginRequiredModal from "@/components/template/modal/LoginRequiredModal";
 
@@ -17,8 +18,7 @@ import LoginRequiredModal from "@/components/template/modal/LoginRequiredModal";
 
 export default function HeadSection() {
   const t = useTranslations("Home");
-  const router = useRouter();
-  const locale = useLocale();
+  const { navigate } = useNavigation();
   const pathname = usePathname();
   const [showLoginModal, setShowLoginModal] = useState(false);
 
@@ -33,7 +33,7 @@ export default function HeadSection() {
       if (res.ok) {
         const data = await res.json();
         if (data.auth && data.auth.status === 'active') {
-          router.push(`/${locale}/pre_consultation_intake_form?returnUrl=${encodeURIComponent(pathname)}`);
+          navigate(`/pre_consultation_intake_form?returnUrl=${encodeURIComponent(pathname)}`);
           return;
         }
       }
@@ -47,8 +47,8 @@ export default function HeadSection() {
 
   const handleLoginConfirm = () => {
     setShowLoginModal(false);
-    const formUrl = `/${locale}/pre_consultation_intake_form?returnUrl=${encodeURIComponent(pathname)}`;
-    router.push(`/login?redirect=${encodeURIComponent(formUrl)}`);
+    const formUrl = `/pre_consultation_intake_form?returnUrl=${encodeURIComponent(pathname)}`;
+    navigate(`/login?redirect=${encodeURIComponent(formUrl)}`);
   };
 
   return (
@@ -134,7 +134,7 @@ export default function HeadSection() {
   </div>
 
   <Link
-    href={`/${locale}/pre_consultation_intake_form?returnUrl=${encodeURIComponent(pathname)}`}
+    href={`/pre_consultation_intake_form?returnUrl=${encodeURIComponent(pathname)}`}
     onClick={handleVideoConsultationClick}
     className="w-full px-4 sm:px-6 py-4 sm:py-6 flex items-center justify-between rounded-[14px] bg-gradient-to-br from-green-50 to-teal-50 border-2 border-green-400 hover:border-green-500 hover:shadow-md transition-all duration-200 relative overflow-hidden group"
   >

@@ -6,6 +6,7 @@ import HeaderActions from "./HeaderActions";
 import { useEffect } from "react";
 import { usePathname } from "@/i18n/routing";
 import { useMobileModeStore } from "@/stores/useMobileModeStore";
+import { BackButton } from "@/components/BackButton";
 
 const LayoutHeaderBase = () => {
  
@@ -38,6 +39,7 @@ const LayoutHeaderBase = () => {
         {/* Top Section - Main Content (fills remaining space) */}
         <div className="flex-1 flex items-center px-4">
           <div className="w-full flex justify-between items-center">
+            <BackButton  />
             <Logo />
             {!isAuthPage && (
               <HeaderActions iconColor="black" isMobileMode={isMobileMode} />

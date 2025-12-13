@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 import { HospitalDetailMainOutput } from "@/app/api/hospital/[id]/main/main.dto";
 import ReservationCalendarClient from "./ReservationCalendarClient";
 import { ROUTE } from "@/router";
-import { useRouter } from "next/navigation";
+import { useNavigation } from "@/hooks/useNavigation";
 import { useReservationStore } from "@/stores/useReservationStore";
 
 
@@ -19,7 +19,7 @@ interface DetailPageTabProps {
 }
 
 export default function HospitalDetailContent({ hospitalData } : DetailPageTabProps) {
-  const router = useRouter();
+  const { navigate } = useNavigation();
 
   const tabRefs = {
     event: useRef<HTMLDivElement>(null),
@@ -46,7 +46,7 @@ export default function HospitalDetailContent({ hospitalData } : DetailPageTabPr
   // 하단바 닫기
   const handleCloseBottomBar = () => setShowBottomBar(false);
   const handleReservationClick = () => {
-    router.push(ROUTE.RESERVATION(id_uuid_hospital));
+    navigate(ROUTE.RESERVATION(id_uuid_hospital));
   };
   return (
     <>

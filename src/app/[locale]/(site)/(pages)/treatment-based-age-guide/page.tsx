@@ -10,7 +10,7 @@ import { TreatmentsSection } from './components/TreatmentsSection';
 import { SkinTypesSection } from './components/SkinTypesSection';
 import { SpecialTipsSection } from './components/SpecialTipsSection';
 import { useLocale } from 'next-intl';
-import BackButton from '@/components/common/BackButton';
+import { BackButton } from '@/components/BackButton';
 
 const ageGroups = ['20s', '30s', '40s', '50s', '60s', '70s+'];
 

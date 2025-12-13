@@ -7,8 +7,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useTransition } from "react";
-import { useRouter, usePathname } from "@/i18n/routing";
+import { usePathname } from "@/i18n/routing";
 import { useLocale } from "next-intl";
+import { useNavigation } from "@/hooks/useNavigation";
 import { Check } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
@@ -28,7 +29,7 @@ const languageLabels: Record<Locale, string> = {
 
 export const LanguageSwitcherNextIntl = ({ iconColor = 'black' }: LanguageSwitcherProps) => {
   const locale = useLocale();
-  const router = useRouter();
+  const { navigate } = useNavigation();
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
 
@@ -36,7 +37,7 @@ export const LanguageSwitcherNextIntl = ({ iconColor = 'black' }: LanguageSwitch
     if (newLocale === locale) return;
 
     startTransition(() => {
-      router.replace(pathname, { locale: newLocale });
+      navigate(pathname, { replace: true, locale: newLocale });
     });
   };
 

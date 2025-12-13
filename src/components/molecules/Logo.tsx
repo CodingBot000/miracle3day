@@ -1,13 +1,14 @@
 'use client';
 
-import { Link, useRouter } from "@/i18n/routing";
+import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { ROUTE } from "@/router";
+import { useNavigation } from "@/hooks/useNavigation";
 
 const STORAGE_KEY = 'treatment-protocol-category';
 
 const Logo = () => {
-  const router = useRouter();
+  const { navigate } = useNavigation();
 
   const handleLogoClick = (e: React.MouseEvent) => {
     e.preventDefault(); // Link의 기본 동작 방지
@@ -18,7 +19,7 @@ const Logo = () => {
 
       // 모든 브라우저 히스토리 초기화하고 홈으로 이동
       window.history.pushState(null, '', ROUTE.HOME);
-      router.replace(ROUTE.HOME);
+      navigate(ROUTE.HOME, { replace: true });
     }
   };
 

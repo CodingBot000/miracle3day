@@ -5,8 +5,8 @@ import { CommunityComment, Member } from '@/models/communityData.dto';
 import CommentItem from './CommentItem';
 import { toast } from 'sonner';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
 import { useLoginGuard } from '@/hooks/useLoginGuard';
+import { useNavigation } from '@/hooks/useNavigation';
 import { handleNotifications } from '@/utils/notificationHandler';
 import LevelUpModal from '@/components/gamification/LevelUpModal';
 import type { LevelUpNotification } from '@/types/badge';
@@ -24,7 +24,7 @@ export default function CommentSection({
 }: CommentSectionProps) {
   const t = useTranslations('Comment');
   const tCommon = useTranslations('Common');
-  const router = useRouter();
+  const { refresh } = useNavigation();
   const { requireLogin, loginModal } = useLoginGuard();
   const [comments, setComments] = useState(initialComments);
   const [newComment, setNewComment] = useState('');
@@ -75,7 +75,7 @@ export default function CommentSection({
         }
 
         // 서버 데이터 재검증 (백그라운드)
-        router.refresh();
+        refresh();
       }
     } catch (error) {
       console.error('Error posting comment:', error);
@@ -109,7 +109,7 @@ export default function CommentSection({
       setComments(nextComments);
 
       // 서버 데이터 재검증 (백그라운드)
-      router.refresh();
+      refresh();
     } catch (error) {
       console.error('Error deleting comment:', error);
       toast.success('An error occurred while deleting the comment.');
@@ -155,7 +155,7 @@ export default function CommentSection({
         setComments(nextComments);
 
         // 서버 데이터 재검증 (백그라운드)
-        router.refresh();
+        refresh();
       }
     } catch (error) {
       console.error('Error posting reply:', error);

@@ -2,7 +2,7 @@
 
 import { log } from '@/utils/logger';
 import { useEffect, useMemo, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useNavigation } from '@/hooks/useNavigation';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 // import type { TSnsType } from '../login/actions';
@@ -35,7 +35,7 @@ type TermsClientProps = {
 };
 
 export default function TermsClient({ initialProvider }: TermsClientProps) {
-  const router = useRouter();
+  const { navigate } = useNavigation();
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionError, setSubmissionError] = useState<string | null>(null);
@@ -126,16 +126,16 @@ export default function TermsClient({ initialProvider }: TermsClientProps) {
     if (!isLoaded) return;
 
     if (!isSignedIn) {
-      router.replace('/api/auth/google/start');
+      navigate('/api/auth/google/start', { replace: true });
       return;
     }
 
     // 이미 active 상태라면 마이페이지로 이동
     if (user?.status === 'active') {
-      router.replace('/user/my-page');
+      navigate('/user/my-page', { replace: true });
       return;
     }
-  }, [isLoaded, isSignedIn, user, router]);
+  }, [isLoaded, isSignedIn, user, navigate]);
 
   const checkSessionStatus = async (maxAttempts = 10, delay = 500) => {
     for (let i = 0; i < maxAttempts; i++) {
@@ -162,7 +162,7 @@ export default function TermsClient({ initialProvider }: TermsClientProps) {
 
     if (!isSignedIn || !user) {
       setSubmissionError('세션이 만료되었습니다. 다시 로그인해 주세요.');
-      router.replace('/login');
+      navigate('/login', { replace: true });
       return;
     }
 
@@ -190,7 +190,7 @@ export default function TermsClient({ initialProvider }: TermsClientProps) {
         throw new Error('세션 저장이 완료되지 않았습니다.');
       }
 
-      router.replace('/login/onboarding/complete-profile');
+      navigate('/login/onboarding/complete-profile', { replace: true });
     } catch (error) {
       console.error('Failed to save terms agreement', error);
       setSubmissionError('can not save terms agreement. try again please.');

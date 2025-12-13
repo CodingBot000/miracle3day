@@ -6,7 +6,7 @@ import { log } from '@/utils/logger';
 import { useState, useMemo } from "react";
 import { HospitalDetailMainOutput } from "@/app/api/hospital/[id]/main/main.dto";
 // import Image from "next/image";;
-import { useRouter } from "next/navigation";
+import { useNavigation } from "@/hooks/useNavigation";
 import HospitalLocation from "./HospitalLocation";
 import HospitalDoctorList from "./HospitalDoctorList";
 import HospitalAmenities from "./HospitalAmenities";
@@ -30,7 +30,7 @@ interface HospitalDetailNewDesignProps {
 }
 
 const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps) => {
-  const router = useRouter();
+  const { goBack } = useNavigation();
   const locale = useLocale() as 'ko' | 'en';
   const [isModalOpen, setIsModalOpen] = useState(false);
   
@@ -69,7 +69,7 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
   }, [googleReviewsData?.reviews, locale]);
 
   const handleBackClick = () => {
-    router.back();
+    goBack();
   };
 
   const handleImageClicked = () => {

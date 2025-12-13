@@ -1,14 +1,11 @@
 "use client"
 // import Auth from "@/components/molecules/auth";
 import Logo from "@/components/molecules/Logo";
-import LanguageSwitcherNextIntl from "./LanguageSwitcherNextIntl";
-import BackButton from "../../common/BackButton";
+import HeaderActions from "./HeaderActions";
 
 import { useState, useEffect } from "react";
-import { Search, MessageSquareText, MessageCircle } from "lucide-react";
-import { Link, usePathname } from "@/i18n/routing";
-import SearchPanel from "./SearchPanel";
-import AuthClient from "@/components/molecules/auth/AuthClient";
+import { usePathname } from "@/i18n/routing";
+import SearchPanel from "../SearchPanel";
 import { useHeader } from "@/contexts/HeaderContext";
 import { useMobileModeStore } from "@/stores/useMobileModeStore";
 import { HEADER_HEIGHT } from "@/constants/common";
@@ -23,9 +20,6 @@ const LayoutHeaderHome = () => {
   const { isTransparentMode } = useHeader();
   const { isMobileMode } = useMobileModeStore();
   const pathname = usePathname();
-
-  // Check if current page is home
-  const isHomePage = pathname === '/' || pathname === '/home';
 
   // Check if current page is auth (login, terms, etc.)
   const isAuthPage = pathname?.startsWith('/auth') ?? false;
@@ -102,17 +96,11 @@ const LayoutHeaderHome = () => {
     return 'backdrop-blur-md shadow-md';
   };
 
-  const getIconColor = () => {
-    if (!isTransparentMode) {
-      return 'text-black';
-    }
-    return isScrolled ? 'text-black' : 'text-white';
-  };
-
   return (
     <>
     <header
-      className={`fixed top-0 left-0 right-0 z-[200] flex flex-col min-h-[88px] max-h-[128px] ease-in-out ${getHeaderStyles()}`}
+      className={`fixed top-0 left-0 right-0 z-[200] flex flex-col min-h-[62px] max-h-[88px] ease-in-out ${getHeaderStyles()}`}
+      // className={`fixed top-0 left-0 right-0 z-[200] flex flex-col min-h-[88px] max-h-[128px] ease-in-out ${getHeaderStyles()}`}
       style={{
         backgroundColor: isTransparentMode && scrollPosition > 0
           ? `rgba(255, 255, 255, ${bgOpacity})`
@@ -120,50 +108,31 @@ const LayoutHeaderHome = () => {
         transition: 'all 300ms ease-in-out',
       }}
     >
-      {/* Top Section - Main Content (fills remaining space) */}
-      <div className="flex-1 flex items-center px-4">
-        <div className="w-full flex justify-between items-center max-w-[1080px] mx-auto">
-          <Logo />
-          {!isAuthPage && (
-            <div className="flex items-center gap-2">
-              <div className={`flex items-center gap-2 transition-colors duration-300 ${getIconColor()}`}>
-                {/* community */}
-                {!isMobileMode && (
-                  <Link href="/community">
-                    <MessageSquareText size={20} />
-                  </Link>
-                )}
-
-                {/* <div>
-                  <button onClick={() => setShowSearch(true)}>
-                    <Search size={20} />
-                  </button>
-                </div> */}
-                <div>
-                  <LanguageSwitcherNextIntl iconColor={isTransparentMode && !isScrolled ? 'white' : 'black'} />
-                </div>
-              </div>
-              {!isMobileMode && (
-              <div className="relative text-black">
-                <AuthClient iconColor={isTransparentMode && !isScrolled ? 'white' : 'black'} />
-              </div>
-              )}
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Bottom Section - Back Button (fixed 40px height) */}
-      {!isAuthPage && (
-        <div className="h-[30px] flex items-center px-4">
-          <div className="w-full max-w-[1080px] mx-auto">
-          {!isHomePage && (
-            <BackButton iconColor={isTransparentMode && !isScrolled ? 'white' : 'black'} />
-          )}
+      <div className="w-full max-w-[1024px] mx-auto flex flex-col h-full">
+        {/* Top Section - Main Content (fills remaining space) */}
+        <div className="flex-1 flex items-center px-4">
+          <div className="w-full flex justify-between items-center">
+            <Logo />
+            {!isAuthPage && (
+              <HeaderActions
+                iconColor={isTransparentMode && !isScrolled ? 'white' : 'black'}
+                isMobileMode={isMobileMode}
+              />
+            )}
           </div>
         </div>
-      )}
-      
+
+        {/* Bottom Section - Back Button (fixed 40px height) */}
+        {/* {!isAuthPage && (
+          <div className="h-[30px] flex items-center px-4">
+            <div className="w-full max-w-[1080px] mx-auto">
+            {!isHomePage && (
+              <BackButton iconColor={isTransparentMode && !isScrolled ? 'white' : 'black'} />
+            )}
+            </div>
+          </div>
+        )} */}
+      </div>
     </header>
 
 {showSearch && <SearchPanel onClose={() => setShowSearch(false)} />}

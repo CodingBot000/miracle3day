@@ -67,8 +67,8 @@ export default async function HomePage() {
 
   return (
     <TransparentHeaderWrapper>
-      {/* HeroVideos: 모바일은 full-width, 데스크탑은 max-w-[1200px] */}
-      <div className="w-full md:max-w-[1200px] md:mx-auto relative z-10">
+      {/* HeroVideos: 부모 레이아웃(1024px)을 따름 */}
+      <div className="w-full relative z-10">
         <HeroVideos>
           <div className="absolute inset-0 bg-black/15 z-10"></div>
           <div className="absolute inset-0 flex items-end justify-end text-white z-30 pb-6 pr-6 md:pb-12 md:pr-12">
@@ -95,8 +95,8 @@ export default async function HomePage() {
         </HeroVideos>
       </div>
 
-      {/* 본문 컨텐츠: max-w-[1200px]로 제한 */}
-      <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8 min-w-0">
+      {/* 본문 컨텐츠: 부모 레이아웃(1024px)을 따름 */}
+      <div className="w-full px-4 sm:px-6 lg:px-8 min-w-0">
         {/* <section className="max-w-container mx-auto">
           <DiagnosticIntro />
         <div className="my-8 px-4 md:px-6 lg:px-8">

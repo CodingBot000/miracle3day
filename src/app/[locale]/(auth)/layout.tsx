@@ -1,6 +1,6 @@
 "use client";
 
-import LayoutHeaderBase from "@/components/organism/layout/LayoutHeaderBase";
+import LayoutHeaderBase from "@/components/organism/layout/header/LayoutHeaderBase";
 import { HEADER_HEIGHT } from "@/constants/common";
 import React from "react";
 

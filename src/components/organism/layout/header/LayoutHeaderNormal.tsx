@@ -1,10 +1,10 @@
 "use client"
 
 import Logo from "@/components/molecules/Logo";
-import BackButton from "../../common/BackButton";
+import HeaderActions from "./HeaderActions";
 
 import { useState, useEffect } from "react";
-import { Link, usePathname } from "@/i18n/routing";
+import { usePathname } from "@/i18n/routing";
 
 import { useHeader } from "@/contexts/HeaderContext";
 import { useMobileModeStore } from "@/stores/useMobileModeStore";
@@ -95,17 +95,10 @@ const LayoutHeaderNormal = () => {
     return 'backdrop-blur-md shadow-md';
   };
 
-  const getIconColor = () => {
-    if (!isTransparentMode) {
-      return 'text-black';
-    }
-    return isScrolled ? 'text-black' : 'text-white';
-  };
-
   return (
     <>
     <header
-      className={`fixed top-0 left-0 right-0 z-[200] flex flex-col min-h-[88px] max-h-[128px] ease-in-out ${getHeaderStyles()}`}
+      className={`fixed top-0 left-0 right-0 z-[200] flex flex-col min-h-[62px] max-h-[88px] ease-in-out ${getHeaderStyles()}`}
       style={{
         backgroundColor: isTransparentMode && scrollPosition > 0
           ? `rgba(255, 255, 255, ${bgOpacity})`
@@ -113,24 +106,27 @@ const LayoutHeaderNormal = () => {
         transition: 'all 300ms ease-in-out',
       }}
     >
-      {/* Top Section - Main Content (fills remaining space) */}
-      <div className="flex-1 flex items-center px-4">
-        <div className="w-full flex justify-between items-center max-w-[1080px] mx-auto">
-          <Logo />
-        
-        </div>
-      </div>
-
-
-        <div className="h-[30px] flex items-center px-4 border-t border-gray-200/20">
-          <div className="w-full max-w-[1080px] mx-auto">
-
-            <BackButton iconColor={isTransparentMode && !isScrolled ? 'white' : 'black'} />
-
+      <div className="w-full max-w-[1024px] mx-auto flex flex-col h-full">
+        {/* Top Section - Main Content (fills remaining space) */}
+        <div className="flex-1 flex items-center px-4">
+          <div className="w-full flex justify-between items-center">
+            <Logo />
+            {!isAuthPage && (
+              <HeaderActions
+                iconColor={isTransparentMode && !isScrolled ? 'white' : 'black'}
+                isMobileMode={isMobileMode}
+              />
+            )}
           </div>
         </div>
 
-      
+        {/*
+        <div className="h-[30px] flex items-center px-4 border-t border-gray-200/20">
+          <div className="w-full max-w-[1080px] mx-auto">
+            <BackButton iconColor={isTransparentMode && !isScrolled ? 'white' : 'black'} />
+          </div>
+        </div> */}
+      </div>
     </header>
 
 

@@ -104,7 +104,7 @@ module.exports = {
   			}
   		},
   		maxWidth: {
-  			container: '1280px'
+  			container: '1024px'
   		},
   		screens: {
   			xs: '480px',

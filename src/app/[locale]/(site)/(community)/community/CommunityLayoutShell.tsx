@@ -85,7 +85,12 @@ export default function CommunityLayoutShell({
     return `/community?${urlParams.toString()}`
   }
 
-  // Intersection Observer - 필터 가시성 감지
+  // 탭 전환 시 스크롤 최상단으로
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [currentView])
+
+  // Intersection Observer - 필터 가시성 감지 (currentView 변경 시 재설정)
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -99,7 +104,7 @@ export default function CommunityLayoutShell({
     }
 
     return () => observer.disconnect()
-  }, [])
+  }, [currentView])
 
   // 스크롤 가능 여부 확인
   useEffect(() => {
@@ -201,20 +206,20 @@ export default function CommunityLayoutShell({
                 <nav className="flex items-center gap-1">
                   <Link
                     href="/community?view=posts"
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    className={`px-4 py-2 text-sm font-medium transition-colors border-b-2 ${
                       currentView === 'posts'
-                        ? 'bg-pink-50 text-pink-600'
-                        : 'text-gray-600 hover:bg-gray-100'
+                        ? 'text-pink-600 font-bold border-pink-600'
+                        : 'text-gray-600 border-transparent hover:text-gray-900'
                     }`}
                   >
                     {locale === 'ko' ? '게시판' : 'Posts'}
                   </Link>
                   <Link
                     href="/community?view=questions"
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    className={`px-4 py-2 text-sm font-medium transition-colors border-b-2 ${
                       currentView === 'questions'
-                        ? 'bg-pink-50 text-pink-600'
-                        : 'text-gray-600 hover:bg-gray-100'
+                        ? 'text-pink-600 font-bold border-pink-600'
+                        : 'text-gray-600 border-transparent hover:text-gray-900'
                     }`}
                   >
                     {locale === 'ko' ? '데일리 질문' : 'Daily-Q'}
@@ -234,7 +239,7 @@ export default function CommunityLayoutShell({
           </div>
 
           {/* Sticky 필터 (스크롤 시 표시) */}
-          {showStickyFilters && currentView === 'posts' && (
+          {showStickyFilters && (
             <div className="border-t border-gray-100 bg-white/95 backdrop-blur-sm">
               <div className="max-w-[1200px] mx-auto px-4 py-2 space-y-2">
                 {/* Topics */}
@@ -248,17 +253,19 @@ export default function CommunityLayoutShell({
                     {renderTopicButtons(true)}
                   </div>
                 </div>
-                {/* Tags */}
-                <div className="flex items-center gap-3">
-                  <span className="text-xs font-semibold text-gray-500 w-14 flex-shrink-0">TAGS</span>
-                  <div
-                    ref={stickyTagsScrollRef}
-                    className="flex gap-1.5 overflow-x-auto scrollbar-hide"
-                    style={scrollStyle}
-                  >
-                    {renderTagButtons(true)}
+                {/* Tags - posts 탭에만 표시 */}
+                {currentView === 'posts' && (
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs font-semibold text-gray-500 w-14 flex-shrink-0">TAGS</span>
+                    <div
+                      ref={stickyTagsScrollRef}
+                      className="flex gap-1.5 overflow-x-auto scrollbar-hide"
+                      style={scrollStyle}
+                    >
+                      {renderTagButtons(true)}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           )}

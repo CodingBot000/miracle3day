@@ -23,8 +23,8 @@ const Logo = () => {
   };
 
   return (
-    <div className="w-fit">
-      <Link href={ROUTE.HOME} onClick={handleLogoClick}>
+    <div className="w-fit flex items-center">
+      <Link href={ROUTE.HOME} onClick={handleLogoClick} className="flex items-center">
         <Image
           src="/logo/logo.png"
           alt="logo"

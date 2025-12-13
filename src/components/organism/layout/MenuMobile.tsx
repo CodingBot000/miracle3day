@@ -152,12 +152,19 @@ const MenuMobile = () => {
         <Home className={clsx("w-6 h-6", getIconColor("home"))} />
         <span className={clsx("text-xs", getTextColor("home"))}>Home</span>
       </button>
-      <button
+      {/* <button
         onClick={() => goTo(ROUTE.TREATMENT_INFO)}
         className="flex flex-col items-center gap-1 p-2 hover:opacity-80"
       >
         <Stethoscope className={clsx("w-6 h-6", getIconColor("procedure"))} />
         <span className={clsx("text-xs", getTextColor("procedure"))}>Procedure</span>
+      </button> */}
+      <button
+        onClick={() => goTo(ROUTE.RECOMMEND_ESTIMATE)}
+        className="flex flex-col items-center gap-1 p-2 hover:opacity-80"
+      >
+        <Stethoscope className={clsx("w-6 h-6", getIconColor("procedure"))} />
+        <span className={clsx("text-xs", getTextColor("procedure"))}>AI-Match</span>
       </button>
 
       <button

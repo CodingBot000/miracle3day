@@ -1,12 +1,10 @@
 "use client"
 
 import Logo from "@/components/molecules/Logo";
-import BackButton from "../../common/BackButton";
+import HeaderActions from "./HeaderActions";
 
-import { useState, useEffect } from "react";
-import { Link, usePathname } from "@/i18n/routing";
-
-import { useHeader } from "@/contexts/HeaderContext";
+import { useEffect } from "react";
+import { usePathname } from "@/i18n/routing";
 import { useMobileModeStore } from "@/stores/useMobileModeStore";
 
 const LayoutHeaderBase = () => {
@@ -34,20 +32,24 @@ const LayoutHeaderBase = () => {
   return (
     <>
     <header
-      className={`fixed top-0 left-0 right-0 z-[200] flex flex-col min-h-[88px] max-h-[128px] ease-in-out bg-white text-black shadow-md`}
+      className={`fixed top-0 left-0 right-0 z-[200] flex flex-col min-h-[62px] max-h-[88px] ease-in-out bg-white text-black shadow-md`}
     >
-      {/* Top Section - Main Content (fills remaining space) */}
-      <div className="flex-1 flex items-center px-4">
-        <div className="w-full flex justify-between items-center max-w-[1080px] mx-auto">
-          <Logo />
-        
+      <div className="w-full max-w-[1024px] mx-auto flex flex-col h-full">
+        {/* Top Section - Main Content (fills remaining space) */}
+        <div className="flex-1 flex items-center px-4">
+          <div className="w-full flex justify-between items-center">
+            <Logo />
+            {!isAuthPage && (
+              <HeaderActions iconColor="black" isMobileMode={isMobileMode} />
+            )}
+          </div>
         </div>
-      </div>
-        <div className="h-[30px] flex items-center px-4 border-t border-gray-200/20">
+        {/* <div className="h-[30px] flex items-center px-4 border-t border-gray-200/20">
           <div className="w-full max-w-[1080px] mx-auto">
             <BackButton iconColor={'black'} />
           </div>
-        </div>
+        </div> */}
+      </div>
     </header>
     </>
 

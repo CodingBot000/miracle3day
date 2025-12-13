@@ -8,7 +8,7 @@ interface HeroVideosProps {
 
 export default function HeroVideos({ children }: HeroVideosProps) {
   return (
-    <div className="relative w-full h-[45vh] md:h-[60vh] lg:h-[700px] md:rounded-lg overflow-hidden">
+    <div className="relative w-full h-[45vh] md:h-[60vh] md:rounded-lg overflow-hidden">
       <video
         className="absolute inset-0 h-full w-full object-cover object-center"
         style={{

@@ -45,7 +45,7 @@ export const LanguageSwitcherNextIntl = ({ iconColor = 'black' }: LanguageSwitch
       <DropdownMenuTrigger asChild>
         <button
           type="button"
-          className="bg-transparent border-none p-0 m-0 outline-none"
+          className="bg-transparent border-none p-0 m-0 outline-none flex items-center justify-center"
           aria-busy={isPending}
         >
           <Image

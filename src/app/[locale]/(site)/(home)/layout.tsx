@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import MainContent from "@/components/layout/MainContent";
 import MenuMobile from "@/components/organism/layout/MenuMobile";
 
-const LayoutHeaderHome = dynamic(() => import("@/components/organism/layout/LayoutHeaderHome"), {
+const LayoutHeaderHome = dynamic(() => import("@/components/organism/layout/header/LayoutHeaderHome"), {
   ssr: false,
 });
 

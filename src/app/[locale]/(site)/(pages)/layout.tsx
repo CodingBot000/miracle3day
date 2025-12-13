@@ -1,4 +1,4 @@
-import LayoutHeaderNormal from "@/components/organism/layout/LayoutHeaderNormal";
+import LayoutHeaderNormal from "@/components/organism/layout/header/LayoutHeaderNormal";
 import MenuMobile from "@/components/organism/layout/MenuMobile";
 
 export default function PagesLayout({ children }: { children: React.ReactNode }) {

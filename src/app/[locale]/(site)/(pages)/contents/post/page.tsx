@@ -89,7 +89,7 @@ export default function KBeautyIndexPage() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100" style={{ fontFamily: "'Crimson Pro', 'Noto Serif KR', serif" }}>
       {/* Header */}
       <header className="bg-white shadow-sm border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-6 py-8">
+        {/* <div className="max-w-7xl mx-auto px-6 py-8">
           <div className="text-center">
             <h1 className="text-5xl font-bold bg-gradient-to-r from-pink-600 via-purple-600 to-blue-600 bg-clip-text text-transparent mb-3" style={{ fontFamily: "'Inter', 'Pretendard', sans-serif" }}>
               {t('navigation.sections')}
@@ -98,7 +98,7 @@ export default function KBeautyIndexPage() {
               {t('navigation.about')}
             </p>
           </div>
-        </div>
+        </div> */}
       </header>
 
       {/* Main Content */}
@@ -144,9 +144,9 @@ export default function KBeautyIndexPage() {
                     </div>
 
                     {/* Number Badge */}
-                    <div className="absolute top-0 right-0 w-8 h-8 bg-white rounded-full shadow-md flex items-center justify-center">
+                    {/* <div className="absolute top-0 right-0 w-8 h-8 bg-white rounded-full shadow-md flex items-center justify-center">
                       <span className="text-sm font-bold text-slate-700">{section.id}</span>
-                    </div>
+                    </div> */}
 
                     {/* Title */}
                     <h3 className="text-xl font-bold text-slate-800 mb-3 group-hover:text-slate-900 transition-colors" style={{ fontFamily: "'Inter', 'Pretendard', sans-serif" }}>
@@ -178,7 +178,7 @@ export default function KBeautyIndexPage() {
         </div>
 
         {/* Bottom CTA */}
-        <div className="mt-16 text-center">
+        {/* <div className="mt-16 text-center">
           <div className="inline-block p-8 bg-white rounded-3xl shadow-xl border border-slate-200">
             <p className="text-slate-600 mb-4">
               {t('navigation.about')}
@@ -187,17 +187,17 @@ export default function KBeautyIndexPage() {
               {t('navigation.home')}
             </p>
           </div>
-        </div>
+        </div> */}
       </main>
 
       {/* Footer */}
-      <footer className="mt-20 py-8 border-t border-slate-200 bg-white">
+      {/* <footer className="mt-20 py-8 border-t border-slate-200 bg-white">
         <div className="max-w-7xl mx-auto px-6 text-center text-slate-500 text-sm">
           <p>
             {t('navigation.sections')}
           </p>
         </div>
-      </footer>
+      </footer> */}
     </div>
   );
 }

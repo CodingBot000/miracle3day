@@ -54,7 +54,7 @@ export default function ClinicListForHome() {
 
   return (
     <div className="w-full px-4">
-      {/* Desktop: 4 columns (xl: 1280px+), Mobile: 2x2 grid with max 480px container */}
+      {/* Desktop: 4 columns (xl: 1024px+), Mobile: 2x2 grid with max 480px container */}
       <div className="w-full max-w-[480px] xl:max-w-none mx-auto">
         <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
           {clinics.map(({ thumbnail_url, imageurls, name_en, id_uuid, location }) => {

@@ -1,11 +1,12 @@
 'use client'
 
 import { useCallback, useMemo, useState, useEffect } from 'react'
-import { useRouter, usePathname, useSearchParams } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
+import { useNavigation } from '@/hooks/useNavigation'
 import LoginRequiredModal from '@/components/template/modal/LoginRequiredModal'
 
 export function useLoginGuard() {
-  const router = useRouter()
+  const { navigate } = useNavigation()
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const [user, setUser] = useState<any>(null)
@@ -51,12 +52,12 @@ export function useLoginGuard() {
         open={open}
         onConfirm={() => {
           setOpen(false)
-          router.push(loginUrl)
+          navigate(loginUrl)
         }}
         onCancel={() => setOpen(false)}
       />
     )
-  }, [open, router, pathname, searchParams])
+  }, [open, navigate, pathname, searchParams])
 
   return {
     requireLogin,

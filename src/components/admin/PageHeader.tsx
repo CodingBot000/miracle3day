@@ -2,7 +2,7 @@
 
 import { PropsWithChildren, useState, useEffect } from "react";
 import { Home, Eye, Edit3 } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useNavigation } from "@/hooks/useNavigation";
 import { useFormMode } from "@/contexts/admin/FormModeContext";
 import Divider from "./Divider";
 import { log } from '@/utils/logger';
@@ -25,7 +25,7 @@ const PageHeader = ({
   onStepChange,
   id_uuid_hospital,
 }: PropsWithChildren<PageHeaderProps>) => {
-  const router = useRouter();
+  const { navigate } = useNavigation();
   const { toggleMode, isReadMode } = useFormMode();
   const [stepValidation, setStepValidation] = useState<{
     hospital_exists: boolean;
@@ -34,7 +34,7 @@ const PageHeader = ({
   const [isLoading, setIsLoading] = useState(false);
 
   const handleHomeClick = () => {
-    router.push("/admin");
+    navigate("/admin");
   };
 
   const handlePreview = () => {

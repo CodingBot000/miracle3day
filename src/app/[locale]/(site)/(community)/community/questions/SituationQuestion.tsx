@@ -1,11 +1,11 @@
 'use client';
 
 import { useLocale } from 'next-intl';
-import { useRouter } from 'next/navigation';
 import { useLoginGuard } from '@/hooks/useLoginGuard';
+import { useNavigation } from '@/hooks/useNavigation';
 
 export default function SituationQuestion({ question }: { question: any }) {
-  const router = useRouter();
+  const { navigate } = useNavigation();
   const locale = useLocale();
   const { requireLogin, loginModal } = useLoginGuard();
 
@@ -18,7 +18,7 @@ export default function SituationQuestion({ question }: { question: any }) {
 
   // 읽기 화면으로 이동 (로그인 불필요)
   const handleCardClick = () => {
-    router.push(`/community/questions/${question.id}`);
+    navigate(`/community/questions/${question.id}`);
   };
 
   // 글쓰기 화면 (로그인 필수)
@@ -31,7 +31,7 @@ export default function SituationQuestion({ question }: { question: any }) {
     }
 
     // 글쓰기 화면으로 이동
-    router.push(`/community/questions/${question.id}/write`);
+    navigate(`/community/questions/${question.id}/write`);
   };
 
   return (

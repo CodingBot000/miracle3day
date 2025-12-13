@@ -9,6 +9,7 @@ import { usePathname } from "@/i18n/routing";
 import { useHeader } from "@/contexts/HeaderContext";
 import { useMobileModeStore } from "@/stores/useMobileModeStore";
 import { HEADER_HEIGHT } from "@/constants/common";
+import { BackButton } from "@/components/BackButton";
 
 const LayoutHeaderNormal = () => {
  
@@ -110,6 +111,7 @@ const LayoutHeaderNormal = () => {
         {/* Top Section - Main Content (fills remaining space) */}
         <div className="flex-1 flex items-center px-4">
           <div className="w-full flex justify-between items-center">
+            <BackButton  />
             <Logo />
             {!isAuthPage && (
               <HeaderActions

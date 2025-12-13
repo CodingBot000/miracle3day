@@ -1,10 +1,10 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useNavigation } from "@/hooks/useNavigation";
 import Button from "@/components/atoms/button/Button";
 
 const SignUpButton = () => {
-  const router = useRouter();
+  const { navigate } = useNavigation();
 
   return (
     <>
@@ -13,7 +13,7 @@ const SignUpButton = () => {
         color="blue"
         onClick={(e) => {
           e.preventDefault();
-          router.push('/terms');
+          navigate('/terms');
         }}
       >
         SIGN UP

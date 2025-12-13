@@ -104,7 +104,7 @@
             "label": "Dermatology & plastic surgery clinics in Gangnam"
           }
         },
-        "image": "/images/k-beauty/section1-overview/statistics-infographic.jpg"
+        "image": ""
       },
       "conclusion": {
         "title": "Ultimately, why Korea is the world's best can be explained in one sentence",
@@ -118,8 +118,7 @@
         "image": "/images/k-beauty/section1-overview/satisfied-patients.jpg"
       },
       "cta": {
-        "text": "Find Korean Treatments for Your Skin",
-        "link": "/consultation"
+        "text": "Find Korean Treatments for Your Skin"
       }
     },
     "section2": {
@@ -221,8 +220,7 @@
         "image": "/images/k-beauty/section2-skincare/morning-ritual.jpg"
       },
       "cta": {
-        "text": "Find Your Skin Type Routine",
-        "link": "/consultation"
+        "text": "Find Your Skin Type Routine"
       }
     },
     "section3": {
@@ -321,7 +319,7 @@
             "label": "Pico Laser - cheaper than Europe"
           }
         },
-        "image": "/images/k-beauty/section3-dermatology/statistics-charts.jpg"
+        "image": ""
       },
       "conclusion": {
         "title": "Why Korean dermatology treatments are special is simple",
@@ -337,8 +335,7 @@
         "image": "/images/k-beauty/section3-dermatology/post-treatment.jpg"
       },
       "cta": {
-        "text": "Get Dermatology Treatment Consultation",
-        "link": "/consultation"
+        "text": "Get Dermatology Treatment Consultation"
       }
     },
     "section4": {
@@ -459,8 +456,7 @@
         "image": "/images/k-beauty/section4-plastic-surgery/new-beginning.jpg"
       },
       "cta": {
-        "text": "Get Facial Analysis & Consultation",
-        "link": "/consultation"
+        "text": "Get Facial Analysis & Consultation"
       }
     },
     "section5": {
@@ -576,8 +572,7 @@
         "image": "/images/k-beauty/section5-science/research-team.jpg"
       },
       "cta": {
-        "text": "Get Scientific Skin Analysis",
-        "link": "/consultation"
+        "text": "Get Scientific Skin Analysis"
       }
     },
     "section6": {
@@ -696,8 +691,7 @@
         "image": "/images/k-beauty/section6-culture/global-unity.jpg"
       },
       "cta": {
-        "text": "Start My K-Beauty Journey",
-        "link": "/consultation"
+        "text": "Start My K-Beauty Journey"
       }
     },
     "section7": {
@@ -778,7 +772,7 @@
             "**Thorough Analysis**: Ingredient analysis -> Read 100+ reviews -> Blog reviews -> YouTube -> Compare similar products -> Price comparison",
             "-> Average 3-7 days to purchase decision"
           ],
-          "image": "/images/k-beauty/section7-lifestyle/review-search.jpg"
+          "image": ""
         }
       },
       "statistics": {
@@ -817,8 +811,7 @@
         "image": "/images/k-beauty/section7-lifestyle/everyday-beauty.jpg"
       },
       "cta": {
-        "text": "Start My K-Beauty Routine",
-        "link": "/consultation"
+        "text": "Start My K-Beauty Routine"
       }
     }
   },

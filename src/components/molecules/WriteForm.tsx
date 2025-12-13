@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, type ChangeEvent } from 'react';
-import { useRouter } from 'next/navigation';
 import type { CommunityCategory, TopicId, PostTagId } from '@/models/communityData.dto';
+import { useNavigation } from '@/hooks/useNavigation';
 import { toast } from 'sonner';
 import { useLocale } from 'next-intl';
 import { handleNotifications } from '@/utils/notificationHandler';
@@ -42,7 +42,7 @@ export default function WriteForm({
   defaultTopic,
   defaultTag,
 }: WriteFormProps) {
-  const router = useRouter();
+  const { navigate, goBack } = useNavigation();
   const locale = useLocale();
   const [title, setTitle] = useState(initialData?.title || '');
   const [content, setContent] = useState(initialData?.content || '');
@@ -212,9 +212,9 @@ export default function WriteForm({
 
         const data = await response.json();
         if (data?.post?.id) {
-          router.push(`/community/post/${data.post.id}`);
+          navigate(`/community/post/${data.post.id}`);
         } else {
-          router.push(`/community/post/${postId}`);
+          navigate(`/community/post/${postId}`);
         }
       } else {
         const response = await fetch('/api/community/posts', {
@@ -251,7 +251,7 @@ export default function WriteForm({
         if (topicId) redirectParams.set('topic', topicId);
         if (postTag) redirectParams.set('tag', postTag);
 
-        router.push(`/community?${redirectParams.toString()}`)
+        navigate(`/community?${redirectParams.toString()}`)
       }
     } catch (error) {
       console.error('Error submitting post:', error);
@@ -442,7 +442,7 @@ export default function WriteForm({
       <div className="flex justify-end gap-2">
         <button
           type="button"
-          onClick={() => router.back()}
+          onClick={() => goBack()}
           className="px-6 py-3 text-gray-600 hover:text-gray-800"
         >
           Cancel

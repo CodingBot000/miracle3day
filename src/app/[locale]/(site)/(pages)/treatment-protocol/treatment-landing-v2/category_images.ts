@@ -36,7 +36,7 @@ export const TOPIC_IMAGES: Record<string, string[]> = {
 
   // volume_enhancement
   volume_enhancement: [
-    "/landing_model/img17.jpg",
+    "/landing_model/img4.png",
     "/landing_model/img18.jpg",
     "/landing_model/img19.jpg",
     "/landing_model/img21.jpg"
@@ -44,7 +44,7 @@ export const TOPIC_IMAGES: Record<string, string[]> = {
 
   // pore_texture
   pore_texture: [
-    "/landing_model/img12.jpg",
+    "/landing_model/img23.jpg",
     "/landing_model/img13.jpg",
     "/landing_model/img14.jpg",
     "/landing_model/img16.jpg"
@@ -60,7 +60,7 @@ export const TOPIC_IMAGES: Record<string, string[]> = {
 
   // antiaging_regeneration
   antiaging_regeneration: [
-    "/landing_model/img22.jpg",
+    "/landing_model/img20.png",
     "/landing_model/img24.jpg",
     "/landing_model/img25.jpg",
     "/landing_model/img26.jpg"
@@ -76,6 +76,7 @@ export const TOPIC_IMAGES: Record<string, string[]> = {
 
   // misc_hair_body
   misc_hair_body: [
+    "/landing_model/misc_hair_body.jpg",
     "/landing_model/img27.jpg",
     "/landing_model/img28.jpg",
     "/landing_model/img29.jpg",
@@ -84,6 +85,7 @@ export const TOPIC_IMAGES: Record<string, string[]> = {
 
   // contour_line
   contour_line: [
+    "/landing_model/vline.jpg",
     "/landing_model/img8.png",
     "/landing_model/img9.png",
     "/landing_model/model_1.png",

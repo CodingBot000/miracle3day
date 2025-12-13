@@ -1,14 +1,15 @@
 'use client'
 
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { useLoginGuard } from '@/hooks/useLoginGuard'
+import { useNavigation } from '@/hooks/useNavigation'
 
 interface WritePostButtonProps {
   isAuthenticated: boolean
 }
 
 export default function WritePostButton({ isAuthenticated }: WritePostButtonProps) {
-  const router = useRouter()
+  const { navigate } = useNavigation()
   const searchParams = useSearchParams()
   const { requireLogin, loginModal } = useLoginGuard()
 
@@ -28,7 +29,7 @@ export default function WritePostButton({ isAuthenticated }: WritePostButtonProp
     const queryString = params.toString()
     const writeUrl = queryString ? `/community/write?${queryString}` : '/community/write'
 
-    router.push(writeUrl)
+    navigate(writeUrl)
   }
 
   return (

@@ -3,7 +3,7 @@
 import { log } from '@/utils/logger';
 
 
-import { useRouter } from "next/navigation";
+import { useNavigation } from "@/hooks/useNavigation";
 import { ROUTE } from "@/router";
 import { useState } from "react";
 import { MessageCircle, Video } from "lucide-react";
@@ -18,7 +18,7 @@ interface HospitalConsultationButtonProps {
 }
 
 const HospitalConsultationButton = ({ hospitalId, hospitalDetails }: HospitalConsultationButtonProps) => {
-  const router = useRouter();
+  const { navigate } = useNavigation();
   const locale = useLocale();
   const { requireLogin, loginModal } = useLoginGuard();
   const [isCreatingChat, setIsCreatingChat] = useState(false);
@@ -93,7 +93,7 @@ const HospitalConsultationButton = ({ hospitalId, hospitalDetails }: HospitalCon
       await channel.watch();
 
       // 5. 채팅 페이지로 이동
-      router.push(`/chat?cid=${channelId}`);
+      navigate(`/chat?cid=${channelId}`);
     } catch (err: any) {
       console.error("Error creating chat:", err);
       setError(locale === 'ko' ? labels.ko.chatError : labels.en.chatError);
@@ -110,7 +110,7 @@ const HospitalConsultationButton = ({ hospitalId, hospitalDetails }: HospitalCon
         return;
       }
 
-      router.push(ROUTE.RESERVATION(hospitalId));
+      navigate(ROUTE.RESERVATION(hospitalId));
     } catch (err: any) {
       console.error("Error opening reservation page:", err);
       setError(locale === 'ko' ? labels.ko.reservationError : labels.en.reservationError);
@@ -140,15 +140,15 @@ const HospitalConsultationButton = ({ hospitalId, hospitalDetails }: HospitalCon
         log.debug('hasCompleteProfile:', hasCompleteProfile);
       if (!hasCompleteProfile) {
         const currentUrl = `/hospital/${hospitalId}`;
-        router.push(
+        navigate(
           `/login/onboarding/complete-profile?code=${userInfo.id_uuid}&returnUrl=${encodeURIComponent(currentUrl)}`
         );
         return;
       }
 
       // 3. Navigate to video consultation form with hospital ID
-      // router.push(`/pre_consultation_intake_form?hospitalId=${hospitalId}`);
-      router.push(`/${locale}/pre_consultation_intake_form?returnUrl=${encodeURIComponent(`/${locale}/hospital/${hospitalId}`)}`);
+      // navigate(`/pre_consultation_intake_form?hospitalId=${hospitalId}`);
+      navigate(`/pre_consultation_intake_form?returnUrl=${encodeURIComponent(`/hospital/${hospitalId}}`)}`);
 
     } catch (err: any) {
       console.error("Error starting video consultation:", err);

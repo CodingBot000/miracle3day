@@ -2,7 +2,7 @@
 
 import { log } from '@/utils/logger';
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useNavigation } from '@/hooks/useNavigation';
 import { FiArrowLeft, FiCalendar, FiAlertTriangle } from 'react-icons/fi';
 import { FaRegCalendarAlt } from 'react-icons/fa';
 import DatePicker from 'react-datepicker';
@@ -24,7 +24,7 @@ interface ReservationClientProps {
 }
 
 export default function ReservationClient({ initialUserData, hospitalId, hospitalData }: ReservationClientProps) {
-  const router = useRouter();
+  const { goBack } = useNavigation();
   const [formData, setFormData] = useState({
     date: '',
     time: '',
@@ -211,7 +211,7 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
 
         if (response.ok && data.success) {
           log.debug("✅ Reservation created successfully:", data.data);
-          router.back();
+          goBack();
         } else {
           
           console.error("❌ Reservation failed:", data.error);
@@ -227,7 +227,7 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
   };
 
   const handleBack = () => {
-    router.back();
+    goBack();
   };
 
   return (

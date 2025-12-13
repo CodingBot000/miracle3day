@@ -8,6 +8,7 @@ import { useLocale } from 'next-intl'
 import Logo from '@/components/molecules/Logo'
 import { useLoginGuard } from '@/hooks/useLoginGuard'
 import { getFilterButtonClass } from './utils'
+import { BackButton } from '@/components/BackButton'
 
 type CommunityHeaderContextValue = {
   setHeaderContent: (content: ReactNode | null) => void
@@ -202,6 +203,7 @@ export default function CommunityLayoutShell({
             <div className="flex items-center justify-between">
               {/* 왼쪽: 로고 + 탭 */}
               <div className="flex items-center gap-6">
+                 <BackButton  />
                 <Logo />
                 <nav className="flex items-center gap-1">
                   <Link

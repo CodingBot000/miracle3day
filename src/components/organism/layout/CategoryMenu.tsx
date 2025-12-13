@@ -10,7 +10,7 @@ import { SKIN_BEAUTY_CATEGORIES } from "@/app/[locale]/(site)/(pages)/contents/c
 import { PLASTIC_SURGERY_CATEGORIES } from "@/app/[locale]/(site)/(pages)/contents/category/plasticSurgeryCategories";
 import { CATEGORY_ICONS } from "@/app/[locale]/(site)/(pages)/contents/menuIconData";
 import { CategoryNode } from "@/app/[locale]/(site)/(pages)/contents/category/categoryNode";
-import { useRouter } from "@/i18n/routing";
+import { useNavigation } from "@/hooks/useNavigation";
 
 const toIconList = (nodes: CategoryNode[], icons: any) =>
   nodes.map(node => ({
@@ -24,7 +24,7 @@ export default function CategoryMenu() {
   const [tab, setTab] = useState<"skin" | "surgery" | "recommend">("recommend");
   const [selected1, setSelected1] = useState<string | null>(null); // 1뎁스 key
   const [selected2, setSelected2] = useState<string | null>(null); // 2뎁스 key
-  const router = useRouter();
+  const { navigate } = useNavigation();
 
   // 현재 카테고리 데이터
   const rootNodes = tab === "skin" ? SKIN_BEAUTY_CATEGORIES : PLASTIC_SURGERY_CATEGORIES;
@@ -65,7 +65,7 @@ export default function CategoryMenu() {
   const handleSelect2 = (key: string) => {
     // key == selected2
     // setSelected2(key);
-    router.push(`/category/${tab}/${selected1}/${key}`);
+    navigate(`/category/${tab}/${selected1}/${key}`);
     // setSelected2(key);
   };
 

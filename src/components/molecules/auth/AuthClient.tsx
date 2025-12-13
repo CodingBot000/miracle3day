@@ -3,8 +3,9 @@
 import { ROUTE } from "@/router";
 import { User as UserIcon } from "lucide-react";
 import Image from "next/image";
-import { Link, useRouter } from "@/i18n/routing";
+import { Link } from "@/i18n/routing";
 import { useCallback, useEffect, useState } from "react";
+import { useNavigation } from "@/hooks/useNavigation";
 import LoginRequiredModal from "@/components/template/modal/LoginRequiredModal";
 import { useUserStore } from "@/stores/useUserStore";
 
@@ -15,7 +16,7 @@ type AuthClientProps = {
 export default function AuthClient({ iconColor = "#000" }: AuthClientProps) {
   const [loading, setLoading] = useState(true);
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const router = useRouter();
+  const { navigate } = useNavigation();
   const { userInfo, setUser } = useUserStore();
 
   const checkAuth = useCallback(async () => {
@@ -50,7 +51,7 @@ export default function AuthClient({ iconColor = "#000" }: AuthClientProps) {
 
   const handleLoginConfirm = () => {
     setShowLoginModal(false);
-    router.push(ROUTE.LOGIN);
+    navigate(ROUTE.LOGIN);
   };
 
   const handleLoginCancel = () => {

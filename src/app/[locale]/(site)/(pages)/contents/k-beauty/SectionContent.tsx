@@ -3,6 +3,7 @@ import MainPoint from './MainPoint';
 import Statistics from './Statistics';
 import Conclusion from './Conclusion';
 import CTAButton from './CTAButton';
+import { ROUTE } from '@/router';
 
 interface Props {
   sectionKey: string;
@@ -22,7 +23,7 @@ export default function SectionContent({
   cta,
 }: Props) {
   return (
-    <article className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20 max-w-5xl" style={{ fontFamily: "'Crimson Pro', 'Noto Serif KR', serif" }}>
+    <article className="container mx-auto px-4 sm:px-6 lg:px-8 pt-12 lg:pt-20 pb-20 lg:pb-32 max-w-5xl" style={{ fontFamily: "'Crimson Pro', 'Noto Serif KR', serif" }}>
       {/* Introduction */}
       <div className="prose prose-lg max-w-none mb-16">
         {intro && Object.values(intro).map((paragraph, idx) => (
@@ -67,11 +68,11 @@ export default function SectionContent({
       />
 
       {/* CTA */}
-      {cta && cta.text && cta.link && (
-        <div className="mt-16 text-center">
+      {cta && cta.text && (
+        <div className="mt-16 mb-20 lg:mb-32 text-center">
           <CTAButton
             text={cta.text}
-            link={cta.link}
+            link={ROUTE.TREATMENT_PROTOCOL}
           />
         </div>
       )}

@@ -2,7 +2,7 @@
 
 import { HospitalData } from "@/models/hospitalData.dto";
 import { LocationEnum } from "@/constants";
-import { useRouter } from "next/navigation";
+import { useNavigation } from "@/hooks/useNavigation";
 import HospitalListCard from "./HospitalListCard";
 import { ROUTE } from "@/router";
 import { useHospitalGoogleSnapshots } from "@/hooks/useHospitalGoogleSnapshots";
@@ -26,7 +26,7 @@ interface HospitalListNewDesignProps {
 const HospitalListNewDesign = ({ initialData, isFallback = false }: HospitalListNewDesignProps) => {
   const locale = useLocale();
   const hospitals = Array.isArray(initialData) ? initialData : [];
-  const router = useRouter();
+  const { goBack } = useNavigation();
 
   // 병원 ID 목록 추출
   const hospitalIds = useMemo(
@@ -40,7 +40,7 @@ const HospitalListNewDesign = ({ initialData, isFallback = false }: HospitalList
   // Hospital data received successfully with show field
 
   const handleBackClick = () => {
-    router.back();
+    goBack();
   };
 
   // initialData.forEach((hospital, index) => {
@@ -64,7 +64,7 @@ const HospitalListNewDesign = ({ initialData, isFallback = false }: HospitalList
           </svg>
         </button>
         <p className="text-sm md:text-base text-gray-700 font-medium">
-          Awsome Korean Premium Clinics For You
+          Awesome Korean Premium Clinics For You
         </p>
       </div>
 

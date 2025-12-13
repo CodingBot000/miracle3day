@@ -2,11 +2,11 @@
 
 import { log } from '@/utils/logger';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useNavigation } from '@/hooks/useNavigation';
 
 export default function AuthContinuePage() {
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
+  const { navigate } = useNavigation();
 
   useEffect(() => {
     const checkAuthAndRedirect = async () => {
@@ -17,27 +17,27 @@ export default function AuthContinuePage() {
           log.debug('AuthContinuePage Auth check data:', data);
           if (data.auth && data.auth.status === 'active') {
             // 이미 인증된 사용자는 마이페이지로
-            router.replace('/user/my-page');
+            navigate('/user/my-page', { replace: true });
           } else if (data.auth && data.auth.status === 'pending') {
             // 약관 동의 필요
-            router.replace('/terms');
+            navigate('/terms', { replace: true });
           } else {
             // 로그인 필요
-            router.replace('/api/auth/google/start');
+            navigate('/api/auth/google/start', { replace: true });
           }
         } else {
-          router.replace('/api/auth/google/start');
+          navigate('/api/auth/google/start', { replace: true });
         }
       } catch (error) {
         console.error('Auth check error:', error);
-        router.replace('/api/auth/google/start');
+        navigate('/api/auth/google/start', { replace: true });
       } finally {
         setLoading(false);
       }
     };
 
     checkAuthAndRedirect();
-  }, [router]);
+  }, [navigate]);
 
   if (loading) {
     return <div className="flex items-center justify-center min-h-screen">Loading...</div>;

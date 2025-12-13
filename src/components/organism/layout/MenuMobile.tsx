@@ -10,8 +10,9 @@ import {
   MessageSquareText,
 } from "lucide-react";
 import { ROUTE } from "@/router";
-import { useRouter, usePathname } from "@/i18n/routing";
+import { usePathname } from "@/i18n/routing";
 import { useSearchParams } from "next/navigation";
+import { useNavigation } from "@/hooks/useNavigation";
 import { LocationEnum } from "@/constants";
 import clsx from "clsx";
 import AuthClient from "@/components/molecules/auth/AuthClient";
@@ -38,7 +39,7 @@ const HIDDEN_PATHS = [
 ];
 
 const MenuMobile = () => {
-  const router = useRouter();
+  const { navigate } = useNavigation();
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const locationNum = searchParams.get("locationNum") || LocationEnum.Apgujung;
@@ -119,7 +120,7 @@ const MenuMobile = () => {
 
   const goTo = (targetPath: string) => {
     if (pathname === targetPath) return;
-    router.push(targetPath);
+    navigate(targetPath);
   };
 
   // 플랫폼 감지가 완료될 때까지 렌더링 지연 (깜빡임 방지)

@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";;
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useOptimistic } from "react";
+import { useNavigation } from "@/hooks/useNavigation";
 
 import { favoriteActions } from "./actions";
 import { useGetUser } from "@/hooks/useGetUser";
@@ -17,7 +18,7 @@ export interface FavoriteIconProps {
 }
 
 export const FavoriteButton = ({ isFavorite }: FavoriteIconProps) => {
-  const router = useRouter();
+  const { navigate } = useNavigation();
   const params: { id: string } = useParams();
   const id_hospital = params.id;
 
@@ -64,7 +65,7 @@ export const FavoriteButton = ({ isFavorite }: FavoriteIconProps) => {
       <ModalOverlay open={open} handleClick={handleOpenModal}>
         <p>require login</p>
         <br />
-        <Button onClick={() => router.push(ROUTE.LOGIN)}>Login</Button>
+        <Button onClick={() => navigate(ROUTE.LOGIN)}>Login</Button>
       </ModalOverlay>
     </>
   );

@@ -1,8 +1,8 @@
 'use client'
 
 import { MouseEvent, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import type { CommunityPost } from '@/models/communityData.dto';
+import { useNavigation } from '@/hooks/useNavigation';
 import { ANONYMOUS_FALLBACK } from './utils';
 import { useLoginGuard } from '@/hooks/useLoginGuard';
 import { useLocale } from 'next-intl';
@@ -42,7 +42,7 @@ const formatRelativeTime = (dateString: string, locale: string): string => {
 };
 
 export default function PostList({ posts, isAuthenticated }: PostListProps) {
-  const router = useRouter();
+  const { refresh } = useNavigation();
   const locale = useLocale();
 
   const { requireLogin, loginModal } = useLoginGuard();
@@ -50,7 +50,7 @@ export default function PostList({ posts, isAuthenticated }: PostListProps) {
   // 뒤로가기/앞으로가기 시 자동 새로고침
   useEffect(() => {
     const handlePopState = () => {
-      router.refresh(); // 서버 데이터 재검증
+      refresh(); // 서버 데이터 재검증
     };
 
     window.addEventListener('popstate', handlePopState);
@@ -58,7 +58,7 @@ export default function PostList({ posts, isAuthenticated }: PostListProps) {
     return () => {
       window.removeEventListener('popstate', handlePopState);
     };
-  }, [router]);
+  }, [refresh]);
 
   const handleClick = async (event: MouseEvent<HTMLAnchorElement>, postId: number) => {
     // 새 탭에서 열기 - meta/ctrl 키 누른 경우 브라우저 기본 동작 유지

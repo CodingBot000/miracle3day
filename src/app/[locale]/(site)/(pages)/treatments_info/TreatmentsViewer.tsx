@@ -5,7 +5,7 @@ import { useMemo, useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import data from "@/constants/treatments_info.json"
 import { useLocale } from "next-intl";
-import BackButton from "@/components/common/BackButton";
+import { BackButton } from "@/components/BackButton";
 
 type LocalizedText = { ko?: string; en?: string };
 type Treatment = {

@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
 import { useLoginGuard } from '@/hooks/useLoginGuard';
+import { useNavigation } from '@/hooks/useNavigation';
 
 interface PollCommentInputProps {
   onSubmit: (content: string, parentId?: number) => void;
@@ -23,7 +23,7 @@ export default function PollCommentInput({
   onCancel,
 }: PollCommentInputProps) {
   const locale = useLocale();
-  const router = useRouter();
+  const { navigate } = useNavigation();
   const { requireLogin, loginModal } = useLoginGuard();
   const [content, setContent] = useState('');
 
@@ -53,8 +53,8 @@ export default function PollCommentInput({
           <p className="text-gray-600 mb-2">
             {locale === 'ko' ? '댓글을 작성하려면 로그인이 필요합니다' : 'Please login to comment'}
           </p>
-          <button 
-            onClick={() => router.push('/login')}
+          <button
+            onClick={() => navigate('/login')}
             className="text-pink-500 font-semibold hover:text-pink-600"
           >
             {locale === 'ko' ? '로그인' : 'Login'}

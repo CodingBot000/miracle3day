@@ -57,9 +57,17 @@ export const useNavigation = () => {
     }
   };
 
+  /**
+   * 현재 페이지 새로고침 (서버 데이터 재검증)
+   */
+  const refresh = () => {
+    router.refresh();
+  };
+
   return {
     navigate,
     goBack,
+    refresh,
     platform: getPlatform()
   };
 };

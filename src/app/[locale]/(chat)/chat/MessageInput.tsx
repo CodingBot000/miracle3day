@@ -11,7 +11,7 @@ export default function MessageInput() {
         focus
         maxRows={5}
         additionalTextareaProps={{
-          placeholder: '메시지를 입력하세요...',
+          placeholder: 'Enter a message...',
         }}
       />
     </div>

@@ -18,14 +18,14 @@ export default function ChatChannelPage({ params }: { params: { channelUrl: stri
 
   useEffect(() => {
     if (!channelId) {
-      setError('채널 ID가 없습니다.');
+      setError('Channel ID not found.');
       setLoading(false);
       return;
     }
 
     const initChat = async () => {
       try {
-        // 1. 토큰 발급 API 호출
+        // 1. Call token API
         const response = await fetch('/api/stream/token', {
           method: 'POST',
           headers: {
@@ -35,15 +35,15 @@ export default function ChatChannelPage({ params }: { params: { channelUrl: stri
 
         if (!response.ok) {
           const errorData = await response.json();
-          throw new Error(errorData.error || '토큰 발급 실패');
+          throw new Error(errorData.error || 'Failed to issue token');
         }
 
         const { token, apiKey, userId } = await response.json();
 
-        // 2. Stream client 초기화
+        // 2. Initialize Stream client
         const streamClient = StreamChat.getInstance(apiKey);
 
-        // 3. 사용자 연결
+        // 3. Connect user
         await streamClient.connectUser(
           {
             id: userId,
@@ -51,7 +51,7 @@ export default function ChatChannelPage({ params }: { params: { channelUrl: stri
           token
         );
 
-        // 4. 채널 가져오기
+        // 4. Get channel
         const streamChannel = streamClient.channel('messaging', channelId);
         await streamChannel.watch();
 
@@ -60,7 +60,7 @@ export default function ChatChannelPage({ params }: { params: { channelUrl: stri
         setLoading(false);
       } catch (err: any) {
         console.error('[ChatChannelPage] Error:', err);
-        setError(err.message || '채팅방 로딩 실패');
+        setError(err.message || 'Failed to load chat room');
         setLoading(false);
       }
     };
@@ -89,14 +89,14 @@ export default function ChatChannelPage({ params }: { params: { channelUrl: stri
         <div className="text-center max-w-md mx-auto p-6">
           <div className="text-red-500 text-5xl mb-4">⚠️</div>
           <h2 className="text-xl font-semibold text-gray-900 mb-2">
-            채팅방 로딩 오류
+            Chat Room Loading Error
           </h2>
           <p className="text-gray-600 mb-6">{error}</p>
           <button
             onClick={() => router.back()}
             className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
-            돌아가기
+            Go Back
           </button>
         </div>
       </div>
@@ -106,7 +106,7 @@ export default function ChatChannelPage({ params }: { params: { channelUrl: stri
   if (!client || !channel) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <p className="text-gray-600">채팅 클라이언트를 초기화할 수 없습니다.</p>
+        <p className="text-gray-600">Unable to initialize chat client.</p>
       </div>
     );
   }

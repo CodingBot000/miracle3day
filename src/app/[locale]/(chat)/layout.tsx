@@ -2,9 +2,9 @@ import LayoutHeaderBase from '@/components/organism/layout/header/LayoutHeaderBa
 import { PropsWithChildren } from 'react';
 
 /**
- * Chat 전용 레이아웃
- * - MenuMobile 제외 (하단 네비게이션 바 숨김)
- * - 채팅에 집중할 수 있도록 최소한의 UI만 제공
+ * Chat-specific layout
+ * - Excludes MenuMobile (bottom navigation bar hidden)
+ * - Provides minimal UI for focused chat experience
  */
 export default function ChatLayout({ children }: PropsWithChildren) {
   return (

@@ -113,7 +113,7 @@ export default function KBeautyIndexPage() {
             return (
               <Link
                 key={section.id}
-                href={`/contents/post/${section.slug}`}
+                href={`/guide/${section.slug}`}
                 className="group block"
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}

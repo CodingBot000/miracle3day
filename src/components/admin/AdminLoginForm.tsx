@@ -1,7 +1,7 @@
 // components/AdminLoginForm.tsx
 "use client";
 import { useState } from "react";
-import { useNavigation } from "@/hooks/useNavigation";
+import { useRouter } from "next/navigation";
 
 import InputField from "./InputField";
 import { Button } from "../ui/button";
@@ -10,7 +10,7 @@ import { Card, CardContent } from "../ui/card";
 import { log } from "@/utils/logger";
 
 export default function AdminLoginForm() {
-  const { navigate } = useNavigation();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -51,7 +51,7 @@ export default function AdminLoginForm() {
         // 성공: 서버가 HttpOnly 쿠키로 세션을 이미 심었다.
         // 클라이언트에서는 /admin 으로 라우팅만 하면 된다.
         log.info('로그인 성공:', email);
-        navigate("/admin");
+        router.push("/admin");
       } else {
         setError("아이디 또는 비밀번호를 확인해주세요.");
       }

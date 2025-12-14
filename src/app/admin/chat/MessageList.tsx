@@ -33,6 +33,9 @@ export default function MessageList({ channel, client }: MessageListProps) {
         const state = channel.state;
         setMessages(state.messages);
         scrollToBottom();
+
+        // Mark channel as read when messages are loaded
+        await channel.markRead();
       } catch (err) {
         console.error('Failed to load messages:', err);
       }
@@ -41,10 +44,17 @@ export default function MessageList({ channel, client }: MessageListProps) {
     loadMessages();
 
     // Listen for new messages
-    const handleNewMessage = (event: Event) => {
+    const handleNewMessage = async (event: Event) => {
       if (event.message) {
         setMessages((prev) => [...prev, event.message as ChatMessage]);
         scrollToBottom();
+
+        // Mark as read when new message arrives (if user is viewing this channel)
+        try {
+          await channel.markRead();
+        } catch (err) {
+          console.error('Failed to mark as read:', err);
+        }
       }
     };
 

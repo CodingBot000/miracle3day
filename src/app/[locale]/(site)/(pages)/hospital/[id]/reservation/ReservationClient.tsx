@@ -157,7 +157,7 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
       if (!formData.koreaPhone) newErrors.koreaPhone = 'Korea phone number is required';
       if (!formData.date) newErrors.date = 'Date is required';
       if (!formData.time) newErrors.time = 'Time is required';
-      if (!formData.agreeReservation) newErrors.agreeReservation = 'Please agree to reservation terms';
+      // if (!formData.agreeReservation) newErrors.agreeReservation = 'Please agree to reservation terms';
       // if (!formData.agreeNoShow) newErrors.agreeNoShow = 'Please agree to no-show policy';
       
       log.debug('🔍 Step 2: Validation errors:', newErrors);
@@ -243,22 +243,22 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
               <FiArrowLeft className="mr-2" />
               BACK
             </button>
-            <h1 className="text-xl font-semibold">ENTER INFO</h1>
+            <h1 className="text-xl font-semibold">ENTER INFO FOR RESERVATION</h1>
             <div className="w-16"></div>
           </div>
         </div>
 
         {/* Warning Banner */}
-        <div className="bg-yellow-100 border-l-4 border-yellow-400 p-4 mb-6">
+        {/* <div className="bg-yellow-100 border-l-4 border-yellow-400 p-4 mb-6">
           <div className="flex items-center max-w-4xl mx-auto">
             <FiAlertTriangle className="text-yellow-600 mr-3 text-xl" />
             <span className="text-yellow-800 font-medium">
               We don&apos;t have many spots left. Reserve now!
             </span>
           </div>
-        </div>
+        </div> */}
 
-        <div className="max-w-4xl mx-auto px-4 pb-8">
+        <div className="max-w-4xl mx-auto pb-8">
           {/* Reservation Items */}
           <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
             {/* <h2 className="text-lg font-semibold mb-4">Reservation items</h2> */}
@@ -459,12 +459,13 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Please indicate the number of visitors
+                   How many people are in the reservation?
                 </label>
                 <input
                   type="number"
-                  value={formData.visitorsCount}
-                  onChange={(e) => handleInputChange('visitorsCount', e.target.value)}
+                  min={1}
+                  value={formData.reservationCount}
+                  onChange={(e) => handleInputChange('reservationCount', e.target.value)}
                   onWheel={(e) => e.currentTarget.blur()}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 />
@@ -519,7 +520,7 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
                 {errors.koreaPhone && <p className="text-red-500 text-sm mt-1">{errors.koreaPhone}</p>}
               </div>
 
-              <div className="flex items-start space-x-3">
+              {/* <div className="flex items-start space-x-3">
                 <input
                   type="checkbox"
                   checked={formData.agreeReservation}
@@ -529,10 +530,10 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
                 <label className="text-sm text-gray-700">
                   Please make the same amount of reservations as the amount of people that will be receiving procedures. (One person can make reservation for 2 or more products.)
                 </label>
-              </div>
-              {errors.agreeReservation && <p className="text-red-500 text-sm mt-1">{errors.agreeReservation}</p>}
+              </div> */}
+              {/* {errors.agreeReservation && <p className="text-red-500 text-sm mt-1">{errors.agreeReservation}</p>} */}
 
-              <div>
+              {/* <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   How many people are in the reservation?
                 </label>
@@ -547,7 +548,7 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
                   ))}
                   <option value="more">Booked by more than 20 people</option>
                 </select>
-              </div>
+              </div> */}
 
               {/* <div className="flex items-start space-x-3">
                 <input

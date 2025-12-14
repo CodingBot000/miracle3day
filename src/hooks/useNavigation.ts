@@ -1,6 +1,14 @@
+'use client';
+
 import { useRouter } from '@/i18n/routing';
 import { getPlatform, isWeb } from '@/lib/platform';
 
+/**
+ * 다국어 페이지용 Navigation Hook
+ *
+ * ⚠️ Admin 페이지에서는 사용하지 마세요!
+ * Admin에서는 next/navigation의 useRouter를 직접 사용하세요.
+ */
 export const useNavigation = () => {
   const router = useRouter();
 

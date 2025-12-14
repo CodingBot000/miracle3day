@@ -24,7 +24,7 @@ const staticPages = [
   '/legal/cookie-policy',
   '/ai/youcam/s2s',
   '/ai/youcam/jscamera',
-  '/contents/post',
+  '/guide',
 ];
 
 // 동적 페이지 데이터 가져오기 (추후 DB 연동)

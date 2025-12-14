@@ -179,14 +179,20 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
         />
       )}
 
-      {/* 리뷰 없음 */}
-      {!showReviewSkeleton && displayReviews.length === 0 && (
+
+      {/* 리뷰 없음  굳이 리뷰없다고 표시를 할필요없음..*/}
+      {/* {!showReviewSkeleton && displayReviews.length === 0 && (
         <section className="py-8 border-b-8 border-gray-50">
           <div className="px-4">
             <div className="text-sm text-gray-600">No reviews yet.</div>
           </div>
         </section>
+      )} */}
+      {/* Treatment Products */}
+      {!isLoadingProducts && treatmentProducts.length > 0 && (
+        <TreatmentProductList products={treatmentProducts} />
       )}
+      
 
       {/* Hospital Location */}
       <HospitalLocation hospitalInfo={hospital_info} />
@@ -202,10 +208,7 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
 
       {/* <InstagramFeed feedId="bccc1448-efd4-4895-af05-a47a57c4531d" /> */}
 
-      {/* Treatment Products */}
-      {!isLoadingProducts && treatmentProducts.length > 0 && (
-        <TreatmentProductList products={treatmentProducts} />
-      )}
+
 
       {/* Hospital Amenities */}
       <HospitalAmenities hospitalDetails={hospital_details} />

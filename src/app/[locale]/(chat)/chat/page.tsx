@@ -6,6 +6,7 @@ import { Chat } from 'stream-chat-react';
 import { StreamChat, Channel } from 'stream-chat';
 import ChatRoom from './ChatRoom';
 import 'stream-chat-react/dist/css/v2/index.css';
+import './chat.css';
 
 export default function ChatPage() {
   const searchParams = useSearchParams();
@@ -80,7 +81,7 @@ export default function ChatPage() {
 
   if (loading) {
     return (
-      <div className="h-screen flex items-center justify-center bg-gray-50">
+      <div className="h-full flex items-center justify-center bg-gray-50">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
           <p className="text-gray-600 text-lg">채팅방을 불러오는 중...</p>
@@ -91,7 +92,7 @@ export default function ChatPage() {
 
   if (error) {
     return (
-      <div className="h-screen flex items-center justify-center bg-gray-50">
+      <div className="h-full flex items-center justify-center bg-gray-50">
         <div className="text-center max-w-md mx-auto p-6">
           <div className="text-red-500 text-5xl mb-4">⚠️</div>
           <h2 className="text-xl font-semibold text-gray-900 mb-2">
@@ -111,14 +112,14 @@ export default function ChatPage() {
 
   if (!client || !channel) {
     return (
-      <div className="h-screen flex items-center justify-center bg-gray-50">
+      <div className="h-full flex items-center justify-center bg-gray-50">
         <p className="text-gray-600">채팅 클라이언트를 초기화할 수 없습니다.</p>
       </div>
     );
   }
 
   return (
-    <div className="h-screen bg-gray-50">
+    <div className="h-full bg-gray-50">
       <Chat client={client} theme="str-chat__theme-light">
         <ChatRoom channel={channel} />
       </Chat>

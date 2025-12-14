@@ -1,10 +1,13 @@
 "use client";
 
-import { Channel as StreamChannel } from 'stream-chat-react';
+import {
+  Channel as StreamChannel,
+  Window,
+  ChannelHeader as StreamChannelHeader,
+  MessageList as StreamMessageList,
+  MessageInput as StreamMessageInput,
+} from 'stream-chat-react';
 import { Channel } from 'stream-chat';
-import ChannelHeader from './ChannelHeader';
-import MessageList from './MessageList';
-import MessageInput from './MessageInput';
 import 'stream-chat-react/dist/css/v2/index.css';
 
 interface ChatRoomProps {
@@ -24,12 +27,12 @@ export default function ChatRoom({ channel }: ChatRoomProps) {
   }
 
   return (
-    <div className="h-full flex flex-col bg-white">
-      <StreamChannel channel={channel}>
-        <ChannelHeader channel={channel} />
-        <MessageList />
-        <MessageInput />
-      </StreamChannel>
-    </div>
+    <StreamChannel channel={channel}>
+      <Window>
+        <StreamChannelHeader />
+        <StreamMessageList />
+        <StreamMessageInput />
+      </Window>
+    </StreamChannel>
   );
 }

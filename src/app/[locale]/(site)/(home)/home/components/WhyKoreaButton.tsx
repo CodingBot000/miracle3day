@@ -1,7 +1,7 @@
 "use client";
 
 import { useLocale } from "next-intl";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 
 export default function WhyKoreaButton() {
   const locale = useLocale();
@@ -10,7 +10,7 @@ export default function WhyKoreaButton() {
   return (
     <div className="w-full flex justify-end">
       <Link
-        href={`/contents/post/${locale}/`}
+        href="/guide"
         className="inline-flex items-center gap-1 md:gap-3 px-2 md:px-4 py-1 md:py-2 bg-gradient-to-r from-pink-600 via-purple-600 to-blue-600 text-white text-xs md:text-sm font-semibold rounded-full shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300"
       >
         <span className="flex flex-col md:flex-col leading-none md:leading-none">

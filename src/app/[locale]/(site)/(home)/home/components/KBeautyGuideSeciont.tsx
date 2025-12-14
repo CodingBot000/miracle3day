@@ -12,7 +12,7 @@ export default function KBeautyGuideSection() {
       icon: <Globe className="w-6 h-6" />,
       title: t('whyKoreaTitle'),
       description: t('whyKoreaDescription'),
-      href: '/contents/post',
+      href: '/guide',
       ctaText: t('whyKoreaCta'),
     },
     {

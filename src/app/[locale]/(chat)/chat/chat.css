@@ -1,0 +1,49 @@
+/* Stream Chat 1:1 채팅용 레이아웃 */
+
+/* 전체 채팅 컨테이너 */
+.str-chat {
+  height: 100% !important;
+  width: 100% !important;
+}
+
+/* 채널 목록 숨기기 (1:1 채팅에서는 불필요) */
+.str-chat__channel-list {
+  display: none !important;
+}
+
+/* 메인 채널을 전체 너비로 */
+.str-chat__channel {
+  width: 100% !important;
+  flex: 1 !important;
+}
+
+/* Window 컨테이너 전체 크기 */
+.str-chat__main-panel {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* 스레드 패널 숨기기 */
+.str-chat__thread {
+  display: none !important;
+}
+
+/* 메시지 목록 영역 */
+.str-chat__list {
+  flex: 1 !important;
+  overflow-y: auto !important;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+  .str-chat__channel,
+  .str-chat__main-panel {
+    width: 100% !important;
+  }
+
+  /* 모바일에서 사이드바 완전히 제거 */
+  .str-chat__channel-list,
+  .str-chat__thread {
+    display: none !important;
+  }
+}

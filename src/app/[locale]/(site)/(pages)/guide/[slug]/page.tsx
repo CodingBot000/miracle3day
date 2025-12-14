@@ -1,10 +1,11 @@
 import { notFound } from 'next/navigation';
 import { getLocale } from 'next-intl/server';
 import { getKBeautyContent } from '@/locales/content-locale';
-import SectionHero from '../../k-beauty/SectionHero';
-import SectionContent from '../../k-beauty/SectionContent';
+import SectionHero from '../k-beauty/SectionHero';
+import SectionContent from '../k-beauty/SectionContent';
 import TransparentHeaderWrapper from '@/components/layout/TransparentHeaderWrapper';
 import type { KBeautySection } from '@/types/kBeauty';
+import type { Metadata } from 'next';
 
 interface Props {
   params: {
@@ -42,7 +43,7 @@ type SectionData = {
 };
 
 // Generate metadata for SEO
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = params;
   const locale = await getLocale();
   const content = getKBeautyContent(locale);
@@ -67,14 +68,45 @@ export async function generateMetadata({ params }: Props) {
     };
   }
 
+  const imageUrl = `/images/k-beauty/${sectionKey}-${sectionData.id}/hero.jpg`;
+
   return {
-    title: `${sectionData.title || ''} | K-Beauty Guide`,
-    description: sectionData.tagline || '',
-    openGraph: {
-      title: sectionData.title || '',
-      description: sectionData.tagline || '',
-      images: [sectionData.intro ? `/images/k-beauty/${sectionKey}/hero.jpg` : ''],
+    title: `${sectionData.title} | Mimotok K-beauty Guide`,
+    description: sectionData.tagline || sectionData.subtitle || '',
+    keywords: ['K-beauty', 'Korean beauty', sectionData.title, 'skincare', 'dermatology', 'plastic surgery'],
+    authors: [{ name: 'Mimotok' }],
+    alternates: {
+      canonical: `/${locale}/guide/${slug}`,
+      languages: {
+        'en': `/en/guide/${slug}`,
+        'ko': `/ko/guide/${slug}`,
+        'ja': `/ja/guide/${slug}`,
+        'zh-CN': `/zh-CN/guide/${slug}`,
+        'zh-TW': `/zh-TW/guide/${slug}`
+      }
     },
+    openGraph: {
+      title: sectionData.title,
+      description: sectionData.tagline || sectionData.subtitle || '',
+      type: 'article',
+      locale: locale,
+      url: `/${locale}/guide/${slug}`,
+      siteName: 'Mimotok',
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: sectionData.title
+        }
+      ]
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: sectionData.title,
+      description: sectionData.tagline || sectionData.subtitle || '',
+      images: [imageUrl]
+    }
   };
 }
 

@@ -21,7 +21,7 @@ const TreatmentProductCard = ({ product }: TreatmentProductCardProps) => {
 
   // Show option_value and unit only if option_value exists
   const hasOptionValue = product.option_value && product.option_value.trim() !== '';
-
+  console.log('TreatmentProductCard formattedPrice:', formattedPrice);
   return (
     <div className="bg-white border border-gray-200 rounded-md p-2 shadow-sm hover:shadow transition-shadow">
       <div className="flex justify-between items-center gap-3">
@@ -40,9 +40,12 @@ const TreatmentProductCard = ({ product }: TreatmentProductCardProps) => {
               {unitText && ` (${unitText})`}
             </p>
           )}
+
+          {formattedPrice !== '0' && (
           <p className="text-sm font-bold text-gray-900">
             {locale === 'ko' ? '₩' : '$'} {formattedPrice}
           </p>
+          )}
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import LayoutHeaderBase from "@/components/organism/layout/header/LayoutHeaderBase";
+import LayoutHeaderAuth from "@/components/organism/layout/header/LayoutHeaderAuth";
 import { HEADER_HEIGHT } from "@/constants/common";
 import React from "react";
 
@@ -12,7 +12,7 @@ export default function AuthLayout({
 
   return (
     <>
-      <LayoutHeaderBase />
+      <LayoutHeaderAuth />
       <div className="min-h-dvh" style={{ paddingTop: HEADER_HEIGHT }}>
         <div className="mx-auto max-w-[768px]">
           {children}

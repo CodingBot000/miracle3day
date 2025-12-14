@@ -1,10 +1,13 @@
 "use client";
 
-import { Channel as StreamChannel } from 'stream-chat-react';
+import {
+  Channel as StreamChannel,
+  Window,
+  ChannelHeader as StreamChannelHeader,
+  MessageList as StreamMessageList,
+  MessageInput as StreamMessageInput,
+} from 'stream-chat-react';
 import { Channel } from 'stream-chat';
-import ChannelHeader from './ChannelHeader';
-import MessageList from './MessageList';
-import MessageInput from './MessageInput';
 import 'stream-chat-react/dist/css/v2/index.css';
 
 interface ChatRoomProps {
@@ -17,19 +20,19 @@ export default function ChatRoom({ channel }: ChatRoomProps) {
       <div className="h-full flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto mb-4"></div>
-          <p className="text-gray-600">채팅방을 불러오는 중...</p>
+          <p className="text-gray-600">Loading chat room...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="h-full flex flex-col bg-white">
-      <StreamChannel channel={channel}>
-        <ChannelHeader channel={channel} />
-        <MessageList />
-        <MessageInput />
-      </StreamChannel>
-    </div>
+    <StreamChannel channel={channel}>
+      <Window>
+        <StreamChannelHeader />
+        <StreamMessageList />
+        <StreamMessageInput />
+      </Window>
+    </StreamChannel>
   );
 }

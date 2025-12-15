@@ -35,7 +35,8 @@ export default function TreatmentBasedAgeGuide({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <TreatmentAgeGuideClient />
+      {/* Landing page showing default age group 30s */}
+      <TreatmentAgeGuideClient initialAgeGroup="30s" />
     </>
   );
 }

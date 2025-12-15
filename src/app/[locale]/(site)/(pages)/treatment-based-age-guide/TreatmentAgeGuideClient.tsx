@@ -3,6 +3,11 @@
 import { useState } from 'react';
 import { useNavigation } from '@/hooks/useNavigation';
 import { ageBasedData } from '@/constants/treatment/antiaging-agebased';
+import {
+  ageGroups,
+  getSlugFromAgeGroup,
+  type AgeGroup
+} from '@/constants/treatment/antiaging-agebased/ageGroupUtils';
 import { HeroSection } from './components/HeroSection';
 import { IntroSection } from './components/IntroSection';
 import { ConcernsSection } from './components/ConcernsSection';
@@ -11,10 +16,14 @@ import { SkinTypesSection } from './components/SkinTypesSection';
 import { SpecialTipsSection } from './components/SpecialTipsSection';
 import { useLocale, useTranslations } from 'next-intl';
 
-const ageGroups = ['20s', '30s', '40s', '50s', '60s', '70s+'];
+interface TreatmentAgeGuideClientProps {
+  initialAgeGroup?: AgeGroup;
+}
 
-export default function TreatmentAgeGuideClient() {
-  const [activeTab, setActiveTab] = useState('20s');
+export default function TreatmentAgeGuideClient({
+  initialAgeGroup = '30s'
+}: TreatmentAgeGuideClientProps) {
+  const [activeTab, setActiveTab] = useState<AgeGroup>(initialAgeGroup);
   const rawLocale = useLocale();
   const { navigate } = useNavigation();
   const t = useTranslations('TreatmentAgedGuide');
@@ -25,6 +34,13 @@ export default function TreatmentAgeGuideClient() {
   ) ? rawLocale : 'en';
 
   const currentData = ageBasedData[locale].find(item => item.age_group === activeTab);
+
+  // Handle age group change with URL navigation
+  const handleAgeGroupChange = (age: AgeGroup) => {
+    setActiveTab(age);
+    const slug = getSlugFromAgeGroup(age);
+    navigate(`/treatment-based-age-guide/${slug}`);
+  };
 
   return (
     <div className="bg-gradient-to-br from-purple-50 via-white to-blue-50 w-full">
@@ -48,7 +64,7 @@ export default function TreatmentAgeGuideClient() {
             {ageGroups.map((age) => (
               <button
                 key={age}
-                onClick={() => setActiveTab(age)}
+                onClick={() => handleAgeGroupChange(age)}
                 className={`py-3 px-4 text-sm md:text-base rounded-lg font-medium transition-all duration-300 ${
                   activeTab === age
                     ? 'bg-gradient-to-r from-pink-500 to-rose-300 text-white shadow-md'

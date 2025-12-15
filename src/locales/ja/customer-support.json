@@ -1,0 +1,83 @@
+{
+  "CustomerSupport": {
+    "title": "カスタマーサポート",
+    "subtitle": "お困りのことがございましたら、以下から必要な情報をお探しいただくか、直接お問い合わせください。",
+    
+    "categories": {
+      "booking": {
+        "title": "予約・相談",
+        "description": "予約、相談、予約手続きに関するご質問",
+        "links": {
+          "howToBook": "相談予約方法",
+          "changeCancel": "予約の変更・キャンセル",
+          "videoGuide": "ビデオ相談ガイド"
+        }
+      },
+      "treatment": {
+        "title": "施術情報",
+        "description": "施術、回復期間、医療要件に関する詳細",
+        "links": {
+          "ageGuide": "年齢別施術ガイド",
+          "preChecklist": "施術前チェックリスト",
+          "postCare": "アフターケア案内"
+        }
+      },
+      "travel": {
+        "title": "旅行・宿泊",
+        "description": "旅行計画、宿泊、交通手段のサポート",
+        "links": {
+          "airport": "空港送迎サービス",
+          "hotels": "おすすめホテル",
+          "travelGuide": "ソウル旅行ガイド"
+        }
+      },
+      "language": {
+        "title": "言語サポート",
+        "description": "英語、日本語、中国語、韓国語対応",
+        "links": {
+          "interpreter": "通訳サービス",
+          "translation": "医療書類翻訳"
+        }
+      }
+    },
+
+    "contact": {
+      "title": "お問い合わせ方法",
+      "email": {
+        "title": "メール",
+        "value": "mimotok.official@gmail.com",
+        "description": "24時間以内に返信"
+      },
+      "kakao": {
+        "title": "カカオトーク",
+        "value": "@mimotok",
+        "description": "リアルタイムチャット（午前9時～午後6時 KST）"
+      },
+      "whatsapp": {
+        "title": "WhatsApp",
+        "value": "+82-10-XXXX-XXXX",
+        "description": "海外患者様専用"
+      }
+    },
+
+    "emergency": {
+      "title": "緊急サポート",
+      "description": "滞在中の緊急医療問題",
+      "phone": "+82-10-XXXX-XXXX",
+      "available": "24時間対応"
+    },
+
+    "hours": {
+      "title": "営業時間",
+      "weekday": "月～金：午前9時～午後6時（韓国時間）",
+      "weekend": "土：午前10時～午後3時（韓国時間）",
+      "closed": "日曜日および韓国の祝日は休業"
+    },
+
+    "faq": {
+      "button": "よくある質問を見る"
+    },
+
+    "responseTime": "平均応答時間：営業日24時間以内"
+  }
+}

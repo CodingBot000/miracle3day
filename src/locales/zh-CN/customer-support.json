@@ -1,0 +1,83 @@
+{
+  "CustomerSupport": {
+    "title": "客户支持",
+    "subtitle": "我们能为您做什么？在下方查找所需信息或直接联系我们。",
+    
+    "categories": {
+      "booking": {
+        "title": "预约与咨询",
+        "description": "关于预约、咨询和预订流程的问题",
+        "links": {
+          "howToBook": "如何预约咨询",
+          "changeCancel": "变更或取消预约",
+          "videoGuide": "视频咨询指南"
+        }
+      },
+      "treatment": {
+        "title": "治疗信息",
+        "description": "关于治疗程序、恢复时间和医疗要求的详细信息",
+        "links": {
+          "ageGuide": "按年龄划分的治疗指南",
+          "preChecklist": "治疗前检查清单",
+          "postCare": "术后护理说明"
+        }
+      },
+      "travel": {
+        "title": "旅行与住宿",
+        "description": "旅行计划、住宿和交通方面的帮助",
+        "links": {
+          "airport": "机场接送服务",
+          "hotels": "推荐酒店",
+          "travelGuide": "首尔旅游指南"
+        }
+      },
+      "language": {
+        "title": "语言支持",
+        "description": "我们支持英语、日语、中文和韩语",
+        "links": {
+          "interpreter": "口译服务",
+          "translation": "医疗文件翻译"
+        }
+      }
+    },
+
+    "contact": {
+      "title": "联系方式",
+      "email": {
+        "title": "电子邮件",
+        "value": "mimotok.official@gmail.com",
+        "description": "24小时内回复"
+      },
+      "kakao": {
+        "title": "KakaoTalk",
+        "value": "@mimotok",
+        "description": "实时聊天（上午9点 - 下午6点 KST）"
+      },
+      "whatsapp": {
+        "title": "WhatsApp",
+        "value": "+82-10-XXXX-XXXX",
+        "description": "国际患者专用"
+      }
+    },
+
+    "emergency": {
+      "title": "紧急支持",
+      "description": "在您逗留期间如有紧急医疗问题",
+      "phone": "+82-10-XXXX-XXXX",
+      "available": "24/7全天候服务"
+    },
+
+    "hours": {
+      "title": "营业时间",
+      "weekday": "周一至周五：上午9点 - 下午6点（韩国时间）",
+      "weekend": "周六：上午10点 - 下午3点（韩国时间）",
+      "closed": "周日及韩国法定节假日休息"
+    },
+
+    "faq": {
+      "button": "查看常见问题"
+    },
+
+    "responseTime": "平均响应时间：工作日24小时内"
+  }
+}

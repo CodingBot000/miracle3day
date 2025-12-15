@@ -296,7 +296,7 @@ export function generateAgeGuideJsonLd(locale: string) {
 /*
 export default function Page({ params }: { params: { locale: string } }) {
   const jsonLd = generateAgeGuideJsonLd(params.locale);
-  
+
   return (
     <>
       <script
@@ -308,3 +308,134 @@ export default function Page({ params }: { params: { locale: string } }) {
   );
 }
 */
+
+// ====== Age-Specific Metadata Functions ======
+
+import { ageBasedData } from '@/constants/treatment/antiaging-agebased';
+import type { AgeGroup } from '@/constants/treatment/antiaging-agebased/ageGroupUtils';
+
+// 연령대별 메타데이터 생성 함수
+export function generateAgeGroupMetadata(
+  locale: string,
+  ageGroup: AgeGroup
+): Metadata {
+  const localeKey = locale as 'ko' | 'en' | 'ja' | 'zh-CN' | 'zh-TW';
+  const ageData = ageBasedData[localeKey]?.find(
+    item => item.age_group === ageGroup
+  );
+
+  if (!ageData) {
+    return generateAgeGuideMetadata(locale);
+  }
+
+  const isKorean = locale === 'ko';
+  const baseTitle = isKorean ? '연령대별 안티에이징 가이드' : 'Age-Based Anti-Aging Guide';
+
+  return {
+    title: `${ageData.title} | ${baseTitle} | mimotok`,
+    description: ageData.subtitle,
+    keywords: isKorean ? [
+      `${ageGroup} 피부관리`,
+      `${ageGroup} 안티에이징`,
+      ageData.title,
+      '안티에이징',
+      '피부 시술',
+      '맞춤 피부관리',
+      'mimotok',
+    ] : [
+      `${ageGroup} skincare`,
+      `${ageGroup} anti-aging`,
+      ageData.title,
+      'anti-aging',
+      'skin treatment',
+      'customized skincare',
+      'mimotok',
+    ],
+
+    openGraph: {
+      type: 'article',
+      locale: locale === 'ko' ? 'ko_KR' :
+              locale === 'ja' ? 'ja_JP' :
+              locale === 'zh-CN' ? 'zh_CN' :
+              locale === 'zh-TW' ? 'zh_TW' : 'en_US',
+      title: `${ageData.title} | ${baseTitle}`,
+      description: ageData.subtitle,
+      siteName: 'mimotok',
+      images: ageData.heroImage ? [
+        {
+          url: ageData.heroImage,
+          width: 1200,
+          height: 630,
+          alt: ageData.title,
+        },
+      ] : undefined,
+    },
+
+    twitter: {
+      card: 'summary_large_image',
+      title: `${ageData.title} | ${baseTitle}`,
+      description: ageData.subtitle,
+      images: ageData.heroImage ? [ageData.heroImage] : undefined,
+    },
+
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
+  };
+}
+
+// 연령대별 JSON-LD 생성 함수
+export function generateAgeGroupJsonLd(
+  locale: string,
+  ageGroup: AgeGroup
+): object {
+  const localeKey = locale as 'ko' | 'en' | 'ja' | 'zh-CN' | 'zh-TW';
+  const ageData = ageBasedData[localeKey]?.find(
+    item => item.age_group === ageGroup
+  );
+
+  if (!ageData) {
+    return generateAgeGuideJsonLd(locale);
+  }
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'MedicalWebPage',
+    name: ageData.title,
+    description: ageData.subtitle,
+    inLanguage: locale,
+    mainEntity: {
+      '@type': 'MedicalCondition',
+      name: `Anti-aging treatments for ${ageGroup}`,
+      description: ageData.intro,
+    },
+    about: {
+      '@type': 'MedicalTherapy',
+      name: ageData.title,
+      description: ageData.subtitle,
+    },
+    audience: {
+      '@type': 'MedicalAudience',
+      audienceType: 'Patient',
+      suggestedAge: {
+        '@type': 'QuantitativeValue',
+        value: ageGroup,
+      },
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'mimotok',
+      url: 'https://mimotok.com',
+    },
+    datePublished: '2024-12-15',
+    dateModified: new Date().toISOString().split('T')[0],
+  };
+}

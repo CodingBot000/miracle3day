@@ -98,7 +98,7 @@ export default function CookiePolicyPage() {
       rows: [
         ['Session (Essential)', 'session_id=abc123', 'Login/session, security', 'Until session ends', 'Legitimate interest / necessary for service'],
         ['Authentication (Essential)', 'token=eyJhbGciOi... (HttpOnly)', 'Keep you signed in, API access', 'Per service policy', 'Contract performance / security'],
-        ['Preferences (Optional)', 'lang=en, theme=dark', 'Restore language/theme settings', 'Up to 1 year (recommended)', 'Consent'],
+        ['Preferences (Optional)', 'lang=en', 'Restore language/theme settings', 'Up to 1 year (recommended)', 'Consent'],
         ['Tracking/Analytics (Optional)', '_ga=...', 'Usage analysis & improvements', 'Per provider policy', 'Consent'],
       ],
       s3_title: '3) Third-party cookies',

@@ -1,0 +1,83 @@
+{
+  "CustomerSupport": {
+    "title": "Customer Support",
+    "subtitle": "How can we assist you? Find the information you need below or contact us directly.",
+    
+    "categories": {
+      "booking": {
+        "title": "Booking & Consultation",
+        "description": "Questions about appointments, consultations, and booking procedures",
+        "links": {
+          "howToBook": "How to book a consultation",
+          "changeCancel": "Change or cancel appointment",
+          "videoGuide": "Video consultation guide"
+        }
+      },
+      "treatment": {
+        "title": "Treatment Information",
+        "description": "Details about procedures, recovery time, and medical requirements",
+        "links": {
+          "ageGuide": "Treatment guide by age",
+          "preChecklist": "Pre-treatment checklist",
+          "postCare": "Post-care instructions"
+        }
+      },
+      "travel": {
+        "title": "Travel & Accommodation",
+        "description": "Help with travel planning, accommodation, and transportation",
+        "links": {
+          "airport": "Airport pickup service",
+          "hotels": "Recommended hotels",
+          "travelGuide": "Seoul travel guide"
+        }
+      },
+      "language": {
+        "title": "Language Support",
+        "description": "We support English, Japanese, Chinese, and Korean",
+        "links": {
+          "interpreter": "Interpreter service",
+          "translation": "Medical documents translation"
+        }
+      }
+    },
+
+    "contact": {
+      "title": "Contact Methods",
+      "email": {
+        "title": "Email",
+        "value": "mimotok.official@gmail.com",
+        "description": "Response within 24 hours"
+      },
+      "kakao": {
+        "title": "KakaoTalk",
+        "value": "@mimotok",
+        "description": "Real-time chat (9 AM - 6 PM KST)"
+      },
+      "whatsapp": {
+        "title": "WhatsApp",
+        "value": "+82-10-XXXX-XXXX",
+        "description": "For international patients"
+      }
+    },
+
+    "emergency": {
+      "title": "Emergency Support",
+      "description": "For urgent medical concerns during your stay",
+      "phone": "+82-10-XXXX-XXXX",
+      "available": "24/7 Available"
+    },
+
+    "hours": {
+      "title": "Business Hours",
+      "weekday": "Mon - Fri: 9:00 AM - 6:00 PM (KST)",
+      "weekend": "Sat: 10:00 AM - 3:00 PM (KST)",
+      "closed": "Closed on Sundays and Korean holidays"
+    },
+
+    "faq": {
+      "button": "View Frequently Asked Questions"
+    },
+
+    "responseTime": "Average response time: Within 24 hours on business days"
+  }
+}

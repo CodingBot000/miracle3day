@@ -56,7 +56,7 @@ export default function MainPoint({ point, sectionKey, isFirst }: Props) {
       {/* Ten Steps (if exists) */}
       {point.tenSteps && Array.isArray(point.tenSteps) && point.tenSteps.length > 0 && (
         <div className="mt-8 bg-blue-50 rounded-2xl p-8">
-          <h3 className="text-2xl font-bold text-gray-900 mb-6">10단계 루틴</h3>
+          <h3 className="text-2xl font-bold text-gray-900 mb-6">{point.tenStepsTitle}</h3>
           <ol className="space-y-3">
             {point.tenSteps.map((step, idx) => (
               <li key={idx} className="text-gray-700 leading-relaxed">

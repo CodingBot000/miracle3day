@@ -142,6 +142,7 @@
             "これは「複雑さ」ではなく**「精密さ」**です。",
             "各ステップが肌の異なる層と異なる悩みに対応します。これが**「グラススキン」の秘密**です。"
           ],
+          "tenStepsTitle": "10ステップルーティン",
           "tenSteps": [
             "ステップ1：オイルクレンザー（メイク落とし）",
             "ステップ2：フォームクレンザー（ダブル洗顔）",
@@ -245,8 +246,8 @@
       }
     },
     "section3": {
-      "id": "technology",
-      "slug": "advanced-technology",
+      "id": "dermatology",
+      "slug": "dermatology-treatments",
       "title": "技術革新の中心地",
       "subtitle": "韓国が美容技術の試験場である理由",
       "tagline": "世界最新の美容技術が最初にテストされる場所",
@@ -350,8 +351,8 @@
       }
     },
     "section4": {
-      "id": "doctors",
-      "slug": "expert-doctors",
+      "id": "plastic-surgery",
+      "slug": "plastic-surgery-philosophy",
       "title": "専門性と情熱の医師たち",
       "subtitle": "韓国美容医師が特別な理由",
       "tagline": "技術と芸術性を兼ね備えた専門家集団",
@@ -447,8 +448,8 @@
       }
     },
     "section5": {
-      "id": "affordability",
-      "slug": "affordable-excellence",
+      "id": "science",
+      "slug": "science-and-rd",
       "title": "アクセス可能なプレミアム",
       "subtitle": "なぜ韓国は高品質なのに手頃なのか",
       "tagline": "高品質≠高価格、韓国が証明します",

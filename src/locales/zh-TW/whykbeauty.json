@@ -1,0 +1,823 @@
+{
+  "meta": {
+    "language": "zh-TW",
+    "lastUpdated": "2025-01-08"
+  },
+  "navigation": {
+    "home": "首頁",
+    "about": "關於",
+    "sections": "內容"
+  },
+  "sections": {
+    "section1": {
+      "id": "overview",
+      "slug": "why-k-beauty-is-best",
+      "title": "為什麼韓國醫美引領世界",
+      "subtitle": "世界矚目的K-Beauty秘密",
+      "tagline": "你一直在尋找的「那種肌膚」答案就在韓國",
+      "intro": {
+        "paragraph1": "訪問韓國的理由正在逐漸從K-POP演唱會轉向「皮膚科預約」。",
+        "paragraph2": "2024年，**117萬外國患者**訪問了韓國。其中超過半數都是為了皮膚科。",
+        "paragraph3": "他們在尋找什麼？BTS的發光肌膚？BLACKPINK的透明光澤？",
+        "paragraph4": "答案不僅僅是「好基因」。",
+        "paragraph5": "**韓國擁有世界上獨一無二的「美容生態系統」。**"
+      },
+      "mainPoints": {
+        "point1": {
+          "title": "美容成為日常的國家",
+          "subtitle": "在韓國，皮膚科像牙科一樣普遍",
+          "content": [
+            "「午休時去打雷射美白」",
+            "「週末注射填充劑，週一上班」",
+            "這樣的對話在這裡毫不違和。美容治療不再是「特殊日子」的準備，而是**日常維護**。",
+            "因此，韓國記錄了**每千人13.5次美容治療**。這是全球最高水準。"
+          ],
+          "image": "/images/k-beauty/section1-overview/lunch-dermatology.jpg"
+        },
+        "point2": {
+          "title": "需求催生的創新",
+          "subtitle": "競爭推動的技術進化",
+          "content": [
+            "僅首爾江南地區就有**500多家皮膚科和整形外科診所**。這種競爭創造了什麼？",
+            "**最新設備引進競爭** - 音波拉皮、電波拉皮、皮秒雷射...率先引進新設備的市場",
+            "**客製化組合治療的標準化** - 您的皮膚需要這3種治療的組合",
+            "**合理的價格** - 競爭帶來的價格穩定。比全球標準便宜30-50%的優質治療"
+          ],
+          "image": "/images/k-beauty/section1-overview/advanced-equipment.jpg"
+        },
+        "point3": {
+          "title": "零恢復期文化",
+          "subtitle": "快速恢復，快速回歸日常",
+          "content": [
+            "韓國人不等待。「今天治療明天上班可以嗎？」這個問題改變了韓國醫美。",
+            "**非手術提升的進化**（HIFU、RF）",
+            "**日常雷射美白**（皮秒、創世紀）",
+            "**皮膚促進劑的創新**（童顏針、皮膚肉毒）",
+            "所有都是為「快速恢復」而生的韓式解決方案。"
+          ],
+          "image": "/images/k-beauty/section1-overview/zero-downtime.jpg",
+          "stats": {
+            "stat1": "87%的韓國皮膚科醫生使用組合設備和注射策略。（Annals of Dermatology，2025）"
+          }
+        },
+        "point4": {
+          "title": "K-Culture創造的全球信任",
+          "subtitle": "文化創造的嚮往",
+          "content": [
+            "「BLACKPINK為什麼有那樣的皮膚？」「演員孫錫久的年輕外貌秘訣是什麼？」",
+            "全世界的人都在疑惑。當COVID結束後，他們來到韓國尋找答案。",
+            "因為他們了解到，在韓劇中嚮往的肌膚，在韓國是真的可以實現的。"
+          ],
+          "image": "/images/k-beauty/section1-overview/kpop-stage.jpg",
+          "stats": {
+            "year2009": "約1萬人",
+            "year2024": "117萬人",
+            "growth": "增長117倍"
+          }
+        }
+      },
+      "statistics": {
+        "title": "數字看K-Beauty",
+        "data": {
+          "patients": {
+            "value": "117萬人",
+            "label": "2024年訪問韓國的外國患者（歷史最高）"
+          },
+          "dermatology": {
+            "value": "56.6%",
+            "label": "訪問皮膚科的外國患者比例（壓倒性第一）"
+          },
+          "growth": {
+            "value": "117倍",
+            "label": "相比2009年外國皮膚科患者的增長率"
+          },
+          "price": {
+            "value": "30-50%",
+            "label": "比已開發國家便宜的優質治療"
+          },
+          "frequency": {
+            "value": "每千人13.5次",
+            "label": "人均美容治療次數（全球最高）"
+          },
+          "clinics": {
+            "value": "500+",
+            "label": "江南的皮膚科和整形外科診所"
+          }
+        },
+        "image": ""
+      },
+      "conclusion": {
+        "title": "為什麼韓國是全球最佳，可以用一句話解釋",
+        "quote": "將美容變成**生活方式**而非醫療的國家",
+        "points": [
+          "需求創造了供應，",
+          "競爭推進了技術，",
+          "而文化說服了世界。"
+        ],
+        "closingLine": "你一直在尋找的「那種肌膚」的秘密。該輪到你在韓國發現它了。",
+        "image": "/images/k-beauty/section1-overview/satisfied-patients.jpg"
+      },
+      "cta": {
+        "text": "尋找適合您肌膚的韓國治療"
+      }
+    },
+    "section2": {
+      "id": "skincare",
+      "slug": "k-skincare-secret",
+      "title": "K-保養的秘密",
+      "subtitle": "10步保養法創造的革命",
+      "tagline": "全世界追隨的韓國保養哲學",
+      "intro": {
+        "paragraph1": "2015年，紐約時報這樣介紹韓國保養：**「通往完美肌膚的10個步驟」**",
+        "paragraph2": "全世界都驚訝了。「保養需要10個步驟？」",
+        "paragraph3": "但很快就理解了。對於韓國人來說，保養不是「塗抹產品」，而是**「與肌膚對話的時間」**。"
+      },
+      "mainPoints": {
+        "point1": {
+          "title": "細分的藝術",
+          "subtitle": "10步不是複雜，而是精準",
+          "content": [
+            "歐美保養：洗面乳 → 保濕 → 防曬（3步）",
+            "韓國保養：細緻的10步旅程",
+            "這不是「複雜」而是**「精準」**。",
+            "每一步針對不同的皮膚層和不同的問題。這就是**「玻璃肌」的秘密**。"
+          ],
+          "tenSteps": [
+            "步驟1：卸妝油（卸妝）",
+            "步驟2：洗面乳（二次清潔）",
+            "步驟3：去角質（每週2-3次）",
+            "步驟4：化妝水（pH平衡）",
+            "步驟5：精華液（補水）",
+            "步驟6：精華/安瓶（集中護理）",
+            "步驟7：面膜（每週2-3次）",
+            "步驟8：眼霜（眼部護理）",
+            "步驟9：乳液/乳霜（鎖住水分）",
+            "步驟10：防曬（早上）/ 晚霜（晚上）"
+          ],
+          "image": "/images/k-beauty/section2-skincare/ten-step-routine.jpg"
+        },
+        "point2": {
+          "title": "創新成分的寶庫",
+          "subtitle": "發酵和生物技術的魔力",
+          "content": [
+            "韓國化妝品的成分表令人驚嘆。",
+            "**發酵成分**：半乳糖酵母、雙歧桿菌、酵母菌 → 將韓國料理中使用了幾個世紀的發酵技術應用於美容",
+            "**天然來源成分**：蝸牛黏液、蜂膠、人參萃取物、燕窩 → 韓醫（韓國傳統醫學）的智慧",
+            "**生物技術**：EGF、FGF、胜肽、幹細胞培養液 → 最尖端科學的融合",
+            "**結果：傳統 × 科學 = 世界認可的效果**"
+          ],
+          "image": "/images/k-beauty/section2-skincare/fermentation.jpg"
+        },
+        "point3": {
+          "title": "面膜革命",
+          "subtitle": "25分鐘肌膚轉換",
+          "content": [
+            "「今天累了...敷個面膜吧」",
+            "在韓國這是日常。",
+            "**韓國面膜市場**：年產30億片（佔全球70%），平均價格$0.5-3（可以每天使用的價格），種類1,000+（適合所有膚質）",
+            "**為什麼選擇面膜？**",
+            "密封效果 → 成分滲透率提高30-40%",
+            "易於使用 → 隨時隨地",
+            "即效性 → 25分鐘後看得見的效果",
+            "**韓國人平均每週使用2-3次。旅行或重要活動前每天使用。**"
+          ],
+          "image": "/images/k-beauty/section2-skincare/sheet-masks.jpg",
+          "stats": {
+            "production": "30億片/年",
+            "usage": "每週2-3次",
+            "varieties": "1,000+"
+          }
+        },
+        "point4": {
+          "title": "成分透明文化",
+          "subtitle": "化妝品也要看成分表的時代",
+          "content": [
+            "韓國人在購買化妝品前會**搜尋成分**。",
+            "**化妝品成分分析應用「화해（化解）」**：使用者1,500萬，2,000萬以上產品資料庫，每個成分都有安全等級顯示，數十萬條即時評價",
+            "**結果：廠商無法隱藏成分的時代**",
+            "有害成分 → 立即曝光",
+            "無效成分 → 消費者看穿",
+            "優秀成分 → 口碑傳播",
+            "**這種透明度提高了韓國化妝品的品質。**"
+          ],
+          "image": "/images/k-beauty/section2-skincare/ingredient-app.jpg"
+        }
+      },
+      "statistics": {
+        "title": "數字看K-保養",
+        "data": {
+          "steps": {
+            "value": "10步",
+            "label": "平均保養流程"
+          },
+          "time": {
+            "value": "25-40分鐘",
+            "label": "每日保養時間"
+          },
+          "products": {
+            "value": "23個",
+            "label": "平均擁有的保養品數量"
+          },
+          "masks": {
+            "value": "30億片",
+            "label": "年面膜產量"
+          },
+          "ingredients": {
+            "value": "15-30種",
+            "label": "每個產品的主要成分數"
+          }
+        },
+        "image": "/images/k-beauty/section2-skincare/skincare-stats.jpg"
+      },
+      "conclusion": {
+        "title": "K-保養的本質是",
+        "quote": "**不是複雜而是細緻，不是奢侈而是日常**",
+        "points": [
+          "10步不是「麻煩」而是**「投資自己的時間」**",
+          "不是昂貴的產品而是**「正確的順序和組合」**",
+          "不是一次的劇烈變化而是**「每天小改善的累積」**"
+        ],
+        "closingLine": "全世界為什麼迷戀韓國保養。不僅僅是因為有效。**是因為愛護肌膚的文化本身就很美**。今晚開始10步保養如何？25分鐘，為了你自己。",
+        "image": "/images/k-beauty/section2-skincare/happy-skin.jpg"
+      },
+      "cta": {
+        "text": "開始我的K-保養流程"
+      }
+    },
+    "section3": {
+      "id": "technology",
+      "slug": "advanced-technology",
+      "title": "技術創新中心",
+      "subtitle": "為什麼韓國是美容技術的試驗場",
+      "tagline": "世界最新美容技術首先測試的地方",
+      "intro": {
+        "paragraph1": "美容設備廠商推出新產品時，首先考慮的是「韓國市場的反應會如何？」",
+        "paragraph2": "因為韓國是**全球要求最嚴格的美容市場**。",
+        "paragraph3": "而在這裡成功，就意味著全球成功得到保證。"
+      },
+      "mainPoints": {
+        "point1": {
+          "title": "最新設備的試驗場",
+          "subtitle": "新技術首先得到驗證的地方",
+          "content": [
+            "**首先引進韓國的理由**",
+            "1. **需求**：每天有數千人想嘗試新技術",
+            "2. **專業性**：醫生的技術水準高",
+            "3. **反饋**：消費者的評價立即且徹底",
+            "4. **競爭**：落後就立即失去客戶",
+            "**結果：在韓國成功的技術 = 全球標準**"
+          ],
+          "image": "/images/k-beauty/section3-technology/testing-ground.jpg",
+          "examples": [
+            "音波拉皮（HIFU）：在韓國首次大眾化",
+            "皮秒雷射：在韓國確立為去斑標準治療",
+            "電波拉皮：根據韓國市場反應決定全球展開"
+          ]
+        },
+        "point2": {
+          "title": "組合治療的先驅",
+          "subtitle": "創造1+1=3的藝術",
+          "content": [
+            "韓國醫生發現：「單一治療有侷限」",
+            "**組合治療的誕生**",
+            "例）提升治療：HIFU（深層提升）+ RF（表皮緊緻）+ 皮膚促進劑（水分/彈力）= 協同效果提高30-40%",
+            "例）美白治療：皮秒美白 + 穀胱甘肽注射 + 維生素C導入 = 比單獨治療快50%的效果",
+            "**這種「組合策略」現在是全球醫美的標準。**"
+          ],
+          "image": "/images/k-beauty/section3-technology/combination-treatment.jpg"
+        },
+        "point3": {
+          "title": "零恢復期技術的發展",
+          "subtitle": "韓國人連一天都不能等",
+          "content": [
+            "「今天治療，明天上班」的需求催生的創新",
+            "**微創/無創技術的突破**",
+            "**HIFU（高強度聚焦超音波）**：無需手術刀的拉提，疼痛最小化，恢復期0-1天",
+            "**皮秒雷射**：傳統雷射1/1000的短脈衝，周圍組織損傷最小化，去斑革命",
+            "**RF（射頻）**：用熱刺激真皮層產生膠原蛋白，改善鬆弛，可無麻醉",
+            "**皮膚促進劑注射**：針孔最小化，均勻補充水分/營養，1-2天完全恢復"
+          ],
+          "image": "/images/k-beauty/section3-technology/no-downtime.jpg"
+        },
+        "point4": {
+          "title": "AI和大數據的整合",
+          "subtitle": "當技術遇見醫生的直覺",
+          "content": [
+            "韓國醫美現在是**數據驅動**的。",
+            "**AI肌膚診斷系統**：學習數十萬張前後對比照片，自動分類膚質/問題，建議最佳治療組合，效果預測準確度85%以上",
+            "**3D面部分析技術**：以0.1mm為單位分析面部不對稱，建議最佳填充劑/肉毒注射點，視覺化治療前後",
+            "**結果：科學 + 藝術 = 最佳結果**"
+          ],
+          "image": "/images/k-beauty/section3-technology/ai-analysis.jpg"
+        }
+      },
+      "statistics": {
+        "title": "數字看韓國美容技術",
+        "data": {
+          "equipment": {
+            "value": "全球40%",
+            "label": "最新美容設備首先引進的比例"
+          },
+          "combination": {
+            "value": "87%",
+            "label": "使用組合治療的韓國醫生比例"
+          },
+          "downtime": {
+            "value": "0-2天",
+            "label": "平均恢復期"
+          },
+          "satisfaction": {
+            "value": "92%",
+            "label": "患者滿意度"
+          }
+        },
+        "image": "/images/k-beauty/section3-technology/tech-stats.jpg"
+      },
+      "conclusion": {
+        "title": "韓國成為美容技術中心的理由",
+        "quote": "**需求召喚技術，技術催生創新，創新成為世界標準**",
+        "points": [
+          "韓國不僅僅是「消費市場」",
+          "它是世界美容技術的**「實驗室」**",
+          "在這裡成功的技術",
+          "傳播到紐約、倫敦、東京"
+        ],
+        "closingLine": "想體驗最尖端技術嗎？來韓國吧。在全世界看到之前，你可以先體驗。",
+        "image": "/images/k-beauty/section3-technology/global-spread.jpg"
+      },
+      "cta": {
+        "text": "體驗最新技術"
+      }
+    },
+    "section4": {
+      "id": "doctors",
+      "slug": "expert-doctors",
+      "title": "專業與熱情的醫生們",
+      "subtitle": "為什麼韓國醫美醫生與眾不同",
+      "tagline": "兼具技術與藝術性的專家集團",
+      "intro": {
+        "paragraph1": "「韓國醫生的手法不一樣」",
+        "paragraph2": "這是外國患者常說的話。",
+        "paragraph3": "有什麼不同呢？只是技術的差異？不，遠不止如此。"
+      },
+      "mainPoints": {
+        "point1": {
+          "title": "超競爭環境打造的專業性",
+          "subtitle": "要生存就必須是最好的",
+          "content": [
+            "江南區每平方公里平均有12家皮膚科診所。",
+            "這種激烈競爭創造了什麼？",
+            "**不斷學習**：每月參加新技術研討會，海外學會發表，新設備訓練，平均每月30-40小時的額外學習",
+            "**專門化**：不僅僅是「皮膚科醫生」→ 細分為「雷射專門」「填充劑專門」「抗老化專門」",
+            "**差異化**：僅有技術還不夠 → 患者溝通、術後照護、結果保證",
+            "**結果：韓國醫生 = 臨床經驗是全球平均的3-5倍**"
+          ],
+          "image": "/images/k-beauty/section4-doctors/training-session.jpg"
+        },
+        "point2": {
+          "title": "藝術化方法",
+          "subtitle": "醫學 + 美學 = 韓式醫美",
+          "content": [
+            "韓國醫生看患者時，不只是看「問題」，而是看**「整體和諧」**。",
+            "**黃金比例的應用**：面部比例分析（1:1.618），各部位的理想平衡，考慮文化審美標準",
+            "**個人化客製**：同樣的皺紋 → 根據臉型、膚質、年齡、生活方式採取不同方法，沒有「標準治療」這個詞",
+            "**對自然結果的執著**：「看不出接受過治療的程度」是目標，K-Beauty哲學 =「改善了，但保留了那個人的特質」"
+          ],
+          "image": "/images/k-beauty/section4-doctors/artistic-approach.jpg"
+        },
+        "point3": {
+          "title": "以患者為中心的文化",
+          "subtitle": "在韓國患者是國王",
+          "content": [
+            "韓國醫美診所的服務水準達到**飯店業**標準。",
+            "**預約系統**：線上即時預約，即時等待時間通知，彈性調整日程，很多地方每週7天營業",
+            "**諮詢流程**：初次諮詢30-60分鐘，詳細肌膚分析，拍照記錄，調整期望值，無強制推銷",
+            "**術後照護**：24小時緊急聯絡，定期追蹤，結果監測，滿意度回饋",
+            "**價格透明**：事先準確報價，無隱藏費用，套餐優惠明確"
+          ],
+          "image": "/images/k-beauty/section4-doctors/patient-care.jpg"
+        },
+        "point4": {
+          "title": "全球經驗",
+          "subtitle": "多樣膚質的專家",
+          "content": [
+            "韓國醫生現在是**「全球醫生」**。",
+            "**外國患者經驗**：年診療117萬外國患者，理解白人、黑人、亞洲人等多樣膚質，認識文化審美標準的差異",
+            "**語言能力**：英語基礎，很多醫生會日語/中文，配備醫療翻譯系統",
+            "**符合國際標準**：眾多JCI認證醫院，可處理國際保險，遵守全球醫療安全標準"
+          ],
+          "image": "/images/k-beauty/section4-doctors/international.jpg"
+        }
+      },
+      "statistics": {
+        "title": "數字看韓國醫生",
+        "data": {
+          "experience": {
+            "value": "3-5倍",
+            "label": "與全球平均相比的臨床經驗"
+          },
+          "training": {
+            "value": "30-40小時/月",
+            "label": "額外學習時間"
+          },
+          "satisfaction": {
+            "value": "94%",
+            "label": "外國患者滿意度"
+          },
+          "languages": {
+            "value": "2-3種語言",
+            "label": "平均可用語言數"
+          }
+        },
+        "image": "/images/k-beauty/section4-doctors/doctor-stats.jpg"
+      },
+      "conclusion": {
+        "title": "韓國醫生特別的理由",
+        "quote": "**技術 + 藝術性 + 服務 = 世界最高水準**",
+        "points": [
+          "競爭磨練了專業性，",
+          "患者要求了最好的服務，",
+          "全球經驗拓寬了視野"
+        ],
+        "closingLine": "把你的肌膚交給韓國醫生吧。他們不只是醫生。**是理解你美麗的藝術家**。",
+        "image": "/images/k-beauty/section4-doctors/satisfied-patient.jpg"
+      },
+      "cta": {
+        "text": "諮詢專業醫生"
+      }
+    },
+    "section5": {
+      "id": "affordability",
+      "slug": "affordable-excellence",
+      "title": "可負擔的高端",
+      "subtitle": "為什麼韓國既高品質又實惠",
+      "tagline": "高品質≠高價格，韓國來證明",
+      "intro": {
+        "paragraph1": "「韓國醫美，這麼便宜沒問題嗎？」",
+        "paragraph2": "這是外國患者最驚訝的部分。",
+        "paragraph3": "同樣的治療，同樣的設備，更高的專業性。但價格卻**便宜30-50%**。",
+        "paragraph4": "這不是欺詐。這是韓國的「規模經濟」。"
+      },
+      "mainPoints": {
+        "point1": {
+          "title": "規模經濟",
+          "subtitle": "需求降低價格",
+          "content": [
+            "韓國醫美市場規模：**年55億美元（約6兆韓元）**",
+            "**為什麼便宜？**",
+            "1. **巨大需求**：年1,350萬次治療 = 設備利用率最大化",
+            "2. **競爭穩定價格**：500多家診所競爭 = 價格自然合理化",
+            "3. **高效營運**：高周轉率 = 降低固定成本",
+            "4. **直接交易**：與設備廠商直接簽約 = 無中間差價",
+            "**結果：實現高品質 + 低價格**"
+          ],
+          "image": "/images/k-beauty/section5-affordability/economy-scale.jpg",
+          "priceComparison": {
+            "laserToning": {
+              "us": "$300-500",
+              "korea": "$50-100",
+              "savings": "70-80%"
+            },
+            "botox": {
+              "us": "$400-800",
+              "korea": "$150-300",
+              "savings": "60-65%"
+            },
+            "filler": {
+              "us": "$600-1,200",
+              "korea": "$300-600",
+              "savings": "50%"
+            }
+          }
+        },
+        "point2": {
+          "title": "政府戰略支援",
+          "subtitle": "K-Beauty是國家產業",
+          "content": [
+            "韓國政府將醫美作為**戰略產業**培育。",
+            "**政府支援計畫**：醫療旅遊基礎設施投資（年2億美元以上），吸引外國患者行銷，醫療糾紛調解服務，醫療翻譯支援，醫療旅遊簽證簡化",
+            "**醫療機構認證制度**：支援國際醫療機構認證（JCI），保證醫療服務品質，監測外國患者滿意度",
+            "**結果：安全性 + 品質保證 + 實惠價格**"
+          ],
+          "image": "/images/k-beauty/section5-affordability/government-support.jpg"
+        },
+        "point3": {
+          "title": "透明的價格政策",
+          "subtitle": "無隱藏費用",
+          "content": [
+            "韓國診所的價格政策**透明得驚人**。",
+            "**價格透明度**：線上明確顯示價格，諮詢前提供準確報價，提前告知額外費用，明確顯示套餐優惠",
+            "**支付系統**：卡/現金/轉帳全部可用，可以分期付款，可用外幣支付，自動開具發票/證明",
+            "**保險對接**：部分治療可申請海外保險，提供英文診斷書/治療記錄，支援理賠手續"
+          ],
+          "image": "/images/k-beauty/section5-affordability/transparent-pricing.jpg"
+        },
+        "point4": {
+          "title": "套餐經濟性",
+          "subtitle": "聰明組合更省錢",
+          "content": [
+            "在韓國**套餐治療**很普遍。",
+            "**熱門套餐範例**",
+            "**基礎保養套餐**：雷射美白5次 + 水光針3次 + 維生素導入 = $400-600（比單項節省40%）",
+            "**抗老化套餐**：HIFU 1次 + 肉毒桿菌 + 皮膚促進劑3次 = $800-1,200（比單項節省35%）",
+            "**全面提升套餐**：HIFU + RF + 線雕 + 填充劑 = $2,000-3,000（比單項節省45%）",
+            "**遊客特別套餐**：主要治療 + 飯店接送 + 翻譯 + 術後照護產品 = 一價全包"
+          ],
+          "image": "/images/k-beauty/section5-affordability/package-deals.jpg"
+        }
+      },
+      "statistics": {
+        "title": "數字看韓國的價格競爭力",
+        "data": {
+          "marketSize": {
+            "value": "$55億",
+            "label": "年醫美市場規模"
+          },
+          "savings": {
+            "value": "30-50%",
+            "label": "相比全球平均的節省率"
+          },
+          "procedures": {
+            "value": "1,350萬次",
+            "label": "年總治療次數"
+          },
+          "packages": {
+            "value": "35-45%",
+            "label": "套餐平均折扣率"
+          }
+        },
+        "image": "/images/k-beauty/section5-affordability/price-stats.jpg"
+      },
+      "conclusion": {
+        "title": "韓國價格競爭力的秘密",
+        "quote": "**規模 + 競爭 + 效率 + 支援 = 實惠的最高品質**",
+        "points": [
+          "便宜並不意味著品質低",
+          "反而是**更多經驗 = 更好結果**",
+          "在韓國人人都能享受最好的醫美",
+          "這才是真正的「美容民主化」"
+        ],
+        "closingLine": "高品質醫美不再需要高價格。來韓國親自驗證吧。",
+        "image": "/images/k-beauty/section5-affordability/happy-clients.jpg"
+      },
+      "cta": {
+        "text": "找適合我的套餐"
+      }
+    },
+    "section6": {
+      "id": "culture",
+      "slug": "k-culture-impact",
+      "title": "K-Culture創造的現象",
+      "subtitle": "音樂開啟了通往美容之路",
+      "tagline": "BTS打開了門，BLACKPINK架起了橋",
+      "intro": {
+        "paragraph1": "2012年，江南Style席捲全球。",
+        "paragraph2": "2020年，Dynamite登頂Billboard。",
+        "paragraph3": "2024年，117萬人訪問了韓國皮膚科。",
+        "paragraph4": "**這是巧合嗎？**"
+      },
+      "mainPoints": {
+        "point1": {
+          "title": "K-POP創造的好奇心",
+          "subtitle": "他們肌膚的秘密是什麼？",
+          "content": [
+            "「BTS為什麼皮膚那麼好？」",
+            "全世界粉絲開始疑惑。",
+            "**K-POP偶像美容秘訣探尋現象**",
+            "- YouTube搜尋「BTS skincare routine」：1,200萬條",
+            "- 「BLACKPINK makeup tutorial」：800萬條",
+            "- Instagram #kpopbeauty：500萬以上貼文",
+            "**粉絲不僅僅是粉絲。他們成為了消費者。**"
+          ],
+          "image": "/images/k-beauty/section6-culture/kpop-influence.jpg",
+          "stats": {
+            "youtube": "2,000萬+",
+            "instagram": "500萬+",
+            "sales": "增長300%"
+          }
+        },
+        "point2": {
+          "title": "韓劇創造的嚮往",
+          "subtitle": "想擁有劇中主角那樣的肌膚",
+          "content": [
+            "Netflix韓劇熱潮（2020-2024）是決定性的。",
+            "**魷魚遊戲** → 全球1.42億家庭觀看",
+            "**梨泰院Class** → 8,000萬家庭",
+            "**愛的迫降** → 9,000萬家庭",
+            "觀眾看到了什麼？**完美的肌膚，自然的美麗，超越年齡的外貌**",
+            "**然後採取了行動：**",
+            "- 韓國化妝品搜尋：增長500%（2020-2024）",
+            "- 韓國醫美諮詢：增長700%",
+            "- 訪韓醫療遊客：增長300%"
+          ],
+          "image": "/images/k-beauty/section6-culture/kdrama-effect.jpg"
+        },
+        "point3": {
+          "title": "SNS創造的傳播",
+          "subtitle": "#kbeauty #glassskin #koreanskincare引領的全球現象",
+          "content": [
+            "2015年之前：K-Beauty是少數愛好者的專屬",
+            "2024年：**全球趨勢**",
+            "**Instagram變化**",
+            "- #kbeauty：1,500萬條（2024）",
+            "- #glassskin：800萬條",
+            "- #koreanskincare：1,200萬條",
+            "- #10stepskincare：500萬條",
+            "**TikTok爆發式增長**",
+            "- #kbeauty：150億次播放",
+            "- #kbeautyroutine：80億次",
+            "- 「玻璃肌」挑戰參與者：2,000萬+",
+            "**網紅效應**：90%的美容網紅評測韓國產品，韓國旅行Vlog=必備內容，「韓國皮膚科體驗記」=高參與度"
+          ],
+          "image": "/images/k-beauty/section6-culture/social-media.jpg"
+        },
+        "point4": {
+          "title": "COVID創造的機會",
+          "subtitle": "疫情後第一個旅行目的地是韓國",
+          "content": [
+            "2020-2022年，世界停止了。",
+            "但在Netflix上觀看韓國內容。",
+            "在SNS上學習韓國保養。",
+            "然後**2023年，邊境開放了。**",
+            "**報復性旅遊（Revenge Travel）目的地=韓國**",
+            "- 2023年醫療遊客：90萬人（比2019年+20%）",
+            "- 2024年：117萬人（歷史最高）",
+            "- 2025年預測：150萬人+",
+            "**他們訪問的理由：**",
+            "- 想實現在Netflix看到的「那種肌膚」",
+            "- 想直接體驗在SNS學到的治療",
+            "- 想在K-Culture的中心變美"
+          ],
+          "image": "/images/k-beauty/section6-culture/post-covid.jpg"
+        }
+      },
+      "statistics": {
+        "title": "數字看K-Culture效應",
+        "data": {
+          "netflix": {
+            "value": "3億家庭",
+            "label": "韓劇累計觀看家庭數"
+          },
+          "hallyu": {
+            "value": "$130億",
+            "label": "年韓流經濟效應"
+          },
+          "export": {
+            "value": "$83億",
+            "label": "K-Beauty全球化妝品出口（2024）"
+          },
+          "medical": {
+            "value": "$4.7億",
+            "label": "外國患者治療收入"
+          },
+          "social": {
+            "value": "1,500萬+",
+            "label": "#kbeauty主題標籤貼文"
+          }
+        },
+        "image": "/images/k-beauty/section6-culture/economic-impact.jpg"
+      },
+      "conclusion": {
+        "title": "K-Culture創造的奇蹟就是這個",
+        "quote": "**音樂創造了好奇，電視劇創造了嚮往，SNS創造了傳播，COVID創造了機會，產品創造了滿意**",
+        "points": [
+          "結果：",
+          "韓國美容現在是**全球標準**",
+          "K-Beauty本身就是一個**品類**",
+          "玻璃肌是**普遍目標**"
+        ],
+        "closingLine": "世界不再問「K-Beauty是什麼？」而是問**「哪種K-Beauty適合我的肌膚？」**這就是文化創造的革命。而這場革命還在繼續。",
+        "image": "/images/k-beauty/section6-culture/global-unity.jpg"
+      },
+      "cta": {
+        "text": "開始我的K-Beauty之旅"
+      }
+    },
+    "section7": {
+      "id": "lifestyle",
+      "slug": "beauty-lifestyle",
+      "title": "韓國美容生活方式",
+      "subtitle": "美容是韓國語",
+      "tagline": "融入日常生活的美容哲學",
+      "intro": {
+        "paragraph1": "問一個韓國人：「今天保養做了幾步？」",
+        "paragraph2": "10步？5步？還是「忙所以只做了3步」？",
+        "paragraph3": "這個問題只在韓國才自然。",
+        "paragraph4": "在韓國，美容是：不是為特殊日子準備而是**日常儀式**，不是奢侈而是**必需照護**，不是愛好而是**生活方式**",
+        "paragraph5": "這就是韓國美容真正的秘密。**就是文化本身。**"
+      },
+      "mainPoints": {
+        "point1": {
+          "title": "對年輕的嚮往",
+          "subtitle": "您多大年紀？看不出來！",
+          "content": [
+            "這是韓國人最想聽到的話。",
+            "**年輕外貌文化的根源**",
+            "**儒教背景**：年齡=權威，但外表應該年輕=**「有經驗但年輕」是理想**",
+            "**現代社會壓力**：就業市場的年齡歧視，隨年齡失去競爭力的焦慮",
+            "**年輕外貌=健康指標**：有彈性的肌膚、光澤、明亮膚色、少皺紋、活力→都是健康的訊號",
+            "**為年輕外貌的投資**：月化妝品15-20萬韓元，年皮膚科$1,500-3,000，一生約$10萬（20-60歲）",
+            "**這被認為是「投資」而非「奢侈」**"
+          ],
+          "image": "/images/k-beauty/section7-lifestyle/age-groups.jpg"
+        },
+        "point2": {
+          "title": "肌膚優先哲學：由內而外的光澤",
+          "subtitle": "好肌膚勝過好化妝",
+          "content": [
+            "韓國美容優先順序：1. **保養**（壓倒性第一）2. 頭髮護理 3. 化妝 4. 時尚",
+            "**為什麼肌膚優先？**",
+            "**文化性**：「外貌反映內在」，健康肌膚=健康生活方式",
+            "**實用性**：化妝會卸掉但肌膚是永久的，好肌膚=化妝更好看",
+            "**投資報酬**：好化妝品（日常效果）vs 皮膚科治療（數月）vs 生活方式改變（一生）",
+            "→ 韓國人偏好長期投資"
+          ],
+          "image": "/images/k-beauty/section7-lifestyle/natural-skin.jpg"
+        },
+        "point3": {
+          "title": "日常皮膚科：午餐美白",
+          "subtitle": "皮膚科=便利商店？",
+          "content": [
+            "在韓國這完全正常：「午飯後去打美白回來」",
+            "**可及性**：江南區每公里2-3家皮膚科診所，當天walk-in治療可能，平均等待10-20分鐘",
+            "**日常治療文化**：",
+            "20多歲：雷射美白、水光針（每月）",
+            "30多歲：美白+提升、皮膚促進劑（每月1-2次）",
+            "40歲以上：組合提升、再生療法、填充劑/肉毒（每月2次以上）",
+            "**實惠的費用**：單次治療$50-150，套餐折扣，會員制，**「省幾杯咖啡...」**"
+          ],
+          "image": "/images/k-beauty/section7-lifestyle/clinic-waiting.jpg"
+        },
+        "point4": {
+          "title": "詳細流程：10步都不夠",
+          "subtitle": "今天只做了3步，沒時間",
+          "content": [
+            "對韓國人來說3步是**「簡化版」**。",
+            "**季節性流程範例**",
+            "**春季（乾燥+細塵）**：水洗→鎮靜化妝水→保濕精華→保濕霜→防曬→防塵劑",
+            "**夏季（油+紫外線）**：輕盈清爽質地，加強UV照護",
+            "**秋季（準備乾燥）**：增強保濕，補充營養，去角質",
+            "**冬季（極度乾燥）**：添加油類產品，晚霜，頻繁保濕面膜",
+            "**終極客製化**：韓國人按季節更換產品，根據肌膚狀況組合，AM/PM使用不同流程，**每天傾聽肌膚**"
+          ],
+          "image": "/images/k-beauty/section7-lifestyle/product-collection.jpg"
+        },
+        "point5": {
+          "title": "美容資訊民主化",
+          "subtitle": "必須先讀100個評價",
+          "content": [
+            "韓國美容產品購買過程很徹底。",
+            "**資訊管道**：化妝品應用「화해（化解）」（成分分析，數萬條評價），Olive Young評價（認證購買者），Naver部落格（長期評價），YouTube（開箱，教學）",
+            "**徹底分析**：成分分析→讀100+條評價→部落格評價→YouTube→比較類似產品→價格比較",
+            "→ 平均3-7天做出購買決定"
+          ],
+          "image": ""
+        }
+      },
+      "statistics": {
+        "title": "數字看韓國美容生活",
+        "data": {
+          "time": {
+            "value": "243小時",
+            "label": "年保養總時間"
+          },
+          "money": {
+            "value": "$180",
+            "label": "月平均化妝品支出"
+          },
+          "products": {
+            "value": "23個",
+            "label": "平均擁有的保養品"
+          },
+          "visits": {
+            "value": "12-36次",
+            "label": "年皮膚科訪問頻率"
+          }
+        },
+        "image": "/images/k-beauty/section7-lifestyle/daily-stats.jpg"
+      },
+      "conclusion": {
+        "title": "對韓國人來說美容是",
+        "quote": "早晨儀式，晚間冥想，關愛自己的時間，對未來的投資",
+        "points": [
+          "**不僅僅是為了好看。**",
+          "而是：",
+          "**愛自己的方式**",
+          "**優雅老去的方式**",
+          "**每天光彩照人的方式**"
+        ],
+        "closingLine": "世界熱衷韓國美容的真正原因不是因為產品好。**是因為對美容的態度很美**。你也可以體驗這美麗的文化。今晚開始10步保養吧。為自己25分鐘。這是所有改變的開始。",
+        "image": "/images/k-beauty/section7-lifestyle/everyday-beauty.jpg"
+      },
+      "cta": {
+        "text": "開始我的K-Beauty流程"
+      }
+    }
+  },
+  "common": {
+    "readMore": "閱讀更多",
+    "backToTop": "返回頂部",
+    "share": "分享",
+    "relatedContent": "相關內容"
+  }
+}

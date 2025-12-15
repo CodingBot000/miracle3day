@@ -23,9 +23,9 @@ export default function SectionContent({
   cta,
 }: Props) {
   return (
-    <article className="container mx-auto px-4 sm:px-6 lg:px-8 pt-12 lg:pt-20 pb-20 lg:pb-32 max-w-5xl" style={{ fontFamily: "'Crimson Pro', 'Noto Serif KR', serif" }}>
+    <article className="container mx-auto px-4 sm:px-6 lg:px-8 pt-6 lg:pt-12 pb-8 lg:pb-12 max-w-5xl" style={{ fontFamily: "'Crimson Pro', 'Noto Serif KR', serif" }}>
       {/* Introduction */}
-      <div className="prose prose-lg max-w-none mb-16">
+      <div className="prose prose-lg max-w-none mb-8">
         {intro && Object.values(intro).map((paragraph, idx) => (
           paragraph && typeof paragraph === 'string' && (
             <p

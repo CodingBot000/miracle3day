@@ -15,7 +15,7 @@ export default function SectionHero({
   backgroundImage
 }: Props) {
   return (
-    <section className="relative h-[70vh] min-h-[600px] max-h-[800px] flex flex-col items-center justify-center overflow-hidden pt-24 pb-12">
+    <section className="relative h-[35vh] min-h-[300px] max-h-[400px] md:h-[70vh] md:min-h-[600px] md:max-h-[800px] flex flex-col items-center justify-center overflow-hidden pt-24 pb-12">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image

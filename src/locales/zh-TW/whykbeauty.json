@@ -246,8 +246,8 @@
       }
     },
     "section3": {
-      "id": "technology",
-      "slug": "advanced-technology",
+      "id": "dermatology",
+      "slug": "dermatology-treatments",
       "title": "技術創新中心",
       "subtitle": "為什麼韓國是美容技術的試驗場",
       "tagline": "世界最新美容技術首先測試的地方",
@@ -351,8 +351,8 @@
       }
     },
     "section4": {
-      "id": "doctors",
-      "slug": "expert-doctors",
+      "id": "plastic-surgery",
+      "slug": "plastic-surgery-philosophy",
       "title": "專業與熱情的醫生們",
       "subtitle": "為什麼韓國醫美醫生與眾不同",
       "tagline": "兼具技術與藝術性的專家集團",
@@ -448,8 +448,8 @@
       }
     },
     "section5": {
-      "id": "affordability",
-      "slug": "affordable-excellence",
+      "id": "science",
+      "slug": "science-and-rd",
       "title": "可負擔的高端",
       "subtitle": "為什麼韓國既高品質又實惠",
       "tagline": "高品質≠高價格，韓國來證明",

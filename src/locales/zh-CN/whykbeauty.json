@@ -246,8 +246,8 @@
       }
     },
     "section3": {
-      "id": "technology",
-      "slug": "advanced-technology",
+      "id": "dermatology",
+      "slug": "dermatology-treatments",
       "title": "技术创新中心",
       "subtitle": "为什么韩国是美容技术的试验场",
       "tagline": "世界最新美容技术首先测试的地方",
@@ -351,8 +351,8 @@
       }
     },
     "section4": {
-      "id": "doctors",
-      "slug": "expert-doctors",
+      "id": "plastic-surgery",
+      "slug": "plastic-surgery-philosophy",
       "title": "专业与热情的医生们",
       "subtitle": "为什么韩国医美医生与众不同",
       "tagline": "兼具技术与艺术性的专家集团",
@@ -448,8 +448,8 @@
       }
     },
     "section5": {
-      "id": "affordability",
-      "slug": "affordable-excellence",
+      "id": "science",
+      "slug": "science-and-rd",
       "title": "可负担的高端",
       "subtitle": "为什么韩国既高质量又实惠",
       "tagline": "高质量≠高价格，韩国来证明",

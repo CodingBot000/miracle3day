@@ -111,7 +111,7 @@ export default function TreatmentProtocol() {
   return (
     <div className="space-y-5 min-h-screen bg-gradient-to-br from-[#FDF5F0] via-white to-[#F8E8E0]">
       {/* Hero */}
-      <section className="pt-10 pb-2">
+      <section className="pb-2">
         <div className="text-center">
           <h1 className="text-2xl md:text-4xl font-bold tracking-tight text-gray-900">
             Premium Beauty Care

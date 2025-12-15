@@ -7,8 +7,11 @@
 
 import ko from '@/locales/ko/whykbeauty.json';
 import en from '@/locales/en/whykbeauty.json';
+import ja from '@/locales/ja/whykbeauty.json';
+import zhCN from '@/locales/zh-CN/whykbeauty.json';
+import zhTW from '@/locales/zh-TW/whykbeauty.json';
 
-const CONTENT_LOCALES = ['ko', 'en'];
+const CONTENT_LOCALES = ['ko', 'en', 'ja', 'zh-CN', 'zh-TW'];
 const FALLBACK_LOCALE = 'en';
 
 // ============================================
@@ -17,11 +20,17 @@ const FALLBACK_LOCALE = 'en';
 
 export type ContentData = typeof ko;
 
-const kBeautyContent: Record<string, ContentData> = { ko, en };
+const kBeautyContent: Record<string, any> = {
+  ko,
+  en,
+  ja,
+  'zh-CN': zhCN,
+  'zh-TW': zhTW
+};
 
 /**
  * WhyKBeauty 콘텐츠 가져오기
- * - ko/en만 지원, 나머지는 en fallback
+ * - ko/en/ja/zh-CN/zh-TW 지원, 나머지는 en fallback
  */
 export function getKBeautyContent(locale: string): ContentData {
   const contentLocale = getContentLocale(locale);

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ChevronLeft, MessageCircle, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import LottieLoading from "@/components/atoms/LottieLoading";
+import { useUserStreamUnreadCount } from "@/hooks/useUserStreamUnreadCount";
 
 interface ChannelMember {
   user_id: string;
@@ -36,6 +37,9 @@ export default function ChatListPage() {
   const [userId, setUserId] = useState<string>("");
   const [channels, setChannels] = useState<ChannelData[]>([]);
   const router = useRouter();
+
+  // Get unread counts for all channels
+  const { channelsWithUnread, isLoading: unreadLoading } = useUserStreamUnreadCount();
 
   useEffect(() => {
     const fetchChannels = async () => {
@@ -141,6 +145,7 @@ export default function ChatListPage() {
               {channels.map((channel) => {
                 const hospitalId = getHospitalIdFromChannel(channel);
                 const hospitalName = getHospitalNameFromChannel(channel);
+                const unreadCount = channelsWithUnread.get(channel.channel_url) || 0;
 
                 return (
                   <div
@@ -154,10 +159,15 @@ export default function ChatListPage() {
                       <button
                         onClick={() => handleOpenChat(channel.channel_url)}
                         style={{ backgroundColor: '#9333ea' }}
-                        className="px-4 py-2 text-white rounded-lg hover:opacity-90 transition-all flex items-center gap-2"
+                        className="relative px-4 py-2 text-white rounded-lg hover:opacity-90 transition-all flex items-center gap-2"
                       >
                         <MessageCircle className="w-4 h-4" />
                         Open Chat
+                        {!unreadLoading && unreadCount > 0 && (
+                          <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full min-w-[20px] text-center">
+                            {unreadCount}
+                          </span>
+                        )}
                       </button>
                       {hospitalId && (
                         <Link

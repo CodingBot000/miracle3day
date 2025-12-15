@@ -1,21 +1,33 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { Plus, X, Calendar, Clock } from 'lucide-react';
+import { Plus, X, Calendar, Clock, Globe } from 'lucide-react';
 import { useLocale } from 'next-intl';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { ko } from 'date-fns/locale/ko';
 import { enUS } from 'date-fns/locale/en-US';
+import { setHours, setMinutes } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
 import { questions } from '@/app/[locale]/(consult)/pre_consultation_intake_form/pre_consultation_intake/form-definition_pre_con_questions';
 import { getLocalizedText } from '@/utils/i18n';
+import {
+  EnhancedTimeSlot,
+  createEnhancedTimeSlot,
+  isWithinDoctorAvailability,
+  isDateAvailable,
+  getAvailableTimesForDate,
+  generateAvailabilityText,
+  hasDuplicateUTCTime,
+  parseEnhancedTimeSlot,
+} from '@/utils/timezoneHelpers';
 
 // Register locales
 registerLocale('ko', ko);
 registerLocale('en', enUS);
 
+// Legacy interface for backward compatibility
 export interface VideoConsultTimeSlot {
   rank: number;
   date: string; // 'YYYY-MM-DD'
@@ -31,112 +43,200 @@ const VideoConsultScheduleStep: React.FC<VideoConsultScheduleStepProps> = ({ dat
   const locale = useLocale();
   const scheduleData = questions.consultSchedule;
 
-  // Initialize with one empty slot
-  const [slots, setSlots] = useState<VideoConsultTimeSlot[]>(
-    data.videoConsultSlots || [
-      { rank: 1, date: '', startTime: '' }
-    ]
-  );
+  // Get user timezone
+  const userTimezone = useMemo(() => Intl.DateTimeFormat().resolvedOptions().timeZone, []);
 
+  // Initialize with one empty slot
+  const [slots, setSlots] = useState<EnhancedTimeSlot[]>(() => {
+    if (data.videoConsultSlotsEnhanced && data.videoConsultSlotsEnhanced.length > 0) {
+      return data.videoConsultSlotsEnhanced;
+    }
+    return [];
+  });
+
+  const [selectedDates, setSelectedDates] = useState<(Date | null)[]>([null]);
+  const [selectedTimes, setSelectedTimes] = useState<(Date | null)[]>([null]);
   const [errors, setErrors] = useState<Record<number, string>>({});
 
-  // Get user timezone
-  const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  // Generate availability text for user's timezone
+  const availabilityText = useMemo(
+    () => generateAvailabilityText(userTimezone, locale),
+    [userTimezone, locale]
+  );
 
   // Update parent when slots change
   useEffect(() => {
     onDataChange({
       ...data,
-      videoConsultSlots: slots,
-      videoConsultTimezone: userTimezone
+      videoConsultSlotsEnhanced: slots,
+      videoConsultSlots: slots.map(s => ({
+        rank: s.rank,
+        date: s.date,
+        startTime: s.startTime,
+      })),
+      videoConsultTimezone: userTimezone,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slots]);
 
-  // Convert string date to Date object
-  const parseDate = (dateStr: string): Date | null => {
-    if (!dateStr) return null;
-    const [year, month, day] = dateStr.split('-').map(Number);
-    return new Date(year, month - 1, day);
+  const handleDateChange = (index: number, date: Date | null) => {
+    const newSelectedDates = [...selectedDates];
+    newSelectedDates[index] = date;
+    setSelectedDates(newSelectedDates);
+
+    // Reset time when date changes
+    const newSelectedTimes = [...selectedTimes];
+    newSelectedTimes[index] = null;
+    setSelectedTimes(newSelectedTimes);
+
+    // Update or remove slot
+    if (!date) {
+      // Remove slot if date is cleared
+      removeSlotByIndex(index);
+    } else if (selectedTimes[index]) {
+      // Update slot if time is already selected
+      updateSlot(index, date, selectedTimes[index]!);
+    }
+
+    clearError(index);
   };
 
-  // Convert Date object to string
-  const formatDate = (date: Date | null): string => {
-    if (!date) return '';
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
+  const handleTimeChange = (index: number, time: Date | null) => {
+    const newSelectedTimes = [...selectedTimes];
+    newSelectedTimes[index] = time;
+    setSelectedTimes(newSelectedTimes);
+
+    if (selectedDates[index] && time) {
+      // Combine date and time
+      const combinedDateTime = setMinutes(
+        setHours(selectedDates[index]!, time.getHours()),
+        time.getMinutes()
+      );
+
+      // Check if within availability
+      if (!isWithinDoctorAvailability(combinedDateTime, userTimezone)) {
+        setErrors(prev => ({
+          ...prev,
+          [index]: getLocalizedText(
+            {
+              ko: '선택한 시간은 상담 가능 시간이 아닙니다.',
+              en: 'Selected time is outside consultation hours.',
+            },
+            locale
+          ),
+        }));
+        return;
+      }
+
+      updateSlot(index, selectedDates[index]!, combinedDateTime);
+    }
+
+    clearError(index);
   };
 
-  // Convert string time to Date object for time picker
-  const parseTime = (timeStr: string): Date | null => {
-    if (!timeStr) return null;
-    const [hours, minutes] = timeStr.split(':').map(Number);
-    const date = new Date();
-    date.setHours(hours, minutes, 0, 0);
-    return date;
+  const updateSlot = (index: number, date: Date, dateTime: Date) => {
+    // Create enhanced time slot
+    const enhancedSlot = createEnhancedTimeSlot(index + 1, dateTime, userTimezone);
+
+    // Check for duplicate UTC time
+    const otherSlots = slots.filter((_, i) => i !== index);
+    if (hasDuplicateUTCTime(otherSlots, enhancedSlot.dateTimeUTC)) {
+      setErrors(prev => ({
+        ...prev,
+        [index]: getLocalizedText(
+          {
+            ko: '이미 선택한 시간과 중복됩니다.',
+            en: 'This time slot is already selected.',
+          },
+          locale
+        ),
+      }));
+      return;
+    }
+
+    // Update slots
+    const newSlots = [...slots];
+    newSlots[index] = enhancedSlot;
+    setSlots(newSlots);
+
+    clearError(index);
   };
 
-  // Convert Date object to time string
-  const formatTime = (date: Date | null): string => {
-    if (!date) return '';
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    return `${hours}:${minutes}`;
+  const removeSlotByIndex = (index: number) => {
+    const newSlots = slots.filter((_, i) => i !== index);
+    const newSelectedDates = selectedDates.filter((_, i) => i !== index);
+    const newSelectedTimes = selectedTimes.filter((_, i) => i !== index);
+
+    // Re-rank slots
+    const rerankedSlots = newSlots.map((slot, i) => ({
+      ...slot,
+      rank: i + 1,
+    }));
+
+    setSlots(rerankedSlots);
+    setSelectedDates(newSelectedDates);
+    setSelectedTimes(newSelectedTimes);
+    clearError(index);
   };
 
-  const handleDateChange = (rank: number, date: Date | null) => {
-    setSlots(prevSlots =>
-      prevSlots.map(slot =>
-        slot.rank === rank ? { ...slot, date: formatDate(date) } : slot
-      )
-    );
-    clearError(rank);
-  };
-
-  const handleTimeChange = (rank: number, time: Date | null) => {
-    setSlots(prevSlots =>
-      prevSlots.map(slot =>
-        slot.rank === rank ? { ...slot, startTime: formatTime(time) } : slot
-      )
-    );
-    clearError(rank);
-  };
-
-  const clearError = (rank: number) => {
-    if (errors[rank]) {
+  const clearError = (index: number) => {
+    if (errors[index]) {
       setErrors(prev => {
         const newErrors = { ...prev };
-        delete newErrors[rank];
+        delete newErrors[index];
         return newErrors;
       });
     }
   };
 
   const addSlot = () => {
-    if (slots.length < 3) {
-      setSlots([...slots, { rank: slots.length + 1, date: '', startTime: '' }]);
+    if (selectedDates.length < 3) {
+      setSelectedDates([...selectedDates, null]);
+      setSelectedTimes([...selectedTimes, null]);
     }
   };
 
-  const removeSlot = (rank: number) => {
-    if (slots.length > 1) {
-      const newSlots = slots
-        .filter(slot => slot.rank !== rank)
-        .map((slot, index) => ({ ...slot, rank: index + 1 }));
-      setSlots(newSlots);
-
-      // Clear error for removed slot
-      setErrors(prev => {
-        const newErrors = { ...prev };
-        delete newErrors[rank];
-        return newErrors;
-      });
+  const removeSlot = (index: number) => {
+    if (selectedDates.length > 1) {
+      removeSlotByIndex(index);
     }
   };
 
-  // Get minimum date (tomorrow - same day booking not allowed)
+  // Filter dates: only allow dates with available time slots
+  const filterDate = (date: Date): boolean => {
+    // Minimum date is tomorrow
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(0, 0, 0, 0);
+
+    if (date < tomorrow) return false;
+
+    return isDateAvailable(date, userTimezone);
+  };
+
+  // Filter time: only allow times within doctor availability
+  const filterTime = (index: number) => (time: Date): boolean => {
+    if (!selectedDates[index]) return false;
+
+    const combinedDateTime = setMinutes(
+      setHours(selectedDates[index]!, time.getHours()),
+      time.getMinutes()
+    );
+
+    return isWithinDoctorAvailability(combinedDateTime, userTimezone);
+  };
+
+  // Get min/max time for a specific date
+  const getTimeRange = (index: number) => {
+    if (!selectedDates[index]) return { minTime: null, maxTime: null };
+
+    const range = getAvailableTimesForDate(selectedDates[index]!, userTimezone);
+    if (!range) return { minTime: null, maxTime: null };
+
+    return { minTime: range.startTime, maxTime: range.endTime };
+  };
+
+  // Get minimum date (tomorrow)
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
   tomorrow.setHours(0, 0, 0, 0);
@@ -193,6 +293,9 @@ const VideoConsultScheduleStep: React.FC<VideoConsultScheduleStepProps> = ({ dat
         .react-datepicker__time-list-item--selected {
           background-color: #fb718f !important;
         }
+        .react-datepicker__time-list-item--disabled {
+          color: #d1d5db !important;
+        }
         .react-datepicker-wrapper {
           width: 100%;
         }
@@ -214,25 +317,50 @@ const VideoConsultScheduleStep: React.FC<VideoConsultScheduleStepProps> = ({ dat
         }
       `}</style>
 
-      <div className="p-2 bg-blue-50 border border-blue-200 rounded-lg">
-        <p className="text-sm text-blue-800">
-          {getLocalizedText(scheduleData.infoMessage, locale)}
-        </p>
+      {/* Availability Info */}
+      <div className="space-y-2">
+        <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+          <p className="text-sm text-blue-800">
+            {getLocalizedText(scheduleData.infoMessage, locale)}
+          </p>
+        </div>
+
+        <div className="p-3 bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg">
+          <div className="flex items-start gap-2">
+            <Globe className="w-5 h-5 text-purple-600 mt-0.5 flex-shrink-0" />
+            <div className="space-y-1 flex-1">
+              <p className="text-sm font-semibold text-purple-900">
+                {locale === 'ko' ? '상담 가능 시간' : 'Consultation Hours'}
+              </p>
+              <p className="text-sm text-purple-800">
+                <span className="font-medium">
+                  {locale === 'ko' ? '귀하의 시간대:' : 'Your timezone:'}{' '}
+                </span>
+                {availabilityText.userTime}
+              </p>
+              <p className="text-xs text-purple-700">
+                <span className="opacity-75">→ </span>
+                {availabilityText.koreaTime}
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {slots.map((slot) => (
-        <div key={slot.rank} className="p-3 border border-gray-200 rounded-lg">
-          <div className="flex items-center justify-between">
+      {/* Time Slots */}
+      {selectedDates.map((selectedDate, index) => (
+        <div key={index} className="p-4 border border-gray-200 rounded-lg bg-white shadow-sm">
+          <div className="flex items-center justify-between mb-3">
             <Label className="text-base md:text-lg font-semibold text-gray-800">
-              {getLocalizedText(scheduleData.slotLabel, locale)} {slot.rank}
-              {slot.rank === 1 && <span className="text-red-500 ml-1">*</span>}
+              {getLocalizedText(scheduleData.slotLabel, locale)} {index + 1}
+              {index === 0 && <span className="text-red-500 ml-1">*</span>}
             </Label>
-            {slots.length > 1 && (
+            {selectedDates.length > 1 && (
               <Button
                 type="button"
                 variant="ghost"
                 size="sm"
-                onClick={() => removeSlot(slot.rank)}
+                onClick={() => removeSlot(index)}
                 className="text-gray-500 hover:text-red-500"
               >
                 <X className="w-4 h-4" />
@@ -250,9 +378,10 @@ const VideoConsultScheduleStep: React.FC<VideoConsultScheduleStepProps> = ({ dat
               <div className="relative">
                 <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 z-10 pointer-events-none" />
                 <DatePicker
-                  selected={parseDate(slot.date)}
-                  onChange={(date) => handleDateChange(slot.rank, date)}
+                  selected={selectedDate}
+                  onChange={(date) => handleDateChange(index, date)}
                   minDate={tomorrow}
+                  filterDate={filterDate}
                   locale={locale === 'ko' ? 'ko' : 'en'}
                   dateFormat={locale === 'ko' ? 'yyyy년 MM월 dd일' : 'MMM dd, yyyy'}
                   placeholderText={getLocalizedText(scheduleData.datePlaceholder, locale)}
@@ -270,8 +399,8 @@ const VideoConsultScheduleStep: React.FC<VideoConsultScheduleStepProps> = ({ dat
               <div className="relative">
                 <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 z-10 pointer-events-none" />
                 <DatePicker
-                  selected={parseTime(slot.startTime)}
-                  onChange={(time) => handleTimeChange(slot.rank, time)}
+                  selected={selectedTimes[index]}
+                  onChange={(time) => handleTimeChange(index, time)}
                   showTimeSelect
                   showTimeSelectOnly
                   timeIntervals={30}
@@ -281,20 +410,43 @@ const VideoConsultScheduleStep: React.FC<VideoConsultScheduleStepProps> = ({ dat
                   locale={locale === 'ko' ? 'ko' : 'en'}
                   placeholderText={getLocalizedText(scheduleData.timePlaceholder, locale)}
                   className="w-full"
+                  disabled={!selectedDate}
+                  filterTime={filterTime(index)}
+                  minTime={getTimeRange(index).minTime || undefined}
+                  maxTime={getTimeRange(index).maxTime || undefined}
                 />
               </div>
             </div>
           </div>
 
+          {/* Display selected time in both timezones */}
+          {slots[index] && (
+            <div className="mt-3 p-2 bg-gray-50 rounded text-xs space-y-1">
+              <div className="flex items-center gap-2 text-gray-700">
+                <span className="font-medium">
+                  {locale === 'ko' ? '선택한 시간:' : 'Selected time:'}
+                </span>
+                <span>{slots[index].displayTime.user}</span>
+              </div>
+              <div className="flex items-center gap-2 text-gray-600">
+                <span className="opacity-75">→</span>
+                <span className="font-medium">
+                  {locale === 'ko' ? '한국 시간:' : 'Korea time:'}
+                </span>
+                <span>{slots[index].displayTime.korea}</span>
+              </div>
+            </div>
+          )}
+
           {/* Error message for this slot */}
-          {errors[slot.rank] && (
-            <p className="text-sm text-red-600 mt-2">{errors[slot.rank]}</p>
+          {errors[index] && (
+            <p className="text-sm text-red-600 mt-2">{errors[index]}</p>
           )}
         </div>
       ))}
 
       {/* Add Another Slot Button */}
-      {slots.length < 3 && (
+      {selectedDates.length < 3 && (
         <Button
           type="button"
           variant="outline"
@@ -307,8 +459,11 @@ const VideoConsultScheduleStep: React.FC<VideoConsultScheduleStepProps> = ({ dat
       )}
 
       {/* Timezone info */}
-      <div className="text-sm text-gray-500 text-center">
-        {getLocalizedText(scheduleData.timezoneLabel, locale)}: {userTimezone}
+      <div className="text-sm text-gray-500 text-center flex items-center justify-center gap-2">
+        <Globe className="w-4 h-4" />
+        <span>
+          {getLocalizedText(scheduleData.timezoneLabel, locale)}: <strong>{userTimezone}</strong>
+        </span>
       </div>
     </div>
   );

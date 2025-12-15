@@ -1562,6 +1562,13 @@ demographicsBasic: [
       "zh-CN": "最多选择3个首选时间段。诊所将确认最佳可用时间。",
       "zh-TW": "最多選擇3個首選時間段。診所將確認最佳可用時間。"
     },
+    infoMessageAdditional: {
+      ko: "💬 상담 가능 시간은 평일 오후 8시~자정, 일요일 오전 9시~자정입니다",
+      en: "💬 Consultation hours: Weekdays 8PM-12AM, Sundays 9AM-12AM",
+      ja: "💬 相談可能時間は平日 午後8時～深夜12時、日曜日 午前9時～深夜12時です",
+      "zh-CN": "💬 咨询时间为：工作日晚8点至午夜12点，周日上午9点至午夜12点",
+      "zh-TW": "💬 諮詢時間為：工作日晚8點至午夜12點，週日上午9點至午夜12點"
+    },
     slotLabel: {
       ko: "희망 시간",
       en: "Preferred Time Slot",

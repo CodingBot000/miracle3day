@@ -43,6 +43,12 @@ export const Footer = () => {
     }
   };
 
+  const handleAboutUsClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const aboutUsUrl = `/static/about_us/about-us-${locale}.html`;
+    openModal(aboutUsUrl, 'About Us');
+  };
+
   return (
     <footer className="min-h-[200px] flex flex-col items-center gap-3 p-8 mt-8 bg-gray-300 text-center text-sm text-gray-600 pb-[calc(2rem+env(safe-area-inset-bottom))]">
             {/* <DeleteUserButton uid="109baff6-2d4a-4119-818d-e65fd9289a41" /> */}
@@ -67,6 +73,11 @@ export const Footer = () => {
         <Link href="/legal/terms" onClick={handleTermsClick} className="hover:underline">
           Terms
         </Link>
+        <span className="mx-1">|</span>
+        <Link href="/about-us" onClick={handleAboutUsClick} className="hover:underline">
+          About Us
+        </Link>
+
       </div>
 
       <TermsHtmlModal

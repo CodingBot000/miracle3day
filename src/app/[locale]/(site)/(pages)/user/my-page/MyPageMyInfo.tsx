@@ -15,6 +15,7 @@ import { toast } from "sonner";
 import BadgeSection from "@/components/mypage/BadgeSection";
 import { useUserStore } from "@/stores/useUserStore";
 import { log } from "@/utils/logger";
+import { useUserStreamUnreadCount } from "@/hooks/useUserStreamUnreadCount";
 
 interface MyPageMyInfoClientDetailProps {
   user: UserOutputDto;
@@ -28,6 +29,9 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { updateAvatar } = useUserStore();
   const [showSettings, setShowSettings] = useState<boolean>(false);
+
+  // Get total unread count for chat badge
+  const { totalUnreadCount, isLoading: unreadLoading } = useUserStreamUnreadCount();
 
   log.debug("MyPageMyInfo user", user);
   log.debug("MyPageMyInfo user?.userInfo?.id_uuid:", user?.userInfo?.id_uuid);
@@ -211,6 +215,11 @@ export default function MyPageMyInfo({ user }: MyPageMyInfoClientDetailProps) {
                 <span className="text-gray-600">My Chatting List</span>
                 <Link href="/user/my-page/chat-list" className="flex items-center text-gray-400 hover:text-gray-600">
                   <MessageCircle className="w-5 h-5 mr-2" />
+                  {!unreadLoading && totalUnreadCount > 0 && (
+                    <span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-600 rounded-full mr-1">
+                      {totalUnreadCount}
+                    </span>
+                  )}
                   <ChevronRight className="w-5 h-5" />
                 </Link>
               </div>

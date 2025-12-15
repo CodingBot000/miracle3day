@@ -7,241 +7,16 @@ import * as React from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useTopicDetail } from "@/hooks/useTreatmentData";
-import type { Benefits, Locale, SequenceStep, SequenceTitle, LocalizedText } from "@/models/treatmentData.dto";
+import type { Locale } from "@/models/treatmentData.dto";
 import { useLocale } from "next-intl";
 import TreatmentDetailCard from "../_demo/TreatmentDetailCard";
 import { buildInfoLine } from "@/constants/treatment/types";
 import { ArrowLeft } from "lucide-react";
 import { InfoIcon } from "@/components/icons/InfoIcon";
 import LottieLoading from '@/components/atoms/LottieLoading';
-
-function getTitleByLocale(title: SequenceTitle, locale: Locale): string {
-  if (locale === "ko") return title.ko ?? title.en ?? "";
-  return title.en ?? title.ko ?? "";
-}
-
-function pickLocale<T extends { ko?: string | null; en?: string | null }>(
-  value: T | undefined,
-  locale: Locale
-): string {
-  if (!value) {
-    return "";
-  }
-
-  return locale === "ko"
-    ? value.ko ?? value.en ?? ""
-    : value.en ?? value.ko ?? "";
-}
-
-type SequenceTimelineProps = {
-  steps: SequenceStep[];
-  locale: Locale;
-  stepCount?: number;
-};
-
-function SequenceTimeline({ steps, locale, stepCount }: SequenceTimelineProps) {
-  const sortedSteps = [...steps].sort((a, b) => a.order - b.order);
-  const showStepNumber = sortedSteps.length > 1;
-
-  if (!sortedSteps.length) {
-    return null;
-  }
-
-  return (
-    <div className="rounded-2xl border border-white/60 bg-gradient-to-br from-white/75 via-white/65 to-white/55 p-3 shadow-[0_18px_40px_rgba(212,165,154,0.18)] backdrop-blur-xl md:p-4">
-      <div className="border-l-4 border-[#d4a59a] pl-3">
-        <h3 className="text-base font-semibold text-[#6b4e44] md:text-lg">
-          {locale === "ko" ? "시술 순서" : "Treatment Plan"}
-        </h3>
-      </div>
-
-      <ol className="mt-3 space-y-2">
-        {sortedSteps.map((step, index) => {
-          const waitMin = step.timing?.waitMinDays ?? null;
-          const waitMax = step.timing?.waitMaxDays ?? null;
-          const hasWaitInfo = waitMin !== null || waitMax !== null;
-
-          return (
-            <li key={step.order}>
-              <div className="flex gap-2 rounded-xl border border-white/60 bg-white/70 p-2.5 shadow-[0_16px_30px_rgba(212,165,154,0.16)] backdrop-blur-xl md:gap-3 md:p-3">
-                {showStepNumber && (
-                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border-2 border-white/70 bg-[#d4a59a] text-xs font-semibold text-white shadow-[0_8px_16px_rgba(212,165,154,0.35)] md:h-7 md:w-7 md:text-sm">
-                    {index + 1}
-                  </div>
-                )}
-                <div className="flex-1 space-y-1">
-                  <div className="flex flex-wrap items-center justify-between gap-1">
-                    <p className="text-sm font-semibold text-[#6b4e44] md:text-base">
-                      {getTitleByLocale(step.title, locale)}
-                    </p>
-                    {step.timing?.afterWeeks && (
-                      <span className="rounded-full bg-white/70 px-2 py-0.5 text-[10px] font-medium text-[#a88f84] shadow-inner md:text-xs">
-                        {locale === "ko"
-                          ? `${step.timing.afterWeeks}주 후`
-                          : `~${step.timing.afterWeeks} weeks later`}
-                      </span>
-                    )}
-                  </div>
-
-                  {hasWaitInfo && (
-                    <p className="text-[10px] text-[#a88f84] md:text-xs">
-                      {locale === "ko"
-                        ? `다음 단계까지 ${waitMin ?? ""}${
-                            waitMax !== null ? `~${waitMax}` : ""
-                          }일`
-                        : `Wait ${waitMin ?? ""}${
-                            waitMax !== null ? `~${waitMax}` : ""
-                          } days`}
-                    </p>
-                  )}
-
-                  {step.note && (
-                    <p className="text-xs leading-relaxed text-[#8b7266] md:text-sm">
-                      {step.note}
-                    </p>
-                  )}
-                </div>
-              </div>
-            </li>
-          );
-        })}
-      </ol>
-    </div>
-  );
-}
-
-type BenefitsProps = {
-  benefits: Benefits | null | undefined;
-  locale: Locale;
-};
-
-const defaultEmojis = ["✨", "💫", "🌟", "💎", "🌸", "🌼"];
-
-function BenefitsBlock({ benefits, locale }: BenefitsProps) {
-  if (!benefits) {
-    return null;
-  }
-
-  const inputs = Array.isArray(benefits.inputs) ? benefits.inputs : [];
-  const result = benefits.result;
-  const resultText = pickLocale(result?.title, locale);
-  const hasInputs = inputs.length > 0;
-
-  if (!hasInputs && !resultText) {
-    return (
-      <div className="rounded-2xl border border-white/60 bg-gradient-to-br from-white/75 via-white/65 to-white/55 p-3 text-xs text-[#8b7266] shadow-[0_18px_40px_rgba(212,165,154,0.18)] backdrop-blur-xl md:p-4 md:text-sm">
-        {locale === "ko"
-          ? "등록된 효과 정보가 없습니다."
-          : "No benefits available."}
-      </div>
-    );
-  }
-
-  return (
-    <div className="rounded-2xl border border-white/60 bg-gradient-to-br from-white/75 via-white/65 to-white/55 p-3 shadow-[0_18px_40px_rgba(212,165,154,0.18)] backdrop-blur-xl md:p-4">
-      <div className="border-l-4 border-[#d4a59a] pl-3">
-        <h3 className="text-base font-semibold text-[#6b4e44] md:text-lg">
-          {locale === "ko" ? "효과 & 결과" : "Benefits & Result"}
-        </h3>
-        <p className="text-[10px] text-[#8b7266] md:text-xs">
-          {locale === "ko"
-            ? "어떤 변화를 기대할 수 있을까요?"
-            : "What positive changes to expect"}
-        </p>
-      </div>
-
-      <div className="mt-3 space-y-1">
-        {hasInputs && (
-          <div className="grid gap-2 md:grid-cols-2">
-            {inputs.map((input, index) => {
-              const emoji =
-                (input.meta && typeof input.meta.emoji === "string"
-                  ? input.meta.emoji
-                  : undefined) ?? defaultEmojis[index % defaultEmojis.length];
-
-              return (
-                <div
-                  key={index}
-                  className="group relative overflow-hidden rounded-xl border border-white/60 bg-white/70 p-2.5 shadow-[0_14px_30px_rgba(212,165,154,0.16)] backdrop-blur-xl transition-transform duration-300 hover:-translate-y-1 md:p-3"
-                >
-                  <div className="absolute -top-6 -right-6 h-20 w-20 rounded-full bg-[#d4a59a]/20 blur-2xl" />
-                  <div className="flex items-center gap-2">
-                    <span className="text-xl drop-shadow-sm md:text-2xl">{emoji}</span>
-                    <p className="text-sm font-semibold text-[#6b4e44] md:text-base">
-                      {pickLocale(input.title, locale)}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
-
-        <div className="flex justify-center py-0.5 text-xl text-[#d4a59a] drop-shadow-sm md:text-4xl">
-          ↓
-        </div>
-
-        <div className="rounded-xl border border-white/60 bg-white/70 p-3 text-center shadow-[0_18px_36px_rgba(212,165,154,0.2)] backdrop-blur-xl md:p-4">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#a88f84] md:text-xs">
-            {locale === "ko" ? "결과" : "Result"}
-          </p>
-          <p className="mt-1 text-base font-semibold text-[#6b4e44] md:text-lg">
-            {resultText}
-          </p>
-          {result?.meta?.description && (
-            <p className="mt-1 text-[10px] text-[#8b7266] md:text-xs">
-              {String(result.meta.description)}
-            </p>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-type CautionsProps = {
-  cautions: LocalizedText | null | undefined;
-  locale: Locale;
-};
-
-function CautionsBlock({ cautions, locale }: CautionsProps) {
-  const text = pickLocale(cautions ?? undefined, locale).trim();
-
-  if (!text) {
-    return (
-      <div className="rounded-2xl border border-white/60 bg-gradient-to-br from-white/75 via-white/65 to-white/55 p-3 text-xs text-[#8b7266] shadow-[0_18px_40px_rgba(212,165,154,0.18)] backdrop-blur-xl md:p-4 md:text-sm">
-        {locale === "ko"
-          ? "등록된 주의사항이 없습니다."
-          : "No cautions available."}
-      </div>
-    );
-  }
-
-  return (
-    <div className="rounded-2xl border border-white/60 bg-gradient-to-br from-white/75 via-white/65 to-white/55 p-3 shadow-[0_18px_40px_rgba(212,165,154,0.18)] backdrop-blur-xl md:p-4">
-      <div className="border-l-4 border-[#d4a59a] pl-3">
-        <p className="text-[10px] uppercase tracking-[0.3em] text-[#a88f84] md:text-xs">
-          {locale === "ko" ? "Important Notes" : "Important Notes"}
-        </p>
-        <h3 className="text-base font-semibold text-[#6b4e44] md:text-lg">
-          {locale === "ko" ? "주의사항" : "Cautions"}
-        </h3>
-        <p className="text-[10px] text-[#8b7266] md:text-xs">
-          {locale === "ko"
-            ? "시술 전 꼭 확인해주세요"
-            : "Please review before the treatment"}
-        </p>
-      </div>
-
-      <div className="mt-2 flex gap-2">
-        <span className="text-xl drop-shadow-sm md:text-2xl">⚠️</span>
-        <p className="text-xs leading-relaxed text-[#8b7266] md:text-sm">
-          {text}
-        </p>
-      </div>
-    </div>
-  );
-}
+import { BenefitsBlock } from "./components/BenefitsBlock";
+import { CautionsBlock } from "./components/CautionsBlock";
+import { SequenceTimeline } from "./components/SequenceTimeline";
 
 export default function ProtocolPage() {
   const router = useRouter();
@@ -345,7 +120,7 @@ export default function ProtocolPage() {
 
   console.log('[ProtocolPage] rendering with content:', content);
   return (
-    <div className="py-6 space-y-5 min-h-screen bg-gradient-to-br from-[#FDF5F0] via-white to-[#F8E8E0]">
+    <div className="space-y-3 min-h-screen bg-gradient-to-br from-[#FDF5F0] via-white to-[#F8E8E0]">
       {/* Header */}
       <header className="flex flex-col sm:flex-row sm:items-center gap-3 justify-between">
         <div>
@@ -393,8 +168,8 @@ export default function ProtocolPage() {
       </div>
 
       {/* Treatment Content */}
-      <div className="space-y-5">
-        <div className="rounded-2xl border border-white/40 bg-gradient-to-br from-[#fff5f0] via-[#fff9f5] to-[#fde6dc] p-4 shadow-[0_25px_55px_rgba(212,165,154,0.18)] backdrop-blur-xl md:p-6">
+      <div className="space-y-4">
+        <div className="rounded-2xl border border-white/40 bg-gradient-to-br from-[#fff5f0] via-[#fff9f5] to-[#fde6dc] p-1 shadow-[0_25px_55px_rgba(212,165,154,0.18)] backdrop-blur-xl md:p-6">
           <div className="space-y-4">
             {content.sequence?.length ? (
               <SequenceTimeline

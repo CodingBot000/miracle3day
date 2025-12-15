@@ -14,19 +14,22 @@ import enRecommendTreatment from '@/locales/en/recommend_treatment.json';
 
 import jaCommon from '@/locales/ja/common.json';
 import jaHome from '@/locales/ja/home.json';
+import jaWhykbeauty from '@/locales/ja/whykbeauty.json';
 
 import zhCNCommon from '@/locales/zh-CN/common.json';
 import zhCNHome from '@/locales/zh-CN/home.json';
+import zhCNWhykbeauty from '@/locales/zh-CN/whykbeauty.json';
 
 import zhTWCommon from '@/locales/zh-TW/common.json';
 import zhTWHome from '@/locales/zh-TW/home.json';
+import zhTWWhykbeauty from '@/locales/zh-TW/whykbeauty.json';
 
 const messages: Record<string, Record<string, unknown>> = {
   ko: { ...koCommon, ...koHome, ...koWhykbeauty, ...koRecommendTreatment },
   en: { ...enCommon, ...enHome, ...enWhykbeauty, ...enRecommendTreatment },
-  ja: { ...jaCommon, ...jaHome, ...enWhykbeauty, ...enRecommendTreatment }, // recommend_treatment은 en fallback
-  'zh-CN': { ...zhCNCommon, ...zhCNHome, ...enWhykbeauty, ...enRecommendTreatment }, // recommend_treatment은 en fallback
-  'zh-TW': { ...zhTWCommon, ...zhTWHome, ...enWhykbeauty, ...enRecommendTreatment }, // recommend_treatment은 en fallback
+  ja: { ...jaCommon, ...jaHome, ...jaWhykbeauty, ...enRecommendTreatment }, // recommend_treatment은 en fallback
+  'zh-CN': { ...zhCNCommon, ...zhCNHome, ...zhCNWhykbeauty, ...enRecommendTreatment }, // recommend_treatment은 en fallback
+  'zh-TW': { ...zhTWCommon, ...zhTWHome, ...zhTWWhykbeauty, ...enRecommendTreatment }, // recommend_treatment은 en fallback
 };
 
 export default getRequestConfig(async ({ requestLocale }) => {

@@ -21,6 +21,7 @@ export interface KBeautyMainPoint {
   image: string;
   stats?: Record<string, string | { value: string; label: string }>;
   tenSteps?: string[];
+  tenStepsTitle?: string;
 }
 
 export interface KBeautyStatistics {

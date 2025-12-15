@@ -1,0 +1,604 @@
+{
+  "TreatmentAgedGuide": {
+    "title": "年年齡段抗衰老指南",
+    "subtitle": "發現適合您獨特人生阶段的個性化護膚方案",
+    "disclaimer": "在開始任何新的治療方案之前，請諮詢皮膚科医生或護膚专家。",
+    "requestConsultation": "申請諮詢",
+    "cta": {
+      "ageGuide": "年齡指南",
+      "view": "查看"
+    },
+    "labels": {
+      "cycle": "週期",
+      "interval": "間隔",
+      "duration": "持續時間",
+      "time": "所需時間",
+      "cost": "費用",
+      "onset": "起效時間",
+      "downtime": "恢復期"
+    },
+    "priceUnits": {
+      "per_session": "每次",
+      "per_area": "每部位",
+      "per_treatment": "全臉",
+      "per_cc": "每cc"
+    },
+    "ageGroups": {
+      "20s": {
+        "heroImage": "/anti_ange_guide/hero/antiage_guide_hero_20s.jpg",
+        "title": "青春的黃金時代，對未來的明智投資",
+        "subtitle": "發光的肌膚不會自我維持。今天的小選擇将改變你30岁時的臉。",
+        "intro": "20岁的肌膚就像刚盛開的花瓣——水潤且富有彈性。但不要被欺骗以为这黃金時光會永远持續。即使現在，看不見的時間種子也在表面下悄悄紮根。",
+        "concerns": {
+          "title": "20多岁的隱藏肌膚煩惱",
+          "items": [
+            {
+              "name": "毛孔和痘印的蜂起",
+              "desc": "不規則的生活和考試、求職的壓力引發荷爾蒙波動。宵夜带來的痘痘在光滑的肌膚上造成小地震。現在可以用遮瑕膏遮蓋，但随著時間推移可能會變成不可逆轉的痕跡。"
+            },
+            {
+              "name": "色素沈著，看不見的敌人",
+              "desc": "「但我防曬做得很好！」即便如此，陽光下黑色素在肌膚中的記憶比你想象的更持久。現在難以看見所以危险——就像用透明墨水写的信，加热后才會顯現。"
+            },
+            {
+              "name": "不均勻的膚色",
+              "desc": "酒精、宵夜、熬夜的痕跡留在臉上。一個区域發紅，另一個發黃，眼下發暗——像混合顏料的調色板，渾濁的色調隱藏了你的自然美。"
+            }
+          ]
+        },
+        "treatments": {
+          "title": "20多岁的定制治療：對未來的明智選擇",
+          "items": [
+            {
+              "id": "skin_booster_rejuran",
+              "name": "皮膚促進劑（童顏針、保濕促進劑）",
+              "effect": "在肌膚中建造水庫。濃密的玻尿痠网格深入肌膚深層，保護免受乾燥和壓力；健康的水分屏障即使不化妆也能創造自然光澤。",
+              "cycle": "3-5次，每2-3週一次",
+              "duration": "6-8個月",
+              "costFrom": 150000,
+              "costTo": 250000,
+              "priceUnit": "per_session",
+              "imageUrl": "https://images.unsplash.com/photo-1629380108567-a0b544204f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxza2luY2FyZSUyMHByb2R1Y3RzJTIwc3BhfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "laser_toning_pico",
+              "name": "激光美白 / 皮秒美白",
+              "effect": "透明感的秘密。擦除日常陽光留下的「小陰影」，就像擦拭旧窗戶。即使一次也能獲得明顯更亮、更透明的膚色——在20多岁時特別有效，因为恢復快。",
+              "cycle": "5-8次，每2-4週一次",
+              "duration": "12個月以上",
+              "costFrom": 80000,
+              "costTo": 150000,
+              "priceUnit": "per_session",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "fraxel_pico_fraxel",
+              "name": "点阵激光 / 皮秒点阵",
+              "effect": "肌膚的重置按鈕。改善痘印和粗大毛孔的再生治療；微光束刺激新胶原蛋白——就像把旧书頁換成新的，重獲光滑如玻璃的質感。",
+              "cycle": "3-5次，每4-6週一次",
+              "downtime": "3-7天",
+              "costFrom": 200000,
+              "costTo": 350000,
+              "priceUnit": "per_session",
+              "imageUrl": "https://images.unsplash.com/photo-1629380108567-a0b544204f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxza2luY2FyZSUyMHByb2R1Y3RzJTIwc3BhfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            }
+          ]
+        },
+        "skinTypes": {
+          "title": "按膚質的詳細護理",
+          "items": {
+            "dry": "干性皮膚：「干旱土地先補水」用皮膚促進劑創造深層水庫，用美白温和強化屏障。",
+            "oily": "油性皮膚：「光澤背后的真相」用点阵收緊毛孔，用皮秒美白預防炎症后色素沈著。",
+            "sensitive": "敏感皮膚：「小心處理」用低能量激光和温和再生療法逐步建立抵抗力。"
+          }
+        },
+        "specialTips": {
+          "title": "20多岁的特別護理提示",
+          "subsections": [
+            {
+              "title": "生活方式与治療的協同效應",
+              "tips": [
+                "黃金時間睡眠：晚上11点到凌晨2点的深度睡眠提高生长激素，增強效果。",
+                "抗氧化劑：蓝莓、西紅柿、绿茶帮助激光后恢復。",
+                "壓力管理：瑜伽和冥想降低壓力激素，改善再生。"
+              ]
+            },
+            {
+              "title": "季節性定制護理",
+              "tips": [
+                "春/夏：在強紫外線下专注于皮秒美白。",
+                "秋/冬：在乾燥季節優先考虑皮膚促進劑和再生治療。"
+              ]
+            }
+          ]
+        }
+      },
+      "30s": {
+        "heroImage": "/anti_ange_guide/hero/antiage_guide_hero_30s.jpg",
+        "title": "青春的最后防線——明智選擇的時刻",
+        "subtitle": "当笑紋不再可愛，臉看起來疲惫時，就是開始的時候。",
+        "intro": "30多岁感觉很特別。你仍然認为自己年輕，但鏡子说的不一样。早晨的緊緻度不如以前，笑后皺紋残留——这些是30多岁的訊號。",
+        "concerns": {
+          "title": "30多岁的微妙變化",
+          "items": [
+            {
+              "name": "眼週和額頭的細紋",
+              "desc": "即使在休息時也有淡紋残留，變得更加明顯，就像時間留下的小字。"
+            },
+            {
+              "name": "暗沉的膚色",
+              "desc": "20多岁清晰明亮的膚色變得渾濁。更慢的代謝和黑色素清除使光澤變暗，即使化妆也是如此。"
+            },
+            {
+              "name": "體積流失的開始",
+              "desc": "臉颊感觉不那么丰满；随著臉颊脂肪微妙下降，法令紋開始顯現。"
+            }
+          ]
+        },
+        "treatments": {
+          "title": "30多岁治療平衡：預防 + 矯正",
+          "items": [
+            {
+              "id": "botox_expression_lines",
+              "name": "肉毒素",
+              "effect": "防止表情紋加深——聪明的預防而不是完全消除紋路。",
+              "duration": "4-6個月",
+              "time": "10-15分鐘",
+              "costFrom": 80000,
+              "costTo": 150000,
+              "priceUnit": "per_area",
+              "onset": "3-7天開始",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "hifu_ulthera",
+              "name": "HIFU（超声刀） / 热玛吉",
+              "effect": "无需手術刀的提升。瞄準SMAS層產生自然提升效果。",
+              "cycle": "每年1-2次",
+              "duration": "12-18個月",
+              "costFrom": 800000,
+              "costTo": 1500000,
+              "priceUnit": "per_treatment",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "filler_nasolabial",
+              "name": "填充劑（玻尿痠）",
+              "effect": "恢復法令紋、淚溝等的體積。即效體積矯正。",
+              "duration": "6-12個月",
+              "time": "20-30分鐘",
+              "costFrom": 300000,
+              "costTo": 600000,
+              "priceUnit": "per_cc",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "laser_toning_pigment",
+              "name": "激光美白",
+              "effect": "改善累積的色素沈著，恢復膚色均勻性。",
+              "cycle": "5-10次，每月1-2次",
+              "costFrom": 100000,
+              "costTo": 200000,
+              "priceUnit": "per_session",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            }
+          ]
+        },
+        "skinTypes": {
+          "title": "按膚質的30多岁護理",
+          "items": {
+            "dry": "干性皮膚：恢復體積后，用皮膚促進劑加強保濕。",
+            "oily": "油性皮膚：提升后，用美白繼續管理毛孔。",
+            "sensitive": "敏感皮膚：尽量減少注射，優先考虑温和的再生激光。"
+          }
+        },
+        "specialTips": {
+          "title": "30多岁的生活方式護理",
+          "subsections": [
+            {
+              "title": "職業女性",
+              "tips": [
+                "专注于恢復期少的肉毒素 + HIFU",
+                "每3個月定期維護"
+              ]
+            },
+            {
+              "title": "兼顾育儿和工作的人",
+              "tips": [
+                "每年1次集中治療 + 短時間維護",
+                "加強夜間家庭護理"
+              ]
+            }
+          ]
+        }
+      },
+      "40s": {
+        "heroImage": "/anti_ange_guide/hero/antiage_guide_hero_40s.jpg",
+        "title": "認識衰老，明智管理的時刻",
+        "subtitle": "40多岁不是守護青春的時候，而是優雅變老的時候。",
+        "intro": "40多岁時重力法則變得明確。鬆弛、深皺紋和明顯的體積流失——这些是不可避免的變化。但有了正確的策略，可以让这段旅程更加優雅。",
+        "concerns": {
+          "title": "40多岁的主要煩惱",
+          "items": [
+            {
+              "name": "明顯的鬆弛",
+              "desc": "臉颊和面部輪廓的下垂開始顯現。"
+            },
+            {
+              "name": "深皺紋",
+              "desc": "法令紋、木偶紋、額頭皺紋深深刻印。"
+            },
+            {
+              "name": "嚴重的體積流失",
+              "desc": "臉颊、太陽穴、眼下凹陷強調衰老印象。"
+            }
+          ]
+        },
+        "treatments": {
+          "title": "40多岁治療策略：多角度方法",
+          "items": [
+            {
+              "id": "thread_lift",
+              "name": "線雕",
+              "effect": "物理性提升鬆弛。无需手術的即效提升。",
+              "duration": "12-18個月",
+              "downtime": "3-7天",
+              "costFrom": 1500000,
+              "costTo": 3000000,
+              "priceUnit": "per_treatment",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "fat_graft",
+              "name": "脂肪移植",
+              "effect": "用自己的脂肪自然恢復體積。长期持續。",
+              "duration": "半永久",
+              "downtime": "7-14天",
+              "costFrom": 3000000,
+              "costTo": 6000000,
+              "priceUnit": "per_treatment",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "deep_filler",
+              "name": "深層填充劑",
+              "effect": "深層體積恢復，结構支撑。",
+              "duration": "12-18個月",
+              "costFrom": 500000,
+              "costTo": 1000000,
+              "priceUnit": "per_treatment",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "rf_fractional",
+              "name": "RF（射频） / 点阵激光",
+              "effect": "刺激胶原蛋白再生，改善肌膚質感和緊緻度。",
+              "cycle": "3-5次，每月1次",
+              "downtime": "3-5天",
+              "costFrom": 300000,
+              "costTo": 600000,
+              "priceUnit": "per_session",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            }
+          ]
+        },
+        "skinTypes": {
+          "title": "按膚質的40多岁護理",
+          "items": {
+            "dry": "干性皮膚：提升后，用脂肪移植提供深層營養。",
+            "oily": "油性皮膚：線雕 + RF 同時管理毛孔和緊緻度。",
+            "sensitive": "敏感皮膚：尽量減少侵入性治療，以再生为中心的護理。"
+          }
+        },
+        "specialTips": {
+          "title": "40多岁的生活方式護理",
+          "subsections": [
+            {
+              "title": "活跃社交生活的人",
+              "tips": [
+                "重要活動前3個月集中治療",
+                "定期肉毒素 + 填充劑維護"
+              ]
+            },
+            {
+              "title": "孩子獨立，有時間照顾自己的人",
+              "tips": [
+                "每年1次大提升 + 定期小維護",
+                "投資再生療法"
+              ]
+            }
+          ]
+        }
+      },
+      "50s": {
+        "heroImage": "/anti_ange_guide/hero/antiage_guide_hero_50s.jpg",
+        "title": "成熟美，戰略管理",
+        "subtitle": "50多岁是接受衰老的同時保持最佳状态的時候。",
+        "intro": "50多岁時，更年期后的荷爾蒙變化加速衰老。皮膚變薄、失去彈性和嚴重鬆弛——这些不再微妙。但有了全面的策略，可以保持有尊嚴的美。",
+        "concerns": {
+          "title": "50多岁的主要煩惱",
+          "items": [
+            {
+              "name": "進行性鬆弛",
+              "desc": "整個面部顯著下垂，面部輪廓丧失。"
+            },
+            {
+              "name": "皮膚變薄和乾燥",
+              "desc": "更年期后荷爾蒙減少導致皮膚變薄和乾燥。"
+            },
+            {
+              "name": "嚴重的體積流失",
+              "desc": "面部中央部分凹陷強調衰老印象。"
+            }
+          ]
+        },
+        "treatments": {
+          "title": "50多岁治療哲学：全面年輕化",
+          "items": [
+            {
+              "id": "facelift_mini",
+              "name": "迷你拉皮",
+              "effect": "下面部和頸部線条的剧烈改善。最有效的鬆弛解决方案。",
+              "duration": "5-10年",
+              "downtime": "14-21天",
+              "costFrom": 5000000,
+              "costTo": 10000000,
+              "priceUnit": "per_treatment",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "fat_graft_full",
+              "name": "全臉脂肪移植",
+              "effect": "大规模恢復失去的體積。",
+              "duration": "半永久",
+              "downtime": "10-14天",
+              "costFrom": 4000000,
+              "costTo": 8000000,
+              "priceUnit": "per_treatment",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "strong_thread",
+              "name": "強力線雕",
+              "effect": "无需手術的提升替代方案。",
+              "duration": "18-24個月",
+              "downtime": "5-10天",
+              "costFrom": 2000000,
+              "costTo": 4000000,
+              "priceUnit": "per_treatment",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "regen_prp_stem",
+              "name": "PRP / 干細胞 / 童顏針",
+              "effect": "加強變薄的皮膚，恢復再生力。",
+              "cycle": "每月1次 × 3-5次",
+              "costFrom": 400000,
+              "costTo": 800000,
+              "priceUnit": "per_session",
+              "imageUrl": "https://images.unsplash.com/photo-1629380108567-a0b544204f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxza2luY2FyZSUyMHByb2R1Y3RzJTIwc3BhfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            }
+          ]
+        },
+        "skinTypes": {
+          "title": "按膚質的50多岁護理",
+          "items": {
+            "dry": "干性皮膚：提升后，集中再生 + 促進劑療法。",
+            "oily": "油性皮膚：结合提升和質感改善。",
+            "sensitive": "敏感皮膚：優先考虑線 + 再生而不是手術。"
+          }
+        },
+        "specialTips": {
+          "title": "50多岁的生活方式護理",
+          "subsections": [
+            {
+              "title": "活跃社交生活的人",
+              "tips": [
+                "值得考虑手術——剧烈改善",
+                "確保充足的恢復期"
+              ]
+            },
+            {
+              "title": "希望逐步改善的人",
+              "tips": [
+                "線雕 + 脂肪移植的阶段性方法",
+                "定期再生療法維持结果"
+              ]
+            }
+          ]
+        }
+      },
+      "60s": {
+        "heroImage": "/anti_ange_guide/hero/antiage_guide_hero_60s.jpg",
+        "title": "有尊嚴的美，自然的優雅",
+        "subtitle": "60多岁不是恢復青春，而是保持健康有活力的外貌。",
+        "intro": "60多岁時骨骼和皮膚衰老更加明顯。目標不是剧烈變化，而是保持自然健康的外貌。",
+        "concerns": {
+          "title": "60多岁的主要煩惱",
+          "items": [
+            {
+              "name": "進行性鬆弛和皺紋",
+              "desc": "整個面部皮膚鬆弛和深皺紋。"
+            },
+            {
+              "name": "皮膚脆弱性",
+              "desc": "薄皮膚容易受伤，癒合緩慢。"
+            },
+            {
+              "name": "嚴重的體積流失",
+              "desc": "臉颊、面部輪廓、太陽穴的顯著凹陷強調衰老印象。"
+            }
+          ]
+        },
+        "treatments": {
+          "title": "60多岁方法：安全保守的護理",
+          "items": [
+            {
+              "id": "mini_facelift_neck",
+              "name": "迷你拉皮 / 頸部拉皮",
+              "effect": "最有效的鬆弛解决方案，健康状况良好時可考虑。",
+              "duration": "5-8年",
+              "downtime": "14-21天",
+              "costFrom": 5000000,
+              "costTo": 10000000,
+              "priceUnit": "per_treatment",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "conservative_filler",
+              "name": "保守填充劑",
+              "effect": "避免过度矯正，自然恢復體積。",
+              "duration": "12-18個月",
+              "costFrom": 3000000,
+              "costTo": 7000000,
+              "priceUnit": "per_treatment",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "regen_stemcell",
+              "name": "干細胞 / PRP / 童顏針",
+              "effect": "增厚和再生薄皮膚。",
+              "cycle": "每月 × 3-5次",
+              "costFrom": 500000,
+              "costTo": 1000000,
+              "priceUnit": "per_session",
+              "imageUrl": "https://images.unsplash.com/photo-1629380108567-a0b544204f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxza2luY2FyZSUyMHByb2R1Y3RzJTIwc3BhfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "laser_resurfacing_heavy",
+              "name": "強力激光換膚",
+              "effect": "改善皺紋、色素和質感。",
+              "downtime": "7-14天",
+              "costFrom": 500000,
+              "costTo": 1000000,
+              "priceUnit": "per_session",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            }
+          ]
+        },
+        "skinTypes": {
+          "title": "按膚質的60多岁護理",
+          "items": {
+            "dry": "用促進劑/再生注射加強薄皮膚。",
+            "oily": "结合提升和體積重新拉緊皮膚。",
+            "sensitive": "優先LED/低強度再生。最小化刺激。"
+          }
+        },
+        "specialTips": {
+          "title": "60多岁的生活方式護理",
+          "subsections": [
+            {
+              "title": "活跃社交生活的人",
+              "tips": [
+                "活動前3個月加強提升",
+                "保持持續再生"
+              ]
+            },
+            {
+              "title": "退休后，有時間護理的人",
+              "tips": [
+                "每年1次大提升 + 定期小維護",
+                "強調无刺激習慣"
+              ]
+            }
+          ]
+        }
+      },
+      "70s+": {
+        "heroImage": "/anti_ange_guide/hero/antiage_guide_hero_70s.jpg",
+        "title": "尊重自然優雅和尊嚴的時刻",
+        "subtitle": "不追求強制青春，而是健康有尊嚴的美。",
+        "intro": "70多岁及以后，骨骼和皮膚衰老明顯。優先考虑自然、安全的矯正和恢復，而不是激進的逆轉。",
+        "concerns": {
+          "title": "70多岁的主要煩惱",
+          "items": [
+            {
+              "name": "進行性鬆弛和皺紋",
+              "desc": "整個面部皮膚鬆弛和深皺紋。"
+            },
+            {
+              "name": "皮膚脆弱性",
+              "desc": "薄皮膚容易受伤，癒合緩慢。"
+            },
+            {
+              "name": "嚴重的體積流失",
+              "desc": "臉颊、面部輪廓、太陽穴的顯著凹陷強調衰老印象。"
+            }
+          ]
+        },
+        "treatments": {
+          "title": "70多岁方法：自然、以恢復为中心的護理",
+          "items": [
+            {
+              "id": "soft_thread",
+              "name": "柔和線雕",
+              "effect": "温和輪廓矯正而非激進提升。",
+              "duration": "≈1年",
+              "costFrom": 1000000,
+              "costTo": 2000000,
+              "priceUnit": "per_treatment",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "light_filler_fat",
+              "name": "保守填充劑 / 小量脂肪移植",
+              "effect": "對凹陷区域最小體積恢復。",
+              "duration": "12個月以上",
+              "costFrom": 2000000,
+              "costTo": 4000000,
+              "priceUnit": "per_treatment",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "regen_soft",
+              "name": "童顏針 / PRP / 干細胞",
+              "effect": "恢復再生力，加強薄皮膚。",
+              "cycle": "每月 × 3-5次",
+              "costFrom": 300000,
+              "costTo": 700000,
+              "priceUnit": "per_session",
+              "imageUrl": "https://images.unsplash.com/photo-1629380108567-a0b544204f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxza2luY2FyZSUyMHByb2R1Y3RzJTIwc3BhfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "noninvasive_led",
+              "name": "非侵入性LED / 低能量激光",
+              "effect": "對敏感脆弱的皮膚安全。",
+              "cycle": "定期療程",
+              "costFrom": 100000,
+              "costTo": 300000,
+              "priceUnit": "per_session",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            }
+          ]
+        },
+        "skinTypes": {
+          "title": "按膚質的70多岁護理",
+          "items": {
+            "dry": "用促進劑/童顏針增強保濕和再生。",
+            "oily": "更专注于質感改善而非強力提升。",
+            "sensitive": "使用低刺激LED/再生護理以最小化副作用。"
+          }
+        },
+        "specialTips": {
+          "title": "70多岁的生活方式護理",
+          "subsections": [
+            {
+              "title": "有尊嚴的老年生活",
+              "tips": [
+                "優先自然改善而非激進提升",
+                "定期皮膚健康检查"
+              ]
+            },
+            {
+              "title": "安全第一策略",
+              "tips": [
+                "治療前的生活方式和營養",
+                "強調非侵入性選擇"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

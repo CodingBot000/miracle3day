@@ -1,0 +1,83 @@
+{
+  "CustomerSupport": {
+    "title": "고객 지원",
+    "subtitle": "무엇을 도와드릴까요? 아래에서 필요한 정보를 찾거나 직접 문의해 주세요.",
+    
+    "categories": {
+      "booking": {
+        "title": "예약 및 상담",
+        "description": "예약, 상담, 예약 절차에 관한 문의",
+        "links": {
+          "howToBook": "상담 예약 방법",
+          "changeCancel": "예약 변경 또는 취소",
+          "videoGuide": "화상 상담 가이드"
+        }
+      },
+      "treatment": {
+        "title": "시술 정보",
+        "description": "시술, 회복 기간, 의료 요구사항에 대한 정보",
+        "links": {
+          "ageGuide": "연령대별 시술 가이드",
+          "preChecklist": "시술 전 체크리스트",
+          "postCare": "시술 후 관리 안내"
+        }
+      },
+      "travel": {
+        "title": "여행 및 숙박",
+        "description": "여행 계획, 숙박, 교통편에 대한 도움",
+        "links": {
+          "airport": "공항 픽업 서비스",
+          "hotels": "추천 호텔",
+          "travelGuide": "서울 여행 가이드"
+        }
+      },
+      "language": {
+        "title": "언어 지원",
+        "description": "영어, 일본어, 중국어, 한국어 지원",
+        "links": {
+          "interpreter": "통역 서비스",
+          "translation": "의료 서류 번역"
+        }
+      }
+    },
+
+    "contact": {
+      "title": "연락 방법",
+      "email": {
+        "title": "이메일",
+        "value": "mimotok.official@gmail.com",
+        "description": "24시간 이내 답변"
+      },
+      "kakao": {
+        "title": "카카오톡",
+        "value": "@mimotok",
+        "description": "실시간 채팅 (오전 9시 - 오후 6시 KST)"
+      },
+      "whatsapp": {
+        "title": "왓츠앱",
+        "value": "+82-10-XXXX-XXXX",
+        "description": "해외 환자 전용"
+      }
+    },
+
+    "emergency": {
+      "title": "긴급 지원",
+      "description": "체류 중 긴급 의료 상황",
+      "phone": "+82-10-XXXX-XXXX",
+      "available": "24시간 이용 가능"
+    },
+
+    "hours": {
+      "title": "운영 시간",
+      "weekday": "월-금: 오전 9시 - 오후 6시 (한국시간)",
+      "weekend": "토: 오전 10시 - 오후 3시 (한국시간)",
+      "closed": "일요일 및 한국 공휴일 휴무"
+    },
+
+    "faq": {
+      "button": "자주 묻는 질문 보기"
+    },
+
+    "responseTime": "평균 응답 시간: 영업일 기준 24시간 이내"
+  }
+}

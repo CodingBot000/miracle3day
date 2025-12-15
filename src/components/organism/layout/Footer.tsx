@@ -56,10 +56,13 @@ export const Footer = () => {
         <span className="flex items-center gap-1">
           <LanguageSwitcherNextIntl /> Language
         </span>
-
-        <Link href="/support/customer-support" className="flex items-center gap-1 hover:underline">
-          <Headset size={16} /> Customer Support
+   <span className="mx-1">|</span>
+        <Link href="/about-us" onClick={handleAboutUsClick} className="hover:underline">
+          About Us
         </Link>
+        {/* <Link href="/support/customer-support" className="flex items-center gap-1 hover:underline">
+          <Headset size={16} /> Customer Support
+        </Link> */}
       </div>
 
       <div className="flex flex-wrap justify-center items-center gap-2">
@@ -73,11 +76,13 @@ export const Footer = () => {
         <Link href="/legal/terms" onClick={handleTermsClick} className="hover:underline">
           Terms
         </Link>
-        <span className="mx-1">|</span>
-        <Link href="/about-us" onClick={handleAboutUsClick} className="hover:underline">
-          About Us
-        </Link>
+     
 
+       <span className="mx-1">|</span>
+          <Link href="mailto:mimotok.official@gmail.com" className="text-blue-600 underline">
+            mimotok.official@gmail.com
+          </Link>
+  
       </div>
 
       <TermsHtmlModal

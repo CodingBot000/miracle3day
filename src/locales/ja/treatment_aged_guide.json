@@ -1,0 +1,604 @@
+{
+  "TreatmentAgedGuide": {
+    "title": "年齢別アンチエイジングガイド",
+    "subtitle": "あなたのライフステージに合わせたパーソナライズされたスキンケアソリューションを発見",
+    "disclaimer": "新しい治療を始める前に、皮膚科医またはスキンケア専門家にご相談ください。",
+    "requestConsultation": "相談を申し込む",
+    "cta": {
+      "ageGuide": "年齢別ガイド",
+      "view": "見る"
+    },
+    "labels": {
+      "cycle": "サイクル",
+      "interval": "間隔",
+      "duration": "持続期間",
+      "time": "所要時間",
+      "cost": "費用",
+      "onset": "効果発現",
+      "downtime": "ダウンタイム"
+    },
+    "priceUnits": {
+      "per_session": "1回あたり",
+      "per_area": "1部位あたり",
+      "per_treatment": "全顔",
+      "per_cc": "1ccあたり"
+    },
+    "ageGroups": {
+      "20s": {
+        "heroImage": "/anti_ange_guide/hero/antiage_guide_hero_20s.jpg",
+        "title": "若さの黄金期、未来への賢い投資",
+        "subtitle": "輝く肌は自然に維持されません。今日の小さな選択が30代のあなたの顔を変えます。",
+        "intro": "20代の肌は咲いたばかりの花びらのよう—みずみずしく弾力があります。しかし、この黄金期が永遠に続くと思い込んではいけません。今この瞬間も、目に見えない時間の種が静かに表面下に根を張っています。",
+        "concerns": {
+          "title": "20代の隠れた肌の悩み",
+          "items": [
+            {
+              "name": "毛穴とニキビ跡の蜂起",
+              "desc": "不規則な生活と試験・就職活動のストレスがホルモンバランスの乱れを引き起こします。夜食が引き起こすニキビは、滑らかな肌に小さな地震を起こします。今はコンシーラーで隠せますが、時間が経つと取り返しのつかない跡になる可能性があります。"
+            },
+            {
+              "name": "色素沈着、見えない敵",
+              "desc": "「でも日焼け止めはちゃんと塗ってる！」それでも、太陽の下でのメラニンの肌の記憶は想像以上に持続的です。今は見えにくいので危険—まるで熱を加えると現れる透明なインクで書かれた手紙のようです。"
+            },
+            {
+              "name": "不均一な肌トーン",
+              "desc": "アルコール、夜食、徹夜の痕跡が顔に残ります。ある部分は赤く、別の部分は黄色く、目の下は暗い—混ざった絵の具のパレットのように、濁ったトーンがあなたの自然な美しさを隠します。"
+            }
+          ]
+        },
+        "treatments": {
+          "title": "20代のためのオーダーメイド治療：未来への賢い選択",
+          "items": [
+            {
+              "id": "skin_booster_rejuran",
+              "name": "スキンブースター（リジュラン、保湿ブースター）",
+              "effect": "肌に水の貯水池を作ります。濃密なヒアルロン酸メッシュが肌深部に座り、乾燥とストレスから保護します。健康な水分バリアが化粧なしでも自然な輝きを作り出します。",
+              "cycle": "3〜5回、2〜3週間ごと",
+              "duration": "6〜8ヶ月",
+              "costFrom": 150000,
+              "costTo": 250000,
+              "priceUnit": "per_session",
+              "imageUrl": "https://images.unsplash.com/photo-1629380108567-a0b544204f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxza2luY2FyZSUyMHByb2R1Y3RzJTIwc3BhfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "laser_toning_pico",
+              "name": "レーザートーニング / ピコトーニング",
+              "effect": "透明感の秘密。日常の太陽が残した「小さな影」を消す、古い窓を磨くように。1回でも明らかに明るく透明なトーンが得られます—20代では特に回復が早いため効果的です。",
+              "cycle": "5〜8回、2〜4週間ごと",
+              "duration": "12ヶ月以上",
+              "costFrom": 80000,
+              "costTo": 150000,
+              "priceUnit": "per_session",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "fraxel_pico_fraxel",
+              "name": "フラクセル / ピコフラクセル",
+              "effect": "肌のリセットボタン。ニキビ跡と拡大毛穴を改善する再生治療。マイクロビームが新しいコラーゲンを刺激—古い本のページを新しいものに交換して、滑らかでガラスのような質感を取り戻します。",
+              "cycle": "3〜5回、4〜6週間ごと",
+              "downtime": "3〜7日",
+              "costFrom": 200000,
+              "costTo": 350000,
+              "priceUnit": "per_session",
+              "imageUrl": "https://images.unsplash.com/photo-1629380108567-a0b544204f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxza2luY2FyZSUyMHByb2R1Y3RzJTIwc3BhfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            }
+          ]
+        },
+        "skinTypes": {
+          "title": "肌タイプ別の詳細ケア",
+          "items": {
+            "dry": "乾燥肌：「乾いた土地にまず水を」スキンブースターで深い貯水池を作り、トーニングで優しくバリアを強化。",
+            "oily": "脂性肌：「輝きの背後にある真実」フラクセルで毛穴を引き締め、ピコトーニングで炎症後色素沈着を予防。",
+            "sensitive": "敏感肌：「慎重に扱う」低エネルギーレーザーと優しい再生療法で徐々に回復力を構築。"
+          }
+        },
+        "specialTips": {
+          "title": "20代のための特別ケアのヒント",
+          "subsections": [
+            {
+              "title": "ライフスタイルと施術の相乗効果",
+              "tips": [
+                "ゴールデンタイム睡眠：午後11時〜午前2時の深い睡眠が成長ホルモンを高め、結果を向上させます。",
+                "抗酸化物質：ブルーベリー、トマト、緑茶がレーザー後の回復を助けます。",
+                "ストレス管理：ヨガと瞑想がストレスホルモンを下げ、再生を改善します。"
+              ]
+            },
+            {
+              "title": "季節に合わせたケア",
+              "tips": [
+                "春/夏：強い紫外線下でピコトーニングに焦点を当てる。",
+                "秋/冬：乾燥季節にスキンブースターと再生治療を優先。"
+              ]
+            }
+          ]
+        }
+      },
+      "30s": {
+        "heroImage": "/anti_ange_guide/hero/antiage_guide_hero_30s.jpg",
+        "title": "若さの最後の防衛線—賢い選択の時",
+        "subtitle": "笑顔のしわがもはやかわいく見えず、顔が疲れて見える時、それが始める時です。",
+        "intro": "30代は特別な感じがします。まだ若いと思っているのに、鏡は違うことを言います。朝の張りは以前ほどではなく、笑った後にしわが残る—これらは30代のサインです。",
+        "concerns": {
+          "title": "30代の微妙な変化",
+          "items": [
+            {
+              "name": "目元と額の細かいしわ",
+              "desc": "休んでいる時も薄いしわが残り、さらにはっきりとしてくる、時間が残した小さな文字のように。"
+            },
+            {
+              "name": "くすんだ肌トーン",
+              "desc": "20代の明るく輝くトーンが曇ります。ターンオーバーとメラニンクリアランスの遅れが、メイクをしても輝きを鈍らせます。"
+            },
+            {
+              "name": "ボリューム喪失の始まり",
+              "desc": "頬がふっくら感を失い、ほうれい線が現れ始める、頬の脂肪が微妙に下降するにつれて。"
+            }
+          ]
+        },
+        "treatments": {
+          "title": "30代の治療バランス：予防 + 矯正",
+          "items": [
+            {
+              "id": "botox_expression_lines",
+              "name": "ボトックス",
+              "effect": "表情じわが深くなるのを防ぐ—しわを完全に消すのではなく、賢い予防。",
+              "duration": "4〜6ヶ月",
+              "time": "10〜15分",
+              "costFrom": 80000,
+              "costTo": 150000,
+              "priceUnit": "per_area",
+              "onset": "3〜7日で開始",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "hifu_ulthera",
+              "name": "HIFU（ハイフ） / ウルセラ",
+              "effect": "メスを使わないリフティング。SMAS層をターゲットにして自然なリフト効果を生み出します。",
+              "cycle": "年1〜2回",
+              "duration": "12〜18ヶ月",
+              "costFrom": 800000,
+              "costTo": 1500000,
+              "priceUnit": "per_treatment",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "filler_nasolabial",
+              "name": "フィラー（ヒアルロン酸）",
+              "effect": "ほうれい線、涙袋などのボリュームを復元。即効性のあるボリューム矯正。",
+              "duration": "6〜12ヶ月",
+              "time": "20〜30分",
+              "costFrom": 300000,
+              "costTo": 600000,
+              "priceUnit": "per_cc",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "laser_toning_pigment",
+              "name": "レーザートーニング",
+              "effect": "蓄積した色素沈着を改善し、トーンの均一性を回復。",
+              "cycle": "5〜10回、月1〜2回",
+              "costFrom": 100000,
+              "costTo": 200000,
+              "priceUnit": "per_session",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            }
+          ]
+        },
+        "skinTypes": {
+          "title": "肌タイプ別30代ケア",
+          "items": {
+            "dry": "乾燥肌：ボリューム復元後、スキンブースターで保湿を強化。",
+            "oily": "脂性肌：リフティング後、トーニングで毛穴管理を継続。",
+            "sensitive": "敏感肌：注射を最小限に、優しい再生レーザーを優先。"
+          }
+        },
+        "specialTips": {
+          "title": "30代のためのライフスタイル別ケア",
+          "subsections": [
+            {
+              "title": "キャリア女性のために",
+              "tips": [
+                "ダウンタイムが少ないボトックス + HIFUに焦点を当てる",
+                "3ヶ月ごとの定期メンテナンス"
+              ]
+            },
+            {
+              "title": "育児と仕事を両立する方",
+              "tips": [
+                "年1回の集中治療 + 短時間メンテナンス",
+                "夜のホームケアを強化"
+              ]
+            }
+          ]
+        }
+      },
+      "40s": {
+        "heroImage": "/anti_ange_guide/hero/antiage_guide_hero_40s.jpg",
+        "title": "老化を認め、賢く管理する時",
+        "subtitle": "40代は若さを守る時ではなく、エレガントに年を重ねる時です。",
+        "intro": "40代では重力の法則が明確になります。タルミ、深いしわ、そして明らかなボリューム喪失—これらは避けられない変化です。しかし、適切な戦略があれば、この旅をもっと優雅にすることができます。",
+        "concerns": {
+          "title": "40代の主要な悩み",
+          "items": [
+            {
+              "name": "明確なタルミ",
+              "desc": "頬とフェイスラインのたるみが目立ち始める。"
+            },
+            {
+              "name": "深いしわ",
+              "desc": "ほうれい線、マリオネットライン、額のしわが深く刻まれる。"
+            },
+            {
+              "name": "深刻なボリューム喪失",
+              "desc": "頬、こめかみ、目の下のくぼみが老けた印象を強調。"
+            }
+          ]
+        },
+        "treatments": {
+          "title": "40代治療戦略：多角的アプローチ",
+          "items": [
+            {
+              "id": "thread_lift",
+              "name": "糸リフト",
+              "effect": "タルミを物理的にリフト。手術なしで即効性のあるリフト。",
+              "duration": "12〜18ヶ月",
+              "downtime": "3〜7日",
+              "costFrom": 1500000,
+              "costTo": 3000000,
+              "priceUnit": "per_treatment",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "fat_graft",
+              "name": "脂肪移植",
+              "effect": "自分の脂肪で自然なボリューム復元。長期持続。",
+              "duration": "半永久",
+              "downtime": "7〜14日",
+              "costFrom": 3000000,
+              "costTo": 6000000,
+              "priceUnit": "per_treatment",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "deep_filler",
+              "name": "ディープフィラー",
+              "effect": "深い層のボリューム復元、構造的サポート。",
+              "duration": "12〜18ヶ月",
+              "costFrom": 500000,
+              "costTo": 1000000,
+              "priceUnit": "per_treatment",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "rf_fractional",
+              "name": "RF（高周波） / フラクショナルレーザー",
+              "effect": "コラーゲン再生を刺激し、肌の質感と張りを改善。",
+              "cycle": "3〜5回、月1回",
+              "downtime": "3〜5日",
+              "costFrom": 300000,
+              "costTo": 600000,
+              "priceUnit": "per_session",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            }
+          ]
+        },
+        "skinTypes": {
+          "title": "肌タイプ別40代ケア",
+          "items": {
+            "dry": "乾燥肌：リフティング後、脂肪移植で深い栄養を。",
+            "oily": "脂性肌：糸リフト + RF で毛穴と張りの両方を管理。",
+            "sensitive": "敏感肌：侵襲的治療を最小限に、再生中心のケア。"
+          }
+        },
+        "specialTips": {
+          "title": "40代のライフスタイル別ケア",
+          "subsections": [
+            {
+              "title": "活発な社会生活を送る方",
+              "tips": [
+                "重要なイベントの3ヶ月前に集中治療",
+                "定期的なボトックス + フィラーメンテナンス"
+              ]
+            },
+            {
+              "title": "子供が独立し、自分に時間を使える方",
+              "tips": [
+                "年1回の大きなリフト + 定期的な小さなメンテナンス",
+                "再生療法に投資"
+              ]
+            }
+          ]
+        }
+      },
+      "50s": {
+        "heroImage": "/anti_ange_guide/hero/antiage_guide_hero_50s.jpg",
+        "title": "成熟した美しさ、戦略的管理",
+        "subtitle": "50代は老化を受け入れながらも、最高の姿を維持する時です。",
+        "intro": "50代では閉経後のホルモン変化により老化が加速します。肌の薄化、弾力性の喪失、そして深刻なタルミ—これらはもはや微妙ではありません。しかし、包括的な戦略があれば、尊厳ある美しさを維持できます。",
+        "concerns": {
+          "title": "50代の主要な悩み",
+          "items": [
+            {
+              "name": "進行したタルミ",
+              "desc": "顔全体のたるみが著しく、フェイスラインの喪失。"
+            },
+            {
+              "name": "肌の薄化と乾燥",
+              "desc": "閉経後のホルモン減少により肌が薄くなり乾燥。"
+            },
+            {
+              "name": "深刻なボリューム喪失",
+              "desc": "顔の中央部分のくぼみが老けた印象を強調。"
+            }
+          ]
+        },
+        "treatments": {
+          "title": "50代治療哲学：包括的な若返り",
+          "items": [
+            {
+              "id": "facelift_mini",
+              "name": "ミニフェイスリフト",
+              "effect": "下顔面とネックラインの劇的な改善。最も効果的なタルミ解決策。",
+              "duration": "5〜10年",
+              "downtime": "14〜21日",
+              "costFrom": 5000000,
+              "costTo": 10000000,
+              "priceUnit": "per_treatment",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "fat_graft_full",
+              "name": "全顔脂肪移植",
+              "effect": "失われたボリュームを大規模に復元。",
+              "duration": "半永久",
+              "downtime": "10〜14日",
+              "costFrom": 4000000,
+              "costTo": 8000000,
+              "priceUnit": "per_treatment",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "strong_thread",
+              "name": "強力糸リフト",
+              "effect": "手術なしのリフティング代替案。",
+              "duration": "18〜24ヶ月",
+              "downtime": "5〜10日",
+              "costFrom": 2000000,
+              "costTo": 4000000,
+              "priceUnit": "per_treatment",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "regen_prp_stem",
+              "name": "PRP / 幹細胞 / リジュラン",
+              "effect": "薄くなった肌を強化し、再生力を回復。",
+              "cycle": "月1回 × 3〜5回",
+              "costFrom": 400000,
+              "costTo": 800000,
+              "priceUnit": "per_session",
+              "imageUrl": "https://images.unsplash.com/photo-1629380108567-a0b544204f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxza2luY2FyZSUyMHByb2R1Y3RzJTIwc3BhfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            }
+          ]
+        },
+        "skinTypes": {
+          "title": "肌タイプ別50代ケア",
+          "items": {
+            "dry": "乾燥肌：リフト後、集中的な再生 + ブースター療法。",
+            "oily": "脂性肌：リフティングと質感改善を組み合わせる。",
+            "sensitive": "敏感肌：手術よりも糸 + 再生を優先。"
+          }
+        },
+        "specialTips": {
+          "title": "50代のライフスタイル別ケア",
+          "subsections": [
+            {
+              "title": "活発な社会生活を送る方",
+              "tips": [
+                "手術を検討する価値あり—劇的な改善",
+                "回復期間を十分に確保"
+              ]
+            },
+            {
+              "title": "徐々に改善を望む方",
+              "tips": [
+                "糸リフト + 脂肪移植の段階的アプローチ",
+                "定期的な再生療法で結果を維持"
+              ]
+            }
+          ]
+        }
+      },
+      "60s": {
+        "heroImage": "/anti_ange_guide/hero/antiage_guide_hero_60s.jpg",
+        "title": "尊厳ある美しさ、自然な優雅さ",
+        "subtitle": "60代は若さを取り戻すのではなく、健康的で活気に満ちた外見を維持することです。",
+        "intro": "60代では骨と皮膚の老化がより顕著になります。目標は劇的な変化ではなく、自然で健康的な外見を維持することです。",
+        "concerns": {
+          "title": "60代の主要な悩み",
+          "items": [
+            {
+              "name": "進行したタルミとしわ",
+              "desc": "顔全体の皮膚の弛緩と深いしわ。"
+            },
+            {
+              "name": "肌の脆弱性",
+              "desc": "薄い肌は傷つきやすく、治癒が遅い。"
+            },
+            {
+              "name": "深刻なボリューム喪失",
+              "desc": "頬、フェイスライン、こめかみの著しいくぼみが老けた印象を強調。"
+            }
+          ]
+        },
+        "treatments": {
+          "title": "60代アプローチ：安全で保守的なケア",
+          "items": [
+            {
+              "id": "mini_facelift_neck",
+              "name": "ミニフェイスリフト / ネックリフト",
+              "effect": "最も効果的なタルミ解決策、健康状態が良ければ検討。",
+              "duration": "5〜8年",
+              "downtime": "14〜21日",
+              "costFrom": 5000000,
+              "costTo": 10000000,
+              "priceUnit": "per_treatment",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "conservative_filler",
+              "name": "保守的フィラー",
+              "effect": "過剰補正を避けて自然なボリューム復元。",
+              "duration": "12〜18ヶ月",
+              "costFrom": 3000000,
+              "costTo": 7000000,
+              "priceUnit": "per_treatment",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "regen_stemcell",
+              "name": "幹細胞 / PRP / リジュラン",
+              "effect": "薄い肌を厚くし、再生。",
+              "cycle": "月1回 × 3〜5回",
+              "costFrom": 500000,
+              "costTo": 1000000,
+              "priceUnit": "per_session",
+              "imageUrl": "https://images.unsplash.com/photo-1629380108567-a0b544204f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxza2luY2FyZSUyMHByb2R1Y3RzJTIwc3BhfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "laser_resurfacing_heavy",
+              "name": "積極的レーザーリサーフェシング",
+              "effect": "しわ、色素、質感を改善。",
+              "downtime": "7〜14日",
+              "costFrom": 500000,
+              "costTo": 1000000,
+              "priceUnit": "per_session",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            }
+          ]
+        },
+        "skinTypes": {
+          "title": "肌タイプ別60代ケア",
+          "items": {
+            "dry": "薄い肌をブースター/再生注射で強化。",
+            "oily": "リフティングとボリュームを組み合わせて肌を引き締め直す。",
+            "sensitive": "LED/低強度再生を優先。刺激を最小限に。"
+          }
+        },
+        "specialTips": {
+          "title": "60代のライフスタイル別ケア",
+          "subsections": [
+            {
+              "title": "活発な社会生活を送る方",
+              "tips": [
+                "イベントの3ヶ月前にリフティングを強化",
+                "継続的な再生を維持"
+              ]
+            },
+            {
+              "title": "退職後、ケアに時間をかけられる方",
+              "tips": [
+                "年1回の大きなリフト + 定期的な小さなメンテナンス",
+                "刺激の少ない習慣を重視"
+              ]
+            }
+          ]
+        }
+      },
+      "70s+": {
+        "heroImage": "/anti_ange_guide/hero/antiage_guide_hero_70s.jpg",
+        "title": "自然な優雅さと尊厳を称える時",
+        "subtitle": "無理な若さではなく、健康で尊厳ある美しさを目指します。",
+        "intro": "70代以降では、骨格と皮膚の老化が顕著です。積極的な逆転よりも、自然で安全な矯正と回復を優先します。",
+        "concerns": {
+          "title": "70代の主要な悩み",
+          "items": [
+            {
+              "name": "進行したタルミとしわ",
+              "desc": "顔全体の皮膚の弛緩と深いしわ。"
+            },
+            {
+              "name": "肌の脆弱性",
+              "desc": "薄い肌は傷つきやすく、治癒が遅い。"
+            },
+            {
+              "name": "深刻なボリューム喪失",
+              "desc": "頬、フェイスライン、こめかみの著しいくぼみが老けた印象を強調。"
+            }
+          ]
+        },
+        "treatments": {
+          "title": "70代アプローチ：自然で回復中心のケア",
+          "items": [
+            {
+              "id": "soft_thread",
+              "name": "ソフト糸リフト",
+              "effect": "積極的な引き上げよりも優しい輪郭矯正。",
+              "duration": "≈1年",
+              "costFrom": 1000000,
+              "costTo": 2000000,
+              "priceUnit": "per_treatment",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "light_filler_fat",
+              "name": "保守的フィラー / 少量脂肪移植",
+              "effect": "くぼんだ部分への最小限のボリューム復元。",
+              "duration": "12ヶ月以上",
+              "costFrom": 2000000,
+              "costTo": 4000000,
+              "priceUnit": "per_treatment",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "regen_soft",
+              "name": "リジュラン / PRP / 幹細胞",
+              "effect": "再生力を回復し、薄い肌を強化。",
+              "cycle": "月1回 × 3〜5回",
+              "costFrom": 300000,
+              "costTo": 700000,
+              "priceUnit": "per_session",
+              "imageUrl": "https://images.unsplash.com/photo-1629380108567-a0b544204f8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxza2luY2FyZSUyMHByb2R1Y3RzJTIwc3BhfGVufDF8fHx8MTc1OTI1MjM3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            },
+            {
+              "id": "noninvasive_led",
+              "name": "非侵襲性LED / 低エネルギーレーザー",
+              "effect": "敏感で脆弱な肌に安全。",
+              "cycle": "定期セッション",
+              "costFrom": 100000,
+              "costTo": 300000,
+              "priceUnit": "per_session",
+              "imageUrl": "https://images.unsplash.com/photo-1758653500124-e916873a84cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWVzdGhldGljJTIwdHJlYXRtZW50fGVufDF8fHx8MTc1OTI0ODc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+            }
+          ]
+        },
+        "skinTypes": {
+          "title": "肌タイプ別70代ケア",
+          "items": {
+            "dry": "ブースター/リジュランで保湿と再生を強化。",
+            "oily": "強いリフトよりも質感の改善に焦点を当てる。",
+            "sensitive": "副作用を最小限に抑える低刺激LED/再生ケアを使用。"
+          }
+        },
+        "specialTips": {
+          "title": "70代のライフスタイル別ケア",
+          "subsections": [
+            {
+              "title": "尊厳あるシニアライフのために",
+              "tips": [
+                "積極的なリフトよりも自然な改善を優先",
+                "定期的な肌の健康チェックアップ"
+              ]
+            },
+            {
+              "title": "安全第一戦略",
+              "tips": [
+                "施術前にライフスタイルと栄養",
+                "非侵襲的オプションを重視"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

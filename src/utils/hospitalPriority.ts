@@ -13,7 +13,12 @@ import { HospitalData } from "@/models/hospitalData.dto";
 // ============================================================================
 // 우선순위 설정
 // ============================================================================
-export const PRIORITY_CONFIG = {
+export const PRIORITY_CONFIG: {
+  topPriorityIds: string[];
+  alwaysLastIds: string[];
+  topPriorityProbability: number;
+  topPriorityCount: number;
+} = {
   // 최상위 노출 우선순위 병원 (확률적으로 상단 노출)
   topPriorityIds: [
     'a8aa77a6-57a0-4bbc-8d48-6a12305e8272', // 오르타의원
@@ -32,7 +37,7 @@ export const PRIORITY_CONFIG = {
 
   // 최상단에 배치할 우선순위 병원 개수
   topPriorityCount: 2,
-} as const;
+};
 
 // ============================================================================
 // Fisher-Yates shuffle algorithm

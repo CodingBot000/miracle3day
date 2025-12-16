@@ -11,6 +11,8 @@ import { ProgressBar } from '@/components/atoms/loading/ProgressBar';
 import CookieConsent from '@/components/template/CookieConsent';
 import { Toaster } from 'sonner';
 import { HeaderProvider } from '@/contexts/HeaderContext';
+import { SearchProvider } from '@/contexts/SearchContext';
+import GlobalSearchOverlay from '@/components/search/GlobalSearchOverlay';
 import Script from 'next/script';
 import GA4Scripts from '@/components/common/GA4Scripts';
 import GA4PageViewTracker from '@/components/common/GA4PageView';
@@ -157,15 +159,18 @@ export default async function LocaleLayout({
 
         <NextIntlClientProvider messages={messages}>
           <Providers>
-            <HeaderProvider>
-              <ScrollTop />
-              <div id="modal-root" />
+            <SearchProvider>
+              <HeaderProvider>
+                <ScrollTop />
+                <div id="modal-root" />
 
-              {children}
+                {children}
 
-              <CookieConsent />
-              <Toaster richColors position="top-center" duration={1500} />
-            </HeaderProvider>
+                <CookieConsent />
+                <Toaster richColors position="top-center" duration={1500} />
+                <GlobalSearchOverlay />
+              </HeaderProvider>
+            </SearchProvider>
           </Providers>
         </NextIntlClientProvider>
       </body>

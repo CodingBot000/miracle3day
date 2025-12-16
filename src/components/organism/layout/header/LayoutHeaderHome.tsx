@@ -5,7 +5,6 @@ import HeaderActions from "./HeaderActions";
 
 import { useState, useEffect } from "react";
 import { usePathname } from "@/i18n/routing";
-import SearchPanel from "../SearchPanel";
 import { useHeader } from "@/contexts/HeaderContext";
 import { useMobileModeStore } from "@/stores/useMobileModeStore";
 import { HEADER_HEIGHT } from "@/constants/common";
@@ -15,7 +14,6 @@ import { HEADER_HEIGHT } from "@/constants/common";
 //   ssr: false,
 // });
 const LayoutHeaderHome = () => {
-  const [showSearch, setShowSearch] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
   const { isTransparentMode } = useHeader();
   const { isMobileMode } = useMobileModeStore();
@@ -134,10 +132,7 @@ const LayoutHeaderHome = () => {
         )} */}
       </div>
     </header>
-
-{showSearch && <SearchPanel onClose={() => setShowSearch(false)} />}
     </>
-
   );
 };
 

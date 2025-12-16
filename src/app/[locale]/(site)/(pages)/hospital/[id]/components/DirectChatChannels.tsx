@@ -1,9 +1,10 @@
 "use client";
 
-import { HospitalDetailInfo } from "@/models/hospitalData.dto";
+import { HospitalDetailInfo, SNSChannelData } from "@/models/hospitalData.dto";
 import Image from "next/image";
 import React, { useState } from "react";
 import { parseSNSUrl, type SNSPlatform } from "@/utils/snsUtils";
+import { parseSNSChannelData, type ParsedSNSChannel } from "@/utils/snsChannelUtils";
 import CopyAlertModal from "@/components/template/modal/CopyAlertModal";
 import { useLocale } from "next-intl";
 import { MessageCircle } from "lucide-react";
@@ -17,9 +18,10 @@ interface ChannelItem {
   id: string;
   icon: React.ReactNode;
   label: string;
-  value: string;
+  value: SNSChannelData;
   platform: SNSPlatform;
   needsCopy?: boolean;
+  accounts?: ParsedSNSChannel[];
 }
 
 const DirectChatChannels = ({ hospitalDetails }: DirectChatChannelsProps) => {
@@ -128,14 +130,20 @@ const DirectChatChannels = ({ hospitalDetails }: DirectChatChannelsProps) => {
 
   // hospitalDetails에서 값이 있는 채널만 필터링
   const availableChannels: ChannelItem[] = channelDefinitions
-    .map(def => ({
-      ...def,
-      value: hospitalDetails[def.id as keyof HospitalDetailInfo] as string,
-    }))
-    .filter(channel => channel.value && channel.value.trim() !== '');
+    .map(def => {
+      const value = hospitalDetails[def.id as keyof HospitalDetailInfo] as SNSChannelData;
+      const accounts = parseSNSChannelData(value, locale);
 
-  const handleChannelClick = async (channel: ChannelItem) => {
-    const parsed = parseSNSUrl(channel.platform, channel.value);
+      return {
+        ...def,
+        value,
+        accounts,
+      };
+    })
+    .filter(channel => channel.accounts && channel.accounts.length > 0);
+
+  const handleChannelClick = async (channel: ChannelItem, account: ParsedSNSChannel) => {
+    const parsed = parseSNSUrl(channel.platform, account.url);
 
     // WeChat의 경우 ID 복사 및 모달 표시
     if (parsed.isIdOnly) {
@@ -148,6 +156,7 @@ const DirectChatChannels = ({ hospitalDetails }: DirectChatChannelsProps) => {
         // 추적: ID 복사
         trackEvent('external_link_click', {
           channel: channel.id,
+          locale: account.locale,
           action_type: 'copy_id',
         });
       } catch (err) {
@@ -161,6 +170,7 @@ const DirectChatChannels = ({ hospitalDetails }: DirectChatChannelsProps) => {
           // 추적: Instagram 앱 리다이렉트 시도
           trackEvent('external_link_click', {
             channel: channel.id,
+            locale: account.locale,
             link_url: parsed.url,
             action_type: 'link_click',
             app_redirect_attempt: true,
@@ -182,6 +192,7 @@ const DirectChatChannels = ({ hospitalDetails }: DirectChatChannelsProps) => {
       // 추적: 링크 클릭
       trackEvent('external_link_click', {
         channel: channel.id,
+        locale: account.locale,
         link_url: parsed.url,
         action_type: 'link_click',
       });
@@ -191,18 +202,19 @@ const DirectChatChannels = ({ hospitalDetails }: DirectChatChannelsProps) => {
     }
   };
 
-  const handleCopy = async (channel: ChannelItem, e: React.MouseEvent) => {
+  const handleCopy = async (channel: ChannelItem, account: ParsedSNSChannel, e: React.MouseEvent) => {
     e.stopPropagation();
-    const parsed = parseSNSUrl(channel.platform, channel.value);
+    const parsed = parseSNSUrl(channel.platform, account.url);
     try {
-      await navigator.clipboard.writeText(parsed.displayValue || channel.value);
-      setCopiedText(parsed.displayValue || channel.value);
+      await navigator.clipboard.writeText(parsed.displayValue || account.url);
+      setCopiedText(parsed.displayValue || account.url);
       setCopyMessage(isKorean ? labels.ko.copySuccess : labels.en.copySuccess);
       setShowCopyModal(true);
 
       // 추적: ID 복사
       trackEvent('external_link_click', {
         channel: channel.id,
+        locale: account.locale,
         action_type: 'copy_id',
       });
     } catch (err) {
@@ -244,55 +256,60 @@ const DirectChatChannels = ({ hospitalDetails }: DirectChatChannelsProps) => {
         >
           <div className="flex flex-col gap-1.5">
             {availableChannels.map((channel, index) => (
-              <div
-                key={channel.id}
-                className={`flex items-center gap-2 group transition-all duration-200 ${
-                  isExpanded
-                    ? 'opacity-100 translate-x-0'
-                    : 'opacity-0 -translate-x-2'
-                }`}
-                style={{
-                  transitionDelay: isExpanded ? `${index * 30}ms` : `${(availableChannels.length - index) * 20}ms`,
-                }}
-              >
-                <button
-                  onClick={() => handleChannelClick(channel)}
-                  className="flex-1 flex items-center gap-2 px-2 py-1.5 rounded-md hover:bg-gray-100 transition-colors"
-                >
-                  <div className="w-5 h-5 flex-shrink-0">
-                    {React.cloneElement(channel.icon as React.ReactElement, {
-                      className: "w-full h-full object-contain",
-                    })}
-                  </div>
-                  <span className="text-xs text-gray-700 truncate">
-                    {isKorean
-                      ? labels.ko.channelNames[channel.id as keyof typeof labels.ko.channelNames] || channel.label
-                      : labels.en.channelNames[channel.id as keyof typeof labels.en.channelNames] || channel.label}
-                  </span>
-                </button>
-                {(channel.needsCopy || channel.platform === 'wechat') && (
-                  <button
-                    onClick={(e) => handleCopy(channel, e)}
-                    className="p-1 rounded hover:bg-gray-200 transition-colors flex-shrink-0"
-                    title="Copy"
+              <React.Fragment key={channel.id}>
+                {channel.accounts?.map((account) => (
+                  <div
+                    key={`${channel.id}-${account.locale}`}
+                    className={`flex items-center gap-2 group transition-all duration-200 ${
+                      isExpanded
+                        ? 'opacity-100 translate-x-0'
+                        : 'opacity-0 -translate-x-2'
+                    }`}
+                    style={{
+                      transitionDelay: isExpanded ? `${index * 30}ms` : `${(availableChannels.length - index) * 20}ms`,
+                    }}
                   >
-                    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        d="M4 2H12C13.1046 2 14 2.89543 14 4V12C14 13.1046 13.1046 14 12 14H4C2.89543 14 2 13.1046 2 12V4C2 2.89543 2.89543 2 4 2Z"
-                        stroke="#6b7280"
-                        strokeWidth="1.5"
-                      />
-                      <path
-                        d="M10 6H14V10"
-                        stroke="#6b7280"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </button>
-                )}
-              </div>
+                    <button
+                      onClick={() => handleChannelClick(channel, account)}
+                      className="flex-1 flex items-center gap-2 px-2 py-1.5 rounded-md hover:bg-gray-100 transition-colors"
+                    >
+                      <div className="w-5 h-5 flex-shrink-0">
+                        {React.cloneElement(channel.icon as React.ReactElement, {
+                          className: "w-full h-full object-contain",
+                        })}
+                      </div>
+                      <span className="text-xs text-gray-700 truncate">
+                        {account.flagEmoji && `${account.flagEmoji} `}
+                        {isKorean
+                          ? labels.ko.channelNames[channel.id as keyof typeof labels.ko.channelNames] || channel.label
+                          : labels.en.channelNames[channel.id as keyof typeof labels.en.channelNames] || channel.label}
+                      </span>
+                    </button>
+                    {(channel.needsCopy || channel.platform === 'wechat') && (
+                      <button
+                        onClick={(e) => handleCopy(channel, account, e)}
+                        className="p-1 rounded hover:bg-gray-200 transition-colors flex-shrink-0"
+                        title="Copy"
+                      >
+                        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path
+                            d="M4 2H12C13.1046 2 14 2.89543 14 4V12C14 13.1046 13.1046 14 12 14H4C2.89543 14 2 13.1046 2 12V4C2 2.89543 2.89543 2 4 2Z"
+                            stroke="#6b7280"
+                            strokeWidth="1.5"
+                          />
+                          <path
+                            d="M10 6H14V10"
+                            stroke="#6b7280"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </React.Fragment>
             ))}
           </div>
         </div>

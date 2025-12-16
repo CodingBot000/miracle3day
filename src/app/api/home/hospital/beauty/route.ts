@@ -4,16 +4,7 @@ export const runtime = 'nodejs';
 import { TABLE_HOSPITAL } from "@/constants/tables";
 import { q } from "@/lib/db";
 import type { HospitalData } from "@/models/hospitalData.dto";
-
-// Fisher-Yates shuffle algorithm for randomizing array order
-function shuffleArray<T>(array: T[]): T[] {
-  const shuffled = [...array];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
-}
+import { shuffleAndApplyPriority } from "@/utils/hospitalPriority";
 
 export async function GET() {
   try {
@@ -67,8 +58,8 @@ export async function GET() {
       rows = await q<HospitalData>(fallbackSql);
     }
 
-    // Randomize the order of hospitals
-    const shuffledRows = shuffleArray(rows);
+    // Randomize the order of hospitals and apply priority rules
+    const shuffledRows = shuffleAndApplyPriority(rows);
 
     return Response.json(
       { data: shuffledRows },

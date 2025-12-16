@@ -4,6 +4,7 @@ import { Link } from "@/i18n/routing";
 import { MessageSquareText } from "lucide-react";
 import LanguageSwitcherNextIntl from "../LanguageSwitcherNextIntl";
 import AuthClient from "@/components/molecules/auth/AuthClient";
+import { SearchButton } from "@/components/search/SearchButton";
 
 interface HeaderActionsProps {
   /** 아이콘 색상 ('white' | 'black') */
@@ -26,6 +27,9 @@ export default function HeaderActions({
       <div className={`flex items-center gap-2 transition-colors duration-300 ${
         iconColor === 'white' ? 'text-white' : 'text-black'
       }`}>
+        {/* Search button */}
+        <SearchButton iconColor={iconColor === 'white' ? 'white' : 'currentColor'} />
+
         {/* community */}
         {!isMobileMode && (
           <Link href="/community" className="flex items-center">

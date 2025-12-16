@@ -8,6 +8,7 @@ import {
   Heart,
   Hospital,
   MessageSquareText,
+  Search,
 } from "lucide-react";
 import { ROUTE } from "@/router";
 import { usePathname } from "@/i18n/routing";
@@ -16,6 +17,7 @@ import { useNavigation } from "@/hooks/useNavigation";
 import { LocationEnum } from "@/constants";
 import clsx from "clsx";
 import AuthClient from "@/components/molecules/auth/AuthClient";
+import { useSearch } from "@/contexts/SearchContext";
 import { useMobileModeStore } from "@/stores/useMobileModeStore";
 import { useEffect, useState, useMemo } from "react";
 import { usePlatform } from "@/hooks/usePlatform";
@@ -42,6 +44,7 @@ const MenuMobile = () => {
   const { navigate } = useNavigation();
   const searchParams = useSearchParams();
   const pathname = usePathname();
+  const { openSearch } = useSearch();
   const locationNum = searchParams.get("locationNum") || LocationEnum.Apgujung;
   const { setMobileMode } = useMobileModeStore();
   const { isWebView, isClient } = usePlatform();
@@ -166,6 +169,14 @@ const MenuMobile = () => {
       >
         <Stethoscope className={clsx("w-6 h-6", getIconColor("procedure"))} />
         <span className={clsx("text-xs", getTextColor("procedure"))}>AI-Match</span>
+      </button>
+
+      <button
+        onClick={openSearch}
+        className="flex flex-col items-center gap-1 p-2 hover:opacity-80"
+      >
+        <Search className="w-6 h-6 text-gray-400" />
+        <span className="text-xs text-gray-400">Search</span>
       </button>
 
       <button

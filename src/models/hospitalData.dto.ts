@@ -1,3 +1,12 @@
+export type SNSChannelData = {
+  default: string;
+  en?: string;
+  ja?: string;
+  'zh-TW'?: string;
+  'zh-CN'?: string;
+  ko?: string;
+} | null;
+
 export interface FullHospital {
   id: number;
   id_uuid: string;
@@ -186,15 +195,15 @@ export type HospitalDetail = Pick<
     has_anesthesiologist: number;
     specialist_count: number;
     email: string;
-    kakao_talk: string;
-    line: string;
-    we_chat: string;
-    whats_app: string;
-    telegram: string;
-    facebook_messenger: string;
-    instagram: string;
-    tiktok: string;
-    youtube: string;
+    kakao_talk: SNSChannelData;
+    line: SNSChannelData;
+    we_chat: SNSChannelData;
+    whats_app: SNSChannelData;
+    telegram: SNSChannelData;
+    facebook_messenger: SNSChannelData;
+    instagram: SNSChannelData;
+    tiktok: SNSChannelData;
+    youtube: SNSChannelData;
     other_channel: string;
     sns_content_agreement: number;
     available_languages: string[];

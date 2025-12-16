@@ -157,15 +157,16 @@ const HospitalConsultationButton = ({ hospitalId, hospitalDetails }: HospitalCon
   };
 
   // Direct Chat 채널이 있는지 확인
-  const hasDirectChatChannels = 
-    (hospitalDetails.instagram && hospitalDetails.instagram.trim() !== '') ||
-    (hospitalDetails.facebook_messenger && hospitalDetails.facebook_messenger.trim() !== '') ||
-    (hospitalDetails.we_chat && hospitalDetails.we_chat.trim() !== '') ||
-    (hospitalDetails.whats_app && hospitalDetails.whats_app.trim() !== '') ||
-    (hospitalDetails.tiktok && hospitalDetails.tiktok.trim() !== '') ||
-    (hospitalDetails.line && hospitalDetails.line.trim() !== '') ||
-    (hospitalDetails.kakao_talk && hospitalDetails.kakao_talk.trim() !== '') ||
-    (hospitalDetails.telegram && hospitalDetails.telegram.trim() !== '') ||
+  const hasDirectChatChannels =
+    hospitalDetails.instagram !== null ||
+    hospitalDetails.facebook_messenger !== null ||
+    hospitalDetails.we_chat !== null ||
+    hospitalDetails.whats_app !== null ||
+    hospitalDetails.tiktok !== null ||
+    hospitalDetails.line !== null ||
+    hospitalDetails.kakao_talk !== null ||
+    hospitalDetails.telegram !== null ||
+    hospitalDetails.youtube !== null ||
     (hospitalDetails.other_channel && hospitalDetails.other_channel.trim() !== '');
 
   return (

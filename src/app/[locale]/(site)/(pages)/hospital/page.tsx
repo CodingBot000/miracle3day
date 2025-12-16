@@ -6,6 +6,7 @@ import HospitalListNewDesign from "./components/HospitalListNewDesign";
 import { TABLE_HOSPITAL } from "@/constants/tables";
 import { q } from "@/lib/db";
 import type { HospitalData } from "@/models/hospitalData.dto";
+import { shuffleAndApplyPriority } from "@/utils/hospitalPriority";
 
 type Props = {
   searchParams: {
@@ -47,7 +48,6 @@ async function getHospitalListAll() {
         show
       FROM ${TABLE_HOSPITAL}
       WHERE show = true
-      ORDER BY created_at DESC
     `;
     const rows = await q<HospitalData>(sql);
     return rows;
@@ -104,7 +104,6 @@ async function getHospitalListByTreatment(
       INNER JOIN treatment_product tp ON h.id_uuid = tp.id_uuid_hospital
       WHERE (${whereConditions})
       AND h.show = true
-      ORDER BY h.created_at DESC
     `;
 
     const rows = await q<HospitalData>(sql);
@@ -139,7 +138,6 @@ async function getHospitalListByLanguages() {
       INNER JOIN hospital_details hd ON h.id_uuid = hd.id_uuid_hospital
       WHERE cardinality(array_remove(hd.available_languages, 'ko')) >= 3
       AND h.show = true
-      ORDER BY h.created_at DESC
     `;
 
     const rows = await q<HospitalData>(sql);
@@ -170,17 +168,20 @@ const HospitalListPage = async ({ searchParams }: Props) => {
     hospitalData = await getHospitalListAll();
   }
 
+  // Randomize the order of hospitals and apply priority rules
+  const shuffledHospitalData = shuffleAndApplyPriority(hospitalData);
+
   return (
     <main className="min-h-screen bg-white">
       {/* 선택된 시술 정보 표시 (fallback이 아닌 경우만) */}
       {treatmentId && !isFallback && (
         <div className="px-4 py-3 bg-gradient-to-r from-[#FDF5F0] to-[#F8E8E0] border-b border-[#E8B4A0]/30">
           <p className="text-sm text-[#8B4513]">
-            <span className="font-medium">&quot;{treatmentNameKo || treatmentId}&quot;</span> 시술 가능 병원 <span className="font-bold">{hospitalData.length}</span>개
+            <span className="font-medium">&quot;{treatmentNameKo || treatmentId}&quot;</span> 시술 가능 병원 <span className="font-bold">{shuffledHospitalData.length}</span>개
           </p>
         </div>
       )}
-      <HospitalListNewDesign initialData={hospitalData} isFallback={isFallback} />
+      <HospitalListNewDesign initialData={shuffledHospitalData} isFallback={isFallback} />
     </main>
   );
 };

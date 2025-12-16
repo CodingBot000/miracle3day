@@ -101,63 +101,63 @@ const HospitalContactInfo = ({ hospitalDetails }: HospitalContactInfoProps) => {
     {
       icon: <Image src="/icons/icon_sns_instagram.png" alt="Instagram" width={16} height={16} />,
       label: "instagram",
-      value: hospitalDetails.instagram,
+      value: hospitalDetails.instagram?.default || '',
       type: "link",
       platform: "instagram"
     },
     {
       icon: <Image src="/icons/icon_sns_facebook.png" alt="Facebook Messenger" width={16} height={16} />,
       label: "facebook_messenger",
-      value: hospitalDetails.facebook_messenger,
+      value: hospitalDetails.facebook_messenger?.default || '',
       type: "link",
       platform: "facebook"
     },
     {
       icon: <Image src="/icons/icon_sns_we_chat.png" alt="WeChat" width={16} height={16} />,
       label: "we_chat",
-      value: hospitalDetails.we_chat,
+      value: hospitalDetails.we_chat?.default || '',
       type: "link",
       platform: "wechat"
     },
     {
       icon: <Image src="/icons/icon_sns_whats_app.jpg" alt="WhatsApp" width={16} height={16} />,
       label: "whats_app",
-      value: hospitalDetails.whats_app,
+      value: hospitalDetails.whats_app?.default || '',
       type: "link",
       platform: "whatsapp"
     },
     {
       icon: <Image src="/icons/icon_sns_ticktok.png" alt="TikTok" width={16} height={16} />,
       label: "tiktok",
-      value: hospitalDetails.tiktok,
+      value: hospitalDetails.tiktok?.default || '',
       type: "link",
       platform: "tiktok"
     },
     {
       icon: <Image src="/icons/icon_sns_youtube.svg" alt="YouTube" width={16} height={16} />,
       label: "youtube",
-      value: hospitalDetails.youtube,
+      value: hospitalDetails.youtube?.default || '',
       type: "link",
       platform: "youtube"
     },
     {
       icon: <Image src="/icons/icon_sns_line.png" alt="Line" width={16} height={16} />,
       label: "line",
-      value: hospitalDetails.line,
+      value: hospitalDetails.line?.default || '',
       type: "link",
       platform: "line"
     },
     {
       icon: <Image src="/icons/icon_sns_kakaotalk.png" alt="KakaoTalk" width={16} height={16} />,
       label: "kakao_talk",
-      value: hospitalDetails.kakao_talk,
+      value: hospitalDetails.kakao_talk?.default || '',
       type: "link",
       platform: "kakao_talk"
     },
     {
       icon: <Image src="/icons/icon_sns_facebook.png" alt="Telegram" width={16} height={16} />,
       label: "telegram",
-      value: hospitalDetails.telegram,
+      value: hospitalDetails.telegram?.default || '',
       type: "link",
       platform: "telegram"
     },

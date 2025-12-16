@@ -36,13 +36,26 @@ export default function ClinicListForHome() {
 
   if (loading) {
     return (
-      <div className="grid grid-cols-2 gap-4 px-4 py-10 xl:grid-cols-4">
-        {Array.from({ length: 4 }).map((_, index) => (
-          <div
-            key={index}
-            className="h-48 animate-pulse rounded-xl border border-white/40 bg-white/40 backdrop-blur-sm"
-          />
-        ))}
+      <div className="w-full px-4">
+        <div className="w-full max-w-[480px] xl:max-w-none mx-auto">
+          <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
+            {Array.from({ length: 4 }).map((_, index) => (
+              <div
+                key={index}
+                className="w-full animate-pulse"
+              >
+                {/* 이미지 영역 스켈레톤 */}
+                <div className="aspect-[4/3] w-full bg-gray-200 rounded-xl mb-3" />
+
+                {/* 텍스트 영역 스켈레톤 */}
+                <div className="space-y-2">
+                  <div className="h-4 w-3/4 bg-gray-200 rounded" />
+                  <div className="h-3 w-1/2 bg-gray-200 rounded" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     );
   }

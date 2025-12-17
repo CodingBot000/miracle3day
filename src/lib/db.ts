@@ -1,17 +1,19 @@
 import { Pool } from "pg";
 import type { QueryResult, QueryResultRow } from "pg";
 
-const createPool = () => {
-  // Remove surrounding quotes from password if present
-  const password = process.env.PGPASSWORD?.replace(/^['"]|['"]$/g, '');
+const sanitizePassword = (password?: string) => {
+  if (!password) return password;
+  if (password.startsWith("'") && password.endsWith("'")) {
+    return password.slice(1, -1);
+  }
+  if (password.startsWith('"') && password.endsWith('"')) {
+    return password.slice(1, -1);
+  }
+  return password;
+};
 
-  // log.debug('[DB] Creating pool with config:');
-  // log.debug('  Host:', process.env.PGHOST);
-  // log.debug('  Port:', process.env.PGPORT);
-  // log.debug('  Database:', process.env.PGDATABASE);
-  // log.debug('  User:', process.env.PGUSER);
-  // log.debug('  Password length:', password?.length);
-  // log.debug('  SSL:', process.env.PGSSL);
+const createPool = () => {
+  const password = sanitizePassword(process.env.PGPASSWORD);
 
   return new Pool({
     host: process.env.PGHOST,

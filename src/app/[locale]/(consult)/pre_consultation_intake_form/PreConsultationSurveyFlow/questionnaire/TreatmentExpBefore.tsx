@@ -149,12 +149,12 @@ const TreatmentExpBeforeStep: React.FC<TreatmentExpBeforeStepProps> = ({ data, o
       {/* Side Effects Description */}
       <div>
         <Label className="text-lg font-medium text-gray-800 mb-4 block">
-        {locale === 'ko' ? "선택한 시술 후 부작용이 있었다면 아래에 설명해주세요. (선택 사항)" : "If you have experienced any side effects after the selected procedure(s), please describe them below. (Optional)"}
+          {getLocalizedText(questions.pastTreatmentsLabels.sideEffectsLabel, locale)}
         </Label>
         <Textarea
           value={tempSideEffects}
           onChange={(e) => handleSideEffectsChange(e.target.value)}
-          placeholder="Share any specific concerns, expectations, or questions you have about treatment..."
+          placeholder={getLocalizedText(questions.pastTreatmentsLabels.sideEffectsPlaceholder, locale)}
           className={`border-rose-200 focus:border-rose-400 focus:ring-rose-400/20 min-h-[120px] ${
             !hasPastTreatments ? 'opacity-50 cursor-not-allowed' : ''
           }`}
@@ -165,13 +165,12 @@ const TreatmentExpBeforeStep: React.FC<TreatmentExpBeforeStepProps> = ({ data, o
       {/* Additional Notes */}
       <div>
         <Label className="text-lg font-medium text-gray-800 mb-4 block">
-          {locale === 'ko' ? "다른 사항이 있으신가요? (선택 사항)" : "Anything else you'd like us to know? (Optional)"}
+          {getLocalizedText(questions.pastTreatmentsLabels.additionalNotesLabel, locale)}
         </Label>
         <Textarea
           value={pastTreatments.additionalNotes || ''}
           onChange={(e) => handleNotesChange(e.target.value)}
-          placeholder=
-          {locale === 'ko' ? "시술에 대한 그외 걱정, 기대하는바 혹은 질문이 있으신가요? 아래에 설명해주세요." : "Share any specific concerns, expectations, or questions you have about treatment..."}
+          placeholder={getLocalizedText(questions.pastTreatmentsLabels.additionalNotesPlaceholder, locale)}
           className="border-rose-200 focus:border-rose-400 focus:ring-rose-400/20 min-h-[120px]"
         />
       </div>

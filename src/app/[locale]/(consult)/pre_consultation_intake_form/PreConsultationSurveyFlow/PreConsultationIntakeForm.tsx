@@ -3,6 +3,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import { useConsultFormStorage } from '../../common/formStorage';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 
 import { useToast } from '@/hooks/use-toast';
 import PageHeader from '@/app/[locale]/(consult)/pre_consultation_intake_form/PageHeader';
@@ -11,6 +12,7 @@ import { preConsultationSteps } from '@/app/[locale]/(consult)/pre_consultation_
 import { intakeForm } from '@/app/[locale]/(consult)/pre_consultation_intake_form/pre_consultation_intake/form-definition_pre_con_base';
 import { useLocale } from 'next-intl';
 import { getLocalizedText } from '@/utils/i18n';
+import ConsultationGuidePage from './ConsultationGuidePage';
 
 
 import {
@@ -60,6 +62,7 @@ const PreConsultationIntakeForm: React.FC = () => {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [isValideSendForm, setIsValideSendForm] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [showGuideModal, setShowGuideModal] = useState(false);
 
   const { toast } = useToast();
   const { loadStoredData, saveData } = useConsultFormStorage('preConsult');
@@ -238,11 +241,12 @@ const PreConsultationIntakeForm: React.FC = () => {
     <div className="min-h-screen">
       
       {/* Header */}
-      <PageHeader 
-        currentStep={currentStep} 
-        totalSteps={preConsultationSteps.length} 
+      <PageHeader
+        currentStep={currentStep}
+        totalSteps={preConsultationSteps.length}
         // onBack={currentStep > 0 ? handlePrevious : undefined}
         onBack={handlePrevious}
+        onOpenGuide={() => setShowGuideModal(true)}
       />
 
       {/* Main Content */}
@@ -403,7 +407,7 @@ const PreConsultationIntakeForm: React.FC = () => {
         </div>
       </div>
 
-      
+
       {/* Preview Dialog */}
       <PreviewReport
         open={isPreviewOpen}
@@ -481,6 +485,16 @@ const PreConsultationIntakeForm: React.FC = () => {
           // }
         }}
       />
+
+      {/* Guide Modal */}
+      <Dialog open={showGuideModal} onOpenChange={setShowGuideModal}>
+        <DialogContent className="max-w-md p-0 overflow-hidden [&>button]:hidden max-h-[90vh] overflow-y-auto">
+          <ConsultationGuidePage
+            locale={locale}
+            onStart={() => setShowGuideModal(false)}
+          />
+        </DialogContent>
+      </Dialog>
 
     </div>
   );

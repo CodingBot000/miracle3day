@@ -42,7 +42,7 @@ interface UserInfo {
   ageRange: string;
   gender: string;
   email: string;
-  phoneNumber: number;
+  phoneNumber: string | null;
   country: string;
   messengers: any[];
 }

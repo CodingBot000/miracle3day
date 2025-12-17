@@ -55,24 +55,24 @@ export const LanguageSwitcherNextIntl = ({ iconColor = 'black' }: LanguageSwitch
             width={24}
             height={24}
             className={cn(
-              "cursor-pointer transition-all duration-300 ease-in-out hover:opacity-70",
+              "cursor-pointer transition-all duration-300 ease-in-out hover:opacity-70 w-4 h-4 md:w-6 md:h-6",
               iconColor === 'white' ? 'brightness-0 invert' : '',
               isPending && 'opacity-50'
             )}
           />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-[150px] z-[250]">
+      <DropdownMenuContent className="w-[120px] md:w-[150px] z-[250] text-xs md:text-sm">
         {locales.map((loc) => (
           <DropdownMenuItem
             key={loc}
             onClick={() => handleLanguageChange(loc)}
             className={cn(
-              "flex items-center gap-2 cursor-pointer",
+              "flex items-center gap-1 md:gap-2 cursor-pointer text-xs md:text-sm py-1 md:py-2",
               loc === locale && "bg-muted text-primary font-semibold"
             )}
           >
-            {loc === locale && <Check className="w-4 h-4" />}
+            {loc === locale && <Check className="w-3 h-3 md:w-4 md:h-4" />}
             {languageLabels[loc]}
           </DropdownMenuItem>
         ))}

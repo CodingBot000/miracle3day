@@ -81,6 +81,17 @@
   .overflow-x-auto {
     -webkit-overflow-scrolling: touch;
   }
+
+  /* Override react-day-picker disabled date styling */
+  .rdp-disabled {
+    color: rgb(156, 163, 175) !important; /* gray-400 */
+    opacity: 0.4 !important;
+    cursor: not-allowed !important;
+  }
+
+  .rdp-disabled:hover {
+    background-color: transparent !important;
+  }
 }
 
 

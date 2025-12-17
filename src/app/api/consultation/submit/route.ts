@@ -22,7 +22,8 @@ export async function POST(request: NextRequest) {
     const privateAgeRange = data.demographicsBasic?.age_group || data.userInfo?.ageRange || null;
     const privateGender = data.demographicsBasic?.gender || data.userInfo?.gender || null;
     const country = data.demographicsBasic?.country_of_residence || data.userInfo?.country || null;
-    const phoneNumber = data.userInfo?.phoneNumber || null;
+    // phoneNumber를 문자열로 변환 (numeric 타입 에러 방지)
+    const phoneNumber = data.userInfo?.phoneNumber ? String(data.userInfo.phoneNumber) : null;
 
     // Messengers 처리
     const messengers = data.userInfo?.messengers?.filter((msg: any) => msg.value?.trim() !== '').map((msg: any) => ({
@@ -58,7 +59,8 @@ export async function POST(request: NextRequest) {
     const visitPathOther = data.visitPath?.otherPath || null;
 
     // Demographics Basic (race/ethnic_background)
-    const race = data.demographicsBasic?.ethnic_background || null;
+    // userInfo.ethnicBackground에서도 fallback으로 읽음
+    const race = data.demographicsBasic?.ethnic_background || data.userInfo?.ethnicBackground || null;
 
     // Image paths
     const imagePaths = data.imagePaths || [];

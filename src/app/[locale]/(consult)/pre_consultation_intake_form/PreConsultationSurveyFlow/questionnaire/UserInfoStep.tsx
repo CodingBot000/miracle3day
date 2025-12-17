@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { CountryCode } from '@/models/country-code.dto';
@@ -10,6 +10,7 @@ import { ChoiceCard } from '@/components/molecules/card/ChoiceCard';
 import { questions } from '@/app/[locale]/(consult)/pre_consultation_intake_form/pre_consultation_intake/form-definition_pre_con_questions';
 import { useLocale } from 'next-intl';
 import { getLocalizedText } from '@/utils/i18n';
+import { isValidEmail } from '@/utils/validators';
 
 interface UserInfoStepProps {
   data: any;
@@ -35,7 +36,34 @@ const UserInfo: React.FC<UserInfoStepProps> = ({ data, onDataChange }) => {
   // 국제번호 prefix 계산 (nation이 있으면 +phone_code, 없으면 기본값)
   const phonePrefix = nation?.phone_code ? `+${nation.phone_code}` : undefined;
 
+  // 이메일 유효성 검사 함수
+  const validateEmail = (email: string): string | undefined => {
+    if (!email || email.trim() === '') {
+      return getLocalizedText(emailQuestion?.validationErrors?.required, locale);
+    }
+
+    if (!isValidEmail(email)) {
+      return getLocalizedText(emailQuestion?.validationErrors?.invalid, locale);
+    }
+
+    return undefined;
+  };
+
+  // 초기 렌더링 시 이메일 유효성 검사
+  useEffect(() => {
+    if (userInfo.email) {
+      const error = validateEmail(userInfo.email);
+      setEmailError(error);
+    }
+  }, []); // 빈 배열: 컴포넌트 마운트 시 1회만 실행
+
   const handleChange = (field: string, value: string | number | undefined) => {
+    // 이메일 필드인 경우 유효성 검사 수행
+    if (field === 'email' && typeof value === 'string') {
+      const error = validateEmail(value);
+      setEmailError(error);
+    }
+
     onDataChange({
       ...data,
       userInfo: {

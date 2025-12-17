@@ -1111,6 +1111,40 @@ export const questions = {
       },
     },
   ],
+
+  // ─────────────────────────────────────────────────────────
+  // Past Treatments Form Labels
+  // ─────────────────────────────────────────────────────────
+  pastTreatmentsLabels: {
+    sideEffectsLabel: {
+      ko: "선택한 시술 후 부작용이 있었다면 아래에 설명해주세요. (선택 사항)",
+      en: "If you have experienced any side effects after the selected procedure(s), please describe them below. (Optional)",
+      ja: "選択した施術後に副作用があった場合は、以下に説明してください。（任意）",
+      "zh-CN": "如果您在所选治疗后出现任何副作用，请在下方描述。（可选）",
+      "zh-TW": "如果您在所選治療後出現任何副作用，請在下方描述。（可選）"
+    },
+    sideEffectsPlaceholder: {
+      ko: "시술 후 겪은 부작용이나 불편한 증상이 있다면 자세히 적어주세요...",
+      en: "Share any specific side effects or uncomfortable symptoms you experienced after the treatment...",
+      ja: "施術後に経験した副作用や不快な症状があれば詳しくお書きください...",
+      "zh-CN": "请分享您在治疗后经历的任何特定副作用或不适症状...",
+      "zh-TW": "請分享您在治療後經歷的任何特定副作用或不適症狀..."
+    },
+    additionalNotesLabel: {
+      ko: "다른 사항이 있으신가요? (선택 사항)",
+      en: "Anything else you'd like us to know? (Optional)",
+      ja: "他に何かございますか？（任意）",
+      "zh-CN": "还有其他您想让我们知道的吗？（可选）",
+      "zh-TW": "還有其他您想讓我們知道的嗎？（可選）"
+    },
+    additionalNotesPlaceholder: {
+      ko: "시술에 대한 그외 걱정, 기대하는바 혹은 질문이 있으신가요? 아래에 설명해주세요.",
+      en: "Share any specific concerns, expectations, or questions you have about treatment...",
+      ja: "施術に関するその他の懸念、期待、または質問があればお書きください...",
+      "zh-CN": "请分享您对治疗的任何具体担忧、期望或问题...",
+      "zh-TW": "請分享您對治療的任何具體擔憂、期望或問題..."
+    }
+  },
 demographicsBasic: [
     {
       "id": "age_group",
@@ -1427,6 +1461,22 @@ demographicsBasic: [
         "ja": "メールアドレスを入力してください",
         "zh-CN": "输入您的电子邮箱",
         "zh-TW": "輸入您的電子郵箱"
+      },
+      "validationErrors": {
+        "required": {
+          "ko": "이메일 주소를 입력해주세요.",
+          "en": "Please enter your email address.",
+          "ja": "メールアドレスを入力してください。",
+          "zh-CN": "请输入您的电子邮件地址。",
+          "zh-TW": "請輸入您的電子郵件地址。"
+        },
+        "invalid": {
+          "ko": "올바른 이메일 형식이 아닙니다. (예: example@email.com)",
+          "en": "Invalid email format. (e.g., example@email.com)",
+          "ja": "正しいメール形式ではありません。（例：example@email.com）",
+          "zh-CN": "电子邮件格式无效。（例：example@email.com）",
+          "zh-TW": "電子郵件格式無效。（例：example@email.com）"
+        }
       }
     },
     {

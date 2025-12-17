@@ -3,15 +3,17 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
+import { Calendar as CalendarComponent } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Plus, X, Calendar, Clock, Globe } from 'lucide-react';
 import { useLocale } from 'next-intl';
-import DatePicker, { registerLocale } from 'react-datepicker';
+import { setHours, setMinutes, format } from 'date-fns';
 import { ko } from 'date-fns/locale/ko';
 import { enUS } from 'date-fns/locale/en-US';
-import { setHours, setMinutes } from 'date-fns';
-import 'react-datepicker/dist/react-datepicker.css';
 import { questions } from '@/app/[locale]/(consult)/pre_consultation_intake_form/pre_consultation_intake/form-definition_pre_con_questions';
 import { getLocalizedText } from '@/utils/i18n';
+import { cn } from '@/lib/utils';
 import {
   EnhancedTimeSlot,
   createEnhancedTimeSlot,
@@ -22,10 +24,6 @@ import {
   hasDuplicateUTCTime,
   parseEnhancedTimeSlot,
 } from '@/utils/timezoneHelpers';
-
-// Register locales
-registerLocale('ko', ko);
-registerLocale('en', enUS);
 
 // Legacy interface for backward compatibility
 export interface VideoConsultTimeSlot {
@@ -54,9 +52,29 @@ const VideoConsultScheduleStep: React.FC<VideoConsultScheduleStepProps> = ({ dat
     return [];
   });
 
-  const [selectedDates, setSelectedDates] = useState<(Date | null)[]>([null]);
-  const [selectedTimes, setSelectedTimes] = useState<(Date | null)[]>([null]);
+  const [selectedDates, setSelectedDates] = useState<(Date | null)[]>(() => {
+    if (data.videoConsultSlotsEnhanced && data.videoConsultSlotsEnhanced.length > 0) {
+      return data.videoConsultSlotsEnhanced.map((slot: EnhancedTimeSlot) => {
+        // Parse the date from the slot (format: 'YYYY-MM-DD')
+        const dateParts = slot.date.split('-');
+        return new Date(parseInt(dateParts[0]), parseInt(dateParts[1]) - 1, parseInt(dateParts[2]));
+      });
+    }
+    return [null];
+  });
+
+  const [selectedTimes, setSelectedTimes] = useState<(Date | null)[]>(() => {
+    if (data.videoConsultSlotsEnhanced && data.videoConsultSlotsEnhanced.length > 0) {
+      return data.videoConsultSlotsEnhanced.map((slot: EnhancedTimeSlot) => {
+        // Parse the time from the slot (format: 'HH:mm')
+        const [hours, minutes] = slot.startTime.split(':').map(Number);
+        return setMinutes(setHours(new Date(), hours), minutes);
+      });
+    }
+    return [null];
+  });
   const [errors, setErrors] = useState<Record<number, string>>({});
+  const [openPopovers, setOpenPopovers] = useState<Record<number, boolean>>({});
 
   // Generate availability text for user's timezone
   const availabilityText = useMemo(
@@ -79,58 +97,100 @@ const VideoConsultScheduleStep: React.FC<VideoConsultScheduleStepProps> = ({ dat
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slots]);
 
-  const handleDateChange = (index: number, date: Date | null) => {
-    const newSelectedDates = [...selectedDates];
-    newSelectedDates[index] = date;
-    setSelectedDates(newSelectedDates);
+  const handleDateChange = (index: number, date: Date | undefined) => {
+    console.log('[handleDateChange] Called:', { index, date, currentDate: selectedDates[index], currentTime: selectedTimes[index] });
 
-    // Reset time when date changes
-    const newSelectedTimes = [...selectedTimes];
-    newSelectedTimes[index] = null;
-    setSelectedTimes(newSelectedTimes);
+    // Capture current state values before any updates
+    const currentDate = selectedDates[index];
+    const currentTime = selectedTimes[index];
+
+    // Check if same date is being selected (before handling undefined)
+    const isSameDate = currentDate && date &&
+      currentDate.getFullYear() === date.getFullYear() &&
+      currentDate.getMonth() === date.getMonth() &&
+      currentDate.getDate() === date.getDate();
+
+    // IMPORTANT: If same date is selected again, Calendar sends undefined (toggle behavior)
+    // We need to detect this and just close the popover without clearing the date
+    // This applies even if time is not selected yet (currentTime can be null)
+    if (!date && currentDate) {
+      console.log('[handleDateChange] Detected Calendar toggle (same date re-click). Preserving date selection.');
+      setOpenPopovers(prev => ({ ...prev, [index]: false }));
+      return;
+    }
+
+    // Update date state
+    setSelectedDates(prev => {
+      const updated = [...prev];
+      updated[index] = date || null;
+      return updated;
+    });
+
+    // Only reset time if date actually changed
+    if (!isSameDate) {
+      setSelectedTimes(prev => {
+        const updated = [...prev];
+        updated[index] = null;
+        return updated;
+      });
+    }
+
+    // Close popover
+    setOpenPopovers(prev => ({ ...prev, [index]: false }));
 
     // Update or remove slot
     if (!date) {
-      // Remove slot if date is cleared
+      // Remove slot if date is cleared (but not from same-date re-click)
+      console.log('[handleDateChange] Removing slot because date is cleared');
       removeSlotByIndex(index);
-    } else if (selectedTimes[index]) {
-      // Update slot if time is already selected
-      updateSlot(index, date, selectedTimes[index]!);
+    } else if (!isSameDate && currentTime) {
+      // Date changed and time exists - update slot with new date
+      console.log('[handleDateChange] Updating slot with new date');
+      const combinedDateTime = setMinutes(
+        setHours(date, currentTime.getHours()),
+        currentTime.getMinutes()
+      );
+      updateSlot(index, date, combinedDateTime);
+    } else {
+      console.log('[handleDateChange] No action needed - slot preserved');
     }
 
     clearError(index);
   };
 
-  const handleTimeChange = (index: number, time: Date | null) => {
+  const handleTimeChange = (index: number, timeString: string) => {
+    if (!selectedDates[index]) return;
+
+    // Parse time string (HH:mm)
+    const [hours, minutes] = timeString.split(':').map(Number);
+    const time = setMinutes(setHours(new Date(), hours), minutes);
+
     const newSelectedTimes = [...selectedTimes];
     newSelectedTimes[index] = time;
     setSelectedTimes(newSelectedTimes);
 
-    if (selectedDates[index] && time) {
-      // Combine date and time
-      const combinedDateTime = setMinutes(
-        setHours(selectedDates[index]!, time.getHours()),
-        time.getMinutes()
-      );
+    // Combine date and time
+    const combinedDateTime = setMinutes(
+      setHours(selectedDates[index]!, time.getHours()),
+      time.getMinutes()
+    );
 
-      // Check if within availability
-      if (!isWithinDoctorAvailability(combinedDateTime, userTimezone)) {
-        setErrors(prev => ({
-          ...prev,
-          [index]: getLocalizedText(
-            {
-              ko: '선택한 시간은 상담 가능 시간이 아닙니다.',
-              en: 'Selected time is outside consultation hours.',
-            },
-            locale
-          ),
-        }));
-        return;
-      }
-
-      updateSlot(index, selectedDates[index]!, combinedDateTime);
+    // Check if within availability
+    if (!isWithinDoctorAvailability(combinedDateTime, userTimezone)) {
+      setErrors(prev => ({
+        ...prev,
+        [index]: getLocalizedText(
+          {
+            ko: '선택한 시간은 상담 가능 시간이 아닙니다.',
+            en: 'Selected time is outside consultation hours.',
+          },
+          locale
+        ),
+      }));
+      return;
     }
 
+    updateSlot(index, selectedDates[index]!, combinedDateTime);
     clearError(index);
   };
 
@@ -214,26 +274,41 @@ const VideoConsultScheduleStep: React.FC<VideoConsultScheduleStepProps> = ({ dat
     return isDateAvailable(date, userTimezone);
   };
 
-  // Filter time: only allow times within doctor availability
-  const filterTime = (index: number) => (time: Date): boolean => {
-    if (!selectedDates[index]) return false;
-
-    const combinedDateTime = setMinutes(
-      setHours(selectedDates[index]!, time.getHours()),
-      time.getMinutes()
-    );
-
-    return isWithinDoctorAvailability(combinedDateTime, userTimezone);
-  };
-
-  // Get min/max time for a specific date
-  const getTimeRange = (index: number) => {
-    if (!selectedDates[index]) return { minTime: null, maxTime: null };
+  // Generate time options for a specific date
+  const generateTimeOptions = (index: number): string[] => {
+    if (!selectedDates[index]) return [];
 
     const range = getAvailableTimesForDate(selectedDates[index]!, userTimezone);
-    if (!range) return { minTime: null, maxTime: null };
+    if (!range) return [];
 
-    return { minTime: range.startTime, maxTime: range.endTime };
+    const options: string[] = [];
+    const date = selectedDates[index]!;
+
+    // Generate 30-minute intervals from start to end
+    let current = new Date(date);
+    current.setHours(range.startTime.getHours(), range.startTime.getMinutes(), 0, 0);
+
+    const end = new Date(date);
+    end.setHours(range.endTime.getHours(), range.endTime.getMinutes(), 0, 0);
+
+    while (current <= end) {
+      const timeString = format(current, 'HH:mm');
+
+      // Check if this time is within doctor availability
+      const combinedDateTime = setMinutes(
+        setHours(date, current.getHours()),
+        current.getMinutes()
+      );
+
+      if (isWithinDoctorAvailability(combinedDateTime, userTimezone)) {
+        options.push(timeString);
+      }
+
+      // Add 30 minutes
+      current = new Date(current.getTime() + 30 * 60 * 1000);
+    }
+
+    return options;
   };
 
   // Get minimum date (tomorrow)
@@ -241,82 +316,11 @@ const VideoConsultScheduleStep: React.FC<VideoConsultScheduleStepProps> = ({ dat
   tomorrow.setDate(tomorrow.getDate() + 1);
   tomorrow.setHours(0, 0, 0, 0);
 
+  // Get date-fns locale
+  const dateLocale = locale === 'ko' ? ko : enUS;
+
   return (
     <div className="space-y-6">
-      {/* eslint-disable-next-line react/no-unknown-property */}
-      <style jsx global>{`
-        .react-datepicker {
-          font-family: inherit;
-          border: 1px solid #e5e7eb;
-          border-radius: 0.5rem;
-          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-        .react-datepicker__header {
-          background-color: #fff;
-          border-bottom: 1px solid #e5e7eb;
-          padding-top: 0.5rem;
-        }
-        .react-datepicker__current-month {
-          font-weight: 600;
-          color: #111827;
-        }
-        .react-datepicker__day-name {
-          color: #6b7280;
-        }
-        .react-datepicker__day {
-          color: #111827;
-          border-radius: 0.375rem;
-        }
-        .react-datepicker__day:hover {
-          background-color: #fce7f3;
-        }
-        .react-datepicker__day--selected {
-          background-color: #fb718f !important;
-          color: white !important;
-        }
-        .react-datepicker__day--keyboard-selected {
-          background-color: #fce7f3;
-        }
-        .react-datepicker__day--disabled {
-          color: #d1d5db;
-        }
-        .react-datepicker__time-container {
-          border-left: 1px solid #e5e7eb;
-        }
-        .react-datepicker__time-list-item {
-          height: auto !important;
-          padding: 8px 10px !important;
-        }
-        .react-datepicker__time-list-item:hover {
-          background-color: #fce7f3 !important;
-        }
-        .react-datepicker__time-list-item--selected {
-          background-color: #fb718f !important;
-        }
-        .react-datepicker__time-list-item--disabled {
-          color: #d1d5db !important;
-        }
-        .react-datepicker-wrapper {
-          width: 100%;
-        }
-        .react-datepicker__input-container {
-          width: 100%;
-        }
-        .react-datepicker__input-container input {
-          width: 100%;
-          padding: 0.5rem 0.75rem 0.5rem 2.5rem;
-          border: 1px solid #e5e7eb;
-          border-radius: 0.375rem;
-          font-size: 0.875rem;
-          line-height: 1.25rem;
-          outline: none;
-        }
-        .react-datepicker__input-container input:focus {
-          border-color: #fb718f;
-          box-shadow: 0 0 0 2px rgba(251, 113, 143, 0.2);
-        }
-      `}</style>
-
       {/* Availability Info */}
       <div className="space-y-2">
         <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
@@ -375,19 +379,63 @@ const VideoConsultScheduleStep: React.FC<VideoConsultScheduleStepProps> = ({ dat
                 {getLocalizedText(scheduleData.dateLabel, locale)}
                 <span className="text-red-500 ml-1">*</span>
               </Label>
-              <div className="relative">
-                <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 z-10 pointer-events-none" />
-                <DatePicker
-                  selected={selectedDate}
-                  onChange={(date) => handleDateChange(index, date)}
-                  minDate={tomorrow}
-                  filterDate={filterDate}
-                  locale={locale === 'ko' ? 'ko' : 'en'}
-                  dateFormat={locale === 'ko' ? 'yyyy년 MM월 dd일' : 'MMM dd, yyyy'}
-                  placeholderText={getLocalizedText(scheduleData.datePlaceholder, locale)}
-                  className="w-full"
-                />
-              </div>
+              <Popover
+                open={openPopovers[index]}
+                onOpenChange={(open) => setOpenPopovers(prev => ({ ...prev, [index]: open }))}
+              >
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className={cn(
+                      "w-full justify-start text-left font-normal pl-10 relative",
+                      !selectedDate && "text-muted-foreground"
+                    )}
+                  >
+                    <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                    {selectedDate ? (
+                      format(selectedDate, locale === 'ko' ? 'yyyy년 MM월 dd일' : 'MMM dd, yyyy', {
+                        locale: dateLocale,
+                      })
+                    ) : (
+                      <span>{getLocalizedText(scheduleData.datePlaceholder, locale)}</span>
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <CalendarComponent
+                    mode="single"
+                    selected={selectedDate || undefined}
+                    onSelect={(date) => handleDateChange(index, date)}
+                    disabled={(date) => !filterDate(date)}
+                    locale={dateLocale}
+                    className="rounded-md border p-0"
+                    classNames={{
+                      months: "flex flex-col sm:flex-row p-0",
+                      month: "space-y-4 p-0",
+                      caption: "flex justify-center pt-1 pb-2 relative",
+                      caption_label: "text-sm font-medium",
+                      nav: "flex items-center gap-1",
+                      nav_button: cn(
+                        "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100"
+                      ),
+                      nav_button_previous: "",
+                      nav_button_next: "",
+                      table: "w-full border-collapse p-0",
+                      head_row: "flex w-full",
+                      head_cell: "text-muted-foreground rounded-md w-9 font-normal text-[0.8rem] flex-1 flex items-center justify-center",
+                      row: "flex w-full mt-2",
+                      cell: "flex-1 text-center text-sm p-0 relative",
+                      day: cn(
+                        "h-9 w-9 p-0 font-normal mx-auto"
+                      ),
+                      day_selected: "bg-[#fb718f] text-white hover:bg-[#fb718f] hover:text-white focus:bg-[#fb718f] focus:text-white",
+                      day_today: "bg-accent text-accent-foreground",
+                      day_disabled: "!text-gray-400 !opacity-40 !cursor-not-allowed hover:!bg-transparent",
+                      day_outside: "text-gray-300 opacity-50",
+                    }}
+                  />
+                </PopoverContent>
+              </Popover>
             </div>
 
             {/* Time Picker */}
@@ -398,23 +446,22 @@ const VideoConsultScheduleStep: React.FC<VideoConsultScheduleStepProps> = ({ dat
               </Label>
               <div className="relative">
                 <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 z-10 pointer-events-none" />
-                <DatePicker
-                  selected={selectedTimes[index]}
-                  onChange={(time) => handleTimeChange(index, time)}
-                  showTimeSelect
-                  showTimeSelectOnly
-                  timeIntervals={30}
-                  timeCaption={getLocalizedText(scheduleData.timeCaption, locale)}
-                  dateFormat="HH:mm"
-                  timeFormat="HH:mm"
-                  locale={locale === 'ko' ? 'ko' : 'en'}
-                  placeholderText={getLocalizedText(scheduleData.timePlaceholder, locale)}
-                  className="w-full"
+                <Select
+                  value={selectedTimes[index] ? format(selectedTimes[index]!, 'HH:mm') : ''}
+                  onValueChange={(value) => handleTimeChange(index, value)}
                   disabled={!selectedDate}
-                  filterTime={filterTime(index)}
-                  minTime={getTimeRange(index).minTime || undefined}
-                  maxTime={getTimeRange(index).maxTime || undefined}
-                />
+                >
+                  <SelectTrigger className="w-full pl-10">
+                    <SelectValue placeholder={getLocalizedText(scheduleData.timePlaceholder, locale)} />
+                  </SelectTrigger>
+                  <SelectContent className="max-h-[200px]">
+                    {generateTimeOptions(index).map((timeOption) => (
+                      <SelectItem key={timeOption} value={timeOption}>
+                        {timeOption}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             </div>
           </div>

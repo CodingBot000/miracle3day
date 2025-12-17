@@ -4,14 +4,17 @@ import { log } from '@/utils/logger';
 import { useNavigation } from '@/hooks/useNavigation';
 import React, { useEffect, useState } from 'react';
 import type { ChangeEvent } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import { Calendar as CalendarComponent } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { NationModal } from '@/components/template/modal/NationModal';
 import { CountryCode } from '@/models/country-code.dto';
 import { findCountry } from '@/constants/country';
 import { useTranslations } from 'next-intl';
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
 
 const initialForm = {
   id_country: '',
@@ -36,37 +39,6 @@ const getMinDate = () => {
   return date;
 };
 
-// DatePicker용 커스텀 인풋 컴포넌트
-const CustomInput = React.forwardRef<HTMLInputElement, any>(
-  ({ value, onClick, placeholder, className }, ref) => (
-    <div className="flex items-center cursor-pointer" onClick={onClick}>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-5 w-5 text-gray-400 mr-2"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-        />
-      </svg>
-      <input
-        value={value || ''}
-        className={`${className} cursor-pointer flex-1`}
-        placeholder={placeholder}
-        readOnly
-        ref={ref}
-      />
-    </div>
-  )
-);
-
-CustomInput.displayName = 'CustomInput';
-
 export default function SignUpMoreInfoForm() {
   const t = useTranslations('signUpMoreInfo');
   const { navigate, goBack } = useNavigation();
@@ -79,6 +51,7 @@ export default function SignUpMoreInfoForm() {
   const [error, setError] = useState<string | null>(null);
   const [checkingAgreement, setCheckingAgreement] = useState(true);
   const [statusError, setStatusError] = useState<string | null>(null);
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   const checkAuth = async () => {
     setCheckingAgreement(true);
@@ -283,21 +256,81 @@ export default function SignUpMoreInfoForm() {
         <div className="space-y-1">
           <Label className="text-sm font-medium text-slate-600">{t('fields.birthDate')}</Label>
           <p className="text-xs text-slate-500 mb-1">{t('fields.birthDateHint')}</p>
-          <div className="w-full rounded-lg border border-slate-200 bg-white/70 shadow-sm">
-            <DatePicker
-              selected={birthDate}
-              onChange={(date: Date | null) => setBirthDate(date)}
-              dateFormat="yyyy-MM-dd"
-              maxDate={getMaxDate()}
-              minDate={getMinDate()}
-              showMonthDropdown
-              showYearDropdown
-              dropdownMode="select"
-              placeholderText={t('fields.birthDatePlaceholder')}
-              className="w-full px-3 py-2 text-sm outline-none bg-transparent"
-              customInput={<CustomInput />}
-            />
-          </div>
+          <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                className={cn(
+                  "w-full justify-start text-left font-normal rounded-lg border border-slate-200 bg-white/70 shadow-sm px-3 py-2 h-auto",
+                  !birthDate && "text-muted-foreground"
+                )}
+              >
+                <div className="flex items-center w-full">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5 text-gray-400 mr-2 flex-shrink-0"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    />
+                  </svg>
+                  <span className="text-sm flex-1">
+                    {birthDate ? format(birthDate, 'yyyy-MM-dd') : t('fields.birthDatePlaceholder')}
+                  </span>
+                </div>
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <CalendarComponent
+                mode="single"
+                selected={birthDate || undefined}
+                onSelect={(date) => {
+                  setBirthDate(date || null);
+                  setIsCalendarOpen(false);
+                }}
+                disabled={(date) => {
+                  const minDate = getMinDate();
+                  const maxDate = getMaxDate();
+                  return date < minDate || date > maxDate;
+                }}
+                defaultMonth={birthDate || getMaxDate()}
+                className="p-0"
+                classNames={{
+                  months: "flex flex-col sm:flex-row p-0",
+                  month: "space-y-4 p-0",
+                  caption: "flex justify-center pt-1 pb-2 relative",
+                  caption_label: "text-sm font-medium",
+                  caption_dropdowns: "flex justify-center gap-1",
+                  nav: "flex items-center gap-1",
+                  nav_button: cn(
+                    "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100"
+                  ),
+                  nav_button_previous: "",
+                  nav_button_next: "",
+                  table: "w-full border-collapse p-0",
+                  head_row: "flex w-full",
+                  head_cell: "text-muted-foreground rounded-md w-9 font-normal text-[0.8rem] flex-1 flex items-center justify-center",
+                  row: "flex w-full mt-2",
+                  cell: "flex-1 text-center text-sm p-0 relative [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+                  day: cn(
+                    "h-9 w-9 p-0 font-normal aria-selected:opacity-100 mx-auto"
+                  ),
+                  day_selected: "bg-slate-900 text-white hover:bg-slate-900 hover:text-white focus:bg-slate-900 focus:text-white",
+                  day_today: "bg-accent text-accent-foreground",
+                  day_outside: "text-gray-300 opacity-50",
+                  day_disabled: "!text-gray-400 !opacity-40 !cursor-not-allowed hover:!bg-transparent",
+                  day_range_middle: "aria-selected:bg-accent aria-selected:text-accent-foreground",
+                  day_hidden: "invisible",
+                }}
+              />
+            </PopoverContent>
+          </Popover>
         </div>
 
         <div className="space-y-1">

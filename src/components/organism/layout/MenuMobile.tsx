@@ -154,7 +154,7 @@ const MenuMobile = () => {
         className="flex flex-col items-center gap-1 p-2 hover:opacity-80"
       >
         <Home className={clsx("w-6 h-6", getIconColor("home"))} />
-        <span className={clsx("text-xs", getTextColor("home"))}>Home</span>
+        {/* <span className={clsx("text-xs", getTextColor("home"))}>Home</span> */}
       </button>
       {/* <button
         onClick={() => goTo(ROUTE.TREATMENT_INFO)}
@@ -168,7 +168,7 @@ const MenuMobile = () => {
         className="flex flex-col items-center gap-1 p-2 hover:opacity-80"
       >
         <Stethoscope className={clsx("w-6 h-6", getIconColor("procedure"))} />
-        <span className={clsx("text-xs", getTextColor("procedure"))}>AI-Match</span>
+        {/* <span className={clsx("text-xs", getTextColor("procedure"))}>AI-Match</span> */}
       </button>
 
       <button
@@ -176,7 +176,7 @@ const MenuMobile = () => {
         className="flex flex-col items-center gap-1 p-2 hover:opacity-80"
       >
         <Search className="w-6 h-6 text-gray-400" />
-        <span className="text-xs text-gray-400">Search</span>
+        {/* <span className="text-xs text-gray-400">Search</span> */}
       </button>
 
       <button
@@ -184,7 +184,7 @@ const MenuMobile = () => {
         className="flex flex-col items-center gap-1 p-2 hover:opacity-80"
       >
         <MessageSquareText size={20} className={getIconColor("community")} />
-        <span className={clsx("text-xs", getTextColor("community"))}>Community</span>
+        {/* <span className={clsx("text-xs", getTextColor("community"))}>Community</span> */}
       </button>
       {/* <button
         onClick={() => goTo(ROUTE.EVENT)}
@@ -205,13 +205,13 @@ const MenuMobile = () => {
         className="flex flex-col items-center gap-1 p-2 hover:opacity-80"
       >
         <Hospital className={clsx("w-6 h-6", getIconColor("clinics"))} />
-        <span className={clsx("text-xs", getTextColor("clinics"))}>Clinics</span>
+        {/* <span className={clsx("text-xs", getTextColor("clinics"))}>Clinics</span> */}
       </button>
       <div className="flex flex-col items-center gap-1 p-2 hover:opacity-80">
         <div className="relative">
           <AuthClient iconColor={isActive("mypage") ? "#000" : "#9ca3af"} />
         </div>
-        <span className={clsx("text-xs", getTextColor("mypage"))}>My Page</span>
+        {/* <span className={clsx("text-xs", getTextColor("mypage"))}>My Page</span> */}
       </div>
 
       {/* <button

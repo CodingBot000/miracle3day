@@ -29,6 +29,8 @@ export const DOCTOR_AVAILABILITY_KST: DoctorAvailability[] = [
   { dayOfWeek: 3, startHour: 20, startMinute: 0, endHour: 23, endMinute: 59 },
   { dayOfWeek: 4, startHour: 20, startMinute: 0, endHour: 23, endMinute: 59 },
   { dayOfWeek: 5, startHour: 20, startMinute: 0, endHour: 23, endMinute: 59 },
+  // Saturday: 09:00 - 24:00 KST
+  { dayOfWeek: 6, startHour: 9, startMinute: 0, endHour: 23, endMinute: 59 },
   // Sunday: 09:00 - 24:00 KST
   { dayOfWeek: 0, startHour: 9, startMinute: 0, endHour: 23, endMinute: 59 },
 ];
@@ -214,11 +216,11 @@ export function generateAvailabilityText(
   koreaTime: string;
 } {
   const weekdaySlots = DOCTOR_AVAILABILITY_KST.filter(s => s.dayOfWeek >= 1 && s.dayOfWeek <= 5);
-  const sundaySlots = DOCTOR_AVAILABILITY_KST.filter(s => s.dayOfWeek === 0);
+  const weekendSlots = DOCTOR_AVAILABILITY_KST.filter(s => s.dayOfWeek === 0 || s.dayOfWeek === 6);
 
   // Create sample dates for conversion (use a specific date to ensure consistency)
   const sampleDate = new Date('2025-12-15'); // A Monday
-  const sampleSunday = new Date('2025-12-21'); // A Sunday
+  const sampleSaturday = new Date('2025-12-20'); // A Saturday
 
   // Convert weekday availability
   const weekdayStart = setMinutes(setHours(sampleDate, weekdaySlots[0].startHour), weekdaySlots[0].startMinute);
@@ -230,19 +232,15 @@ export function generateAvailabilityText(
   const weekdayStartUser = toZonedTime(weekdayStartKorea, userTimezone);
   const weekdayEndUser = toZonedTime(weekdayEndKorea, userTimezone);
 
-  // Convert Sunday availability
-  const sundayStart = setMinutes(setHours(sampleSunday, sundaySlots[0].startHour), sundaySlots[0].startMinute);
-  const sundayEnd = setMinutes(setHours(sampleSunday, sundaySlots[0].endHour), sundaySlots[0].endMinute);
+  // Convert weekend availability (Saturday/Sunday have same hours)
+  const weekendStart = setMinutes(setHours(sampleSaturday, weekendSlots[0].startHour), weekendSlots[0].startMinute);
+  const weekendEnd = setMinutes(setHours(sampleSaturday, weekendSlots[0].endHour), weekendSlots[0].endMinute);
 
-  const sundayStartKorea = fromZonedTime(sundayStart, KOREA_TIMEZONE);
-  const sundayEndKorea = fromZonedTime(sundayEnd, KOREA_TIMEZONE);
+  const weekendStartKorea = fromZonedTime(weekendStart, KOREA_TIMEZONE);
+  const weekendEndKorea = fromZonedTime(weekendEnd, KOREA_TIMEZONE);
 
-  const sundayStartUser = toZonedTime(sundayStartKorea, userTimezone);
-  const sundayEndUser = toZonedTime(sundayEndKorea, userTimezone);
-
-  // Format strings
-  const weekdayDayUser = format(weekdayStartUser, 'EEEE', { locale: locale === 'ko' ? ko : enUS });
-  const sundayDayUser = format(sundayStartUser, 'EEEE', { locale: locale === 'ko' ? ko : enUS });
+  const weekendStartUser = toZonedTime(weekendStartKorea, userTimezone);
+  const weekendEndUser = toZonedTime(weekendEndKorea, userTimezone);
 
   const timeFormat = locale === 'ko' ? 'HH:mm' : 'h:mm a';
 
@@ -250,29 +248,30 @@ export function generateAvailabilityText(
   let koreaTimeText = '';
 
   if (locale === 'ko') {
-    userTimeText = `평일 ${format(weekdayStartUser, timeFormat)}~${format(weekdayEndUser, timeFormat)}, ${sundayDayUser} ${format(sundayStartUser, timeFormat)}~${format(sundayEndUser, timeFormat)} (현지 시간)`;
-    koreaTimeText = `평일 오후 8시~자정, 일요일 오전 9시~자정 (한국 시간)`;
+    userTimeText = `평일 ${format(weekdayStartUser, timeFormat)}~${format(weekdayEndUser, timeFormat)}, 주말 ${format(weekendStartUser, timeFormat)}~${format(weekendEndUser, timeFormat)} (현지 시간)`;
+    koreaTimeText = `평일 오후 8시~자정, 주말 오전 9시~자정 (한국 시간)`;
   } else {
     const weekdayStartDay = format(weekdayStartUser, 'EEEE', { locale: enUS });
     const weekdayEndDay = format(weekdayEndUser, 'EEEE', { locale: enUS });
-    const sundayDay = format(sundayStartUser, 'EEEE', { locale: enUS });
 
     // Check if day changes
     const weekdayDayChange = weekdayStartDay !== weekdayEndDay;
-    const sundayDayChange = sundayDay !== format(sundayEndUser, 'EEEE', { locale: enUS });
+    const weekendDayChange = format(weekendStartUser, 'EEEE', { locale: enUS }) !== format(weekendEndUser, 'EEEE', { locale: enUS });
 
     let weekdayText = `Weekdays ${format(weekdayStartUser, timeFormat)}-${format(weekdayEndUser, timeFormat)}`;
     if (weekdayDayChange) {
       weekdayText = `${weekdayStartDay}s ${format(weekdayStartUser, timeFormat)} - ${weekdayEndDay}s ${format(weekdayEndUser, timeFormat)}`;
     }
 
-    let sundayText = `${sundayDay}s ${format(sundayStartUser, timeFormat)}-${format(sundayEndUser, timeFormat)}`;
-    if (sundayDayChange) {
-      sundayText = `${sundayDay}s ${format(sundayStartUser, timeFormat)} - ${format(sundayEndUser, 'EEEE', { locale: enUS })}s ${format(sundayEndUser, timeFormat)}`;
+    let weekendText = `Weekends ${format(weekendStartUser, timeFormat)}-${format(weekendEndUser, timeFormat)}`;
+    if (weekendDayChange) {
+      const weekendStartDay = format(weekendStartUser, 'EEEE', { locale: enUS });
+      const weekendEndDay = format(weekendEndUser, 'EEEE', { locale: enUS });
+      weekendText = `${weekendStartDay}s ${format(weekendStartUser, timeFormat)} - ${weekendEndDay}s ${format(weekendEndUser, timeFormat)}`;
     }
 
-    userTimeText = `${weekdayText}, ${sundayText} (Your local time)`;
-    koreaTimeText = `Weekdays 8PM-12AM, Sundays 9AM-12AM (Korea time)`;
+    userTimeText = `${weekdayText}, ${weekendText} (Your local time)`;
+    koreaTimeText = `Weekdays 8PM-12AM, Weekends 9AM-12AM (Korea time)`;
   }
 
   return {

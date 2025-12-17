@@ -5,8 +5,11 @@ import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@/hooks/useNavigation';
 import { FiArrowLeft, FiCalendar, FiAlertTriangle } from 'react-icons/fi';
 import { FaRegCalendarAlt } from 'react-icons/fa';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import { Calendar as CalendarComponent } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Button } from '@/components/ui/button';
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
 import { country } from '@/constants/country';
 import CountrySelectModal from '@/components/template/modal/CountrySelectModal';
 import { CountryCode } from '@/models/country-code.dto';
@@ -55,6 +58,7 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [countryModalOpen, setCountryModalOpen] = useState(false);
   const [birthDate, setBirthDate] = useState<Date | null>(null);
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const selectedCountry = country.find(c => `${c.country_name} (+${c.phone_code})` === formData.phoneCountry) || country[0];
 
   // Zustand store에서 데이터 가져오기
@@ -418,43 +422,64 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
                   <FaRegCalendarAlt className="mr-2 text-gray-400" />
                   Date of Birth
                 </label>
-                <div className="relative">
-                  <DatePicker
-                    selected={birthDate}
-                    onChange={(date: Date | null) => {
-                      setBirthDate(date);
-                      if (date) {
-                        const formattedDate = date.toLocaleDateString('en-US', {
-                          month: '2-digit',
-                          day: '2-digit',
-                          year: 'numeric'
-                        });
-                        handleInputChange('dateOfBirth', formattedDate);
-                      } else {
-                        handleInputChange('dateOfBirth', '');
-                      }
-                    }}
-                    dateFormat="MM/dd/yyyy"
-                    placeholderText="mm/dd/yyyy"
-                    maxDate={new Date()}
-                    showYearDropdown
-                    showMonthDropdown
-                    dropdownMode="select"
-                    onKeyDown={(e) => {
-                      // Prevent manual typing except Tab, Escape and navigation keys
-                      const allowedKeys = ['Tab', 'Escape', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'];
-                      if (!allowedKeys.includes(e.key)) {
-                        e.preventDefault();
-                      }
-                    }}
-                    onChangeRaw={(e) => {
-                      // Prevent any raw input changes
-                      e?.preventDefault();
-                    }}
-                    className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  
-                </div>
+                <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-full justify-start text-left font-normal border-gray-300 focus:ring-2 focus:ring-blue-500",
+                        !birthDate && "text-muted-foreground"
+                      )}
+                    >
+                      {birthDate ? format(birthDate, 'MM/dd/yyyy') : 'mm/dd/yyyy'}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <CalendarComponent
+                      mode="single"
+                      selected={birthDate || undefined}
+                      onSelect={(date) => {
+                        setBirthDate(date || null);
+                        setIsCalendarOpen(false);
+                        if (date) {
+                          const formattedDate = date.toLocaleDateString('en-US', {
+                            month: '2-digit',
+                            day: '2-digit',
+                            year: 'numeric'
+                          });
+                          handleInputChange('dateOfBirth', formattedDate);
+                        } else {
+                          handleInputChange('dateOfBirth', '');
+                        }
+                      }}
+                      disabled={(date) => date > new Date()}
+                      defaultMonth={birthDate || new Date()}
+                      className="p-0"
+                      classNames={{
+                        months: "flex flex-col sm:flex-row p-0",
+                        month: "space-y-4 p-0",
+                        caption: "flex justify-center pt-1 pb-2 relative",
+                        caption_label: "text-sm font-medium",
+                        nav: "flex items-center gap-1",
+                        nav_button: cn(
+                          "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100"
+                        ),
+                        nav_button_previous: "",
+                        nav_button_next: "",
+                        table: "w-full border-collapse p-0",
+                        head_row: "flex w-full",
+                        head_cell: "text-muted-foreground rounded-md w-9 font-normal text-[0.8rem] flex-1 flex items-center justify-center",
+                        row: "flex w-full mt-2",
+                        cell: "flex-1 text-center text-sm p-0 relative",
+                        day: cn(
+                          "h-9 w-9 p-0 font-normal mx-auto"
+                        ),
+                        day_disabled: "!text-gray-400 !opacity-40 !cursor-not-allowed hover:!bg-transparent",
+                        day_outside: "text-gray-300 opacity-50",
+                      }}
+                    />
+                  </PopoverContent>
+                </Popover>
               </div>
 
               <div>

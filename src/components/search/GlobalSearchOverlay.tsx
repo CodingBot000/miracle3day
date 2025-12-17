@@ -517,11 +517,13 @@ export const GlobalSearchOverlay: React.FC = () => {
               )}
 
               {/* Keyboard hint */}
-              <div className="text-center text-xs text-gray-400 py-4">
-                Press <kbd className="px-1.5 py-0.5 bg-gray-100 border rounded">↑</kbd>{' '}
-                <kbd className="px-1.5 py-0.5 bg-gray-100 border rounded">↓</kbd> to navigate,{' '}
-                <kbd className="px-1.5 py-0.5 bg-gray-100 border rounded">Enter</kbd> to select,{' '}
-                <kbd className="px-1.5 py-0.5 bg-gray-100 border rounded">Esc</kbd> to close
+              <div className="text-center text-xs text-gray-400 py-4">Use Keyboard Guide
+                <div className="text-center text-xs text-gray-400 py-4">
+                  Press <kbd className="px-1.5 py-0.5 bg-gray-100 border rounded">↑</kbd>{' '}
+                  <kbd className="px-1.5 py-0.5 bg-gray-100 border rounded">↓</kbd> to navigate,{' '}
+                  <kbd className="px-1.5 py-0.5 bg-gray-100 border rounded">Enter</kbd> to select,{' '}
+                  <kbd className="px-1.5 py-0.5 bg-gray-100 border rounded">Esc</kbd> to close
+                </div>
               </div>
             </div>
           )}

@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import textsData from './consultation-guide-texts.json';
 
 interface StepData {
@@ -43,93 +43,116 @@ const ConsultationGuidePage: React.FC<ConsultationGuidePageProps> = ({ locale = 
     },
   ];
 
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-rose-50/30">
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+  // Inject styles only on client side to avoid hydration issues
+  useEffect(() => {
+    const styleId = 'consultation-guide-styles';
 
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+    // Check if style already exists
+    if (document.getElementById(styleId)) {
+      return;
+    }
+
+    const style = document.createElement('style');
+    style.id = styleId;
+    style.textContent = `
+      @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
         }
-
-        @keyframes scaleIn {
-          from {
-            opacity: 0;
-            transform: scale(0.9);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-
-        @keyframes float {
-          0%, 100% {
-            transform: translateY(0px);
-          }
-          50% {
-            transform: translateY(-6px);
-          }
-        }
-
-        .animate-fadeInUp {
-          animation: fadeInUp 0.8s ease-out forwards;
-        }
-
-        .animate-scaleIn {
-          animation: scaleIn 0.6s ease-out forwards;
-        }
-
-        .step-card {
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .step-card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 12px 24px rgba(255, 107, 157, 0.12);
-        }
-
-        .step-number {
-          background: linear-gradient(135deg, #FF6B9D 0%, #C94277 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-
-        .cta-button {
-          background: linear-gradient(135deg, #FF6B9D 0%, #C94277 100%);
-          transition: all 0.3s ease;
-          box-shadow: 0 8px 24px rgba(255, 107, 157, 0.3);
-        }
-
-        .cta-button:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 12px 32px rgba(255, 107, 157, 0.4);
-        }
-
-        .cta-button:active {
+        to {
+          opacity: 1;
           transform: translateY(0);
         }
+      }
 
-        .highlight-text {
-          background: linear-gradient(135deg, #FF6B9D 0%, #C94277 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          font-weight: 700;
+      @keyframes scaleIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
         }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
 
-        .icon-wrapper {
-          animation: float 3s ease-in-out infinite;
+      @keyframes float {
+        0%, 100% {
+          transform: translateY(0px);
         }
-      `}</style>
+        50% {
+          transform: translateY(-6px);
+        }
+      }
+
+      .animate-fadeInUp {
+        animation: fadeInUp 0.8s ease-out forwards;
+      }
+
+      .animate-scaleIn {
+        animation: scaleIn 0.6s ease-out forwards;
+      }
+
+      .step-card {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .step-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(255, 107, 157, 0.12);
+      }
+
+      .step-number {
+        background: linear-gradient(135deg, #FF6B9D 0%, #C94277 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .cta-button {
+        background: linear-gradient(135deg, #FF6B9D 0%, #C94277 100%);
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 24px rgba(255, 107, 157, 0.3);
+      }
+
+      .cta-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 32px rgba(255, 107, 157, 0.4);
+      }
+
+      .cta-button:active {
+        transform: translateY(0);
+      }
+
+      .highlight-text {
+        background: linear-gradient(135deg, #FF6B9D 0%, #C94277 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 700;
+      }
+
+      .icon-wrapper {
+        animation: float 3s ease-in-out infinite;
+      }
+    `;
+
+    document.head.appendChild(style);
+
+    // Cleanup function
+    return () => {
+      const existingStyle = document.getElementById(styleId);
+      if (existingStyle) {
+        existingStyle.remove();
+      }
+    };
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-white to-rose-50/30">
 
       {/* Mobile-first container: max-width for desktop, centered */}
       <div className="w-full max-w-md mx-auto px-5 py-8 sm:py-12">

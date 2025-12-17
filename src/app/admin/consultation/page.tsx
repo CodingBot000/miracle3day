@@ -31,7 +31,7 @@ interface ConsultationSubmission {
   visit_path_other: string;
   image_paths: string[];
   country: string;
-  korean_phone_number: number;
+  korean_phone_number: string | null;
   messengers: any;
   status: string;
   updated_at: string;

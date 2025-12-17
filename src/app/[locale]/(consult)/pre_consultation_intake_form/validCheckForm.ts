@@ -107,13 +107,27 @@ export const validateStepData = (stepId: string, data: StepData): boolean => {
     case VIDEO_CONSULT_SCHEDULE:
       // Validate that at least one complete slot is filled
       const slots = data.videoConsultSlots;
-      if (!slots || slots.length === 0) return false;
+      console.log('[VIDEO_CONSULT_SCHEDULE] Validation check:', {
+        hasSlots: !!slots,
+        slotsLength: slots?.length,
+        slots: slots,
+        fullData: data
+      });
 
-      // Check if at least the first slot is completely filled (date and startTime only)
-      const firstSlot = slots[0];
-      if (!firstSlot.date || !firstSlot.startTime) return false;
+      if (!slots || slots.length === 0) {
+        console.log('[VIDEO_CONSULT_SCHEDULE] Validation FAILED: No slots or empty array');
+        return false;
+      }
 
-      return true;
+      // Check if at least one slot has both date AND startTime filled with non-empty values
+      const hasCompleteSlot = slots.some((slot: any) =>
+        slot &&
+        slot.date && slot.date.toString().trim() !== '' &&
+        slot.startTime && slot.startTime.toString().trim() !== ''
+      );
+
+      console.log('[VIDEO_CONSULT_SCHEDULE] Validation result:', hasCompleteSlot);
+      return hasCompleteSlot;
     default:
       return true;
   }

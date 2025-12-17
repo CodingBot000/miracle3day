@@ -2,7 +2,7 @@
 
 import { log } from '@/utils/logger';
 import { useNavigation } from '@/hooks/useNavigation';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import type { ChangeEvent } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label';
 import { NationModal } from '@/components/template/modal/NationModal';
 import { CountryCode } from '@/models/country-code.dto';
 import { findCountry } from '@/constants/country';
+import { useTranslations } from 'next-intl';
 
 const initialForm = {
   id_country: '',
@@ -67,6 +68,7 @@ const CustomInput = React.forwardRef<HTMLInputElement, any>(
 CustomInput.displayName = 'CustomInput';
 
 export default function SignUpMoreInfoForm() {
+  const t = useTranslations('signUpMoreInfo');
   const { navigate, goBack } = useNavigation();
   const [user, setUser] = useState<any>(null);
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -78,7 +80,7 @@ export default function SignUpMoreInfoForm() {
   const [checkingAgreement, setCheckingAgreement] = useState(true);
   const [statusError, setStatusError] = useState<string | null>(null);
 
-  const checkAuth = useCallback(async () => {
+  const checkAuth = async () => {
     setCheckingAgreement(true);
     setStatusError(null);
 
@@ -86,7 +88,7 @@ export default function SignUpMoreInfoForm() {
       const res = await fetch('/api/auth/session');
       if (res.ok) {
         const data = await res.json();
-        // 정보처리방침 동의한 순간에도 pending 상태로 떨어질수있어서 조건추가 
+        // 정보처리방침 동의한 순간에도 pending 상태로 떨어질수있어서 조건추가
         if (data.auth && (data.auth.status === 'active' || data.auth.status === 'pending')) {
           setUser(data.auth);
           setIsSignedIn(true);
@@ -101,15 +103,16 @@ export default function SignUpMoreInfoForm() {
       }
     } catch (err) {
       console.error('Auth check error:', err);
-      setStatusError('인증 상태를 확인하지 못했습니다. 다시 시도해 주세요.');
+      setStatusError('AUTH_CHECK_ERROR');
     } finally {
       setCheckingAgreement(false);
     }
-  }, [navigate]);
+  };
 
   useEffect(() => {
     checkAuth();
-  }, [checkAuth]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // 기존 프로필 데이터 조회 및 폼 채우기
   useEffect(() => {
@@ -158,7 +161,7 @@ export default function SignUpMoreInfoForm() {
   if (checkingAgreement) {
     return (
       <div className="space-y-6 rounded-2xl border border-white/40 bg-white/80 p-8 shadow-xl backdrop-blur">
-        <p className="text-sm text-slate-500">약관 동의 상태를 확인하는 중입니다…</p>
+        <p className="text-sm text-slate-500">{t('checkingAgreement')}</p>
       </div>
     );
   }
@@ -166,13 +169,13 @@ export default function SignUpMoreInfoForm() {
   if (statusError) {
     return (
       <div className="space-y-6 rounded-2xl border border-white/40 bg-white/80 p-8 shadow-xl backdrop-blur">
-        <p className="text-sm text-red-500">{statusError}</p>
+        <p className="text-sm text-red-500">{t('authCheckError')}</p>
         <button
           type="button"
           onClick={checkAuth}
           className="w-full rounded-xl bg-slate-900 px-4 py-3 text-sm font-medium text-white hover:bg-slate-800"
         >
-          다시 시도
+          {t('retryButton')}
         </button>
       </div>
     );
@@ -242,7 +245,7 @@ export default function SignUpMoreInfoForm() {
             type="button"
             onClick={() => goBack()}
             className="flex items-center justify-center w-8 h-8 rounded-lg hover:bg-slate-100 transition-colors"
-            aria-label="Go back"
+            aria-label={t('goBackLabel')}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -259,18 +262,18 @@ export default function SignUpMoreInfoForm() {
               />
             </svg>
           </button>
-          <h1 className="text-2xl font-semibold text-slate-900">Complete your profile</h1>
+          <h1 className="text-2xl font-semibold text-slate-900">{t('title')}</h1>
         </div>
         <p className="mt-2 text-sm text-slate-500">
-        Tell us a little more about yourself so we can personalize your experience.
+        {t('description')}
         <br />
-        This helps us provide tailored recommendations and seamless real-time video consultations.
+        {t('descriptionSecondary')}
         </p>
       </div>
 
       <div className="flex flex-col gap-4">
         <div className="space-y-1">
-          <Label htmlFor="nationality">Nationality</Label>
+          <Label htmlFor="nationality">{t('fields.nationality')}</Label>
           <NationModal
             nation={nation?.country_name || ''}
             onSelect={(value: CountryCode) => setNation(value)}
@@ -278,8 +281,8 @@ export default function SignUpMoreInfoForm() {
         </div>
 
         <div className="space-y-1">
-          <Label className="text-sm font-medium text-slate-600">Birth date</Label>
-          <p className="text-xs text-slate-500 mb-1">You must be at least 14 years old</p>
+          <Label className="text-sm font-medium text-slate-600">{t('fields.birthDate')}</Label>
+          <p className="text-xs text-slate-500 mb-1">{t('fields.birthDateHint')}</p>
           <div className="w-full rounded-lg border border-slate-200 bg-white/70 shadow-sm">
             <DatePicker
               selected={birthDate}
@@ -290,7 +293,7 @@ export default function SignUpMoreInfoForm() {
               showMonthDropdown
               showYearDropdown
               dropdownMode="select"
-              placeholderText="Select your birth date"
+              placeholderText={t('fields.birthDatePlaceholder')}
               className="w-full px-3 py-2 text-sm outline-none bg-transparent"
               customInput={<CustomInput />}
             />
@@ -298,7 +301,7 @@ export default function SignUpMoreInfoForm() {
         </div>
 
         <div className="space-y-1">
-          <Label className="text-sm font-medium text-slate-600">Gender</Label>
+          <Label className="text-sm font-medium text-slate-600">{t('fields.gender')}</Label>
           <RadioGroup
             value={form.gender}
             onValueChange={(value) => setForm((prev) => ({ ...prev, gender: value }))}
@@ -306,32 +309,32 @@ export default function SignUpMoreInfoForm() {
           >
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="male" id="male" />
-              <Label htmlFor="male" className="font-normal cursor-pointer">Male</Label>
+              <Label htmlFor="male" className="font-normal cursor-pointer">{t('fields.genderMale')}</Label>
             </div>
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="female" id="female" />
-              <Label htmlFor="female" className="font-normal cursor-pointer">Female</Label>
+              <Label htmlFor="female" className="font-normal cursor-pointer">{t('fields.genderFemale')}</Label>
             </div>
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="other" id="other" />
-              <Label htmlFor="other" className="font-normal cursor-pointer">Other (including prefer not to say)</Label>
+              <Label htmlFor="other" className="font-normal cursor-pointer">{t('fields.genderOther')}</Label>
             </div>
           </RadioGroup>
         </div>
 
         <div className="space-y-1">
-          <Label className="text-sm font-medium text-slate-600">Secondary email</Label>
+          <Label className="text-sm font-medium text-slate-600">{t('fields.secondaryEmail')}</Label>
           <input
             type="email"
             value={form.secondary_email}
             onChange={handleChange('secondary_email')}
             className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2 text-sm"
-            placeholder="Optional"
+            placeholder={t('fields.secondaryEmailPlaceholder')}
           />
         </div>
 
         <div className="space-y-1">
-          <Label className="text-sm font-medium text-slate-600">Phone number</Label>
+          <Label className="text-sm font-medium text-slate-600">{t('fields.phoneNumber')}</Label>
           <div className="flex gap-2">
             {/* Phone country code (read-only) */}
             <div className="w-24 flex-shrink-0">
@@ -349,7 +352,7 @@ export default function SignUpMoreInfoForm() {
                 value={form.phone_number}
                 onChange={handleChange('phone_number')}
                 className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2 text-sm"
-                placeholder="Enter phone number (Optional)"
+                placeholder={t('fields.phoneNumberPlaceholder')}
               />
             </div>
           </div>
@@ -364,7 +367,7 @@ export default function SignUpMoreInfoForm() {
         onClick={handleSubmit}
         className="w-full rounded-xl bg-slate-900 px-4 py-3 text-sm font-medium text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-400"
       >
-        {submitting ? 'Saving...' : 'Finish'}
+        {submitting ? t('buttons.saving') : t('buttons.finish')}
       </button>
     </div>
   );

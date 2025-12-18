@@ -55,8 +55,6 @@ const ConsultationGuidePage: React.FC<ConsultationGuidePageProps> = ({ locale = 
     const style = document.createElement('style');
     style.id = styleId;
     style.textContent = `
-      @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
-
       @keyframes fadeInUp {
         from {
           opacity: 0;

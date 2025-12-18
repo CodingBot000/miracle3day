@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { useDropzone } from 'react-dropzone';
 import { log } from '@/utils/logger';
+import { compressSingleImage } from '@/utils/imageCompression';
 
 interface ClinicImageThumbnailUploadSectionProps {
   onFileChange: (file: File | string | null) => void;
@@ -82,24 +83,41 @@ const ClinicImageThumbnailUploadSection = ({
 
   // 파일 처리 함수
   const processFiles = useCallback(
-    (acceptedFiles: File[]) => {
+    async (acceptedFiles: File[]) => {
       const selectedFile = acceptedFiles[0]; // 첫 번째 파일만 사용
       if (!selectedFile) return;
 
-      setFile(selectedFile);
-      onFileChange(selectedFile); // 새 파일 선택 시 부모에게 알림
+      try {
+        // 이미지 압축 (썸네일용)
+        const { compressedFile, error } = await compressSingleImage(
+          selectedFile,
+          'thumbnail', // Thumbnail images
+        );
 
-      // Dirty Flag: 썸네일 교체
-      onUserChanged?.('thumbnail:replace');
+        if (error || !compressedFile) {
+          console.error('이미지 압축 실패:', error);
+          alert('이미지 처리 실패');
+          return;
+        }
 
-      const fileReader = new FileReader();
-      fileReader.onload = () => {
-        const result = fileReader.result as string;
-        setPreview(result);
-        setIsExistingImage(false);
-      };
-      // 새로 추가한 이미지는 base64 데이터로 생성
-      fileReader.readAsDataURL(selectedFile);
+        setFile(compressedFile);
+        onFileChange(compressedFile); // 압축된 파일을 부모에게 알림
+
+        // Dirty Flag: 썸네일 교체
+        onUserChanged?.('thumbnail:replace');
+
+        // 압축된 파일로 base64 preview 생성
+        const fileReader = new FileReader();
+        fileReader.onload = () => {
+          const result = fileReader.result as string;
+          setPreview(result);
+          setIsExistingImage(false);
+        };
+        fileReader.readAsDataURL(compressedFile);
+      } catch (error) {
+        console.error('이미지 압축 중 오류:', error);
+        alert('이미지 처리 실패');
+      }
     },
     [onFileChange, onUserChanged],
   );

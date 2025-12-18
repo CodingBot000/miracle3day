@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Upload, X } from 'lucide-react';
+import { compressSingleImage } from '@/utils/imageCompression';
 
 interface UploadImageStepProps {
   data: any;
@@ -15,7 +16,7 @@ const UploadImageStep: React.FC<UploadImageStepProps> = ({ data, onDataChange, o
   const [uploadedImage, setUploadedImage] = useState<string | null>(uploadImage.uploadedImage || null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFile = useCallback((file: File) => {
+  const handleFile = useCallback(async (file: File) => {
     // 파일 타입 검증
     if (!file.type.startsWith('image/')) {
       alert('Only image files are allowed');
@@ -36,21 +37,42 @@ const UploadImageStep: React.FC<UploadImageStepProps> = ({ data, onDataChange, o
       return;
     }
 
-    // 파일을 base64로 변환하여 미리보기 생성
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const result = e.target?.result as string;
-      setUploadedImage(result);
-      onDataChange({
-        ...data,
-        uploadImage: {
-          uploadedImage: result,
-          imageFile: file,
-          imageFileName: file.name
+    try {
+      // 이미지 압축 (제출 시점이 아닌 선택 시점에 압축하여 UX 향상)
+      const { compressedFile, error } = await compressSingleImage(
+        file,
+        'review', // High quality for medical consultation images
+        {
+          maxSizeMB: 2.0, // Override for medical images (higher quality)
         }
-      });
-    };
-    reader.readAsDataURL(file);
+      );
+
+      if (error || !compressedFile) {
+        console.error('Compression failed:', error);
+        alert('Failed to process image. Please try another file.');
+        return;
+      }
+
+      // 압축된 파일을 base64로 변환하여 미리보기 생성
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const result = e.target?.result as string;
+        setUploadedImage(result);
+        onDataChange({
+          ...data,
+          uploadImage: {
+            uploadedImage: result,
+            imageFile: compressedFile, // Store compressed file, not original
+            imageFileName: file.name
+          }
+        });
+      };
+      reader.readAsDataURL(compressedFile);
+
+    } catch (error) {
+      console.error('Image processing error:', error);
+      alert('Failed to process image. Please try again.');
+    }
   }, [data, onDataChange]);
 
   const handleDragEnter = useCallback((e: React.DragEvent) => {

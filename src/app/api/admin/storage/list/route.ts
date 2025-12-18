@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { listFiles } from '@/lib/admin/s3Client';
+import { listFiles } from '@/lib/s3';
 import { log } from "@/utils/logger";
 /**
  * POST /api/storage/list - S3 파일 목록 조회

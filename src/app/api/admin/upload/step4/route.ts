@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { pool } from '@/lib/db';
-import { deleteFile } from '@/lib/admin/s3Client';
+import { deleteFile } from '@/lib/s3';
 import {
   TABLE_HOSPITAL_PREPARE,
   TABLE_DOCTOR_PREPARE,
@@ -85,7 +85,7 @@ export async function POST(request: NextRequest) {
     log.info('- doctors count:', doctors.length);
 
     // ✅ 0. 실제 파일 업로드 처리
-    const { uploadFile } = await import('@/lib/admin/s3Client');
+    const { uploadFile } = await import('@/lib/s3');
 
     // 0-1. 썸네일 파일 업로드
     const thumbnailFile = formData.get('thumbnail_file') as File | null;

@@ -71,58 +71,34 @@ const PreviewReport: React.FC<PreviewReportProps> =
         return { ...acc, ...stepData };
       }, {});
 
-      // 이미지 업로드 처리
+      // 이미지 업로드 처리 (압축 + presigned URL)
       let imagePaths: string[] = [];
       const submissionId = crypto.randomUUID(); // UUID를 미리 생성
 
       if (allStepData.uploadImage?.imageFile) {
-        const originalFileName = allStepData.uploadImage.imageFileName || 'image.jpg';
+        // Import upload helper
+        const { uploadImageWithCompression } = await import('@/lib/imageUploadHelper');
 
-        // 파일명을 안전하게 변환 (한글/특수문자 제거)
-        const safeFileName = originalFileName
-          .replace(/[^a-zA-Z0-9.-]/g, '_') // 영문, 숫자, 점, 하이픈만 허용
-          .replace(/_{2,}/g, '_'); // 연속된 언더스코어를 하나로 변환
+        // Upload with compression
+        const result = await uploadImageWithCompression(
+          allStepData.uploadImage.imageFile,
+          {
+            compressionType: 'review', // High quality for medical consultation images
+            bucket: 'consultation_photos',
+            folder: `${submissionId}/raw`,
+            upsert: false,
+          }
+        );
 
-        // S3 경로: consultation_photos가 버킷의 루트 폴더
-        const imagePath = `${submissionId}/raw/${safeFileName}`;
-        const bucket = 'consultation_photos';
+        // DB에 저장할 전체 경로
+        imagePaths = [result.s3Path];
 
-        // S3 presigned URL 요청
-        const signResponse = await fetch('/api/storage/s3/sign-upload', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            bucket: bucket,
-            key: imagePath,
-            contentType: allStepData.uploadImage.imageFile.type,
-            upsert: false
-          })
+        log.debug('Image uploaded successfully:', {
+          original: result.originalFile.name,
+          compressed: result.compressedFile.name,
+          compressionRatio: result.compressionRatio.toFixed(2) + 'x',
+          path: result.s3Path
         });
-
-        if (!signResponse.ok) {
-          const error = await signResponse.json();
-          console.error('Failed to get signed URL:', error);
-          throw new Error('Failed to get upload URL');
-        }
-
-        const { url: signedUrl } = await signResponse.json();
-
-        // S3에 이미지 업로드
-        const uploadResponse = await fetch(signedUrl, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': allStepData.uploadImage.imageFile.type,
-          },
-          body: allStepData.uploadImage.imageFile
-        });
-
-        if (!uploadResponse.ok) {
-          console.error('S3 upload failed:', uploadResponse.status);
-          throw new Error('Failed to upload image to S3');
-        }
-
-        // DB에 저장할 전체 경로 (consultation_photos/submissionId/raw/filename)
-        imagePaths = [`${bucket}/${imagePath}`];
       }
 
       // API로 데이터 전송 - submission_type을 'video_consult'로 설정

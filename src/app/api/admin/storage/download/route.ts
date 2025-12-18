@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GetObjectCommand } from '@aws-sdk/client-s3';
-import { s3Client, BUCKET_NAME } from '@/lib/admin/s3Client';
+import { s3Client, BUCKET_NAME } from '@/lib/s3';
 import { log } from "@/utils/logger";
 /**
  * POST /api/storage/download - S3 파일 다운로드

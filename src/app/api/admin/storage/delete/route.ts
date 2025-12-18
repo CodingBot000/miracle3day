@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { deleteFile, deleteFiles } from '@/lib/admin/s3Client';
+import { deleteFile, deleteFiles } from '@/lib/s3';
 
 /**
  * DELETE /api/storage/delete - S3 파일 삭제

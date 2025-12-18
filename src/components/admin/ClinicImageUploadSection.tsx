@@ -23,6 +23,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { useFormMode } from '@/contexts/admin/FormModeContext';
 import { log } from '@/utils/logger';
+import { compressMultipleImages } from '@/utils/imageCompression';
 
 interface ClinicImageUploadSectionProps {
   onFilesChange: (files: File[]) => void;
@@ -141,7 +142,7 @@ const ClinicImageUploadSection = ({
 
   // 파일 처리 함수
   const processFiles = useCallback(
-    (acceptedFiles: File[]) => {
+    async (acceptedFiles: File[]) => {
       if (disableUpload) return;
 
       // Banner는 maxImages(7개) 제한, Avatar는 개수 제한 없음
@@ -168,20 +169,42 @@ const ClinicImageUploadSection = ({
           );
 
           if (fileList.length > 0) {
-            setFiles((prev) => [...prev, ...fileList]);
+            try {
+              // 이미지 압축 (클리닉 디스플레이용)
+              const { results, errors } = await compressMultipleImages(
+                fileList,
+                'clinic_display', // Clinic display images
+              );
 
-            fileList.forEach((file) => {
-              const fileReader = new FileReader();
-              fileReader.onload = () => {
-                const result = fileReader.result as string;
-                setPreview((prev) => prev.concat(result));
-                setIsExistingImage((prev) =>
-                  prev.concat(false),
-                );
-              };
-              // 새로 추가한 이미지는 base64 데이터로 생성 
-              fileReader.readAsDataURL(file);
-            });
+              if (errors.length > 0) {
+                log.error('일부 이미지 압축 실패:', errors);
+                alert(`${errors.length}개 파일 처리 실패`);
+              }
+
+              // Filter successful results only
+              const successfulResults = results.filter(r => r.success);
+
+              if (successfulResults.length > 0) {
+                const compressedFiles = successfulResults.map(r => r.compressedFile);
+                setFiles((prev) => [...prev, ...compressedFiles]);
+
+                // 압축된 파일로 base64 preview 생성
+                successfulResults.forEach((result) => {
+                  const fileReader = new FileReader();
+                  fileReader.onload = () => {
+                    const dataUrl = fileReader.result as string;
+                    setPreview((prev) => prev.concat(dataUrl));
+                    setIsExistingImage((prev) =>
+                      prev.concat(false),
+                    );
+                  };
+                  fileReader.readAsDataURL(result.compressedFile);
+                });
+              }
+            } catch (error) {
+              console.error('이미지 압축 중 오류:', error);
+              alert('이미지 처리 실패');
+            }
           }
           return;
         } else {
@@ -194,25 +217,47 @@ const ClinicImageUploadSection = ({
 
       if (fileList.length === 0) return;
 
-      setFiles((prev) => [...prev, ...fileList]);
+      try {
+        // 이미지 압축 (클리닉 디스플레이용)
+        const { results, errors } = await compressMultipleImages(
+          fileList,
+          'clinic_display', // Clinic display images
+        );
 
-      fileList.forEach((file) => {
-        const fileReader = new FileReader();
-        fileReader.onload = () => {
-          const result = fileReader.result as string;
-          setPreview((prev) => prev.concat(result));
-          setIsExistingImage((prev) => prev.concat(false));
-        };
-        // 새로 추가한 이미지는 base64 데이터로 생성
-        fileReader.readAsDataURL(file);
-      });
+        if (errors.length > 0) {
+          log.error('일부 이미지 압축 실패:', errors);
+          alert(`${errors.length}개 파일 처리 실패`);
+        }
 
-      // Dirty Flag: 갤러리 파일 추가
-      onUserChanged?.('gallery:add');
+        // Filter successful results only
+        const successfulResults = results.filter(r => r.success);
 
-      // Avatar의 경우 슬롯 수 증가
-      if (type === 'Avatar') {
-        setAvatarCount((prev) => prev + fileList.length);
+        if (successfulResults.length > 0) {
+          const compressedFiles = successfulResults.map(r => r.compressedFile);
+          setFiles((prev) => [...prev, ...compressedFiles]);
+
+          // 압축된 파일로 base64 preview 생성
+          successfulResults.forEach((result) => {
+            const fileReader = new FileReader();
+            fileReader.onload = () => {
+              const dataUrl = fileReader.result as string;
+              setPreview((prev) => prev.concat(dataUrl));
+              setIsExistingImage((prev) => prev.concat(false));
+            };
+            fileReader.readAsDataURL(result.compressedFile);
+          });
+
+          // Dirty Flag: 갤러리 파일 추가
+          onUserChanged?.('gallery:add');
+
+          // Avatar의 경우 슬롯 수 증가
+          if (type === 'Avatar') {
+            setAvatarCount((prev) => prev + successfulResults.length);
+          }
+        }
+      } catch (error) {
+        console.error('이미지 압축 중 오류:', error);
+        alert('이미지 처리 실패');
       }
     },
     [disableUpload, type, maxImages, preview.length, onUserChanged],

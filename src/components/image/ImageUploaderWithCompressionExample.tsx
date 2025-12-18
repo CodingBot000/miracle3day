@@ -38,46 +38,41 @@ const ImageUploaderWithCompressionExample: React.FC = () => {
     setModalStatus("compressing");
     setModalOpen(true);
 
-    try {
-      if (fileArray.length === 1) {
-        // 단일 파일
-        const result = await compressSingleImage(fileArray[0], targetType);
-        setProcessedCount(1);
-        log.debug("compressed single result", result);
+    // Result 패턴 사용 (예외가 발생하지 않음)
+    if (fileArray.length === 1) {
+      // 단일 파일
+      const result = await compressSingleImage(fileArray[0], targetType);
+      setProcessedCount(1);
+      log.debug("compressed single result", result);
+
+      if (!result.success) {
+        setHasTimeoutError(result.error instanceof ImageCompressionTimeoutError);
+        setModalStatus("error");
+        console.error("compression error", result.error);
       } else {
-        // 다중 파일
-        const { results, errors } = await compressMultipleImages(
-          fileArray,
-          targetType
-        );
-
-        setProcessedCount(fileArray.length);
-
-        if (errors.length > 0) {
-          const hasTimeout = errors.some(
-            (e) => e instanceof ImageCompressionTimeoutError
-          );
-          setHasTimeoutError(hasTimeout);
-          setModalStatus("error");
-          console.error("compression errors", errors);
-        } else {
-          setModalStatus("done");
-        }
-
-        log.debug("compressed multiple results", results);
-      }
-
-      if (fileArray.length === 1) {
         setModalStatus("done");
       }
-    } catch (error) {
-      console.error(error);
+    } else {
+      // 다중 파일
+      const { results, errors } = await compressMultipleImages(
+        fileArray,
+        targetType
+      );
 
-      if (error instanceof ImageCompressionTimeoutError) {
-        setHasTimeoutError(true);
+      setProcessedCount(fileArray.length);
+
+      if (errors.length > 0) {
+        const hasTimeout = errors.some(
+          (e) => e instanceof ImageCompressionTimeoutError
+        );
+        setHasTimeoutError(hasTimeout);
+        setModalStatus("error");
+        console.error("compression errors", errors);
+      } else {
+        setModalStatus("done");
       }
 
-      setModalStatus("error");
+      log.debug("compressed multiple results", results);
     }
   };
 

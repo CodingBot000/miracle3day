@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { uploadFile } from '@/lib/admin/s3Client';
+import { uploadFile } from '@/lib/s3';
 
 /**
  * POST /api/storage/upload - S3 파일 업로드

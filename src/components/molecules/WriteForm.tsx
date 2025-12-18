@@ -81,7 +81,9 @@ export default function WriteForm({
         toast.error(`Failed to compress ${errors.length} image(s)`);
       }
 
-      const newImages = results.map(r => ({
+      // Filter successful results only
+      const successfulResults = results.filter(r => r.success);
+      const newImages = successfulResults.map(r => ({
         file: r.compressedFile,
         preview: URL.createObjectURL(r.compressedFile),
       }));

@@ -1,0 +1,29 @@
+{
+  "rules": [
+    {
+      "allowedHeaders": [
+        "*"
+      ],
+      "allowedMethods": [
+        "GET",
+        "PUT",
+        "POST",
+        "DELETE",
+        "HEAD"
+      ],
+      "allowedOrigins": [
+        "http://localhost:3000",
+        "https://mimotok.com",
+        "https://www.mimotok.com"
+      ],
+      "exposeHeaders": [
+        "ETag",
+        "x-amz-server-side-encryption",
+        "x-amz-request-id",
+        "x-amz-id-2",
+        "x-amz-checksum-crc32"
+      ],
+      "maxAgeSeconds": 3000
+    }
+  ]
+}

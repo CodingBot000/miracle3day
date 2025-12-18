@@ -10,31 +10,28 @@ export default function UploadTest() {
     const file = inputRef.current?.files?.[0];
     if (!file) return alert("파일을 선택하세요.");
 
-    setLog("1) presign 요청 중...");
-    const q = new URLSearchParams({
-      fileName: file.name,
-      contentType: file.type,
-    });
-    const r1 = await fetch(`/api/storage/presign_upload?${q}`);
-    if (!r1.ok) {
-      const e = await r1.json();
-      setLog(`presign 실패: ${e.error ?? r1.status}`);
-      return;
-    }
-    const { url, key, publicUrl } = await r1.json();
-    setLog(`2) 업로드 중...\nkey=${key}`);
+    setLog("업로드 중...");
+    const formData = new FormData();
+    formData.append('file', file);
 
-    const r2 = await fetch(url, {
-      method: "PUT",
-      headers: { "Content-Type": file.type },
-      body: file,
+    const response = await fetch(`/api/storage/upload`, {
+      method: 'POST',
+      body: formData,
     });
-    if (!r2.ok) {
-      setLog(`업로드 실패: ${r2.status}`);
+
+    if (!response.ok) {
+      const error = await response.json();
+      setLog(`업로드 실패: ${error.error ?? response.status}`);
       return;
     }
 
-    setLog(`✅ 업로드 성공!\n키: ${key}\n(읽기 필요 시 /api/storage/presign_read?key=${encodeURIComponent(key)})\n직접 URL(서명제거): ${publicUrl}`);
+    const { ok, key, publicUrl } = await response.json();
+
+    if (ok) {
+      setLog(`✅ 업로드 성공!\n키: ${key}\n(읽기 필요 시 /api/storage/read?key=${encodeURIComponent(key)})\n직접 URL: ${publicUrl}`);
+    } else {
+      setLog(`업로드 실패`);
+    }
   }
 
   return (

@@ -88,20 +88,20 @@ const ClinicImageThumbnailUploadSection = ({
       if (!selectedFile) return;
 
       try {
-        // 이미지 압축 (썸네일용)
-        const { compressedFile, error } = await compressSingleImage(
+        // 이미지 압축 (썸네일용) - Result 패턴
+        const result = await compressSingleImage(
           selectedFile,
           'thumbnail', // Thumbnail images
         );
 
-        if (error || !compressedFile) {
-          console.error('이미지 압축 실패:', error);
-          alert('이미지 처리 실패');
+        if (!result.success) {
+          console.error('이미지 압축 실패:', result.error);
+          alert(`이미지 처리 실패: ${result.error.message}`);
           return;
         }
 
-        setFile(compressedFile);
-        onFileChange(compressedFile); // 압축된 파일을 부모에게 알림
+        setFile(result.compressedFile);
+        onFileChange(result.compressedFile); // 압축된 파일을 부모에게 알림
 
         // Dirty Flag: 썸네일 교체
         onUserChanged?.('thumbnail:replace');
@@ -109,11 +109,11 @@ const ClinicImageThumbnailUploadSection = ({
         // 압축된 파일로 base64 preview 생성
         const fileReader = new FileReader();
         fileReader.onload = () => {
-          const result = fileReader.result as string;
-          setPreview(result);
+          const readerResult = fileReader.result as string;
+          setPreview(readerResult);
           setIsExistingImage(false);
         };
-        fileReader.readAsDataURL(compressedFile);
+        fileReader.readAsDataURL(result.compressedFile);
       } catch (error) {
         console.error('이미지 압축 중 오류:', error);
         alert('이미지 처리 실패');

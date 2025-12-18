@@ -2,7 +2,10 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Upload, X } from 'lucide-react';
-import { compressSingleImage } from '@/utils/imageCompression';
+import {
+  compressSingleImage,
+  ImageCompressionTimeoutError,
+} from '@/utils/imageCompression';
 
 interface UploadImageStepProps {
   data: any;
@@ -37,42 +40,47 @@ const UploadImageStep: React.FC<UploadImageStepProps> = ({ data, onDataChange, o
       return;
     }
 
-    try {
-      // 이미지 압축 (제출 시점이 아닌 선택 시점에 압축하여 UX 향상)
-      const { compressedFile, error } = await compressSingleImage(
-        file,
-        'review', // High quality for medical consultation images
-        {
-          maxSizeMB: 2.0, // Override for medical images (higher quality)
-        }
-      );
-
-      if (error || !compressedFile) {
-        console.error('Compression failed:', error);
-        alert('Failed to process image. Please try another file.');
-        return;
+    // 이미지 압축 (Result 패턴 - 예외가 발생하지 않음)
+    const compressionResult = await compressSingleImage(
+      file,
+      'review', // High quality for medical consultation images
+      {
+        maxSizeMB: 2.0, // Override for medical images (higher quality)
       }
+    );
 
-      // 압축된 파일을 base64로 변환하여 미리보기 생성
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const result = e.target?.result as string;
-        setUploadedImage(result);
-        onDataChange({
-          ...data,
-          uploadImage: {
-            uploadedImage: result,
-            imageFile: compressedFile, // Store compressed file, not original
-            imageFileName: file.name
-          }
-        });
-      };
-      reader.readAsDataURL(compressedFile);
+    // 압축 실패 체크
+    if (!compressionResult.success) {
+      console.error('Image compression failed:', compressionResult.error);
 
-    } catch (error) {
-      console.error('Image processing error:', error);
-      alert('Failed to process image. Please try again.');
+      // 에러 타입에 따라 명확한 메시지 제공
+      if (compressionResult.error instanceof ImageCompressionTimeoutError) {
+        alert('Image compression timeout. The image is too large or complex. Please try a smaller image.');
+      } else {
+        const errorMessage = compressionResult.error.fileName
+          ? `Failed to compress image: ${compressionResult.error.fileName}. ${compressionResult.error.message}`
+          : `Image compression failed: ${compressionResult.error.message}`;
+        alert(errorMessage);
+      }
+      return;
     }
+
+    // 압축 성공 - 파일을 base64로 변환하여 미리보기 생성
+    const compressedFile = compressionResult.compressedFile;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const result = e.target?.result as string;
+      setUploadedImage(result);
+      onDataChange({
+        ...data,
+        uploadImage: {
+          uploadedImage: result,
+          imageFile: compressedFile, // Store compressed file, not original
+          imageFileName: file.name
+        }
+      });
+    };
+    reader.readAsDataURL(compressedFile);
   }, [data, onDataChange]);
 
   const handleDragEnter = useCallback((e: React.DragEvent) => {

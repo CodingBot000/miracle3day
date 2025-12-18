@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import {
-  ListObjectsV2Command,
-  ListObjectsV2CommandOutput,
-} from '@aws-sdk/client-s3';
+import { GetObjectCommand } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { getIronSession } from 'iron-session';
 import { sessionOptions, SessionData } from '@/lib/session';
 import { pool } from '@/lib/db';
@@ -44,52 +42,29 @@ export async function GET(request: NextRequest) {
     // 4. Query parameters 추출
     const searchParams = request.nextUrl.searchParams;
     const bucket = searchParams.get('bucket');
-    const prefix = searchParams.get('prefix') || '';
+    const key = searchParams.get('key');
 
-    if (!bucket) {
+    if (!bucket || !key) {
       return NextResponse.json(
-        { error: 'Bucket parameter is required' },
+        { error: 'Bucket and key parameters are required' },
         { status: 400 }
       );
     }
 
-    // 5. Lightsail 리스팅
-    const command = new ListObjectsV2Command({
+    // 5. Presigned URL 생성 (5분 만료)
+    const command = new GetObjectCommand({
       Bucket: bucket,
-      Prefix: prefix,
-      Delimiter: '/', // 폴더 구분자
+      Key: key,
     });
 
-    const response: ListObjectsV2CommandOutput = await s3Client.send(command);
+    const url = await getSignedUrl(s3Client, command, { expiresIn: 300 });
 
-    // 6. 폴더 목록 (CommonPrefixes)
-    const folders = response.CommonPrefixes?.map((cp) => ({
-      type: 'folder' as const,
-      key: cp.Prefix || '',
-      name: cp.Prefix?.replace(prefix, '').replace('/', '') || '',
-    })) || [];
-
-    // 7. 파일 목록 (Contents)
-    const files = response.Contents?.filter((obj) => obj.Key !== prefix) // 현재 폴더 자체는 제외
-      .map((obj) => ({
-        type: 'file' as const,
-        key: obj.Key || '',
-        name: obj.Key?.replace(prefix, '') || '',
-        size: obj.Size || 0,
-        lastModified: obj.LastModified?.toISOString() || '',
-      })) || [];
-
-    return NextResponse.json({
-      bucket,
-      prefix,
-      folders,
-      files,
-    });
+    return NextResponse.json({ url });
 
   } catch (error) {
-    console.error('Error listing objects:', error);
+    console.error('Error generating presigned URL:', error);
     return NextResponse.json(
-      { error: 'Failed to list objects' },
+      { error: 'Failed to generate presigned URL' },
       { status: 500 }
     );
   }

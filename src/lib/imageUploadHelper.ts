@@ -107,17 +107,18 @@ export async function uploadImageWithCompression(
   });
 
   try {
-    // Step 1: Compress image
-    const { compressedFile, error } = await compressSingleImage(
+    // Step 1: Compress image (Result 패턴)
+    const compressionResult = await compressSingleImage(
       file,
       options.compressionType,
       options.compressionOverride
     );
 
-    if (error || !compressedFile) {
-      throw new Error(`Compression failed: ${error?.message || 'Unknown error'}`);
+    if (!compressionResult.success) {
+      throw new Error(`Compression failed: ${compressionResult.error.message}`);
     }
 
+    const compressedFile = compressionResult.compressedFile;
     const compressionRatio = file.size / compressedFile.size;
 
     // Step 2: Sanitize filename

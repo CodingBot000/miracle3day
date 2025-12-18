@@ -22,8 +22,11 @@ export const getSessionOptions = (isSecure: boolean): SessionOptions => ({
   },
 });
 
+// Export SessionData type for explicit use
+export interface SessionData {
+  auth?: AuthOnlyDto;
+}
+
 declare module "iron-session" {
-  interface IronSessionData {
-    auth?: AuthOnlyDto;
-  }
+  interface IronSessionData extends SessionData {}
 }

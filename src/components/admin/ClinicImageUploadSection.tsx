@@ -171,31 +171,34 @@ const ClinicImageUploadSection = ({
           if (fileList.length > 0) {
             try {
               // 이미지 압축 (클리닉 디스플레이용)
-              const { results, failed } = await compressMultipleImages(
+              const { results, errors } = await compressMultipleImages(
                 fileList,
                 'clinic_display', // Clinic display images
               );
 
-              if (failed.length > 0) {
-                log.error('일부 이미지 압축 실패:', failed);
-                alert(`${failed.length}개 파일 처리 실패`);
+              if (errors.length > 0) {
+                log.error('일부 이미지 압축 실패:', errors);
+                alert(`${errors.length}개 파일 처리 실패`);
               }
 
-              if (results.length > 0) {
-                const compressedFiles = results.map(r => r.compressedFile);
+              // Filter successful results only
+              const successfulResults = results.filter(r => r.success);
+
+              if (successfulResults.length > 0) {
+                const compressedFiles = successfulResults.map(r => r.compressedFile);
                 setFiles((prev) => [...prev, ...compressedFiles]);
 
                 // 압축된 파일로 base64 preview 생성
-                results.forEach(({ compressedFile }) => {
+                successfulResults.forEach((result) => {
                   const fileReader = new FileReader();
                   fileReader.onload = () => {
-                    const result = fileReader.result as string;
-                    setPreview((prev) => prev.concat(result));
+                    const dataUrl = fileReader.result as string;
+                    setPreview((prev) => prev.concat(dataUrl));
                     setIsExistingImage((prev) =>
                       prev.concat(false),
                     );
                   };
-                  fileReader.readAsDataURL(compressedFile);
+                  fileReader.readAsDataURL(result.compressedFile);
                 });
               }
             } catch (error) {
@@ -216,29 +219,32 @@ const ClinicImageUploadSection = ({
 
       try {
         // 이미지 압축 (클리닉 디스플레이용)
-        const { results, failed } = await compressMultipleImages(
+        const { results, errors } = await compressMultipleImages(
           fileList,
           'clinic_display', // Clinic display images
         );
 
-        if (failed.length > 0) {
-          log.error('일부 이미지 압축 실패:', failed);
-          alert(`${failed.length}개 파일 처리 실패`);
+        if (errors.length > 0) {
+          log.error('일부 이미지 압축 실패:', errors);
+          alert(`${errors.length}개 파일 처리 실패`);
         }
 
-        if (results.length > 0) {
-          const compressedFiles = results.map(r => r.compressedFile);
+        // Filter successful results only
+        const successfulResults = results.filter(r => r.success);
+
+        if (successfulResults.length > 0) {
+          const compressedFiles = successfulResults.map(r => r.compressedFile);
           setFiles((prev) => [...prev, ...compressedFiles]);
 
           // 압축된 파일로 base64 preview 생성
-          results.forEach(({ compressedFile }) => {
+          successfulResults.forEach((result) => {
             const fileReader = new FileReader();
             fileReader.onload = () => {
-              const result = fileReader.result as string;
-              setPreview((prev) => prev.concat(result));
+              const dataUrl = fileReader.result as string;
+              setPreview((prev) => prev.concat(dataUrl));
               setIsExistingImage((prev) => prev.concat(false));
             };
-            fileReader.readAsDataURL(compressedFile);
+            fileReader.readAsDataURL(result.compressedFile);
           });
 
           // Dirty Flag: 갤러리 파일 추가
@@ -246,7 +252,7 @@ const ClinicImageUploadSection = ({
 
           // Avatar의 경우 슬롯 수 증가
           if (type === 'Avatar') {
-            setAvatarCount((prev) => prev + results.length);
+            setAvatarCount((prev) => prev + successfulResults.length);
           }
         }
       } catch (error) {

@@ -82,11 +82,26 @@ export class ImageCompressionError extends Error {
   }
 }
 
-export interface SingleCompressionResult {
+// Result 패턴: 성공 케이스
+export interface SingleCompressionSuccess {
+  success: true;
   originalFile: File;
   compressedFile: File;
   type: ImageCompressionType;
+  error: null;
 }
+
+// Result 패턴: 실패 케이스
+export interface SingleCompressionFailure {
+  success: false;
+  originalFile: File;
+  compressedFile: null;
+  type: ImageCompressionType;
+  error: ImageCompressionError | ImageCompressionTimeoutError;
+}
+
+// Result 패턴: Union 타입
+export type SingleCompressionResult = SingleCompressionSuccess | SingleCompressionFailure;
 
 export interface MultipleCompressionResult {
   results: SingleCompressionResult[];
@@ -118,7 +133,8 @@ async function withTimeout<T>(
 }
 
 /**
- * 단일 파일 압축
+ * 단일 파일 압축 (Result 패턴)
+ * @returns success가 true면 압축 성공, false면 실패 (error 포함)
  */
 export async function compressSingleImage(
   file: File,
@@ -145,24 +161,39 @@ export async function compressSingleImage(
     });
 
     return {
+      success: true,
       originalFile: file,
       compressedFile,
       type,
+      error: null,
     };
   } catch (error: any) {
+    let compressionError: ImageCompressionError | ImageCompressionTimeoutError;
+
     if (error instanceof ImageCompressionTimeoutError) {
-      throw error;
+      compressionError = error;
+    } else if (error instanceof ImageCompressionError) {
+      compressionError = error;
+    } else {
+      compressionError = new ImageCompressionError(
+        error?.message || "Image compression failed",
+        file.name
+      );
     }
-    throw new ImageCompressionError(
-      error?.message || "Image compression failed",
-      file.name
-    );
+
+    return {
+      success: false,
+      originalFile: file,
+      compressedFile: null,
+      type,
+      error: compressionError,
+    };
   }
 }
 
 /**
- * 복수 파일 압축
- * - 각 파일마다 독립적으로 압축 및 에러/타임아웃 처리
+ * 복수 파일 압축 (Result 패턴)
+ * - 각 파일마다 독립적으로 압축
  * - 전체 진행이 끝난 뒤 결과/에러 배열 반환
  */
 export async function compressMultipleImages(
@@ -170,32 +201,19 @@ export async function compressMultipleImages(
   type: ImageCompressionType,
   overrideOptions?: Partial<ImageCompressionConfig>
 ): Promise<MultipleCompressionResult> {
-  const tasks = files.map((file) =>
-    compressSingleImage(file, type, overrideOptions)
-      .then((result) => ({ status: "fulfilled" as const, result }))
-      .catch((error) => ({ status: "rejected" as const, error }))
+  // 모든 파일을 병렬로 압축 (Result 패턴이므로 예외가 발생하지 않음)
+  const allResults = await Promise.all(
+    files.map((file) => compressSingleImage(file, type, overrideOptions))
   );
-
-  const settled = await Promise.all(tasks);
 
   const results: SingleCompressionResult[] = [];
   const errors: (ImageCompressionError | ImageCompressionTimeoutError)[] = [];
 
-  for (const item of settled) {
-    if (item.status === "fulfilled") {
-      results.push(item.result);
-    } else if (item.status === "rejected") {
-      if (item.error instanceof ImageCompressionTimeoutError) {
-        errors.push(item.error);
-      } else if (item.error instanceof ImageCompressionError) {
-        errors.push(item.error);
-      } else {
-        errors.push(
-          new ImageCompressionError(
-            item.error?.message || "Unknown compression error"
-          )
-        );
-      }
+  // 성공/실패를 분리
+  for (const result of allResults) {
+    results.push(result);
+    if (!result.success) {
+      errors.push(result.error);
     }
   }
 

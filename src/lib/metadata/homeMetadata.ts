@@ -9,11 +9,11 @@ type LocaleMeta = {
 
 const metadataByLocale: Record<string, LocaleMeta> = {
   en: {
-    title: 'Korean Dermatology & Skin Clinic for Foreigners | Free Video Consultation | Mimotok',
-    description: 'Book Korean dermatology for foreigners. Free video consultation with clinics. Get instant quotes via AI questionnaire. Glass skin, laser, botox at Korean prices. English support.',
+    title:  'Korean Dermatology & K Beauty Clinic for Foreigners | Mimotok',
+    description: 'Book Korean dermatology and K beauty treatments for foreigners. Free video consultation with Seoul clinics. Get instant quotes for glass skin, laser, botox at Korean prices. Full English support.',
     keywords: [
       'Korean dermatology for foreigners',
-      'K-beauty treatments Seoul',
+      'K beauty treatments Seoul',
       'Korea skin clinic English',
       'medical tourism Korea skin',
       'glass skin treatment Korea',
@@ -25,25 +25,25 @@ const metadataByLocale: Record<string, LocaleMeta> = {
       'Seoul skin clinic booking',
       'Korea botox price',
       'Korean filler clinic',
-      'K-beauty medical tourism'
+      'K beauty medical tourism'
     ]
   },
   ko: {
-    title: '미모톡 - 외국인 피부과·성형외과 예약 | 무료 화상상담 | AI 견적',
-    description: '외국인 환자를 위한 한국 피부과, 성형외과 예약 플랫폼. 무료 화상상담, 문진표 기반 AI 자동 견적. 영어, 일본어, 중국어 상담 지원.',
+    title: '미모톡 - 피부과·성형외과 예약 | 무료 화상상담 | AI 견적',
+    description: '한국 피부과, 성형외과 예약 플랫폼. 무료 화상상담, 문진표 기반 AI 자동 견적. 영어, 일본어, 중국어 상담 지원.',
     keywords: [
-      '외국인 피부과',
+      '피부과',
       '의료관광 피부과',
-      '외국인 성형외과',
+      '성형외과',
       '무료 화상상담',
       '피부과 견적',
-      '강남 피부과 외국인',
+      '강남 피부과',
       '한국 의료관광'
     ]
   },
   ja: {
-    title: '韓国皮膚科・美容クリニック予約 | 無料ビデオ相談 | 日本語対応 | Mimotok',
-    description: '韓国の皮膚科・美容クリニックをオンライン予約。無料ビデオ相談で医師と直接話せる。問診票で自動見積り。レーザー、ボトックス、ヒアルロン酸を韓国価格で。',
+    title: '韓国美容(Kbeauty)クリニック予約 | 無料相談 | Mimotok',
+    description: '韓国美容(Kbeauty)クリニックをオンライン予約。無料ビデオ相談で医師と直接相談。AI問診で即時見積り。レーザー、ボトックス、ヒアルロン酸を現地価格で。日本語完全対応。',
     keywords: [
       '韓国 皮膚科 予約',
       '韓国 美容クリニック 日本語',
@@ -53,15 +53,18 @@ const metadataByLocale: Record<string, LocaleMeta> = {
       '韓国 美容医療 相談',
       '韓国 皮膚科 無料相談',
       '韓国 美容 ビデオ相談',
-      'K-beauty 施術',
+      'K beauty 施術',
       '韓国 医療観光 皮膚科',
       '韓国 ヒアルロン酸 価格',
       '韓国 美肌 治療'
     ]
   },
   'zh-TW': {
-    title: '韓國皮膚科・整形外科預約 | 免費視訊諮詢 | 中文服務 | Mimotok',
-    description: '線上預約韓國皮膚科診所。免費視訊諮詢直接與醫生溝通。問診表AI自動報價。雷射、肉毒、玻尿酸，韓國價格。提供中文服務。',
+     title: 'K Beauty & Gangnam Beauty Clinic | 韓國美容診所 | Mimotok',
+    description: 'Book k beauty and Korean beauty treatments in Gangnam, Seoul. Free video consultation, AI instant quotes. Laser, botox, filler at Korean prices. 提供繁體中文服務。',
+
+    // title: '韓國皮膚科・整形外科預約 | 免費視訊諮詢 | 中文服務 | Mimotok',
+    // description: '線上預約韓國皮膚科診所。免費視訊諮詢直接與醫生溝通。問診表AI自動報價。雷射、肉毒、玻尿酸，韓國價格。提供中文服務。',
     keywords: [
       '韓國皮膚科預約',
       '韓國整形外科',
@@ -74,7 +77,7 @@ const metadataByLocale: Record<string, LocaleMeta> = {
       '韓國醫療觀光',
       '韓國皮膚科免費諮詢',
       '韓國美容視訊諮詢',
-      'K-beauty療程'
+      'K beauty療程'
     ]
   },
   'zh-CN': {
@@ -92,7 +95,7 @@ const metadataByLocale: Record<string, LocaleMeta> = {
       '韩国医疗观光',
       '韩国皮肤科免费咨询',
       '韩国美容视频咨询',
-      'K-beauty疗程'
+      'K beauty疗程'
     ]
   }
 };

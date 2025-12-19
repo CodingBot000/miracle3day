@@ -30,7 +30,8 @@ export async function GET(
         unit,
         price,
         group_id,
-        expose
+        expose,
+        meta
       FROM ${TABLE_TREATMENT_PRODUCT}
       WHERE id_uuid_hospital = $1
       ORDER BY department ASC, group_id ASC
@@ -49,6 +50,7 @@ export async function GET(
       price: Number(row.price ?? 0),
       group_id: row.group_id ?? '',
       expose: Boolean(row.expose ?? false),
+      meta: row.meta ?? undefined,
     }));
 
     return NextResponse.json({ products }, { status: 200 });

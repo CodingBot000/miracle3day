@@ -1,7 +1,7 @@
 {
   "meta": {
     "language": "en",
-    "lastUpdated": "2025-01-08"
+    "lastUpdated": "2025-11-08"
   },
   "navigation": {
     "home": "Home",
@@ -12,7 +12,7 @@
     "section1": {
       "id": "overview",
       "slug": "why-k-beauty-is-best",
-      "title": "Why Korean Medical Aesthetics Leads the World",
+      "title": "Why Korean Medical Beauty Leads Global Trends - K-Beauty Chosen by 1.17M Patients",
       "subtitle": "The Secret Behind K-Beauty That the World is Watching",
       "tagline": "The answer to 'that skin' you've been searching for is in Korea",
       "intro": {
@@ -284,7 +284,7 @@
             "Skin Booster: Tiny needle marks, makeup next day",
             "\"Friday evening treatment, Monday back to work\" - Korean's standard schedule"
           ],
-          "image": "/images/k-beauty/section3-dermatology/recovery-timeline.jpg"
+          "image": ""
         },
         "point5": {
           "title": "Expertise and Safety",

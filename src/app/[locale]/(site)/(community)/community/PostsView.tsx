@@ -43,7 +43,7 @@ export default async function PostsView({ topicId, tagId, language }: PostsViewP
   const getDisplayName = (name: string | { en: string; ko: string } | null | undefined): string | null => {
     if (!name) return null;
     if (typeof name === 'string') return name;
-    return name[language] || name.ko || name.en || null;
+    return name[language] || name.en || name.ko || null;
   };
 
   // 헤더 라벨 결정

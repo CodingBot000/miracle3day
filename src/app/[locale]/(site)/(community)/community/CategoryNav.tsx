@@ -56,7 +56,7 @@ export default function CategoryNav({ categories }: { categories: any[] }) {
                   ? 'bg-blue-600 text-white shadow-lg'
                   : 'bg-white text-gray-700 hover:bg-blue-50 border border-gray-200'
               }`}>
-                {cat.icon && `${cat.icon} `}{typeof cat.name === 'string' ? cat.name : cat.name[locale]}
+                {cat.icon && `${cat.icon} `}{typeof cat.name === 'string' ? cat.name : (cat.name[locale] || cat.name['en'] || cat.name['ko'])}
               </button>
             </Link>
           ))}
@@ -79,7 +79,7 @@ export default function CategoryNav({ categories }: { categories: any[] }) {
                       ? 'bg-blue-600 text-white shadow-lg'
                       : 'bg-white text-gray-700 hover:bg-blue-50 border border-gray-200'
                   }`}>
-                    {cat.icon && `${cat.icon} `}{typeof cat.name === 'string' ? cat.name : cat.name[locale]}
+                    {cat.icon && `${cat.icon} `}{typeof cat.name === 'string' ? cat.name : (cat.name[locale] || cat.name['en'] || cat.name['ko'])}
                   </button>
                 </Link>
               ))}

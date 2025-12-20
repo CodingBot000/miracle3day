@@ -33,7 +33,7 @@ const LayoutHeaderAuth = () => {
   return (
     <>
     <header
-      className={`fixed top-0 left-0 right-0 z-[200] flex flex-col min-h-[62px] max-h-[88px] ease-in-out bg-white text-black shadow-md`}
+      className={`fixed top-0 left-0 right-0 z-header flex flex-col min-h-[62px] max-h-[88px] ease-in-out bg-white text-black shadow-md`}
     >
       <div className="w-full max-w-[1024px] mx-auto flex flex-col h-full">
         {/* Top Section - Main Content (fills remaining space) */}

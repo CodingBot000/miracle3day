@@ -91,8 +91,8 @@ const LayoutHeaderHome = () => {
   return (
     <>
     <header
-      className={`fixed top-0 left-0 right-0 z-[200] flex flex-col min-h-[62px] max-h-[88px] ease-in-out ${getHeaderStyles()}`}
-      // className={`fixed top-0 left-0 right-0 z-[200] flex flex-col min-h-[88px] max-h-[128px] ease-in-out ${getHeaderStyles()}`}
+      className={`fixed top-0 left-0 right-0 z-header flex flex-col min-h-[62px] max-h-[88px] ease-in-out ${getHeaderStyles()}`}
+      // className={`fixed top-0 left-0 right-0 z-header flex flex-col min-h-[88px] max-h-[128px] ease-in-out ${getHeaderStyles()}`}
       style={{
         backgroundColor: isTransparentMode && scrollPosition > 0
           ? `rgba(255, 255, 255, ${bgOpacity})`

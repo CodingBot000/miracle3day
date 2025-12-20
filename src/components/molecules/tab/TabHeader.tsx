@@ -17,7 +17,7 @@ const TabHeader = ({ list, currentTab, onTabChange }: TabHeaderProps) => {
   };
 
   return (
-    <ul className="flex justify-center items-center my-4 sticky top-[84px] z-[12] cursor-pointer">
+    <ul className="flex justify-center items-center my-4 sticky top-[84px] z-sticky cursor-pointer">
       {list.map(({ key, name }) => (
         <li
           key={key}

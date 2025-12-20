@@ -66,7 +66,7 @@ const ImageCompressionModal: React.FC<ImageCompressionModalProps> = ({
   })();
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40">
+    <div className="fixed inset-0 z-maximum flex items-center justify-center bg-black/40">
       <div className="w-full max-w-sm rounded-lg bg-white p-6 shadow-lg">
         <h2 className="text-lg font-semibold mb-2">{title}</h2>
         <p className="text-sm text-gray-600 mb-4">{description}</p>

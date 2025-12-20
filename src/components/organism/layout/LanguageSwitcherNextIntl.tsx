@@ -62,7 +62,7 @@ export const LanguageSwitcherNextIntl = ({ iconColor = 'black' }: LanguageSwitch
           />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-[120px] md:w-[150px] z-[250] text-xs md:text-sm">
+      <DropdownMenuContent className="w-[120px] md:w-[150px] z-drawer text-xs md:text-sm">
         {locales.map((loc) => (
           <DropdownMenuItem
             key={loc}

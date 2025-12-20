@@ -20,8 +20,8 @@ export const PageTransitionOverlay = () => {
   if (!isPageLoading) return null;
 
   return (
-    <div 
-      className="fixed top-0 left-0 w-full h-full z-[9999] bg-black/30"
+    <div
+      className="fixed top-0 left-0 w-full h-full z-maximum bg-black/30"
       aria-hidden="true"
     />
   );

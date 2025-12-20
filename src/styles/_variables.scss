@@ -1,4 +1,21 @@
-// color
+/*
+  색상 변수 제거됨 - Tailwind CSS config를 단일 진실 공급원으로 사용
+
+  모든 색상은 tailwind.config.js에 정의되어 있습니다:
+  - red, green, blue, yellow 등 기본 색상
+  - white-100, black-100, gray-100 등 shade 변형
+  - kakao, naver, apple 등 브랜드 색상
+
+  Tailwind 사용법:
+  - className="bg-red text-white"
+  - className="border-gray-300"
+  - className="text-kakao"
+
+  더 이상 SCSS 색상 변수를 사용하지 마세요!
+*/
+
+/*
+// color (DEPRECATED - Use Tailwind classes)
 $red: #e74c3c;
 $red-100: #ff7272;
 $red-200: #8a0b0b;
@@ -41,6 +58,7 @@ $gray-200: #e3edfe;
 $gray-300: #e8e8e8;
 $gray-400: #8e8e8e;
 $gray-500: #42444e;
+*/
 
 // media query
 $laptop: 1024px;

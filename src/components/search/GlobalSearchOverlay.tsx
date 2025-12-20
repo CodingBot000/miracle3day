@@ -231,7 +231,7 @@ export const GlobalSearchOverlay: React.FC = () => {
 
   return createPortal(
     <div
-      className="fixed inset-0 bg-black/50 z-[9999]"
+      className="fixed inset-0 bg-black/50 z-maximum"
       onClick={closeSearch}
     >
       <div

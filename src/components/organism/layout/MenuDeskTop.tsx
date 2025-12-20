@@ -64,7 +64,7 @@ const Menu = () => {
       <Portal>
         <div
           ref={modalRef}
-          className={`fixed left-0 w-full max-h-[80vh] transition-all duration-300 p-5 bg-white/70 backdrop-blur z-[99] flex-col md:flex ${
+          className={`fixed left-0 w-full max-h-[80vh] transition-all duration-300 p-5 bg-white/70 backdrop-blur z-overlay flex-col md:flex ${
             open ? "top-0" : "-top-[100%]"
           }`}
         >

@@ -3,10 +3,9 @@
 import { EventCard } from "@/components/molecules/card";
 import { InfinityItemList } from "@/components/template/InfinityItemList";
 import { ROUTE } from "@/router";
-import { daysYMDFormat } from "@/utils/days";
+
 import { getAllEventAPI } from "@/app/api/event";
 
-import styles from "./event.module.scss";
 import { ProductCard } from "@/components/molecules/card/ProductCard";
 
 const EventList  = () => {

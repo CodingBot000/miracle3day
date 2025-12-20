@@ -11,7 +11,7 @@ export default function MainContent({ children }: MainContentProps) {
   const { isTransparentMode } = useHeader();
   
   return (
-    <div className={isTransparentMode ? '' : 'pt-[88px]'}>
+    <div className={isTransparentMode ? '' : 'pt-[62px]'}>
       {children}
     </div>
   );

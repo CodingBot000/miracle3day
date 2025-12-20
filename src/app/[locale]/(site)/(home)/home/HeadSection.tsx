@@ -52,7 +52,7 @@ export default function HeadSection() {
   };
 
   return (
-    <section className="w-full flex flex-col items-center gap-10 px-4 mt-8">
+    <section className="w-full flex flex-col items-center gap-10 px-4 mt-3  md:mt-4 mb-10 md:mb-16">
       {/* Heading */}
       <div
         className="w-full max-w-screen-xl flex flex-col items-center"

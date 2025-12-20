@@ -14,7 +14,7 @@ export default function HomeLayout({ children }: { children: React.ReactNode }) 
         <LayoutHeaderHome />
       </Suspense>
 
-      <main className="flex-1 w-full relative">
+      <main className="w-full">
         <MainContent>
           {children}
         </MainContent>

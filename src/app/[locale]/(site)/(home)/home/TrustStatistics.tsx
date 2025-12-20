@@ -187,8 +187,7 @@ function StatCard({ number, label, sublabel, delay = 0 }: StatCardProps) {
       style={{
         animationDelay: `${delay}ms`,
         opacity: isVisible ? 1 : 0,
-        transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
-        transition: `all 0.8s cubic-bezier(0.4, 0, 0.2, 1) ${delay}ms`
+        transition: `opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1) ${delay}ms`
       }}
     >
       <div className="absolute -inset-0.5 bg-gradient-to-r from-rose-100 via-amber-50 to-rose-100 rounded-2xl opacity-0 group-hover:opacity-100 blur transition-all duration-500" />
@@ -223,7 +222,7 @@ function StatCard({ number, label, sublabel, delay = 0 }: StatCardProps) {
         </div>
 
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
         </div>
       </div>
     </div>
@@ -259,8 +258,8 @@ export default function TrustStatistics() {
   }, [t.stats.length]);
 
   return (
-    <div className="bg-gradient-to-b from-stone-50 via-white to-rose-50/30" style={{ padding: '16px 0', margin: 0 }}>
-      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 16px' }}>
+    <div className="bg-gradient-to-b from-stone-50 via-white to-rose-50/30 py-4">
+      <div className="max-w-7xl mx-auto px-4">
         
         {/* Section Header */}
         <div className="text-center mb-4 md:mb-6">
@@ -290,10 +289,8 @@ export default function TrustStatistics() {
         <div className="md:hidden -mx-4">
           <div
             ref={scrollContainerRef}
-            className="flex gap-4 overflow-x-auto overflow-y-visible snap-x snap-mandatory px-4 pb-2"
+            className="flex gap-4 overflow-x-auto overflow-y-hidden snap-x snap-mandatory px-4 pb-2 scrollbar-hide"
             style={{
-              scrollbarWidth: 'none',
-              msOverflowStyle: 'none',
               WebkitOverflowScrolling: 'touch'
             }}
           >
@@ -343,11 +340,6 @@ export default function TrustStatistics() {
         </div>
       </div>
 
-      <style jsx>{`
-        div::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
     </div>
   );
 }

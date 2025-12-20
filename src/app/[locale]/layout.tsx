@@ -116,7 +116,7 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className="overflow-x-hidden" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <head>
         <Script id="runtime-env" strategy="beforeInteractive">
           {`(function(){function d(){if(window.APP_ENV?.inWebView){return{inWebView:true,platform:window.APP_ENV.platform}}const u=navigator.userAgent;if(u.includes('MyAppWebView/1.0 (Android)'))return{inWebView:true,platform:'android'};if(u.includes('MyAppWebView/1.0 (iOS)'))return{inWebView:true,platform:'ios'};return{inWebView:false,platform:/Android/i.test(u)?'android':/iPhone|iPad|iPod/i.test(u)?'ios':'web'}}window.RUNTIME_ENV=d();document.documentElement.dataset.inWebview=String(window.RUNTIME_ENV.inWebView);document.documentElement.dataset.platform=window.RUNTIME_ENV.platform;})();`}
@@ -149,7 +149,7 @@ export default async function LocaleLayout({
           `}
         </Script>
       </head>
-      <body className={inter.className + ' min-h-screen flex flex-col overflow-x-hidden'}>
+      <body className={inter.className}>
         {/* GA4 스크립트 삽입 */}
         <GA4Scripts />
         {/* 라우트 변경 시 page_view 전송 */}

@@ -37,35 +37,29 @@ const LayoutHeaderHome = () => {
       return;
     }
 
-    let rafId: number;
-    let lastScrollPosition = -1;
-
-    const checkScroll = () => {
-      // Check for custom scroll container (used in post pages)
+    const handleScroll = () => {
       const postScrollContainer = document.getElementById('post-scroll-container');
 
       let currentScrollPosition: number;
       if (postScrollContainer) {
-        // If post scroll container exists, use its scroll position
         currentScrollPosition = postScrollContainer.scrollTop || 0;
       } else {
-        // Otherwise use window scroll position
-        currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        currentScrollPosition = window.pageYOffset ||
+                              document.documentElement.scrollTop ||
+                              document.body.scrollTop || 0;
       }
 
-      if (currentScrollPosition !== lastScrollPosition) {
-        lastScrollPosition = currentScrollPosition;
-        setScrollPosition(currentScrollPosition);
-      }
-
-      rafId = requestAnimationFrame(checkScroll);
+      setScrollPosition(currentScrollPosition);
     };
 
-    // Start checking scroll position using requestAnimationFrame
-    rafId = requestAnimationFrame(checkScroll);
+    // 초기 실행
+    handleScroll();
+
+    // 스크롤 이벤트 등록
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
-      cancelAnimationFrame(rafId);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [isTransparentMode]);
 

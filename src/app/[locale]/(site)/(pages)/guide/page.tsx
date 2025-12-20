@@ -88,7 +88,7 @@ export default function KBeautyIndexPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100" style={{ fontFamily: "'Crimson Pro', 'Noto Serif KR', serif" }}>
       {/* Header */}
-      <header className="bg-white shadow-sm border-b border-slate-200">
+      {/* <header className="bg-white shadow-sm border-b border-slate-200"> */}
         {/* <div className="max-w-7xl mx-auto px-6 py-8">
           <div className="text-center">
             <h1 className="text-5xl font-bold bg-gradient-to-r from-pink-600 via-purple-600 to-blue-600 bg-clip-text text-transparent mb-3" style={{ fontFamily: "'Inter', 'Pretendard', sans-serif" }}>
@@ -99,7 +99,7 @@ export default function KBeautyIndexPage() {
             </p>
           </div>
         </div> */}
-      </header>
+      {/* </header> */}
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-6 py-12">

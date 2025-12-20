@@ -16,17 +16,20 @@
   }
 
   html {
-    @apply antialiased h-full overflow-x-hidden;
+    @apply antialiased;
+    /* h-full 제거 - 강제 높이 없앰 */
   }
 
   body {
-    @apply bg-white text-black leading-normal h-full overflow-x-hidden;
+    @apply bg-white text-black leading-normal;
+    /* h-full 제거 - 강제 높이 없앰 */
     word-wrap: break-word;
     overflow-wrap: break-word;
   }
 
   a {
-    @apply flex text-inherit no-underline cursor-pointer;
+    @apply text-inherit no-underline cursor-pointer;
+    /* flex 제거 - 인라인 링크 보존 */
   }
 
   a:focus,
@@ -36,7 +39,8 @@
   }
 
   main {
-    @apply min-h-[calc(100vh-10rem)];
+    /* Removed min-height to fix TrustStatistics bottom spacing issue */
+    /* @apply min-h-[calc(100vh-10rem)]; */
   }
 
   /* Apply default border color only to form elements to avoid conflicts */
@@ -46,9 +50,10 @@
 }
 
 @layer components {
-  .container {
+  /* container 클래스 제거 - tailwind.config.js 사용 */
+  /* .container {
     @apply max-w-[1024px] mx-auto px-6;
-  }
+  } */
   
   .btn-outline {
     @apply border border-current bg-transparent;
@@ -218,41 +223,3 @@
     --chart-5: 340 75% 55%
   }
 }
-
- 
-
-
-// .badge-only,
-// .badge-purchase,
-// .badge-booking,
-// .badge-timeout {
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   font-size: 10px;
-//   font-weight: 600;
-//   height: 16px;
-//   border-radius: 2px;
-//   padding: 0 4px;
-// }
-
-// .badge-only {
-//   background-color: #ea9ec0;
-//   color: white;
-// }
-
-// .badge-purchase {
-//   background-color: #6b7280;
-//   color: white;
-// }
-
-// .badge-booking {
-//   background-color: #4caf50;
-//   color: white;
-// }
-
-// .badge-timeout {
-//   background-color: #e60058;
-//   color: white;
-// }
-

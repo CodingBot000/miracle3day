@@ -35,6 +35,7 @@ import { motion } from "framer-motion";
 import KBeautyGuideSection from "./components/KBeautyGuideSeciont";
 import { Metadata } from 'next';
 import { getHomeMetadata } from '@/lib/metadata/homeMetadata';
+import TrustStatistics from './TrustStatistics';
 
 export async function generateMetadata({ 
   params 
@@ -68,7 +69,7 @@ export default async function HomePage() {
   return (
     <TransparentHeaderWrapper>
       {/* HeroVideos: 부모 레이아웃(1024px)을 따름 */}
-      <div className="w-full relative z-10">
+      <div className="w-full relative">
         <HeroVideos>
           <div className="absolute inset-0 bg-black/15 z-10"></div>
           <div className="absolute inset-0 flex items-end justify-end text-white z-30 pb-6 pr-6 md:pb-12 md:pr-12">
@@ -106,12 +107,13 @@ export default async function HomePage() {
               {/* <div className="my-8 px-4 md:px-6 lg:px-8">
           <CategoryMenu />
         </div> */}
-
+      <TrustStatistics />
           <HeadSection />
+          
 {/* <UploadTestViaServer /> */}
           {/* <MiddleSection1 /> */}
-          <section className="w-full flex flex-col items-center px-4 md:py-4 rounded-lg mt-10">
-        {/* Heading */}
+          {/* <section className="w-full flex flex-col items-center px-4 md:py-4 rounded-lg mt-10">
+        
         <div className="text-center mb-6">
           <div className="text-2xl md:text-4xl font-bold tracking-tight">
             {t('hotIssueTitle')}
@@ -120,19 +122,19 @@ export default async function HomePage() {
             {t('hotIssueSubtitle')}
           </div>
         </div>
-        {/* 홈에서는 전체 영역 클릭 시 community로 이동 */}
+        
         <Link href="/community?view=questions" className="block w-full cursor-pointer">
           <div className="pointer-events-none">
             <QuestionsView isMainPage={true} />
           </div>
         </Link>
 
-      </section>
+      </section> */}
           {/* <TreatmentProtocol /> */}
 
 
        {/* See All Clinics Link */}
-       <div className="text-right mt-10 px-4">
+       <div className="text-right mt-0 md:mt-0 px-4">
           <Link
             href="/hospital"
             className="inline-flex items-center gap-1 text-gray-400 hover:text-gray-900 transition-colors text-xl font-medium mb-4"

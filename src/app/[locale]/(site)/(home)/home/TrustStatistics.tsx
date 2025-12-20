@@ -183,26 +183,25 @@ function StatCard({ number, label, sublabel, delay = 0 }: StatCardProps) {
   return (
     <div
       ref={cardRef}
-      className="group relative md:min-w-0 min-w-[280px] snap-center flex-shrink-0"
+      className="group relative md:flex-1 md:min-w-0 w-[280px] snap-center flex-shrink-0 md:flex-shrink"
       style={{
-        animationDelay: `${delay}ms`,
         opacity: isVisible ? 1 : 0,
-        transition: `opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1) ${delay}ms`
+        transition: `opacity 0.8s ease-in-out`
       }}
     >
       <div className="absolute -inset-0.5 bg-gradient-to-r from-rose-100 via-amber-50 to-rose-100 rounded-2xl opacity-0 group-hover:opacity-100 blur transition-all duration-500" />
 
-      <div className="relative flex flex-col bg-white rounded-2xl p-4 md:p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-stone-100 overflow-hidden">
+      <div className="relative flex flex-col bg-white rounded-2xl p-4 md:p-6 shadow-lg hover:shadow-2xl transition-all duration-500 border border-stone-100 overflow-hidden">
 
-        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-rose-50/50 to-transparent rounded-bl-full transform translate-x-8 -translate-y-8" />
+        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-rose-50/50 to-transparent rounded-bl-full" />
 
-        <div className="relative mb-4">
-          <div className="text-3xl md:text-5xl font-serif font-bold bg-gradient-to-br from-stone-800 via-stone-700 to-stone-600 bg-clip-text text-transparent">
+        <div className="relative mb-3">
+          <div className="text-2xl md:text-4xl font-serif font-bold bg-gradient-to-br from-stone-800 via-stone-700 to-stone-600 bg-clip-text text-transparent">
             {isVisible ? count.toLocaleString() : '0'}{suffix}
           </div>
 
           <div
-            className="h-1 bg-gradient-to-r from-rose-400 to-amber-400 mt-3 rounded-full"
+            className="h-1 bg-gradient-to-r from-rose-400 to-amber-400 mt-2 rounded-full"
             style={{
               width: isVisible ? '100%' : '0%',
               transition: `width 1.2s cubic-bezier(0.4, 0, 0.2, 1) ${delay + 400}ms`
@@ -211,11 +210,11 @@ function StatCard({ number, label, sublabel, delay = 0 }: StatCardProps) {
         </div>
 
         <div className="relative">
-          <div className="text-base md:text-lg font-medium text-stone-700 leading-relaxed">
+          <div className="text-sm md:text-base font-medium text-stone-700 leading-relaxed break-words">
             {label}
           </div>
           {sublabel && (
-            <div className="text-sm text-stone-500 mt-2">
+            <div className="text-xs md:text-sm text-stone-500 mt-1">
               {sublabel}
             </div>
           )}
@@ -258,7 +257,7 @@ export default function TrustStatistics() {
   }, [t.stats.length]);
 
   return (
-    <div className="bg-gradient-to-b from-stone-50 via-white to-rose-50/30 py-4">
+    <div className="py-6 pb-25">
       <div className="max-w-7xl mx-auto px-4">
         
         {/* Section Header */}
@@ -273,7 +272,7 @@ export default function TrustStatistics() {
         </div>
 
         {/* Desktop: Grid Layout */}
-        <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-7xl mx-auto mb-4">
+        <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 max-w-6xl mx-auto mb-4">
           {t.stats.map((stat, index) => (
             <StatCard
               key={index}
@@ -286,10 +285,10 @@ export default function TrustStatistics() {
         </div>
 
         {/* Mobile: Horizontal Scroll */}
-        <div className="md:hidden -mx-4">
+        <div className="md:hidden">
           <div
             ref={scrollContainerRef}
-            className="flex gap-4 overflow-x-auto overflow-y-hidden snap-x snap-mandatory px-4 pb-2 scrollbar-hide"
+            className="flex gap-3 overflow-x-auto overflow-y-hidden snap-x snap-mandatory px-4 pb-2 scrollbar-hide"
             style={{
               WebkitOverflowScrolling: 'touch'
             }}

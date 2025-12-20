@@ -97,7 +97,7 @@ const LayoutHeaderHome = () => {
         backgroundColor: isTransparentMode && scrollPosition > 0
           ? `rgba(255, 255, 255, ${bgOpacity})`
           : undefined,
-        transition: 'all 300ms ease-in-out',
+        transition: 'background-color 300ms ease-in-out',
       }}
     >
       <div className="w-full max-w-[1024px] mx-auto flex flex-col h-full">

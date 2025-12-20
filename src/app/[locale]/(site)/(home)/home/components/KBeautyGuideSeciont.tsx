@@ -70,7 +70,7 @@ export default function KBeautyGuideSection() {
               {/* CTA */}
               <div className="flex items-center text-orange-500 text-base md:text-lg font-medium group-hover:text-orange-600">
                 <span>{card.ctaText}</span>
-                <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
+                <ChevronRight className="w-4 h-4 ml-1" />
               </div>
             </Link>
           ))}

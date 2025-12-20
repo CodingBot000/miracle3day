@@ -146,7 +146,7 @@ const MenuMobile = () => {
     <div
       className={clsx(
         "fixed bottom-0 left-0 right-0 z-[100] bg-white p-2 shadow-[0_-2px_10px_rgba(0,0,0,0.1)] h-16",
-        "hidden max-md:flex justify-around items-center"
+        "max-md:flex justify-around items-center md:hidden"
       )}
     >
       <button

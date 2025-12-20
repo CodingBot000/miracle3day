@@ -17,14 +17,20 @@
 
   html {
     @apply antialiased;
-    /* h-full 제거 - 강제 높이 없앰 */
+    /* 안전 장치: 뷰포트 기준 스크롤 */
+    min-height: 100vh;
+    overflow-x: hidden;
   }
 
   body {
     @apply bg-white text-black leading-normal;
-    /* h-full 제거 - 강제 높이 없앰 */
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+    margin: 0;
+    padding: 0;
+    /* 안전 장치: 컨텐츠 기준 높이 */
+    min-height: 100vh;
+    overflow-x: hidden;
+    /* transform 제거 - fixed position 문제 해결 */
+    /* transform: translateZ(0); */
   }
 
   a {

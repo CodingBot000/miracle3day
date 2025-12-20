@@ -100,7 +100,7 @@ export default function HeadSection() {
     {/* AI Beauty Match - 메인 CTA */}
     <Link
       href={ROUTE.RECOMMEND_ESTIMATE}
-      className="flex-1 relative min-h-[64px] sm:min-h-[70px] px-4 sm:px-6 py-3 sm:py-4 flex flex-col items-center justify-center rounded-[14px] bg-gradient-to-br from-pink-400 to-pink-500 text-white font-medium hover:from-pink-500 hover:to-pink-600 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 group overflow-hidden"
+      className="flex-1 relative min-h-[64px] sm:min-h-[70px] px-4 sm:px-6 py-3 sm:py-4 flex flex-col items-center justify-center rounded-[14px] bg-gradient-to-br from-pink-400 to-pink-500 text-white font-medium hover:from-pink-500 hover:to-pink-600 hover:shadow-lg transition-all duration-200 group overflow-hidden"
     >
       {/* AI 뱃지 */}
       <div className="absolute top-2 right-2 bg-white/40 backdrop-blur-sm text-white text-[12px] font-bold px-2 py-0.3 rounded-full border border-white/30">
@@ -120,7 +120,7 @@ export default function HeadSection() {
     {/* Find Treatments - 보조 CTA */}
     <Link
       href={ROUTE.TREATMENT_PROTOCOL}
-      className="flex-1 relative min-h-[64px] sm:min-h-[70px] px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-center rounded-[14px] bg-gradient-to-br from-orange-400 to-orange-500 text-white font-medium hover:from-orange-500 hover:to-orange-600 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+      className="flex-1 relative min-h-[64px] sm:min-h-[70px] px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-center rounded-[14px] bg-gradient-to-br from-orange-400 to-orange-500 text-white font-medium hover:from-orange-500 hover:to-orange-600 hover:shadow-lg transition-all duration-200"
     >
       <div className="flex items-center gap-2">
         <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -161,7 +161,7 @@ export default function HeadSection() {
         alt="Video Consultation"
         width={120}
         height={120}
-        className="object-contain w-[80px] h-[80px] sm:w-[120px] sm:h-[120px] group-hover:scale-105 transition-transform duration-200"
+        className="object-contain w-[80px] h-[80px] sm:w-[120px] sm:h-[120px]"
       />
     </div>
   </Link>

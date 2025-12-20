@@ -14,10 +14,8 @@ export default function HomeLayout({ children }: { children: React.ReactNode }) 
         <LayoutHeaderHome />
       </Suspense>
 
-      <main className="w-full">
-        <MainContent>
-          {children}
-        </MainContent>
+      <main className="w-full pt-[62px]">
+        {children}
       </main>
 
       <MenuMobile />

@@ -97,9 +97,13 @@ export default function AuthClient({ iconColor = "#000" }: AuthClientProps) {
               <Image
                 src={userInfo.avatar}
                 alt="Profile"
-                width={25}
-                height={25}
+                width={48}
+                height={48}
+                quality={100}
+                unoptimized={true}
+                priority
                 className="object-cover w-full h-full"
+                style={{ imageRendering: '-webkit-optimize-contrast' }}
               />
             ) : (
               <UserIcon size={24} style={{ color: iconColor }} />

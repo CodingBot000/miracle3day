@@ -105,8 +105,10 @@ const LayoutHeaderNormal = () => {
         {/* Top Section - Main Content (fills remaining space) */}
         <div className="flex-1 flex items-center px-4">
           <div className="w-full flex justify-between items-center">
-            <BackButton  />
-            <Logo />
+            <div className="flex items-center gap-2">
+              <BackButton  />
+              <Logo />
+            </div>
             {!isAuthPage && (
               <HeaderActions
                 iconColor={isTransparentMode && !isScrolled ? 'white' : 'black'}

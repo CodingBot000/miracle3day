@@ -197,14 +197,14 @@ export default function CommunityLayoutShell({
     <CommunityHeaderContext.Provider value={contextValue}>
       <div className="min-h-screen bg-gray-50">
         {/* 고정 헤더 */}
-        <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+        <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200 shadow-sm">
           {/* 메인 헤더 row */}
-          <div className="max-w-[1200px] mx-auto px-4 py-3">
+          <div className="max-w-[1024px] mx-auto px-4 py-3">
             <div className="flex items-center justify-between">
               {/* 왼쪽: 로고 + 탭 */}
               <div className="flex items-center gap-6">
                  <BackButton  />
-                <Logo />
+                {/* <Logo /> */}
                 <nav className="flex items-center gap-1">
                   <Link
                     href="/community?view=posts"
@@ -243,7 +243,7 @@ export default function CommunityLayoutShell({
           {/* Sticky 필터 (스크롤 시 표시) */}
           {showStickyFilters && (
             <div className="border-t border-gray-100 bg-white/95 backdrop-blur-sm">
-              <div className="max-w-[1200px] mx-auto px-4 py-2 space-y-2">
+              <div className="max-w-[1024px] mx-auto px-4 py-2 space-y-2">
                 {/* Topics */}
                 <div className="flex items-center gap-3">
                   <span className="text-xs font-semibold text-gray-500 w-14 flex-shrink-0">TOPICS</span>
@@ -273,8 +273,8 @@ export default function CommunityLayoutShell({
           )}
         </header>
 
-        {/* 메인 콘텐츠 */}
-        <div className="max-w-[1200px] mx-auto px-4 py-6">
+        {/* 메인 콘텐츠 - 헤더 높이만큼 padding 추가 */}
+        <div className="pt-20">
           {headerContent ?? (
             <>
               {/* 원본 필터 영역 (Intersection Observer 감지 대상) */}

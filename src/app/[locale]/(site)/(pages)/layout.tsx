@@ -6,8 +6,9 @@ export default function PagesLayout({ children }: { children: React.ReactNode })
     <>
       <LayoutHeaderNormal />
 
-      <main className="w-full relative pt-[88px]">
-        <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8">
+      <main className="w-full relative pt-[68px]">
+        {/* <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8"> */}
+        <div className="mx-auto w-full">
           {children}
         </div>
       </main>

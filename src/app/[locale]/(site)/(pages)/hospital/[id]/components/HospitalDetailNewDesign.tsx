@@ -30,7 +30,7 @@ interface HospitalDetailNewDesignProps {
 }
 
 const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps) => {
-  const { goBack } = useNavigation();
+  // const { goBack } = useNavigation();
   const locale = useLocale() as 'ko' | 'en';
   const [isModalOpen, setIsModalOpen] = useState(false);
   
@@ -68,9 +68,9 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
     }));
   }, [googleReviewsData?.reviews, locale]);
 
-  const handleBackClick = () => {
-    goBack();
-  };
+  // const handleBackClick = () => {
+  //   goBack();
+  // };
 
   const handleImageClicked = () => {
     setIsModalOpen(true);
@@ -84,17 +84,8 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
     <div className="max-w-container mx-auto min-h-screen relative">
       {/* Header with back button */}
       {/* <div className="flex items-center h-14 px-4 border-b border-gray-100 relative"> */}
-        {/* <button 
-          onClick={handleBackClick}
-          className="flex items-center justify-center w-6 h-6"
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M15.0711 5L8 12.0711L15.0711 19.1421" stroke="#1C1C1C" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        
-        </button>
-         */}
 
+{/* 
          <div className="flex items-center h-14 px-4 md:px-6 lg:px-8 border-b border-gray-100 relative">
         <button 
           onClick={handleBackClick}
@@ -107,7 +98,7 @@ const HospitalDetailNewDesign = ({ hospitalData }: HospitalDetailNewDesignProps)
         <p className="text-xl md:text-2xl text-gray-700 font-bold">
           Introduce Korean Premium Clinic
         </p>
-      </div>
+      </div> */}
 
 
       <div className="w-full relative mb-6">

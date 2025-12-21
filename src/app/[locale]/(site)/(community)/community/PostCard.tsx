@@ -30,7 +30,7 @@ export default function PostCard({
   thumbnail,
 }: PostCardProps) {
   return (
-    <div className="block px-4 py-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors bg-white">
+    <div className="block px-4 py-3 hover:bg-gray-50 transition-colors bg-white">
       <Link
         href={`/community/post/${post.id}`}
         target="_blank"
@@ -76,7 +76,7 @@ export default function PostCard({
 
           {/* 우측: 썸네일 (있을 경우만) */}
           {thumbnail && (
-            <div className="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden bg-gray-100">
+            <div className="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 overflow-hidden bg-gray-100">
               <img
                 src={thumbnail}
                 alt=""

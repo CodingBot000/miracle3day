@@ -19,15 +19,20 @@ export const SearchHeader: React.FC<SearchHeaderProps> = ({
 }) => {
   return (
     <div className="sticky top-0 bg-white border-b z-10">
-      <div className="flex items-center gap-3 p-4 max-w-3xl mx-auto">
+      <div className="flex items-center gap-3 px-4 py-2 max-w-3xl mx-auto min-h-[62px]">
         <button
           type="button"
           onClick={onClose}
-          className="p-2 hover:bg-gray-100 rounded-full transition-colors"
           aria-label="Close"
         >
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M15 18L9 12L15 6"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         </button>
 
@@ -39,7 +44,7 @@ export const SearchHeader: React.FC<SearchHeaderProps> = ({
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={onKeyDown}
             placeholder="Search treatments, hospitals..."
-            className="w-full px-4 py-3 pr-10 text-base border-2 border-gray-200 rounded-full focus:border-pink-500 focus:outline-none transition-colors"
+            className="w-full px-4 py-2 pr-10 text-sm border-2 border-gray-200 rounded-full focus:border-pink-500 focus:outline-none transition-colors"
             autoComplete="off"
             autoCorrect="off"
             autoCapitalize="off"

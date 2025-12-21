@@ -15,8 +15,12 @@ import type {
   HospitalResult,
   ProductResult,
 } from "@/models/search";
+import { getCurrencyInfo } from "@/utils/exchangeRate";
 
 type Props = {
+  params: {
+    locale: string;
+  };
   searchParams: {
     q?: string;
   };
@@ -99,12 +103,9 @@ async function searchDatabase(query: string) {
       FROM ${TABLE_TREATMENT_PRODUCT} tp
       LEFT JOIN ${TABLE_HOSPITAL} h ON h.id_uuid = tp.id_uuid_hospital
       WHERE
-        tp.expose = true AND
-        (
-          tp.name->>'en' ILIKE $1 OR
-          tp.name->>'ko' ILIKE $1 OR
-          tp.group_id ILIKE $1
-        )
+        tp.name->>'en' ILIKE $1 OR
+        tp.name->>'ko' ILIKE $1 OR
+        tp.group_id ILIKE $1
       ORDER BY
         tp.match_score DESC NULLS LAST,
         LENGTH(COALESCE(tp.name->>'en', '')) ASC
@@ -116,10 +117,21 @@ async function searchDatabase(query: string) {
   return { treatments, hospitals, products };
 }
 
-export default async function SearchResultsPage({ searchParams }: Props) {
+export default async function SearchResultsPage({ params, searchParams }: Props) {
   const query = searchParams.q?.trim() || "";
   const { treatments, hospitals, products } = await searchDatabase(query);
   const totalCount = treatments.length + hospitals.length + products.length;
+
+  // Format price with currency conversion
+  const formatPrice = (price: number) => {
+    if (!price || price === 0) return null;
+
+    const currencyInfo = getCurrencyInfo(params.locale);
+    const convertedPrice = Math.round(price * currencyInfo.rate);
+    const formattedPrice = convertedPrice.toLocaleString(currencyInfo.localeStr);
+
+    return `${currencyInfo.symbol}${formattedPrice}`;
+  };
 
   if (!query) {
     return (
@@ -285,11 +297,13 @@ export default async function SearchResultsPage({ searchParams }: Props) {
                         )}
                       </div>
                     </div>
-                    <div className="text-right flex-shrink-0">
-                      <div className="font-semibold text-pink-600">
-                        {product.price.toLocaleString()}
+                    {formatPrice(product.price) && (
+                      <div className="text-right flex-shrink-0">
+                        <div className="font-semibold text-pink-600">
+                          {formatPrice(product.price)}
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </Link>
                 ))}
               </div>

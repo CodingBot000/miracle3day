@@ -91,7 +91,7 @@ const LayoutHeaderHome = () => {
   return (
     <>
     <header
-      className={`fixed top-0 left-0 right-0 z-header flex flex-col min-h-[62px] max-h-[88px] ease-in-out ${getHeaderStyles()}`}
+      className={`fixed top-0 left-0 right-0 z-header flex flex-col justify-center min-h-[62px] max-h-[88px] ease-in-out ${getHeaderStyles()}`}
       // className={`fixed top-0 left-0 right-0 z-header flex flex-col min-h-[88px] max-h-[128px] ease-in-out ${getHeaderStyles()}`}
       style={{
         backgroundColor: isTransparentMode && scrollPosition > 0
@@ -100,9 +100,9 @@ const LayoutHeaderHome = () => {
         transition: 'background-color 300ms ease-in-out',
       }}
     >
-      <div className="w-full max-w-[1024px] mx-auto flex flex-col h-full">
+      <div className="w-full max-w-[1024px] mx-auto flex flex-col justify-center h-full">
         {/* Top Section - Main Content (fills remaining space) */}
-        <div className="flex-1 flex items-center px-4">
+        <div className="flex items-center px-4">
           <div className="w-full flex justify-between items-center">
             <Logo />
             {!isAuthPage && (

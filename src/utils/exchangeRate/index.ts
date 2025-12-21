@@ -14,6 +14,10 @@ export {
   formatTWD,
 } from './converter-client';
 
+// Currency Info
+export { getCurrencyInfo } from './currencyInfo';
+export type { CurrencyInfo } from './currencyInfo';
+
 // Types
 export type { Currency, ExchangeRateData } from './types';
 export { FALLBACK_RATES, getCurrencyPair } from './types';

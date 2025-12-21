@@ -163,21 +163,26 @@ function StatCard({ number, label, sublabel, delay = 0 }: StatCardProps) {
     if (!isVisible) return;
 
     const duration = 1000;
-    const steps = 60;
-    const increment = numericValue / steps;
-    let current = 0;
+    const startTime = performance.now();
+    let rafId: number;
 
-    const timer = setInterval(() => {
-      current += increment;
-      if (current >= numericValue) {
-        setCount(numericValue);
-        clearInterval(timer);
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+
+      // easeOutQuart easing for smooth animation
+      const eased = 1 - Math.pow(1 - progress, 4);
+      setCount(Math.floor(numericValue * eased));
+
+      if (progress < 1) {
+        rafId = requestAnimationFrame(animate);
       } else {
-        setCount(Math.floor(current));
+        setCount(numericValue);
       }
-    }, duration / steps);
+    };
 
-    return () => clearInterval(timer);
+    rafId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(rafId);
   }, [isVisible, numericValue]);
 
   return (

@@ -9,6 +9,7 @@ import React, {
 } from 'react';
 import { createPortal } from 'react-dom';
 import Image from 'next/image';
+import { useLocale } from 'next-intl';
 import { useNavigation } from '@/hooks/useNavigation';
 import { useSearch } from '@/contexts/SearchContext';
 import type {
@@ -25,6 +26,8 @@ import {
   clearRecentSearches,
   removeRecentSearch,
 } from '@/lib/search-utils';
+import { getCurrencyInfo } from '@/utils/exchangeRate';
+import { SearchHeader } from './SearchHeader';
 
 const DEBOUNCE_MS = 1000;
 const MIN_QUERY_LENGTH = 2;
@@ -32,6 +35,7 @@ const MIN_QUERY_LENGTH = 2;
 export const GlobalSearchOverlay: React.FC = () => {
   const { isOpen, closeSearch } = useSearch();
   const { navigate } = useNavigation();
+  const locale = useLocale();
   const inputRef = useRef<HTMLInputElement>(null);
   const [mounted, setMounted] = useState(false);
 
@@ -201,6 +205,17 @@ export const GlobalSearchOverlay: React.FC = () => {
     []
   );
 
+  // Format price with currency conversion
+  const formatPrice = useCallback((price: number) => {
+    if (!price || price === 0) return null;
+
+    const currencyInfo = getCurrencyInfo(locale);
+    const convertedPrice = Math.round(price * currencyInfo.rate);
+    const formattedPrice = convertedPrice.toLocaleString(currencyInfo.localeStr);
+
+    return `${currencyInfo.symbol}${formattedPrice}`;
+  }, [locale]);
+
   const getTypeIcon = (type: SearchSuggestion['type']) => {
     switch (type) {
       case 'treatment_group':
@@ -239,48 +254,13 @@ export const GlobalSearchOverlay: React.FC = () => {
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="sticky top-0 bg-white border-b z-10">
-          <div className="flex items-center gap-3 p-4 max-w-3xl mx-auto">
-            <button
-              type="button"
-              onClick={closeSearch}
-              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-              aria-label="Close"
-            >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-
-            <div className="flex-1 relative">
-              <input
-                ref={inputRef}
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder="Search treatments, hospitals..."
-                className="w-full px-4 py-3 pr-10 text-base border-2 border-gray-200 rounded-full focus:border-pink-500 focus:outline-none transition-colors"
-                autoComplete="off"
-                autoCorrect="off"
-                autoCapitalize="off"
-                spellCheck="false"
-              />
-              {query && (
-                <button
-                  type="button"
-                  onClick={() => setQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-gray-100 rounded-full"
-                  aria-label="Clear"
-                >
-                  <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              )}
-            </div>
-          </div>
-        </div>
+        <SearchHeader
+          query={query}
+          setQuery={setQuery}
+          onClose={closeSearch}
+          onKeyDown={handleKeyDown}
+          inputRef={inputRef}
+        />
 
         {/* Content */}
         <div className="max-w-3xl mx-auto p-4">
@@ -395,9 +375,11 @@ export const GlobalSearchOverlay: React.FC = () => {
                                 <div className="text-xs text-gray-500 truncate">
                                   {hospital.product_name}
                                 </div>
-                                <div className="text-sm font-semibold text-pink-600 mt-1">
-                                  ₩{hospital.price.toLocaleString()}
-                                </div>
+                                {formatPrice(hospital.price) && (
+                                  <div className="text-sm font-semibold text-pink-600 mt-1">
+                                    {formatPrice(hospital.price)}
+                                  </div>
+                                )}
                               </div>
                             </button>
                           ))}
@@ -437,11 +419,18 @@ export const GlobalSearchOverlay: React.FC = () => {
                               </div>
                             )}
                           </div>
-                          {product.category && (
-                            <span className="text-xs text-gray-400 px-2 py-0.5 bg-gray-100 rounded">
-                              {product.category}
-                            </span>
-                          )}
+                          <div className="flex items-center gap-2">
+                            {formatPrice(product.price || 0) && (
+                              <span className="text-sm font-semibold text-pink-600">
+                                {formatPrice(product.price || 0)}
+                              </span>
+                            )}
+                            {product.category && (
+                              <span className="text-xs text-gray-400 px-2 py-0.5 bg-gray-100 rounded">
+                                {product.category}
+                              </span>
+                            )}
+                          </div>
                         </button>
                       ))}
                   </div>

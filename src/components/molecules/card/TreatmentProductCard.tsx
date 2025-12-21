@@ -2,52 +2,7 @@
 
 import { TreatmentProductData, MetaTreatmentDetails } from "@/models/treatmentProduct.dto";
 import { useLocale } from "next-intl";
-import { FALLBACK_RATES } from "@/utils/exchangeRate/types";
-
-/**
- * Locale에 따른 환율 및 통화 정보
- */
-const getCurrencyInfo = (locale: string) => {
-  switch (locale) {
-    case 'ko':
-      return {
-        rate: 1, // KRW는 기준
-        symbol: '₩',
-        localeStr: 'ko-KR'
-      };
-    case 'en':
-      return {
-        rate: FALLBACK_RATES['KRW_USD'] ?? 0.00072,
-        symbol: '$',
-        localeStr: 'en-US'
-      };
-    case 'ja':
-      return {
-        rate: FALLBACK_RATES['KRW_JPY'] ?? 0.11,
-        symbol: '¥',
-        localeStr: 'ja-JP'
-      };
-    case 'zh-CN':
-      return {
-        rate: FALLBACK_RATES['KRW_CNY'] ?? 0.0052,
-        symbol: '¥',
-        localeStr: 'zh-CN'
-      };
-    case 'zh-TW':
-      return {
-        rate: FALLBACK_RATES['KRW_TWD'] ?? 0.023,
-        symbol: 'NT$',
-        localeStr: 'zh-TW'
-      };
-    default:
-      // 기본값은 USD
-      return {
-        rate: FALLBACK_RATES['KRW_USD'] ?? 0.00072,
-        symbol: '$',
-        localeStr: 'en-US'
-      };
-  }
-};
+import { getCurrencyInfo } from "@/utils/exchangeRate";
 
 interface TreatmentProductCardProps {
   product: TreatmentProductData;

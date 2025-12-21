@@ -1,4 +1,16 @@
-// button
+/*
+  Button mixins 제거됨 - Tailwind 유틸리티 클래스 사용
+
+  Tailwind 사용법:
+  - Outline: className="border border-red bg-transparent text-red"
+  - Contained: className="bg-red text-white"
+
+  또는 globals.scss의 @layer components에서 정의하거나
+  Button 컴포넌트에서 직접 스타일링하세요.
+*/
+
+/*
+// button (DEPRECATED - Use Tailwind classes)
 @mixin button-outline($color) {
   color: $color;
   border: 1px solid $color;
@@ -10,11 +22,24 @@
   color: $white;
   background-color: $color;
 }
+*/
 
-.container {
+/*
+  Container 클래스 제거됨 - Tailwind의 container 유틸리티 사용
+
+  Tailwind container 사용법:
+  <div className="container">...</div>
+
+  설정: tailwind.config.js
+  - max-width: 1024px (2xl breakpoint)
+  - center: true
+  - padding: 2rem
+*/
+
+/* .container {
   max-width: 768px;
   margin: 0 auto;
   padding: 0 1.5rem;
 
   height: 80vh;
-}
+} */

@@ -1,4 +1,4 @@
-export const revalidate = 0;
+export const revalidate = 300;
 export const runtime = 'nodejs';
 
 import { TABLE_HOSPITAL } from "@/constants/tables";
@@ -63,7 +63,13 @@ export async function GET() {
 
     return Response.json(
       { data: shuffledRows },
-      { status: 200, statusText: "success", headers: { "Cache-Control": "no-store" } }
+      {
+        status: 200,
+        statusText: "success",
+        headers: {
+          "Cache-Control": "public, max-age=300, s-maxage=300, stale-while-revalidate=600"
+        }
+      }
     );
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";

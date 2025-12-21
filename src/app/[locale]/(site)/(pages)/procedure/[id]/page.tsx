@@ -3,7 +3,7 @@ import { Metadata, ResolvingMetadata } from "next";
 import { capitalizeWord } from "@/utils/word";
 import { procedureMapper } from "@/constants";
 import { getProcedureInfoAPI } from "@/app/api/surgeries/[id]/info";
-import styles from "./procedure.module.scss";
+
 import React from "react";
 import ImageAutoRatioComp from "@/components/common/ImageAutoRatioComp";
 

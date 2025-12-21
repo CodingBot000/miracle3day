@@ -159,14 +159,9 @@ export default async function KBeautySectionPage({ params }: Props) {
 
   return (
     <>
-      <style dangerouslySetInnerHTML={{
-        __html: `
-          html { overflow: hidden !important; }
-        `
-      }} />
       <div
         id="post-scroll-container"
-        className="fixed inset-0 bg-gradient-to-br from-[#FDF5F0] via-white to-[#F8E8E0] overflow-y-auto"
+        className="bg-gradient-to-br from-[#FDF5F0] via-white to-[#F8E8E0] overflow-y-auto"
         style={{ zIndex: 1 }}
       >
         <TransparentHeaderWrapper>

@@ -29,6 +29,7 @@ export interface BasicSuggestion {
   category: string
   thumbnail_url?: string | null
   id_uuid_hospital?: string
+  price?: number
 }
 
 // Union type for all suggestions

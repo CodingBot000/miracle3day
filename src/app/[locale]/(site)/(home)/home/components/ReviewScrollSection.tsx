@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import ReviewCardForHome from '@/components/molecules/card/ReviewCardForHome';
 import { ReviewDataFromGoogleMap } from '@/models/reviewData.dto';
 import { useLocale } from 'next-intl';
@@ -88,54 +88,10 @@ export default function ReviewScrollSection() {
     return (reviews ?? []).map(convertToReviewFormat);
   }, [reviews]);
 
-  // Double the list for infinite loop
-  const doubled = useMemo(
-    () => displayReviews.concat(displayReviews),
-    [displayReviews]
-  );
-
-  // Check for reduced motion preference
-  const prefersReduced =
-    typeof window !== 'undefined' &&
-    window.matchMedia &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // requestAnimationFrame for smooth scrolling
-  const wrapRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!wrapRef.current || !doubled.length || prefersReduced) return;
-
-    const wrap = wrapRef.current;
-    let rafId: number;
-    let last = performance.now();
-    const speed = 30; // px/sec (adjust for desired scroll speed)
-
-    const tick = (t: number) => {
-      const dt = (t - last) / 1000;
-      last = t;
-      wrap.scrollLeft += speed * dt;
-
-      // Loop back when reaching halfway (since list is doubled)
-      const loopWidth = wrap.scrollWidth / 2;
-
-      if (wrap.scrollLeft >= loopWidth) {
-        wrap.scrollLeft = wrap.scrollLeft - loopWidth;
-      }
-      rafId = requestAnimationFrame(tick);
-    };
-
-    rafId = requestAnimationFrame(tick);
-
-    return () => {
-      if (rafId) cancelAnimationFrame(rafId);
-    };
-  }, [doubled.length, prefersReduced]);
-
   // Skeleton loading state - 항상 공간 차지
   if (loading) {
     return (
-      <section className="w-full pt-8 md:pt-12 h-[350px] md:h-[450px]">
+      <section className="w-full pt-8 md:pt-12">
         <div className="w-full -mx-4 sm:-mx-6 lg:-mx-8">
           <div className="px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl md:text-3xl font-semibold mb-4 md:mb-10">Customer Reviews</h2>
@@ -174,7 +130,7 @@ export default function ReviewScrollSection() {
   // Error state
   if (error) {
     return (
-      <section className="w-full pt-8 md:pt-12 h-[350px] md:h-[450px]">
+      <section className="w-full pt-8 md:pt-12">
         <div className="w-full -mx-4 sm:-mx-6 lg:-mx-8">
           <div className="px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl md:text-3xl font-semibold mb-4 md:mb-10">Customer Reviews</h2>
@@ -191,7 +147,7 @@ export default function ReviewScrollSection() {
   // No reviews - 여전히 공간 차지
   if (!reviews || reviews.length === 0) {
     return (
-      <section className="w-full pt-8 md:pt-12 h-[350px] md:h-[450px]">
+      <section className="w-full pt-8 md:pt-12">
         <div className="w-full -mx-4 sm:-mx-6 lg:-mx-8">
           <div className="px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl md:text-3xl font-semibold mb-3">Customer Reviews</h2>
@@ -207,7 +163,7 @@ export default function ReviewScrollSection() {
   // log.debug('[ReviewScrollSection] Rendering reviews:', convertedReviews.length);
 
   return (
-    <section className="w-full pt-8 md:pt-12 h-[350px] md:h-[450px]">
+    <section className="w-full pt-8 md:pt-12">
       <div className="w-full -mx-4 sm:-mx-6 lg:-mx-8">
         <div className="px-4 sm:px-6 lg:px-8 mb-4 md:mb-10">
           <h2 className="text-2xl md:text-3xl font-semibold">
@@ -216,25 +172,14 @@ export default function ReviewScrollSection() {
         </div>
 
         <div className="w-full overflow-x-auto overflow-y-hidden">
-          <div
-            ref={wrapRef}
-            className="flex gap-4 px-4 sm:px-6 lg:px-8 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
-          >
-            {doubled.map((review, idx) => (
-              <div key={`review-${idx}`} className="shrink-0">
+          <div className="flex gap-4 px-4 sm:px-6 lg:px-8 pb-2 snap-x snap-proximity">
+            {displayReviews.map((review, idx) => (
+              <div key={`review-${idx}`} className="shrink-0 snap-start">
                 <ReviewCardForHome review={review} />
               </div>
             ))}
           </div>
         </div>
-
-        {prefersReduced && (
-          <div className="px-4 sm:px-6 lg:px-8">
-            <p className="text-sm text-gray-500 text-center mt-4">
-              Auto-scroll disabled due to motion preferences
-            </p>
-          </div>
-        )}
       </div>
     </section>
   );

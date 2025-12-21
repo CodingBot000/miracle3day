@@ -6,7 +6,7 @@ export default function PagesLayout({ children }: { children: React.ReactNode })
     <>
       <LayoutHeaderNormal />
 
-      <main className="flex-1 w-full relative pt-[88px]">
+      <main className="w-full relative pt-[88px]">
         <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8">
           {children}
         </div>

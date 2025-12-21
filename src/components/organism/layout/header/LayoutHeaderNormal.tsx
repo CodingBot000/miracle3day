@@ -39,35 +39,29 @@ const LayoutHeaderNormal = () => {
       return;
     }
 
-    let rafId: number;
-    let lastScrollPosition = -1;
-
-    const checkScroll = () => {
-      // Check for custom scroll container (used in post pages)
+    const handleScroll = () => {
       const postScrollContainer = document.getElementById('post-scroll-container');
 
       let currentScrollPosition: number;
       if (postScrollContainer) {
-        // If post scroll container exists, use its scroll position
         currentScrollPosition = postScrollContainer.scrollTop || 0;
       } else {
-        // Otherwise use window scroll position
-        currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        currentScrollPosition = window.pageYOffset ||
+                              document.documentElement.scrollTop ||
+                              document.body.scrollTop || 0;
       }
 
-      if (currentScrollPosition !== lastScrollPosition) {
-        lastScrollPosition = currentScrollPosition;
-        setScrollPosition(currentScrollPosition);
-      }
-
-      rafId = requestAnimationFrame(checkScroll);
+      setScrollPosition(currentScrollPosition);
     };
 
-    // Start checking scroll position using requestAnimationFrame
-    rafId = requestAnimationFrame(checkScroll);
+    // 초기 실행
+    handleScroll();
+
+    // 스크롤 이벤트 등록
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
-      cancelAnimationFrame(rafId);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [isTransparentMode]);
 
@@ -99,7 +93,7 @@ const LayoutHeaderNormal = () => {
   return (
     <>
     <header
-      className={`fixed top-0 left-0 right-0 z-[200] flex flex-col min-h-[62px] max-h-[88px] ease-in-out ${getHeaderStyles()}`}
+      className={`fixed top-0 left-0 right-0 z-header flex flex-col justify-center min-h-[62px] max-h-[88px] ease-in-out ${getHeaderStyles()}`}
       style={{
         backgroundColor: isTransparentMode && scrollPosition > 0
           ? `rgba(255, 255, 255, ${bgOpacity})`
@@ -107,12 +101,14 @@ const LayoutHeaderNormal = () => {
         transition: 'all 300ms ease-in-out',
       }}
     >
-      <div className="w-full max-w-[1024px] mx-auto flex flex-col h-full">
+      <div className="w-full max-w-[1024px] mx-auto flex flex-col justify-center h-full">
         {/* Top Section - Main Content (fills remaining space) */}
-        <div className="flex-1 flex items-center px-4">
+        <div className="flex items-center px-4">
           <div className="w-full flex justify-between items-center">
-            <BackButton  />
-            <Logo />
+            <div className="flex items-center gap-2">
+              <BackButton  />
+              <Logo />
+            </div>
             {!isAuthPage && (
               <HeaderActions
                 iconColor={isTransparentMode && !isScrolled ? 'white' : 'black'}

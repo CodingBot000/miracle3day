@@ -46,7 +46,7 @@ export const formatHKD = (hkd: number) => `HK$${hkd.toLocaleString("en-HK")}`;
 /**
  * CNY 포맷 (중국 위안화)
  */
-export const formatCNY = (cny: number) => `¥${cny.toLocaleString("zh-CN")}`;
+export const formatCNY = (cny: number) => `元${cny.toLocaleString("zh-CN")}`;
 
 /**
  * TWD 포맷 (대만 달러)

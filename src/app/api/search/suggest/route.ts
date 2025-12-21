@@ -85,7 +85,7 @@ export async function GET(request: Request) {
           ON h.id_uuid = tp.id_uuid_hospital
         WHERE h.show = true
         ORDER BY h.favorite_count DESC NULLS LAST, tp.price ASC
-        LIMIT 8`,
+      `,
         [searchPattern]
       ),
 
@@ -110,7 +110,7 @@ export async function GET(request: Request) {
         ORDER BY
           favorite_count DESC NULLS LAST,
           LENGTH(COALESCE(name_en, name)) ASC
-        LIMIT 5`,
+       `,
         [searchPattern]
       ),
 
@@ -121,13 +121,15 @@ export async function GET(request: Request) {
         label_ko: string
         category: string
         id_uuid_hospital: string
+        price: number
       }>(
         `SELECT
           tp.id::text as id,
           COALESCE(tp.name->>'en', tp.name->>'ko') as label,
           COALESCE(tp.name->>'ko', tp.name->>'en') as label_ko,
           COALESCE(tp.level1->>'en', '') as category,
-          tp.id_uuid_hospital
+          tp.id_uuid_hospital,
+          tp.price
         FROM ${TABLE_TREATMENT_PRODUCT} tp
         WHERE
           tp.name->>'en' ILIKE $1 OR
@@ -135,8 +137,7 @@ export async function GET(request: Request) {
           tp.group_id ILIKE $1
         ORDER BY
           tp.match_score DESC NULLS LAST,
-          LENGTH(COALESCE(tp.name->>'en', '')) ASC
-        LIMIT 3`,
+          LENGTH(COALESCE(tp.name->>'en', '')) ASC`,
         [searchPattern]
       ),
     ])

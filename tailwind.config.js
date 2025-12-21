@@ -17,6 +17,20 @@ module.exports = {
 			}
 		},
   	extend: {
+		zIndex: {
+			'base': '1',
+			'layer': '2',
+			'elevated': '10',
+			'sticky': '20',
+			'dropdown': '50',
+			'overlay': '100',
+			'header': '200',
+			'drawer': '300',
+			'modal': '1000',
+			'toast': '2000',
+			'tooltip': '3000',
+			'maximum': '9999'
+		},
   		colors: {
 		
   			red: {

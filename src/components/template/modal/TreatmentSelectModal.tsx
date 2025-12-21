@@ -294,7 +294,7 @@ export function TreatmentSelectModal({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[9999]">
+    <div className="fixed inset-0 z-maximum">
       {/* 배경 오버레이 */}
       <div 
         className="absolute inset-0 bg-black bg-opacity-50"

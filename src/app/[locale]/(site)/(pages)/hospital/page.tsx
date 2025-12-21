@@ -9,6 +9,9 @@ import type { HospitalData } from "@/models/hospitalData.dto";
 import { shuffleAndApplyPriority } from "@/utils/hospitalPriority";
 
 type Props = {
+  params: {
+    locale: string;
+  };
   searchParams: {
     locationNum?: string;
     treatmentId?: string;
@@ -148,7 +151,8 @@ async function getHospitalListByLanguages() {
   }
 }
 
-const HospitalListPage = async ({ searchParams }: Props) => {
+const HospitalListPage = async ({ params, searchParams }: Props) => {
+  const { locale } = params;
   const { treatmentId, treatmentNameKo, treatmentNameEn } = searchParams;
 
   let hospitalData: HospitalData[] = [];
@@ -171,13 +175,19 @@ const HospitalListPage = async ({ searchParams }: Props) => {
   // Randomize the order of hospitals and apply priority rules
   const shuffledHospitalData = shuffleAndApplyPriority(hospitalData);
 
+  // Localized text
+  const isKorean = locale === 'ko';
+  const treatmentDisplayName = isKorean ? (treatmentNameKo || treatmentId) : (treatmentNameEn || treatmentId);
+  const availableText = isKorean ? '시술 가능 병원' : 'clinics available';
+  const countSuffix = isKorean ? '개' : '';
+
   return (
     <main className="min-h-screen bg-white">
       {/* 선택된 시술 정보 표시 (fallback이 아닌 경우만) */}
       {treatmentId && !isFallback && (
         <div className="px-4 py-3 bg-gradient-to-r from-[#FDF5F0] to-[#F8E8E0] border-b border-[#E8B4A0]/30">
           <p className="text-sm text-[#8B4513]">
-            <span className="font-medium">&quot;{treatmentNameKo || treatmentId}&quot;</span> 시술 가능 병원 <span className="font-bold">{shuffledHospitalData.length}</span>개
+            <span className="font-medium">&quot;{treatmentDisplayName}&quot;</span> {availableText} <span className="font-bold">{shuffledHospitalData.length}</span>{countSuffix}
           </p>
         </div>
       )}

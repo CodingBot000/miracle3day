@@ -1,6 +1,6 @@
 import { InfinityScrollOutputDto } from "@/types/infinite";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { RefObject, useEffect } from "react";
+import { RefObject, useEffect, useCallback } from "react";
 
 interface useInfinityProps<T> {
   queryKey: [string, string];
@@ -27,37 +27,40 @@ export const useInfinity = <T extends InfinityScrollOutputDto>({
     queryFn: ({ pageParam = 0 }) => fetchFn(pageParam),
     getNextPageParam: (lastPage, allPages) =>
       lastPage.nextCursor ? allPages.length : undefined,
-    retry: 0,
-    staleTime: 0,
-    refetchOnMount: true,
-    refetchOnWindowFocus: true,
+    retry: 1,
+    staleTime: 5 * 60 * 1000,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
     refetchOnReconnect: true,
-    networkMode: "always",
+    networkMode: "online",
   });
 
-  const options: IntersectionObserverInit = {
-    root: null,
-    threshold: 1.0,
-    rootMargin: "20px",
-  };
-
-  const observerCallback = ([entries]: IntersectionObserverEntry[]) => {
-    if (entries.isIntersecting && hasNextPage) {
-      fetchNextPage();
-    }
-  };
+  const observerCallback = useCallback(
+    ([entries]: IntersectionObserverEntry[]) => {
+      if (entries.isIntersecting && hasNextPage) {
+        fetchNextPage();
+      }
+    },
+    [hasNextPage, fetchNextPage]
+  );
 
   useEffect(() => {
     if (!observerElem.current) return;
+
+    const options: IntersectionObserverInit = {
+      root: null,
+      threshold: 1.0,
+      rootMargin: "20px",
+    };
 
     const observer = new IntersectionObserver(observerCallback, options);
 
     observer.observe(observerElem.current);
 
     return () => {
-      observer && observer.disconnect();
+      observer.disconnect();
     };
-  }, [fetchNextPage, hasNextPage, observerCallback, options]);
+  }, [observerCallback]);
 
   return {
     data,

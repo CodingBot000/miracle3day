@@ -12,7 +12,7 @@ import { UserOutputDto } from './getUser.dto';
  */
 export const getUserAPIServer = async (): Promise<UserOutputDto | null> => {
   try {
-    const cookieStore = await cookies();
+    const cookieStore = cookies();
     const session = await getIronSession(cookieStore, sessionOptions) as any;
 
     if (!session.auth || session.auth.status !== 'active' || !session.auth.id_uuid) {

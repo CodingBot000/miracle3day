@@ -38,5 +38,27 @@
     "goToLogin": "前往登录/注册",
     "signInToContinue": "请登录以继续",
     "useGoogleAccount": "使用Google账号探索诊所并预约项目。"
+  },
+  "NotFound": {
+    "title": "404 - 找不到页面",
+    "subtitle": "抱歉！我们找不到您要访问的页面",
+    "errorCode": "错误代码",
+    "currentUrl": "尝试访问的URL",
+    "timestamp": "时间",
+    "showDetails": "显示详细信息",
+    "hideDetails": "隐藏详细信息",
+    "reasonsTitle": "为什么会发生这种情况？",
+    "reason1": "页面可能已被移动或删除",
+    "reason2": "URL可能输入错误",
+    "reason3": "您点击的链接可能已过期",
+    "helpTitle": "您可以尝试以下操作",
+    "goHome": "返回首页",
+    "goBack": "返回上一页",
+    "searchPlaceholder": "搜索项目或诊所...",
+    "suggestionsTitle": "热门页面",
+    "hospitals": "浏览诊所",
+    "treatments": "查看项目",
+    "aboutUs": "关于我们",
+    "reportLink": "报告损坏的链接"
   }
 }

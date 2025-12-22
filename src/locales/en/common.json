@@ -38,5 +38,27 @@
     "goToLogin": "Go to Login/Signup",
     "signInToContinue": "Sign in to continue",
     "useGoogleAccount": "Use your Google account to explore clinics and book treatments."
+  },
+  "NotFound": {
+    "title": "404 - Page Not Found",
+    "subtitle": "Oops! We couldn't find the page you're looking for",
+    "errorCode": "Error Code",
+    "currentUrl": "Attempted URL",
+    "timestamp": "Time",
+    "showDetails": "Show Details",
+    "hideDetails": "Hide Details",
+    "reasonsTitle": "Why did this happen?",
+    "reason1": "The page may have been moved or deleted",
+    "reason2": "The URL might be mistyped",
+    "reason3": "The link you clicked might be outdated",
+    "helpTitle": "Here's what you can do",
+    "goHome": "Go to Home",
+    "goBack": "Go Back",
+    "searchPlaceholder": "Search for treatments or hospitals...",
+    "suggestionsTitle": "Popular Pages",
+    "hospitals": "Browse Hospitals",
+    "treatments": "View Treatments",
+    "aboutUs": "About Us",
+    "reportLink": "Report a broken link"
   }
 }

@@ -38,5 +38,27 @@
     "goToLogin": "로그인/회원가입 페이지로",
     "signInToContinue": "로그인하여 계속하기",
     "useGoogleAccount": "Google 계정으로 클리닉을 탐색하고 예약하세요."
+  },
+  "NotFound": {
+    "title": "404 - 페이지를 찾을 수 없습니다",
+    "subtitle": "앗! 찾으시는 페이지가 존재하지 않습니다",
+    "errorCode": "오류 코드",
+    "currentUrl": "시도한 URL",
+    "timestamp": "시간",
+    "showDetails": "상세 정보 보기",
+    "hideDetails": "상세 정보 숨기기",
+    "reasonsTitle": "왜 이런 일이 발생했나요?",
+    "reason1": "페이지가 이동되었거나 삭제되었을 수 있습니다",
+    "reason2": "URL이 잘못 입력되었을 수 있습니다",
+    "reason3": "클릭한 링크가 오래되었을 수 있습니다",
+    "helpTitle": "다음과 같이 해보세요",
+    "goHome": "홈으로 가기",
+    "goBack": "뒤로 가기",
+    "searchPlaceholder": "시술이나 병원을 검색하세요...",
+    "suggestionsTitle": "인기 페이지",
+    "hospitals": "병원 둘러보기",
+    "treatments": "시술 보기",
+    "aboutUs": "회사 소개",
+    "reportLink": "깨진 링크 신고하기"
   }
 }

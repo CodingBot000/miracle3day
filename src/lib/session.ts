@@ -8,7 +8,9 @@ export const sessionOptions: SessionOptions = {
     // secure flag는 요청 프로토콜에 따라 결정됨 (middleware에서 동적 설정)
     // 기본값: production이면 true, 개발 환경이면 false
     secure: process.env.NODE_ENV === "production",
+    httpOnly: true, // XSS 방지
     sameSite: "lax",
+    path: "/", // 모든 경로에서 접근 가능
     maxAge: 60 * 60 * 24 * 365, // 1년 (초 단위)
   },
 };

@@ -68,10 +68,11 @@ const HospitalListCard = ({
                 />
               )}
 
-              <div className="flex items-center gap-2 text-xs text-gray-500">
-                <MapPin size="15" />
-                {/* <span className="font-bold">{language === 'ko' ? '위치' : 'Location'} :</span> */}
-                <span>{language === 'ko' ? region?.label.ko : region?.label.en}</span>
+              <div className="flex items-center gap-2 text-gray-500">
+                <MapPin size="15" className="flex-shrink-0" />
+                <span className="truncate text-[10px] sm:text-xs">
+                  {language === 'ko' ? region?.label.ko : region?.label.en}
+                </span>
               </div>
 
               <p className="text-sm md:text-base lg:text-lg text-gray-500">

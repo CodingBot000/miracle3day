@@ -6,9 +6,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ANALYSIS_STEPS, SupportedLocale } from "../../pre_consultation_intake_form/pre_consultation_intake/analysisSteps";
 import TreatmentAnalysisLoading from "./TreatmentAnalysisLoading";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import { useLocale } from "next-intl";
 
 interface MobileAnalysisLoadingScreenProps {
-  locale?: SupportedLocale;              // "ko" | "en"
+  locale?: SupportedLocale;              // Optional: will use useLocale() if not provided
   delayBetweenStepsMs?: number;          // 기본 500ms
   onComplete?: () => void;               // 마지막 문장 표시 완료 시
 }
@@ -23,12 +24,57 @@ const fakeCodeLines = [
   "Ranking final treatment candidates...",
 ];
 
+// Multilingual translations
+const TRANSLATIONS = {
+  ko: {
+    title: "맞춤 시술 플랜 분석 중",
+    subtitle: "입력하신 문진 내용을 기반으로 최적의 시술 조합을 찾고 있어요.",
+    aiStatus: "AI 분석 진행 중",
+    bottomInfo: "피부타입, 고민, 예산, 시술 경험 등을 모두 고려해서 안전하고 현실적인 시술 조합만 추천해드릴게요.",
+    waitMessage: "앱을 종료하지 말고 잠시만 기다려 주세요.",
+  },
+  en: {
+    title: "Analyzing your treatment plan",
+    subtitle: "We're finding the best treatment combination based on your answers.",
+    aiStatus: "AI analysis in progress",
+    bottomInfo: "We consider your skin type, concerns, budget, and treatment history to recommend only safe and realistic options.",
+    waitMessage: "Please keep this screen open while we prepare your results.",
+  },
+  ja: {
+    title: "施術プランを分析中",
+    subtitle: "ご回答いただいた内容に基づいて、最適な施術の組み合わせを見つけています。",
+    aiStatus: "AI分析進行中",
+    bottomInfo: "お肌のタイプ、お悩み、ご予算、施術経験などをすべて考慮して、安全で現実的な施術の組み合わせのみをご提案いたします。",
+    waitMessage: "結果を準備していますので、この画面を開いたままお待ちください。",
+  },
+  "zh-CN": {
+    title: "正在分析您的治疗方案",
+    subtitle: "我们正在根据您的回答为您寻找最佳的治疗组合。",
+    aiStatus: "AI分析进行中",
+    bottomInfo: "我们会综合考虑您的皮肤类型、问题、预算和治疗经验，只为您推荐安全且切合实际的选项。",
+    waitMessage: "我们正在准备您的结果，请保持此页面打开。",
+  },
+  "zh-TW": {
+    title: "正在分析您的治療方案",
+    subtitle: "我們正在根據您的回答為您尋找最佳的治療組合。",
+    aiStatus: "AI分析進行中",
+    bottomInfo: "我們會綜合考慮您的皮膚類型、問題、預算和治療經驗，只為您推薦安全且切合實際的選項。",
+    waitMessage: "我們正在準備您的結果，請保持此頁面打開。",
+  },
+} as const;
+
 export const MobileAnalysisLoadingScreen: React.FC<MobileAnalysisLoadingScreenProps> = ({
-  locale = "ko",
+  locale: localeProp,
   delayBetweenStepsMs = 1000,
   onComplete,
 }) => {
+  // Use next-intl's useLocale hook to get the current locale
+  const currentLocale = useLocale() as SupportedLocale;
+  // Use prop if provided, otherwise use current locale from next-intl
+  const locale = localeProp || currentLocale;
+
   const steps = ANALYSIS_STEPS[locale];
+  const translations = TRANSLATIONS[locale];
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -92,16 +138,11 @@ export const MobileAnalysisLoadingScreen: React.FC<MobileAnalysisLoadingScreenPr
       <div className="relative z-10 flex flex-col min-h-dvh items-center justify-center px-6 pb-[max(24px,env(safe-area-inset-bottom))]">
         {/* 상단 작은 로고/타이틀 영역 */}
         <div className="mb-10 flex flex-col items-center gap-1">
-          {/* <div className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] uppercase tracking-[0.16em]">
-            {locale === "ko" ? "AI 시술 추천 엔진" : "AI Treatment Engine"}
-          </div> */}
           <h1 className="mt-3 text-lg font-semibold tracking-tight">
-            {locale === "ko" ? "맞춤 시술 플랜 분석 중" : "Analyzing your treatment plan"}
+            {translations.title}
           </h1>
           <p className="mt-1 text-xs text-slate-300 text-center">
-            {locale === "ko"
-              ? "입력하신 문진 내용을 기반으로 최적의 시술 조합을 찾고 있어요."
-              : "We’re finding the best treatment combination based on your answers."}
+            {translations.subtitle}
           </p>
             <div className="items-center">
             <DotLottieReact
@@ -122,14 +163,8 @@ export const MobileAnalysisLoadingScreen: React.FC<MobileAnalysisLoadingScreenPr
             </div>
             <div className="flex flex-col">
               <span className="text-xs font-medium text-emerald-300">
-                {locale === "ko" ? "AI 분석 진행 중" : "AI analysis in progress"}
+                {translations.aiStatus}
               </span>
-              {/* <TreatmentAnalysisLoading /> */}
-              {/* <span className="text-[10px] text-slate-400">
-                {locale === "ko"
-                  ? "보통 몇 초 정도 소요돼요."
-                  : "This usually takes just a few seconds."}
-              </span> */}
             </div>
           </div>
 
@@ -162,17 +197,13 @@ export const MobileAnalysisLoadingScreen: React.FC<MobileAnalysisLoadingScreenPr
 
           {/* 하단 안내 문구 */}
           <p className="mt-4 text-[11px] leading-relaxed text-slate-400">
-            {locale === "ko"
-              ? "피부타입, 고민, 예산, 시술 경험 등을 모두 고려해서 안전하고 현실적인 시술 조합만 추천해드릴게요."
-              : "We consider your skin type, concerns, budget, and treatment history to recommend only safe and realistic options."}
+            {translations.bottomInfo}
           </p>
         </div>
 
         {/* 맨 아래 작은 텍스트 */}
         <div className="mt-6 text-[10px] text-slate-500 text-center">
-          {locale === "ko"
-            ? "앱을 종료하지 말고 잠시만 기다려 주세요."
-            : "Please keep this screen open while we prepare your results."}
+          {translations.waitMessage}
         </div>
       </div>
     </div>

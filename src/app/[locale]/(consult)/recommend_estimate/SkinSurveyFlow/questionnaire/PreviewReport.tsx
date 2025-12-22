@@ -24,7 +24,6 @@ import { useRouter } from 'next/navigation';
 import { fbqTrack } from '@/utils/metapixel';
 import { MessengerInput } from '@/components/atoms/input/InputMessengerFields';
 import { log } from '@/utils/logger';
-import { recommendTreatments, RecommendationOutput } from './questionScript/matching';
 
 const SUBMISSION_ID_STORAGE_KEY = 'recommendation_submission_id';
 

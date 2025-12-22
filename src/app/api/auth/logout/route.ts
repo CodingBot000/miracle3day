@@ -4,14 +4,14 @@ import { sessionOptions } from "@/lib/session";
 
 export async function POST(req: Request) {
   try {
-    const res = NextResponse.redirect(new URL("/", req.url));
+    const res = NextResponse.json({ success: true });
     const session = await getIronSession(req, res, sessionOptions) as any;
-    
+
     session.destroy();
-    
+
     return res;
   } catch (error) {
     console.error("Logout error:", error);
-    return NextResponse.redirect(new URL("/", req.url));
+    return NextResponse.json({ success: false, error: "Logout failed" }, { status: 500 });
   }
 }

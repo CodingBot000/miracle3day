@@ -26,7 +26,7 @@ interface HospitalListNewDesignProps {
 const HospitalListNewDesign = ({ initialData, isFallback = false }: HospitalListNewDesignProps) => {
   const locale = useLocale();
   const hospitals = Array.isArray(initialData) ? initialData : [];
-  const { goBack } = useNavigation();
+  // const { goBack } = useNavigation();
 
   // 병원 ID 목록 추출
   const hospitalIds = useMemo(
@@ -39,9 +39,9 @@ const HospitalListNewDesign = ({ initialData, isFallback = false }: HospitalList
 
   // Hospital data received successfully with show field
 
-  const handleBackClick = () => {
-    goBack();
-  };
+  // const handleBackClick = () => {
+  //   goBack();
+  // };
 
   // initialData.forEach((hospital, index) => {
   //   if (hospital.id_uuid === "b2ae476e-00a0-49cd-898d-770880992d85") {
@@ -55,14 +55,14 @@ const HospitalListNewDesign = ({ initialData, isFallback = false }: HospitalList
     <div className="w-full max-w-7xl mx-auto bg-white min-h-screen">
       {/* Header with back button */}
       <div className="flex items-center h-14 px-4 md:px-6 lg:px-8 border-b border-gray-100 relative">
-        <button 
+        {/* <button 
           onClick={handleBackClick}
           className="flex items-center justify-center w-6 h-6 mr-3"
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M15.0711 5L8 12.0711L15.0711 19.1421" stroke="#1C1C1C" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
-        </button>
+        </button> */}
         <p className="text-sm md:text-base text-gray-700 font-medium">
           Awesome Korean Premium Clinics For You
         </p>

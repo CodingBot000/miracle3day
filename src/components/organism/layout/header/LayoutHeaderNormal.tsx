@@ -24,6 +24,9 @@ const LayoutHeaderNormal = () => {
   // Check if current page is auth (login, terms, etc.)
   const isAuthPage = pathname?.startsWith('/auth') ?? false;
 
+  // Check if current page is guide
+  const isGuidePage = pathname?.startsWith('/guide') ?? false;
+
   // 모바일 모드일 때 LayoutHeader의 스타일을 조정할 수 있습니다
   useEffect(() => {
     if (isMobileMode) {
@@ -66,8 +69,8 @@ const LayoutHeaderNormal = () => {
   }, [isTransparentMode]);
 
   // 헤더 높이 (158px)를 기준으로 스크롤 진행도 계산 (0~1)
-  
-  const scrollProgress = isTransparentMode
+  // guide 페이지에서는 투명 모드를 비활성화
+  const scrollProgress = (isTransparentMode && !isGuidePage)
     ? Math.min(scrollPosition / HEADER_HEIGHT, 1)
     : 1;
 
@@ -79,8 +82,8 @@ const LayoutHeaderNormal = () => {
 
   // 스타일 계산
   const getHeaderStyles = () => {
-    if (!isTransparentMode) {
-      // 투명 모드가 아닌 경우: 항상 배경이 있음
+    // guide 페이지이거나 투명 모드가 아닌 경우: 항상 배경이 있음
+    if (!isTransparentMode || isGuidePage) {
       return 'bg-white/95 backdrop-blur-md shadow-md';
     }
     // 투명 모드인 경우: 완전 투명 또는 동적 opacity
@@ -95,7 +98,7 @@ const LayoutHeaderNormal = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-header flex flex-col justify-center min-h-[62px] max-h-[88px] ease-in-out ${getHeaderStyles()}`}
       style={{
-        backgroundColor: isTransparentMode && scrollPosition > 0
+        backgroundColor: (isTransparentMode && !isGuidePage && scrollPosition > 0)
           ? `rgba(255, 255, 255, ${bgOpacity})`
           : undefined,
         transition: 'all 300ms ease-in-out',
@@ -111,7 +114,7 @@ const LayoutHeaderNormal = () => {
             </div>
             {!isAuthPage && (
               <HeaderActions
-                iconColor={isTransparentMode && !isScrolled ? 'white' : 'black'}
+                iconColor={(isTransparentMode && !isGuidePage && !isScrolled) ? 'white' : 'black'}
                 isMobileMode={isMobileMode}
               />
             )}

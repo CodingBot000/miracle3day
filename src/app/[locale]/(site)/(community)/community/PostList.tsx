@@ -91,7 +91,7 @@ export default function PostList({ posts, isAuthenticated }: PostListProps) {
         {posts.length === 0 ? (
           <div className="p-8 text-center text-gray-500">No posts yet.</div>
         ) : (
-          posts.map((post) => {
+          posts.map((post, index) => {
             const authorPresentation = getAuthorPresentation(post)
             const formattedDate = formatRelativeTime(post.created_at, locale)
             const commentCount = post.comment_count ?? 0
@@ -100,18 +100,22 @@ export default function PostList({ posts, isAuthenticated }: PostListProps) {
             // Get thumbnail from first image (already a full URL)
             const thumbnail = post.images?.[0] || null;
 
+            const isLast = index === posts.length - 1;
+
             return (
-              <PostCard
-                key={post.id}
-                post={post}
-                authorPresentation={authorPresentation}
-                formattedDate={formattedDate}
-                commentCount={commentCount}
-                likeCount={likeCount}
-                language={locale as 'ko' | 'en' | 'ja' | 'zh-CN' | 'zh-TW'}
-                onClickPost={handleClick}
-                thumbnail={thumbnail}
-              />
+              <div key={post.id}>
+                <PostCard
+                  post={post}
+                  authorPresentation={authorPresentation}
+                  formattedDate={formattedDate}
+                  commentCount={commentCount}
+                  likeCount={likeCount}
+                  language={locale as 'ko' | 'en' | 'ja' | 'zh-CN' | 'zh-TW'}
+                  onClickPost={handleClick}
+                  thumbnail={thumbnail}
+                />
+                {!isLast && <div className="border-b border-gray-200 mt-2" />}
+              </div>
             )
           })
         )}

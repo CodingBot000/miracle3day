@@ -31,5 +31,5 @@ export async function GET(req: Request) {
 
   console.log("OAuth start - state encoded in URL parameter:", { nonce, redirectUrl });
 
-  return NextResponse.redirect(googleAuthUrl);
+  return NextResponse.redirect(googleAuthUrl, { status: 303 });
 }

@@ -190,6 +190,14 @@ export default function TermsClient({ initialProvider }: TermsClientProps) {
         throw new Error('세션 저장이 완료되지 않았습니다.');
       }
 
+      // 팝업 윈도우에서 실행 중이면 자동으로 닫기
+      if (typeof window !== 'undefined' && window.opener && !window.opener.closed) {
+        console.log('Terms accepted in popup, closing...');
+        window.close();
+        return;
+      }
+
+      // 일반 윈도우 - 프로필 완성 페이지로 이동
       navigate('/login/onboarding/complete-profile', { replace: true });
     } catch (error) {
       console.error('Failed to save terms agreement', error);

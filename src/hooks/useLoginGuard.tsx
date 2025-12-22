@@ -2,11 +2,9 @@
 
 import { useCallback, useMemo, useState, useEffect } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
-import { useNavigation } from '@/hooks/useNavigation'
-import LoginRequiredModal from '@/components/template/modal/LoginRequiredModal'
+import LoginModal from '@/components/template/modal/LoginModal'
 
 export function useLoginGuard() {
-  const { navigate } = useNavigation()
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const [user, setUser] = useState<any>(null)
@@ -45,19 +43,15 @@ export function useLoginGuard() {
     // Build current URL with query params for redirect
     const queryString = searchParams.toString()
     const currentUrl = pathname + (queryString ? `?${queryString}` : '')
-    const loginUrl = `/login?redirect=${encodeURIComponent(currentUrl)}`
 
     return (
-      <LoginRequiredModal
+      <LoginModal
         open={open}
-        onConfirm={() => {
-          setOpen(false)
-          navigate(loginUrl)
-        }}
-        onCancel={() => setOpen(false)}
+        onClose={() => setOpen(false)}
+        redirectUrl={currentUrl}
       />
     )
-  }, [open, navigate, pathname, searchParams])
+  }, [open, pathname, searchParams])
 
   return {
     requireLogin,

@@ -65,10 +65,42 @@ export default function LoginClient() {
       return;
     }
 
-    // 일반 브라우저는 기존 OAuth 리다이렉트 방식
+    // 일반 브라우저는 팝업 윈도우로 OAuth 실행
     const oauthUrl = `/api/auth/google/start?state=${encodeURIComponent(redirectUrl)}`;
-    console.log('Browser: redirecting to OAuth URL:', oauthUrl);
-    window.location.href = oauthUrl;
+    console.log('Browser: opening OAuth in popup window:', oauthUrl);
+
+    setIsLoading(true);
+
+    // 팝업 윈도우 중앙 위치 계산
+    const width = 500;
+    const height = 600;
+    const left = window.screenX + (window.outerWidth - width) / 2;
+    const top = window.screenY + (window.outerHeight - height) / 2;
+
+    // 팝업 윈도우 열기
+    const popup = window.open(
+      oauthUrl,
+      'google-oauth',
+      `width=${width},height=${height},left=${left},top=${top},popup=1`
+    );
+
+    if (!popup) {
+      // 팝업 차단된 경우 - 기존 리다이렉트 방식으로 폴백
+      console.warn('Popup blocked, falling back to redirect');
+      window.location.replace(oauthUrl);
+      return;
+    }
+
+    // 팝업 완료 감지
+    const checkPopup = setInterval(() => {
+      if (popup.closed) {
+        clearInterval(checkPopup);
+        setIsLoading(false);
+        // 팝업이 닫혔으면 원래 가려던 페이지로 이동
+        console.log('Popup closed, redirecting to:', redirectUrl);
+        window.location.href = redirectUrl;
+      }
+    }, 500);
   };
 
   return (

@@ -46,7 +46,7 @@ export const useNavigation = () => {
 
   /**
    * 뒤로가기
-   * - window.history.back() 사용 (router.back()보다 웹뷰 호환성 좋음)
+   * - router.back() 사용 (OAuth 히스토리 문제 방지)
    * - 웹에서 새창인 경우 창 닫기
    */
   const goBack = () => {
@@ -56,13 +56,8 @@ export const useNavigation = () => {
       return;
     }
 
-    // 히스토리가 있으면 뒤로가기
-    if (typeof window !== 'undefined' && window.history.length > 1) {
-      window.history.back();
-    } else {
-      // 히스토리 없으면 홈으로
-      router.push('/', { scroll: true });
-    }
+    // Next.js router.back() 사용 (OAuth 히스토리를 안전하게 처리)
+    router.back();
   };
 
   /**

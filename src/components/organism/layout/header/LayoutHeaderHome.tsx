@@ -63,8 +63,8 @@ const LayoutHeaderHome = () => {
     };
   }, [isTransparentMode]);
 
-  // 헤더 높이 (158px)를 기준으로 스크롤 진행도 계산 (0~1)
-  
+  // 헤더 높이 (88px)를 기준으로 스크롤 진행도 계산 (0~1)
+
   const scrollProgress = isTransparentMode
     ? Math.min(scrollPosition / HEADER_HEIGHT, 1)
     : 1;

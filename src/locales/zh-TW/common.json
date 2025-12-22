@@ -38,5 +38,27 @@
     "goToLogin": "前往登入/註冊",
     "signInToContinue": "請登入以繼續",
     "useGoogleAccount": "使用Google帳號探索診所並預約項目。"
+  },
+  "NotFound": {
+    "title": "404 - 找不到頁面",
+    "subtitle": "抱歉！我們找不到您要造訪的頁面",
+    "errorCode": "錯誤代碼",
+    "currentUrl": "嘗試造訪的URL",
+    "timestamp": "時間",
+    "showDetails": "顯示詳細資訊",
+    "hideDetails": "隱藏詳細資訊",
+    "reasonsTitle": "為什麼會發生這種情況？",
+    "reason1": "頁面可能已被移動或刪除",
+    "reason2": "URL可能輸入錯誤",
+    "reason3": "您點擊的連結可能已過期",
+    "helpTitle": "您可以嘗試以下操作",
+    "goHome": "返回首頁",
+    "goBack": "返回上一頁",
+    "searchPlaceholder": "搜尋項目或診所...",
+    "suggestionsTitle": "熱門頁面",
+    "hospitals": "瀏覽診所",
+    "treatments": "查看項目",
+    "aboutUs": "關於我們",
+    "reportLink": "報告損壞的連結"
   }
 }

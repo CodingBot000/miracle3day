@@ -38,5 +38,27 @@
     "goToLogin": "ログイン/会員登録へ",
     "signInToContinue": "続行するにはログインしてください",
     "useGoogleAccount": "Googleアカウントでクリニックを探して施術を予約しましょう。"
+  },
+  "NotFound": {
+    "title": "404 - ページが見つかりません",
+    "subtitle": "お探しのページが見つかりませんでした",
+    "errorCode": "エラーコード",
+    "currentUrl": "アクセスしたURL",
+    "timestamp": "時刻",
+    "showDetails": "詳細を表示",
+    "hideDetails": "詳細を非表示",
+    "reasonsTitle": "なぜこのエラーが発生したのですか？",
+    "reason1": "ページが移動または削除された可能性があります",
+    "reason2": "URLが間違っている可能性があります",
+    "reason3": "クリックしたリンクが古い可能性があります",
+    "helpTitle": "次のことを試してください",
+    "goHome": "ホームへ",
+    "goBack": "戻る",
+    "searchPlaceholder": "施術やクリニックを検索...",
+    "suggestionsTitle": "人気ページ",
+    "hospitals": "クリニックを探す",
+    "treatments": "施術を見る",
+    "aboutUs": "会社概要",
+    "reportLink": "リンク切れを報告"
   }
 }

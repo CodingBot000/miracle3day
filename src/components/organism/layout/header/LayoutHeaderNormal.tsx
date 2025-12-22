@@ -68,7 +68,7 @@ const LayoutHeaderNormal = () => {
     };
   }, [isTransparentMode]);
 
-  // 헤더 높이 (158px)를 기준으로 스크롤 진행도 계산 (0~1)
+  // 헤더 높이 (88px)를 기준으로 스크롤 진행도 계산 (0~1)
   // guide 페이지에서는 투명 모드를 비활성화
   const scrollProgress = (isTransparentMode && !isGuidePage)
     ? Math.min(scrollPosition / HEADER_HEIGHT, 1)

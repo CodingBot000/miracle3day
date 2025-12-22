@@ -199,6 +199,13 @@ export default function SignUpMoreInfoForm() {
         throw new Error(msg || 'Failed to complete onboarding');
       }
 
+      // 팝업 윈도우에서 실행 중이면 자동으로 닫기
+      if (typeof window !== 'undefined' && window.opener && !window.opener.closed) {
+        console.log('Profile completed in popup, closing...');
+        window.close();
+        return;
+      }
+
       // 세션이 업데이트되었으므로 window.location.href로 완전히 새로고침하며 이동
       // AuthClient가 업데이트된 세션 정보를 반영하도록 함
       window.location.href = '/';

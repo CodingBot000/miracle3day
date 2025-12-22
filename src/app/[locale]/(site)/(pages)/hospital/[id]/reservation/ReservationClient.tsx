@@ -19,6 +19,7 @@ import { HospitalDetailMainOutput } from '@/app/api/hospital/[id]/main/main.dto'
 import ReservationModal from '@/components/template/modal/ReservationModal';
 import ReservationCalendarClient from '@/app/[locale]/(site)/(pages)/hospital/[id]/components/content/ReservationCalendarClient';
 import HospitalListCard from '@/app/[locale]/(site)/(pages)/hospital/components/HospitalListCard';
+import FitText from '@/components/ui/FitText';
 
 interface ReservationClientProps {
   initialUserData: UserOutputDto | null;
@@ -230,9 +231,9 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
     }
   };
 
-  const handleBack = () => {
-    goBack();
-  };
+  // const handleBack = () => {
+  //   goBack();
+  // };
 
   return (
     <>
@@ -240,14 +241,20 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
         {/* Header */}
         <div className="bg-white border-b border-gray-200 px-4 py-4">
           <div className="flex items-center justify-between max-w-4xl mx-auto">
-            <button 
+            {/* <button
               onClick={handleBack}
               className="flex items-center text-gray-600 hover:text-gray-800"
             >
               <FiArrowLeft className="mr-2" />
               BACK
-            </button>
-            <h1 className="text-xl font-semibold">ENTER INFO FOR RESERVATION</h1>
+            </button> */}
+            <FitText
+              className="flex-1 mx-4 font-semibold"
+              minFontSize={14}
+              maxFontSize={20}
+            >
+              ENTER INFO FOR RESERVATION
+            </FitText>
             <div className="w-16"></div>
           </div>
         </div>

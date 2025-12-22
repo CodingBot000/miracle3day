@@ -171,8 +171,9 @@ export async function GET(req: Request) {
         // userRole은 'user'로 유지
       }
 
-      // 기존 회원 - 바로 active 상태로 설정하고 원래 페이지로 이동
-      const res = NextResponse.redirect(new URL(redirectUrl, baseUrl));
+      // 기존 회원 - 바로 active 상태로 설정
+      // 팝업 윈도우에서 실행 중이면 자동으로 닫고, 아니면 리다이렉트
+      const res = new NextResponse();
       const session = await getIronSession(req, res, getSessionOptions(isSecureRequest(req.url))) as any;
 
       session.auth = {
@@ -187,7 +188,40 @@ export async function GET(req: Request) {
         hospitalAccess,
       };
       await session.save();
-      return res;
+
+      // HTML 페이지 반환: 팝업이면 닫고, 아니면 리다이렉트
+      return new NextResponse(
+        `<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login Successful</title>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <script>
+      if (window.opener && !window.opener.closed) {
+        // 팝업 윈도우 - 부모에게 성공 알리고 닫기
+        console.log('OAuth success in popup, closing...');
+        window.close();
+      } else {
+        // 일반 윈도우 - 리다이렉트 (팝업 차단 폴백)
+        console.log('OAuth success in regular window, redirecting...');
+        window.location.href = '${redirectUrl}';
+      }
+    </script>
+    <p style="text-align: center; font-family: sans-serif; margin-top: 100px;">
+      Login successful! This window will close automatically...
+    </p>
+  </body>
+</html>`,
+        {
+          status: 200,
+          headers: {
+            'Content-Type': 'text/html; charset=utf-8',
+            'Set-Cookie': res.headers.get('Set-Cookie') || '',
+          },
+        }
+      );
     } else {
       // 신규 회원 - pending 상태로 약관 동의 페이지로
       const res = NextResponse.redirect(new URL("/terms", baseUrl));

@@ -6,7 +6,6 @@ import PageHeader from '../PageHeader';
 import PreviewReport from './questionnaire/PreviewReport';
 import { questions } from '@/app/[locale]/(consult)/recommend_estimate/estimate/form-definition_questions';
 import { steps } from '@/app/[locale]/(consult)/recommend_estimate/estimate/form-definition_steps';
-import { recommendTreatments } from './questionnaire/questionScript/matching/index';
 import { useLocale } from 'next-intl';
 import { getLocalizedText } from '@/utils/i18n';
 
@@ -445,7 +444,7 @@ const BeautyQuestionnaire: React.FC = () => {
         onOpenChange={setIsPreviewOpen}
         formData={formData}
         onNavigateStart={() => setIsNavigating(true)}
-        onSubmissionComplete={(allStepData) => {
+        onSubmissionComplete={async (allStepData) => {
           setIsPreviewOpen(false);
 
           // Generate recommendations
@@ -499,7 +498,22 @@ const BeautyQuestionnaire: React.FC = () => {
             log.debug("=== Algorithm Input ===");
             log.debug(algorithmInput);
 
-            const output = recommendTreatments(algorithmInput);
+            // API를 통해 서버 사이드에서 추천 알고리즘 실행
+            // (매칭 알고리즘이 클라이언트에 노출되지 않음)
+            const response = await fetch('/api/recommend_estimate', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(algorithmInput),
+            });
+
+            if (!response.ok) {
+              const errorData = await response.json();
+              throw new Error(errorData.error || 'Failed to generate recommendations');
+            }
+
+            const output = await response.json();
 
             log.debug("=== Recommendation Output ===");
             log.debug("Recommendations count:", output.recommendations.length);

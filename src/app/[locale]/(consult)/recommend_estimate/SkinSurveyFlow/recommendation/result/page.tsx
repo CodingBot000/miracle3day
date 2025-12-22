@@ -95,31 +95,7 @@ export default function RecommendationResultPage() {
 
   // 로딩 화면
   if (isLoading) {
-    return (
-      <div className="fixed inset-0 z-50 min-h-screen bg-gradient-to-br from-[#FDF5F0] via-white to-[#F8E8E0] overflow-hidden">
-        <div className="flex flex-col justify-center items-center min-h-screen">
-          {/* <DotLottieReact
-            src="/lottie/analysis.lottie"
-            loop
-            autoplay
-            style={{ width: 200, height: 200 }}
-          /> */}
-          {/* <p className="mt-4 text-xl font-medium text-gray-700 justify-center items-center">
-            {locale === 'ko'
-              ? "맞춤형 시술 계획을 분석 중입니다..."
-              : "Analyzing your personalized treatment plan..."}
-          </p> */}
-          {/* <div className="mt-2 justify-center items-center">
-            <TreatmentAnalysisLoading />
-            </div> */}
-              
-                  {/* 모바일 전용 컴포넌트 (md:hidden으로 데스크탑에서 안 보임) */}
-                  <MobileAnalysisLoadingScreen />
-              
-              
-        </div>
-      </div>
-    );
+    return <MobileAnalysisLoadingScreen />;
   }
 
   // 데이터 소실 모달

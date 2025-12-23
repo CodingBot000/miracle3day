@@ -15,6 +15,36 @@ const ADMIN_SECRET = new TextEncoder().encode(process.env.AUTH_SECRET!);
 // next-intl 미들웨어 생성
 const intlMiddleware = createIntlMiddleware(routing);
 
+/**
+ * 1. Middleware 체크 (현재 방식)
+장점:
+✅ 빠른 리다이렉트 (페이지 렌더링 전에 체크)
+✅ 서버 부하 감소
+✅ 중앙 집중식 관리
+단점:
+❌ 동적 라우트 처리 어려움 (/hospital/[id]/reservation 같은 거)
+❌ 복잡한 권한 체크 불가 (역할 기반 등)
+❌ 경로 목록 유지보수 필요
+2. Page-level 체크 (reservation이 현재 하는 방식)
+장점:
+✅ 유연함 (역할, 권한 등 복잡한 로직 가능)
+✅ 동적 라우트에 적합
+✅ 페이지와 인증 로직이 함께 있음
+단점:
+❌ 페이지 코드가 먼저 실행됨 (느림)
+❌ 각 페이지마다 중복 코드
+추천: 하이브리드 방식
+
+// Middleware: 간단한 경로만
+AUTH_REQUIRED_PATHS = [
+  '/user',           // ✅ 정적 경로
+  '/admin',          // ✅ 정적 경로
+  '/withdrawal',     // ✅ 정적 경로
+]
+
+// Page-level: 동적 경로나 복잡한 로직
+// /hospital/[id]/reservation → page.tsx에서 체크 (현재 방식 유지)
+ */
 // 환자용 인증 필요 경로 (locale prefix 없이)
 const AUTH_REQUIRED_PATHS = [
   '/user',

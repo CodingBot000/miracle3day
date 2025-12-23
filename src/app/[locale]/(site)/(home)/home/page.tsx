@@ -11,6 +11,7 @@ import KBeautyGuideSection from "./components/KBeautyGuideSeciont";
 import TrustStatistics from './TrustStatistics';
 import HeroVideos from "./components/hero/HeroVideos";
 import TransparentHeaderWrapper from "@/components/layout/TransparentHeaderWrapper";
+import { GA4_EVENT_ACTION } from '@/lib/ga4_event_execute';
 
 export async function generateMetadata({ 
   params 

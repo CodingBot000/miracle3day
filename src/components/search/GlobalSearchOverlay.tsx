@@ -28,6 +28,8 @@ import {
 } from '@/lib/search-utils';
 import { getCurrencyInfo } from '@/utils/exchangeRate';
 import { SearchHeader } from './SearchHeader';
+import { GA4_EVENT_ACTION } from '@/lib/ga4_event_execute';
+import { getDeviceType } from '@/utils/deviceDetection';
 
 const DEBOUNCE_MS = 1000;
 const MIN_QUERY_LENGTH = 2;
@@ -45,6 +47,18 @@ export const GlobalSearchOverlay: React.FC = () => {
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [popularSearches, setPopularSearches] = useState<PopularTerm[]>([]);
+
+  // GA4 이벤트
+  useEffect(() => {
+    GA4_EVENT_ACTION.GLOBAL_SEARCH({
+      locale: locale,
+      device_type: getDeviceType(),
+      referrer_url: typeof document !== 'undefined' ? document.referrer : '',
+      page_path: window.location.pathname,
+    });
+  }, []); // 빈 dependency array = 컴포넌트 마운트 시 1회만 실행
+
+  
 
   // Mount check for portal
   useEffect(() => {

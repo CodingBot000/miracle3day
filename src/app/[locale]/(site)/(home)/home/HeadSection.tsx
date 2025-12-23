@@ -46,6 +46,7 @@ export default function HeadSection() {
   };
 
   const handleLoginConfirm = () => {
+    
     setShowLoginModal(false);
     const formUrl = `/pre_consultation_intake_form?returnUrl=${encodeURIComponent(pathname)}`;
     navigate(`/login?redirect=${encodeURIComponent(formUrl)}`);

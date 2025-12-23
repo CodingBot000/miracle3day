@@ -108,7 +108,7 @@ const TreatmentProductList = ({ products }: TreatmentProductListProps) => {
             className="flex ml-8 items-center gap-1 px-3 py-1.5 rounded-md hover:bg-gray-100 transition-colors"
             aria-label={isExpanded ? "Collapse" : "Expand"}
           >
-            <span className="text-sm text-gray-600">
+            <span className="inline-block text-sm text-white bg-green-100 px-2.5 py-1 rounded-full font-medium">
               {/* {isExpanded ? "Close" : "View"} */}
               {isExpanded ? (locale === 'ko' ? "닫기" : "Close") : (locale === 'ko' ? "더보기" : "View More")}
 
@@ -205,6 +205,18 @@ const TreatmentProductList = ({ products }: TreatmentProductListProps) => {
                 </div>
               </div>
             ))}
+          </div>
+        )}
+
+        {/* 하단 닫기 버튼 - isExpanded일 때만 표시 */}
+        {isExpanded && (
+          <div className="flex justify-center mt-6">
+            <button
+              onClick={() => setIsExpanded(false)}
+              className="inline-block text-sm text-white bg-green-100 px-2.5 py-1 rounded-full font-medium hover:bg-green-200 transition-colors"
+            >
+              {locale === 'ko' ? "닫기" : "Close"}
+            </button>
           </div>
         )}
       </div>

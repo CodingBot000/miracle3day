@@ -85,7 +85,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
        ) VALUES (
          $1, $2, $3, $4, $5, $6, $7, $8, $9, $10,
          $11, $12, $13, $14, $15, $16, $17, $18, $19, $20,
-         $21::jsonb, $22
+         $21, $22
        )
        RETURNING *`,
       [
@@ -108,7 +108,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
         reservationData.area_to_improve,
         reservationData.consultation_request,
         reservationData.additional_info,
-        JSON.stringify(reservationData.preferred_languages ?? []),
+        reservationData.preferred_languages ?? [],
         reservationData.status_code,
         reservationData.created_at,
       ]

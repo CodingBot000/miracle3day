@@ -60,5 +60,24 @@
     "treatments": "查看項目",
     "aboutUs": "關於我們",
     "reportLink": "報告損壞的連結"
+  },
+  "Error": {
+    "title": "出現問題",
+    "subtitle": "發生了意外錯誤",
+    "errorType": "錯誤類型",
+    "errorMessage": "錯誤訊息",
+    "errorDigest": "錯誤ID",
+    "timestamp": "時間",
+    "showDetails": "顯示技術詳情",
+    "hideDetails": "隱藏技術詳情",
+    "stackTrace": "堆疊追蹤",
+    "whatHappened": "發生了什麼？",
+    "errorExplanation": "處理您的請求時發生了意外錯誤。此問題已記錄，我們的團隊將進行調查。",
+    "whatCanYouDo": "您可以做什麼？",
+    "tryAgain": "重試",
+    "goHome": "返回首頁",
+    "goBack": "返回上一頁",
+    "reportIssue": "報告此問題",
+    "reportEmail": "如果此問題持續存在，請聯絡我們"
   }
 }

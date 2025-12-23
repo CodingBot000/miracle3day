@@ -60,5 +60,24 @@
     "treatments": "시술 보기",
     "aboutUs": "회사 소개",
     "reportLink": "깨진 링크 신고하기"
+  },
+  "Error": {
+    "title": "문제가 발생했습니다",
+    "subtitle": "예상치 못한 오류가 발생했습니다",
+    "errorType": "오류 유형",
+    "errorMessage": "오류 메시지",
+    "errorDigest": "오류 ID",
+    "timestamp": "시간",
+    "showDetails": "기술 세부정보 보기",
+    "hideDetails": "기술 세부정보 숨기기",
+    "stackTrace": "스택 추적",
+    "whatHappened": "무슨 일이 발생했나요?",
+    "errorExplanation": "요청을 처리하는 중 예상치 못한 오류가 발생했습니다. 이 문제는 기록되었으며 담당 팀이 조사할 예정입니다.",
+    "whatCanYouDo": "어떻게 하면 되나요?",
+    "tryAgain": "다시 시도",
+    "goHome": "홈으로 가기",
+    "goBack": "뒤로 가기",
+    "reportIssue": "문제 신고하기",
+    "reportEmail": "이 문제가 계속되면 문의해 주세요"
   }
 }

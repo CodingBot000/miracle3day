@@ -21,6 +21,8 @@ export const getSessionOptions = (isSecure: boolean): SessionOptions => ({
   cookieOptions: {
     ...sessionOptions.cookieOptions,
     secure: isSecure || process.env.NODE_ENV === "production",
+    httpOnly: true,
+    path: "/",
   },
 });
 

@@ -3,7 +3,7 @@ export const languagesClinicAvailable = [
   { label: "日本語", code: "ja-JP" },
   { label: "繁體中文(台灣)", code: "zh-TW" },
   { label: "繁體中文(香港)", code: "zh-HK" },
-  { label: "ภาษาไทย", code: "th-TH" },
+  // { label: "ภาษาไทย", code: "th-TH" },
   { label: "Tiếng Việt", code: "vi-VN" },
   { label: "Français", code: "fr-FR" },
   { label: "Español", code: "es-ES" },

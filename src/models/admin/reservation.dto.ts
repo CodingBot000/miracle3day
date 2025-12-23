@@ -18,7 +18,7 @@ export interface ReservationInputDto {
   preferred_time: string;
   visitor_count?: number;
   reservation_headcount?: number;
-  treatment_experience?: boolean;
+  treatment_experience?: string;
   area_to_improve?: string;
   consultation_request?: string;
   additional_info?: string;

@@ -20,6 +20,8 @@ import ReservationModal from '@/components/template/modal/ReservationModal';
 import ReservationCalendarClient from '@/app/[locale]/(site)/(pages)/hospital/[id]/components/content/ReservationCalendarClient';
 import HospitalListCard from '@/app/[locale]/(site)/(pages)/hospital/components/HospitalListCard';
 import FitText from '@/components/ui/FitText';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Loader2, CheckCircle } from 'lucide-react';
 
 interface ReservationClientProps {
   initialUserData: UserOutputDto | null;
@@ -48,7 +50,7 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
     treatmentExperience: '',
     koreaPhone: '',
     reservationCount: '',
-    interpreterLanguage: '',
+    preferredLanguages: [] as string[],
     agreeReservation: false,
     agreeNoShow: false,
   
@@ -60,6 +62,8 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
   const [countryModalOpen, setCountryModalOpen] = useState(false);
   const [birthDate, setBirthDate] = useState<Date | null>(null);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const selectedCountry = country.find(c => `${c.country_name} (+${c.phone_code})` === formData.phoneCountry) || country[0];
 
   // Zustand store에서 데이터 가져오기
@@ -141,7 +145,7 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
     // setShowBottomBar(true);
   };
   
-  const handleInputChange = (field: string, value: string | boolean) => {
+  const handleInputChange = (field: string, value: string | boolean | string[]) => {
     setFormData(prev => ({
       ...prev,
       [field]: value
@@ -159,9 +163,10 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
       if (!formData.nationality) newErrors.nationality = 'Nationality is required';
       if (!formData.email) newErrors.email = 'Email is required';
       if (!formData.phoneNumber) newErrors.phoneNumber = 'Phone number is required';
-      if (!formData.koreaPhone) newErrors.koreaPhone = 'Korea phone number is required';
+      // if (!formData.koreaPhone) newErrors.koreaPhone = 'Korea phone number is required';
       if (!formData.date) newErrors.date = 'Date is required';
       if (!formData.time) newErrors.time = 'Time is required';
+      if (formData.preferredLanguages.length === 0) newErrors.preferredLanguages = 'Please select at least one language option';
       // if (!formData.agreeReservation) newErrors.agreeReservation = 'Please agree to reservation terms';
       // if (!formData.agreeNoShow) newErrors.agreeNoShow = 'Please agree to no-show policy';
       
@@ -174,60 +179,68 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
 
       if (Object.keys(newErrors).length === 0) {
         log.debug('🔍 Step 4: No validation errors, proceeding with API call...');
-        
-        // API 전송 준비
-        const reservationData = {
-          date: formData.date,
-          time: formData.time,
-          id_user: initialUserData?.userInfo?.id_uuid,
-          id_uuid_hospital: hospitalId,
-          name: formData.englishName,
-          english_name: formData.englishName,
-          passport_name: formData.passportName,
-          nationality: formData.nationality,
-          gender: formData.gender as 'male' | 'female' | 'other',
-          birth_date: formData.dateOfBirth,
-          email: formData.email,
-          phone: formData.phoneCountry + ' ' + formData.phoneNumber,
-          phone_korea: formData.koreaPhone,
-          preferred_date: formData.date,
-          preferred_time: formData.time,
-          visitor_count: parseInt(formData.visitorsCount) || undefined,
-          reservation_headcount: parseInt(formData.reservationCount) || undefined,
-          treatment_experience: formData.treatmentExperience === 'true',
-          area_to_improve: formData.improvementAreas,
-          consultation_request: formData.consultationFor,
-          additional_info: formData.treatmentExperience,
-          preferred_languages: formData.interpreterLanguage ? [formData.interpreterLanguage] : []
-        };
 
-        log.debug('🔍 Step 5: Reservation data ready:', reservationData);
-        
-        const response = await fetch(`/api/hospital/${hospitalId}/reservation`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(reservationData),
-        });
+        setIsSubmitting(true);
 
-        log.debug('🔍 Step 6: API response received:', response.status);
-        
-        const data = await response.json();
-        log.debug('🔍 Step 7: API response data:', data);
+        try {
+          // API 전송 준비
+          const reservationData = {
+            date: formData.date,
+            time: formData.time,
+            id_user: initialUserData?.userInfo?.id_uuid,
+            id_uuid_hospital: hospitalId,
+            name: formData.englishName,
+            english_name: formData.englishName,
+            passport_name: formData.passportName,
+            nationality: formData.nationality,
+            gender: formData.gender as 'male' | 'female' | 'other',
+            birth_date: formData.dateOfBirth,
+            email: formData.email,
+            phone: formData.phoneCountry + ' ' + formData.phoneNumber,
+            phone_korea: formData.koreaPhone || undefined,
+            preferred_date: formData.date,
+            preferred_time: formData.time,
+            visitor_count: formData.visitorsCount || undefined,
+            reservation_headcount: formData.reservationCount || undefined,
+            treatment_experience: formData.treatmentExperience || undefined,
+            area_to_improve: formData.improvementAreas,
+            consultation_request: formData.consultationFor,
+            additional_info: formData.treatmentExperience,
+            preferred_languages: formData.preferredLanguages
+          };
 
-        if (response.ok && data.success) {
-          log.debug("✅ Reservation created successfully:", data.data);
-          goBack();
-        } else {
-          
-          console.error("❌ Reservation failed:", data.error);
-          alert(data.error || "An error occurred while processing your reservation. Please try again.");
+          log.debug('🔍 Step 5: Reservation data ready:', reservationData);
+
+          const response = await fetch(`/api/hospital/${hospitalId}/reservation`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(reservationData),
+          });
+
+          log.debug('🔍 Step 6: API response received:', response.status);
+
+          const data = await response.json();
+          log.debug('🔍 Step 7: API response data:', data);
+
+          if (response.ok && data.success) {
+            log.debug("✅ Reservation created successfully:", data.data);
+            setShowSuccessModal(true);
+          } else {
+            console.error("❌ Reservation failed:", data.error);
+            alert(data.error || "An error occurred while processing your reservation. Please try again.");
+          }
+        } catch (err) {
+          console.error("🚨 Error in API call:", err);
+          alert("A network error has occurred. Please check your internet connection and try again.");
+        } finally {
+          setIsSubmitting(false);
         }
       } else {
         log.debug('🔍 Step 4: Validation failed, not submitting');
       }
     } catch (err) {
       console.error("🚨 Error in handleConfirm:", err);
-      alert("A network error has occurred. Please check your internet connection and try again.");
+      alert("An unexpected error occurred. Please try again.");
     }
   };
 
@@ -237,10 +250,10 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
 
   return (
     <>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 w-full max-w-full overflow-x-hidden">
         {/* Header */}
         <div className="bg-white border-b border-gray-200 px-4 py-4">
-          <div className="flex items-center justify-between max-w-4xl mx-auto">
+          <div className="flex items-center justify-between max-w-4xl mx-auto w-full">
             {/* <button
               onClick={handleBack}
               className="flex items-center text-gray-600 hover:text-gray-800"
@@ -269,11 +282,11 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
           </div>
         </div> */}
 
-        <div className="max-w-4xl mx-auto pb-8">
+        <div className="max-w-4xl mx-auto pb-8 px-4 w-full box-border">
           {/* Reservation Items */}
-          <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+          <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 mb-6 w-full box-border">
             {/* <h2 className="text-lg font-semibold mb-4">Reservation items</h2> */}
-            <div className="flex items-start space-x-4 p-4 border border-gray-200 rounded-lg">
+            <div className="flex items-start space-x-4 p-4 border border-gray-200 rounded-lg w-full box-border">
               <div className="w-16 h-16 bg-gray-200 rounded-lg flex-shrink-0">
                  {/* {hospitalData.hospital_info.thumbnail_url ? ( */}
               <img
@@ -299,9 +312,9 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
           </div>
 
           {/* Basic Information */}
-          <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+          <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 mb-6 w-full box-border">
             <h2 className="text-lg font-semibold mb-4">Basic Information</h2>
-            <div className="space-y-4">
+            <div className="space-y-4 w-full">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   English Name <span className="text-red-500">*</span>
@@ -393,9 +406,9 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
           </div>
 
           {/* Additional Information */}
-          <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+          <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 mb-6 w-full box-border">
             <h2 className="text-lg font-semibold mb-4">Additional Information</h2>
-            <div className="space-y-4">
+            <div className="space-y-4 w-full">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Name on Passport (in English)
@@ -441,7 +454,7 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
                       {birthDate ? format(birthDate, 'MM/dd/yyyy') : 'mm/dd/yyyy'}
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
+                  <PopoverContent className="w-auto p-0 max-w-[calc(100vw-2rem)]" align="start" avoidCollisions={true} sideOffset={5}>
                     <CalendarComponent
                       mode="single"
                       selected={birthDate || undefined}
@@ -529,7 +542,8 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Have you ever received or heard of this skin treatment before?
+                  Please describe your experience with this treatment. 
+(e.g., 'I've tried it before in Korea', 'I've only heard about it', 'This is my first time')
                 </label>
                 <textarea
                   value={formData.treatmentExperience}
@@ -541,15 +555,19 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Phone number available for contact in Korea (if available) <span className="text-red-500">*</span>
-                </label>
+                Contact number available during your visit
+                <span className="text-gray-500 text-xs ml-2">(Optional)</span>
+              </label>
                 <input
                   type="tel"
                   value={formData.koreaPhone}
                   onChange={(e) => handleInputChange('koreaPhone', e.target.value)}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 ${errors.koreaPhone ? 'border-red-300' : 'border-red-300'}`}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Ex) your roaming number or +82 10-1234-5678"
                 />
-                {errors.koreaPhone && <p className="text-red-500 text-sm mt-1">{errors.koreaPhone}</p>}
+                <p className="text-xs text-gray-500 mt-1">
+                  💡 roaming number, Korean number, or any number we can reach you on your visit date
+                </p>
               </div>
 
               {/* <div className="flex items-start space-x-3">
@@ -595,38 +613,207 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
               </div>
               {errors.agreeNoShow && <p className="text-red-500 text-sm mt-1">{errors.agreeNoShow}</p>} */}
 
-              <p className="text-red-500 text-sm">You must accept the terms and conditions to proceed.</p>
+              {/* <p className="text-red-500 text-sm">You must accept the terms and conditions to proceed.</p> */}
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Which language interpreter do you need?
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Which language interpreters do you need? (Select in order of priority, max 3) <span className="text-red-500">*</span>
                 </label>
-                <select
-                  value={formData.interpreterLanguage}
-                  onChange={(e) => handleInputChange('interpreterLanguage', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="">SELECT</option>
-                  <option value="english">English</option>
-                  <option value="japanese">Japanese</option>
-                  <option value="chinese">Chinese</option>
-                  <option value="none">No interpreter needed</option>
-                </select>
+                <p className="text-xs text-gray-500 mb-3">
+                  Click languages in your preferred order. Numbers show priority.
+                </p>
+
+                {/* 선택된 언어 실시간 표시 */}
+                {formData.preferredLanguages.length > 0 && (
+                  <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                    <p className="text-xs font-semibold text-blue-800 mb-2">Your selection:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {formData.preferredLanguages.map((langValue, index) => {
+                        const langLabel = [
+                          { value: 'en', label: 'English' },
+                          { value: 'ja', label: '日本語' },
+                          { value: 'zh-CN', label: '简体中文' },
+                          { value: 'zh-TW', label: '繁體中文' },
+                          { value: 'th', label: 'ภาษาไทย' },
+                          { value: 'ko', label: '한국어' },
+                          { value: 'none', label: 'No interpreter needed' }
+                        ].find(l => l.value === langValue)?.label;
+
+                        return (
+                          <span key={langValue} className="text-sm font-medium text-blue-700">
+                            {index + 1}. {langLabel}
+                            {index < formData.preferredLanguages.length - 1 && <span className="ml-1">→</span>}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                <div className="space-y-2">
+                  {[
+                    { value: 'en', label: 'English' },
+                    { value: 'ja', label: '日本語' },
+                    { value: 'zh-CN', label: '简体中文' },
+                    { value: 'zh-TW', label: '繁體中文' },
+                    { value: 'th', label: 'ภาษาไทย' },
+                    { value: 'ko', label: '한국어' },
+                    { value: 'none', label: 'No interpreter needed' }
+                  ].map((lang) => {
+                    const priorityIndex = formData.preferredLanguages.indexOf(lang.value);
+                    const isSelected = priorityIndex !== -1;
+                    const isNoneOption = lang.value === 'none';
+                    const hasNoneSelected = formData.preferredLanguages.includes('none');
+                    const isMaxSelected = formData.preferredLanguages.length >= 3;
+
+                    // 비활성화 조건:
+                    // 1. 3개 선택되었고 현재 항목이 선택되지 않은 경우
+                    // 2. "No interpreter needed"가 선택되어 있고 현재 항목이 그것이 아닌 경우
+                    const isDisabled = (!isSelected && isMaxSelected) || (!isNoneOption && hasNoneSelected);
+
+                    return (
+                      <label
+                        key={lang.value}
+                        className={cn(
+                          "flex items-center gap-3 p-4 border-2 rounded-lg transition-all",
+                          isSelected
+                            ? "border-blue-500 bg-blue-50"
+                            : isDisabled
+                            ? "border-gray-200 bg-gray-50 cursor-not-allowed opacity-50"
+                            : "border-gray-200 hover:border-gray-300 cursor-pointer"
+                        )}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={isSelected}
+                          disabled={isDisabled}
+                          onChange={(e) => {
+                            let newLanguages = [...formData.preferredLanguages];
+
+                            if (e.target.checked) {
+                              // "No interpreter needed" 선택 시 다른 모든 항목 해제
+                              if (isNoneOption) {
+                                newLanguages = ['none'];
+                              } else {
+                                // 다른 항목 선택 시 "No interpreter needed" 자동 해제
+                                newLanguages = newLanguages.filter(v => v !== 'none');
+                                newLanguages.push(lang.value);
+                              }
+                            } else {
+                              // 체크 해제: 배열에서 제거
+                              const index = newLanguages.indexOf(lang.value);
+                              if (index > -1) {
+                                newLanguages.splice(index, 1);
+                              }
+                            }
+
+                            handleInputChange('preferredLanguages', newLanguages);
+                            // 에러 클리어
+                            if (newLanguages.length > 0 && errors.preferredLanguages) {
+                              setErrors(prev => {
+                                const newErrors = { ...prev };
+                                delete newErrors.preferredLanguages;
+                                return newErrors;
+                              });
+                            }
+                          }}
+                          className="w-5 h-5 text-blue-600 rounded focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                        />
+                        <span className={cn(
+                          "flex-1 text-sm font-medium",
+                          isDisabled ? "text-gray-400" : "text-gray-700"
+                        )}>
+                          {lang.label}
+                        </span>
+                        {isSelected && (
+                          <span className="flex items-center justify-center w-7 h-7 bg-blue-500 text-white text-sm font-bold rounded-full">
+                            {priorityIndex + 1}
+                          </span>
+                        )}
+                      </label>
+                    );
+                  })}
+                </div>
+
+                {errors.preferredLanguages && (
+                  <p className="text-red-500 text-sm mt-2">{errors.preferredLanguages}</p>
+                )}
               </div>
             </div>
           </div>
 
           {/* CONFIRM Button */}
-          <div className="bg-white rounded-lg shadow-sm p-6">
+          <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 w-full box-border">
             <button
               onClick={handleConfirm}
-              className="w-full py-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
+              disabled={
+                isSubmitting ||
+                !formData.englishName ||
+                !formData.nationality ||
+                !formData.email ||
+                !formData.phoneNumber ||
+                !formData.date ||
+                !formData.time ||
+                formData.preferredLanguages.length === 0
+              }
+              className={cn(
+                "w-full py-4 font-semibold rounded-lg transition-colors flex items-center justify-center gap-2",
+                isSubmitting ||
+                !formData.englishName ||
+                !formData.nationality ||
+                !formData.email ||
+                !formData.phoneNumber ||
+                !formData.date ||
+                !formData.time ||
+                formData.preferredLanguages.length === 0
+                  ? "bg-gray-300 text-gray-400 cursor-not-allowed"
+                  : "bg-blue-600 text-white hover:bg-blue-700"
+              )}
             >
-              CONFIRM
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  <span>Processing...</span>
+                </>
+              ) : (
+                <span>CONFIRM</span>
+              )}
             </button>
           </div>
         </div>
       </div>
+
+      {/* Success Modal */}
+      <Dialog open={showSuccessModal} onOpenChange={() => {}}>
+        <DialogContent
+          className="max-w-md [&>button]:hidden"
+          onPointerDownOutside={(e) => e.preventDefault()}
+          onEscapeKeyDown={(e) => e.preventDefault()}
+        >
+          <div className="flex flex-col items-center justify-center p-6 space-y-4">
+            <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center">
+              <CheckCircle className="w-8 h-8 text-white" />
+            </div>
+            <div className="text-center space-y-2">
+              <h3 className="text-lg font-semibold text-gray-900">
+                Reservation Completed Successfully!
+              </h3>
+              <p className="text-sm text-gray-600">
+                Reservation completed successfully. You can check your reservation status on My Page.
+              </p>
+            </div>
+            <button
+              onClick={() => {
+                setShowSuccessModal(false);
+                goBack();
+              }}
+              className="bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 text-white px-6 py-2 rounded-full font-semibold transition-all"
+            >
+              OK
+            </button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

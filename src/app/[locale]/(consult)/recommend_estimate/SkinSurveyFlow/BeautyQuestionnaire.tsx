@@ -27,6 +27,8 @@ import {
 
 import { log } from '@/utils/logger';
 import { validateStepData, getValidationMessage } from '../validCheckForm';
+import { GA4_EVENT_ACTION } from '@/lib/ga4_event_execute';
+import { getDeviceType } from '@/utils/deviceDetection';
 import SkinTypeStep from './questionnaire/SkinTypeStep';
 import SkinConcernsStep from './questionnaire/SkinConcernsStep';
 import TreatmentGoalsStep from './questionnaire/TreatmentGoalsStep';
@@ -82,6 +84,16 @@ const BeautyQuestionnaire: React.FC = () => {
       window.removeEventListener('popstate', handlePopState);
     };
   }, [router]);
+
+  // GA4 이벤트: 설문 페이지 진입 추적
+  useEffect(() => {
+    GA4_EVENT_ACTION.LANDING_AI_RECOMMENDATION_CLICK({
+      locale: locale,
+      device_type: getDeviceType(),
+      referrer_url: typeof document !== 'undefined' ? document.referrer : '',
+      page_path: window.location.pathname,
+    });
+  }, []); // 빈 dependency array = 컴포넌트 마운트 시 1회만 실행
 
   // 현재 스텝의 유효성을 실시간으로 확인
   const isCurrentStepValid = () => {

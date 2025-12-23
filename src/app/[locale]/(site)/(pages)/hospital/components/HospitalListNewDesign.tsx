@@ -6,8 +6,10 @@ import { useNavigation } from "@/hooks/useNavigation";
 import HospitalListCard from "./HospitalListCard";
 import { ROUTE } from "@/router";
 import { useHospitalGoogleSnapshots } from "@/hooks/useHospitalGoogleSnapshots";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useLocale } from "next-intl";
+import { GA4_EVENT_ACTION } from "@/lib/ga4_event_execute";
+import { getDeviceType } from "@/utils/deviceDetection";
 
 // Fallback 메시지 (시술 기반 검색 결과가 없을 때)
 const FALLBACK_MESSAGES: Record<string, string> = {
@@ -27,6 +29,21 @@ const HospitalListNewDesign = ({ initialData, isFallback = false }: HospitalList
   const locale = useLocale();
   const hospitals = Array.isArray(initialData) ? initialData : [];
   // const { goBack } = useNavigation();
+
+
+   
+    // GA4 이벤트
+    useEffect(() => {
+      GA4_EVENT_ACTION.HOSPITAL_LIST_PAGE({
+        locale: locale,
+        device_type: getDeviceType(),
+        referrer_url: typeof document !== 'undefined' ? document.referrer : '',
+        page_path: window.location.pathname,
+      });
+    }, []); // 빈 dependency array = 컴포넌트 마운트 시 1회만 실행
+  
+    
+  
 
   // 병원 ID 목록 추출
   const hospitalIds = useMemo(

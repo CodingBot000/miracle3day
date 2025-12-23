@@ -8,6 +8,8 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import Cookies from "js-cookie";
 import { introModal } from "./pre_consultation_intake/form-definition_pre_con_base";
 import { getLocalizedText } from "@/utils/i18n";
+import { GA4_EVENT_ACTION } from "@/lib/ga4_event_execute";
+import { getDeviceType } from "@/utils/deviceDetection";
 
 const INTRO_COOKIE_KEY = "pre_consultation_intro_hidden";
 const GUIDE_COOKIE_KEY = "pre_consultation_guide_seen";
@@ -18,6 +20,17 @@ export default function PreConsultationIntakeFormPage() {
   const [dontShowAgain, setDontShowAgain] = useState(false);
   const locale = useLocale();
 
+    // GA4 이벤트: 설문 페이지 진입 추적
+    useEffect(() => {
+      GA4_EVENT_ACTION.LANDING_VIDEO_CONSULT({
+        locale: locale,
+        device_type: getDeviceType(),
+        referrer_url: typeof document !== 'undefined' ? document.referrer : '',
+        page_path: window.location.pathname,
+      });
+    }, []); // 빈 dependency array = 컴포넌트 마운트 시 1회만 실행
+  
+    
   useEffect(() => {
     // 가이드 페이지를 이미 봤는지 확인
     const guideSeen = Cookies.get(GUIDE_COOKIE_KEY);

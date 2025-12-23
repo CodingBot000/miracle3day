@@ -60,5 +60,24 @@
     "treatments": "查看项目",
     "aboutUs": "关于我们",
     "reportLink": "报告损坏的链接"
+  },
+  "Error": {
+    "title": "出现问题",
+    "subtitle": "发生了意外错误",
+    "errorType": "错误类型",
+    "errorMessage": "错误消息",
+    "errorDigest": "错误ID",
+    "timestamp": "时间",
+    "showDetails": "显示技术详情",
+    "hideDetails": "隐藏技术详情",
+    "stackTrace": "堆栈跟踪",
+    "whatHappened": "发生了什么？",
+    "errorExplanation": "处理您的请求时发生了意外错误。此问题已记录，我们的团队将进行调查。",
+    "whatCanYouDo": "您可以做什么？",
+    "tryAgain": "重试",
+    "goHome": "返回首页",
+    "goBack": "返回上一页",
+    "reportIssue": "报告此问题",
+    "reportEmail": "如果此问题持续存在，请联系我们"
   }
 }

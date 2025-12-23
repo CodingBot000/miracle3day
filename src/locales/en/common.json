@@ -60,5 +60,24 @@
     "treatments": "View Treatments",
     "aboutUs": "About Us",
     "reportLink": "Report a broken link"
+  },
+  "Error": {
+    "title": "Something Went Wrong",
+    "subtitle": "We encountered an unexpected error",
+    "errorType": "Error Type",
+    "errorMessage": "Error Message",
+    "errorDigest": "Error ID",
+    "timestamp": "Time",
+    "showDetails": "Show Technical Details",
+    "hideDetails": "Hide Technical Details",
+    "stackTrace": "Stack Trace",
+    "whatHappened": "What happened?",
+    "errorExplanation": "An unexpected error occurred while processing your request. This issue has been logged and our team will investigate.",
+    "whatCanYouDo": "What can you do?",
+    "tryAgain": "Try Again",
+    "goHome": "Go to Home",
+    "goBack": "Go Back",
+    "reportIssue": "Report This Issue",
+    "reportEmail": "If this problem persists, please contact us"
   }
 }

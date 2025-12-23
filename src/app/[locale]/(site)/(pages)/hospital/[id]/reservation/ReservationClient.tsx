@@ -542,8 +542,8 @@ export default function ReservationClient({ initialUserData, hospitalId, hospita
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Please describe your experience with this treatment. 
-(e.g., 'I've tried it before in Korea', 'I've only heard about it', 'This is my first time')
+                  Please describe your experience with this treatment.
+                  {`(e.g., 'I've tried it before in Korea', 'I've only heard about it', 'This is my first time')`}
                 </label>
                 <textarea
                   value={formData.treatmentExperience}

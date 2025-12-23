@@ -150,7 +150,7 @@ export async function generateMetadata(
     'zh-CN': 'Chinese',
     'zh-HK': 'Cantonese',
     'ko-KR': 'Korean',
-    // 'th-TH': 'Thai',
+    'th-TH': 'Thai',
     'vi-VN': 'Vietnamese'
   };
   

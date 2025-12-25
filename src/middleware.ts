@@ -142,8 +142,11 @@ export const config = {
     // Admin 경로 보호
     '/admin/:path*',
     
-    // 환자용 경로 (정적 파일, api, _next 등 제외)
-    '/((?!api|_next|_vercel|static|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|lottie|mp4|webm|ogg|mp3|wav|pdf|xml|html)$).*)',
+    
+    // '/((?!api|_next|_vercel|static|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|lottie|mp4|webm|ogg|mp3|wav|pdf|xml|html)$).*)',
+     // 환자용 경로 (정적 파일, api, _next 등 제외)
+    '/((?!api|_next|_vercel|static|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|lottie|mp4|webm|ogg|mp3|wav|pdf|xml|html|txt)$).*)',
+
   ],
 };
 

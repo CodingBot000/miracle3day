@@ -1,0 +1,888 @@
+{
+  "onboarding": {
+    "steps": [
+      {
+        "step": 1,
+        "id": "age_group",
+        "type": "single_choice",
+        "skip_allowed": false,
+        "title": {
+          "ko": "연령대를 선택해주세요",
+          "en": "Select your age group"
+        },
+        "subtitle": {
+          "ko": "연령대별 최적의 루틴을 추천해드려요",
+          "en": "We'll recommend the best routine for your age"
+        },
+        "options": [
+          {
+            "id": "10s",
+            "label": {
+              "ko": "10대",
+              "en": "10s"
+            }
+          },
+          {
+            "id": "20s",
+            "label": {
+              "ko": "20대",
+              "en": "20s"
+            }
+          },
+          {
+            "id": "30s",
+            "label": {
+              "ko": "30대",
+              "en": "30s"
+            }
+          },
+          {
+            "id": "40s",
+            "label": {
+              "ko": "40대",
+              "en": "40s"
+            }
+          },
+          {
+            "id": "50s+",
+            "label": {
+              "ko": "50대 이상",
+              "en": "50s+"
+            }
+          }
+        ]
+      },
+      {
+        "step": 2,
+        "id": "gender",
+        "type": "single_choice",
+        "skip_allowed": false,
+        "title": {
+          "ko": "성별을 선택해주세요",
+          "en": "Select your gender"
+        },
+        "subtitle": {
+          "ko": "",
+          "en": ""
+        },
+        "options": [
+          {
+            "id": "female",
+            "label": {
+              "ko": "여성",
+              "en": "Female"
+            }
+          },
+          {
+            "id": "male",
+            "label": {
+              "ko": "남성",
+              "en": "Male"
+            }
+          },
+          {
+            "id": "prefer_not_to_say",
+            "label": {
+              "ko": "선택 안 함",
+              "en": "Prefer not to say"
+            }
+          }
+        ]
+      },
+      {
+        "step": 3,
+        "id": "country",
+        "type": "single_choice",
+        "skip_allowed": false,
+        "title": {
+          "ko": "어디에 거주하시나요?",
+          "en": "Where do you live?"
+        },
+        "subtitle": {
+          "ko": "지역의 기후와 계절에 맞는 루틴을 제공해요",
+          "en": "We provide routines based on your local climate and seasons"
+        }
+      },
+    
+      {
+        "step": 4,
+        "id": "skin_type",
+        "type": "single_choice",
+        "skip_allowed": false,
+        "title": {
+          "ko": "피부 타입을 선택해주세요",
+          "en": "Select your skin type"
+        },
+        "subtitle": {
+          "ko": "",
+          "en": ""
+        },
+        "options": [
+          {
+            "id": "dry",
+            "label": {
+              "ko": "건성",
+              "en": "Dry"
+            },
+            "description": {
+              "ko": "당기고 각질이 자주 일어나요",
+              "en": "Feels tight and flaky often"
+            }
+          },
+          {
+            "id": "oily",
+            "label": {
+              "ko": "지성",
+              "en": "Oily"
+            },
+            "description": {
+              "ko": "번들거림과 모공이 고민이에요",
+              "en": "Shiny with visible pores"
+            }
+          },
+          {
+            "id": "combination",
+            "label": {
+              "ko": "복합성",
+              "en": "Combination"
+            },
+            "description": {
+              "ko": "T존은 지성, 볼은 건성이에요",
+              "en": "T-zone oily, cheeks dry"
+            }
+          },
+          {
+            "id": "sensitive",
+            "label": {
+              "ko": "민감성",
+              "en": "Sensitive"
+            },
+            "description": {
+              "ko": "자극에 쉽게 붉어지고 따가워요",
+              "en": "Easily irritated and red"
+            }
+          },
+          {
+            "id": "unknown",
+            "label": {
+              "ko": "잘 모르겠어요",
+              "en": "Not sure"
+            },
+            "description": {
+              "ko": "간단한 진단 테스트 하기",
+              "en": "Take a simple quiz"
+            }
+          }
+        ]
+      },
+      {
+        "step": 5,
+        "id": "skin_concerns",
+        "type": "multiple_choice",
+        "skip_allowed": false,
+        "max_selections": 3,
+        "title": {
+          "ko": "주요 피부 고민을 선택해주세요",
+          "en": "Select your main skin concerns"
+        },
+        "subtitle": {
+          "ko": "선택한 고민을 해결하는 루틴을 만들어드려요 (최대 3개)",
+          "en": "We'll create a routine to address your concerns (up to 3)"
+        },
+        "selection_count": {
+          "ko": "{count}/3 선택됨",
+          "en": "{count}/3 selected"
+        },
+        "options": [
+          {
+            "id": "dryness",
+            "label": {
+              "ko": "건조함/수분 부족",
+              "en": "Dryness/Dehydration"
+            }
+          },
+          {
+            "id": "acne",
+            "label": {
+              "ko": "여드름/트러블",
+              "en": "Acne/Breakouts"
+            }
+          },
+          {
+            "id": "hyperpigmentation",
+            "label": {
+              "ko": "색소침착/기미",
+              "en": "Hyperpigmentation/Dark spots"
+            }
+          },
+          {
+            "id": "large_pores",
+            "label": {
+              "ko": "넓은 모공",
+              "en": "Large pores"
+            }
+          },
+          {
+            "id": "fine_lines",
+            "label": {
+              "ko": "잔주름/주름",
+              "en": "Fine lines/Wrinkles"
+            }
+          },
+          {
+            "id": "redness",
+            "label": {
+              "ko": "홍조/민감성",
+              "en": "Redness/Sensitivity"
+            }
+          },
+          {
+            "id": "excess_oil",
+            "label": {
+              "ko": "과도한 피지",
+              "en": "Excess oil"
+            }
+          },
+          {
+            "id": "texture",
+            "label": {
+              "ko": "피부결 거칠음",
+              "en": "Rough texture"
+            }
+          }
+        ]
+      },
+      {
+        "step": 6,
+        "id": "current_products",
+        "type": "multiple_choice",
+        "skip_allowed": true,
+        "title": {
+          "ko": "현재 사용 중인 제품을 모두 선택해주세요",
+          "en": "Select all products you currently use"
+        },
+        "subtitle": {
+          "ko": "현재 루틴을 분석해 빠진 단계를 찾아드려요",
+          "en": "We'll analyze your routine to find missing steps"
+        },
+        "skip_button": {
+          "ko": "건너뛰기",
+          "en": "Skip"
+        },
+        "options": [
+          {
+            "id": "cleanser",
+            "label": {
+              "ko": "클렌저",
+              "en": "Cleanser"
+            }
+          },
+          {
+            "id": "toner",
+            "label": {
+              "ko": "토너",
+              "en": "Toner"
+            }
+          },
+          {
+            "id": "essence",
+            "label": {
+              "ko": "에센스",
+              "en": "Essence"
+            }
+          },
+          {
+            "id": "serum",
+            "label": {
+              "ko": "세럼/앰플",
+              "en": "Serum/Ampoule"
+            }
+          },
+          {
+            "id": "eye_cream",
+            "label": {
+              "ko": "아이크림",
+              "en": "Eye cream"
+            }
+          },
+          {
+            "id": "moisturizer",
+            "label": {
+              "ko": "모이스처라이저",
+              "en": "Moisturizer"
+            }
+          },
+          {
+            "id": "sunscreen",
+            "label": {
+              "ko": "선크림",
+              "en": "Sunscreen"
+            }
+          },
+          {
+            "id": "sleeping_pack",
+            "label": {
+              "ko": "수면팩",
+              "en": "Sleeping pack"
+            }
+          },
+          {
+            "id": "exfoliator",
+            "label": {
+              "ko": "각질제거제",
+              "en": "Exfoliator"
+            }
+          },
+          {
+            "id": "sheet_mask",
+            "label": {
+              "ko": "시트마스크",
+              "en": "Sheet mask"
+            }
+          }
+        ]
+      },
+      {
+        "step": 7,
+        "id": "daily_routine_time",
+        "type": "single_choice",
+        "skip_allowed": false,
+        "title": {
+          "ko": "하루 평균 스킨케어에 얼마나 시간을 쓰시나요?",
+          "en": "How much time do you spend on skincare daily?"
+        },
+        "subtitle": {
+          "ko": "",
+          "en": ""
+        },
+        "options": [
+          {
+            "id": "under_5min",
+            "label": {
+              "ko": "5분 이하",
+              "en": "Under 5 minutes"
+            },
+            "description": {
+              "ko": "간단하게",
+              "en": "Quick routine"
+            },
+            "sub_description": {
+              "ko": "클렌징 + 크림 정도만",
+              "en": "Just cleansing + cream"
+            }
+          },
+          {
+            "id": "5_10min",
+            "label": {
+              "ko": "5-10분",
+              "en": "5-10 minutes"
+            },
+            "description": {
+              "ko": "보통",
+              "en": "Normal"
+            },
+            "sub_description": {
+              "ko": "기본 단계는 다 해요",
+              "en": "Complete basic steps"
+            }
+          },
+          {
+            "id": "over_10min",
+            "label": {
+              "ko": "10분 이상",
+              "en": "Over 10 minutes"
+            },
+            "description": {
+              "ko": "꼼꼼하게",
+              "en": "Thorough"
+            },
+            "sub_description": {
+              "ko": "마사지나 팩도 자주 해요",
+              "en": "Including massage or masks"
+            }
+          }
+        ]
+      },
+      {
+        "step": 8,
+        "id": "primary_goal",
+        "type": "single_choice",
+        "skip_allowed": true,
+        "title": {
+          "ko": "가장 중요한 스킨케어 목표는 무엇인가요?",
+          "en": "What's your main skincare goal?"
+        },
+        "subtitle": {
+          "ko": "목표에 맞는 제품과 성분을 우선 추천해요",
+          "en": "We'll prioritize products and ingredients for your goal"
+        },
+        "skip_button": {
+          "ko": "건너뛰기",
+          "en": "Skip"
+        },
+        "options": [
+          {
+            "id": "hydration",
+            "label": {
+              "ko": "수분 공급",
+              "en": "Hydration"
+            }
+          },
+          {
+            "id": "brightening",
+            "label": {
+              "ko": "미백/톤업",
+              "en": "Brightening"
+            }
+          },
+          {
+            "id": "anti_aging",
+            "label": {
+              "ko": "항노화",
+              "en": "Anti-Aging"
+            }
+          },
+          {
+            "id": "acne_control",
+            "label": {
+              "ko": "여드름 관리",
+              "en": "Acne Control"
+            }
+          },
+          {
+            "id": "sensitive_care",
+            "label": {
+              "ko": "민감 케어",
+              "en": "Sensitive Care"
+            }
+          }
+        ]
+      },
+      {
+        "step": 9,
+        "id": "interested_ingredients",
+        "type": "multiple_choice",
+        "skip_allowed": true,
+        "title": {
+          "ko": "관심있는 성분이 있나요?",
+          "en": "Any ingredients you're interested in?"
+        },
+        "subtitle": {
+          "ko": "잘 모르겠다면 건너뛰어도 괜찮아요!",
+          "en": "It's okay to skip if you're not sure!"
+        },
+        "skip_button": {
+          "ko": "잘 모르겠어요",
+          "en": "Not sure"
+        },
+        "options": [
+          {
+            "id": "hyaluronic_acid",
+            "label": {
+              "ko": "히알루론산",
+              "en": "Hyaluronic Acid"
+            }
+          },
+          {
+            "id": "niacinamide",
+            "label": {
+              "ko": "나이아신아마이드",
+              "en": "Niacinamide"
+            }
+          },
+          {
+            "id": "retinol",
+            "label": {
+              "ko": "레티놀",
+              "en": "Retinol"
+            }
+          },
+          {
+            "id": "vitamin_c",
+            "label": {
+              "ko": "비타민C",
+              "en": "Vitamin C"
+            }
+          },
+          {
+            "id": "peptides",
+            "label": {
+              "ko": "펩타이드",
+              "en": "Peptides"
+            }
+          },
+          {
+            "id": "ceramide",
+            "label": {
+              "ko": "세라마이드",
+              "en": "Ceramide"
+            }
+          },
+          {
+            "id": "aha_bha",
+            "label": {
+              "ko": "AHA/BHA",
+              "en": "AHA/BHA"
+            }
+          },
+          {
+            "id": "centella",
+            "label": {
+              "ko": "센텔라",
+              "en": "Centella"
+            }
+          }
+        ]
+      },
+      {
+        "step": 10,
+        "id": "product_preferences",
+        "type": "multiple_choice",
+        "skip_allowed": true,
+        "max_selections": 3,
+        "title": {
+          "ko": "제품 선호도가 있나요?",
+          "en": "Any product preferences?"
+        },
+        "subtitle": {
+          "ko": "최대 3개까지 선택 가능해요",
+          "en": "Select up to 3 preferences"
+        },
+        "skip_button": {
+          "ko": "건너뛰기",
+          "en": "Skip"
+        },
+        "options": [
+          {
+            "id": "natural",
+            "label": {
+              "ko": "자연 유래 성분",
+              "en": "Natural Ingredients"
+            }
+          },
+          {
+            "id": "fragrance_free",
+            "label": {
+              "ko": "무향",
+              "en": "Fragrance-Free"
+            }
+          },
+          {
+            "id": "alcohol_free",
+            "label": {
+              "ko": "무알코올",
+              "en": "Alcohol-Free"
+            }
+          },
+          {
+            "id": "hypoallergenic",
+            "label": {
+              "ko": "저자극",
+              "en": "Hypoallergenic"
+            }
+          },
+          {
+            "id": "anti_aging_focus",
+            "label": {
+              "ko": "항노화 집중",
+              "en": "Anti-Aging Focus"
+            }
+          },
+          {
+            "id": "non_comedogenic",
+            "label": {
+              "ko": "논코메도제닉",
+              "en": "Non-Comedogenic"
+            }
+          },
+          {
+            "id": "vegan",
+            "label": {
+              "ko": "비건",
+              "en": "Vegan"
+            }
+          },
+          {
+            "id": "budget_friendly",
+            "label": {
+              "ko": "가성비 중시",
+              "en": "Budget-Friendly"
+            }
+          }
+        ]
+      },
+      {
+        "step": 11,
+        "id": "sleep_pattern",
+        "type": "single_choice",
+        "skip_allowed": true,
+        "title": {
+          "ko": "평소 수면 패턴은 어떤가요?",
+          "en": "What's your typical sleep pattern?"
+        },
+        "subtitle": {
+          "ko": "수면 패턴에 맞춰 알림 시간을 설정해요",
+          "en": "We'll set alarm times based on your sleep pattern"
+        },
+        "skip_button": {
+          "ko": "건너뛰기",
+          "en": "Skip"
+        },
+        "options": [
+          {
+            "id": "regular",
+            "label": {
+              "ko": "밤 10시-새벽 6시",
+              "en": "10 PM - 6 AM"
+            },
+            "description": {
+              "ko": "규칙적",
+              "en": "Regular"
+            }
+          },
+          {
+            "id": "normal",
+            "label": {
+              "ko": "밤 12시-오전 8시",
+              "en": "12 AM - 8 AM"
+            },
+            "description": {
+              "ko": "보통",
+              "en": "Normal"
+            }
+          },
+          {
+            "id": "night_owl",
+            "label": {
+              "ko": "새벽 2시 이후",
+              "en": "After 2 AM"
+            },
+            "description": {
+              "ko": "올빼미",
+              "en": "Night owl"
+            }
+          },
+          {
+            "id": "irregular",
+            "label": {
+              "ko": "불규칙",
+              "en": "Irregular"
+            },
+            "description": {
+              "ko": "교대근무/야간",
+              "en": "Shift work/Night shifts"
+            }
+          }
+        ]
+      },
+      {
+        "step": 12,
+        "id": "work_environment",
+        "type": "single_choice",
+        "skip_allowed": true,
+        "title": {
+          "ko": "주로 어디서 시간을 보내시나요?",
+          "en": "Where do you spend most of your time?"
+        },
+        "subtitle": {
+          "ko": "",
+          "en": ""
+        },
+        "skip_button": {
+          "ko": "건너뛰기",
+          "en": "Skip"
+        },
+        "options": [
+          {
+            "id": "indoor",
+            "label": {
+              "ko": "실내",
+              "en": "Indoor"
+            },
+            "description": {
+              "ko": "사무실/집",
+              "en": "Office/Home"
+            },
+            "sub_description": {
+              "ko": "건조함과 블루라이트 케어",
+              "en": "Dryness and blue light care"
+            }
+          },
+          {
+            "id": "outdoor",
+            "label": {
+              "ko": "실외",
+              "en": "Outdoor"
+            },
+            "description": {
+              "ko": "야외 활동 많음",
+              "en": "Frequent outdoor activities"
+            },
+            "sub_description": {
+              "ko": "자외선 차단 강화",
+              "en": "Enhanced UV protection"
+            }
+          },
+          {
+            "id": "mixed",
+            "label": {
+              "ko": "반반",
+              "en": "Mixed"
+            },
+            "description": {
+              "ko": "",
+              "en": ""
+            }
+          }
+        ]
+      },
+      {
+        "step": 13,
+        "id": "exercise_frequency",
+        "type": "single_choice",
+        "skip_allowed": true,
+        "title": {
+          "ko": "운동을 얼마나 자주 하시나요?",
+          "en": "How often do you exercise?"
+        },
+        "subtitle": {
+          "ko": "",
+          "en": ""
+        },
+        "skip_button": {
+          "ko": "건너뛰기",
+          "en": "Skip"
+        },
+        "options": [
+          {
+            "id": "rarely",
+            "label": {
+              "ko": "거의 안 함",
+              "en": "Rarely"
+            }
+          },
+          {
+            "id": "weekly_1_2",
+            "label": {
+              "ko": "주 1-2회",
+              "en": "1-2 times/week"
+            }
+          },
+          {
+            "id": "weekly_3_4",
+            "label": {
+              "ko": "주 3-4회",
+              "en": "3-4 times/week"
+            }
+          },
+          {
+            "id": "daily",
+            "label": {
+              "ko": "거의 매일",
+              "en": "Almost daily"
+            }
+          }
+        ]
+      },
+      {
+        "step": 14,
+        "id": "monthly_budget",
+        "type": "single_choice",
+        "skip_allowed": true,
+        "title": {
+          "ko": "월 스킨케어 예산은 어느 정도인가요?",
+          "en": "What's your monthly skincare budget?"
+        },
+        "subtitle": {
+          "ko": "예산에 맞는 제품을 추천해드려요",
+          "en": "We'll recommend products within your budget"
+        },
+        "skip_button": {
+          "ko": "상관없어요",
+          "en": "No preference"
+        },
+        "options": [
+          {
+            "id": "under_30",
+            "label": {
+              "ko": "$30 이하",
+              "en": "Under $30"
+            },
+            "description": {
+              "ko": "가성비 중시",
+              "en": "Budget-conscious"
+            }
+          },
+          {
+            "id": "30_100",
+            "label": {
+              "ko": "$30-$100",
+              "en": "$30-$100"
+            },
+            "description": {
+              "ko": "보통",
+              "en": "Moderate"
+            }
+          },
+          {
+            "id": "100_300",
+            "label": {
+              "ko": "$100-$300",
+              "en": "$100-$300"
+            },
+            "description": {
+              "ko": "프리미엄",
+              "en": "Premium"
+            }
+          },
+          {
+            "id": "over_300",
+            "label": {
+              "ko": "$300 이상",
+              "en": "Over $300"
+            },
+            "description": {
+              "ko": "럭셔리",
+              "en": "Luxury"
+            }
+          },
+          {
+            "id": "no_limit",
+            "label": {
+              "ko": "상관없음",
+              "en": "No limit"
+            }
+          }
+        ]
+      }
+    ],
+    "completion": {
+      "title": {
+        "ko": "프로필 완성!",
+        "en": "Profile Complete!"
+      },
+      "subtitle": {
+        "ko": "당신의 피부를 위한 맞춤 루틴을\n지금 바로 만들어드릴게요",
+        "en": "We'll create your personalized routine\nright now"
+      },
+      "button": {
+        "ko": "루틴 생성하기",
+        "en": "Create My Routine"
+      }
+    },
+    "navigation": {
+      "next": {
+        "ko": "다음",
+        "en": "Next"
+      },
+      "back": {
+        "ko": "이전",
+        "en": "Back"
+      },
+      "skip": {
+        "ko": "건너뛰기",
+        "en": "Skip"
+      }
+    }
+  }
+}

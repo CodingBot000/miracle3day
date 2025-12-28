@@ -1,0 +1,500 @@
+/* ===== 공통 ===== */
+.fitzpatrick-selector {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.fitzpatrick-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.fitzpatrick-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #1a1a1a;
+}
+
+.fitzpatrick-subtitle {
+  font-size: 14px;
+  color: #666;
+}
+
+/* ===== 방법 선택 ===== */
+.fitzpatrick-method-selection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fitzpatrick-method-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.fitzpatrick-method-button:hover {
+  border-color: #007aff;
+  background: #f8f9ff;
+}
+
+.fitzpatrick-method-photo {
+  border-color: #007aff;
+  background: #f0f7ff;
+}
+
+.fitzpatrick-method-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.fitzpatrick-method-description {
+  font-size: 13px;
+  color: #666;
+  margin-top: 4px;
+}
+
+.fitzpatrick-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #999;
+  font-size: 13px;
+}
+
+.fitzpatrick-divider::before,
+.fitzpatrick-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.fitzpatrick-divider span {
+  padding: 0 12px;
+}
+
+.fitzpatrick-skip-button {
+  padding: 12px;
+  background: transparent;
+  border: none;
+  color: #666;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* ===== 사진 촬영 ===== */
+.photo-method {
+  padding: 16px;
+}
+
+.photo-step-title {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.photo-tips {
+  background: #f5f5f5;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.photo-tips-title {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.photo-tips-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.photo-tips-list li {
+  padding: 4px 0;
+  padding-left: 20px;
+  position: relative;
+  font-size: 14px;
+  color: #555;
+}
+
+.photo-tips-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #007aff;
+}
+
+.photo-file-input {
+  display: none;
+}
+
+.photo-capture-button {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  background: #007aff;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+.photo-capture-button:active {
+  background: #0056b3;
+}
+
+.photo-gallery-button {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  background: #f5f5f5;
+  color: #333;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 12px;
+  transition: all 0.2s ease;
+}
+
+.photo-gallery-button:hover {
+  border-color: #007aff;
+  background: #f0f7ff;
+}
+
+.photo-gallery-button:active {
+  background: #e8e8e8;
+}
+
+.photo-back-button,
+.photo-retake-button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #666;
+  cursor: pointer;
+}
+
+.photo-canvas-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.photo-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  touch-action: none;
+}
+
+.photo-marker {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border: 3px solid white;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.photo-marker-active {
+  width: 20px;
+  height: 20px;
+  border-width: 2px;
+  animation: pulse 0.8s ease-in-out infinite;
+}
+
+.photo-marker-selected {
+  width: 28px;
+  height: 28px;
+  border-width: 4px;
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.3),
+    0 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+/* ===== 돋보기 ===== */
+.photo-magnifier {
+  position: absolute;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.3),
+    0 0 0 3px white,
+    0 0 0 4px rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+  z-index: 100;
+  background: #fff;
+}
+
+.photo-magnifier-canvas {
+  display: block;
+  border-radius: 50%;
+}
+
+.photo-magnifier-color {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.photo-tip {
+  font-size: 13px;
+  color: #666;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.photo-error {
+  background: #fff0f0;
+  color: #d32f2f;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+/* ===== 결과 확인 ===== */
+.photo-result {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: #f5f5f5;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.photo-result-swatch {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
+}
+
+.photo-result-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.photo-result-type {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.photo-result-description {
+  font-size: 14px;
+  color: #666;
+}
+
+.photo-confirm-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.photo-confirm-yes {
+  padding: 16px;
+  background: #007aff;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.photo-confirm-retry,
+.photo-switch-manual {
+  padding: 12px;
+  background: transparent;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #666;
+  cursor: pointer;
+}
+
+.photo-reselect-button {
+  padding: 14px;
+  background: #f0f7ff;
+  border: 2px solid #007aff;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #007aff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.photo-reselect-button:hover {
+  background: #e0efff;
+}
+
+.photo-reselect-button:active {
+  background: #d0e5ff;
+}
+
+/* ===== 직접 선택 ===== */
+.manual-method {
+  padding: 16px;
+}
+
+.manual-title {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.manual-chips-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.manual-tip {
+  font-size: 13px;
+  color: #666;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.manual-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.manual-confirm-button {
+  padding: 16px;
+  background: #007aff;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.manual-confirm-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.manual-back-button {
+  padding: 12px;
+  background: transparent;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #666;
+  cursor: pointer;
+}
+
+/* ===== 컬러 칩 ===== */
+.color-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 8px;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.color-chip:hover {
+  border-color: #007aff;
+}
+
+.color-chip-selected {
+  border-color: #007aff;
+  background: #f0f7ff;
+  box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.2);
+}
+
+.color-chip-swatch {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  margin-bottom: 8px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.color-chip-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.color-chip-type {
+  font-size: 11px;
+  color: #999;
+}
+
+/* ===== 유틸리티 ===== */
+.hidden {
+  display: none !important;
+}
+
+/* ===== 반응형 ===== */
+@media (max-width: 360px) {
+  .manual-chips-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .color-chip-swatch {
+    width: 40px;
+    height: 40px;
+  }
+}

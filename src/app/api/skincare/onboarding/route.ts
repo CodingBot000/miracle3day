@@ -17,6 +17,8 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const {
       id_uuid,
+      fitzpatrick_type,
+      fitzpatrick_rgb,
       age_group,
       gender,
       country_code,
@@ -47,6 +49,8 @@ export async function POST(request: NextRequest) {
     const result = await one(
       `INSERT INTO skincare_onboarding (
         id_uuid,
+        fitzpatrick_type,
+        fitzpatrick_rgb,
         age_group,
         gender,
         country_code,
@@ -69,10 +73,12 @@ export async function POST(request: NextRequest) {
         updated_at
       ) VALUES (
         $1, $2, $3, $4, $5, $6, $7, $8, $9, $10,
-        $11, $12, $13, $14, $15, $16, $17, true, 18, NOW(), NOW()
+        $11, $12, $13, $14, $15, $16, $17, $18, $19, true, 18, NOW(), NOW()
       )
       ON CONFLICT (id_uuid)
       DO UPDATE SET
+        fitzpatrick_type = EXCLUDED.fitzpatrick_type,
+        fitzpatrick_rgb = EXCLUDED.fitzpatrick_rgb,
         age_group = EXCLUDED.age_group,
         gender = EXCLUDED.gender,
         country_code = EXCLUDED.country_code,
@@ -95,6 +101,8 @@ export async function POST(request: NextRequest) {
       RETURNING *`,
       [
         id_uuid,
+        fitzpatrick_type || null,
+        fitzpatrick_rgb || null,
         age_group || null,
         gender || null,
         country_code || null,

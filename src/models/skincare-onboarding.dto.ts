@@ -6,6 +6,8 @@
 
 export interface SkincareOnboardingDTO {
   id_uuid: string;                  // 사용자 UUID
+  fitzpatrick_type?: number;        // 1-6 (Fitzpatrick Skin Type)
+  fitzpatrick_rgb?: string;         // 'r,g,b' 형식 (사진 선택 시만 저장, 없으면 수동 선택)
   age_group?: string;               // '10s', '20s', '30s', '40s', '50s+'
   gender?: string;                  // 'female', 'male', 'prefer_not_to_say'
   country_code?: string;            // 'US', 'CN', 'zh-CN', 'zh-TW'
@@ -49,10 +51,11 @@ export interface QuestionOption {
  */
 export interface QuestionData {
   id: string;
-  type: 'single_choice' | 'multiple_choice' | 'single_choice_with_search';
+  type: 'single_choice' | 'multiple_choice' | 'single_choice_with_search' | 'component';
   title: string;
   subtitle?: string;
-  options: QuestionOption[];
+  options?: QuestionOption[];
   skip_allowed?: boolean;
   max_selections?: number;
+  component_name?: string;          // 'component' 타입일 때 사용할 컴포넌트 이름
 }

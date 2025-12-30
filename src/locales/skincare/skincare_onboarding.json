@@ -633,8 +633,8 @@
         {
           "id": "regular",
           "label": {
-            "ko": "밤 10시-새벽 6시",
-            "en": "10 PM - 6 AM"
+              "ko": "대략 밤 10시 전후-새벽 6시 전후",
+              "en": "Around 10 PM - 6 AM"
           },
           "description": {
             "ko": "규칙적",
@@ -644,8 +644,8 @@
         {
           "id": "normal",
           "label": {
-            "ko": "밤 12시-오전 8시",
-            "en": "12 AM - 8 AM"
+            "ko": "대략 밤 12시 전후-오전 8시 전후",
+            "en": "Around 12 AM - 8 AM"
           },
           "description": {
             "ko": "보통",
@@ -655,8 +655,8 @@
         {
           "id": "night_owl",
           "label": {
-            "ko": "새벽 2시 이후",
-            "en": "After 2 AM"
+            "ko": "대략 새벽 2시 이후",
+            "en": "Around 2 AM or later"
           },
           "description": {
             "ko": "올빼미",

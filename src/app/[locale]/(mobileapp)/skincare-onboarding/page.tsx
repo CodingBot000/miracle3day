@@ -11,7 +11,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
+import { useNavigation } from '@/hooks/useNavigation';
 import { AnimatePresence } from 'framer-motion';
 import { v4 as uuidv4 } from 'uuid';
 import WelcomeScreen from './components/WelcomeScreen';
@@ -30,7 +31,7 @@ import { ONBOARDING_STEP_ORDER, TOTAL_STEPS as TOTAL_QUESTIONS } from './stepOrd
 
 export default function SkincareOnboardingPage() {
   const params = useParams();
-  const router = useRouter();
+  const { goBack } = useNavigation();
   const locale = (params?.locale as string) || 'ko';
 
   // 현재 단계 (0: Welcome, 1: Intro, 2+: Questions, Last: Completion)
@@ -88,10 +89,10 @@ export default function SkincareOnboardingPage() {
   // 이전 단계로 이동
   const handleBack = () => {
     if (step > 0) {
-      setStep(step - 1);
+      setStep(step -1);
     } else {
       // 첫 화면에서 뒤로가기 시 앱 종료 또는 이전 페이지로
-      router.back();
+      goBack();
     }
   };
 
@@ -128,14 +129,19 @@ export default function SkincareOnboardingPage() {
         onboarding_step: totalSteps,
       };
 
+      // 항상 localStorage에 저장 (API 성공/실패와 무관하게 다음 단계에서 사용 가능)
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('skincare_onboarding_answers', JSON.stringify({
+          ...submitData,
+          id_uuid: userId
+        }));
+      }
+
       // API 호출하여 데이터 저장
       const result = await saveOnboarding(submitData);
 
       if (result.success) {
-        // 저장 성공 시 메인/대시보드로 이동 (2초 후)
-        setTimeout(() => {
-          router.push(`/${locale}/skincare/dashboard`);
-        }, 2000);
+        // 저장 성공 - CompletionScreen will handle navigation via its own button
       } else {
         setSubmitError(result.message || 'Failed to save onboarding data');
       }

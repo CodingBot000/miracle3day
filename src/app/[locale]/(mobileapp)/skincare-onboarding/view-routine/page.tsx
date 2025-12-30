@@ -126,7 +126,7 @@ function ViewRoutineContent() {
 
         <div className="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
           <button
-            onClick={() => navigate(`/${locale}/skincare/dashboard`)}
+            onClick={() => navigate(`/${locale}/skincare-main`)}
             className="px-8 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
           >
             ✓ Start Using This Routine

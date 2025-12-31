@@ -154,12 +154,6 @@ export default function RoutineTypeSelector({ onSelect, isLoading }: RoutineType
         ))}
       </div>
 
-      {/* Hide scrollbar CSS */}
-      <style jsx>{`
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
     </div>
   );
 }

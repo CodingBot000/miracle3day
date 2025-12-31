@@ -253,10 +253,10 @@ export default function CountryRegionStep({
                   >
                     <span className="text-3xl mb-1">{region.icon}</span>
                     <h4 className="font-semibold text-gray-900 text-center text-sm">
-                      {region.name[lang] || region.name.en}
+                      {lang === 'ko' ? region.name.native : region.name.en}
                     </h4>
                     <p className="text-xs text-gray-500 text-center leading-tight">
-                      {region.example_cities[lang] || region.example_cities.en}
+                      {lang === 'ko' ? region.example_cities.native : region.example_cities.en}
                     </p>
                   </motion.button>
                 ))}

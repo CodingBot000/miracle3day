@@ -63,7 +63,7 @@ export default function TodayTab({ routine }: TodayTabProps) {
     // localStorage에만 저장
     const today = new Date().toISOString().split('T')[0];
     const storageKey = `routine_progress_${today}`;
-    localStorage.setItem(storageKey, JSON.stringify([...newChecked]));
+    localStorage.setItem(storageKey, JSON.stringify(Array.from(newChecked)));
   };
 
   // 서버에 배치 저장

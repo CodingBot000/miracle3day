@@ -122,12 +122,6 @@ export default function RoutineCarousel({
         ← Swipe to compare →
       </div>
 
-      {/* 스크롤바 숨기기 CSS */}
-      <style jsx>{`
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
     </div>
   );
 }

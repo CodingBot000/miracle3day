@@ -1,0 +1,470 @@
+{
+  "regions": {
+    "US": {
+      "regions": [
+        {
+          "id": "northeast",
+          "name": {
+            "native": "Northeast",
+            "en": "Northeast"
+          },
+          "icon": "🗽",
+          "climate": "humid_continental",
+          "example_cities": {
+            "native": "New York, Boston, Philadelphia, etc.",
+            "en": "New York, Boston, Philadelphia, etc."
+          },
+          "representative_coords": {
+            "lat": 40.7128,
+            "lon": -74.0060
+          }
+        },
+        {
+          "id": "south",
+          "name": {
+            "native": "South",
+            "en": "South"
+          },
+          "icon": "🌴",
+          "climate": "humid_subtropical",
+          "example_cities": {
+            "native": "Miami, Atlanta, Houston, etc.",
+            "en": "Miami, Atlanta, Houston, etc."
+          },
+          "representative_coords": {
+            "lat": 25.7617,
+            "lon": -80.1918
+          }
+        },
+        {
+          "id": "midwest",
+          "name": {
+            "native": "Midwest",
+            "en": "Midwest"
+          },
+          "icon": "🌾",
+          "climate": "continental",
+          "example_cities": {
+            "native": "Chicago, Detroit, Minneapolis, etc.",
+            "en": "Chicago, Detroit, Minneapolis, etc."
+          },
+          "representative_coords": {
+            "lat": 41.8781,
+            "lon": -87.6298
+          }
+        },
+        {
+          "id": "west",
+          "name": {
+            "native": "West",
+            "en": "West"
+          },
+          "icon": "☀️",
+          "climate": "mediterranean",
+          "example_cities": {
+            "native": "Los Angeles, San Francisco, Seattle, etc.",
+            "en": "Los Angeles, San Francisco, Seattle, etc."
+          },
+          "representative_coords": {
+            "lat": 34.0522,
+            "lon": -118.2437
+          }
+        },
+        {
+          "id": "southwest",
+          "name": {
+            "native": "Southwest",
+            "en": "Southwest"
+          },
+          "icon": "🏔️",
+          "climate": "desert",
+          "example_cities": {
+            "native": "Phoenix, Las Vegas, Dallas, etc.",
+            "en": "Phoenix, Las Vegas, Dallas, etc."
+          },
+          "representative_coords": {
+            "lat": 33.4484,
+            "lon": -112.0740
+          }
+        }
+      ]
+    },
+    
+    "CN": {
+      "regions": [
+        {
+          "id": "north",
+          "name": {
+            "native": "华北",
+            "en": "North China"
+          },
+          "icon": "🏛️",
+          "climate": "continental_monsoon",
+          "example_cities": {
+            "native": "北京、天津、石家庄等",
+            "en": "Beijing, Tianjin, Shijiazhuang, etc."
+          },
+          "representative_coords": {
+            "lat": 39.9042,
+            "lon": 116.4074
+          }
+        },
+        {
+          "id": "east",
+          "name": {
+            "native": "华东",
+            "en": "East China"
+          },
+          "icon": "🌊",
+          "climate": "subtropical_monsoon",
+          "example_cities": {
+            "native": "上海、杭州、南京等",
+            "en": "Shanghai, Hangzhou, Nanjing, etc."
+          },
+          "representative_coords": {
+            "lat": 31.2304,
+            "lon": 121.4737
+          }
+        },
+        {
+          "id": "south",
+          "name": {
+            "native": "华南",
+            "en": "South China"
+          },
+          "icon": "🌴",
+          "climate": "tropical_monsoon",
+          "example_cities": {
+            "native": "广州、深圳、香港等",
+            "en": "Guangzhou, Shenzhen, Hong Kong, etc."
+          },
+          "representative_coords": {
+            "lat": 23.1291,
+            "lon": 113.2644
+          }
+        },
+        {
+          "id": "southwest",
+          "name": {
+            "native": "西南",
+            "en": "Southwest China"
+          },
+          "icon": "⛰️",
+          "climate": "plateau",
+          "example_cities": {
+            "native": "成都、重庆、昆明等",
+            "en": "Chengdu, Chongqing, Kunming, etc."
+          },
+          "representative_coords": {
+            "lat": 30.5728,
+            "lon": 104.0668
+          }
+        },
+        {
+          "id": "northeast",
+          "name": {
+            "native": "东北",
+            "en": "Northeast China"
+          },
+          "icon": "❄️",
+          "climate": "cold_continental",
+          "example_cities": {
+            "native": "哈尔滨、沈阳、长春等",
+            "en": "Harbin, Shenyang, Changchun, etc."
+          },
+          "representative_coords": {
+            "lat": 45.8038,
+            "lon": 126.5340
+          }
+        },
+        {
+          "id": "northwest",
+          "name": {
+            "native": "西北",
+            "en": "Northwest China"
+          },
+          "icon": "🏜️",
+          "climate": "desert",
+          "example_cities": {
+            "native": "西安、兰州、西宁等",
+            "en": "Xi'an, Lanzhou, Xining, etc."
+          },
+          "representative_coords": {
+            "lat": 34.3416,
+            "lon": 108.9398
+          }
+        },
+        {
+          "id": "central",
+          "name": {
+            "native": "中部",
+            "en": "Central China"
+          },
+          "icon": "🌾",
+          "climate": "subtropical_monsoon",
+          "example_cities": {
+            "native": "武汉、长沙、郑州等",
+            "en": "Wuhan, Changsha, Zhengzhou, etc."
+          },
+          "representative_coords": {
+            "lat": 30.5928,
+            "lon": 114.3055
+          }
+        }
+      ]
+    },
+
+    "CA": {
+      "regions": [
+        {
+          "id": "ontario",
+          "name": {
+            "native": "Ontario",
+            "en": "Ontario"
+          },
+          "icon": "🍁",
+          "climate": "humid_continental",
+          "example_cities": {
+            "native": "Toronto, Ottawa, Mississauga, etc.",
+            "en": "Toronto, Ottawa, Mississauga, etc."
+          },
+          "representative_coords": {
+            "lat": 43.6532,
+            "lon": -79.3832
+          }
+        },
+        {
+          "id": "british_columbia",
+          "name": {
+            "native": "British Columbia",
+            "en": "British Columbia"
+          },
+          "icon": "🌲",
+          "climate": "oceanic",
+          "example_cities": {
+            "native": "Vancouver, Victoria, Kelowna, etc.",
+            "en": "Vancouver, Victoria, Kelowna, etc."
+          },
+          "representative_coords": {
+            "lat": 49.2827,
+            "lon": -123.1207
+          }
+        },
+        {
+          "id": "quebec",
+          "name": {
+            "native": "Québec",
+            "en": "Quebec"
+          },
+          "icon": "⚜️",
+          "climate": "humid_continental",
+          "example_cities": {
+            "native": "Montréal, Québec, Laval, etc.",
+            "en": "Montreal, Quebec City, Laval, etc."
+          },
+          "representative_coords": {
+            "lat": 45.5017,
+            "lon": -73.5673
+          }
+        },
+        {
+          "id": "alberta",
+          "name": {
+            "native": "Alberta",
+            "en": "Alberta"
+          },
+          "icon": "🏔️",
+          "climate": "subarctic",
+          "example_cities": {
+            "native": "Calgary, Edmonton, etc.",
+            "en": "Calgary, Edmonton, etc."
+          },
+          "representative_coords": {
+            "lat": 51.0447,
+            "lon": -114.0719
+          }
+        }
+      ]
+    },
+
+    "AU": {
+      "regions": [
+        {
+          "id": "new_south_wales",
+          "name": {
+            "native": "New South Wales",
+            "en": "New South Wales"
+          },
+          "icon": "🌊",
+          "climate": "temperate",
+          "example_cities": {
+            "native": "Sydney, Newcastle, Wollongong, etc.",
+            "en": "Sydney, Newcastle, Wollongong, etc."
+          },
+          "representative_coords": {
+            "lat": -33.8688,
+            "lon": 151.2093
+          }
+        },
+        {
+          "id": "victoria",
+          "name": {
+            "native": "Victoria",
+            "en": "Victoria"
+          },
+          "icon": "🎭",
+          "climate": "oceanic",
+          "example_cities": {
+            "native": "Melbourne, Geelong, Ballarat, etc.",
+            "en": "Melbourne, Geelong, Ballarat, etc."
+          },
+          "representative_coords": {
+            "lat": -37.8136,
+            "lon": 144.9631
+          }
+        },
+        {
+          "id": "queensland",
+          "name": {
+            "native": "Queensland",
+            "en": "Queensland"
+          },
+          "icon": "☀️",
+          "climate": "tropical",
+          "example_cities": {
+            "native": "Brisbane, Gold Coast, Cairns, etc.",
+            "en": "Brisbane, Gold Coast, Cairns, etc."
+          },
+          "representative_coords": {
+            "lat": -27.4698,
+            "lon": 153.0251
+          }
+        },
+        {
+          "id": "western_australia",
+          "name": {
+            "native": "Western Australia",
+            "en": "Western Australia"
+          },
+          "icon": "🏜️",
+          "climate": "mediterranean",
+          "example_cities": {
+            "native": "Perth, Fremantle, etc.",
+            "en": "Perth, Fremantle, etc."
+          },
+          "representative_coords": {
+            "lat": -31.9505,
+            "lon": 115.8605
+          }
+        },
+        {
+          "id": "northern_territory",
+          "name": {
+            "native": "Northern Territory",
+            "en": "Northern Territory"
+          },
+          "icon": "🦘",
+          "climate": "tropical_savanna",
+          "example_cities": {
+            "native": "Darwin, Alice Springs, etc.",
+            "en": "Darwin, Alice Springs, etc."
+          },
+          "representative_coords": {
+            "lat": -12.4634,
+            "lon": 130.8456
+          }
+        }
+      ]
+    },
+
+    "JP": {
+      "regions": [
+        {
+          "id": "hokkaido",
+          "name": {
+            "native": "北海道",
+            "en": "Hokkaido"
+          },
+          "icon": "❄️",
+          "climate": "humid_continental",
+          "example_cities": {
+            "native": "札幌、函館、旭川など",
+            "en": "Sapporo, Hakodate, Asahikawa, etc."
+          },
+          "representative_coords": {
+            "lat": 43.0642,
+            "lon": 141.3469
+          }
+        },
+        {
+          "id": "kanto",
+          "name": {
+            "native": "関東",
+            "en": "Kanto"
+          },
+          "icon": "🗼",
+          "climate": "humid_subtropical",
+          "example_cities": {
+            "native": "東京、横浜、千葉など",
+            "en": "Tokyo, Yokohama, Chiba, etc."
+          },
+          "representative_coords": {
+            "lat": 35.6762,
+            "lon": 139.6503
+          }
+        },
+        {
+          "id": "kansai",
+          "name": {
+            "native": "関西",
+            "en": "Kansai"
+          },
+          "icon": "🏯",
+          "climate": "humid_subtropical",
+          "example_cities": {
+            "native": "大阪、京都、神戸など",
+            "en": "Osaka, Kyoto, Kobe, etc."
+          },
+          "representative_coords": {
+            "lat": 34.6937,
+            "lon": 135.5023
+          }
+        },
+        {
+          "id": "kyushu",
+          "name": {
+            "native": "九州",
+            "en": "Kyushu"
+          },
+          "icon": "🌋",
+          "climate": "humid_subtropical",
+          "example_cities": {
+            "native": "福岡、熊本、鹿児島など",
+            "en": "Fukuoka, Kumamoto, Kagoshima, etc."
+          },
+          "representative_coords": {
+            "lat": 33.5904,
+            "lon": 130.4017
+          }
+        },
+        {
+          "id": "okinawa",
+          "name": {
+            "native": "沖縄",
+            "en": "Okinawa"
+          },
+          "icon": "🏝️",
+          "climate": "tropical_rainforest",
+          "example_cities": {
+            "native": "那覇など",
+            "en": "Naha, etc."
+          },
+          "representative_coords": {
+            "lat": 26.2124,
+            "lon": 127.6809
+          }
+        }
+      ]
+    }
+  }
+}

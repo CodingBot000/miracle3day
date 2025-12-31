@@ -81,9 +81,27 @@ export default function SkincareMainPage() {
     if (hasFetched.current) return;
     hasFetched.current = true;
 
-    const fetchRoutine = async () => {
+    const loadRoutine = async () => {
       try {
-        // localStorage에서 user_uuid 가져오기
+        console.log('[DEBUG] 🔄 Loading routine...');
+
+        // 1. localStorage에서 캐시된 루틴 데이터 먼저 확인
+        const cachedRoutine = localStorage.getItem('skincare_routine_data');
+        const cachedProfile = localStorage.getItem('skincare_user_profile');
+
+        if (cachedRoutine) {
+          console.log('[DEBUG] ✅ Found cached routine, using local data');
+          const parsedRoutine = JSON.parse(cachedRoutine);
+          const parsedProfile = cachedProfile ? JSON.parse(cachedProfile) : null;
+
+          setRoutine(parsedRoutine);
+          setUserProfile(parsedProfile);
+          setLoading(false);
+          return; // API 호출 안 함!
+        }
+
+        // 2. 캐시 없으면 user_uuid 확인
+        console.log('[DEBUG] 📡 No cached data, fetching from API...');
         const stored = localStorage.getItem('skincare_onboarding_answers');
 
         if (!stored) {
@@ -99,7 +117,7 @@ export default function SkincareMainPage() {
           return;
         }
 
-        // API 호출
+        // 3. API 호출
         const response = await fetch(`/api/skincare/routines/user/${id_uuid}`);
         const result: ApiResponse = await response.json();
 
@@ -109,18 +127,26 @@ export default function SkincareMainPage() {
           return;
         }
 
+        console.log('[DEBUG] ✅ API success, caching to localStorage');
+
+        // 4. API 응답을 localStorage에 캐싱
+        localStorage.setItem('skincare_routine_data', JSON.stringify(result.data.routine));
+        if (result.data.user_profile) {
+          localStorage.setItem('skincare_user_profile', JSON.stringify(result.data.user_profile));
+        }
+
         setRoutine(result.data.routine);
         setUserProfile(result.data.user_profile);
 
       } catch (err) {
-        console.error('Failed to fetch routine:', err);
+        console.error('[DEBUG] ❌ Failed to fetch routine:', err);
         setError('Failed to load routine');
       } finally {
         setLoading(false);
       }
     };
 
-    fetchRoutine();
+    loadRoutine();
   }, [locale]); // navigate 제거, hasFetched로 중복 방지
 
   // 로딩 상태

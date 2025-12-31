@@ -10,6 +10,7 @@ interface RoutineStep {
 }
 
 interface RoutineData {
+  user_uuid: string;
   morning_steps: RoutineStep[];
   midday_steps: RoutineStep[];
   evening_steps: RoutineStep[];
@@ -36,6 +37,8 @@ export default function ProgressTab({ routine }: ProgressTabProps) {
     totalSteps: 0
   });
   const [streak, setStreak] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [dataSource, setDataSource] = useState<'api' | 'local'>('local');
 
   const totalStepsPerDay =
     routine.morning_steps.length +
@@ -43,15 +46,57 @@ export default function ProgressTab({ routine }: ProgressTabProps) {
     routine.evening_steps.length;
 
   useEffect(() => {
-    // 오늘 통계
-    setTodayStats(getTodayProgress(totalStepsPerDay));
+    const loadStats = async () => {
+      console.log('[DEBUG] 📊 Loading weekly stats...');
 
-    // 이번 주 통계
-    setWeekStats(getWeekProgress(totalStepsPerDay));
+      // 오늘 통계는 항상 localStorage에서 (가장 최신)
+      setTodayStats(getTodayProgress(totalStepsPerDay));
 
-    // 연속 달성
-    setStreak(getStreak());
-  }, [totalStepsPerDay]);
+      try {
+        // API에서 주간 통계 로드 시도
+        const response = await fetch(
+          `/api/skincare/progress/weekly?user_uuid=${routine.user_uuid}`
+        );
+        const result = await response.json();
+
+        if (result.success && result.data) {
+          console.log('[DEBUG] ✅ Weekly stats from API:', result.data);
+
+          // API 데이터로 주간 통계 설정
+          const apiDaily = result.data.daily.map((d: { date: string; label: string; completed: number; total: number; rate: number }) => ({
+            date: d.date,
+            label: d.label,
+            completed: d.completed,
+            total: d.total,
+            percentage: d.rate
+          }));
+
+          setWeekStats({
+            daily: apiDaily,
+            average: result.data.completion_rate,
+            totalCompleted: result.data.total_completed,
+            totalSteps: result.data.total_possible
+          });
+
+          setStreak(result.data.streak);
+          setDataSource('api');
+        } else {
+          throw new Error(result.error || 'API failed');
+        }
+      } catch (error) {
+        console.log('[DEBUG] ⚠️ API failed, using localStorage fallback:', error);
+
+        // Fallback: localStorage 기반 계산
+        setWeekStats(getWeekProgress(totalStepsPerDay));
+        setStreak(getStreak());
+        setDataSource('local');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadStats();
+  }, [totalStepsPerDay, routine.user_uuid]);
 
   return (
     <div className="p-4 space-y-6">

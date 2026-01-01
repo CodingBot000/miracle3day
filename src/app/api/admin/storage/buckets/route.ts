@@ -1,23 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ListBucketsCommand } from '@aws-sdk/client-s3';
-import { getIronSession } from 'iron-session';
-import { sessionOptions, SessionData } from '@/lib/session';
+import { verifyAccessToken, ACCESS_TOKEN_COOKIE } from '@/lib/auth/jwt';
 import { pool } from '@/lib/db';
 import { s3Client } from '@/lib/s3';
 
 export async function GET(request: NextRequest) {
   try {
-    // 1. 세션 확인
-    const session = await getIronSession<SessionData>(request, new Response(), sessionOptions);
+    // 1. JWT 세션 확인
+    const token = request.cookies.get(ACCESS_TOKEN_COOKIE)?.value;
 
-    if (!session.auth?.id_uuid) {
+    if (!token) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const payload = await verifyAccessToken(token);
+
+    if (!payload) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     // 2. 어드민 조회
     const { rows: adminRows } = await pool.query(
       `SELECT id_uuid_hospital, email FROM admin WHERE id_uuid_hospital = $1`,
-      [session.auth.id_uuid]
+      [payload.sub]
     );
 
     if (adminRows.length === 0) {

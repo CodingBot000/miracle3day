@@ -1,15 +1,19 @@
 import { NextResponse } from "next/server";
-import { readSession } from "@/lib/admin/auth";
 import { pool } from "@/lib/db";
+import { readAccessToken, readAdminSession } from "@/lib/auth/jwt";
 
 export async function GET() {
   console.log('[API /auth/me] 세션 확인 요청');
 
-  const s = await readSession();
+  // 통합 JWT 우선, 기존 Admin JWT 호환
+  const accessToken = await readAccessToken();
+  const oldAdminSession = await readAdminSession();
 
-  console.log('[API /auth/me] 세션 데이터:', s);
+  const session = accessToken || oldAdminSession;
 
-  if (!s) {
+  console.log('[API /auth/me] 세션 데이터:', session);
+
+  if (!session) {
     console.log('[API /auth/me] ❌ 세션 없음 - 401 반환');
     return NextResponse.json({ ok: false }, { status: 401 });
   }
@@ -18,7 +22,7 @@ export async function GET() {
   try {
     const { rows } = await pool.query(
       `SELECT id, email, id_uuid_hospital FROM admin WHERE id = $1`,
-      [s.sub]
+      [session.sub]
     );
 
     console.log('[API /auth/me] DB 조회 결과:', rows);

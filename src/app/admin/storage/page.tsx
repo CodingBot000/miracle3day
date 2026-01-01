@@ -1,22 +1,20 @@
 import { redirect } from 'next/navigation';
-import { getIronSession } from 'iron-session';
-import { sessionOptions, SessionData } from '@/lib/session';
+import { getSessionUser } from '@/lib/auth/jwt';
 import { pool } from '@/lib/db';
 import StorageExplorer from './components/StorageExplorer';
-import { cookies } from 'next/headers';
 
 export default async function StoragePage() {
-  // 1. 세션 확인
-  const session = await getIronSession<SessionData>(cookies(), sessionOptions);
+  // 1. JWT 세션 확인
+  const session = await getSessionUser();
 
-  if (!session.auth?.id_uuid) {
+  if (!session) {
     redirect('/admin/login');
   }
 
   // 2. 어드민 조회
   const { rows: adminRows } = await pool.query(
     `SELECT id_uuid_hospital, email FROM admin WHERE id_uuid_hospital = $1`,
-    [session.auth.id_uuid]
+    [session.id]
   );
 
   if (adminRows.length === 0) {

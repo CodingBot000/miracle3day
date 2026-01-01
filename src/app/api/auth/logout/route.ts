@@ -1,13 +1,15 @@
 import { NextResponse } from "next/server";
-import { getIronSession } from "iron-session";
-import { sessionOptions } from "@/lib/session";
+import { clearAuthCookies } from "@/lib/auth/jwt";
 
-export async function POST(req: Request) {
+export async function POST() {
   try {
     const res = NextResponse.json({ success: true });
-    const session = await getIronSession(req, res, sessionOptions) as any;
 
-    session.destroy();
+    // JWT 쿠키 삭제
+    clearAuthCookies(res);
+
+    // 기존 iron-session 쿠키도 삭제 (마이그레이션 호환)
+    res.cookies.set("app_session", "", { maxAge: 0, path: "/" });
 
     return res;
   } catch (error) {

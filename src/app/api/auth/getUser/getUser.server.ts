@@ -1,28 +1,25 @@
 import { log } from '@/utils/logger';
-import { cookies } from 'next/headers';
-import { getIronSession } from 'iron-session';
-import { sessionOptions } from '@/lib/session';
 import { q } from '@/lib/db';
 import { TABLE_MEMBERS } from '@/constants/tables';
 import { UserOutputDto } from './getUser.dto';
+import { getSessionUser } from '@/lib/auth/jwt';
 
 /**
- * Server-side function to get user data from session
+ * Server-side function to get user data from session (JWT 기반)
  * Use this ONLY in Server Components or Server Actions
  */
 export const getUserAPIServer = async (): Promise<UserOutputDto | null> => {
   try {
-    const cookieStore = cookies();
-    const session = await getIronSession(cookieStore, sessionOptions) as any;
+    const session = await getSessionUser();
 
-    if (!session.auth || session.auth.status !== 'active' || !session.auth.id_uuid) {
+    if (!session || session.status !== 'active') {
       log.debug('[getUserAPIServer] No active session');
       return null;
     }
 
     const member = await q(
       `SELECT * FROM ${TABLE_MEMBERS} WHERE id_uuid = $1 LIMIT 1`,
-      [session.auth.id_uuid]
+      [session.id]
     );
 
     if (!member.length) {
@@ -32,9 +29,9 @@ export const getUserAPIServer = async (): Promise<UserOutputDto | null> => {
 
     const userInfo = {
       auth_user: {
-        id: session.auth.id_uuid,
-        email: session.auth.email,
-        imageUrl: session.auth.avatar,
+        id: session.id,
+        email: session.email,
+        imageUrl: session.avatar,
       },
       ...member[0]
     };

@@ -1,42 +1,47 @@
 import { log } from '@/utils/logger';
-import { NextResponse } from 'next/server';
-import { getIronSession } from 'iron-session';
-import { sessionOptions } from '@/lib/session';
+import { NextRequest, NextResponse } from 'next/server';
+import { verifyAccessToken, ACCESS_TOKEN_COOKIE } from '@/lib/auth/jwt';
 import { q } from '@/lib/db';
 import { TABLE_MEMBERS } from '@/constants/tables';
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
-    const session = await getIronSession(req, new NextResponse(), sessionOptions) as any;
-    
-    // 디버깅 코드 삭제 금지 ** 절대로 삭제하지말것 **
-    log.debug('=== Onboarding Complete Debug ===');
-    log.debug('session:', session);
-    log.debug('session.auth:', session.auth);
-    log.debug('session.auth?.status:', session.auth?.status);
-    log.debug('session.auth?.id_uuid:', session.auth?.id_uuid);
-    log.debug('================================');
-    
-    if (!session.auth) {
-      log.debug('No session.auth - returning 401');
+    const token = req.cookies.get(ACCESS_TOKEN_COOKIE)?.value;
+
+    if (!token) {
+      log.debug('No token - returning 401');
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
-    
-    if (session.auth.status === 'pending') {
+
+    const payload = await verifyAccessToken(token);
+
+    // 디버깅 코드 삭제 금지 ** 절대로 삭제하지말것 **
+    log.debug('=== Onboarding Complete Debug ===');
+    log.debug('payload:', payload);
+    log.debug('payload?.status:', payload?.status);
+    log.debug('payload?.sub:', payload?.sub);
+    log.debug('================================');
+
+    if (!payload) {
+      log.debug('No payload - returning 401');
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    if (payload.status === 'pending') {
       log.debug('Session is pending - need to complete terms agreement first');
       return NextResponse.json({
         error: 'Terms agreement required',
         redirect: '/terms'
       }, { status: 403 });
     }
-    
-    if (session.auth.status !== 'active' || !session.auth.id_uuid) {
-      log.debug('Session not active or missing id_uuid - returning 401');
+
+    if (payload.status !== 'active') {
+      log.debug('Session not active - returning 401');
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const body = await req.json();
-    const userId = session.auth.id_uuid;
+    const userId = payload.sub;
 
     // 기존 회원 정보 업데이트 (nickname은 consent/accept에서 이미 생성됨)
     await q(

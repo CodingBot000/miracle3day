@@ -1,17 +1,25 @@
 import { log } from '@/utils/logger';
-import { getIronSession } from "iron-session";
-import { sessionOptions } from "@/lib/session";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { q } from "@/lib/db";
 import { TABLE_MEMBERS, TABLE_MEMBER_SOCIAL_ACCOUNTS } from "@/constants/tables";
 import { initializeBadgeSystem } from "@/services/badges/initialization";
 import { generateNickname } from "@/app/utils/generateNickname";
+import {
+  verifyAccessToken,
+  generateTokenPair,
+  setAuthCookies,
+  ACCESS_TOKEN_COOKIE,
+} from "@/lib/auth/jwt";
+import type { TokenPayloadInput, AccessTokenPayload } from "@/lib/auth/types";
 
-export async function POST(req: Request) {
-  const res = new NextResponse();
-  const session = await getIronSession(req, res, sessionOptions) as any;
-  const auth = session.auth;
+export async function POST(req: NextRequest) {
+  // JWT에서 Access Token 읽기
+  const accessToken = req.cookies.get(ACCESS_TOKEN_COOKIE)?.value;
+  if (!accessToken) {
+    return new NextResponse("Unauthorized", { status: 401 });
+  }
 
+  const auth = await verifyAccessToken(accessToken);
   if (!auth || auth.status !== "pending") {
     return new NextResponse("Forbidden", { status: 403 });
   }
@@ -20,8 +28,8 @@ export async function POST(req: Request) {
   const body = await req.json();
   const marketingOptIn = body.marketingOptIn === true;
 
-  const provider = auth.provider; // 'google' | 'apple' | 'facebook'
-  const providerUserId = auth.provider_user_id as string;
+  const provider = auth.provider; // 'google' | 'apple' | 'facebook' | 'email'
+  const providerUserId = auth.providerUserId as string;
   const email: string | null = auth.email ?? null;   // 이메일이 없어도 null 허용
   const avatar: string | null = auth.avatar ?? null;
   const name: string | null = auth.name ?? null;     // 구글에서 가져온 이름
@@ -140,18 +148,25 @@ Google도 이메일을 반환하지 않습니다.
       console.error('Badge init background error:', err);
     });
 
-    // 5) 세션 active로 승격
-    session.auth = {
-      ...session.auth,
+    // 5) JWT로 active 상태 토큰 발급
+    const tokenInput: TokenPayloadInput = {
+      sub: memberId,
+      email,
+      role: "user",
       status: "active",
-      id_uuid: memberId,
+      provider,
+      providerUserId,
+      name,
+      avatar,
     };
 
-    log.debug('Before session.save(), session.auth:', session.auth);
-    await session.save();
-    log.debug('After session.save() completed');
-    // 설명: 본 주석 삭제금지 - { headers: res.headers }); header를 추가해야 session.save()로 업데이트된 쿠키가 포함되서 새응답으로 전달되어 업데이트된 세션쿠키를 받아 status를 최신상태로 받을수있다.
-    return NextResponse.json({ ok: true, member_id: memberId }, { headers: res.headers });
+    const tokens = await generateTokenPair(tokenInput);
+    log.debug('JWT tokens generated for active user:', memberId);
+
+    const res = NextResponse.json({ ok: true, member_id: memberId });
+    setAuthCookies(res, tokens.accessToken, tokens.refreshToken);
+
+    return res;
   } catch (e) {
     await q("ROLLBACK");
     console.error("Consent accept error:", e);

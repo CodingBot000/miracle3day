@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { cookies } from "next/headers";
 import { pool } from "@/lib/db";
-import { issueSession, COOKIE_NAME } from "@/lib/admin/auth";
 import argon2 from "argon2";
 import rateLimit from "@/lib/rate-limit";
+import { generateTokenPair, setAuthCookies } from "@/lib/auth/jwt";
+import type { TokenPayloadInput } from "@/lib/auth/types";
 
 // Rate limiter 생성 (1분에 5번)
 const limiter = rateLimit({
@@ -68,27 +68,23 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false }, { status: 401 });
   }
 
-  // 3) JWT 발급
-  const token = await issueSession({
-    sub: user.id,
+  // 3) 통합 JWT 발급
+  const tokenInput: TokenPayloadInput = {
+    sub: String(user.id),
     email: user.email,
     role: "admin",
-  });
-  console.log("[AUTH-LOGIN DEBUG] Step9 issued session token");
+    status: "active",
+    provider: "email",
+  };
+  const tokens = await generateTokenPair(tokenInput);
+  console.log("[AUTH-LOGIN DEBUG] Step9 issued JWT tokens");
 
   // 4) HttpOnly 쿠키 설정
-  const cookieStore = await cookies();
-  cookieStore.set({
-    name: COOKIE_NAME,
-    value: token,
-    httpOnly: true,
-    secure: true,
-    sameSite: "lax",
-    path: "/",
-  });
-  console.log("[AUTH-LOGIN DEBUG] Step10 cookie stored");
+  const res = NextResponse.json({ ok: true });
+  setAuthCookies(res, tokens.accessToken, tokens.refreshToken);
+  console.log("[AUTH-LOGIN DEBUG] Step10 JWT cookies set");
 
   // 5) 프런트에서 성공 여부만 보면 되게 최소 정보 반환
   console.log("[AUTH-LOGIN DEBUG] Step11 login success response", { email });
-  return NextResponse.json({ ok: true });
+  return res;
 }

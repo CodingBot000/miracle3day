@@ -8,6 +8,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 // import type { TSnsType } from '../login/actions';
 import { useLocale } from 'next-intl';
 import TermsHtmlModal from '@/components/template/modal/TermsHtmlModal';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { SNS_APPLE, SNS_GOOGLE, SNS_FACEBOOK } from '@/constants/key';
 
@@ -36,6 +37,7 @@ type TermsClientProps = {
 
 export default function TermsClient({ initialProvider }: TermsClientProps) {
   const { navigate } = useNavigation();
+  const queryClient = useQueryClient();
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionError, setSubmissionError] = useState<string | null>(null);
@@ -190,6 +192,10 @@ export default function TermsClient({ initialProvider }: TermsClientProps) {
         throw new Error('세션 저장이 완료되지 않았습니다.');
       }
 
+      // 로그인 상태가 변경되었으므로 React Query 캐시 무효화
+      // 이렇게 하면 다음 페이지에서 useGetUser가 fresh data를 가져옴
+      await queryClient.invalidateQueries({ queryKey: ['getUser'] });
+
       // 팝업 윈도우에서 실행 중이면 자동으로 닫기
       if (typeof window !== 'undefined' && window.opener && !window.opener.closed) {
         console.log('Terms accepted in popup, closing...');
@@ -212,7 +218,7 @@ export default function TermsClient({ initialProvider }: TermsClientProps) {
       <div className="mb-8">
         <h1 className="text-2xl font-bold">Welcome!</h1>
         <p className="text-gray-600 mt-2">
-          In order to use BeautyWell, you need to agree to terms and conditions below.
+          In order to use Mimotok, you need to agree to terms and conditions below.
         </p>
         {providerLabel ? (
           <p className="mt-4 rounded-lg border border-blue-100 bg-blue-50 px-3 py-2 text-sm text-blue-600">

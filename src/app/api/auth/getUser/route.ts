@@ -1,20 +1,25 @@
-import { NextResponse } from "next/server";
-import { getIronSession } from "iron-session";
-import { sessionOptions } from "@/lib/session";
+import { NextResponse, NextRequest } from "next/server";
 import { q } from "@/lib/db";
 import { TABLE_MEMBERS } from "@/constants/tables";
+import { verifyAccessToken, ACCESS_TOKEN_COOKIE } from "@/lib/auth/jwt";
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   try {
-    const session = await getIronSession(req, new NextResponse(), sessionOptions) as any;
-    
-    if (!session.auth || session.auth.status !== 'active' || !session.auth.id_uuid) {
+    const token = req.cookies.get(ACCESS_TOKEN_COOKIE)?.value;
+
+    if (!token) {
+      return NextResponse.json({ userInfo: null }, { status: 401 });
+    }
+
+    const payload = await verifyAccessToken(token);
+
+    if (!payload || payload.status !== 'active') {
       return NextResponse.json({ userInfo: null }, { status: 401 });
     }
 
     const member = await q(
       `SELECT * FROM ${TABLE_MEMBERS} WHERE id_uuid = $1 LIMIT 1`,
-      [session.auth.id_uuid]
+      [payload.sub]
     );
 
     if (!member.length) {
@@ -23,9 +28,9 @@ export async function GET(req: Request) {
 
     const userInfo = {
       auth_user: {
-        id: session.auth.id_uuid,
-        email: session.auth.email,
-        imageUrl: session.auth.avatar,
+        id: payload.sub,
+        email: payload.email,
+        imageUrl: payload.avatar,
       },
       ...member[0]
     };

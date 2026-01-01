@@ -1,16 +1,13 @@
 import { NextResponse } from "next/server";
 import * as jose from "jose";
-import { getIronSession } from "iron-session";
-import { getSessionOptions } from "@/lib/session";
 import { q } from "@/lib/db";
 import { TABLE_MEMBERS, TABLE_MEMBER_SOCIAL_ACCOUNTS } from "@/constants/tables";
 import { decryptOAuthState } from "@/lib/oauth";
+import { generateTokenPair, setAuthCookies } from "@/lib/auth/jwt";
+import type { TokenPayloadInput, HospitalAccess } from "@/lib/auth/types";
 
 // Base URL for redirects (always use actual request origin)
 const getBaseUrl = (reqUrl: string) => new URL(reqUrl).origin;
-
-// Check if request is secure (HTTPS)
-const isSecureRequest = (reqUrl: string) => new URL(reqUrl).protocol === 'https:';
 
 type TermsAgreements = {
   [key: string]: {
@@ -37,6 +34,34 @@ async function exchangeToken(code: string, verifier: string) {
 
   if (!res.ok) throw new Error("Token exchange failed");
   return res.json();
+}
+
+// 약관 동의 필요 시 HTML 응답 생성 (Popup에서 Main Window로 이동)
+function createTermsRedirectHtml(): string {
+  return `<!DOCTYPE html>
+<html>
+  <head>
+    <title>Terms Required</title>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <script>
+      if (window.opener && !window.opener.closed) {
+        // Popup 윈도우 - Main Window로 /terms 이동 후 닫기
+        console.log('Pending user in popup, redirecting main window to /terms...');
+        window.opener.location.href = '/terms';
+        window.close();
+      } else {
+        // 일반 윈도우 - 직접 이동
+        console.log('Pending user in regular window, redirecting...');
+        window.location.href = '/terms';
+      }
+    </script>
+    <p style="text-align: center; font-family: sans-serif; margin-top: 100px;">
+      Redirecting to terms page...
+    </p>
+  </body>
+</html>`;
 }
 
 export async function GET(req: Request) {
@@ -104,18 +129,25 @@ export async function GET(req: Request) {
       const termsAgreementsData = termsAgreements[0]?.terms_agreements as TermsAgreements | null;
       
       if (!termsAgreementsData) {
-        const res = NextResponse.redirect(new URL("/terms", baseUrl));
-        const session = await getIronSession(req, res, getSessionOptions(isSecureRequest(req.url))) as any;
-        session.auth = {
-          provider,
-          provider_user_id: providerUserId,
+        // pending 상태 - JWT 발급 (providerUserId를 sub로 사용)
+        const tokenInput: TokenPayloadInput = {
+          sub: `pending:${providerUserId}`,
           email,
-          avatar: payload.picture as string,
-          name: payload.name as string,
+          role: "user",
           status: "pending",
+          provider: "google",
+          providerUserId,
+          name: payload.name as string,
+          avatar: payload.picture as string,
         };
-        await session.save();
-        return res;
+        const tokens = await generateTokenPair(tokenInput);
+        // Popup/일반 윈도우 대응 - HTML 응답
+        const htmlRes = new NextResponse(createTermsRedirectHtml(), {
+          status: 200,
+          headers: { 'Content-Type': 'text/html; charset=utf-8' },
+        });
+        setAuthCookies(htmlRes, tokens.accessToken, tokens.refreshToken);
+        return htmlRes;
       }
       
       // required가 true인 항목 중 agreed가 false인 것이 있는지 확인
@@ -124,18 +156,25 @@ export async function GET(req: Request) {
       );
       
       if (hasUnagreeRequired) {
-        const res = NextResponse.redirect(new URL("/terms", baseUrl));
-        const session = await getIronSession(req, res, getSessionOptions(isSecureRequest(req.url))) as any;
-        session.auth = {
-          provider,
-          provider_user_id: providerUserId,
+        // pending 상태 - JWT 발급 (providerUserId를 sub로 사용)
+        const tokenInput: TokenPayloadInput = {
+          sub: `pending:${providerUserId}`,
           email,
-          avatar: payload.picture as string,
-          name: payload.name as string,
+          role: "user",
           status: "pending",
+          provider: "google",
+          providerUserId,
+          name: payload.name as string,
+          avatar: payload.picture as string,
         };
-        await session.save();
-        return res;
+        const tokens = await generateTokenPair(tokenInput);
+        // Popup/일반 윈도우 대응 - HTML 응답
+        const htmlRes = new NextResponse(createTermsRedirectHtml(), {
+          status: 200,
+          headers: { 'Content-Type': 'text/html; charset=utf-8' },
+        });
+        setAuthCookies(htmlRes, tokens.accessToken, tokens.refreshToken);
+        return htmlRes;
       }
       // ✅ Admin 권한 체크 (optional - 실패해도 로그인 진행)
       let userRole: 'user' | 'hospital_admin' | 'super_admin' = 'user';
@@ -171,26 +210,23 @@ export async function GET(req: Request) {
         // userRole은 'user'로 유지
       }
 
-      // 기존 회원 - 바로 active 상태로 설정
-      // 팝업 윈도우에서 실행 중이면 자동으로 닫고, 아니면 리다이렉트
-      const res = new NextResponse();
-      const session = await getIronSession(req, res, getSessionOptions(isSecureRequest(req.url))) as any;
-
-      session.auth = {
-        provider,
-        provider_user_id: providerUserId,
+      // 기존 회원 - 바로 active 상태로 JWT 발급
+      const tokenInput: TokenPayloadInput = {
+        sub: memberId,
         email,
-        avatar: payload.picture as string,
-        name: payload.name as string,
-        status: "active",
-        id_uuid: memberId,
         role: userRole,
-        hospitalAccess,
+        status: "active",
+        provider: "google",
+        providerUserId,
+        name: payload.name as string,
+        avatar: payload.picture as string,
+        hospitalAccess: hospitalAccess.length > 0 ? hospitalAccess : undefined,
       };
-      await session.save();
+      const tokens = await generateTokenPair(tokenInput);
 
       // HTML 페이지 반환: 팝업이면 닫고, 아니면 리다이렉트
-      return new NextResponse(
+      // JWT 쿠키를 포함한 응답 생성
+      const htmlRes = new NextResponse(
         `<!DOCTYPE html>
 <html>
   <head>
@@ -218,25 +254,31 @@ export async function GET(req: Request) {
           status: 200,
           headers: {
             'Content-Type': 'text/html; charset=utf-8',
-            'Set-Cookie': res.headers.get('Set-Cookie') || '',
           },
         }
       );
+      setAuthCookies(htmlRes, tokens.accessToken, tokens.refreshToken);
+      return htmlRes;
     } else {
-      // 신규 회원 - pending 상태로 약관 동의 페이지로
-      const res = NextResponse.redirect(new URL("/terms", baseUrl));
-      const session = await getIronSession(req, res, getSessionOptions(isSecureRequest(req.url))) as any;
-
-      session.auth = {
-        provider,
-        provider_user_id: providerUserId,
+      // 신규 회원 - pending 상태로 약관 동의 페이지로 (JWT 발급)
+      const tokenInput: TokenPayloadInput = {
+        sub: `pending:${providerUserId}`,
         email,
-        avatar: payload.picture as string,
-        name: payload.name as string,
+        role: "user",
         status: "pending",
+        provider: "google",
+        providerUserId,
+        name: payload.name as string,
+        avatar: payload.picture as string,
       };
-      await session.save();
-      return res;
+      const tokens = await generateTokenPair(tokenInput);
+      // Popup/일반 윈도우 대응 - HTML 응답
+      const htmlRes = new NextResponse(createTermsRedirectHtml(), {
+        status: 200,
+        headers: { 'Content-Type': 'text/html; charset=utf-8' },
+      });
+      setAuthCookies(htmlRes, tokens.accessToken, tokens.refreshToken);
+      return htmlRes;
     }
   } catch (error) {
     console.error("OAuth callback error:", error);

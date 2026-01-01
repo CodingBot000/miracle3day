@@ -1,7 +1,6 @@
 import { log } from '@/utils/logger';
-import { NextResponse } from 'next/server';
-import { getIronSession } from 'iron-session';
-import { sessionOptions } from '@/lib/session';
+import { NextRequest, NextResponse } from 'next/server';
+import { verifyAccessToken, ACCESS_TOKEN_COOKIE } from '@/lib/auth/jwt';
 import { q } from '@/lib/db';
 import { TABLE_MEMBERS } from '@/constants/tables';
 
@@ -9,19 +8,25 @@ import { TABLE_MEMBERS } from '@/constants/tables';
  * GET - 온보딩 진행 중인 사용자의 프로필 정보 조회
  * pending 또는 active 상태 모두 허용
  */
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   try {
-    const session = await getIronSession(req, new NextResponse(), sessionOptions) as any;
+    const token = req.cookies.get(ACCESS_TOKEN_COOKIE)?.value;
+
+    if (!token) {
+      return NextResponse.json({ profile: null }, { status: 401 });
+    }
+
+    const payload = await verifyAccessToken(token);
 
     log.debug('=== Onboarding Profile Debug ===');
-    log.debug('session.auth:', session.auth);
+    log.debug('payload:', payload);
 
-    if (!session.auth || !session.auth.id_uuid) {
+    if (!payload) {
       return NextResponse.json({ profile: null }, { status: 401 });
     }
 
     // pending 또는 active 상태 모두 허용
-    if (session.auth.status !== 'active' && session.auth.status !== 'pending') {
+    if (payload.status !== 'active' && payload.status !== 'pending') {
       return NextResponse.json({ profile: null }, { status: 401 });
     }
 
@@ -30,7 +35,7 @@ export async function GET(req: Request) {
        FROM ${TABLE_MEMBERS}
        WHERE id_uuid = $1
        LIMIT 1`,
-      [session.auth.id_uuid]
+      [payload.sub]
     );
 
     if (!members.length) {

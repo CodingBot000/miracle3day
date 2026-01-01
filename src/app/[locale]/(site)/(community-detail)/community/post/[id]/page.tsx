@@ -1,8 +1,6 @@
 import { redirect } from 'next/navigation';
-import { cookies } from "next/headers";
 import { getLocale } from 'next-intl/server';
-import { getIronSession } from "iron-session";
-import { sessionOptions } from "@/lib/session";
+import { getSessionUser } from '@/lib/auth/jwt';
 import CommentSection from '@/components/molecules/CommentSection';
 import { Member, CommunityPost, CommunityComment } from '@/models/communityData.dto';
 import PostNotFoundFallback from './PostNotFoundFallback';
@@ -64,17 +62,15 @@ export default async function PostDetailPage({
     redirect('/community');
   }
 
-  // 읽기는 로그인 불필요 - 세션이 있으면 member 정보 가져오기
-  const cookieStore = cookies();
-  const session = await getIronSession(cookieStore, sessionOptions);
-  const auth = (session as any).auth;
+  // 읽기는 로그인 불필요 - JWT 세션이 있으면 member 정보 가져오기
+  const session = await getSessionUser();
 
   let userId: string | null = null;
   let member: any = null;
   let memberUuid: string | null = null;
 
-  if (auth && auth.status === "active" && auth.id_uuid) {
-    userId = auth.id_uuid as string;
+  if (session && session.status === "active") {
+    userId = session.id;
     member = await findMemberByUserId(userId);
 
     if (member) {

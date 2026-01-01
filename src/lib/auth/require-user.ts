@@ -1,15 +1,6 @@
+/**
+ * 로그인 필수 유틸리티 (JWT 기반)
+ */
 
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import { getIronSession } from "iron-session";
-import { sessionOptions } from "@/lib/session";
-
-export async function requireUserId(): Promise<string> {
-  const session = await getIronSession(cookies(), sessionOptions);
-  const auth = (session as any).auth;
-
-  if (!auth || auth.status !== "active" || !auth.id_uuid) {
-    redirect("/login"); // 로그인 페이지로 즉시 이동 (throw)
-  }
-  return auth.id_uuid as string;
-}
+// session.ts에서 재 export (기존 코드 호환성 유지)
+export { requireUserId, requireSession, requireActiveSession } from "./session";

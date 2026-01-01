@@ -1,8 +1,6 @@
 import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
-import { cookies } from 'next/headers';
-import { getIronSession } from 'iron-session';
-import { sessionOptions } from '@/lib/session';
+import { getSessionUser } from '@/lib/auth/jwt';
 import PollResultsContent from '@/components/community/PollResultsContent';
 import { getPollQuestionById, getPollOptionsWithVotes, getUserPollVote } from '@/services/poll';
 import { getPollComments } from '@/services/pollComments';
@@ -33,19 +31,17 @@ export default async function PollResultsPage({
     return;
   }
 
-  // 사용자 인증 확인
-  const cookieStore = await cookies();
-  const session = await getIronSession(cookieStore, sessionOptions);
-  const auth = (session as any).auth;
+  // JWT 세션 확인
+  const session = await getSessionUser();
 
   let userVote = null;
   let memberUuid: string | null = null;
   let isAuthenticated = false;
 
-  if (auth && auth.status === 'active' && auth.id_uuid) {
+  if (session && session.status === 'active') {
     isAuthenticated = true;
-    const member = await findMemberByUserId(auth.id_uuid);
-    memberUuid = member?.uuid || member?.id_uuid || auth.id_uuid;
+    const member = await findMemberByUserId(session.id);
+    memberUuid = member?.uuid || member?.id_uuid || session.id;
 
     // 사용자 투표 정보 가져오기
     if (memberUuid) {

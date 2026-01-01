@@ -25,6 +25,7 @@ export async function GET(req: Request) {
     code_challenge: challenge,
     code_challenge_method: "S256",
     state: encryptedState,
+    prompt: "select_account",  // 항상 계정 선택 화면 표시
   });
 
   const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?${params}`;

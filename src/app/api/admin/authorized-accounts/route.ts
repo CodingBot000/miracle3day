@@ -1,25 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getIronSession } from "iron-session";
-import { sessionOptions } from "@/lib/session";
+import { verifyAccessToken, ACCESS_TOKEN_COOKIE, tokenToSessionUser } from "@/lib/auth/jwt";
 import { q, one, pool } from "@/lib/db";
+import type { SessionUser } from "@/lib/auth/types";
 
-interface SessionAuth {
-  id_uuid?: string;
-  email?: string;
-  role?: 'user' | 'hospital_admin' | 'super_admin';
-  hospitalAccess?: { hospital_id: string; hospital_name?: string }[];
-}
-
-async function getAdminSession(req: Request): Promise<{ auth: SessionAuth | null; hospitalId: string | null }> {
+async function getAdminSession(req: NextRequest): Promise<{ auth: SessionUser | null; hospitalId: string | null }> {
   try {
-    const session = await getIronSession(req, new Response(), sessionOptions) as any;
+    const token = req.cookies.get(ACCESS_TOKEN_COOKIE)?.value;
 
-    if (!session.auth || session.auth.role !== 'hospital_admin') {
+    if (!token) {
       return { auth: null, hospitalId: null };
     }
 
-    const hospitalId = session.auth.hospitalAccess?.[0]?.hospital_id || null;
-    return { auth: session.auth, hospitalId };
+    const payload = await verifyAccessToken(token);
+
+    if (!payload || payload.role !== 'hospital_admin') {
+      return { auth: null, hospitalId: null };
+    }
+
+    const session = tokenToSessionUser(payload);
+    const hospitalId = session.hospitalAccess?.[0]?.hospital_id || null;
+    return { auth: session, hospitalId };
   } catch (error) {
     console.error('[AuthorizedAccounts] Session error:', error);
     return { auth: null, hospitalId: null };

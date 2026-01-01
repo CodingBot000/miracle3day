@@ -45,3 +45,7 @@ certs/
 *.pem
 *.key
 *.crt
+
+# 민감 정보 포함 폴더 (커밋 제외)
+scripts/
+docs/

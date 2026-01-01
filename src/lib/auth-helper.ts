@@ -1,19 +1,25 @@
-import { cookies } from "next/headers";
-import { getIronSession } from "iron-session";
-import { sessionOptions } from "@/lib/session";
+/**
+ * 인증 헬퍼 (JWT 기반)
+ */
 
-export async function getAuthSession(req: Request) {
+import { getSessionUser } from "@/lib/auth/jwt";
+
+/**
+ * 현재 인증된 세션 정보 조회
+ * @param _req - 사용되지 않음 (API 호환성 유지)
+ */
+export async function getAuthSession(_req?: Request) {
   try {
-    const session = await getIronSession(cookies(), sessionOptions) as any;
-    
-    if (!session.auth || session.auth.status !== 'active' || !session.auth.id_uuid) {
+    const session = await getSessionUser();
+
+    if (!session || session.status !== 'active') {
       return null;
     }
-    
+
     return {
-      userId: session.auth.id_uuid,
-      email: session.auth.email,
-      provider: session.auth.provider
+      userId: session.id,
+      email: session.email,
+      provider: session.provider
     };
   } catch (error) {
     console.error('Auth session error:', error);

@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { OAuth2Client } from "google-auth-library";
-import { getIronSession } from "iron-session";
-import { sessionOptions } from "@/lib/session";
 import { q } from "@/lib/db";
 import { TABLE_MEMBERS, TABLE_MEMBER_SOCIAL_ACCOUNTS } from "@/constants/tables";
+import { generateTokenPair, setAuthCookies } from "@/lib/auth/jwt";
+import type { TokenPayloadInput } from "@/lib/auth/types";
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
@@ -73,14 +73,14 @@ export async function POST(req: Request) {
       memberId = rows[0]?.id_uuid ?? null;
     }
 
-    // 응답 데이터 및 세션 데이터 준비
+    // 응답 데이터 및 토큰 입력 준비
     let responseData: {
       success: boolean;
       needsTerms?: boolean;
       redirectUrl: string;
       isNewUser?: boolean;
     };
-    let sessionAuth: any;
+    let tokenInput: TokenPayloadInput;
 
     if (memberId) {
       // 기존 회원 - 약관 동의 상태 확인
@@ -99,14 +99,16 @@ export async function POST(req: Request) {
         );
 
       if (needsTerms) {
-        // 약관 동의 필요
-        sessionAuth = {
-          provider,
-          provider_user_id: providerUserId,
+        // 약관 동의 필요 - pending 상태
+        tokenInput = {
+          sub: `pending:${providerUserId}`,
           email,
-          avatar,
-          name,
+          role: "user",
           status: "pending",
+          provider: "google",
+          providerUserId,
+          name,
+          avatar,
         };
         responseData = {
           success: true,
@@ -114,15 +116,16 @@ export async function POST(req: Request) {
           redirectUrl: "/terms",
         };
       } else {
-        // 기존 회원 - 정상 로그인
-        sessionAuth = {
-          provider,
-          provider_user_id: providerUserId,
+        // 기존 회원 - 정상 로그인 (active 상태)
+        tokenInput = {
+          sub: memberId,
           email,
-          avatar,
-          name,
+          role: "user",
           status: "active",
-          id_uuid: memberId,
+          provider: "google",
+          providerUserId,
+          name,
+          avatar,
         };
         responseData = {
           success: true,
@@ -131,14 +134,16 @@ export async function POST(req: Request) {
         };
       }
     } else {
-      // 신규 회원 - 약관 동의 페이지로
-      sessionAuth = {
-        provider,
-        provider_user_id: providerUserId,
+      // 신규 회원 - 약관 동의 페이지로 (pending 상태)
+      tokenInput = {
+        sub: `pending:${providerUserId}`,
         email,
-        avatar,
-        name,
+        role: "user",
         status: "pending",
+        provider: "google",
+        providerUserId,
+        name,
+        avatar,
       };
       responseData = {
         success: true,
@@ -148,11 +153,10 @@ export async function POST(req: Request) {
       };
     }
 
-    // 응답 생성 후 세션 저장 - 동일한 res 객체를 반환해야 쿠키가 포함됨
+    // JWT 토큰 발급 및 쿠키 설정
+    const tokens = await generateTokenPair(tokenInput);
     const res = NextResponse.json(responseData);
-    const session = (await getIronSession(req, res, sessionOptions)) as any;
-    session.auth = sessionAuth;
-    await session.save();
+    setAuthCookies(res, tokens.accessToken, tokens.refreshToken);
 
     return res;
   } catch (error) {

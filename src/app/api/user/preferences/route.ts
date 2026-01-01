@@ -1,21 +1,25 @@
-import { getIronSession } from "iron-session";
-import { sessionOptions } from "@/lib/session";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { verifyAccessToken, ACCESS_TOKEN_COOKIE } from "@/lib/auth/jwt";
 import { q, one } from "@/lib/db";
 
 // 설정 조회
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   try {
-    const res = new NextResponse();
-    const session = await getIronSession(req, res, sessionOptions) as any;
+    const token = req.cookies.get(ACCESS_TOKEN_COOKIE)?.value;
 
-    if (!session.auth?.id_uuid) {
+    if (!token) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const payload = await verifyAccessToken(token);
+
+    if (!payload || payload.status !== 'active') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const result = await one(
       'SELECT preferences FROM members WHERE id_uuid = $1',
-      [session.auth.id_uuid]
+      [payload.sub]
     );
 
     return NextResponse.json({
@@ -35,12 +39,17 @@ export async function GET(req: Request) {
 }
 
 // 설정 저장 (부분 업데이트 지원)
-export async function PUT(req: Request) {
+export async function PUT(req: NextRequest) {
   try {
-    const res = new NextResponse();
-    const session = await getIronSession(req, res, sessionOptions) as any;
+    const token = req.cookies.get(ACCESS_TOKEN_COOKIE)?.value;
 
-    if (!session.auth?.id_uuid) {
+    if (!token) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const payload = await verifyAccessToken(token);
+
+    if (!payload || payload.status !== 'active') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -56,10 +65,10 @@ export async function PUT(req: Request) {
        SET preferences = COALESCE(preferences, '{}'::jsonb) || $1::jsonb,
            updated_at = NOW()
        WHERE id_uuid = $2`,
-      [JSON.stringify(preferences), session.auth.id_uuid]
+      [JSON.stringify(preferences), payload.sub]
     );
 
-    console.log(`[Preferences] Updated for user ${session.auth.id_uuid}:`, preferences);
+    console.log(`[Preferences] Updated for user ${payload.sub}:`, preferences);
 
     return NextResponse.json({ success: true });
   } catch (error) {

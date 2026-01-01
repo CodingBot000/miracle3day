@@ -8,9 +8,13 @@ import { jwtVerify } from 'jose';
 // CONFIGURATION
 // =============================================================================
 
-// Admin JWT 설정
+// JWT 설정 (통합)
+const ACCESS_TOKEN_COOKIE = 'bl_access_token';
+const REFRESH_TOKEN_COOKIE = 'bl_refresh_token';
+const AUTH_SECRET = new TextEncoder().encode(process.env.AUTH_SECRET!);
+
+// 기존 Admin JWT (호환용 - 추후 제거)
 const ADMIN_COOKIE_NAME = 'bl_admin_session';
-const ADMIN_SECRET = new TextEncoder().encode(process.env.AUTH_SECRET!);
 
 // next-intl 미들웨어 생성
 const intlMiddleware = createIntlMiddleware(routing);
@@ -62,12 +66,63 @@ function isAuthRequiredPath(pathname: string) {
   return AUTH_REQUIRED_PATHS.some((p) => pathWithoutLocale.startsWith(p));
 }
 
+// 통합 JWT 세션 검증 결과
+interface SessionVerifyResult {
+  valid: boolean;
+  needsRefresh: boolean;
+  isAdmin?: boolean;
+  status?: string;
+}
+
+// 통합 JWT 검증
+async function verifySession(req: NextRequest): Promise<SessionVerifyResult> {
+  const accessToken = req.cookies.get(ACCESS_TOKEN_COOKIE)?.value;
+  const refreshToken = req.cookies.get(REFRESH_TOKEN_COOKIE)?.value;
+
+  // 토큰 없음
+  if (!accessToken && !refreshToken) {
+    return { valid: false, needsRefresh: false };
+  }
+
+  // Access Token 검증
+  if (accessToken) {
+    try {
+      const { payload } = await jwtVerify(accessToken, AUTH_SECRET);
+      if (payload.type === 'access') {
+        return {
+          valid: true,
+          needsRefresh: false,
+          isAdmin: payload.role === 'admin' || payload.role === 'super_admin' || payload.role === 'hospital_admin',
+          status: payload.status as string,
+        };
+      }
+    } catch {
+      // Access Token 만료 - Refresh 필요
+    }
+  }
+
+  // Access Token 없거나 만료 → Refresh Token 확인
+  if (refreshToken) {
+    try {
+      const { payload } = await jwtVerify(refreshToken, AUTH_SECRET);
+      if (payload.type === 'refresh') {
+        return { valid: false, needsRefresh: true };
+      }
+    } catch {
+      // Refresh Token도 만료
+    }
+  }
+
+  return { valid: false, needsRefresh: false };
+}
+
+// 기존 Admin JWT 검증 (호환용 - 추후 제거)
 async function verifyAdminSession(req: NextRequest): Promise<boolean> {
   const token = req.cookies.get(ADMIN_COOKIE_NAME)?.value;
   if (!token) return false;
 
   try {
-    await jwtVerify(token, ADMIN_SECRET);
+    await jwtVerify(token, AUTH_SECRET);
     return true;
   } catch {
     return false;
@@ -87,18 +142,27 @@ export async function middleware(req: NextRequest) {
   // ========================================
   if (pathname.startsWith('/admin')) {
     log.debug('[middleware] admin path detected');
-    
+
     // /admin/login은 항상 허용
     if (pathname === '/admin/login') {
       return NextResponse.next();
     }
 
-    // JWT 세션 확인
-    const isValidAdmin = await verifyAdminSession(req);
-    
-    if (!isValidAdmin) {
+    // 통합 JWT 세션 확인 (우선) + 기존 Admin JWT (호환)
+    const session = await verifySession(req);
+    const isValidOldAdmin = await verifyAdminSession(req);
+
+    if (!session.valid && !session.needsRefresh && !isValidOldAdmin) {
       log.debug('[middleware] invalid admin session, redirecting to login');
       return NextResponse.redirect(new URL('/admin/login', req.url));
+    }
+
+    // Refresh 필요 시
+    if (session.needsRefresh && !isValidOldAdmin) {
+      log.debug('[middleware] admin session needs refresh');
+      return NextResponse.redirect(
+        new URL(`/api/auth/refresh?redirect=${encodeURIComponent(pathname)}`, req.url)
+      );
     }
 
     log.debug('[middleware] admin auth passed');
@@ -110,13 +174,29 @@ export async function middleware(req: NextRequest) {
   // ========================================
   if (isAuthRequiredPath(pathname)) {
     log.debug('[middleware] patient auth required path detected:', pathname);
-    const sessionCookie = req.cookies.get('app_session');
-    log.debug('[middleware] patient session cookie exists:', !!sessionCookie);
 
-    if (!sessionCookie) {
+    // 통합 JWT 세션 확인
+    const session = await verifySession(req);
+
+    if (!session.valid && !session.needsRefresh) {
       log.debug('[middleware] redirect unauthenticated user to Google OAuth');
       return NextResponse.redirect(new URL('/api/auth/google/start', req.url));
     }
+
+    // Refresh 필요 시
+    if (session.needsRefresh) {
+      log.debug('[middleware] patient session needs refresh');
+      return NextResponse.redirect(
+        new URL(`/api/auth/refresh?redirect=${encodeURIComponent(pathname)}`, req.url)
+      );
+    }
+
+    // 약관 미동의 상태 체크
+    if (session.valid && session.status === 'pending') {
+      log.debug('[middleware] user needs to accept terms');
+      return NextResponse.redirect(new URL('/terms', req.url));
+    }
+
     log.debug('[middleware] patient auth check passed');
   }
 

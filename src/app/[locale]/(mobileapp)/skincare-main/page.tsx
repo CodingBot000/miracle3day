@@ -6,6 +6,7 @@ import { useNavigation } from '@/hooks/useNavigation';
 import TodayTab from './components/TodayTab';
 import MyRoutineTab from './components/MyRoutineTab';
 import ProgressTab from './components/ProgressTab';
+import { mobileStorage, STORAGE_KEYS } from '@/lib/storage';
 
 type TabType = 'today' | 'routine' | 'progress';
 
@@ -85,9 +86,9 @@ export default function SkincareMainPage() {
       try {
         console.log('[DEBUG] 🔄 Loading routine...');
 
-        // 1. localStorage에서 캐시된 루틴 데이터 먼저 확인
-        const cachedRoutine = localStorage.getItem('skincare_routine_data');
-        const cachedProfile = localStorage.getItem('skincare_user_profile');
+        // 1. mobileStorage에서 캐시된 루틴 데이터 먼저 확인
+        const cachedRoutine = mobileStorage.getRaw(STORAGE_KEYS.SKINCARE_ROUTINE_DATA);
+        const cachedProfile = mobileStorage.getRaw(STORAGE_KEYS.SKINCARE_USER_PROFILE);
 
         if (cachedRoutine) {
           console.log('[DEBUG] ✅ Found cached routine, using local data');
@@ -102,7 +103,7 @@ export default function SkincareMainPage() {
 
         // 2. 캐시 없으면 user_uuid 확인
         console.log('[DEBUG] 📡 No cached data, fetching from API...');
-        const stored = localStorage.getItem('skincare_onboarding_answers');
+        const stored = mobileStorage.getRaw(STORAGE_KEYS.SKINCARE_ONBOARDING_ANSWERS);
 
         if (!stored) {
           // 온보딩 안 한 사용자 → 리다이렉트
@@ -127,12 +128,12 @@ export default function SkincareMainPage() {
           return;
         }
 
-        console.log('[DEBUG] ✅ API success, caching to localStorage');
+        console.log('[DEBUG] ✅ API success, caching to mobileStorage');
 
-        // 4. API 응답을 localStorage에 캐싱
-        localStorage.setItem('skincare_routine_data', JSON.stringify(result.data.routine));
+        // 4. API 응답을 mobileStorage에 캐싱
+        mobileStorage.setRaw(STORAGE_KEYS.SKINCARE_ROUTINE_DATA, JSON.stringify(result.data.routine));
         if (result.data.user_profile) {
-          localStorage.setItem('skincare_user_profile', JSON.stringify(result.data.user_profile));
+          mobileStorage.setRaw(STORAGE_KEYS.SKINCARE_USER_PROFILE, JSON.stringify(result.data.user_profile));
         }
 
         setRoutine(result.data.routine);

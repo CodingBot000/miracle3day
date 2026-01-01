@@ -23,6 +23,7 @@ import CompletionScreen from './components/CompletionScreen';
 import { FitzpatrickSelector, FitzpatrickResult } from '../components/fitzpatrick';
 import { SkincareOnboardingDTO } from '@/models/skincare-onboarding.dto';
 import { saveOnboarding } from '@/lib/api/skincare-onboarding';
+import { mobileStorage, STORAGE_KEYS } from '@/lib/storage';
 import onboardingData from '@/locales/skincare/skincare_onboarding.json';
 import { ONBOARDING_STEP_ORDER, TOTAL_STEPS as TOTAL_QUESTIONS } from './stepOrder';
 
@@ -129,13 +130,11 @@ export default function SkincareOnboardingPage() {
         onboarding_step: totalSteps,
       };
 
-      // 항상 localStorage에 저장 (API 성공/실패와 무관하게 다음 단계에서 사용 가능)
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('skincare_onboarding_answers', JSON.stringify({
-          ...submitData,
-          id_uuid: userId
-        }));
-      }
+      // 항상 mobileStorage에 저장 (API 성공/실패와 무관하게 다음 단계에서 사용 가능)
+      mobileStorage.setRaw(STORAGE_KEYS.SKINCARE_ONBOARDING_ANSWERS, JSON.stringify({
+        ...submitData,
+        id_uuid: userId
+      }));
 
       // API 호출하여 데이터 저장
       const result = await saveOnboarding(submitData);

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { mobileStorage, STORAGE_KEYS } from '@/lib/storage';
 
 interface RoutineStep {
   id: number;
@@ -31,24 +32,24 @@ export default function TodayTab({ routine }: TodayTabProps) {
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [showSavedToast, setShowSavedToast] = useState(false);
 
-  // 로컬스토리지에서 오늘 날짜의 체크 상태 로드
+  // mobileStorage에서 오늘 날짜의 체크 상태 로드
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-    const storageKey = `routine_progress_${today}`;
-    const saved = localStorage.getItem(storageKey);
+    const storageKey = STORAGE_KEYS.getRoutineProgressKey(today);
+    const saved = mobileStorage.getRaw(storageKey);
 
     if (saved) {
       setCheckedSteps(new Set(JSON.parse(saved)));
     }
 
     // 마지막 저장 시간 로드
-    const lastSavedTime = localStorage.getItem('routine_last_saved');
+    const lastSavedTime = mobileStorage.getRaw(STORAGE_KEYS.ROUTINE_LAST_SAVED);
     if (lastSavedTime) {
       setLastSaved(new Date(lastSavedTime));
     }
   }, []);
 
-  // 체크 상태 변경 시 localStorage에만 저장 (API 호출 X)
+  // 체크 상태 변경 시 mobileStorage에만 저장 (API 호출 X)
   const handleCheck = (stepId: string) => {
     const newChecked = new Set(checkedSteps);
 
@@ -60,10 +61,10 @@ export default function TodayTab({ routine }: TodayTabProps) {
 
     setCheckedSteps(newChecked);
 
-    // localStorage에만 저장
+    // mobileStorage에만 저장
     const today = new Date().toISOString().split('T')[0];
-    const storageKey = `routine_progress_${today}`;
-    localStorage.setItem(storageKey, JSON.stringify(Array.from(newChecked)));
+    const storageKey = STORAGE_KEYS.getRoutineProgressKey(today);
+    mobileStorage.setRaw(storageKey, JSON.stringify(Array.from(newChecked)));
   };
 
   // 서버에 배치 저장
@@ -103,7 +104,7 @@ export default function TodayTab({ routine }: TodayTabProps) {
         console.log('[DEBUG] ✅ Server save success:', result);
         const now = new Date();
         setLastSaved(now);
-        localStorage.setItem('routine_last_saved', now.toISOString());
+        mobileStorage.setRaw(STORAGE_KEYS.ROUTINE_LAST_SAVED, now.toISOString());
 
         // 토스트 표시
         setShowSavedToast(true);

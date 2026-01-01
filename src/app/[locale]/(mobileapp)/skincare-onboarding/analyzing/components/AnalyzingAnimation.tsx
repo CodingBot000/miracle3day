@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { mobileStorage, STORAGE_KEYS } from '@/lib/storage';
 
 interface AnalyzingAnimationProps {
   progress: number;
 }
 
 const getUserData = () => {
-  if (typeof window === 'undefined') return {};
-  const stored = localStorage.getItem('skincare_onboarding_answers');
+  const stored = mobileStorage.getRaw(STORAGE_KEYS.SKINCARE_ONBOARDING_ANSWERS);
   return stored ? JSON.parse(stored) : {};
 };
 

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { mobileStorage, STORAGE_KEYS } from '@/lib/storage';
 
 interface RoutineStep {
   id: number;
@@ -208,13 +209,9 @@ function StatCard({
 // 유틸 함수들
 function getTodayProgress(totalSteps: number) {
   const today = new Date().toISOString().split('T')[0];
-  const storageKey = `routine_progress_${today}`;
+  const storageKey = STORAGE_KEYS.getRoutineProgressKey(today);
 
-  if (typeof window === 'undefined') {
-    return { completed: 0, total: totalSteps, percentage: 0 };
-  }
-
-  const saved = localStorage.getItem(storageKey);
+  const saved = mobileStorage.getRaw(storageKey);
   const completed = saved ? JSON.parse(saved).length : 0;
   const percentage = totalSteps > 0 ? Math.round((completed / totalSteps) * 100) : 0;
 
@@ -231,13 +228,10 @@ function getWeekProgress(totalStepsPerDay: number) {
     const date = new Date(now);
     date.setDate(date.getDate() - i);
     const dateStr = date.toISOString().split('T')[0];
-    const storageKey = `routine_progress_${dateStr}`;
+    const storageKey = STORAGE_KEYS.getRoutineProgressKey(dateStr);
 
-    let completed = 0;
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem(storageKey);
-      completed = saved ? JSON.parse(saved).length : 0;
-    }
+    const saved = mobileStorage.getRaw(storageKey);
+    const completed = saved ? JSON.parse(saved).length : 0;
 
     totalCompleted += completed;
 
@@ -262,10 +256,6 @@ function getWeekProgress(totalStepsPerDay: number) {
 }
 
 function getStreak(): number {
-  if (typeof window === 'undefined') {
-    return 0;
-  }
-
   const now = new Date();
   let streak = 0;
 
@@ -274,8 +264,8 @@ function getStreak(): number {
     const date = new Date(now);
     date.setDate(date.getDate() - i);
     const dateStr = date.toISOString().split('T')[0];
-    const storageKey = `routine_progress_${dateStr}`;
-    const saved = localStorage.getItem(storageKey);
+    const storageKey = STORAGE_KEYS.getRoutineProgressKey(dateStr);
+    const saved = mobileStorage.getRaw(storageKey);
 
     if (saved && JSON.parse(saved).length > 0) {
       streak++;

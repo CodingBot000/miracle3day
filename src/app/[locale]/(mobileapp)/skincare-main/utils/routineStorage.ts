@@ -1,3 +1,5 @@
+import { mobileStorage } from '@/lib/storage';
+
 interface DailyProgress {
   date: string;  // YYYY-MM-DD
   checkedSteps: string[];  // ['morning-1', 'midday-6', ...]
@@ -19,24 +21,21 @@ export class RoutineStorage {
 
   // 오늘 진행도 가져오기
   static getTodayProgress(): string[] {
-    if (typeof window === 'undefined') return [];
     const key = this.getTodayKey();
-    const saved = localStorage.getItem(key);
+    const saved = mobileStorage.getRaw(key);
     return saved ? JSON.parse(saved) : [];
   }
 
   // 오늘 진행도 저장
   static saveTodayProgress(checkedSteps: string[]): void {
-    if (typeof window === 'undefined') return;
     const key = this.getTodayKey();
-    localStorage.setItem(key, JSON.stringify(checkedSteps));
+    mobileStorage.setRaw(key, JSON.stringify(checkedSteps));
   }
 
   // 특정 날짜 진행도 가져오기
   static getProgressByDate(date: Date): string[] {
-    if (typeof window === 'undefined') return [];
     const key = this.getDateKey(date);
-    const saved = localStorage.getItem(key);
+    const saved = mobileStorage.getRaw(key);
     return saved ? JSON.parse(saved) : [];
   }
 
@@ -62,8 +61,6 @@ export class RoutineStorage {
 
   // 연속 달성 일수
   static getStreak(): number {
-    if (typeof window === 'undefined') return 0;
-
     const now = new Date();
     let streak = 0;
 
@@ -90,20 +87,18 @@ export class RoutineStorage {
 
   // 오래된 데이터 정리 (30일 이전)
   static cleanupOldData(): void {
-    if (typeof window === 'undefined') return;
-
     const now = new Date();
     const cutoffDate = new Date(now);
     cutoffDate.setDate(cutoffDate.getDate() - 30);
 
-    // localStorage의 모든 키를 확인
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      if (key && key.startsWith('routine_progress_')) {
+    // mobileStorage의 모든 키를 확인
+    const keys = mobileStorage.keys();
+    for (const key of keys) {
+      if (key.startsWith('routine_progress_')) {
         const dateStr = key.replace('routine_progress_', '');
         const date = new Date(dateStr);
         if (date < cutoffDate) {
-          localStorage.removeItem(key);
+          mobileStorage.remove(key);
         }
       }
     }

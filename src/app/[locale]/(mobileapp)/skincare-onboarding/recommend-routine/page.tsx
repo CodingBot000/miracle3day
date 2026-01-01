@@ -10,6 +10,7 @@ import {
   ADVANCED_TEMPLATE,
   RoutineTemplate
 } from '@/lib/skincare/routineTemplates';
+import { mobileStorage, STORAGE_KEYS } from '@/lib/storage';
 
 export interface RoutineData {
   type: 'basic' | 'intermediate' | 'advanced';
@@ -268,8 +269,7 @@ export default function RecommendRoutinePage() {
 }
 
 function getUserUuid(): string {
-  if (typeof window === 'undefined') return '';
-  const stored = localStorage.getItem('skincare_onboarding_answers');
+  const stored = mobileStorage.getRaw(STORAGE_KEYS.SKINCARE_ONBOARDING_ANSWERS);
   if (stored) {
     const data = JSON.parse(stored);
     return data.id_uuid || '';

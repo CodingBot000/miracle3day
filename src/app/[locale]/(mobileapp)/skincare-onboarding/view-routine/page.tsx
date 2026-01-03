@@ -43,7 +43,9 @@ function ViewRoutineContent() {
 
   const fetchRoutine = async (uuid: string) => {
     try {
-      const response = await fetch(`/api/skincare/routines/${uuid}`);
+      const response = await fetch(`/api/skincare/routines/${uuid}`, {
+        credentials: 'include',
+      });
 
       if (!response.ok) {
         throw new Error('Failed to fetch routine');

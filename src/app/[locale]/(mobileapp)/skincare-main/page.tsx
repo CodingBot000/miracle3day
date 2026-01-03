@@ -112,7 +112,9 @@ export default function SkincareMainPage() {
         }
 
         // 3. API 호출
-        const response = await fetch(`/api/skincare/routines/user/${id_uuid}`);
+        const response = await fetch(`/api/skincare/routines/user/${id_uuid}`, {
+          credentials: 'include',
+        });
         const result: ApiResponse = await response.json();
 
         if (!result.success || !result.data?.routine) {

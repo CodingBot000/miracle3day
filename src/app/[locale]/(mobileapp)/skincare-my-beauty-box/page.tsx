@@ -65,7 +65,9 @@ export default function MyBeautyBoxPage() {
   // 데이터 로드
   const fetchProducts = useCallback(async () => {
     try {
-      const response = await fetch('/api/skincare/my-beauty-box');
+      const response = await fetch('/api/skincare/my-beauty-box', {
+        credentials: 'include',
+      });
       const result = await response.json();
 
       if (!result.success) {
@@ -186,6 +188,7 @@ export default function MyBeautyBoxPage() {
           product_ids: [product.product_id],
           status: 'wishlist',
         }),
+        credentials: 'include',
       });
 
       const result = await response.json();

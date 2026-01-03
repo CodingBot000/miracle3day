@@ -28,7 +28,9 @@ export default function IntroScreen({ onNext, locale = 'ko' }: IntroScreenProps)
 
     try {
       // 1. 로그인 상태 확인
-      const authResponse = await fetch('/api/auth/session');
+      const authResponse = await fetch('/api/auth/session', {
+        credentials: 'include',
+      });
       const authResult = await authResponse.json();
 
       if (!authResult.auth) {
@@ -41,7 +43,9 @@ export default function IntroScreen({ onNext, locale = 'ko' }: IntroScreenProps)
       console.log('[DEBUG] Logged in as:', authResult.auth.id);
 
       // 2. 온보딩 체크
-      const onboardingResponse = await fetch('/api/skincare/onboarding/check');
+      const onboardingResponse = await fetch('/api/skincare/onboarding/check', {
+        credentials: 'include',
+      });
       const onboardingResult = await onboardingResponse.json();
 
       if (onboardingResult.hasOnboarding) {

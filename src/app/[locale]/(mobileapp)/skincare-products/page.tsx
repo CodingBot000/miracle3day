@@ -129,7 +129,9 @@ export default function ProductsPage() {
   // 필터 옵션 조회
   const fetchFilters = useCallback(async () => {
     try {
-      const response = await fetch('/api/skincare/filters');
+      const response = await fetch('/api/skincare/filters', {
+        credentials: 'include',
+      });
       const result = await response.json();
       console.log('[Products] Filters API response:', result);
       if (result.success) {
@@ -151,7 +153,9 @@ export default function ProductsPage() {
   // 저장된 제품 ID 조회
   const fetchSavedProducts = useCallback(async () => {
     try {
-      const response = await fetch('/api/skincare/my-beauty-box');
+      const response = await fetch('/api/skincare/my-beauty-box', {
+        credentials: 'include',
+      });
       const result = await response.json();
       if (result.success) {
         const ids = new Set<number>((result.items || []).map((item: { product_id: number }) => item.product_id));
@@ -188,7 +192,9 @@ export default function ProductsPage() {
         if (ageGroup) queryParams.set('theme_name', ageGroup);
       }
 
-      const response = await fetch(`/api/skincare/products?${queryParams}`);
+      const response = await fetch(`/api/skincare/products?${queryParams}`, {
+        credentials: 'include',
+      });
       const result = await response.json();
 
       if (result.success) {
@@ -277,6 +283,7 @@ export default function ProductsPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ product_ids: Array.from(selectedProducts) }),
+        credentials: 'include',
       });
       const result = await response.json();
 

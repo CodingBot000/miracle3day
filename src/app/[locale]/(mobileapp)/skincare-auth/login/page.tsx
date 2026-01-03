@@ -59,7 +59,9 @@ export default function SkincareLoginPage() {
     console.log('[DEBUG] Checking onboarding status...');
 
     try {
-      const response = await fetch('/api/skincare/onboarding/check');
+      const response = await fetch('/api/skincare/onboarding/check', {
+        credentials: 'include',
+      });
       const result = await response.json();
 
       if (result.hasOnboarding) {

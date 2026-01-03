@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, Suspense } from 'react';
-import { useSearchParams, useParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useNavigation } from '@/hooks/useNavigation';
 import RoutineTimeline from './components/RoutineTimeline';
 
@@ -26,8 +26,6 @@ interface RoutineData {
 function ViewRoutineContent() {
   const searchParams = useSearchParams();
   const { navigate } = useNavigation();
-  const params = useParams();
-  const locale = (params?.locale as string) || 'en';
 
   const routine_uuid = searchParams.get('routine_uuid');
   const [routine, setRoutine] = useState<RoutineData | null>(null);
@@ -77,7 +75,7 @@ function ViewRoutineContent() {
         <h1 className="text-2xl font-bold text-gray-900 mb-2">Oops!</h1>
         <p className="text-gray-600 mb-6">{error || 'Routine not found'}</p>
         <button
-          onClick={() => navigate(`/${locale}/skincare-onboarding/recommend-routine`)}
+          onClick={() => navigate('/skincare-onboarding/recommend-routine')}
           className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
         >
           Choose Another Routine
@@ -126,13 +124,13 @@ function ViewRoutineContent() {
 
         <div className="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
           <button
-            onClick={() => navigate(`/${locale}/skincare-main`)}
+            onClick={() => navigate('/skincare-main', { replace: true })}
             className="px-8 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
           >
             ✓ Start Using This Routine
           </button>
           <button
-            onClick={() => navigate(`/${locale}/skincare-onboarding/recommend-routine`)}
+            onClick={() => navigate('/skincare-onboarding/recommend-routine')}
             className="px-8 py-3 bg-white text-gray-700 border-2 border-gray-300 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
           >
             Choose Different Routine

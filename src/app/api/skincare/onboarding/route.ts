@@ -2,10 +2,12 @@
  * 스킨케어 온보딩 API 라우트
  *
  * POST /api/skincare/onboarding - 데이터 저장
+ * - JWT 토큰에서 사용자 ID 추출 (클라이언트에서 보내지 않음)
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { q, one } from '@/lib/db';
+import { one } from '@/lib/db';
+import { verifyAccessToken, ACCESS_TOKEN_COOKIE } from '@/lib/auth/jwt';
 
 export const runtime = 'nodejs';
 
@@ -14,9 +16,30 @@ export const runtime = 'nodejs';
  */
 export async function POST(request: NextRequest) {
   try {
+    // 1. JWT 토큰에서 user_id 추출
+    const token = request.cookies.get(ACCESS_TOKEN_COOKIE)?.value;
+
+    if (!token) {
+      return NextResponse.json(
+        { success: false, message: 'Unauthorized - Please login first' },
+        { status: 401 }
+      );
+    }
+
+    const payload = await verifyAccessToken(token);
+
+    if (!payload || payload.status !== 'active') {
+      return NextResponse.json(
+        { success: false, message: 'Invalid or expired token' },
+        { status: 401 }
+      );
+    }
+
+    const id_uuid = payload.sub; // JWT에서 추출한 사용자 ID
+
+    // 2. 요청 본문에서 온보딩 데이터 추출
     const body = await request.json();
     const {
-      id_uuid,
       fitzpatrick_type,
       fitzpatrick_rgb,
       age_group,
@@ -36,14 +59,6 @@ export async function POST(request: NextRequest) {
       exercise_frequency,
       monthly_budget,
     } = body;
-
-    // 필수 필드 검증
-    if (!id_uuid) {
-      return NextResponse.json(
-        { success: false, message: 'User UUID is required' },
-        { status: 400 }
-      );
-    }
 
     // UPSERT: 기존 데이터가 있으면 업데이트, 없으면 삽입
     const result = await one(

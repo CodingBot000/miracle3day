@@ -4,11 +4,12 @@ import { useEffect, useState, useRef } from 'react';
 import { useParams } from 'next/navigation';
 import { useNavigation } from '@/hooks/useNavigation';
 import TodayTab from './components/TodayTab';
-import MyRoutineTab from './components/MyRoutineTab';
-import ProgressTab from './components/ProgressTab';
+// import MyRoutineTab from './components/MyRoutineTab';
+// import ProgressTab from './components/ProgressTab';
 import { mobileStorage, STORAGE_KEYS } from '@/lib/storage';
 
-type TabType = 'today' | 'routine' | 'progress';
+type TabType = 'today';
+// type TabType = 'today' | 'routine' | 'progress';
 
 interface RoutineStep {
   id: number;
@@ -63,19 +64,11 @@ export default function SkincareMainPage() {
   const { navigate } = useNavigation();
   const hasFetched = useRef(false);
 
-  const [activeTab, setActiveTab] = useState<TabType>('today');
+  // const [activeTab, setActiveTab] = useState<TabType>('today');
   const [routine, setRoutine] = useState<RoutineData | null>(null);
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [shouldRedirect, setShouldRedirect] = useState<string | null>(null);
-
-  // 리다이렉트 처리를 별도 useEffect로 분리
-  useEffect(() => {
-    if (shouldRedirect) {
-      navigate(shouldRedirect);
-    }
-  }, [shouldRedirect, navigate]);
 
   useEffect(() => {
     // 중복 호출 방지
@@ -106,15 +99,15 @@ export default function SkincareMainPage() {
         const stored = mobileStorage.getRaw(STORAGE_KEYS.SKINCARE_ONBOARDING_ANSWERS);
 
         if (!stored) {
-          // 온보딩 안 한 사용자 → 리다이렉트
-          setShouldRedirect(`/${locale}/skincare-onboarding`);
+          // 온보딩 안 한 사용자 → 리다이렉트 (replace로 히스토리 대체)
+          navigate('/skincare-onboarding', { replace: true });
           return;
         }
 
         const { id_uuid } = JSON.parse(stored);
 
         if (!id_uuid) {
-          setShouldRedirect(`/${locale}/skincare-onboarding`);
+          navigate('/skincare-onboarding', { replace: true });
           return;
         }
 
@@ -123,8 +116,8 @@ export default function SkincareMainPage() {
         const result: ApiResponse = await response.json();
 
         if (!result.success || !result.data?.routine) {
-          // 루틴 없음 → 온보딩으로
-          setShouldRedirect(`/${locale}/skincare-onboarding`);
+          // 루틴 없음 → 온보딩으로 (replace로 히스토리 대체)
+          navigate('/skincare-onboarding', { replace: true });
           return;
         }
 
@@ -169,7 +162,7 @@ export default function SkincareMainPage() {
         <div className="text-center">
           <p className="text-red-600 mb-4">{error || 'Something went wrong'}</p>
           <button
-            onClick={() => navigate(`/${locale}/skincare-onboarding`)}
+            onClick={() => navigate('/skincare-onboarding')}
             className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold"
           >
             Go to Onboarding
@@ -179,9 +172,16 @@ export default function SkincareMainPage() {
     );
   }
 
+  // 탭 없이 TodayTab만 표시
+  return (
+    <div className="flex-1 overflow-y-auto">
+      <TodayTab routine={routine} />
+    </div>
+  );
+
+  /* 탭 시스템 (필요시 복구)
   return (
     <>
-      {/* 탭 헤더 (고정) */}
       <div className="flex-shrink-0 bg-white border-b border-gray-200 shadow-sm z-10">
         <div className="flex">
           <TabButton
@@ -205,7 +205,6 @@ export default function SkincareMainPage() {
         </div>
       </div>
 
-      {/* 탭 콘텐츠 - 스크롤 영역 */}
       <div className="flex-1 overflow-y-auto">
         {activeTab === 'today' && <TodayTab routine={routine} />}
         {activeTab === 'routine' && <MyRoutineTab routine={routine} userProfile={userProfile} />}
@@ -213,31 +212,32 @@ export default function SkincareMainPage() {
       </div>
     </>
   );
+  */
 }
 
 // 탭 버튼 컴포넌트
-function TabButton({
-  active,
-  onClick,
-  children
-}: {
-  active: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className={`
-        flex-1 py-3 text-sm font-semibold transition-colors
-        border-b-2
-        ${active
-          ? 'text-blue-600 border-blue-600'
-          : 'text-gray-500 border-transparent hover:text-gray-700'
-        }
-      `}
-    >
-      {children}
-    </button>
-  );
-}
+// function TabButton({
+//   active,
+//   onClick,
+//   children
+// }: {
+//   active: boolean;
+//   onClick: () => void;
+//   children: React.ReactNode;
+// }) {
+//   return (
+//     <button
+//       onClick={onClick}
+//       className={`
+//         flex-1 py-3 text-sm font-semibold transition-colors
+//         border-b-2
+//         ${active
+//           ? 'text-blue-600 border-blue-600'
+//           : 'text-gray-500 border-transparent hover:text-gray-700'
+//         }
+//       `}
+//     >
+//       {children}
+//     </button>
+//   );
+// }

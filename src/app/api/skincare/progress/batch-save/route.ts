@@ -122,7 +122,7 @@ export async function POST(request: NextRequest) {
 }
 
 /**
- * skincare_routine_progress 테이블이 없으면 생성
+ * skincare_routine_progress 테이블이 없으면 생성, 있으면 누락된 컬럼 추가
  */
 async function ensureProgressTable() {
   const tableExists = await one(`
@@ -166,5 +166,68 @@ async function ensureProgressTable() {
     `);
 
     console.log('[DEBUG] ✅ Table created successfully');
+  } else {
+    // 테이블이 존재하면 step_id 컬럼 확인 및 추가
+    await ensureStepIdColumn();
+  }
+}
+
+/**
+ * step_id 컬럼이 없으면 추가 (마이그레이션 대응)
+ */
+async function ensureStepIdColumn() {
+  const columnExists = await one(`
+    SELECT EXISTS (
+      SELECT FROM information_schema.columns
+      WHERE table_name = 'skincare_routine_progress'
+      AND column_name = 'step_id'
+    ) AS exists
+  `);
+
+  if (!columnExists?.exists) {
+    console.log('[DEBUG] 📋 Adding step_id column to skincare_routine_progress...');
+
+    // step_id 컬럼 추가
+    await query(`
+      ALTER TABLE skincare_routine_progress
+      ADD COLUMN step_id VARCHAR(50)
+    `);
+
+    // 기존 데이터가 있다면 time_of_day와 step_number로 step_id 생성
+    await query(`
+      UPDATE skincare_routine_progress
+      SET step_id = time_of_day || '-' || step_number
+      WHERE step_id IS NULL
+    `);
+
+    // NOT NULL 제약 추가
+    await query(`
+      ALTER TABLE skincare_routine_progress
+      ALTER COLUMN step_id SET NOT NULL
+    `);
+
+    // 기존 unique 제약조건 삭제 후 재생성
+    try {
+      await query(`
+        ALTER TABLE skincare_routine_progress
+        DROP CONSTRAINT IF EXISTS unique_user_step_date
+      `);
+    } catch (e) {
+      // 제약조건이 없을 수 있음
+    }
+
+    await query(`
+      ALTER TABLE skincare_routine_progress
+      ADD CONSTRAINT unique_user_step_date
+      UNIQUE (user_uuid, routine_uuid, step_id, completion_date)
+    `);
+
+    // step_id 인덱스 추가
+    await query(`
+      CREATE INDEX IF NOT EXISTS idx_progress_step_id
+      ON skincare_routine_progress (step_id)
+    `);
+
+    console.log('[DEBUG] ✅ step_id column added successfully');
   }
 }

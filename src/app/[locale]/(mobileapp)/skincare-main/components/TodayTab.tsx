@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { mobileStorage, STORAGE_KEYS } from '@/lib/storage';
+import WeeklySummary from './WeeklySummary';
 
 interface RoutineStep {
   id: number;
@@ -130,7 +131,7 @@ export default function TodayTab({ routine }: TodayTabProps) {
   const progress = totalSteps > 0 ? Math.round((completedSteps / totalSteps) * 100) : 0;
 
   return (
-    <div className="p-4 space-y-6 pb-24">
+    <div className="px-4 py-3 space-y-6 pb-24">
       {/* 진행도 카드 */}
       <div className="bg-white rounded-xl p-4 shadow-sm">
         <div className="flex justify-between items-center mb-2">
@@ -150,6 +151,17 @@ export default function TodayTab({ routine }: TodayTabProps) {
           {completedSteps} of {totalSteps} steps completed
         </p>
       </div>
+
+      {/* 주간 요약 */}
+      <div className="-mt-4">
+        <WeeklySummary
+          totalStepsPerDay={totalSteps}
+          todayCompletedCount={checkedSteps.size}
+        />
+      </div>
+
+      {/* 오늘의 팁 */}
+      <TodayTip tip="건조한 날씨, 보습 강화!" />
 
       {/* Morning */}
       <RoutineSection
@@ -182,11 +194,11 @@ export default function TodayTab({ routine }: TodayTabProps) {
         timePrefix="evening"
       />
 
-      {/* 플로팅 저장 버튼 */}
+      {/* Floating 플로팅 저장 버튼 */}
       <button
         onClick={handleSaveToServer}
         disabled={isSaving}
-        className="fixed bottom-6 right-6 bg-blue-600 text-white rounded-full w-14 h-14 shadow-lg hover:bg-blue-700 active:bg-blue-800 disabled:bg-gray-400 z-50 flex items-center justify-center transition-all"
+        className="fixed bottom-12 right-6 bg-blue-600 text-white rounded-full w-14 h-14 shadow-lg hover:bg-blue-700 active:bg-blue-800 disabled:bg-gray-400 z-50 flex items-center justify-center transition-all"
       >
         {isSaving ? (
           <svg className="animate-spin h-6 w-6" viewBox="0 0 24 24" fill="none">
@@ -315,6 +327,25 @@ function RoutineSection({
           );
         })}
       </div>
+    </div>
+  );
+}
+
+// 오늘의 팁 컴포넌트
+interface TodayTipProps {
+  tip: string;
+}
+
+function TodayTip({ tip }: TodayTipProps) {
+  return (
+    <div className="-mt-4 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3">
+      <div className="flex items-center gap-2">
+        <span className="text-sm font-semibold text-amber-800">오늘의 팁</span>
+      </div>
+      <p className="text-sm text-amber-700 mt-1 flex items-center gap-1.5">
+        <span>💡</span>
+        <span>{tip}</span>
+      </p>
     </div>
   );
 }

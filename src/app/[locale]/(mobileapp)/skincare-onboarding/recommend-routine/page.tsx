@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
 import { useNavigation } from '@/hooks/useNavigation';
 import RoutineCarousel from './components/RoutineCarousel';
 import {
@@ -33,8 +32,6 @@ export interface RoutineStep {
 
 export default function RecommendRoutinePage() {
   const { navigate } = useNavigation();
-  const params = useParams();
-  const locale = (params?.locale as string) || 'en';
 
   // 3가지 루틴 데이터
   const [routines, setRoutines] = useState<{
@@ -177,7 +174,7 @@ export default function RecommendRoutinePage() {
       console.log('✅ Routine saved to DB:', { type: selectedRoutine, uuid: routineUuid });
 
       // view-routine 페이지로 이동
-      navigate(`/${locale}/skincare-onboarding/view-routine?routine_uuid=${routineUuid}`);
+      navigate(`/skincare-onboarding/view-routine?routine_uuid=${routineUuid}`);
 
     } catch (err) {
       console.error('❌ Error saving routine:', err);

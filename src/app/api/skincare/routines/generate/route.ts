@@ -3,6 +3,8 @@ import { generateRoutine } from '@/lib/skincare/routineGenerator';
 import { saveRoutineToDatabase } from '@/lib/skincare/routineQueries';
 import { one } from '@/lib/db';
 
+export const runtime = 'nodejs';
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();

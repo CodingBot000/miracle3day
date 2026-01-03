@@ -26,6 +26,7 @@ import { saveOnboarding } from '@/lib/api/skincare-onboarding';
 import { mobileStorage, STORAGE_KEYS } from '@/lib/storage';
 import onboardingData from '@/locales/skincare/skincare_onboarding.json';
 import { ONBOARDING_STEP_ORDER, TOTAL_STEPS as TOTAL_QUESTIONS } from './stepOrder';
+import { getTestDataBeforeLastStep } from '@/lib/skincare/testDummyData';
 
 // 단계 정의
 // 0: Welcome, 1: Intro, 2-N: Questions (동적), N+1: Completion
@@ -95,6 +96,15 @@ export default function SkincareOnboardingPage() {
       // 첫 화면에서 뒤로가기 시 앱 종료 또는 이전 페이지로
       goBack();
     }
+  };
+
+  // [TEST] 마지막 질문으로 점프 (테스트용)
+  const handleTestJump = () => {
+    console.log('[TEST] Jumping to last question with dummy data...');
+    const dummyData = getTestDataBeforeLastStep();
+    setAnswers(dummyData);
+    // 마지막 질문 (monthly_budget) 스텝으로 이동: step 2 + 14 = 16
+    setStep(2 + TOTAL_QUESTIONS - 1);
   };
 
   // 온보딩 완료 및 데이터 저장
@@ -266,11 +276,25 @@ export default function SkincareOnboardingPage() {
     return null;
   };
 
+  // 테스트 점프 버튼 표시 여부 (질문 스텝에서만, 마지막 질문 제외)
+  const showTestJumpButton = step >= 2 && step < 2 + TOTAL_QUESTIONS - 1;
+
   return (
     <div className="min-h-screen bg-white">
       <AnimatePresence mode="wait">
         {renderStep()}
       </AnimatePresence>
+
+      {/* [TEST] 플로팅 점프 버튼 - 개발/테스트 전용 */}
+      {showTestJumpButton && (
+        <button
+          onClick={handleTestJump}
+          className="fixed bottom-24 right-4 z-50 bg-red-500 hover:bg-red-600 text-white text-xs font-bold px-3 py-2 rounded-full shadow-lg animate-pulse"
+          title="테스트용: 마지막 질문으로 점프"
+        >
+          🚀 SKIP
+        </button>
+      )}
     </div>
   );
 }

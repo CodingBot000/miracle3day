@@ -191,7 +191,7 @@ export default function CompletionScreen({
       // 여기서는 덮어쓰지 않음 - 기존 데이터(id_uuid 포함) 유지
 
       // Navigate to AI analysis animation page
-      navigate(`/${locale}/skincare-onboarding/analyzing`);
+      navigate('/skincare-onboarding/analyzing');
 
     } catch (err) {
       console.error('Error navigating to analyzing:', err);
@@ -203,7 +203,7 @@ export default function CompletionScreen({
 
   return (
     <motion.div
-      className="flex flex-col items-center min-h-screen bg-white px-6 py-8"
+      className="flex flex-col items-center min-h-screen h-screen overflow-y-auto bg-white px-6 py-8"
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5 }}

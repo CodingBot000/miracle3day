@@ -20,9 +20,17 @@ interface BeautyBoxItem {
   price_krw: number | null;
   image_url: string | null;
   volume_text: string | null;
+  category2: string | null;
   avg_rating: number | null;
   review_count: number | null;
   added_at: string;
+  status: 'wishlist' | 'owned' | 'in_use' | 'used';
+  memo: string | null;
+  my_category: string | null;
+  opened_at: string | null;
+  expiry_date: string | null;
+  use_by_date: string | null;
+  finished_at: string | null;
 }
 
 /**
@@ -69,9 +77,17 @@ export async function GET(request: NextRequest) {
         pm.price_krw,
         pm.image_url,
         pm.volume_text,
+        pm.category2,
         pm.avg_rating,
         pm.review_count,
-        bb.added_at
+        bb.added_at,
+        COALESCE(bb.status, 'wishlist') as status,
+        bb.memo,
+        bb.my_category,
+        bb.opened_at,
+        bb.expiry_date,
+        bb.use_by_date,
+        bb.finished_at
       FROM product_my_beauty_box bb
       INNER JOIN products_master pm ON bb.product_id = pm.id
       WHERE bb.id_uuid_member = $1
@@ -104,7 +120,10 @@ export async function POST(request: NextRequest) {
 
     const { userId } = authResult;
     const body = await request.json();
-    const { product_ids } = body as { product_ids: number[] };
+    const { product_ids, status = 'wishlist' } = body as {
+      product_ids: number[];
+      status?: 'wishlist' | 'owned' | 'in_use' | 'used';
+    };
 
     if (!Array.isArray(product_ids) || product_ids.length === 0) {
       return NextResponse.json(
@@ -127,11 +146,11 @@ export async function POST(request: NextRequest) {
 
     for (const productId of product_ids) {
       const result = await one<{ id: number }>(
-        `INSERT INTO product_my_beauty_box (id_uuid_member, product_id, added_at)
-         VALUES ($1, $2, NOW())
+        `INSERT INTO product_my_beauty_box (id_uuid_member, product_id, status, added_at)
+         VALUES ($1, $2, $3, NOW())
          ON CONFLICT (id_uuid_member, product_id) DO NOTHING
          RETURNING id`,
-        [userId, productId]
+        [userId, productId, status]
       );
 
       if (result) {

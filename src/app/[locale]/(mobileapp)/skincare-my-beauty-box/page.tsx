@@ -1,64 +1,68 @@
 'use client';
 
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useState, useRef, useCallback, useMemo } from 'react';
 import { useParams } from 'next/navigation';
 import { useNavigation } from '@/hooks/useNavigation';
-import { ArrowLeft, Plus, Package } from 'lucide-react';
+import { ArrowLeft, Plus, Package, SlidersHorizontal } from 'lucide-react';
 import BeautyBoxItem from './components/BeautyBoxItem';
+import BeautyBoxSection from './components/BeautyBoxSection';
 import DeleteConfirmModal from './components/DeleteConfirmModal';
+import DateEditModal, { DateUpdates } from './components/DateEditModal';
+import SyncButton from './components/SyncButton';
 import EmptyState from './components/EmptyState';
+import { useBeautyBoxStorage } from './hooks/useBeautyBoxStorage';
+import {
+  BeautyBoxProduct,
+  ProductStatus,
+  getTexts,
+} from './types';
+import { countUrgentProducts, getTodayString } from './utils/beautybox-helpers';
 
-interface BeautyBoxProduct {
-  id: number;
-  product_id: number;
-  product_name: string;
-  brand_name: string;
-  price_krw: number | null;
-  image_url: string | null;
-  volume_text: string | null;
-  avg_rating: number | null;
-  review_count: number | null;
-  added_at: string;
-}
-
-const text = {
-  ko: {
-    title: 'My Beauty Box',
-    total: '총 {count}개 제품',
-    addProducts: '제품 추가하기',
-    deleteTitle: '제품 삭제',
-    deleteMessage: '이 제품을 My Beauty Box에서 삭제하시겠습니까?',
-    cancel: '취소',
-    delete: '삭제',
-    loading: '로딩 중...',
-    error: '데이터를 불러오는데 실패했습니다',
-  },
-  en: {
-    title: 'My Beauty Box',
-    total: '{count} products',
-    addProducts: 'Add Products',
-    deleteTitle: 'Delete Product',
-    deleteMessage: 'Remove this product from My Beauty Box?',
-    cancel: 'Cancel',
-    delete: 'Delete',
-    loading: 'Loading...',
-    error: 'Failed to load data',
-  },
-};
+// 섹션 순서 (고정)
+const SECTION_ORDER: ProductStatus[] = ['in_use', 'owned', 'wishlist', 'used'];
 
 export default function MyBeautyBoxPage() {
   const params = useParams();
   const locale = (params?.locale as string) || 'en';
-  const t = text[locale as keyof typeof text] || text.en;
+  const t = getTexts(locale);
   const { navigate, goBack } = useNavigation();
   const hasFetched = useRef(false);
 
+  // 스토리지 훅
+  const {
+    hasUnsavedChanges,
+    pendingCount,
+    addChange,
+    updateLocalProducts,
+    syncToServer,
+    saveExpandedSections,
+    getExpandedSections,
+  } = useBeautyBoxStorage();
+
+  // 상태
   const [products, setProducts] = useState<BeautyBoxProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // 모달 상태
   const [deleteTarget, setDeleteTarget] = useState<BeautyBoxProduct | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [dateEditTarget, setDateEditTarget] = useState<BeautyBoxProduct | null>(null);
 
+  // 섹션 펼침 상태
+  const [expandedSections, setExpandedSections] = useState<Set<ProductStatus>>(
+    new Set<ProductStatus>(['in_use', 'owned', 'wishlist'])
+  );
+
+  // 저장된 섹션 상태 로드
+  useEffect(() => {
+    const saved = getExpandedSections();
+    if (saved && saved.length > 0) {
+      setExpandedSections(new Set(saved as ProductStatus[]));
+    }
+  }, [getExpandedSections]);
+
+  // 데이터 로드
   const fetchProducts = useCallback(async () => {
     try {
       const response = await fetch('/api/skincare/my-beauty-box');
@@ -72,14 +76,16 @@ export default function MyBeautyBoxPage() {
         throw new Error(result.message || 'Failed to fetch');
       }
 
-      setProducts(result.items || []);
+      const items = result.items || [];
+      setProducts(items);
+      updateLocalProducts(items);
     } catch (err) {
       console.error('[MyBeautyBox] Error:', err);
       setError(t.error);
     } finally {
       setLoading(false);
     }
-  }, [navigate, t.error]);
+  }, [navigate, t.error, updateLocalProducts]);
 
   useEffect(() => {
     if (hasFetched.current) return;
@@ -87,27 +93,135 @@ export default function MyBeautyBoxPage() {
     fetchProducts();
   }, [fetchProducts]);
 
-  const handleDelete = async () => {
+  // 섹션 펼침 토글
+  const handleSectionToggle = useCallback((status: ProductStatus, expanded: boolean) => {
+    setExpandedSections((prev) => {
+      const next = new Set(prev);
+      if (expanded) {
+        next.add(status);
+      } else {
+        next.delete(status);
+      }
+      saveExpandedSections(Array.from(next));
+      return next;
+    });
+  }, [saveExpandedSections]);
+
+  // 상태 변경 (스와이프 액션)
+  const handleStatusChange = useCallback((product: BeautyBoxProduct, newStatus: ProductStatus) => {
+    const today = getTodayString();
+    const updates: Partial<BeautyBoxProduct> = { status: newStatus };
+
+    // 상태별 날짜 자동 설정
+    if (newStatus === 'in_use' && !product.opened_at) {
+      updates.opened_at = today;
+    }
+    if (newStatus === 'used' && !product.finished_at) {
+      updates.finished_at = today;
+    }
+
+    // 로컬 상태 업데이트
+    setProducts((prev) =>
+      prev.map((p) => (p.id === product.id ? { ...p, ...updates } : p))
+    );
+
+    // pending change 추가
+    addChange({
+      type: 'update',
+      recordId: product.id,
+      changes: updates,
+    });
+  }, [addChange]);
+
+  // 삭제
+  const handleDelete = useCallback(async () => {
     if (!deleteTarget) return;
 
     setIsDeleting(true);
     try {
-      const response = await fetch(`/api/skincare/my-beauty-box/${deleteTarget.id}`, {
-        method: 'DELETE',
-      });
-      const result = await response.json();
+      // 로컬에서 즉시 제거
+      setProducts((prev) => prev.filter((p) => p.id !== deleteTarget.id));
 
-      if (result.success) {
-        setProducts((prev) => prev.filter((p) => p.id !== deleteTarget.id));
-      }
-    } catch (err) {
-      console.error('[MyBeautyBox] Delete error:', err);
+      // pending change 추가
+      addChange({
+        type: 'delete',
+        recordId: deleteTarget.id,
+      });
     } finally {
       setIsDeleting(false);
       setDeleteTarget(null);
     }
-  };
+  }, [deleteTarget, addChange]);
 
+  // 날짜 편집 저장
+  const handleDateSave = useCallback((dates: DateUpdates) => {
+    if (!dateEditTarget) return;
+
+    const updates: Partial<BeautyBoxProduct> = {};
+    if (dates.opened_at !== undefined) updates.opened_at = dates.opened_at;
+    if (dates.expiry_date !== undefined) updates.expiry_date = dates.expiry_date;
+    if (dates.use_by_date !== undefined) updates.use_by_date = dates.use_by_date;
+    if (dates.finished_at !== undefined) updates.finished_at = dates.finished_at;
+
+    // 로컬 상태 업데이트
+    setProducts((prev) =>
+      prev.map((p) => (p.id === dateEditTarget.id ? { ...p, ...updates } : p))
+    );
+
+    // pending change 추가
+    addChange({
+      type: 'update',
+      recordId: dateEditTarget.id,
+      changes: updates,
+    });
+  }, [dateEditTarget, addChange]);
+
+  // 다시 담기 (used → 새 wishlist)
+  const handleAddAgain = useCallback(async (product: BeautyBoxProduct) => {
+    try {
+      const response = await fetch('/api/skincare/my-beauty-box', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          product_ids: [product.product_id],
+          status: 'wishlist',
+        }),
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        // 새로고침해서 새 아이템 가져오기
+        fetchProducts();
+      }
+    } catch (err) {
+      console.error('[MyBeautyBox] Add again error:', err);
+    }
+  }, [fetchProducts]);
+
+  // 섹션별 데이터 그룹화
+  const sections = useMemo(() => {
+    const grouped: Record<ProductStatus, BeautyBoxProduct[]> = {
+      in_use: [],
+      owned: [],
+      wishlist: [],
+      used: [],
+    };
+
+    products.forEach((product) => {
+      const status = product.status || 'wishlist';
+      if (grouped[status]) {
+        grouped[status].push(product);
+      }
+    });
+
+    return SECTION_ORDER.map((status) => ({
+      status,
+      products: grouped[status],
+      urgentCount: countUrgentProducts(grouped[status]),
+    }));
+  }, [products]);
+
+  // 로딩 상태
   if (loading) {
     return (
       <div className="flex-1 flex items-center justify-center">
@@ -119,6 +233,7 @@ export default function MyBeautyBoxPage() {
     );
   }
 
+  // 에러 상태
   if (error) {
     return (
       <div className="flex-1 flex items-center justify-center p-4">
@@ -129,27 +244,39 @@ export default function MyBeautyBoxPage() {
     );
   }
 
+  const totalCount = products.length;
+
   return (
     <>
       {/* 헤더 */}
-      <div className="flex-shrink-0 bg-white border-b border-gray-200 px-4 py-3">
-        <div className="flex items-center gap-3">
-          <button
-            onClick={goBack}
-            className="p-2 -ml-2 rounded-full hover:bg-gray-100 transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5 text-gray-700" />
-          </button>
-          <div className="flex items-center gap-2">
-            <Package className="w-5 h-5 text-pink-500" />
-            <h1 className="text-lg font-bold text-gray-900">{t.title}</h1>
+      <div className="sticky top-0 z-20 bg-white border-b border-gray-200 px-4 py-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={goBack}
+              className="p-2 -ml-2 rounded-full hover:bg-gray-100 transition-colors"
+            >
+              <ArrowLeft className="w-5 h-5 text-gray-700" />
+            </button>
+            <div className="flex items-center gap-2">
+              <Package className="w-5 h-5 text-pink-500" />
+              <h1 className="text-lg font-bold text-gray-900">{t.title}</h1>
+            </div>
           </div>
+
+          {/* 필터/정렬 버튼 (추후 구현) */}
+          <button
+            className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+            disabled
+          >
+            <SlidersHorizontal className="w-5 h-5 text-gray-400" />
+          </button>
         </div>
       </div>
 
       {/* 콘텐츠 */}
-      <div className="flex-1 overflow-y-auto pb-24">
-        {products.length === 0 ? (
+      <div className="flex-1 overflow-y-auto pb-32">
+        {totalCount === 0 ? (
           <EmptyState
             locale={locale}
             onAddClick={() => navigate('/skincare-products')}
@@ -157,29 +284,42 @@ export default function MyBeautyBoxPage() {
         ) : (
           <>
             {/* 제품 수 */}
-            <div className="px-4 py-3 bg-gray-50 border-b border-gray-100">
+            <div className="px-4 py-2.5 bg-gray-50 border-b border-gray-100">
               <p className="text-sm text-gray-600">
-                {t.total.replace('{count}', products.length.toString())}
+                {t.total.replace('{count}', String(totalCount))}
               </p>
             </div>
 
-            {/* 제품 리스트 */}
-            <div className="divide-y divide-gray-100">
-              {products.map((product) => (
-                <BeautyBoxItem
-                  key={product.id}
-                  product={product}
-                  locale={locale}
-                  onDelete={() => setDeleteTarget(product)}
-                />
-              ))}
-            </div>
+            {/* 섹션별 리스트 */}
+            {sections.map(({ status, products: sectionProducts, urgentCount }) => (
+              <BeautyBoxSection
+                key={status}
+                status={status}
+                count={sectionProducts.length}
+                urgentCount={urgentCount}
+                expanded={expandedSections.has(status)}
+                onToggle={(expanded) => handleSectionToggle(status, expanded)}
+                locale={locale}
+              >
+                {sectionProducts.map((product) => (
+                  <BeautyBoxItem
+                    key={product.id}
+                    product={product}
+                    locale={locale}
+                    onDelete={() => setDeleteTarget(product)}
+                    onStatusChange={(newStatus) => handleStatusChange(product, newStatus)}
+                    onDateEdit={() => setDateEditTarget(product)}
+                    onAddAgain={status === 'used' ? () => handleAddAgain(product) : undefined}
+                  />
+                ))}
+              </BeautyBoxSection>
+            ))}
           </>
         )}
       </div>
 
       {/* 하단 고정 버튼 */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 safe-area-bottom">
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 safe-area-bottom z-30">
         <button
           onClick={() => navigate('/skincare-products')}
           className="w-full py-3 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-xl font-semibold flex items-center justify-center gap-2 shadow-lg hover:opacity-90 transition-opacity"
@@ -189,6 +329,14 @@ export default function MyBeautyBoxPage() {
         </button>
       </div>
 
+      {/* 저장 버튼 */}
+      <SyncButton
+        pendingCount={pendingCount}
+        hasUnsavedChanges={hasUnsavedChanges}
+        onSync={syncToServer}
+        locale={locale}
+      />
+
       {/* 삭제 확인 모달 */}
       {deleteTarget && (
         <DeleteConfirmModal
@@ -197,6 +345,16 @@ export default function MyBeautyBoxPage() {
           isDeleting={isDeleting}
           onConfirm={handleDelete}
           onCancel={() => setDeleteTarget(null)}
+        />
+      )}
+
+      {/* 날짜 편집 모달 */}
+      {dateEditTarget && (
+        <DateEditModal
+          product={dateEditTarget}
+          locale={locale}
+          onSave={handleDateSave}
+          onClose={() => setDateEditTarget(null)}
         />
       )}
     </>

@@ -1,0 +1,193 @@
+{
+  "articles": [
+    {
+      "id": "product-application-order",
+      "category_id": "routine",
+      "subcategory_id": "product-order",
+      "level": "beginner",
+      "title_key": "article.product_order.title",
+      "summary_key": "article.product_order.summary",
+      "content": {
+        "sections": [
+          {
+            "id": "principle",
+            "type": "text",
+            "heading_key": "article.product_order.section.principle.heading",
+            "body_key": "article.product_order.section.principle.body"
+          },
+          {
+            "id": "morning-order",
+            "type": "steps",
+            "heading_key": "article.product_order.section.morning.heading",
+            "items_key": "article.product_order.section.morning.items"
+          },
+          {
+            "id": "evening-order",
+            "type": "steps",
+            "heading_key": "article.product_order.section.evening.heading",
+            "items_key": "article.product_order.section.evening.items"
+          },
+          {
+            "id": "optional-steps",
+            "type": "info",
+            "heading_key": "article.product_order.section.optional.heading",
+            "body_key": "article.product_order.section.optional.body"
+          },
+          {
+            "id": "wait-times",
+            "type": "tips",
+            "heading_key": "article.product_order.section.wait.heading",
+            "body_key": "article.product_order.section.wait.body"
+          }
+        ]
+      },
+      "tags": ["routine", "order", "layering", "morning", "evening", "steps"],
+      "applicable_to": {
+        "skin_types": ["all"],
+        "concerns": ["all"],
+        "age_groups": ["all"]
+      },
+      "evidence_level": "expert_consensus",
+      "references": [
+        {
+          "source": "American Academy of Dermatology",
+          "url": "https://www.aad.org/public/everyday-care/skin-care-secrets/routine",
+          "accessed_date": "2025-01-04",
+          "type": "guideline"
+        }
+      ],
+      "related_articles": ["basic-skincare-routine", "toner-vs-essence-vs-serum", "moisturizer-guide"],
+      "created_at": "2025-01-04",
+      "updated_at": "2025-01-04",
+      "status": "published"
+    },
+    {
+      "id": "basic-skincare-routine",
+      "category_id": "routine",
+      "subcategory_id": "basic-routine",
+      "level": "beginner",
+      "title_key": "article.basic_routine.title",
+      "summary_key": "article.basic_routine.summary",
+      "content": {
+        "sections": [
+          {
+            "id": "essential-three",
+            "type": "text",
+            "heading_key": "article.basic_routine.section.essential.heading",
+            "body_key": "article.basic_routine.section.essential.body"
+          },
+          {
+            "id": "cleanser",
+            "type": "text",
+            "heading_key": "article.basic_routine.section.cleanser.heading",
+            "body_key": "article.basic_routine.section.cleanser.body"
+          },
+          {
+            "id": "moisturizer",
+            "type": "text",
+            "heading_key": "article.basic_routine.section.moisturizer.heading",
+            "body_key": "article.basic_routine.section.moisturizer.body"
+          },
+          {
+            "id": "sunscreen",
+            "type": "text",
+            "heading_key": "article.basic_routine.section.sunscreen.heading",
+            "body_key": "article.basic_routine.section.sunscreen.body"
+          },
+          {
+            "id": "tips",
+            "type": "tips",
+            "heading_key": "article.basic_routine.section.tips.heading",
+            "items_key": "article.basic_routine.section.tips.items"
+          }
+        ]
+      },
+      "tags": ["routine", "basics", "cleanser", "moisturizer", "sunscreen", "beginner"],
+      "applicable_to": {
+        "skin_types": ["all"],
+        "concerns": ["all"],
+        "age_groups": ["all"]
+      },
+      "evidence_level": "guideline",
+      "references": [
+        {
+          "source": "American Academy of Dermatology",
+          "url": "https://www.aad.org/public/everyday-care/skin-care-basics/care",
+          "accessed_date": "2025-01-04",
+          "type": "guideline"
+        }
+      ],
+      "related_articles": ["product-application-order", "choosing-cleanser", "how-to-choose-moisturizer"],
+      "created_at": "2025-01-04",
+      "updated_at": "2025-01-04",
+      "status": "published"
+    },
+    {
+      "id": "toner-essence-serum-explained",
+      "category_id": "basics",
+      "subcategory_id": "product-types",
+      "level": "beginner",
+      "title_key": "article.toner_essence_serum.title",
+      "summary_key": "article.toner_essence_serum.summary",
+      "content": {
+        "sections": [
+          {
+            "id": "overview",
+            "type": "text",
+            "heading_key": "article.toner_essence_serum.section.overview.heading",
+            "body_key": "article.toner_essence_serum.section.overview.body"
+          },
+          {
+            "id": "toner",
+            "type": "text",
+            "heading_key": "article.toner_essence_serum.section.toner.heading",
+            "body_key": "article.toner_essence_serum.section.toner.body"
+          },
+          {
+            "id": "essence",
+            "type": "text",
+            "heading_key": "article.toner_essence_serum.section.essence.heading",
+            "body_key": "article.toner_essence_serum.section.essence.body"
+          },
+          {
+            "id": "serum",
+            "type": "text",
+            "heading_key": "article.toner_essence_serum.section.serum.heading",
+            "body_key": "article.toner_essence_serum.section.serum.body"
+          },
+          {
+            "id": "comparison",
+            "type": "list",
+            "heading_key": "article.toner_essence_serum.section.comparison.heading",
+            "items_key": "article.toner_essence_serum.section.comparison.items"
+          },
+          {
+            "id": "do-you-need-all",
+            "type": "info",
+            "heading_key": "article.toner_essence_serum.section.need_all.heading",
+            "body_key": "article.toner_essence_serum.section.need_all.body"
+          }
+        ]
+      },
+      "tags": ["toner", "essence", "serum", "products", "difference", "layering"],
+      "applicable_to": {
+        "skin_types": ["all"],
+        "concerns": ["all"],
+        "age_groups": ["all"]
+      },
+      "evidence_level": "expert_consensus",
+      "references": [
+        {
+          "source": "American Academy of Dermatology",
+          "url": "https://www.aad.org/public/everyday-care/skin-care-basics/care",
+          "accessed_date": "2025-01-04",
+          "type": "guideline"
+        }
+      ],
+      "related_articles": ["product-application-order", "basic-skincare-routine", "how-to-choose-serum"],
+      "created_at": "2025-01-04",
+      "updated_at": "2025-01-04",
+      "status": "published"
+    }
+  ]
+}

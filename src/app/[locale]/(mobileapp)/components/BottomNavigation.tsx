@@ -23,12 +23,19 @@ const MENU_ITEMS: MenuItem[] = [
     path: "/skincare-main",
     matchPaths: ["/skincare-main"],
   },
-  {
-    key: "routine",
-    label: "루틴",
+  // {
+  //   key: "routine",
+  //   label: "루틴",
+  //   icon: <Sparkles className="w-6 h-6" />,
+  //   path: "/skincare-onboarding",
+  //   matchPaths: ["/skincare-onboarding"],
+  // },
+    {
+    key: "community",
+    label: "Community",
     icon: <Sparkles className="w-6 h-6" />,
-    path: "/skincare-onboarding",
-    matchPaths: ["/skincare-onboarding"],
+    path: "/community",
+    matchPaths: ["/community"],
   },
   {
     key: "products",
@@ -56,7 +63,7 @@ const MENU_ITEMS: MenuItem[] = [
     key: "mypage",
     label: "마이",
     icon: <User className="w-6 h-6" />,
-    path: "/skincare-auth",
+    path: "/skincare-auth/my-page",
     matchPaths: ["/skincare-auth", "/skincare-mypage"],
   },
 ];

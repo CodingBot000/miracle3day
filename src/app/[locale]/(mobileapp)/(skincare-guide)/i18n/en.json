@@ -1,0 +1,453 @@
+{
+  "_meta": {
+    "language": "en",
+    "language_name": "English",
+    "version": "1.0.0",
+    "last_updated": "2025-01-04"
+  },
+
+  "category": {
+    "basics": {
+      "name": "Skincare Basics",
+      "description": "Fundamental knowledge for healthy skin care",
+      "skin_science": "Skin Science",
+      "skin_types": "Understanding Skin Types",
+      "basic_routine": "Basic Routine",
+      "product_types": "Product Types"
+    },
+    "routine": {
+      "name": "Skincare Routine",
+      "description": "Building and optimizing your daily routine",
+      "morning": "Morning Routine",
+      "evening": "Evening Routine",
+      "product_order": "Product Application Order",
+      "layering": "Layering Techniques"
+    },
+    "sun_protection": {
+      "name": "Sun Protection",
+      "description": "Protecting your skin from UV damage",
+      "sunscreen_basics": "Sunscreen Basics",
+      "choosing": "Choosing Sunscreen",
+      "application": "How to Apply",
+      "sun_damage": "Sun Damage"
+    },
+    "ingredients": {
+      "name": "Ingredients",
+      "description": "Understanding skincare ingredients",
+      "actives": "Active Ingredients",
+      "hydrating": "Hydrating Ingredients",
+      "anti_aging": "Anti-Aging Ingredients",
+      "conflicts": "Ingredient Conflicts"
+    },
+    "concerns": {
+      "name": "Skin Concerns",
+      "description": "Addressing specific skin issues",
+      "acne": "Acne",
+      "aging": "Aging",
+      "pigmentation": "Pigmentation",
+      "sensitivity": "Sensitivity",
+      "dryness": "Dryness"
+    },
+    "advanced": {
+      "name": "Advanced Topics",
+      "description": "In-depth skincare knowledge",
+      "exfoliation": "Exfoliation",
+      "retinoids": "Retinoids",
+      "acids": "Acids",
+      "treatments": "Professional Treatments"
+    },
+    "age_specific": {
+      "name": "Age-Specific & Targeted Care",
+      "description": "Customized skincare guides by age and demographic",
+      "20s": "Skincare in Your 20s",
+      "40s_50s": "Skincare in Your 40s-50s",
+      "60s_70s": "Skincare in Your 60s-70s",
+      "men": "Skincare for Men"
+    }
+  },
+
+  "article": {
+    "sunscreen_basics": {
+      "title": "Sunscreen Basics: Everything You Need to Know",
+      "summary": "Learn why sunscreen is essential for skin health and how to understand SPF, broad-spectrum protection, and UV rays.",
+      "section": {
+        "why": {
+          "heading": "Why is Sunscreen Important?",
+          "body": "Sunscreen protects your skin from the sun's harmful ultraviolet (UV) rays. Regular use can reduce your risk of skin cancer, prevent premature aging like wrinkles and age spots, and maintain an even skin tone. Dermatologists recommend sunscreen for everyone, regardless of skin tone."
+        },
+        "uv_types": {
+          "heading": "Understanding UV Rays",
+          "body": "There are two types of UV rays that reach our skin: UVA and UVB. UVA rays penetrate deep into the skin, causing premature aging and wrinkles. UVB rays primarily affect the skin's surface, causing sunburn. Both types contribute to skin cancer risk, which is why broad-spectrum protection is essential."
+        },
+        "spf": {
+          "heading": "What Does SPF Mean?",
+          "body": "SPF stands for Sun Protection Factor. It measures how well a sunscreen protects against UVB rays. SPF 30 blocks about 97% of UVB rays, while SPF 50 blocks about 98%. Dermatologists recommend using SPF 30 or higher for adequate protection."
+        },
+        "broad_spectrum": {
+          "heading": "Broad-Spectrum Protection",
+          "body": "Broad-spectrum sunscreens protect against both UVA and UVB rays. When choosing a sunscreen, always look for 'broad-spectrum' on the label to ensure complete protection from both types of harmful rays."
+        },
+        "key_points": {
+          "heading": "Key Takeaways",
+          "items": [
+            "Use SPF 30 or higher",
+            "Choose broad-spectrum sunscreen",
+            "Apply every day, even on cloudy days",
+            "Reapply every 2 hours when outdoors",
+            "Sunscreen is important for all skin tones"
+          ]
+        }
+      }
+    },
+    "choose_sunscreen": {
+      "title": "How to Choose the Right Sunscreen",
+      "summary": "Find the perfect sunscreen for your skin type and lifestyle with these dermatologist-recommended tips.",
+      "section": {
+        "criteria": {
+          "heading": "Three Essential Criteria",
+          "items": [
+            "SPF 30 or higher for adequate UVB protection",
+            "Broad-spectrum to protect against both UVA and UVB rays",
+            "Water-resistant if you'll be swimming or sweating"
+          ]
+        },
+        "types": {
+          "heading": "Chemical vs. Mineral Sunscreens",
+          "body": "Chemical sunscreens absorb UV rays and convert them to heat, while mineral (physical) sunscreens contain zinc oxide or titanium dioxide that sit on the skin and reflect UV rays. Mineral sunscreens are often recommended for sensitive skin and are less likely to cause irritation."
+        },
+        "skin_type": {
+          "heading": "Sunscreen by Skin Type",
+          "items": [
+            "Oily/Acne-prone: Look for 'non-comedogenic' and lightweight, gel formulas",
+            "Dry: Choose sunscreens with moisturizing ingredients like hyaluronic acid",
+            "Sensitive: Mineral sunscreens with zinc oxide or titanium dioxide",
+            "Combination: Lightweight lotions or fluid formulas"
+          ]
+        },
+        "sensitive": {
+          "heading": "For Sensitive Skin",
+          "body": "If you have sensitive skin, choose mineral sunscreens containing zinc oxide or titanium dioxide. Avoid sunscreens with fragrances, dyes, or oxybenzone. Look for products labeled 'hypoallergenic' or 'for sensitive skin'."
+        }
+      }
+    },
+    "apply_sunscreen": {
+      "title": "How to Apply Sunscreen Correctly",
+      "summary": "Learn the proper techniques for applying sunscreen to get the full protection you need.",
+      "section": {
+        "amount": {
+          "heading": "How Much to Use",
+          "body": "Most people don't apply enough sunscreen. For your face, use about a nickel-sized amount. For your entire body in a swimsuit, use about one ounce (enough to fill a shot glass). If you're using less, you're not getting the full SPF protection."
+        },
+        "timing": {
+          "heading": "When to Apply",
+          "body": "Apply sunscreen 15-30 minutes before going outside to allow it to fully bind to your skin. This gives the sunscreen time to form a protective layer."
+        },
+        "reapply": {
+          "heading": "Don't Forget to Reapply",
+          "body": "Reapply sunscreen every 2 hours when outdoors. If you're swimming or sweating, reapply immediately after. No sunscreen is truly waterproof—'water-resistant' sunscreens need reapplication after 40 or 80 minutes in water."
+        },
+        "missed": {
+          "heading": "Commonly Missed Areas",
+          "items": [
+            "Ears and behind ears",
+            "Back of neck",
+            "Tops of feet",
+            "Hairline and scalp (if thinning)",
+            "Lips (use SPF lip balm)",
+            "Around the eyes"
+          ]
+        },
+        "steps": {
+          "heading": "Application Steps",
+          "items": [
+            "Apply sunscreen as the last step of your morning skincare routine",
+            "Use the proper amount (nickel-sized for face)",
+            "Dot sunscreen across forehead, cheeks, nose, and chin",
+            "Gently spread and pat into skin—don't rub vigorously",
+            "Extend to ears, neck, and any exposed areas",
+            "Wait 2-3 minutes before applying makeup"
+          ]
+        }
+      }
+    },
+    "product_order": {
+      "title": "The Correct Order to Apply Skincare Products",
+      "summary": "Learn the proper sequence for applying your skincare products for maximum effectiveness.",
+      "section": {
+        "principle": {
+          "heading": "The Basic Principle",
+          "body": "The general rule is to apply products from thinnest to thickest consistency. Lighter, water-based products go first, followed by heavier, oil-based products. This allows each product to penetrate the skin properly without being blocked by heavier formulas."
+        },
+        "morning": {
+          "heading": "Morning Routine Order",
+          "items": [
+            "Cleanser - Remove overnight oil and product residue",
+            "Toner (optional) - Balance pH and prep skin",
+            "Serum/Essence - Deliver active ingredients",
+            "Eye Cream (optional) - Treat delicate eye area",
+            "Moisturizer - Lock in hydration",
+            "Sunscreen (SPF 30+) - Protect from UV damage (always last)"
+          ]
+        },
+        "evening": {
+          "heading": "Evening Routine Order",
+          "items": [
+            "Makeup Remover/Oil Cleanser - Remove makeup and sunscreen",
+            "Water-based Cleanser - Deep clean pores",
+            "Exfoliant (if using) - 2-3 times per week only",
+            "Toner (optional) - Balance and prep",
+            "Serum/Treatment - Active ingredients like retinol",
+            "Eye Cream (optional) - Nourish eye area",
+            "Moisturizer/Night Cream - Seal in all products"
+          ]
+        },
+        "optional": {
+          "heading": "What's Optional?",
+          "body": "Not everyone needs every step. A minimal effective routine includes cleanser, moisturizer, and sunscreen (morning). Toners, essences, and serums are beneficial additions but not essential for everyone. Start simple and add products as needed."
+        },
+        "wait": {
+          "heading": "Wait Times Between Products",
+          "body": "For most products, you don't need to wait long—just until the product feels absorbed (about 30 seconds to 1 minute). However, for active ingredients like retinol or vitamin C, waiting 1-2 minutes can improve absorption and reduce irritation."
+        }
+      }
+    },
+    "basic_routine": {
+      "title": "Building a Basic Skincare Routine",
+      "summary": "Start your skincare journey with these three essential steps recommended by dermatologists.",
+      "section": {
+        "essential": {
+          "heading": "The Essential Three",
+          "body": "Every effective skincare routine includes three fundamental steps: cleanse, moisturize, and protect. These three products form the foundation of healthy skin care and are recommended by dermatologists for everyone, regardless of age or skin type."
+        },
+        "cleanser": {
+          "heading": "Step 1: Cleanser",
+          "body": "Cleansing removes dirt, oil, makeup, and environmental pollutants. Use a gentle cleanser twice daily—morning and evening. Choose a cleanser suited to your skin type: gel cleansers for oily skin, cream or milk cleansers for dry skin, and gentle foaming cleansers for normal skin."
+        },
+        "moisturizer": {
+          "heading": "Step 2: Moisturizer",
+          "body": "Moisturizer helps maintain your skin's natural barrier and keeps skin hydrated. Apply moisturizer while your skin is still slightly damp for better absorption. Even oily skin needs moisturizer—look for lightweight, oil-free formulas."
+        },
+        "sunscreen": {
+          "heading": "Step 3: Sunscreen (Morning Only)",
+          "body": "Sunscreen is the single most important anti-aging product. Apply SPF 30 or higher broad-spectrum sunscreen every morning, even on cloudy days or when staying indoors near windows. UV rays can penetrate clouds and glass."
+        },
+        "tips": {
+          "heading": "Beginner Tips",
+          "items": [
+            "Start simple—you can always add products later",
+            "Give products 4-6 weeks to show results",
+            "Introduce new products one at a time",
+            "Patch test new products on your inner arm first",
+            "Consistency matters more than complexity"
+          ]
+        }
+      }
+    },
+    "toner_essence_serum": {
+      "title": "Toner vs. Essence vs. Serum: What's the Difference?",
+      "summary": "Understand the key differences between these skincare products and learn which ones you actually need.",
+      "section": {
+        "overview": {
+          "heading": "Understanding the Confusion",
+          "body": "Toners, essences, and serums are often confused because they all come in similar packaging and are applied between cleansing and moisturizing. However, each serves a different purpose and has a distinct formulation."
+        },
+        "toner": {
+          "heading": "Toner",
+          "body": "Toners are water-like liquids applied after cleansing. They help remove any remaining impurities, balance skin's pH, and prepare the skin to better absorb subsequent products. Modern toners also often contain hydrating or soothing ingredients. They're typically the most watery of the three."
+        },
+        "essence": {
+          "heading": "Essence",
+          "body": "Essences are a staple in Korean skincare routines. They're slightly thicker than toners but thinner than serums. Essences are primarily focused on hydration and often contain fermented ingredients. They help boost cell renewal and improve skin texture. Think of them as a 'hydrating booster.'"
+        },
+        "serum": {
+          "heading": "Serum",
+          "body": "Serums are concentrated treatments with high levels of active ingredients targeting specific concerns like wrinkles, dark spots, or acne. They have a thicker, gel-like consistency and deliver powerful ingredients deep into the skin. Serums are the 'treatment' step in your routine."
+        },
+        "comparison": {
+          "heading": "Quick Comparison",
+          "items": [
+            "Consistency: Toner (watery) < Essence (light liquid) < Serum (concentrated gel)",
+            "Purpose: Toner (prep) → Essence (hydrate) → Serum (treat)",
+            "Active concentration: Toner (low) < Essence (medium) < Serum (high)",
+            "Application order: Toner → Essence → Serum"
+          ]
+        },
+        "need_all": {
+          "heading": "Do You Need All Three?",
+          "body": "No, you don't need all three. Most people benefit from just one or two. If you have specific skin concerns (aging, acne, dark spots), prioritize a serum. If your main goal is hydration, an essence may be sufficient. Toners are most useful for oily skin or as a prep step for better product absorption."
+        }
+      }
+    }
+  },
+
+  "article.skincare20s": {
+    "title": "Dermatologist-Recommended Skin Care for Your 20s",
+    "description": "Essential skincare habits and products to start in your 20s",
+    "message1": {
+      "title": "Use These Two Products Daily",
+      "content": "A mild cleanser (twice daily) and sunscreen (SPF 30+, broad-spectrum, water-resistant) are the foundation of all 20s skincare."
+    },
+    "message2": {
+      "title": "Add a Product for Your Primary Concern",
+      "content": "Vitamin C serum reduces aging signs and dark spots. Retinoids improve fine lines, acne, and skin texture."
+    },
+    "message3": {
+      "title": "Follow the ACT Principle",
+      "content": "Adjustable, Consistent, Tailored. Adjust for seasons/skin changes, stay consistent for 30+ days, and customize for your skin needs."
+    },
+    "message4": {
+      "title": "Maintain Healthy Habits",
+      "content": "Stop tanning, protect from sun daily, don't scrub skin, remove makeup before bed, limit sugar intake."
+    },
+    "message5": {
+      "title": "Be Cautious of Social Media Trends",
+      "content": "Over-exfoliation can damage your skin barrier. Follow advice from board-certified dermatologists."
+    },
+    "message6": {
+      "title": "See a Dermatologist for Skin Conditions",
+      "content": "If skin conditions like eczema or rosacea affect your quality of life, consult a board-certified dermatologist."
+    }
+  },
+
+  "article.skincare4050s": {
+    "title": "Skin Care in Your 40s and 50s",
+    "description": "Create an effective anti-aging skin care plan with healthy habits",
+    "message1": {
+      "title": "Protect Your Skin from the Sun",
+      "content": "Sun protection forms the foundation of every anti-aging skin-care plan. The word 'photoaging' exists because the sun prematurely ages our skin."
+    },
+    "message2": {
+      "title": "Forget About Indoor Tanning",
+      "content": "Tanning beds and sun lamps expose you to harmful UV rays that accelerate skin aging."
+    },
+    "message3": {
+      "title": "Apply Moisturizer Every Day",
+      "content": "As we age, skin becomes drier. Moisturizer traps water in our skin, reducing fine lines and giving skin a more youthful appearance."
+    },
+    "message4": {
+      "title": "Wash Gently Twice a Day",
+      "content": "Use warm water and mild cleanser. Avoid scrubbing your skin clean."
+    },
+    "message5": {
+      "title": "Stop Smoking",
+      "content": "Tobacco smoke leads to dull complexion, loss of firmness, premature wrinkles, and leathery skin."
+    },
+    "message6": {
+      "title": "Eat Healthy Foods",
+      "content": "Eat plenty of fruits, vegetables, lean proteins, and healthy fats."
+    },
+    "message7": {
+      "title": "Get Enough Sleep",
+      "content": "It's called beauty rest for a reason. Sleep gives your body time to refresh and renew itself."
+    }
+  },
+
+  "article.skincare6070s": {
+    "title": "How to Care for Your Skin in Your 60s and 70s",
+    "description": "Lifestyle changes dermatologists recommend for aging skin",
+    "message1": {
+      "title": "Bathe to Relieve Dry Skin",
+      "content": "Use gentle fragrance-free moisturizing cleanser, warm (not hot) water, 5-10 minute baths, and apply creamy moisturizer within 3 minutes of bathing."
+    },
+    "message2": {
+      "title": "Use a Humidifier",
+      "content": "Heating and AC strip humidity from air. Keep indoor humidity between 45-60% to reduce dry, itchy skin."
+    },
+    "message3": {
+      "title": "Wear Gloves for Housework and Gardening",
+      "content": "Gloves protect skin from chemicals, sunlight, and reduce risk of injury."
+    },
+    "message4": {
+      "title": "Continue Sun Protection",
+      "content": "At this stage, sun protection still prevents new age spots, reduces dry/thinning skin, and lowers skin cancer risk."
+    },
+    "message5": {
+      "title": "Go Fragrance Free",
+      "content": "Fragrance can irritate dry skin. Use 'fragrance-free' products. 'Unscented' may still contain irritating ingredients."
+    },
+    "message6": {
+      "title": "Examine Your Skin Regularly",
+      "content": "Risk of skin cancer increases from age 50. Check for new spots or moles that itch, bleed, or change color."
+    }
+  },
+
+  "article.skincareMen": {
+    "title": "Skin Care Tips for Men",
+    "description": "Building healthy skincare routines tailored for men's skin",
+    "message1": {
+      "title": "Consider Product Labels and Ingredients",
+      "content": "Acne-prone skin: look for 'oil-free' or 'non-comedogenic'. Sensitive skin: use 'fragrance-free' products."
+    },
+    "message2": {
+      "title": "Wash Face Daily and After Exercise",
+      "content": "Use mild facial cleanser and lukewarm water instead of regular bar soap."
+    },
+    "message3": {
+      "title": "Watch Your Shaving Technique",
+      "content": "For razor bumps: use single/double-blade razor, wet skin and hair, use moisturizing shaving cream, shave with hair growth direction."
+    },
+    "message4": {
+      "title": "Moisturize Daily",
+      "content": "Apply moisturizer immediately after bathing or shaving while skin is still damp for best results."
+    },
+    "message5": {
+      "title": "Check Your Skin Regularly",
+      "content": "New spots or moles that itch, bleed, or change color are often early warning signs of skin cancer. Men over 50 have higher melanoma risk."
+    },
+    "message6": {
+      "title": "Wear Sunscreen When Outdoors",
+      "content": "Apply broad-spectrum, SPF 30+, water-resistant sunscreen to all exposed skin including scalp, ears, neck, and lips. Reapply every 2 hours."
+    }
+  },
+
+  "guideline": {
+    "morning_order": {
+      "title": "Morning Routine Order",
+      "content": "Cleanser → Toner → Serum → Moisturizer → Sunscreen"
+    },
+    "evening_order": {
+      "title": "Evening Routine Order",
+      "content": "Cleanser → Toner → Treatment/Serum → Eye Cream → Moisturizer"
+    },
+    "spf_minimum": {
+      "title": "Minimum SPF Recommendation",
+      "content": "Use SPF 30 or higher. SPF 30 blocks about 97% of UVB rays."
+    },
+    "sunscreen_reapply": {
+      "title": "Sunscreen Reapplication",
+      "content": "Reapply sunscreen every 2 hours when outdoors, or immediately after swimming or sweating."
+    },
+    "oily_moisturizer": {
+      "title": "Moisturizer for Oily Skin",
+      "content": "Choose lightweight, oil-free, non-comedogenic moisturizers. Gel formulas work well for oily skin."
+    },
+    "dry_moisturizer": {
+      "title": "Moisturizer for Dry Skin",
+      "content": "Look for rich creams with ingredients like hyaluronic acid, ceramides, or shea butter. Apply to slightly damp skin."
+    },
+    "sensitive_sunscreen": {
+      "title": "Sunscreen for Sensitive Skin",
+      "content": "Use mineral sunscreens with zinc oxide or titanium dioxide. Avoid fragrances and oxybenzone."
+    },
+    "retinoid_evening": {
+      "title": "Retinoids: Evening Only",
+      "content": "Apply retinoids only in your evening routine. They can make skin more sensitive to sunlight."
+    },
+    "vitamin_c_morning": {
+      "title": "Vitamin C in Morning Routine",
+      "content": "Vitamin C serums work best in the morning, providing antioxidant protection against environmental damage."
+    },
+    "thin_to_thick": {
+      "title": "Application Order Rule",
+      "content": "Apply products from thinnest to thickest consistency for best absorption."
+    },
+    "patch_test": {
+      "title": "Patch Test New Products",
+      "content": "Test new products on a small area of skin (inner arm or behind ear) for 24-48 hours before full application."
+    },
+    "sunscreen_last": {
+      "title": "Sunscreen as Last Step",
+      "content": "Sunscreen should always be the last step in your morning skincare routine, applied after moisturizer."
+    }
+  }
+}

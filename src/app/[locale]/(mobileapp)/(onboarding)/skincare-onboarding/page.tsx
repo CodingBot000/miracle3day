@@ -20,7 +20,8 @@ import IntroScreen from './components/IntroScreen';
 import QuestionStep from './components/QuestionStep';
 import CountryRegionStep from './components/CountryRegionStep';
 import CompletionScreen from './components/CompletionScreen';
-import { FitzpatrickSelector, FitzpatrickResult } from '../components/fitzpatrick';
+import { FitzpatrickSelector, FitzpatrickResult } from '@/app/[locale]/(mobileapp)/components/fitzpatrick';
+
 import { SkincareOnboardingDTO } from '@/models/skincare-onboarding.dto';
 import { saveOnboarding } from '@/lib/api/skincare-onboarding';
 import { mobileStorage, STORAGE_KEYS } from '@/lib/storage';

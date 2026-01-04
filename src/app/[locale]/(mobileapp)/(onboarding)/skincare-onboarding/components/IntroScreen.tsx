@@ -11,6 +11,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigation } from '@/hooks/useNavigation';
 import ProgressBar from './ProgressBar';
+import DevDebugPanel from './DevDebugPanel';
 
 interface IntroScreenProps {
   onNext: () => void;  // 시작 버튼 클릭 시 호출될 콜백
@@ -89,6 +90,10 @@ export default function IntroScreen({ onNext, locale = 'ko' }: IntroScreenProps)
       exit={{ opacity: 0, x: -100 }}
       transition={{ duration: 0.3 }}
     >
+      {/* [DEV] 디버그 패널 - 개발환경에서만 표시 */}
+      
+        <DevDebugPanel />
+      
       {/* 진행률 표시 */}
       <ProgressBar current={0} total={16} />
 

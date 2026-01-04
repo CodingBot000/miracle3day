@@ -1,0 +1,139 @@
+{
+  "guidelines": [
+    {
+      "id": "morning-routine-order",
+      "type": "product_order",
+      "title_key": "guideline.morning_order.title",
+      "content_key": "guideline.morning_order.content",
+      "conditions": {
+        "time_of_day": "morning"
+      },
+      "priority": 10,
+      "reference_url": "https://www.aad.org/public/everyday-care/skin-care-secrets/routine"
+    },
+    {
+      "id": "evening-routine-order",
+      "type": "product_order",
+      "title_key": "guideline.evening_order.title",
+      "content_key": "guideline.evening_order.content",
+      "conditions": {
+        "time_of_day": "evening"
+      },
+      "priority": 10,
+      "reference_url": "https://www.aad.org/public/everyday-care/skin-care-secrets/routine"
+    },
+    {
+      "id": "spf-30-minimum",
+      "type": "tip",
+      "title_key": "guideline.spf_minimum.title",
+      "content_key": "guideline.spf_minimum.content",
+      "conditions": {
+        "product_type": "sunscreen"
+      },
+      "priority": 10,
+      "reference_url": "https://www.aad.org/public/everyday-care/sun-protection/shade-clothing-sunscreen/how-to-select-sunscreen"
+    },
+    {
+      "id": "sunscreen-reapply",
+      "type": "tip",
+      "title_key": "guideline.sunscreen_reapply.title",
+      "content_key": "guideline.sunscreen_reapply.content",
+      "conditions": {
+        "product_type": "sunscreen"
+      },
+      "priority": 9,
+      "reference_url": "https://www.aad.org/public/everyday-care/sun-protection/shade-clothing-sunscreen/how-to-apply-sunscreen"
+    },
+    {
+      "id": "oily-skin-moisturizer",
+      "type": "tip",
+      "title_key": "guideline.oily_moisturizer.title",
+      "content_key": "guideline.oily_moisturizer.content",
+      "conditions": {
+        "skin_type": "oily",
+        "product_type": "moisturizer"
+      },
+      "priority": 8,
+      "reference_url": "https://www.aad.org/public/everyday-care/skin-care-basics/dry"
+    },
+    {
+      "id": "dry-skin-moisturizer",
+      "type": "tip",
+      "title_key": "guideline.dry_moisturizer.title",
+      "content_key": "guideline.dry_moisturizer.content",
+      "conditions": {
+        "skin_type": "dry",
+        "product_type": "moisturizer"
+      },
+      "priority": 8,
+      "reference_url": "https://www.aad.org/public/everyday-care/skin-care-basics/dry"
+    },
+    {
+      "id": "sensitive-skin-sunscreen",
+      "type": "tip",
+      "title_key": "guideline.sensitive_sunscreen.title",
+      "content_key": "guideline.sensitive_sunscreen.content",
+      "conditions": {
+        "skin_type": "sensitive",
+        "product_type": "sunscreen"
+      },
+      "priority": 8,
+      "reference_url": "https://www.aad.org/public/everyday-care/sun-protection/shade-clothing-sunscreen/how-to-select-sunscreen"
+    },
+    {
+      "id": "retinoid-evening-only",
+      "type": "routine",
+      "title_key": "guideline.retinoid_evening.title",
+      "content_key": "guideline.retinoid_evening.content",
+      "conditions": {
+        "product_type": "retinoid",
+        "time_of_day": "both"
+      },
+      "priority": 10,
+      "reference_url": "https://www.aad.org/public/everyday-care/skin-care-secrets/anti-aging"
+    },
+    {
+      "id": "vitamin-c-morning",
+      "type": "routine",
+      "title_key": "guideline.vitamin_c_morning.title",
+      "content_key": "guideline.vitamin_c_morning.content",
+      "conditions": {
+        "product_type": "vitamin_c"
+      },
+      "priority": 7,
+      "reference_url": "https://www.aad.org/public/everyday-care/skin-care-secrets/anti-aging"
+    },
+    {
+      "id": "thin-to-thick",
+      "type": "product_order",
+      "title_key": "guideline.thin_to_thick.title",
+      "content_key": "guideline.thin_to_thick.content",
+      "conditions": {},
+      "priority": 9,
+      "reference_url": "https://www.aad.org/public/everyday-care/skin-care-secrets/routine"
+    },
+    {
+      "id": "patch-test",
+      "type": "tip",
+      "title_key": "guideline.patch_test.title",
+      "content_key": "guideline.patch_test.content",
+      "conditions": {
+        "skin_type": "sensitive"
+      },
+      "priority": 8,
+      "reference_url": "https://www.aad.org/public/everyday-care/skin-care-basics/care"
+    },
+    {
+      "id": "sunscreen-last-step",
+      "type": "product_order",
+      "title_key": "guideline.sunscreen_last.title",
+      "content_key": "guideline.sunscreen_last.content",
+      "conditions": {
+        "time_of_day": "morning",
+        "product_type": "sunscreen"
+      },
+      "priority": 10,
+      "reference_url": "https://www.aad.org/public/everyday-care/sun-protection"
+    }
+  ]
+}

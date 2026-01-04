@@ -42,10 +42,10 @@ export default function BeautyBoxItem({
       ? getExpiryBadgeStyle(daysRemaining, hasUseByDate, locale)
       : null;
 
-  // 날짜 입력 필요 여부
-  const needsDateInput =
-    (product.status === 'in_use' && !product.opened_at) ||
-    (product.status === 'owned' && !product.expiry_date);
+  // 날짜 편집 버튼 표시 여부
+  // in_use, owned 상태에서는 항상 날짜 편집 가능
+  const showDateEditButton =
+    product.status === 'in_use' || product.status === 'owned';
 
   return (
     <SwipeableCard
@@ -134,19 +134,23 @@ export default function BeautyBoxItem({
           </div>
         </div>
 
-        {/* 우측: 배지 또는 액션 버튼 */}
+        {/* 우측: 배지 + 날짜 편집 버튼 */}
         <div className="flex-shrink-0 flex flex-col items-end justify-center gap-1">
-          {/* D-day 배지 */}
-          {badge && !needsDateInput && (
-            <span
-              className={`text-[11px] font-semibold px-2 py-0.5 rounded-full ${badge.bgColor} ${badge.color}`}
+          {/* D-day 배지 (클릭하면 날짜 편집) */}
+          {badge && onDateEdit && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onDateEdit();
+              }}
+              className={`text-[11px] font-semibold px-2 py-0.5 rounded-full ${badge.bgColor} ${badge.color} hover:opacity-80 transition-opacity`}
             >
               {badge.text}
-            </span>
+            </button>
           )}
 
-          {/* 날짜 입력 버튼 */}
-          {needsDateInput && onDateEdit && (
+          {/* 날짜 편집 버튼 (배지가 없을 때만) */}
+          {showDateEditButton && !badge && onDateEdit && (
             <button
               onClick={(e) => {
                 e.stopPropagation();

@@ -202,7 +202,7 @@ export default function RecommendRoutinePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-gray-50 flex flex-col max-w-md mx-auto w-full">
       {/* 헤더 */}
       <div className="bg-white border-b border-gray-200 p-4 text-center">
         <h1 className="text-xl font-bold text-gray-900">Choose Your Routine</h1>
@@ -222,7 +222,7 @@ export default function RecommendRoutinePage() {
       </div>
 
       {/* 하단 고정 영역 */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-lg z-50">
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-white border-t border-gray-200 p-4 shadow-lg z-50">
         {selectedRoutine && routines[selectedRoutine] && (
           <div className="mb-3">
             <p className="text-sm text-gray-600">Selected:</p>

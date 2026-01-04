@@ -184,7 +184,7 @@ export async function POST(request: NextRequest) {
         pm.price_krw,
         pm.image_url,
         pm.volume_text,
-        pm.category2,
+        pc.category2,             
         pm.avg_rating,
         pm.review_count,
         bb.added_at,
@@ -197,6 +197,7 @@ export async function POST(request: NextRequest) {
         bb.finished_at
       FROM product_my_beauty_box bb
       INNER JOIN products_master pm ON bb.product_id = pm.id
+      LEFT JOIN product_categories pc ON pm.id = pc.product_master_id   -- ✅ 추가
       WHERE bb.id_uuid_member = $1
       ORDER BY bb.added_at DESC`,
       [userId]

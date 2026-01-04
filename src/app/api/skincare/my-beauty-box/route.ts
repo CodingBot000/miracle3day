@@ -70,28 +70,29 @@ export async function GET(request: NextRequest) {
 
     const items = await q<BeautyBoxItem>(
       `SELECT
-        bb.id,
-        bb.product_id,
-        pm.product_name,
-        pm.brand_name,
-        pm.price_krw,
-        pm.image_url,
-        pm.volume_text,
-        pm.category2,
-        pm.avg_rating,
-        pm.review_count,
-        bb.added_at,
-        COALESCE(bb.status, 'wishlist') as status,
-        bb.memo,
-        bb.my_category,
-        bb.opened_at,
-        bb.expiry_date,
-        bb.use_by_date,
-        bb.finished_at
-      FROM product_my_beauty_box bb
-      INNER JOIN products_master pm ON bb.product_id = pm.id
-      WHERE bb.id_uuid_member = $1
-      ORDER BY bb.added_at DESC`,
+  bb.id,
+  bb.product_id,
+  pm.product_name,
+  pm.brand_name,
+  pm.price_krw,
+  pm.image_url,
+  pm.volume_text,
+  pc.category2,             
+  pm.avg_rating,
+  pm.review_count,
+  bb.added_at,
+  COALESCE(bb.status, 'wishlist') as status,
+  bb.memo,
+  bb.my_category,
+  bb.opened_at,
+  bb.expiry_date,
+  bb.use_by_date,
+  bb.finished_at
+FROM product_my_beauty_box bb
+INNER JOIN products_master pm ON bb.product_id = pm.id
+LEFT JOIN product_categories pc ON pm.id = pc.product_master_id   -- ✅ 추가
+WHERE bb.id_uuid_member = $1
+ORDER BY bb.added_at DESC`,
       [userId]
     );
 
@@ -140,31 +141,26 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 일괄 INSERT (중복은 무시)
+    // 일괄 INSERT (중복 허용)
     let added = 0;
-    let duplicates = 0;
 
     for (const productId of product_ids) {
       const result = await one<{ id: number }>(
         `INSERT INTO product_my_beauty_box (id_uuid_member, product_id, status, added_at)
          VALUES ($1, $2, $3, NOW())
-         ON CONFLICT (id_uuid_member, product_id) DO NOTHING
          RETURNING id`,
         [userId, productId, status]
       );
 
       if (result) {
         added++;
-      } else {
-        duplicates++;
       }
     }
 
     return NextResponse.json({
       success: true,
       added,
-      duplicates,
-      message: `${added}개 제품이 추가되었습니다${duplicates > 0 ? ` (${duplicates}개 중복)` : ''}`,
+      message: `${added}개 제품이 추가되었습니다`,
     });
   } catch (error) {
     console.error('My Beauty Box 추가 오류:', error);

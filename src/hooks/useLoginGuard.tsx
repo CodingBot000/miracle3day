@@ -14,7 +14,9 @@ export function useLoginGuard() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await fetch('/api/auth/session')
+        const res = await fetch('/api/auth/session', {
+          credentials: 'include',
+        })
         if (res.ok) {
           const data = await res.json()
           setUser(data.auth)
@@ -27,7 +29,19 @@ export function useLoginGuard() {
         setLoading(false)
       }
     }
+
+    // 초기 로드
     checkAuth()
+
+    // 탭 포커스 시 세션 재확인
+    const handleFocus = () => {
+      checkAuth()
+    }
+
+    window.addEventListener('focus', handleFocus)
+    return () => {
+      window.removeEventListener('focus', handleFocus)
+    }
   }, [])
 
   const requireLogin = useCallback(() => {

@@ -187,8 +187,8 @@ export default function CompletionScreen({
     setIsNavigating(true);
 
     try {
-      // localStorage는 이미 page.tsx에서 저장됨 (id_uuid 포함)
-      // 여기서는 덮어쓰지 않음 - 기존 데이터(id_uuid 포함) 유지
+      // localStorage는 이미 page.tsx에서 저장됨 (id_uuid_member 포함)
+      // 여기서는 덮어쓰지 않음 - 기존 데이터(id_uuid_member 포함) 유지
 
       // Navigate to AI analysis animation page
       navigate('/skincare-onboarding/analyzing');

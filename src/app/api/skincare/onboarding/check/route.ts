@@ -37,9 +37,9 @@ export async function GET(request: NextRequest) {
 
     // 2. skincare_onboarding 테이블에서 조회
     const onboarding = await one(
-      `SELECT id_uuid, onboarding_completed
+      `SELECT id_uuid_member, onboarding_completed
        FROM skincare_onboarding
-       WHERE id_uuid = $1`,
+       WHERE id_uuid_member = $1`,
       [userId]
     );
 

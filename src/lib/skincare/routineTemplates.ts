@@ -14,6 +14,11 @@ export interface StepTemplate {
   recommendation_reason?: string;
 }
 
+/**
+ * 주의 : product_category_step_mapping 테이블의 routine_step 컬럼 값과 step_type 가 현재 일치되어야함.
+ * step_type 를 변경/추가/삭제시 반드시 product_category_step_mapping 테이블의 routine_step 컬럼도 변경되어야함. 
+ * 더 유연하고 안정적인 관리방법이 필요함 
+ */
 export const BASIC_TEMPLATE: RoutineTemplate = {
   type: 'basic',
   morning: [

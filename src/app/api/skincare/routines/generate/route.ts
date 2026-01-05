@@ -52,13 +52,13 @@ async function getUserProfile(user_uuid: string) {
   try {
     const profile = await one(`
       SELECT
-        id_uuid, age_group, gender, country_code, region, city,
+        id_uuid_member, age_group, gender, country_code, region, city,
         skin_type, skin_concerns, fitzpatrick_type,
         current_products, daily_routine_time, primary_goal,
         interested_ingredients, product_preferences,
         sleep_pattern, work_environment, exercise_frequency, monthly_budget
       FROM skincare_onboarding
-      WHERE id_uuid = $1 AND onboarding_completed = TRUE
+      WHERE id_uuid_member = $1 AND onboarding_completed = TRUE
     `, [user_uuid]);
 
     if (!profile) return null;

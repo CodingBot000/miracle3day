@@ -144,7 +144,9 @@ function ViewRoutineContent() {
           <ul className="space-y-2 text-sm text-gray-700">
             <li>• Consistency is key - follow your routine daily</li>
             <li>• Midday touch-up takes less than 3 minutes</li>
-            <li>• You can customize this routine anytime</li>
+            <li className="text-red-600 font-bold text-base bg-red-50 px-3 py-2 rounded-lg border border-red-200">
+              ⚠️ Even after confirming this routine, you can change the entire routine or modify individual routine items at any time.
+            </li>
             <li>• Track your progress over time</li>
           </ul>
         </div>

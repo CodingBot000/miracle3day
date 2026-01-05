@@ -104,15 +104,15 @@ export default function SkincareMainPage() {
           return;
         }
 
-        const { id_uuid } = JSON.parse(stored);
+        const { id_uuid_member } = JSON.parse(stored);
 
-        if (!id_uuid) {
+        if (!id_uuid_member) {
           navigate('/skincare-onboarding', { replace: true });
           return;
         }
 
         // 3. API 호출
-        const response = await fetch(`/api/skincare/routines/user/${id_uuid}`, {
+        const response = await fetch(`/api/skincare/routines/user/${id_uuid_member}`, {
           credentials: 'include',
         });
         const result: ApiResponse = await response.json();

@@ -12,6 +12,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { mobileStorage, STORAGE_KEYS } from '@/lib/storage';
 
 interface UserSession {
   id: string;
@@ -60,12 +61,12 @@ export default function DevDebugPanel() {
     }
   };
 
-  // Skincare 데이터만 삭제 (계정 유지)
-  const handleResetSkincareData = async () => {
+  // Remote DB의 Skincare 데이터만 삭제 (계정 유지)
+  const handleResetRemoteData = async () => {
     if (!session) return;
-    if (!confirm('정말 Skincare 데이터를 초기화하시겠습니까?\n(계정은 유지됩니다)')) return;
+    if (!confirm('정말 Remote DB의 Skincare 데이터를 초기화하시겠습니까?\n(계정은 유지됩니다)')) return;
 
-    setActionLoading('reset');
+    setActionLoading('reset-remote');
     setError(null);
 
     try {
@@ -76,12 +77,59 @@ export default function DevDebugPanel() {
       const data = await res.json();
 
       if (res.ok && data.success) {
-        showToast(`Skincare 초기화 완료: ${data.deleted?.total || 0}건 삭제`);
+        showToast(`Remote DB 초기화 완료: ${data.deleted?.total || 0}건 삭제`);
       } else {
         setError(JSON.stringify(data, null, 2));
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
+    } finally {
+      setActionLoading(null);
+    }
+  };
+
+  // Local Storage 초기화
+  const handleResetLocalStorage = () => {
+    if (!confirm('정말 Local Storage를 초기화하시겠습니까?\n(온보딩, 루틴, 진행상태 등 모든 로컬 데이터 삭제)')) return;
+
+    setActionLoading('reset-local');
+    setError(null);
+
+    try {
+      // 삭제 전 키 개수 확인
+      const progressKeys = mobileStorage.getKeysByPattern(/^routine_progress_/);
+      let deletedCount = 0;
+
+      // 정의된 키들 삭제
+      if (mobileStorage.has(STORAGE_KEYS.SKINCARE_ONBOARDING_ANSWERS)) {
+        mobileStorage.remove(STORAGE_KEYS.SKINCARE_ONBOARDING_ANSWERS);
+        deletedCount++;
+      }
+      if (mobileStorage.has(STORAGE_KEYS.SKINCARE_ROUTINE_DATA)) {
+        mobileStorage.remove(STORAGE_KEYS.SKINCARE_ROUTINE_DATA);
+        deletedCount++;
+      }
+      if (mobileStorage.has(STORAGE_KEYS.SKINCARE_USER_PROFILE)) {
+        mobileStorage.remove(STORAGE_KEYS.SKINCARE_USER_PROFILE);
+        deletedCount++;
+      }
+      if (mobileStorage.has(STORAGE_KEYS.ROUTINE_LAST_SAVED)) {
+        mobileStorage.remove(STORAGE_KEYS.ROUTINE_LAST_SAVED);
+        deletedCount++;
+      }
+
+      // routine_progress_* 패턴 키들 삭제
+      mobileStorage.removeByPattern(/^routine_progress_/);
+      deletedCount += progressKeys.length;
+
+      showToast(`Local Storage 초기화 완료: ${deletedCount}건 삭제`);
+    } catch (err) {
+      const errorDetail = {
+        message: err instanceof Error ? err.message : String(err),
+        stack: err instanceof Error ? err.stack : undefined,
+        type: 'LocalStorage Error'
+      };
+      setError(JSON.stringify(errorDetail, null, 2));
     } finally {
       setActionLoading(null);
     }
@@ -154,18 +202,29 @@ export default function DevDebugPanel() {
 
           {/* 액션 버튼들 */}
           {session && (
-            <div className="flex gap-2">
-              <button
-                onClick={handleResetSkincareData}
-                disabled={!!actionLoading}
-                className="flex-1 bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 text-white font-bold py-2 px-3 rounded text-xs"
-              >
-                {actionLoading === 'reset' ? '처리중...' : '🔄 Skincare 초기화'}
-              </button>
+            <div className="space-y-2">
+              {/* 데이터 초기화 버튼들 */}
+              <div className="flex gap-2">
+                <button
+                  onClick={handleResetRemoteData}
+                  disabled={!!actionLoading}
+                  className="flex-1 bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 text-white font-bold py-2 px-2 rounded text-xs"
+                >
+                  {actionLoading === 'reset-remote' ? '처리중...' : '🌐 Remote DB'}
+                </button>
+                <button
+                  onClick={handleResetLocalStorage}
+                  disabled={!!actionLoading}
+                  className="flex-1 bg-purple-500 hover:bg-purple-600 disabled:bg-gray-400 text-white font-bold py-2 px-2 rounded text-xs"
+                >
+                  {actionLoading === 'reset-local' ? '처리중...' : '💾 Local Storage'}
+                </button>
+              </div>
+              {/* 계정 삭제 버튼 */}
               <button
                 onClick={handleDeleteAccount}
                 disabled={!!actionLoading}
-                className="flex-1 bg-red-600 hover:bg-red-700 disabled:bg-gray-400 text-white font-bold py-2 px-3 rounded text-xs"
+                className="w-full bg-red-600 hover:bg-red-700 disabled:bg-gray-400 text-white font-bold py-2 px-3 rounded text-xs"
               >
                 {actionLoading === 'delete' ? '처리중...' : '🗑️ 계정 삭제'}
               </button>

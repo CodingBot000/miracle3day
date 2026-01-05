@@ -50,7 +50,7 @@ export async function GET(
 
     // 3. 온보딩 데이터 조회
     const data = await one(
-      `SELECT * FROM skincare_onboarding WHERE id_uuid = $1`,
+      `SELECT * FROM skincare_onboarding WHERE id_uuid_member = $1`,
       [userId]
     );
 

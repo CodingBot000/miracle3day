@@ -17,7 +17,7 @@ export const TEST_DATA_MARKER = '__TEST_DUMMY__';
  * - 모든 필드가 테스트용임을 나타내기 위해 특정 패턴 사용
  * - country_code에 'TEST'가 포함됨
  */
-export const TEST_DUMMY_ONBOARDING_DATA: Omit<SkincareOnboardingDTO, 'id_uuid' | 'onboarding_completed' | 'onboarding_step'> = {
+export const TEST_DUMMY_ONBOARDING_DATA: Omit<SkincareOnboardingDTO, 'id_uuid_member' | 'onboarding_completed' | 'onboarding_step'> = {
   // Fitzpatrick Type (피부톤)
   fitzpatrick_type: 3,
   fitzpatrick_rgb: '210,180,140', // 중간 톤

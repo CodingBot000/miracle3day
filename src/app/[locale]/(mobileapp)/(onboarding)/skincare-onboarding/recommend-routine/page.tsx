@@ -269,7 +269,7 @@ function getUserUuid(): string {
   const stored = mobileStorage.getRaw(STORAGE_KEYS.SKINCARE_ONBOARDING_ANSWERS);
   if (stored) {
     const data = JSON.parse(stored);
-    return data.id_uuid || '';
+    return data.id_uuid_member || '';
   }
   return '';
 }

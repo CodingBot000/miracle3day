@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const id_uuid = payload.sub; // JWT에서 추출한 사용자 ID
+    const id_uuid_member = payload.sub; // JWT에서 추출한 사용자 ID
 
     // 2. 요청 본문에서 온보딩 데이터 추출
     const body = await request.json();
@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
     // UPSERT: 기존 데이터가 있으면 업데이트, 없으면 삽입
     const result = await one(
       `INSERT INTO skincare_onboarding (
-        id_uuid,
+        id_uuid_member,
         fitzpatrick_type,
         fitzpatrick_rgb,
         age_group,
@@ -90,7 +90,7 @@ export async function POST(request: NextRequest) {
         $1, $2, $3, $4, $5, $6, $7, $8, $9, $10,
         $11, $12, $13, $14, $15, $16, $17, $18, $19, true, 18, NOW(), NOW()
       )
-      ON CONFLICT (id_uuid)
+      ON CONFLICT (id_uuid_member)
       DO UPDATE SET
         fitzpatrick_type = EXCLUDED.fitzpatrick_type,
         fitzpatrick_rgb = EXCLUDED.fitzpatrick_rgb,
@@ -115,7 +115,7 @@ export async function POST(request: NextRequest) {
         updated_at = NOW()
       RETURNING *`,
       [
-        id_uuid,
+        id_uuid_member,
         fitzpatrick_type || null,
         fitzpatrick_rgb || null,
         age_group || null,

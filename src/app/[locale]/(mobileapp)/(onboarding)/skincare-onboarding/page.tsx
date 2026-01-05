@@ -14,7 +14,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { useNavigation } from '@/hooks/useNavigation';
 import { AnimatePresence } from 'framer-motion';
-import { v4 as uuidv4 } from 'uuid';
 import WelcomeScreen from './components/WelcomeScreen';
 import IntroScreen from './components/IntroScreen';
 import QuestionStep from './components/QuestionStep';
@@ -114,11 +113,8 @@ export default function SkincareOnboardingPage() {
     setSubmitError(null);
 
     try {
-      // TODO: 실제 사용자 UUID 가져오기 (현재는 테스트용 UUID 생성)
-      const userId = uuidv4(); // 테스트용: 매번 새로운 UUID 생성
-
       const submitData: SkincareOnboardingDTO = {
-        id_uuid: userId,
+        id_uuid_member: '', // API에서 JWT 토큰의 user ID를 사용
         fitzpatrick_type: answers.fitzpatrick_type as number,
         fitzpatrick_rgb: answers.fitzpatrick_rgb as string,
         age_group: answers.age_group as string,
@@ -141,17 +137,17 @@ export default function SkincareOnboardingPage() {
         onboarding_step: totalSteps,
       };
 
-      // 항상 mobileStorage에 저장 (API 성공/실패와 무관하게 다음 단계에서 사용 가능)
-      mobileStorage.setRaw(STORAGE_KEYS.SKINCARE_ONBOARDING_ANSWERS, JSON.stringify({
-        ...submitData,
-        id_uuid: userId
-      }));
-
       // API 호출하여 데이터 저장
       const result = await saveOnboarding(submitData);
 
-      if (result.success) {
-        // 저장 성공 - CompletionScreen will handle navigation via its own button
+      if (result.success && result.data) {
+        // API 응답에서 실제 저장된 id_uuid_member를 사용하여 localStorage 저장
+        const actualUserId = result.data.id_uuid_member;
+        mobileStorage.setRaw(STORAGE_KEYS.SKINCARE_ONBOARDING_ANSWERS, JSON.stringify({
+          ...submitData,
+          id_uuid_member: actualUserId
+        }));
+        console.log('✅ Onboarding saved with user ID:', actualUserId);
       } else {
         setSubmitError(result.message || 'Failed to save onboarding data');
       }

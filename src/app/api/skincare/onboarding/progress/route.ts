@@ -35,7 +35,7 @@ export async function PATCH(request: NextRequest) {
       );
     }
 
-    const id_uuid = payload.sub; // JWT에서 추출
+    const id_uuid_member = payload.sub; // JWT에서 추출
 
     // 2. 요청 본문에서 데이터 추출
     const body = await request.json();
@@ -50,7 +50,7 @@ export async function PATCH(request: NextRequest) {
 
     // 업데이트할 필드 동적 생성
     const updateFields: string[] = ['onboarding_step = $2'];
-    const values: any[] = [id_uuid, onboarding_step];
+    const values: any[] = [id_uuid_member, onboarding_step];
     let paramIndex = 3;
 
     // 부분 데이터가 있으면 추가
@@ -65,12 +65,12 @@ export async function PATCH(request: NextRequest) {
     // UPSERT: 데이터가 없으면 새로 생성, 있으면 업데이트
     const result = await one(
       `INSERT INTO skincare_onboarding (
-        id_uuid,
+        id_uuid_member,
         onboarding_step,
         created_at,
         updated_at
       ) VALUES ($1, $2, NOW(), NOW())
-      ON CONFLICT (id_uuid)
+      ON CONFLICT (id_uuid_member)
       DO UPDATE SET
         ${updateFields.join(', ')},
         updated_at = NOW()

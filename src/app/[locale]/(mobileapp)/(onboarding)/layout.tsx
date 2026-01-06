@@ -8,5 +8,9 @@ export default function OnboardingLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <div className="h-full overflow-y-auto">
+      {children}
+    </div>
+  );
 }

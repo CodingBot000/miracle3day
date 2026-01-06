@@ -4,7 +4,7 @@ import { q, one } from '@/lib/db';
 /**
  * 주간 진행 통계 API
  *
- * GET /api/skincare/progress/weekly?user_uuid=xxx
+ * GET /api/skincare/progress/weekly?id_uuid_member=xxx
  *
  * 응답:
  * {
@@ -20,13 +20,13 @@ import { q, one } from '@/lib/db';
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const user_uuid = searchParams.get('user_uuid');
+    const id_uuid_member = searchParams.get('id_uuid_member');
 
-    console.log('[DEBUG] 📊 Weekly stats request:', { user_uuid });
+    console.log('[DEBUG] 📊 Weekly stats request:', { id_uuid_member });
 
-    if (!user_uuid) {
+    if (!id_uuid_member) {
       return NextResponse.json(
-        { success: false, error: 'user_uuid is required' },
+        { success: false, error: 'id_uuid_member is required' },
         { status: 400 }
       );
     }
@@ -40,10 +40,10 @@ export async function GET(request: NextRequest) {
           WHERE routine_uuid = skincare_routines.id_uuid AND is_enabled = TRUE
         ) as total_steps
       FROM skincare_routines
-      WHERE user_uuid = $1 AND is_active = TRUE
+      WHERE id_uuid_member = $1 AND is_active = TRUE
       ORDER BY created_at DESC
       LIMIT 1
-    `, [user_uuid]);
+    `, [id_uuid_member]);
 
     if (!routine) {
       return NextResponse.json({
@@ -86,10 +86,10 @@ export async function GET(request: NextRequest) {
         const result = await one(`
           SELECT COUNT(*) as completed_count
           FROM skincare_routine_progress
-          WHERE user_uuid = $1
+          WHERE id_uuid_member = $1
             AND completion_date = $2
             AND completed = TRUE
-        `, [user_uuid, dateStr]);
+        `, [id_uuid_member, dateStr]);
 
         const completedCount = parseInt(result?.completed_count || '0');
         const date = new Date(dateStr);
@@ -135,10 +135,10 @@ export async function GET(request: NextRequest) {
         const result = await one(`
           SELECT COUNT(*) as completed_count
           FROM skincare_routine_progress
-          WHERE user_uuid = $1
+          WHERE id_uuid_member = $1
             AND completion_date = $2
             AND completed = TRUE
-        `, [user_uuid, dateStr]);
+        `, [id_uuid_member, dateStr]);
 
         const completedCount = parseInt(result?.completed_count || '0');
 

@@ -4,7 +4,7 @@ import { one, q } from '@/lib/db';
 /**
  * 사용자의 저장된 루틴 조회 API
  *
- * GET /api/skincare/routines/user/[user_uuid]
+ * GET /api/skincare/routines/user/[id_uuid_member]
  *
  * 응답:
  * - 사용자의 활성화된 루틴 (is_active = true)
@@ -13,14 +13,14 @@ import { one, q } from '@/lib/db';
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ user_uuid: string }> }
+  { params }: { params: Promise<{ id_uuid_member: string }> }
 ) {
   try {
-    const { user_uuid } = await params;
+    const { id_uuid_member } = await params;
 
-    if (!user_uuid) {
+    if (!id_uuid_member) {
       return NextResponse.json(
-        { success: false, error: 'user_uuid is required' },
+        { success: false, error: 'id_uuid_member is required' },
         { status: 400 }
       );
     }
@@ -29,7 +29,7 @@ export async function GET(
     const routine = await one(`
       SELECT
         id_uuid as routine_uuid,
-        user_uuid,
+        id_uuid_member,
         routine_type,
         routine_name,
         routine_description,
@@ -38,10 +38,10 @@ export async function GET(
         created_at,
         updated_at
       FROM skincare_routines
-      WHERE user_uuid = $1 AND is_active = TRUE
+      WHERE id_uuid_member = $1 AND is_active = TRUE
       ORDER BY created_at DESC
       LIMIT 1
-    `, [user_uuid]);
+    `, [id_uuid_member]);
 
     if (!routine) {
       return NextResponse.json({
@@ -55,7 +55,7 @@ export async function GET(
     const [morningSteps, middaySteps, eveningSteps] = await Promise.all([
       q(`
         SELECT
-          id, step_order, step_type, step_name,
+          id_uuid, step_order, step_type, step_name,
           recommended_ingredients, recommendation_reason,
           usage_frequency, is_enabled
         FROM skincare_routine_steps
@@ -64,7 +64,7 @@ export async function GET(
       `, [routine.routine_uuid]),
       q(`
         SELECT
-          id, step_order, step_type, step_name,
+          id_uuid, step_order, step_type, step_name,
           recommended_ingredients, recommendation_reason,
           usage_frequency, is_enabled
         FROM skincare_routine_steps
@@ -73,7 +73,7 @@ export async function GET(
       `, [routine.routine_uuid]),
       q(`
         SELECT
-          id, step_order, step_type, step_name,
+          id_uuid, step_order, step_type, step_name,
           recommended_ingredients, recommendation_reason,
           usage_frequency, is_enabled
         FROM skincare_routine_steps
@@ -88,8 +88,8 @@ export async function GET(
         age_group, gender, skin_type, skin_concerns,
         fitzpatrick_type, primary_goal, country_code
       FROM skincare_onboarding
-      WHERE id_uuid = $1
-    `, [user_uuid]);
+      WHERE id_uuid_member = $1
+    `, [id_uuid_member]);
 
     return NextResponse.json({
       success: true,

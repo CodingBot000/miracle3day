@@ -4,14 +4,14 @@ import { useEffect, useState } from 'react';
 import { mobileStorage, STORAGE_KEYS } from '@/lib/storage';
 
 interface RoutineStep {
-  id: number;
+  id_uuid: string;
   step_order: number;
   step_type: string;
   step_name: string;
 }
 
 interface RoutineData {
-  user_uuid: string;
+  id_uuid_member: string;
   morning_steps: RoutineStep[];
   midday_steps: RoutineStep[];
   evening_steps: RoutineStep[];
@@ -56,7 +56,7 @@ export default function ProgressTab({ routine }: ProgressTabProps) {
       try {
         // API에서 주간 통계 로드 시도
         const response = await fetch(
-          `/api/skincare/progress/weekly?user_uuid=${routine.user_uuid}`
+          `/api/skincare/progress/weekly?id_uuid_member=${routine.id_uuid_member}`
         );
         const result = await response.json();
 
@@ -97,7 +97,7 @@ export default function ProgressTab({ routine }: ProgressTabProps) {
     };
 
     loadStats();
-  }, [totalStepsPerDay, routine.user_uuid]);
+  }, [totalStepsPerDay, routine.id_uuid_member]);
 
   return (
     <div className="p-4 space-y-6">

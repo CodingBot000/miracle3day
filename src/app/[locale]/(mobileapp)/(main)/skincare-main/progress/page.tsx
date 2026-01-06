@@ -7,7 +7,7 @@ import ProgressTab from '../components/ProgressTab';
 import { mobileStorage, STORAGE_KEYS } from '@/lib/storage';
 
 interface RoutineStep {
-  id: number;
+  id_uuid: string;
   step_order: number;
   step_type: string;
   step_name: string;
@@ -15,7 +15,7 @@ interface RoutineStep {
 
 interface RoutineData {
   routine_uuid: string;
-  user_uuid: string;
+  id_uuid_member: string;
   morning_steps: RoutineStep[];
   midday_steps: RoutineStep[];
   evening_steps: RoutineStep[];

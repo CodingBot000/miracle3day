@@ -42,7 +42,7 @@ export async function DELETE() {
     const routineStepsResult = await q(
       `DELETE FROM skincare_routine_steps
        WHERE routine_uuid IN (
-         SELECT id_uuid FROM skincare_routines WHERE user_uuid = $1
+         SELECT id_uuid FROM skincare_routines WHERE id_uuid_member = $1
        )`,
       [userId]
     );
@@ -50,14 +50,14 @@ export async function DELETE() {
 
     // 1-2. skincare_routines 삭제
     const routinesResult = await q(
-      `DELETE FROM skincare_routines WHERE user_uuid = $1`,
+      `DELETE FROM skincare_routines WHERE id_uuid_member = $1`,
       [userId]
     );
     deleted.skincare_routines = routinesResult.rowCount || 0;
 
     // 1-3. skincare_onboarding 삭제
     const onboardingResult = await q(
-      `DELETE FROM skincare_onboarding WHERE id_uuid = $1`,
+      `DELETE FROM skincare_onboarding WHERE id_uuid_member = $1`,
       [userId]
     );
     deleted.skincare_onboarding = onboardingResult.rowCount || 0;

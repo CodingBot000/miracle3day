@@ -1,7 +1,7 @@
 'use client';
 
 interface RoutineStep {
-  id: number;
+  id_uuid: string;
   step_order: number;
   step_type: string;
   step_name: string;
@@ -129,7 +129,7 @@ function RoutineStepList({ title, icon, steps, accentColor }: RoutineStepListPro
       <div className="space-y-3">
         {steps.map((step, index) => (
           <div
-            key={step.id}
+            key={step.id_uuid}
             className="bg-white rounded-xl p-4 border-2 border-gray-200 shadow-sm"
           >
             {/* 스텝 번호와 이름 */}

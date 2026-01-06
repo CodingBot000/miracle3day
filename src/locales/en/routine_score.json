@@ -1,0 +1,88 @@
+{
+  "title": "Routine Score Analysis",
+  "total_score": "Total Score",
+  "order_score": "Order Score",
+  "completeness_score": "Completeness Score",
+  "ingredient_score": "Ingredient Harmony Score",
+  "issues_title": "Areas to Improve",
+  "good_title": "Great job!",
+  "auto_reorder": "Auto-reorder to recommended",
+  "keep_current": "Keep current order",
+  "grade": {
+    "excellent": "Excellent!",
+    "good": "Good job!",
+    "fair": "Almost there!",
+    "needs_improvement": "Needs improvement"
+  },
+  "routine_type": {
+    "morning": "Morning Routine",
+    "midday": "Midday Routine",
+    "evening": "Evening Routine"
+  },
+  "severity": {
+    "critical": "Critical",
+    "warning": "Warning",
+    "tip": "Tip"
+  },
+  "issues": {
+    "cleanser_not_first": "Start with cleanser for better product absorption",
+    "sunscreen_not_last": "Sunscreen should be last - other products reduce UV protection",
+    "oil_before_water": "Water-based products cannot penetrate after oil-based ones",
+    "serum_before_toner": "Toner prepares skin for better serum absorption",
+    "moisturizer_before_serum": "Apply moisturizer after serum for best results",
+    "eye_cream_timing": "Eye cream works better before moisturizer",
+    "essence_before_serum": "Apply essence before serum (lighter texture first)",
+    "missing_cleanser": "Cleansing is the first step of skincare",
+    "missing_sunscreen": "Sunscreen is essential for preventing skin aging",
+    "missing_moisturizer": "Moisturizing is essential for all skin types"
+  },
+  "good_practices": {
+    "cleanser_first": "Great! Starting with cleanser is correct!",
+    "sunscreen_last": "Perfect! Sunscreen is correctly applied last!",
+    "toner_before_serum": "Toner before serum - perfect order!",
+    "double_cleanse": "Double cleansing for thorough cleaning!"
+  },
+  "step_names": {
+    "cleanser": "Cleanser",
+    "exfoliant": "Exfoliant",
+    "toner": "Toner",
+    "mist": "Mist",
+    "essence": "Essence",
+    "serum": "Serum",
+    "mask": "Mask",
+    "eye_cream": "Eye Cream",
+    "moisturizer": "Moisturizer",
+    "facial_oil": "Facial Oil",
+    "treatment": "Treatment",
+    "sleeping_mask": "Sleeping Mask",
+    "lip_care": "Lip Care",
+    "sunscreen": "Sunscreen",
+    "blotting_paper": "Blotting Paper"
+  },
+  "score_description": {
+    "order": "Is the product order correct?",
+    "completeness": "Are essential steps included?",
+    "ingredient": "Are ingredients compatible?"
+  },
+  "editor": {
+    "title": "Edit Routine",
+    "cancel": "Cancel",
+    "save": "Save",
+    "auto_sort": "Auto Sort",
+    "add_step": "Add Step",
+    "drag_hint": "Long press to reorder",
+    "no_steps": "No steps. Please add a step.",
+    "required": "Required",
+    "current_score": "Current Score",
+    "routine_type": {
+      "morning": "Morning Routine",
+      "midday": "Midday Routine",
+      "evening": "Evening Routine"
+    },
+    "save_success": "Routine saved!",
+    "save_error": "Failed to save",
+    "discard_confirm": "Discard changes?",
+    "discard_yes": "Discard",
+    "discard_no": "Continue editing"
+  }
+}

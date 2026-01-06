@@ -3,7 +3,7 @@
 import RoutineStepCard from './RoutineStepCard';
 
 interface RoutineStep {
-  id: number;
+  id_uuid: string;
   step_order: number;
   step_type: string;
   step_name: string;
@@ -36,7 +36,7 @@ export default function RoutineTimeline({ routine }: RoutineTimelineProps) {
         <div className="space-y-4">
           {routine.morning_steps.map((step: RoutineStep, index: number) => (
             <RoutineStepCard
-              key={step.id}
+              key={step.id_uuid}
               step={step}
               index={index}
             />
@@ -63,7 +63,7 @@ export default function RoutineTimeline({ routine }: RoutineTimelineProps) {
         <div className="space-y-4">
           {routine.midday_steps.map((step: RoutineStep, index: number) => (
             <RoutineStepCard
-              key={step.id}
+              key={step.id_uuid}
               step={step}
               index={index}
               isMidday={true}
@@ -86,7 +86,7 @@ export default function RoutineTimeline({ routine }: RoutineTimelineProps) {
         <div className="space-y-4">
           {routine.evening_steps.map((step: RoutineStep, index: number) => (
             <RoutineStepCard
-              key={step.id}
+              key={step.id_uuid}
               step={step}
               index={index}
             />

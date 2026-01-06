@@ -158,7 +158,7 @@ export default function RecommendRoutinePage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          user_uuid: userUuid,
+          id_uuid_member: userUuid,
           routine_type: selectedRoutine
         })
       });

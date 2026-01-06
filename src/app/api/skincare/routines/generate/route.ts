@@ -8,24 +8,24 @@ export const runtime = 'nodejs';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { user_uuid, routine_type } = body;
+    const { id_uuid_member, routine_type } = body;
 
-    if (!user_uuid) {
-      return NextResponse.json({ error: 'user_uuid is required' }, { status: 400 });
+    if (!id_uuid_member) {
+      return NextResponse.json({ error: 'id_uuid_member is required' }, { status: 400 });
     }
 
     if (!['basic', 'intermediate', 'advanced'].includes(routine_type)) {
       return NextResponse.json({ error: 'Invalid routine_type' }, { status: 400 });
     }
 
-    const userProfile = await getUserProfile(user_uuid);
+    const userProfile = await getUserProfile(id_uuid_member);
 
     if (!userProfile) {
       return NextResponse.json({ error: 'User profile not found' }, { status: 404 });
     }
 
     const routine = await generateRoutine(userProfile, routine_type);
-    const savedRoutine = await saveRoutineToDatabase(user_uuid, routine);
+    const savedRoutine = await saveRoutineToDatabase(id_uuid_member, routine);
 
     return NextResponse.json({
       success: true,
@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-async function getUserProfile(user_uuid: string) {
+async function getUserProfile(id_uuid_member: string) {
   try {
     const profile = await one(`
       SELECT
@@ -59,7 +59,7 @@ async function getUserProfile(user_uuid: string) {
         sleep_pattern, work_environment, exercise_frequency, monthly_budget
       FROM skincare_onboarding
       WHERE id_uuid_member = $1 AND onboarding_completed = TRUE
-    `, [user_uuid]);
+    `, [id_uuid_member]);
 
     if (!profile) return null;
 

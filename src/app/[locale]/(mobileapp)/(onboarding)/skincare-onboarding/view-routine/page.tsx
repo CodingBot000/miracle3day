@@ -6,7 +6,7 @@ import { useNavigation } from '@/hooks/useNavigation';
 import RoutineTimeline from './components/RoutineTimeline';
 
 interface RoutineStep {
-  id: number;
+  id_uuid: string;
   step_order: number;
   step_type: string;
   step_name: string;

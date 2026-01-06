@@ -12,7 +12,7 @@ type TabType = 'today';
 // type TabType = 'today' | 'routine' | 'progress';
 
 interface RoutineStep {
-  id: number;
+  id_uuid: string;
   step_order: number;
   step_type: string;
   step_name: string;
@@ -24,7 +24,7 @@ interface RoutineStep {
 
 interface RoutineData {
   routine_uuid: string;
-  user_uuid: string;
+  id_uuid_member: string;
   routine_type: 'basic' | 'intermediate' | 'advanced';
   routine_name: string;
   routine_description: string;
@@ -94,7 +94,7 @@ export default function SkincareMainPage() {
           return; // API 호출 안 함!
         }
 
-        // 2. 캐시 없으면 user_uuid 확인
+        // 2. 캐시 없으면 id_uuid_member 확인
         console.log('[DEBUG] 📡 No cached data, fetching from API...');
         const stored = mobileStorage.getRaw(STORAGE_KEYS.SKINCARE_ONBOARDING_ANSWERS);
 
@@ -175,11 +175,8 @@ export default function SkincareMainPage() {
   }
 
   // 탭 없이 TodayTab만 표시
-  return (
-    <div className="flex-1 overflow-y-auto">
-      <TodayTab routine={routine} />
-    </div>
-  );
+  // MainLayout에서 이미 스크롤 처리하므로 단순 컨테이너만 사용
+  return <TodayTab routine={routine} />;
 
   /* 탭 시스템 (필요시 복구)
   return (

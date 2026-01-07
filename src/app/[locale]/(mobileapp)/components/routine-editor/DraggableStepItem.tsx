@@ -63,7 +63,7 @@ export default function DraggableStepItem({
   index,
   onDelete,
   isRequired,
-  locale = 'ko'
+  locale = 'en'
 }: DraggableStepItemProps) {
   const {
     attributes,
@@ -135,7 +135,7 @@ export default function DraggableStepItem({
               {stepDisplayName}
             </span>
             {isRequired && (
-              <span className="flex-shrink-0 text-[10px] px-1.5 py-0.5 bg-blue-100 text-blue-700 rounded font-medium">
+              <span className="flex-shrink-0 text-[10px] px-1.5 py-0.5 bg-blue-100 text-white rounded font-medium">
                 {isKo ? '필수' : 'Required'}
               </span>
             )}

@@ -7,6 +7,7 @@ import TodayTab from './components/TodayTab';
 // import MyRoutineTab from './components/MyRoutineTab';
 // import ProgressTab from './components/ProgressTab';
 import { mobileStorage, STORAGE_KEYS } from '@/lib/storage';
+import { DevDateOffsetPanel } from '@/app/[locale]/(mobileapp)/components/dev/DevDateOffsetPanel';
 
 type TabType = 'today';
 // type TabType = 'today' | 'routine' | 'progress';
@@ -176,7 +177,12 @@ export default function SkincareMainPage() {
 
   // 탭 없이 TodayTab만 표시
   // MainLayout에서 이미 스크롤 처리하므로 단순 컨테이너만 사용
-  return <TodayTab routine={routine} />;
+  return (
+    <>
+      <TodayTab routine={routine} />
+      <DevDateOffsetPanel /> {/* DEV ONLY: 나중에 이 줄만 제거 */}
+    </>
+  );
 
   /* 탭 시스템 (필요시 복구)
   return (

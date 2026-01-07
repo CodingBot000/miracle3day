@@ -27,7 +27,14 @@ interface DailyProgress {
   completed: number;
   total: number;
   percentage: number;
+  isToday?: boolean;
+  isPast?: boolean;
 }
+
+// 요일 인덱스 (Sun=0, Mon=1, ..., Sat=6)
+const DAY_ORDER: Record<string, number> = {
+  'Sun': 0, 'Mon': 1, 'Tue': 2, 'Wed': 3, 'Thu': 4, 'Fri': 5, 'Sat': 6
+};
 
 export default function ProgressTab({ routine }: ProgressTabProps) {
   const [todayStats, setTodayStats] = useState({ completed: 0, total: 0, percentage: 0 });
@@ -50,8 +57,11 @@ export default function ProgressTab({ routine }: ProgressTabProps) {
     const loadStats = async () => {
       console.log('[DEBUG] 📊 Loading weekly stats...');
 
-      // 오늘 통계는 항상 localStorage에서 (가장 최신)
-      setTodayStats(getTodayProgress(totalStepsPerDay));
+      // 오늘 통계는 항상 localStorage에서 (가장 최신, 실시간 반영)
+      const todayProgress = getTodayProgress(totalStepsPerDay);
+      setTodayStats(todayProgress);
+
+      const todayStr = new Date().toISOString().split('T')[0];
 
       try {
         // API에서 주간 통계 로드 시도
@@ -63,20 +73,49 @@ export default function ProgressTab({ routine }: ProgressTabProps) {
         if (result.success && result.data) {
           console.log('[DEBUG] ✅ Weekly stats from API:', result.data);
 
-          // API 데이터로 주간 통계 설정
-          const apiDaily = result.data.daily.map((d: { date: string; label: string; completed: number; total: number; rate: number }) => ({
-            date: d.date,
-            label: d.label,
-            completed: d.completed,
-            total: d.total,
-            percentage: d.rate
-          }));
+          // API 데이터로 주간 통계 설정 + 오늘/과거 플래그 추가
+          // 오늘 데이터는 localStorage 값으로 덮어씌움 (실시간 반영)
+          const apiDaily: DailyProgress[] = result.data.daily.map((d: { date: string; label: string; completed: number; total: number; rate: number }) => {
+            const isToday = d.date === todayStr;
+            const isPast = d.date < todayStr;
+
+            // 오늘 데이터는 localStorage 값 사용 (가장 최신)
+            if (isToday) {
+              return {
+                date: d.date,
+                label: d.label,
+                completed: todayProgress.completed,
+                total: todayProgress.total,
+                percentage: todayProgress.percentage,
+                isToday: true,
+                isPast: false
+              };
+            }
+
+            return {
+              date: d.date,
+              label: d.label,
+              completed: d.completed,
+              total: d.total,
+              percentage: d.rate,
+              isToday: false,
+              isPast
+            };
+          });
+
+          // Sun, Mon, Tue, Wed, Thu, Fri, Sat 순서로 정렬
+          apiDaily.sort((a, b) => DAY_ORDER[a.label] - DAY_ORDER[b.label]);
+
+          // 오늘 데이터를 반영한 평균 재계산
+          const totalCompleted = apiDaily.reduce((sum, d) => sum + d.completed, 0);
+          const totalPossible = totalStepsPerDay * 7;
+          const recalculatedAverage = totalPossible > 0 ? Math.round((totalCompleted / totalPossible) * 100) : 0;
 
           setWeekStats({
             daily: apiDaily,
-            average: result.data.completion_rate,
-            totalCompleted: result.data.total_completed,
-            totalSteps: result.data.total_possible
+            average: recalculatedAverage,
+            totalCompleted,
+            totalSteps: totalPossible
           });
 
           setStreak(result.data.streak);
@@ -101,13 +140,28 @@ export default function ProgressTab({ routine }: ProgressTabProps) {
 
   return (
     <div className="p-4 space-y-6">
-      {/* 오늘 */}
-      <StatCard
-        title="Today"
-        completed={todayStats.completed}
-        total={todayStats.total}
-        percentage={todayStats.percentage}
-      />
+      {/* 오늘 + 연속 달성 (가로 배치) */}
+      <div className="flex gap-3">
+        {/* Today 카드 */}
+        <div className="flex-1">
+          <StatCard
+            title="Today"
+            completed={todayStats.completed}
+            total={todayStats.total}
+            percentage={todayStats.percentage}
+          />
+        </div>
+
+        {/* Current Streak 카드 (80px 고정) */}
+        <div
+          className="w-20 flex-shrink-0 bg-gradient-to-br from-orange-400 to-red-500 rounded-xl p-2 text-white shadow-lg flex flex-col items-center justify-center"
+        >
+          <p className="text-[12px] opacity-90 whitespace-nowrap">Streak</p>
+          <p className="text-xl font-bold leading-tight">{streak}</p>
+          <p className="text-[10px] opacity-90">🔥</p>
+          {streak >= 7 && <span className="text-sm">🏆</span>}
+        </div>
+      </div>
 
       {/* 이번 주 */}
       <div className="bg-white rounded-xl p-6 shadow-sm">
@@ -125,41 +179,54 @@ export default function ProgressTab({ routine }: ProgressTabProps) {
 
         {/* 요일별 진행도 */}
         <div className="space-y-2">
-          {weekStats.daily.map((day) => (
-            <div key={day.date} className="flex items-center">
-              <span className="text-xs text-gray-600 w-10">{day.label}</span>
-              <div className="flex-1 mx-2 bg-gray-200 rounded-full h-2">
-                <div
-                  className="bg-blue-600 h-2 rounded-full transition-all"
-                  style={{ width: `${day.percentage}%` }}
-                />
+          {isLoading ? (
+            // 스켈레톤 로딩
+            [...Array(7)].map((_, i) => (
+              <div key={i} className="flex items-center animate-pulse">
+                <div className="w-10 h-4 bg-gray-200 rounded" />
+                <div className="flex-1 mx-2 bg-gray-200 rounded-full h-2" />
+                <div className="w-10 h-4 bg-gray-200 rounded" />
               </div>
-              <span className="text-xs font-semibold w-10 text-right">
-                {day.percentage}%
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
+            ))
+          ) : (
+            weekStats.daily.map((day) => {
+              // 그래프 색상 결정
+              const getBarColor = () => {
+                if (day.isToday) return 'bg-blue-600'; // 오늘: 항상 파란색
+                if (day.isPast) {
+                  if (day.percentage >= 100) return 'bg-green-500'; // 100%: 녹색
+                  if (day.percentage > 50) return 'bg-blue-600';    // 50% 초과: 파란색
+                  return 'bg-red-500';                              // 50% 이하: 빨간색
+                }
+                return 'bg-gray-300'; // 미래: 회색
+              };
 
-      {/* 연속 달성 */}
-      <div className="bg-gradient-to-br from-orange-400 to-red-500 rounded-xl p-6 text-white shadow-lg">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-sm opacity-90">Current Streak</p>
-            <p className="text-3xl font-bold mt-1">
-              {streak} days 🔥
-            </p>
-          </div>
-          {streak >= 7 && (
-            <div className="text-4xl">🏆</div>
+              return (
+                <div key={day.date} className="flex items-center">
+                  {/* 오늘 요일은 진한 볼드 파란색 */}
+                  <span className={`text-xs w-10 ${
+                    day.isToday
+                      ? 'font-bold text-blue-700'
+                      : 'text-gray-600'
+                  }`}>
+                    {day.label}
+                  </span>
+                  <div className="flex-1 mx-2 bg-gray-200 rounded-full h-2">
+                    <div
+                      className={`${getBarColor()} h-2 rounded-full transition-all`}
+                      style={{ width: `${day.percentage}%` }}
+                    />
+                  </div>
+                  <span className={`text-xs font-semibold w-10 text-right ${
+                    day.isToday ? 'text-blue-700' : ''
+                  }`}>
+                    {day.percentage}%
+                  </span>
+                </div>
+              );
+            })
           )}
         </div>
-        {streak === 0 && (
-          <p className="text-sm opacity-70 mt-2">
-            Complete today&apos;s routine to start your streak!
-          </p>
-        )}
       </div>
 
       {/* Phase 2 예정 안내 */}
@@ -186,10 +253,10 @@ function StatCard({
   percentage: number;
 }) {
   return (
-    <div className="bg-white rounded-xl p-6 shadow-sm">
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-bold">{title}</h3>
-        <span className="text-3xl font-bold text-blue-600">{percentage}%</span>
+    <div className="bg-white rounded-xl px-6 py-2 shadow-sm">
+      <div className="flex justify-between items-center mb-2">
+        <h3 className="text-base font-bold">{title}</h3>
+        <span className="text-2xl font-bold text-blue-600">{percentage}%</span>
       </div>
 
       <div className="w-full bg-gray-200 rounded-full h-4 mb-2">
@@ -221,6 +288,7 @@ function getTodayProgress(totalSteps: number) {
 function getWeekProgress(totalStepsPerDay: number) {
   const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const now = new Date();
+  const todayStr = now.toISOString().split('T')[0];
   const daily: DailyProgress[] = [];
   let totalCompleted = 0;
 
@@ -240,9 +308,14 @@ function getWeekProgress(totalStepsPerDay: number) {
       label: days[date.getDay()],
       completed,
       total: totalStepsPerDay,
-      percentage: totalStepsPerDay > 0 ? Math.round((completed / totalStepsPerDay) * 100) : 0
+      percentage: totalStepsPerDay > 0 ? Math.round((completed / totalStepsPerDay) * 100) : 0,
+      isToday: dateStr === todayStr,
+      isPast: dateStr < todayStr
     });
   }
+
+  // Sun, Mon, Tue, Wed, Thu, Fri, Sat 순서로 정렬
+  daily.sort((a, b) => DAY_ORDER[a.label] - DAY_ORDER[b.label]);
 
   const totalSteps = totalStepsPerDay * 7;
   const average = totalSteps > 0 ? Math.round((totalCompleted / totalSteps) * 100) : 0;

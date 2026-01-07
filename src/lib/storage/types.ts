@@ -60,6 +60,9 @@ export const STORAGE_KEYS = {
   SKINCARE_USER_PROFILE: 'skincare_user_profile',
   ROUTINE_LAST_SAVED: 'routine_last_saved',
 
+  // Routine Date Management (날짜 변경 감지용)
+  ROUTINE_CHECK_DATE: 'routine_check_date', // 마지막 체크 날짜 (YYYY-MM-DD)
+
   // Routine Progress (동적 키: routine_progress_YYYY-MM-DD)
   getRoutineProgressKey: (date: string) => `routine_progress_${date}`,
 } as const;
@@ -70,4 +73,5 @@ export type StorageKey =
   | typeof STORAGE_KEYS.SKINCARE_ROUTINE_DATA
   | typeof STORAGE_KEYS.SKINCARE_USER_PROFILE
   | typeof STORAGE_KEYS.ROUTINE_LAST_SAVED
+  | typeof STORAGE_KEYS.ROUTINE_CHECK_DATE
   | `routine_progress_${string}`;

@@ -3,6 +3,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useParams } from 'next/navigation';
 import { mobileStorage, STORAGE_KEYS } from '@/lib/storage';
+import { useRoutineDateSync } from '@/hooks/useRoutineDateSync';
 import WeeklySummary from './WeeklySummary';
 import { ScoreBadge, ScoreDetailModal } from '@/app/[locale]/(mobileapp)/components/routine-score';
 import { RoutineEditor, EditableStep } from '@/app/[locale]/(mobileapp)/components/routine-editor';
@@ -42,7 +43,17 @@ export default function TodayTab({ routine }: TodayTabProps) {
   // 로컬 루틴 데이터 상태 (편집 후 즉시 반영을 위해)
   const [localRoutine, setLocalRoutine] = useState<RoutineData>(routine);
 
-  const [checkedSteps, setCheckedSteps] = useState<Set<string>>(new Set());
+  // 날짜 동기화 훅 사용 (서버 시간 기반 날짜 변경 감지)
+  const {
+    serverDate,
+    checkedSteps,
+    setCheckedSteps,
+    isLoading: isDateSyncLoading,
+  } = useRoutineDateSync({
+    idUuidMember: routine.id_uuid_member,
+    routineUuid: routine.routine_uuid,
+  });
+
   const [isSaving, setIsSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [showSavedToast, setShowSavedToast] = useState(false);
@@ -222,24 +233,15 @@ export default function TodayTab({ routine }: TodayTabProps) {
     }));
   };
 
-  // mobileStorage에서 오늘 날짜의 체크 상태 로드
+  // 마지막 저장 시간 로드
   useEffect(() => {
-    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-    const storageKey = STORAGE_KEYS.getRoutineProgressKey(today);
-    const saved = mobileStorage.getRaw(storageKey);
-
-    if (saved) {
-      setCheckedSteps(new Set(JSON.parse(saved)));
-    }
-
-    // 마지막 저장 시간 로드
     const lastSavedTime = mobileStorage.getRaw(STORAGE_KEYS.ROUTINE_LAST_SAVED);
     if (lastSavedTime) {
       setLastSaved(new Date(lastSavedTime));
     }
   }, []);
 
-  // 체크 상태 변경 시 mobileStorage에만 저장 (API 호출 X)
+  // 체크 상태 변경 (훅의 setCheckedSteps가 localStorage 저장도 처리)
   const handleCheck = (stepId: string) => {
     const newChecked = new Set(checkedSteps);
 
@@ -250,11 +252,6 @@ export default function TodayTab({ routine }: TodayTabProps) {
     }
 
     setCheckedSteps(newChecked);
-
-    // mobileStorage에만 저장
-    const today = new Date().toISOString().split('T')[0];
-    const storageKey = STORAGE_KEYS.getRoutineProgressKey(today);
-    mobileStorage.setRaw(storageKey, JSON.stringify(Array.from(newChecked)));
   };
 
   // 서버에 배치 저장
@@ -263,7 +260,8 @@ export default function TodayTab({ routine }: TodayTabProps) {
     setIsSaving(true);
 
     try {
-      const today = new Date().toISOString().split('T')[0];
+      // 서버 날짜 사용 (날짜 동기화 훅에서 가져온 값)
+      const today = serverDate || new Date().toISOString().split('T')[0];
 
       // 모든 스텝에 대한 진행 상태 생성 (id_uuid + time_of_day)
       type TimeOfDay = 'morning' | 'midday' | 'evening';
@@ -347,6 +345,23 @@ export default function TodayTab({ routine }: TodayTabProps) {
         onCancel={handleEditCancel}
         locale={locale}
       />
+    );
+  }
+
+  // 날짜 동기화 로딩 중일 때
+  if (isDateSyncLoading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="flex flex-col items-center gap-3">
+          <svg className="animate-spin h-8 w-8 text-blue-600" viewBox="0 0 24 24" fill="none">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+          </svg>
+          <span className="text-sm text-gray-500">
+            {locale === 'ko' ? '루틴 로딩 중...' : 'Loading routine...'}
+          </span>
+        </div>
+      </div>
     );
   }
 

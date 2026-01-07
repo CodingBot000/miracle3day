@@ -45,7 +45,7 @@ export default function EditModeToolbar({
             className="text-sm font-semibold px-2 py-0.5 rounded-full"
             style={{ backgroundColor: `${color}20`, color }}
           >
-            {score}점 {emoji}
+            Score: {score} {emoji}
           </span>
         </div>
 

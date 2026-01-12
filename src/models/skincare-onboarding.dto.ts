@@ -5,7 +5,7 @@
  */
 
 export interface SkincareOnboardingDTO {
-  id_uuid: string;                  // 사용자 UUID
+  id_uuid_member: string;           // 사용자 UUID (members 테이블 참조)
   fitzpatrick_type?: number;        // 1-6 (Fitzpatrick Skin Type)
   fitzpatrick_rgb?: string;         // 'r,g,b' 형식 (사진 선택 시만 저장, 없으면 수동 선택)
   age_group?: string;               // '10s', '20s', '30s', '40s', '50s+'

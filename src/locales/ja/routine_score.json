@@ -1,0 +1,88 @@
+{
+  "title": "ルーティンスコア分析",
+  "total_score": "総合スコア",
+  "order_score": "順序スコア",
+  "completeness_score": "完成度スコア",
+  "ingredient_score": "成分調和スコア",
+  "issues_title": "改善が必要な点",
+  "good_title": "よくできています！",
+  "auto_reorder": "推奨順序に自動整列",
+  "keep_current": "現在のままにする",
+  "grade": {
+    "excellent": "完璧です！",
+    "good": "よくできています！",
+    "fair": "もう少しで完璧！",
+    "needs_improvement": "改善が必要です"
+  },
+  "routine_type": {
+    "morning": "朝のルーティン",
+    "midday": "昼のルーティン",
+    "evening": "夜のルーティン"
+  },
+  "severity": {
+    "critical": "重要",
+    "warning": "推奨",
+    "tip": "ヒント"
+  },
+  "issues": {
+    "cleanser_not_first": "クレンザーから始めると、他の製品がより吸収されます",
+    "sunscreen_not_last": "日焼け止めは最後に - 他の製品がUV保護効果を下げます",
+    "oil_before_water": "オイル製品の後は水分製品が浸透しません",
+    "serum_before_toner": "トナーで肌を整えてからセラムを使うと、より吸収されます",
+    "moisturizer_before_serum": "モイスチャライザーはセラムの後に使うと効果的です",
+    "eye_cream_timing": "アイクリームはモイスチャライザーの前に使うとより効果的です",
+    "essence_before_serum": "エッセンスはセラムより先に使いましょう（軽いテクスチャーから）",
+    "missing_cleanser": "クレンジングはスキンケアの第一歩です",
+    "missing_sunscreen": "日焼け止めは肌老化防止の鍵です",
+    "missing_moisturizer": "保湿はすべての肌タイプに必須です"
+  },
+  "good_practices": {
+    "cleanser_first": "クレンザーから始める正しい順序です！",
+    "sunscreen_last": "日焼け止めを最後に塗る完璧な順序です！",
+    "toner_before_serum": "トナーの後にセラム - 完璧な順序です！",
+    "double_cleanse": "ダブルクレンジングでしっかり洗浄！"
+  },
+  "step_names": {
+    "cleanser": "クレンザー",
+    "exfoliant": "角質除去剤",
+    "toner": "トナー",
+    "mist": "ミスト",
+    "essence": "エッセンス",
+    "serum": "セラム",
+    "mask": "マスク",
+    "eye_cream": "アイクリーム",
+    "moisturizer": "モイスチャライザー",
+    "facial_oil": "フェイシャルオイル",
+    "treatment": "トリートメント",
+    "sleeping_mask": "スリーピングマスク",
+    "lip_care": "リップケア",
+    "sunscreen": "日焼け止め",
+    "blotting_paper": "あぶらとり紙"
+  },
+  "score_description": {
+    "order": "製品の使用順序は正しいですか？",
+    "completeness": "必須ステップが含まれていますか？",
+    "ingredient": "成分間の相性は良いですか？"
+  },
+  "editor": {
+    "title": "ルーティン編集",
+    "cancel": "キャンセル",
+    "save": "保存",
+    "auto_sort": "自動整列",
+    "add_step": "ステップ追加",
+    "drag_hint": "長押しで順序変更",
+    "no_steps": "ステップがありません。ステップを追加してください。",
+    "required": "必須",
+    "current_score": "現在のスコア",
+    "routine_type": {
+      "morning": "朝のルーティン",
+      "midday": "昼のルーティン",
+      "evening": "夜のルーティン"
+    },
+    "save_success": "ルーティンを保存しました！",
+    "save_error": "保存に失敗しました",
+    "discard_confirm": "変更を破棄しますか？",
+    "discard_yes": "破棄",
+    "discard_no": "編集を続ける"
+  }
+}

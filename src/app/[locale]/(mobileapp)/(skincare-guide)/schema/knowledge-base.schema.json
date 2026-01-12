@@ -1,0 +1,229 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://skincare-app.com/schemas/knowledge-base.schema.json",
+  "title": "Skincare Knowledge Base Schema",
+  "description": "Schema for skincare educational content",
+  
+  "definitions": {
+    "i18nKey": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)*$",
+      "description": "Dot-notation key for i18n lookup (e.g., 'article.sunscreen.title')"
+    },
+    
+    "skinType": {
+      "type": "string",
+      "enum": ["all", "oily", "dry", "combination", "sensitive", "normal"]
+    },
+    
+    "skinConcern": {
+      "type": "string",
+      "enum": [
+        "acne", "aging", "wrinkles", "dark_spots", "hyperpigmentation",
+        "dryness", "oiliness", "sensitivity", "redness", "sun_damage",
+        "pores", "dullness", "uneven_tone", "dehydration", "fine_lines"
+      ]
+    },
+    
+    "difficultyLevel": {
+      "type": "string",
+      "enum": ["beginner", "intermediate", "advanced"]
+    },
+    
+    "evidenceLevel": {
+      "type": "string",
+      "enum": ["expert_consensus", "clinical_study", "meta_analysis", "guideline"],
+      "description": "Level of scientific evidence supporting the content"
+    },
+    
+    "reference": {
+      "type": "object",
+      "properties": {
+        "source": { "type": "string" },
+        "url": { "type": "string", "format": "uri" },
+        "accessed_date": { "type": "string", "format": "date" },
+        "type": { 
+          "type": "string",
+          "enum": ["guideline", "article", "study", "expert_opinion"]
+        }
+      },
+      "required": ["source", "type"]
+    },
+    
+    "contentSection": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "heading_key": { "$ref": "#/definitions/i18nKey" },
+        "body_key": { "$ref": "#/definitions/i18nKey" },
+        "type": {
+          "type": "string",
+          "enum": ["text", "list", "steps", "tips", "warning", "info"]
+        },
+        "items_key": {
+          "description": "For list/steps type, key to array of items",
+          "$ref": "#/definitions/i18nKey"
+        }
+      },
+      "required": ["id", "type"]
+    },
+    
+    "applicability": {
+      "type": "object",
+      "properties": {
+        "skin_types": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/skinType" }
+        },
+        "concerns": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/skinConcern" }
+        },
+        "age_groups": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["all", "teens", "20s", "30s", "40s", "50+", "children"]
+          }
+        },
+        "climate": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["all", "humid", "dry", "tropical", "cold", "temperate"]
+          }
+        },
+        "seasons": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["all", "spring", "summer", "fall", "winter"]
+          }
+        }
+      }
+    }
+  },
+  
+  "type": "object",
+  "properties": {
+    "articles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$",
+            "description": "Unique article identifier"
+          },
+          "category_id": { "type": "string" },
+          "subcategory_id": { "type": "string" },
+          "level": { "$ref": "#/definitions/difficultyLevel" },
+          "title_key": { "$ref": "#/definitions/i18nKey" },
+          "summary_key": { "$ref": "#/definitions/i18nKey" },
+          "content": {
+            "type": "object",
+            "properties": {
+              "sections": {
+                "type": "array",
+                "items": { "$ref": "#/definitions/contentSection" }
+              }
+            },
+            "required": ["sections"]
+          },
+          "tags": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Searchable keywords"
+          },
+          "applicable_to": { "$ref": "#/definitions/applicability" },
+          "evidence_level": { "$ref": "#/definitions/evidenceLevel" },
+          "references": {
+            "type": "array",
+            "items": { "$ref": "#/definitions/reference" }
+          },
+          "related_articles": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Array of related article IDs"
+          },
+          "routine_step": {
+            "type": "string",
+            "enum": ["cleanse", "tone", "treat", "moisturize", "protect"],
+            "description": "If applicable, which routine step this relates to"
+          },
+          "created_at": { "type": "string", "format": "date" },
+          "updated_at": { "type": "string", "format": "date" },
+          "status": {
+            "type": "string",
+            "enum": ["draft", "review", "published", "archived"]
+          }
+        },
+        "required": ["id", "category_id", "level", "title_key", "content", "status"]
+      }
+    },
+    
+    "categories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name_key": { "$ref": "#/definitions/i18nKey" },
+          "description_key": { "$ref": "#/definitions/i18nKey" },
+          "icon": { "type": "string" },
+          "order": { "type": "integer" },
+          "subcategories": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string" },
+                "name_key": { "$ref": "#/definitions/i18nKey" },
+                "order": { "type": "integer" }
+              },
+              "required": ["id", "name_key"]
+            }
+          }
+        },
+        "required": ["id", "name_key"]
+      }
+    },
+    
+    "guidelines": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "type": {
+            "type": "string",
+            "enum": ["product_order", "ingredient", "routine", "tip"]
+          },
+          "title_key": { "$ref": "#/definitions/i18nKey" },
+          "content_key": { "$ref": "#/definitions/i18nKey" },
+          "conditions": {
+            "type": "object",
+            "description": "When to show this guideline",
+            "properties": {
+              "skin_type": { "$ref": "#/definitions/skinType" },
+              "concern": { "$ref": "#/definitions/skinConcern" },
+              "product_type": { "type": "string" },
+              "time_of_day": {
+                "type": "string",
+                "enum": ["morning", "evening", "both"]
+              }
+            }
+          },
+          "priority": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10
+          },
+          "reference_url": { "type": "string", "format": "uri" }
+        },
+        "required": ["id", "type", "title_key"]
+      }
+    }
+  }
+}

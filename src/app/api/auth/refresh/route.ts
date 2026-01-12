@@ -10,6 +10,52 @@ import {
 } from "@/lib/auth/jwt";
 import type { TokenPayloadInput, HospitalAccess } from "@/lib/auth/types";
 
+// Retry 설정
+const MAX_RETRIES = 2;
+const RETRY_DELAY_MS = 300;
+
+// 지연 헬퍼
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+// DB 조회 결과 타입
+type UserQueryResult =
+  | { success: true; user: any }
+  | { success: false; notFound: true }
+  | { success: false; notFound: false; error: Error };
+
+// DB 조회 with retry
+async function getUserWithRetry(userId: string): Promise<UserQueryResult> {
+  let lastError: Error | null = null;
+
+  for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      const [user] = await q(
+        `SELECT id_uuid, email, role, name, avatar, is_active
+         FROM ${TABLE_MEMBERS}
+         WHERE id_uuid = $1`,
+        [userId]
+      );
+
+      if (!user) {
+        // 사용자가 DB에 없음 (탈퇴 등) - 명확한 "없음"
+        return { success: false, notFound: true };
+      }
+
+      return { success: true, user };
+    } catch (error) {
+      lastError = error as Error;
+      console.warn(`[Refresh] DB query attempt ${attempt + 1} failed:`, error);
+
+      if (attempt < MAX_RETRIES) {
+        await sleep(RETRY_DELAY_MS * (attempt + 1)); // 점진적 지연
+      }
+    }
+  }
+
+  // 모든 재시도 실패 - DB 연결 오류
+  return { success: false, notFound: false, error: lastError! };
+}
+
 /**
  * GET /api/auth/refresh
  * Middleware에서 리다이렉트 시 사용 (redirect 파라미터로 원래 경로 전달)
@@ -30,15 +76,26 @@ export async function GET(req: NextRequest) {
       return res;
     }
 
-    // DB에서 최신 사용자 정보 조회
-    const [user] = await q(
-      `SELECT id_uuid, email, role, name, avatar, is_active
-       FROM ${TABLE_MEMBERS}
-       WHERE id_uuid = $1`,
-      [payload.sub]
-    );
+    // DB에서 최신 사용자 정보 조회 (with retry)
+    const userResult = await getUserWithRetry(payload.sub);
 
-    if (!user || user.is_active === false) {
+    if (!userResult.success) {
+      if (userResult.notFound) {
+        // 사용자가 DB에 없음 → 쿠키 삭제 후 로그인 페이지
+        const res = NextResponse.redirect(new URL("/login", req.url));
+        clearAuthCookies(res);
+        return res;
+      } else {
+        // DB 연결 오류 → 쿠키 유지, 일시적 오류 처리
+        console.error("[Refresh] DB connection error after retries:", userResult.error);
+        // 원래 페이지로 리다이렉트 (쿠키 유지, 다음 요청에서 재시도)
+        return NextResponse.redirect(new URL(redirectUrl, req.url));
+      }
+    }
+
+    const user = userResult.user;
+
+    if (user.is_active === false) {
       const res = NextResponse.redirect(new URL("/login", req.url));
       clearAuthCookies(res);
       return res;
@@ -108,17 +165,33 @@ export async function POST(req: NextRequest) {
       return res;
     }
 
-    // DB에서 최신 사용자 정보 조회
-    const [user] = await q(
-      `SELECT id_uuid, email, role, name, avatar, is_active
-       FROM ${TABLE_MEMBERS}
-       WHERE id_uuid = $1`,
-      [payload.sub]
-    );
+    // DB에서 최신 사용자 정보 조회 (with retry)
+    const userResult = await getUserWithRetry(payload.sub);
 
-    if (!user || user.is_active === false) {
+    if (!userResult.success) {
+      if (userResult.notFound) {
+        // 사용자가 DB에 없음 → 쿠키 삭제
+        const res = NextResponse.json(
+          { error: "User not found" },
+          { status: 401 }
+        );
+        clearAuthCookies(res);
+        return res;
+      } else {
+        // DB 연결 오류 → 쿠키 유지, 503 반환 (일시적 오류)
+        console.error("[Refresh] DB connection error after retries:", userResult.error);
+        return NextResponse.json(
+          { error: "Temporary error, please retry" },
+          { status: 503 }
+        );
+      }
+    }
+
+    const user = userResult.user;
+
+    if (user.is_active === false) {
       const res = NextResponse.json(
-        { error: "User not found or inactive" },
+        { error: "User inactive" },
         { status: 401 }
       );
       clearAuthCookies(res);

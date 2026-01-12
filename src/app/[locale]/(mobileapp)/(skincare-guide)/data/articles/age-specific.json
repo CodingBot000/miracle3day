@@ -1,0 +1,327 @@
+{
+  "category": "age-specific",
+  "description": "Age-specific and demographic-targeted skincare guidelines from AAD",
+  "lastUpdated": "2025-01-05",
+  "articles": [
+    {
+      "id": "skincare-20s",
+      "titleKey": "article.skincare20s.title",
+      "descriptionKey": "article.skincare20s.description",
+      "ageRange": {
+        "min": 20,
+        "max": 29
+      },
+      "targetDemographic": "young-adult",
+      "source": {
+        "name": "American Academy of Dermatology",
+        "url": "https://www.aad.org/public/everyday-care/skin-care-basics/care/skin-care-in-your-20s",
+        "authors": ["Rebecca Baxt, MD, FAAD", "Rajani Katta, MD, FAAD"],
+        "lastReviewed": "2023-02-23"
+      },
+      "keyMessages": [
+        {
+          "titleKey": "article.skincare20s.message1.title",
+          "contentKey": "article.skincare20s.message1.content",
+          "priority": 1
+        },
+        {
+          "titleKey": "article.skincare20s.message2.title",
+          "contentKey": "article.skincare20s.message2.content",
+          "priority": 2
+        },
+        {
+          "titleKey": "article.skincare20s.message3.title",
+          "contentKey": "article.skincare20s.message3.content",
+          "priority": 3
+        },
+        {
+          "titleKey": "article.skincare20s.message4.title",
+          "contentKey": "article.skincare20s.message4.content",
+          "priority": 4
+        },
+        {
+          "titleKey": "article.skincare20s.message5.title",
+          "contentKey": "article.skincare20s.message5.content",
+          "priority": 5
+        },
+        {
+          "titleKey": "article.skincare20s.message6.title",
+          "contentKey": "article.skincare20s.message6.content",
+          "priority": 6
+        }
+      ],
+      "essentialProducts": [
+        {
+          "type": "cleanser",
+          "requirement": "mild, skin-type-appropriate",
+          "frequency": "twice daily"
+        },
+        {
+          "type": "sunscreen",
+          "requirement": "SPF 30+, broad-spectrum, water-resistant",
+          "frequency": "daily before sun exposure"
+        },
+        {
+          "type": "vitamin-c",
+          "requirement": "serum or cream",
+          "frequency": "morning after cleansing",
+          "benefits": ["reduces aging signs", "fades dark spots"]
+        },
+        {
+          "type": "retinoid",
+          "requirement": "retinol or prescription",
+          "frequency": "before bed, 20-30 min after washing",
+          "benefits": ["speeds cell turnover", "treats acne", "reduces fine lines"]
+        }
+      ],
+      "skinConcerns": ["acne", "fine-lines", "dark-spots", "uneven-texture"],
+      "lifestyleRecommendations": [
+        "stop-tanning",
+        "sun-protection-daily",
+        "no-scrubbing",
+        "remove-makeup-before-bed",
+        "limit-sugar"
+      ],
+      "expertQuotes": [
+        {
+          "quote": "The skin care choices you make now will affect what your skin looks like in your next decade – and beyond.",
+          "author": "Rajani Katta, MD, FAAD"
+        },
+        {
+          "quote": "Protect your skin from the sun! Wear sunglasses and a hat, a broad-brimmed hat works best. Seek shade. Your future self will thank you!",
+          "author": "Rebecca Baxt, MD, FAAD"
+        }
+      ]
+    },
+    {
+      "id": "skincare-40s-50s",
+      "titleKey": "article.skincare4050s.title",
+      "descriptionKey": "article.skincare4050s.description",
+      "ageRange": {
+        "min": 40,
+        "max": 59
+      },
+      "targetDemographic": "middle-age",
+      "source": {
+        "name": "American Academy of Dermatology",
+        "url": "https://www.aad.org/public/everyday-care/skin-care-basics/care/skin-care-in-your-40s-and-50s"
+      },
+      "keyMessages": [
+        {
+          "titleKey": "article.skincare4050s.message1.title",
+          "contentKey": "article.skincare4050s.message1.content",
+          "priority": 1
+        },
+        {
+          "titleKey": "article.skincare4050s.message2.title",
+          "contentKey": "article.skincare4050s.message2.content",
+          "priority": 2
+        },
+        {
+          "titleKey": "article.skincare4050s.message3.title",
+          "contentKey": "article.skincare4050s.message3.content",
+          "priority": 3
+        },
+        {
+          "titleKey": "article.skincare4050s.message4.title",
+          "contentKey": "article.skincare4050s.message4.content",
+          "priority": 4
+        },
+        {
+          "titleKey": "article.skincare4050s.message5.title",
+          "contentKey": "article.skincare4050s.message5.content",
+          "priority": 5
+        },
+        {
+          "titleKey": "article.skincare4050s.message6.title",
+          "contentKey": "article.skincare4050s.message6.content",
+          "priority": 6
+        },
+        {
+          "titleKey": "article.skincare4050s.message7.title",
+          "contentKey": "article.skincare4050s.message7.content",
+          "priority": 7
+        }
+      ],
+      "antiAgingBenefits": [
+        "prevent-blotchy-complexion",
+        "retain-firmness",
+        "reduce-fine-lines-wrinkles",
+        "brighter-complexion",
+        "avoid-leathery-skin",
+        "reduce-skin-cancer-risk"
+      ],
+      "skinConcerns": ["wrinkles", "age-spots", "loss-of-firmness", "dryness"],
+      "lifestyleRecommendations": [
+        "sun-protection-comprehensive",
+        "no-indoor-tanning",
+        "daily-moisturizer",
+        "gentle-cleansing",
+        "stop-smoking",
+        "healthy-diet",
+        "adequate-sleep"
+      ]
+    },
+    {
+      "id": "skincare-60s-70s",
+      "titleKey": "article.skincare6070s.title",
+      "descriptionKey": "article.skincare6070s.description",
+      "ageRange": {
+        "min": 60,
+        "max": 79
+      },
+      "targetDemographic": "senior",
+      "source": {
+        "name": "American Academy of Dermatology",
+        "url": "https://www.aad.org/public/everyday-care/skin-care-basics/care/skin-care-in-your-60s-and-70s",
+        "authors": ["Bassel H. Mahmoud, MD, PhD, FAAD", "Kesha Buster, MD, FAAD", "Sandy Marchese Johnson, MD, FAAD"],
+        "lastReviewed": "2021-09-08"
+      },
+      "keyMessages": [
+        {
+          "titleKey": "article.skincare6070s.message1.title",
+          "contentKey": "article.skincare6070s.message1.content",
+          "priority": 1
+        },
+        {
+          "titleKey": "article.skincare6070s.message2.title",
+          "contentKey": "article.skincare6070s.message2.content",
+          "priority": 2
+        },
+        {
+          "titleKey": "article.skincare6070s.message3.title",
+          "contentKey": "article.skincare6070s.message3.content",
+          "priority": 3
+        },
+        {
+          "titleKey": "article.skincare6070s.message4.title",
+          "contentKey": "article.skincare6070s.message4.content",
+          "priority": 4
+        },
+        {
+          "titleKey": "article.skincare6070s.message5.title",
+          "contentKey": "article.skincare6070s.message5.content",
+          "priority": 5
+        },
+        {
+          "titleKey": "article.skincare6070s.message6.title",
+          "contentKey": "article.skincare6070s.message6.content",
+          "priority": 6
+        }
+      ],
+      "skinChanges": [
+        "drier-skin",
+        "thinner-paper-like",
+        "itchy",
+        "more-age-spots-wrinkles",
+        "blotchier",
+        "easily-irritated",
+        "susceptible-to-infections",
+        "bruises-easily",
+        "sweats-less",
+        "heals-slowly"
+      ],
+      "bathingGuidelines": {
+        "waterTemp": "warm-not-hot",
+        "duration": "5-10 minutes",
+        "cleanser": "gentle, fragrance-free, moisturizing",
+        "moisturizerTiming": "within 3 minutes of bathing",
+        "moisturizerType": "creamy, fragrance-free; ointment for very dry skin"
+      },
+      "skinConcerns": ["dryness", "thinning", "age-spots", "skin-cancer-risk"],
+      "lifestyleRecommendations": [
+        "humidifier-use",
+        "wear-gloves-housework",
+        "sun-protection-ongoing",
+        "fragrance-free-products",
+        "regular-skin-checks"
+      ]
+    },
+    {
+      "id": "skincare-men",
+      "titleKey": "article.skincareMen.title",
+      "descriptionKey": "article.skincareMen.description",
+      "targetDemographic": "male",
+      "source": {
+        "name": "American Academy of Dermatology",
+        "url": "https://www.aad.org/public/everyday-care/skin-care-basics/care/skin-care-for-men"
+      },
+      "skinTypeIdentification": [
+        {
+          "type": "sensitive",
+          "description": "may sting or burn after product use"
+        },
+        {
+          "type": "normal",
+          "description": "clear and not sensitive"
+        },
+        {
+          "type": "dry",
+          "description": "flaky, itchy or rough"
+        },
+        {
+          "type": "oily",
+          "description": "shiny and greasy"
+        },
+        {
+          "type": "combination",
+          "description": "dry in some areas and oily in others"
+        }
+      ],
+      "keyMessages": [
+        {
+          "titleKey": "article.skincareMen.message1.title",
+          "contentKey": "article.skincareMen.message1.content",
+          "priority": 1
+        },
+        {
+          "titleKey": "article.skincareMen.message2.title",
+          "contentKey": "article.skincareMen.message2.content",
+          "priority": 2
+        },
+        {
+          "titleKey": "article.skincareMen.message3.title",
+          "contentKey": "article.skincareMen.message3.content",
+          "priority": 3
+        },
+        {
+          "titleKey": "article.skincareMen.message4.title",
+          "contentKey": "article.skincareMen.message4.content",
+          "priority": 4
+        },
+        {
+          "titleKey": "article.skincareMen.message5.title",
+          "contentKey": "article.skincareMen.message5.content",
+          "priority": 5
+        },
+        {
+          "titleKey": "article.skincareMen.message6.title",
+          "contentKey": "article.skincareMen.message6.content",
+          "priority": 6
+        }
+      ],
+      "shavingTips": {
+        "razorType": "single or double-blade for sensitive skin",
+        "preparation": "wet skin and hair to soften",
+        "shavingCream": "moisturizing",
+        "direction": "with hair growth",
+        "bladeChange": "every 5-7 shaves",
+        "commonIssues": ["razor bumps", "razor burns", "ingrown hairs"]
+      },
+      "skinConcerns": ["shaving-irritation", "oiliness", "skin-cancer-higher-risk-50+"],
+      "keyFact": "Men's skin is thicker than women's, but basic skincare elements remain the same"
+    }
+  ],
+  "metadata": {
+    "totalArticles": 4,
+    "ageRangesCovered": ["20-29", "40-59", "60-79"],
+    "demographicsCovered": ["young-adult", "middle-age", "senior", "male"],
+    "commonThemes": [
+      "sun-protection",
+      "moisturizing",
+      "gentle-cleansing",
+      "skin-type-awareness",
+      "regular-skin-checks"
+    ]
+  }
+}

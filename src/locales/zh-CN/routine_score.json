@@ -1,0 +1,88 @@
+{
+  "title": "护肤程序评分分析",
+  "total_score": "总分",
+  "order_score": "顺序评分",
+  "completeness_score": "完整度评分",
+  "ingredient_score": "成分协调评分",
+  "issues_title": "需要改进的地方",
+  "good_title": "做得很好！",
+  "auto_reorder": "自动调整为推荐顺序",
+  "keep_current": "保持当前顺序",
+  "grade": {
+    "excellent": "完美！",
+    "good": "做得很好！",
+    "fair": "差一点就完美了！",
+    "needs_improvement": "需要改进"
+  },
+  "routine_type": {
+    "morning": "早间护肤",
+    "midday": "午间护肤",
+    "evening": "晚间护肤"
+  },
+  "severity": {
+    "critical": "重要",
+    "warning": "建议",
+    "tip": "提示"
+  },
+  "issues": {
+    "cleanser_not_first": "先用洁面产品，其他产品才能更好吸收",
+    "sunscreen_not_last": "防晒霜应该最后用 - 其他产品会降低紫外线防护效果",
+    "oil_before_water": "用过油性产品后，水性产品无法渗透",
+    "serum_before_toner": "先用爽肤水调理肌肤，精华液会更好吸收",
+    "moisturizer_before_serum": "精华液后再用面霜效果更好",
+    "eye_cream_timing": "眼霜在面霜之前用更有效",
+    "essence_before_serum": "精华水应该在精华液之前使用（先轻薄后厚重）",
+    "missing_cleanser": "洁面是护肤的第一步",
+    "missing_sunscreen": "防晒是防止皮肤老化的关键",
+    "missing_moisturizer": "保湿对所有肤质都是必须的"
+  },
+  "good_practices": {
+    "cleanser_first": "从洁面开始，顺序正确！",
+    "sunscreen_last": "防晒霜最后用，完美的顺序！",
+    "toner_before_serum": "爽肤水后用精华液 - 完美的顺序！",
+    "double_cleanse": "双重清洁，彻底洁净！"
+  },
+  "step_names": {
+    "cleanser": "洁面",
+    "exfoliant": "去角质",
+    "toner": "爽肤水",
+    "mist": "喷雾",
+    "essence": "精华水",
+    "serum": "精华液",
+    "mask": "面膜",
+    "eye_cream": "眼霜",
+    "moisturizer": "面霜",
+    "facial_oil": "面部精油",
+    "treatment": "护理",
+    "sleeping_mask": "睡眠面膜",
+    "lip_care": "唇部护理",
+    "sunscreen": "防晒霜",
+    "blotting_paper": "吸油纸"
+  },
+  "score_description": {
+    "order": "产品使用顺序正确吗？",
+    "completeness": "必要步骤都包含了吗？",
+    "ingredient": "成分之间兼容吗？"
+  },
+  "editor": {
+    "title": "编辑护肤程序",
+    "cancel": "取消",
+    "save": "保存",
+    "auto_sort": "自动排序",
+    "add_step": "添加步骤",
+    "drag_hint": "长按拖动调整顺序",
+    "no_steps": "没有步骤。请添加步骤。",
+    "required": "必需",
+    "current_score": "当前评分",
+    "routine_type": {
+      "morning": "早间护肤",
+      "midday": "午间护肤",
+      "evening": "晚间护肤"
+    },
+    "save_success": "护肤程序已保存！",
+    "save_error": "保存失败",
+    "discard_confirm": "放弃更改？",
+    "discard_yes": "放弃",
+    "discard_no": "继续编辑"
+  }
+}

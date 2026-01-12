@@ -1,0 +1,185 @@
+{
+  "articles": [
+    {
+      "id": "sunscreen-basics-101",
+      "category_id": "sun-protection",
+      "subcategory_id": "sunscreen-basics",
+      "level": "beginner",
+      "title_key": "article.sunscreen_basics.title",
+      "summary_key": "article.sunscreen_basics.summary",
+      "content": {
+        "sections": [
+          {
+            "id": "why-sunscreen",
+            "type": "text",
+            "heading_key": "article.sunscreen_basics.section.why.heading",
+            "body_key": "article.sunscreen_basics.section.why.body"
+          },
+          {
+            "id": "uv-types",
+            "type": "info",
+            "heading_key": "article.sunscreen_basics.section.uv_types.heading",
+            "body_key": "article.sunscreen_basics.section.uv_types.body"
+          },
+          {
+            "id": "spf-explained",
+            "type": "text",
+            "heading_key": "article.sunscreen_basics.section.spf.heading",
+            "body_key": "article.sunscreen_basics.section.spf.body"
+          },
+          {
+            "id": "broad-spectrum",
+            "type": "text",
+            "heading_key": "article.sunscreen_basics.section.broad_spectrum.heading",
+            "body_key": "article.sunscreen_basics.section.broad_spectrum.body"
+          },
+          {
+            "id": "key-points",
+            "type": "list",
+            "heading_key": "article.sunscreen_basics.section.key_points.heading",
+            "items_key": "article.sunscreen_basics.section.key_points.items"
+          }
+        ]
+      },
+      "tags": ["sunscreen", "spf", "uv", "sun-protection", "basics", "uva", "uvb"],
+      "applicable_to": {
+        "skin_types": ["all"],
+        "concerns": ["sun_damage", "aging", "hyperpigmentation"],
+        "age_groups": ["all"],
+        "seasons": ["all"]
+      },
+      "evidence_level": "guideline",
+      "references": [
+        {
+          "source": "American Academy of Dermatology",
+          "url": "https://www.aad.org/public/everyday-care/sun-protection",
+          "accessed_date": "2025-01-04",
+          "type": "guideline"
+        }
+      ],
+      "related_articles": ["how-to-choose-sunscreen", "how-to-apply-sunscreen", "sunscreen-myths"],
+      "routine_step": "protect",
+      "created_at": "2025-01-04",
+      "updated_at": "2025-01-04",
+      "status": "published"
+    },
+    {
+      "id": "how-to-choose-sunscreen",
+      "category_id": "sun-protection",
+      "subcategory_id": "choosing-sunscreen",
+      "level": "beginner",
+      "title_key": "article.choose_sunscreen.title",
+      "summary_key": "article.choose_sunscreen.summary",
+      "content": {
+        "sections": [
+          {
+            "id": "three-criteria",
+            "type": "steps",
+            "heading_key": "article.choose_sunscreen.section.criteria.heading",
+            "items_key": "article.choose_sunscreen.section.criteria.items"
+          },
+          {
+            "id": "chemical-vs-physical",
+            "type": "text",
+            "heading_key": "article.choose_sunscreen.section.types.heading",
+            "body_key": "article.choose_sunscreen.section.types.body"
+          },
+          {
+            "id": "by-skin-type",
+            "type": "list",
+            "heading_key": "article.choose_sunscreen.section.skin_type.heading",
+            "items_key": "article.choose_sunscreen.section.skin_type.items"
+          },
+          {
+            "id": "for-sensitive-skin",
+            "type": "tips",
+            "heading_key": "article.choose_sunscreen.section.sensitive.heading",
+            "body_key": "article.choose_sunscreen.section.sensitive.body"
+          }
+        ]
+      },
+      "tags": ["sunscreen", "spf", "choosing", "mineral", "chemical", "sensitive-skin"],
+      "applicable_to": {
+        "skin_types": ["all"],
+        "concerns": ["sun_damage", "sensitivity"],
+        "age_groups": ["all"]
+      },
+      "evidence_level": "guideline",
+      "references": [
+        {
+          "source": "American Academy of Dermatology",
+          "url": "https://www.aad.org/public/everyday-care/sun-protection/shade-clothing-sunscreen/how-to-select-sunscreen",
+          "accessed_date": "2025-01-04",
+          "type": "guideline"
+        }
+      ],
+      "related_articles": ["sunscreen-basics-101", "how-to-apply-sunscreen"],
+      "routine_step": "protect",
+      "created_at": "2025-01-04",
+      "updated_at": "2025-01-04",
+      "status": "published"
+    },
+    {
+      "id": "how-to-apply-sunscreen",
+      "category_id": "sun-protection",
+      "subcategory_id": "application",
+      "level": "beginner",
+      "title_key": "article.apply_sunscreen.title",
+      "summary_key": "article.apply_sunscreen.summary",
+      "content": {
+        "sections": [
+          {
+            "id": "amount",
+            "type": "text",
+            "heading_key": "article.apply_sunscreen.section.amount.heading",
+            "body_key": "article.apply_sunscreen.section.amount.body"
+          },
+          {
+            "id": "when-to-apply",
+            "type": "text",
+            "heading_key": "article.apply_sunscreen.section.timing.heading",
+            "body_key": "article.apply_sunscreen.section.timing.body"
+          },
+          {
+            "id": "reapplication",
+            "type": "warning",
+            "heading_key": "article.apply_sunscreen.section.reapply.heading",
+            "body_key": "article.apply_sunscreen.section.reapply.body"
+          },
+          {
+            "id": "missed-spots",
+            "type": "list",
+            "heading_key": "article.apply_sunscreen.section.missed.heading",
+            "items_key": "article.apply_sunscreen.section.missed.items"
+          },
+          {
+            "id": "steps",
+            "type": "steps",
+            "heading_key": "article.apply_sunscreen.section.steps.heading",
+            "items_key": "article.apply_sunscreen.section.steps.items"
+          }
+        ]
+      },
+      "tags": ["sunscreen", "application", "how-to", "reapply", "amount"],
+      "applicable_to": {
+        "skin_types": ["all"],
+        "concerns": ["sun_damage"],
+        "age_groups": ["all"]
+      },
+      "evidence_level": "guideline",
+      "references": [
+        {
+          "source": "American Academy of Dermatology",
+          "url": "https://www.aad.org/public/everyday-care/sun-protection/shade-clothing-sunscreen/how-to-apply-sunscreen",
+          "accessed_date": "2025-01-04",
+          "type": "guideline"
+        }
+      ],
+      "related_articles": ["sunscreen-basics-101", "how-to-choose-sunscreen", "sunscreen-common-mistakes"],
+      "routine_step": "protect",
+      "created_at": "2025-01-04",
+      "updated_at": "2025-01-04",
+      "status": "published"
+    }
+  ]
+}

@@ -1,0 +1,212 @@
+{
+  "categories": [
+    {
+      "id": "basics",
+      "name_key": "category.basics.name",
+      "description_key": "category.basics.description",
+      "icon": "sparkles",
+      "order": 1,
+      "subcategories": [
+        {
+          "id": "skin-science",
+          "name_key": "category.basics.skin_science",
+          "order": 1
+        },
+        {
+          "id": "skin-types",
+          "name_key": "category.basics.skin_types",
+          "order": 2
+        },
+        {
+          "id": "basic-routine",
+          "name_key": "category.basics.basic_routine",
+          "order": 3
+        },
+        {
+          "id": "product-types",
+          "name_key": "category.basics.product_types",
+          "order": 4
+        }
+      ]
+    },
+    {
+      "id": "routine",
+      "name_key": "category.routine.name",
+      "description_key": "category.routine.description",
+      "icon": "clock",
+      "order": 2,
+      "subcategories": [
+        {
+          "id": "morning-routine",
+          "name_key": "category.routine.morning",
+          "order": 1
+        },
+        {
+          "id": "evening-routine",
+          "name_key": "category.routine.evening",
+          "order": 2
+        },
+        {
+          "id": "product-order",
+          "name_key": "category.routine.product_order",
+          "order": 3
+        },
+        {
+          "id": "layering",
+          "name_key": "category.routine.layering",
+          "order": 4
+        }
+      ]
+    },
+    {
+      "id": "sun-protection",
+      "name_key": "category.sun_protection.name",
+      "description_key": "category.sun_protection.description",
+      "icon": "sun",
+      "order": 3,
+      "subcategories": [
+        {
+          "id": "sunscreen-basics",
+          "name_key": "category.sun_protection.sunscreen_basics",
+          "order": 1
+        },
+        {
+          "id": "choosing-sunscreen",
+          "name_key": "category.sun_protection.choosing",
+          "order": 2
+        },
+        {
+          "id": "application",
+          "name_key": "category.sun_protection.application",
+          "order": 3
+        },
+        {
+          "id": "sun-damage",
+          "name_key": "category.sun_protection.sun_damage",
+          "order": 4
+        }
+      ]
+    },
+    {
+      "id": "ingredients",
+      "name_key": "category.ingredients.name",
+      "description_key": "category.ingredients.description",
+      "icon": "beaker",
+      "order": 4,
+      "subcategories": [
+        {
+          "id": "active-ingredients",
+          "name_key": "category.ingredients.actives",
+          "order": 1
+        },
+        {
+          "id": "hydrating",
+          "name_key": "category.ingredients.hydrating",
+          "order": 2
+        },
+        {
+          "id": "anti-aging",
+          "name_key": "category.ingredients.anti_aging",
+          "order": 3
+        },
+        {
+          "id": "ingredient-conflicts",
+          "name_key": "category.ingredients.conflicts",
+          "order": 4
+        }
+      ]
+    },
+    {
+      "id": "concerns",
+      "name_key": "category.concerns.name",
+      "description_key": "category.concerns.description",
+      "icon": "target",
+      "order": 5,
+      "subcategories": [
+        {
+          "id": "acne",
+          "name_key": "category.concerns.acne",
+          "order": 1
+        },
+        {
+          "id": "aging",
+          "name_key": "category.concerns.aging",
+          "order": 2
+        },
+        {
+          "id": "pigmentation",
+          "name_key": "category.concerns.pigmentation",
+          "order": 3
+        },
+        {
+          "id": "sensitivity",
+          "name_key": "category.concerns.sensitivity",
+          "order": 4
+        },
+        {
+          "id": "dryness",
+          "name_key": "category.concerns.dryness",
+          "order": 5
+        }
+      ]
+    },
+    {
+      "id": "advanced",
+      "name_key": "category.advanced.name",
+      "description_key": "category.advanced.description",
+      "icon": "graduation-cap",
+      "order": 6,
+      "subcategories": [
+        {
+          "id": "exfoliation",
+          "name_key": "category.advanced.exfoliation",
+          "order": 1
+        },
+        {
+          "id": "retinoids",
+          "name_key": "category.advanced.retinoids",
+          "order": 2
+        },
+        {
+          "id": "acids",
+          "name_key": "category.advanced.acids",
+          "order": 3
+        },
+        {
+          "id": "treatments",
+          "name_key": "category.advanced.treatments",
+          "order": 4
+        }
+      ]
+    },
+    {
+      "id": "age-specific",
+      "name_key": "category.age_specific.name",
+      "description_key": "category.age_specific.description",
+      "icon": "users",
+      "order": 7,
+      "subcategories": [
+        {
+          "id": "skincare-20s",
+          "name_key": "category.age_specific.20s",
+          "order": 1
+        },
+        {
+          "id": "skincare-40s-50s",
+          "name_key": "category.age_specific.40s_50s",
+          "order": 2
+        },
+        {
+          "id": "skincare-60s-70s",
+          "name_key": "category.age_specific.60s_70s",
+          "order": 3
+        },
+        {
+          "id": "skincare-men",
+          "name_key": "category.age_specific.men",
+          "order": 4
+        }
+      ]
+    }
+  ]
+}

@@ -4,7 +4,7 @@ import { StepTemplate } from './routineTemplates';
 
 export interface SavedRoutine {
   id_uuid: string;
-  user_uuid: string;
+  id_uuid_member: string;
   routine_type: string;
   routine_name: string;
   routine_description: string;
@@ -13,12 +13,12 @@ export interface SavedRoutine {
 }
 
 export async function saveRoutineToDatabase(
-  user_uuid: string,
+  id_uuid_member: string,
   routine: GeneratedRoutine
 ): Promise<SavedRoutine> {
   try {
     const routineData = {
-      user_uuid,
+      id_uuid_member,
       routine_type: routine.type,
       routine_name: getRoutineName(routine.type),
       routine_description: `AI-generated ${routine.type} skincare routine with midday care`,
@@ -30,17 +30,17 @@ export async function saveRoutineToDatabase(
     await query(`
       UPDATE skincare_routines
       SET is_active = FALSE, is_default = FALSE
-      WHERE user_uuid = $1 AND is_active = TRUE
-    `, [user_uuid]);
+      WHERE id_uuid_member = $1 AND is_active = TRUE
+    `, [id_uuid_member]);
 
     // Insert the new routine
     const insertedRoutine = await one<{ id_uuid: string }>(`
       INSERT INTO skincare_routines (
-        user_uuid, routine_type, routine_name, routine_description, is_active, is_default
+        id_uuid_member, routine_type, routine_name, routine_description, is_active, is_default
       ) VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING id_uuid
     `, [
-      routineData.user_uuid,
+      routineData.id_uuid_member,
       routineData.routine_type,
       routineData.routine_name,
       routineData.routine_description,

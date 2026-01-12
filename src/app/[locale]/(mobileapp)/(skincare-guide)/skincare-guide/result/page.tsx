@@ -186,7 +186,7 @@ export default function SkincareGuideResultPage() {
             {article.expertQuotes?.[0] && (
               <div className="mt-4 p-4 bg-blue-50 rounded-xl">
                 <p className="text-sm text-blue-800 italic">
-                  "{article.expertQuotes[0].quote}"
+                  &ldquo;{article.expertQuotes[0].quote}&rdquo;
                 </p>
                 <p className="text-xs text-blue-600 mt-2">
                   — {article.expertQuotes[0].author}

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import {
   FitzpatrickSelector,
   FitzpatrickResult,
-} from '../components/fitzpatrick';
+} from '../../components/fitzpatrick';
 
 export default function FitzpatrickTestPage() {
   const [result, setResult] = useState<FitzpatrickResult | null>(null);

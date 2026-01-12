@@ -10,7 +10,7 @@
  */
 
 import { NextResponse } from 'next/server';
-import { q } from '@/lib/db';
+import { query } from '@/lib/db';
 import { getSessionUser, clearAuthCookiesServer } from '@/lib/auth/jwt';
 import { TABLE_MEMBERS } from '@/constants/tables';
 
@@ -39,7 +39,7 @@ export async function DELETE() {
     // === 1. Skincare 관련 데이터 삭제 ===
 
     // 1-1. skincare_routine_steps 삭제
-    const routineStepsResult = await q(
+    const routineStepsResult = await query(
       `DELETE FROM skincare_routine_steps
        WHERE routine_uuid IN (
          SELECT id_uuid FROM skincare_routines WHERE id_uuid_member = $1
@@ -49,21 +49,21 @@ export async function DELETE() {
     deleted.skincare_routine_steps = routineStepsResult.rowCount || 0;
 
     // 1-2. skincare_routines 삭제
-    const routinesResult = await q(
+    const routinesResult = await query(
       `DELETE FROM skincare_routines WHERE id_uuid_member = $1`,
       [userId]
     );
     deleted.skincare_routines = routinesResult.rowCount || 0;
 
     // 1-3. skincare_onboarding 삭제
-    const onboardingResult = await q(
+    const onboardingResult = await query(
       `DELETE FROM skincare_onboarding WHERE id_uuid_member = $1`,
       [userId]
     );
     deleted.skincare_onboarding = onboardingResult.rowCount || 0;
 
     // 1-4. product_my_beauty_box 삭제
-    const beautyBoxResult = await q(
+    const beautyBoxResult = await query(
       `DELETE FROM product_my_beauty_box WHERE id_uuid_member = $1`,
       [userId]
     );
@@ -72,7 +72,7 @@ export async function DELETE() {
     // === 2. 회원 탈퇴 (withdrawAction 로직) ===
 
     // 2-1. members 테이블에서 삭제
-    const membersResult = await q(
+    const membersResult = await query(
       `DELETE FROM ${TABLE_MEMBERS} WHERE id_uuid = $1`,
       [userId]
     );

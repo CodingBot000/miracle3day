@@ -8,14 +8,17 @@ import {
   ChatInput,
   ChatHeader,
   TypingIndicator,
+  ApprovalButtons,
   Message,
   UITexts,
+  AIAgentResponse,
 } from './components';
+import { aiAgentClient } from '@/lib/ai-agent-client';
 
 const UI_TEXTS: Record<'ko' | 'en', UITexts> = {
   ko: {
     title: 'AI 뷰티 상담',
-    subtitle: 'Beauty AI Agent',
+    subtitle: 'Beauty AI Agent v7.8',
     placeholder: '피부과, 성형외과, 스킨케어 등 무엇이든 물어보세요...',
     send: '전송',
     typing: '답변을 작성 중...',
@@ -27,10 +30,15 @@ const UI_TEXTS: Record<'ko' | 'en', UITexts> = {
       '여드름 피부 관리 방법',
     ],
     error: '죄송합니다. 오류가 발생했습니다. 다시 시도해주세요.',
+    approvalTitle: '다음 작업을 실행할까요?',
+    approvalConfirm: '진행',
+    approvalCancel: '취소',
+    approvalModify: '수정',
+    clarificationHint: '더 자세한 정보가 필요합니다.',
   },
   en: {
     title: 'AI Beauty Consultation',
-    subtitle: 'Beauty AI Agent',
+    subtitle: 'Beauty AI Agent v7.8',
     placeholder: 'Ask about dermatology, plastic surgery, skincare...',
     send: 'Send',
     typing: 'Typing...',
@@ -42,6 +50,11 @@ const UI_TEXTS: Record<'ko' | 'en', UITexts> = {
       'Acne skin care tips',
     ],
     error: 'Sorry, an error occurred. Please try again.',
+    approvalTitle: 'Should I execute these actions?',
+    approvalConfirm: 'Proceed',
+    approvalCancel: 'Cancel',
+    approvalModify: 'Modify',
+    clarificationHint: 'I need more information.',
   },
 };
 
@@ -54,6 +67,8 @@ export default function AIAgentPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [sessionId, setSessionId] = useState<string | null>(null);
+  const [pendingApproval, setPendingApproval] = useState<AIAgentResponse | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Initialize with greeting message
@@ -70,7 +85,48 @@ export default function AIAgentPage() {
   // Scroll to bottom when new messages arrive
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+  }, [messages, pendingApproval]);
+
+  // Process AI response
+  const processResponse = (response: AIAgentResponse) => {
+    // Save session ID
+    if (response.session_id) {
+      setSessionId(response.session_id);
+    }
+
+    // Check if approval is needed
+    if (response.approval_needed) {
+      setPendingApproval(response);
+
+      // Add system message with execution plan
+      const systemMessage: Message = {
+        id: `${Date.now()}-system`,
+        role: 'system',
+        content: response.message,
+        timestamp: new Date(),
+        metadata: {
+          status: response.status,
+          executionPlan: response.execution_plan || undefined,
+          confidence: response.confidence || undefined,
+        },
+      };
+      setMessages((prev) => [...prev, systemMessage]);
+    } else {
+      // Normal response
+      const assistantMessage: Message = {
+        id: `${Date.now()}-assistant`,
+        role: 'assistant',
+        content: response.message,
+        timestamp: new Date(),
+        metadata: {
+          status: response.status,
+          confidence: response.confidence || undefined,
+          apiCalls: response.api_calls,
+        },
+      };
+      setMessages((prev) => [...prev, assistantMessage]);
+    }
+  };
 
   // Send message
   const handleSend = async (messageText?: string) => {
@@ -89,36 +145,48 @@ export default function AIAgentPage() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/ai_agent', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: text }),
-      });
+      const result = await aiAgentClient.sendMessage(text, sessionId || undefined);
 
-      const data = await response.json();
-
-      if (!data.success) {
-        throw new Error(data.message || 'Failed to get response');
+      if (!result.success || !result.data) {
+        throw new Error(result.message || 'Failed to get response');
       }
 
-      // Add assistant message
-      const assistantMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: 'assistant',
-        content: data.data.answer,
-        timestamp: new Date(),
-        metadata: {
-          complexity: data.data.complexity,
-          apiCalls: data.data.apiCalls,
-          iteration: data.data.iteration,
-        },
-      };
-      setMessages((prev) => [...prev, assistantMessage]);
+      processResponse(result.data);
     } catch (error) {
       console.error('AI Agent error:', error);
 
       const errorMessage: Message = {
-        id: (Date.now() + 1).toString(),
+        id: `${Date.now()}-error`,
+        role: 'assistant',
+        content: ui.error,
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Handle approval feedback
+  const handleApprovalFeedback = async (feedback: 'ok' | 'cancel' | 'modify') => {
+    if (!pendingApproval || !sessionId) return;
+
+    setIsLoading(true);
+    setPendingApproval(null);
+
+    try {
+      const result = await aiAgentClient.sendFeedback(sessionId, feedback);
+
+      if (!result.success || !result.data) {
+        throw new Error(result.message || 'Failed to send feedback');
+      }
+
+      processResponse(result.data);
+    } catch (error) {
+      console.error('AI Agent feedback error:', error);
+
+      const errorMessage: Message = {
+        id: `${Date.now()}-error`,
         role: 'assistant',
         content: ui.error,
         timestamp: new Date(),
@@ -147,6 +215,21 @@ export default function AIAgentPage() {
           ))}
         </AnimatePresence>
 
+        {/* Approval Buttons */}
+        {pendingApproval && !isLoading && (
+          <ApprovalButtons
+            onApprove={() => handleApprovalFeedback('ok')}
+            onCancel={() => handleApprovalFeedback('cancel')}
+            onModify={() => handleApprovalFeedback('modify')}
+            disabled={isLoading}
+            labels={{
+              approve: ui.approvalConfirm || '진행',
+              cancel: ui.approvalCancel || '취소',
+              modify: ui.approvalModify || '수정',
+            }}
+          />
+        )}
+
         {/* Typing Indicator */}
         {isLoading && <TypingIndicator text={ui.typing} />}
 
@@ -159,7 +242,7 @@ export default function AIAgentPage() {
         onChange={setInput}
         onSend={() => handleSend()}
         placeholder={ui.placeholder}
-        disabled={isLoading}
+        disabled={isLoading || !!pendingApproval}
       />
     </div>
   );

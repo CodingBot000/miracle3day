@@ -1,22 +1,15 @@
-export interface Message {
-  id: string;
-  role: 'user' | 'assistant';
-  content: string;
-  timestamp: Date;
-  metadata?: {
-    complexity?: string;
-    apiCalls?: number;
-    iteration?: number;
-  };
-}
+/**
+ * AI Agent 컴포넌트 타입 정의
+ * 공통 타입은 @/types/ai-agent에서 re-export
+ */
 
-export interface UITexts {
-  title: string;
-  subtitle: string;
-  placeholder: string;
-  send: string;
-  typing: string;
-  greeting: string;
-  suggestions: string[];
-  error: string;
-}
+// 공통 타입 re-export
+export type {
+  Message,
+  MessageRole,
+  MessageMetadata,
+  UITexts,
+  AIAgentResponse,
+  AIAgentStatus,
+  ExecutionPlanItem,
+} from '@/types/ai-agent';

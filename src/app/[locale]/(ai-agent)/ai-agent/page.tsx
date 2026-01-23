@@ -15,6 +15,9 @@ import {
 } from './components';
 import { aiAgentClient } from '@/lib/ai-agent-client';
 
+// 로컬 개발 환경에서만 디버그 정보 표시 (신뢰도, API 호출 횟수, 실행 계획 등)
+const IS_DEV_MODE = process.env.NEXT_PUBLIC_AI_AGENT_DEV_MODE === 'true';
+
 const UI_TEXTS: Record<'ko' | 'en', UITexts> = {
   ko: {
     title: 'AI 뷰티 상담',
@@ -169,7 +172,53 @@ export default function AIAgentPage() {
 
   // Handle approval feedback
   const handleApprovalFeedback = async (feedback: 'ok' | 'cancel' | 'modify') => {
-    if (!pendingApproval || !sessionId) return;
+    if (!pendingApproval) return;
+
+    // "수정" 버튼: 로컬에서 처리 (서버 호출 없이 입력창 활성화)
+    if (feedback === 'modify') {
+      setPendingApproval(null);
+      const modifyMessage: Message = {
+        id: `${Date.now()}-modify`,
+        role: 'assistant',
+        content: lang === 'ko'
+          ? '질문을 다시 입력해주세요.'
+          : 'Please rephrase your question.',
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, modifyMessage]);
+      return;
+    }
+
+    // "취소" 버튼: 로컬에서 처리
+    if (feedback === 'cancel') {
+      setPendingApproval(null);
+      const cancelMessage: Message = {
+        id: `${Date.now()}-cancel`,
+        role: 'assistant',
+        content: lang === 'ko'
+          ? '작업이 취소되었습니다. 다른 질문이 있으시면 말씀해주세요.'
+          : 'Action cancelled. Feel free to ask another question.',
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, cancelMessage]);
+      return;
+    }
+
+    // "진행" 버튼: 서버 호출
+    if (!sessionId) {
+      // 세션이 없으면 로컬에서 처리
+      setPendingApproval(null);
+      const noSessionMessage: Message = {
+        id: `${Date.now()}-nosession`,
+        role: 'assistant',
+        content: lang === 'ko'
+          ? '세션이 만료되었습니다. 질문을 다시 입력해주세요.'
+          : 'Session expired. Please ask your question again.',
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, noSessionMessage]);
+      return;
+    }
 
     setIsLoading(true);
     setPendingApproval(null);
@@ -211,6 +260,7 @@ export default function AIAgentPage() {
               message={message}
               suggestions={message.id === 'greeting' ? ui.suggestions : undefined}
               onSuggestionClick={handleSend}
+              showDevInfo={IS_DEV_MODE}
             />
           ))}
         </AnimatePresence>

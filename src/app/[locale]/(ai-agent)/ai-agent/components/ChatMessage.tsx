@@ -7,6 +7,7 @@ interface ChatMessageProps {
   message: Message;
   suggestions?: string[];
   onSuggestionClick?: (suggestion: string) => void;
+  showDevInfo?: boolean; // 로컬 개발 환경에서만 메타데이터 표시
 }
 
 // 상태별 뱃지 스타일
@@ -29,6 +30,7 @@ export default function ChatMessage({
   message,
   suggestions,
   onSuggestionClick,
+  showDevInfo = false,
 }: ChatMessageProps) {
   const isUser = message.role === 'user';
   const isSystem = message.role === 'system';
@@ -65,8 +67,8 @@ export default function ChatMessage({
           {formatContent(message.content)}
         </div>
 
-        {/* Execution Plan (for system messages) */}
-        {message.metadata?.executionPlan && message.metadata.executionPlan.length > 0 && (
+        {/* Execution Plan (for system messages) - 로컬 개발 환경에서만 표시 */}
+        {showDevInfo && message.metadata?.executionPlan && message.metadata.executionPlan.length > 0 && (
           <div className="mt-3 pt-3 border-t border-amber-200">
             <p className="text-xs font-medium text-amber-700 mb-2">실행 계획:</p>
             <ul className="space-y-1">
@@ -79,8 +81,8 @@ export default function ChatMessage({
           </div>
         )}
 
-        {/* Metadata (for assistant messages) */}
-        {!isUser && !isSystem && message.metadata && (
+        {/* Metadata (for assistant messages) - 로컬 개발 환경에서만 표시 */}
+        {showDevInfo && !isUser && !isSystem && message.metadata && (
           <div className="mt-2 pt-2 border-t border-gray-100 flex flex-wrap items-center gap-2">
             {/* Status Badge */}
             {message.metadata.status && (

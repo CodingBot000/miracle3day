@@ -1,20 +1,39 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Message } from './types';
+import type { Message, AIAgentStatus } from './types';
 
 interface ChatMessageProps {
   message: Message;
   suggestions?: string[];
   onSuggestionClick?: (suggestion: string) => void;
+  showDevInfo?: boolean; // 로컬 개발 환경에서만 메타데이터 표시
 }
+
+// 상태별 뱃지 스타일
+const STATUS_BADGE_STYLES: Record<AIAgentStatus, string> = {
+  complete: 'bg-green-100 text-green-700',
+  waiting: 'bg-yellow-100 text-yellow-700',
+  clarification: 'bg-blue-100 text-blue-700',
+  error: 'bg-red-100 text-red-700',
+};
+
+// 상태별 라벨
+const STATUS_LABELS: Record<AIAgentStatus, string> = {
+  complete: '완료',
+  waiting: '확인 대기',
+  clarification: '추가 정보 필요',
+  error: '오류',
+};
 
 export default function ChatMessage({
   message,
   suggestions,
   onSuggestionClick,
+  showDevInfo = false,
 }: ChatMessageProps) {
   const isUser = message.role === 'user';
+  const isSystem = message.role === 'system';
 
   // Format message content with line breaks
   const formatContent = (content: string) => {
@@ -38,6 +57,8 @@ export default function ChatMessage({
         className={`max-w-[85%] rounded-2xl px-4 py-3 ${
           isUser
             ? 'bg-blue-600 text-white rounded-br-md'
+            : isSystem
+            ? 'bg-amber-50 text-amber-900 border border-amber-200 rounded-bl-md'
             : 'bg-white text-gray-800 shadow-sm border border-gray-100 rounded-bl-md'
         }`}
       >
@@ -46,20 +67,47 @@ export default function ChatMessage({
           {formatContent(message.content)}
         </div>
 
-        {/* Metadata (for assistant messages) */}
-        {!isUser && message.metadata?.complexity && (
-          <div className="mt-2 pt-2 border-t border-gray-100 flex items-center gap-2">
-            <span
-              className={`text-xs px-2 py-0.5 rounded-full ${
-                message.metadata.complexity === 'simple'
-                  ? 'bg-green-100 text-green-700'
-                  : message.metadata.complexity === 'medium'
-                  ? 'bg-yellow-100 text-yellow-700'
-                  : 'bg-red-100 text-red-700'
-              }`}
-            >
-              {message.metadata.complexity}
-            </span>
+        {/* Execution Plan (for system messages) - 로컬 개발 환경에서만 표시 */}
+        {showDevInfo && message.metadata?.executionPlan && message.metadata.executionPlan.length > 0 && (
+          <div className="mt-3 pt-3 border-t border-amber-200">
+            <p className="text-xs font-medium text-amber-700 mb-2">실행 계획:</p>
+            <ul className="space-y-1">
+              {message.metadata.executionPlan.map((step, i) => (
+                <li key={i} className="text-xs text-amber-800 font-mono bg-amber-100 px-2 py-1 rounded">
+                  {i + 1}. {step.tool}({JSON.stringify(step.args)})
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Metadata (for assistant messages) - 로컬 개발 환경에서만 표시 */}
+        {showDevInfo && !isUser && !isSystem && message.metadata && (
+          <div className="mt-2 pt-2 border-t border-gray-100 flex flex-wrap items-center gap-2">
+            {/* Status Badge */}
+            {message.metadata.status && (
+              <span
+                className={`text-xs px-2 py-0.5 rounded-full ${
+                  STATUS_BADGE_STYLES[message.metadata.status]
+                }`}
+              >
+                {STATUS_LABELS[message.metadata.status]}
+              </span>
+            )}
+
+            {/* Confidence */}
+            {message.metadata.confidence !== undefined && (
+              <span className="text-xs text-gray-500">
+                신뢰도: {Math.round(message.metadata.confidence * 100)}%
+              </span>
+            )}
+
+            {/* API Calls */}
+            {message.metadata.apiCalls !== undefined && message.metadata.apiCalls > 0 && (
+              <span className="text-xs text-gray-500">
+                API: {message.metadata.apiCalls}회
+              </span>
+            )}
           </div>
         )}
 
@@ -73,7 +121,7 @@ export default function ChatMessage({
                   onClick={() => onSuggestionClick?.(suggestion)}
                   className="text-left text-sm px-3 py-2 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors"
                 >
-                  💬 {suggestion}
+                  {suggestion}
                 </button>
               ))}
             </div>

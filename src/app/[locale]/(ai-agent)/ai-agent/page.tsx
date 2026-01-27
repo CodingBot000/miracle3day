@@ -72,7 +72,21 @@ export default function AIAgentPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [pendingApproval, setPendingApproval] = useState<AIAgentResponse | null>(null);
+  const [agentVersion, setAgentVersion] = useState<string>('Loading...'); // 🆕 버전 정보 state
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Fetch AI Agent version on mount
+  useEffect(() => {
+    const fetchVersion = async () => {
+      const versionInfo = await aiAgentClient.getVersion();
+      if (versionInfo && versionInfo.version) {
+        setAgentVersion(`Beauty AI Agent v${versionInfo.version}`);
+      } else {
+        setAgentVersion('Beauty AI Agent'); // Fallback if version fetch fails
+      }
+    };
+    fetchVersion();
+  }, []);
 
   // Initialize with greeting message
   useEffect(() => {
@@ -249,7 +263,7 @@ export default function AIAgentPage() {
   return (
     <div className="min-h-screen flex flex-col max-w-2xl mx-auto w-full">
       {/* Header with back button */}
-      <ChatHeader title={ui.title} subtitle={ui.subtitle} />
+      <ChatHeader title={ui.title} subtitle={agentVersion} />
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto px-4 py-4 pb-28 space-y-4">

@@ -88,6 +88,32 @@ export class AIAgentClient {
       };
     }
   }
+
+  /**
+   * AI Agent 버전 정보 가져오기
+   */
+  async getVersion(): Promise<{ version: string; status: string } | null> {
+    try {
+      // Next.js API route를 통해 백엔드 root endpoint 호출
+      const response = await fetch('/api/ai_agent/version', {
+        method: 'GET',
+        signal: AbortSignal.timeout(5000), // 5초 timeout
+      });
+
+      if (!response.ok) {
+        return null;
+      }
+
+      const data = await response.json();
+      return {
+        version: data.version || 'unknown',
+        status: data.status || 'ok',
+      };
+    } catch (error) {
+      console.error('Failed to fetch AI Agent version:', error);
+      return null;
+    }
+  }
 }
 
 // 싱글톤 인스턴스

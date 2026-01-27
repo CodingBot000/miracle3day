@@ -25,7 +25,7 @@
     },
     "ageGroups": {
       "20s": {
-        "heroImage": "/anti_ange_guide/hero/antiage_guide_hero_20s.jpg",
+        "heroImage": "/anti_age_guide/hero/antiage_guide_hero_20s.jpg",
         "title": "The Golden Age of Youth, a Wise Investment for the Future",
         "subtitle": "Glowing skin doesn't maintain itself. Small choices today will change your face in your 30s.",
         "intro": "Skin at twenty is like a freshly blossomed petal—dewy and elastic. But don't be deceived into thinking this golden time will last forever. Even now, invisible seeds of time are quietly taking root beneath the surface.",
@@ -114,7 +114,7 @@
         }
       },
       "30s": {
-        "heroImage": "/anti_ange_guide/hero/antiage_guide_hero_30s.jpg",
+        "heroImage": "/anti_age_guide/hero/antiage_guide_hero_30s.jpg",
         "title": "The Last Line of Youth's Defense—A Time for Wise Choices",
         "subtitle": "When smile lines no longer look cute and your face looks tired, that's when to begin.",
         "intro": "Your 30s feel peculiar. You still think you're young, yet the mirror says otherwise. Morning firmness isn't what it used to be, and lines linger after you smile—these are signals of your 30s.",
@@ -217,7 +217,7 @@
         }
       },
       "40s": {
-        "heroImage": "/anti_ange_guide/hero/antiage_guide_hero_40s.jpg",
+        "heroImage": "/anti_age_guide/hero/antiage_guide_hero_40s.jpg",
         "title": "It's Not Your Skin Collapsing—It's Your Confidence",
         "subtitle": "Nasolabial folds and double chins shift a face from 'tired' to 'aged.'",
         "intro": "Your 40s are a peak and a turning point. Signs of aging accelerate—but this decade is also a golden window for visible transformation.",
@@ -341,7 +341,7 @@
         }
       },
       "50s": {
-        "heroImage": "/anti_ange_guide/hero/antiage_guide_hero_50s.jpg",
+        "heroImage": "/anti_age_guide/hero/antiage_guide_hero_50s.jpg",
         "title": "When the Waves of Aging Grow Rough—Management Before Reversal",
         "subtitle": "It's not just aging—the structure itself starts to fail.",
         "intro": "In your 50s, the aging tide surges. Skin thins, wrinkles deepen, and elasticity drops sharply. Still, active care can slow the 'speed of aging.'",
@@ -457,7 +457,7 @@
         }
       },
       "60s": {
-        "heroImage": "/anti_ange_guide/hero/antiage_guide_hero_60s.jpg",
+        "heroImage": "/anti_age_guide/hero/antiage_guide_hero_60s.jpg",
         "title": "When the Results of Aging Are Plain to See",
         "subtitle": "Your 60s often call for correction more than simple maintenance.",
         "intro": "In your 60s, facial structural aging is evident: deeper wrinkles, thinner skin, and minimal elasticity. With the right combinations, overall impression can still change dramatically.",
@@ -552,7 +552,7 @@
         }
       },
       "70s+": {
-        "heroImage": "/anti_ange_guide/hero/antiage_guide_hero_70s.jpg",
+        "heroImage": "/anti_age_guide/hero/antiage_guide_hero_70s.jpg",
         "title": "A Time to Honor Natural Grace and Dignity",
         "subtitle": "Aim not for forced youth, but for healthy, dignified beauty.",
         "intro": "In your 70s and beyond, skeletal and cutaneous aging is pronounced. Prioritize natural, safe correction and recovery rather than aggressive reversal.",

@@ -159,6 +159,6 @@ module.exports = {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
   // important: true, // Removed to follow Tailwind + shadcn best practices
 }; 

@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import ReactMarkdown from 'react-markdown';
 import type { Message, AIAgentStatus } from './types';
 
 interface ChatMessageProps {
@@ -35,17 +36,6 @@ export default function ChatMessage({
   const isUser = message.role === 'user';
   const isSystem = message.role === 'system';
 
-  // Format message content with line breaks
-  const formatContent = (content: string) => {
-    const lines = content.split('\n');
-    return lines.map((line, i) => (
-      <span key={i}>
-        {line}
-        {i < lines.length - 1 && <br />}
-      </span>
-    ));
-  };
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -63,8 +53,27 @@ export default function ChatMessage({
         }`}
       >
         {/* Message Content */}
-        <div className="text-sm leading-relaxed whitespace-pre-wrap">
-          {formatContent(message.content)}
+        <div className="text-sm leading-relaxed prose prose-sm max-w-none">
+          <ReactMarkdown
+            components={{
+              // Customize link styling
+              a: ({ node, ...props }) => (
+                <a
+                  {...props}
+                  className="text-blue-500 hover:text-blue-600 underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                />
+              ),
+              // Preserve line breaks
+              p: ({ node, ...props }) => <p {...props} className="mb-2 last:mb-0" />,
+              // Customize heading styles
+              h2: ({ node, ...props }) => <h2 {...props} className="text-base font-semibold mt-3 mb-2 first:mt-0" />,
+              h3: ({ node, ...props }) => <h3 {...props} className="text-sm font-semibold mt-2 mb-1" />,
+            }}
+          >
+            {message.content}
+          </ReactMarkdown>
         </div>
 
         {/* Execution Plan (for system messages) - 로컬 개발 환경에서만 표시 */}

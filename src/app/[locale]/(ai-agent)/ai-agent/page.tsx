@@ -174,10 +174,16 @@ export default function AIAgentPage() {
     } catch (error) {
       console.error('AI Agent error:', error);
 
+      // 개발 모드에서는 상세 에러 정보 표시
+      const errorDetails = error instanceof Error ? error.message : String(error);
+      const errorContent = IS_DEV_MODE
+        ? `${ui.error}\n\n[개발자 정보]\n${errorDetails}`
+        : ui.error;
+
       const errorMessage: Message = {
         id: `${Date.now()}-error`,
         role: 'assistant',
-        content: ui.error,
+        content: errorContent,
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, errorMessage]);
@@ -250,10 +256,16 @@ export default function AIAgentPage() {
     } catch (error) {
       console.error('AI Agent feedback error:', error);
 
+      // 개발 모드에서는 상세 에러 정보 표시
+      const errorDetails = error instanceof Error ? error.message : String(error);
+      const errorContent = IS_DEV_MODE
+        ? `${ui.error}\n\n[개발자 정보]\n${errorDetails}`
+        : ui.error;
+
       const errorMessage: Message = {
         id: `${Date.now()}-error`,
         role: 'assistant',
-        content: ui.error,
+        content: errorContent,
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, errorMessage]);

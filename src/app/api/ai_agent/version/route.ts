@@ -16,7 +16,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'Content-Type',
 };
 
-const AI_AGENT_URL = process.env.AI_AGENT_URL || 'http://44.244.60.255:8000';
+const AI_AGENT_URL = process.env.AI_AGENT_URL || 'http://44.244.60.255:8001';
 
 /**
  * OPTIONS 요청 처리 (CORS preflight)

@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
       user_feedback,
     });
 
-    // AI Agent 서버 호출 (30초 타임아웃)
+    // AI Agent 서버 호출 (180000 타임아웃)
     const aiResponse = await fetch(`${AI_AGENT_URL}/chat`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
         session_id: session_id || null,
         user_feedback: user_feedback || null,
       }),
-      signal: AbortSignal.timeout(30000),
+      signal: AbortSignal.timeout(180000),
     });
 
     if (!aiResponse.ok) {

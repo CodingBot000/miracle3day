@@ -45,6 +45,7 @@ export interface AIAgentResponse {
   approval_needed: boolean;
   api_calls: number;
   execution_plan?: ExecutionPlanItem[] | null;
+  execution_logs?: string[] | null; // 🆕 v7.12.2: 실행 로그 (개발 모드용)
 }
 
 // ============================================
@@ -64,6 +65,7 @@ export interface MessageMetadata {
   confidence?: number;
   apiCalls?: number;
   executionPlan?: ExecutionPlanItem[];
+  executionLogs?: string[]; // 🆕 v7.12.2: 실행 로그 (개발 모드용)
 }
 
 /**

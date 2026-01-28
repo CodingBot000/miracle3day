@@ -125,6 +125,7 @@ export default function AIAgentPage() {
           status: response.status,
           executionPlan: response.execution_plan || undefined,
           confidence: response.confidence || undefined,
+          executionLogs: response.execution_logs || undefined,
         },
       };
       setMessages((prev) => [...prev, systemMessage]);
@@ -139,6 +140,7 @@ export default function AIAgentPage() {
           status: response.status,
           confidence: response.confidence || undefined,
           apiCalls: response.api_calls,
+          executionLogs: response.execution_logs || undefined,
         },
       };
       setMessages((prev) => [...prev, assistantMessage]);

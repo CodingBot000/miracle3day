@@ -80,7 +80,7 @@ export default function AIAgentPage() {
     const fetchVersion = async () => {
       const versionInfo = await aiAgentClient.getVersion();
       if (versionInfo && versionInfo.version) {
-        setAgentVersion(`Beauty AI Agent v${versionInfo.version}`);
+        setAgentVersion(`Beauty AI Agent ${versionInfo.version}`);
       } else {
         setAgentVersion('Beauty AI Agent'); // Fallback if version fetch fails
       }

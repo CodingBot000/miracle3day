@@ -164,13 +164,13 @@ export default function AIAgentPage() {
     setIsLoading(true);
 
     try {
-      const result = await aiAgentClient.sendMessage(text, sessionId || undefined);
+      const response = await aiAgentClient.sendMessage(text, sessionId || undefined);
 
-      if (!result.success || !result.data) {
-        throw new Error(result.message || 'Failed to get response');
+      if (response.status === 'error') {
+        throw new Error(response.message || 'Failed to get response');
       }
 
-      processResponse(result.data);
+      processResponse(response);
     } catch (error) {
       console.error('AI Agent error:', error);
 
@@ -246,13 +246,13 @@ export default function AIAgentPage() {
     setPendingApproval(null);
 
     try {
-      const result = await aiAgentClient.sendFeedback(sessionId, feedback);
+      const response = await aiAgentClient.sendFeedback(sessionId, feedback);
 
-      if (!result.success || !result.data) {
-        throw new Error(result.message || 'Failed to send feedback');
+      if (response.status === 'error') {
+        throw new Error(response.message || 'Failed to send feedback');
       }
 
-      processResponse(result.data);
+      processResponse(response);
     } catch (error) {
       console.error('AI Agent feedback error:', error);
 

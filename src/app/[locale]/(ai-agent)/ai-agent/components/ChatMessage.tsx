@@ -93,7 +93,7 @@ export default function ChatMessage({
         {/* Execution Logs - 로컬 개발 환경에서만 표시 */}
         {showDevInfo && message.metadata?.executionLogs && message.metadata.executionLogs.length > 0 && (
           <div className="mt-3 pt-3 border-t border-blue-200 bg-blue-50 rounded">
-            <p className="text-xs font-medium text-blue-700 mb-2 px-2 pt-2">🔍 실행 로그:</p>
+            <p className="text-xs font-medium text-blue-700 mb-2 px-2 pt-2">실행 로그:</p>
             <div className="max-h-64 overflow-y-auto px-2 pb-2">
               <ul className="space-y-0.5">
                 {message.metadata.executionLogs.map((log, i) => (

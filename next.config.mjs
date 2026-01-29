@@ -55,7 +55,7 @@ const nextConfig = {
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "img-src 'self' blob: data: https: http:",
       "font-src 'self' https://fonts.gstatic.com data:",
-      "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://maps.googleapis.com https://*.googleapis.com https://beauty-bucket-public.s3.us-west-2.amazonaws.com https://chat.stream-io-api.com https://api.stream-io-api.com https://getstream.io wss://chat.stream-io-api.com wss://api.stream-io-api.com ws: wss:",
+      "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://maps.googleapis.com https://*.googleapis.com https://beauty-bucket-public.s3.us-west-2.amazonaws.com https://chat.stream-io-api.com https://api.stream-io-api.com https://getstream.io https://api.mimotok.com wss://chat.stream-io-api.com wss://api.stream-io-api.com ws: wss:",
       "frame-src 'self' https://www.google.com https://maps.google.com https://*.daily.co",
       "object-src 'none'",
       "base-uri 'self'",

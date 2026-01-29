@@ -20,18 +20,20 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'Content-Type',
 };
 
-// AI Agent 서버 응답 타입 (snake_case)
+// AI Agent 서버 응답 타입 (camelCase - FastAPI v7.13+)
+// FastAPI에서 직접 camelCase로 반환 (Vercel timeout 제약으로 proxy 제거)
 interface AIAgentServerResponse {
   status: 'waiting' | 'complete' | 'clarification' | 'error';
   message: string;
-  session_id?: string | null;
+  sessionId?: string | null;
   confidence?: number | null;
-  approval_needed: boolean;
-  api_calls: number;
-  execution_plan?: Array<{
+  approvalNeeded: boolean;
+  apiCalls: number;
+  executionPlan?: Array<{
     tool: string;
     args: Record<string, unknown>;
   }> | null;
+  executionLogs?: string[] | null;
 }
 
 const AI_AGENT_URL = process.env.AI_AGENT_URL || 'http://44.244.60.255:8001';
@@ -99,19 +101,20 @@ export async function POST(request: NextRequest) {
     console.log(`[AI Agent] 응답:`, {
       status: data.status,
       confidence: data.confidence,
-      approval_needed: data.approval_needed,
-      api_calls: data.api_calls,
+      approvalNeeded: data.approvalNeeded,
+      apiCalls: data.apiCalls,
     });
 
-    // 응답 변환 (snake_case → camelCase)
+    // FastAPI가 이미 camelCase로 반환 (변환 불필요)
     const response: AIAgentResponse = {
       status: data.status,
       message: data.message,
-      session_id: data.session_id,
+      session_id: data.sessionId,
       confidence: data.confidence,
-      approval_needed: data.approval_needed,
-      api_calls: data.api_calls,
-      execution_plan: data.execution_plan,
+      approval_needed: data.approvalNeeded,
+      api_calls: data.apiCalls,
+      execution_plan: data.executionPlan,
+      execution_logs: data.executionLogs,
     };
 
     return NextResponse.json(

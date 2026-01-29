@@ -85,6 +85,14 @@ export async function generateMetadata({
         'zh-TW': 'https://mimotok.com/zh-TW',
       },
     },
+    icons: {
+      icon: [
+        { url: '/favicon.png', sizes: '32x32', type: 'image/png' },
+      ],
+      apple: [
+        { url: '/favicon.png', sizes: '180x180', type: 'image/png' },
+      ],
+    },
   };
 }
 

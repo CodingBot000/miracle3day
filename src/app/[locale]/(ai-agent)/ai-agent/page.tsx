@@ -72,21 +72,33 @@ export default function AIAgentPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [pendingApproval, setPendingApproval] = useState<AIAgentResponse | null>(null);
-  const [agentVersion, setAgentVersion] = useState<string>('Loading...'); // 🆕 버전 정보 state
+  const [agentVersion, setAgentVersion] = useState<string>('Loading...');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Fetch AI Agent version on mount
   useEffect(() => {
     const fetchVersion = async () => {
       const versionInfo = await aiAgentClient.getVersion();
-      if (versionInfo && versionInfo.version) {
+      if (versionInfo.version) {
         setAgentVersion(`Beauty AI Agent ${versionInfo.version}`);
       } else {
-        setAgentVersion('Beauty AI Agent'); // Fallback if version fetch fails
+        // 에러 유형 표시
+        let errorSuffix = '';
+        if (versionInfo.httpStatus) {
+          errorSuffix = `(${versionInfo.httpStatus})`;
+        } else if (versionInfo.isTimeout) {
+          errorSuffix = lang === 'ko' ? '(Timeout)' : '(Timeout)';
+        }
+
+        setAgentVersion(
+          lang === 'ko'
+            ? `서버 연결 불가 ${errorSuffix}`.trim()
+            : `Server Offline ${errorSuffix}`.trim()
+        );
       }
     };
     fetchVersion();
-  }, []);
+  }, [lang]);
 
   // Initialize with greeting message
   useEffect(() => {

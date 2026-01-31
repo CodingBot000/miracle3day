@@ -2,9 +2,11 @@
 
 import { Link } from "@/i18n/routing";
 import { MessageSquareText } from "lucide-react";
+import { VscRobot } from "react-icons/vsc";
 import LanguageSwitcherNextIntl from "../LanguageSwitcherNextIntl";
 import AuthClient from "@/components/molecules/auth/AuthClient";
 import { SearchButton } from "@/components/search/SearchButton";
+import { useNavigation } from "@/hooks/useNavigation";
 
 interface HeaderActionsProps {
   /** 아이콘 색상 ('white' | 'black') */
@@ -22,6 +24,8 @@ export default function HeaderActions({
   iconColor = 'black',
   isMobileMode = false
 }: HeaderActionsProps) {
+  const { navigate } = useNavigation();
+
   return (
     <div className="flex items-center gap-2">
       <div className={`flex items-center gap-2 transition-colors duration-300 ${
@@ -29,6 +33,15 @@ export default function HeaderActions({
       }`}>
         {/* Search button */}
         <SearchButton iconColor={iconColor === 'white' ? 'white' : 'currentColor'} />
+
+        {/* AI Agent button */}
+        <button
+          onClick={() => navigate('/ai-agent')}
+          className="flex items-center hover:opacity-70 transition-opacity"
+          aria-label="AI Beauty Consultation"
+        >
+          <VscRobot size={20} />
+        </button>
 
         {/* community */}
         {!isMobileMode && (

@@ -148,8 +148,8 @@ export default function ChatInput({
             className={`text-xs ${voiceState === 'speaking' ? 'text-red-600' : 'text-gray-500'}`}
           >
             {voiceState === 'speaking'
-              ? '🎤 음성 입력 중...'
-              : '⏳ 음성 대기 중... (5초 후 자동 종료)'}
+              ? '음성 입력 중...'
+              : '음성 대기 중... (5초 후 자동 종료)'}
           </span>
         </div>
       )}

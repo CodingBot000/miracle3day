@@ -10,9 +10,9 @@ interface TypingIndicatorProps {
 
 // AI Agent 처리 단계
 const LOADING_STEPS = [
-  { icon: '🔍', textKo: '질문 분석 중...', textEn: 'Analyzing question...' },
-  { icon: '🏥', textKo: '데이터 검색 중...', textEn: 'Searching data...' },
-  { icon: '📝', textKo: '답변 생성 중...', textEn: 'Generating answer...' },
+  { textKo: '질문 분석 중...', textEn: 'Analyzing question...' },
+  { textKo: '데이터 검색 중...', textEn: 'Searching data...' },
+  { textKo: '답변 생성 중...', textEn: 'Generating answer...' },
 ];
 
 export default function TypingIndicator({ text, showSteps = true }: TypingIndicatorProps) {
@@ -59,7 +59,6 @@ export default function TypingIndicator({ text, showSteps = true }: TypingIndica
           {/* Step Indicator */}
           {showSteps ? (
             <div className="flex items-center gap-2">
-              <span className="text-xl animate-pulse">{currentStep.icon}</span>
               <span className="text-sm font-medium">
                 {isKorean ? currentStep.textKo : currentStep.textEn}
               </span>

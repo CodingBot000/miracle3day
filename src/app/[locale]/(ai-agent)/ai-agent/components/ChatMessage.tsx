@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import type { Message, AIAgentStatus } from './types';
 
 interface ChatMessageProps {
@@ -55,6 +56,7 @@ export default function ChatMessage({
         {/* Message Content */}
         <div className="text-sm leading-relaxed prose prose-sm max-w-none">
           <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
             components={{
               // Customize link styling
               a: ({ node, ...props }) => (

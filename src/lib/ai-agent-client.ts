@@ -137,7 +137,7 @@ export class AIAgentClient {
   /**
    * AI Agent 버전 정보 가져오기 (API Route 유지)
    */
-  async getVersion(): Promise<{ version: string; status: string } | null> {
+  async getVersion(): Promise<{ version?: string; status?: string; error?: boolean; httpStatus?: number; isTimeout?: boolean }> {
     try {
       // Next.js API route를 통해 백엔드 root endpoint 호출
       const response = await fetch(this.versionBaseURL, {
@@ -146,7 +146,10 @@ export class AIAgentClient {
       });
 
       if (!response.ok) {
-        return null;
+        return {
+          error: true,
+          httpStatus: response.status,
+        };
       }
 
       const data = await response.json();
@@ -156,7 +159,15 @@ export class AIAgentClient {
       };
     } catch (error) {
       console.error('Failed to fetch AI Agent version:', error);
-      return null;
+
+      // 타임아웃 에러 확인
+      const isTimeout = error instanceof Error &&
+        (error.name === 'TimeoutError' || error.name === 'AbortError');
+
+      return {
+        error: true,
+        isTimeout,
+      };
     }
   }
 }

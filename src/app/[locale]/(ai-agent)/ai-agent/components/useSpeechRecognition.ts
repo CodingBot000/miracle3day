@@ -80,6 +80,14 @@ interface UseSpeechRecognitionReturn {
 const DEFAULT_SILENCE_TIMEOUT = 5000;
 const DEFAULT_LANG = 'ko-KR';
 
+// 모바일 감지
+const isMobile = () => {
+  if (typeof window === 'undefined') return false;
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  );
+};
+
 export function useSpeechRecognition(
   options: UseSpeechRecognitionOptions = {}
 ): UseSpeechRecognitionReturn {
@@ -94,6 +102,7 @@ export function useSpeechRecognition(
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const silenceTimerRef = useRef<NodeJS.Timeout | null>(null);
   const pendingTextRef = useRef<string>('');
+  const lastSpeechTimeRef = useRef<number>(Date.now());
 
   const [voiceState, setVoiceState] = useState<VoiceState>('idle');
   const [isSupported, setIsSupported] = useState(true);
@@ -158,7 +167,10 @@ export function useSpeechRecognition(
       await navigator.mediaDevices.getUserMedia({ audio: true });
 
       const recognition = new SpeechRecognitionAPI();
-      recognition.continuous = true;
+      const mobile = isMobile();
+
+      // 모바일: continuous false, PC: continuous true
+      recognition.continuous = !mobile;
       recognition.interimResults = true;
       recognition.lang = lang;
 
@@ -175,12 +187,24 @@ export function useSpeechRecognition(
           }
         }
 
-        // 현재 인식된 텍스트 업데이트
-        const currentText = pendingTextRef.current + finalTranscript;
-        pendingTextRef.current = currentText;
+        // final result가 있으면 마지막 발화 시간 업데이트 및 타이머 재시작
+        if (finalTranscript) {
+          lastSpeechTimeRef.current = Date.now();
+          const currentText = pendingTextRef.current + finalTranscript;
+          pendingTextRef.current = currentText;
 
-        if (onTranscriptChange) {
-          onTranscriptChange(currentText + interimTranscript);
+          // 발화 후 5초 타이머 재시작
+          stopSilenceTimer();
+          startSilenceTimer();
+
+          if (onTranscriptChange) {
+            onTranscriptChange(currentText + interimTranscript);
+          }
+        } else if (interimTranscript) {
+          // interim result만 있는 경우 (발화 중)
+          if (onTranscriptChange) {
+            onTranscriptChange(pendingTextRef.current + interimTranscript);
+          }
         }
       };
 
@@ -191,7 +215,13 @@ export function useSpeechRecognition(
 
       recognition.onspeechend = () => {
         setVoiceState('listening');
-        startSilenceTimer();
+        // 모바일에서는 speechend 이벤트 후 바로 종료
+        if (mobile) {
+          recognition.stop();
+        } else {
+          // PC에서는 5초 타이머 시작
+          startSilenceTimer();
+        }
       };
 
       recognition.onerror = (event) => {

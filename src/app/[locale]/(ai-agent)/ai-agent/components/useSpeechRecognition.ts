@@ -102,6 +102,7 @@ export function useSpeechRecognition(
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const silenceTimerRef = useRef<NodeJS.Timeout | null>(null);
   const pendingTextRef = useRef<string>('');
+  const lastInterimRef = useRef<string>(''); // 마지막 interim 결과 저장 (모바일용)
   const lastSpeechTimeRef = useRef<number>(Date.now());
 
   const [voiceState, setVoiceState] = useState<VoiceState>('idle');
@@ -146,11 +147,17 @@ export function useSpeechRecognition(
     stopSilenceTimer();
     setVoiceState('idle');
 
-    const finalText = pendingTextRef.current.trim();
+    // 최종 텍스트 결정: pending 결과가 없으면 마지막 interim 결과 사용 (모바일 대응)
+    let finalText = pendingTextRef.current.trim();
+    if (!finalText && lastInterimRef.current) {
+      finalText = lastInterimRef.current.trim();
+    }
+
     if (finalText && onComplete) {
       onComplete(finalText);
     }
     pendingTextRef.current = '';
+    lastInterimRef.current = '';
   }, [stopSilenceTimer, onComplete]);
 
   // 음성 인식 시작
@@ -202,6 +209,8 @@ export function useSpeechRecognition(
           }
         } else if (interimTranscript) {
           // interim result만 있는 경우 (발화 중)
+          // 모바일에서 final result 없이 종료될 수 있으므로 interim도 저장
+          lastInterimRef.current = pendingTextRef.current + interimTranscript;
           if (onTranscriptChange) {
             onTranscriptChange(pendingTextRef.current + interimTranscript);
           }
@@ -215,9 +224,14 @@ export function useSpeechRecognition(
 
       recognition.onspeechend = () => {
         setVoiceState('listening');
-        // 모바일에서는 speechend 이벤트 후 바로 종료
         if (mobile) {
-          recognition.stop();
+          // 모바일에서는 speechend 후 약간의 지연을 두고 종료
+          // (final result가 도착할 시간 확보)
+          setTimeout(() => {
+            if (recognitionRef.current) {
+              recognition.stop();
+            }
+          }, 500);
         } else {
           // PC에서는 5초 타이머 시작
           startSilenceTimer();

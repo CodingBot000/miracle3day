@@ -22,7 +22,7 @@ const UI_TEXTS: Record<'ko' | 'en', UITexts> = {
   ko: {
     title: 'AI 뷰티 상담',
     subtitle: 'Beauty AI Agent v7.8',
-    placeholder: '피부과, 성형외과, 스킨케어 등 무엇이든 물어보세요...',
+    placeholder: '피부고민, 피부과 병원에 대해 무엇이든 물어보세요...',
     send: '전송',
     typing: '답변을 작성 중...',
     greeting:
@@ -31,6 +31,7 @@ const UI_TEXTS: Record<'ko' | 'en', UITexts> = {
       '강남구 피부과 추천해줘',
       '써마지에 대해 알려줘',
       '울쎄라 시술하는 피부과 추천해줘',
+      '탄력있는 피부를 위한 시술 추천해줘',
     ],
     error: '죄송합니다. 오류가 발생했습니다. 다시 시도해주세요.',
     approvalTitle: '다음 작업을 실행할까요?',

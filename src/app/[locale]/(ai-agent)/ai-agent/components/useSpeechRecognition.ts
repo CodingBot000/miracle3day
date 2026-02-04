@@ -80,12 +80,22 @@ interface UseSpeechRecognitionReturn {
 const DEFAULT_SILENCE_TIMEOUT = 5000;
 const DEFAULT_LANG = 'ko-KR';
 
+// 디버깅 로그 (개발 시에만 true로 설정)
+const DEBUG = false;
+const log = (...args: unknown[]) => {
+  if (DEBUG) {
+    console.log('[SpeechRecognition]', ...args);
+  }
+};
+
 // 모바일 감지
 const isMobile = () => {
   if (typeof window === 'undefined') return false;
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+  const result = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
     navigator.userAgent
   );
+  log('isMobile check:', result, 'userAgent:', navigator.userAgent);
+  return result;
 };
 
 export function useSpeechRecognition(
@@ -111,11 +121,13 @@ export function useSpeechRecognition(
   // 음성 인식 지원 여부 확인
   useEffect(() => {
     if (typeof window === 'undefined') {
+      log('SSR environment - not supported');
       setIsSupported(false);
       return;
     }
     const SpeechRecognitionAPI =
       window.SpeechRecognition || window.webkitSpeechRecognition;
+    log('SpeechRecognition API:', SpeechRecognitionAPI ? 'supported' : 'NOT supported');
     if (!SpeechRecognitionAPI) {
       setIsSupported(false);
     }
@@ -144,16 +156,23 @@ export function useSpeechRecognition(
 
   // 음성 인식 종료 처리
   const handleRecognitionEnd = useCallback(() => {
+    log('handleRecognitionEnd called');
+    log('  pendingText:', pendingTextRef.current);
+    log('  lastInterim:', lastInterimRef.current);
+
     stopSilenceTimer();
     setVoiceState('idle');
 
     // 최종 텍스트 결정: pending 결과가 없으면 마지막 interim 결과 사용 (모바일 대응)
     let finalText = pendingTextRef.current.trim();
     if (!finalText && lastInterimRef.current) {
+      log('  Using lastInterim as final (no pending)');
       finalText = lastInterimRef.current.trim();
     }
 
+    log('  finalText to send:', finalText);
     if (finalText && onComplete) {
+      log('  Calling onComplete');
       onComplete(finalText);
     }
     pendingTextRef.current = '';
@@ -162,83 +181,125 @@ export function useSpeechRecognition(
 
   // 음성 인식 시작
   const startListening = useCallback(async () => {
+    log('startListening called');
+
     const SpeechRecognitionAPI =
       window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognitionAPI) {
+      log('SpeechRecognition API not available');
       alert('이 브라우저는 음성 인식을 지원하지 않습니다.');
       return;
     }
 
     try {
-      // 마이크 권한 요청
-      await navigator.mediaDevices.getUserMedia({ audio: true });
+      // 마이크 권한 요청 (권한만 확인하고 스트림은 바로 해제)
+      log('Requesting microphone permission...');
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      // 스트림 트랙 해제 - SpeechRecognition이 마이크에 접근할 수 있도록
+      stream.getTracks().forEach(track => track.stop());
+      log('Microphone permission granted, stream released');
 
       const recognition = new SpeechRecognitionAPI();
       const mobile = isMobile();
 
-      // 모바일: continuous false, PC: continuous true
+      // 모바일: continuous=false (한 번의 발화 후 종료)
+      // PC: continuous=true (연속 발화 가능)
       recognition.continuous = !mobile;
       recognition.interimResults = true;
       recognition.lang = lang;
 
+      log('Recognition config:', {
+        continuous: recognition.continuous,
+        interimResults: recognition.interimResults,
+        lang: recognition.lang,
+        isMobile: mobile,
+      });
+
       recognition.onresult = (event: SpeechRecognitionEvent) => {
+        log('onresult event fired');
+        log('  resultIndex:', event.resultIndex);
+        log('  results.length:', event.results.length);
+
         let finalTranscript = '';
         let interimTranscript = '';
 
         for (let i = event.resultIndex; i < event.results.length; i++) {
           const transcript = event.results[i][0].transcript;
-          if (event.results[i].isFinal) {
+          const isFinal = event.results[i].isFinal;
+          log(`  result[${i}]: isFinal=${isFinal}, transcript="${transcript}"`);
+
+          if (isFinal) {
             finalTranscript += transcript;
           } else {
             interimTranscript += transcript;
           }
         }
 
+        log('  finalTranscript:', finalTranscript);
+        log('  interimTranscript:', interimTranscript);
+
         // final result가 있으면 마지막 발화 시간 업데이트 및 타이머 재시작
         if (finalTranscript) {
           lastSpeechTimeRef.current = Date.now();
-          const currentText = pendingTextRef.current + finalTranscript;
+
+          // 모바일: 각 결과가 전체 문장을 포함하므로 replace
+          // PC: 결과가 부분적이므로 append
+          const currentText = mobile ? finalTranscript : pendingTextRef.current + finalTranscript;
           pendingTextRef.current = currentText;
+          log('  Updated pendingText:', currentText, '(mobile:', mobile, ')');
 
           // 발화 후 5초 타이머 재시작
           stopSilenceTimer();
           startSilenceTimer();
 
           if (onTranscriptChange) {
+            log('  Calling onTranscriptChange with:', currentText + interimTranscript);
             onTranscriptChange(currentText + interimTranscript);
           }
         } else if (interimTranscript) {
           // interim result만 있는 경우 (발화 중)
-          // 모바일에서 final result 없이 종료될 수 있으므로 interim도 저장
-          lastInterimRef.current = pendingTextRef.current + interimTranscript;
+          // 모바일: replace, PC: append
+          const currentText = mobile ? interimTranscript : pendingTextRef.current + interimTranscript;
+          lastInterimRef.current = currentText;
+          log('  Updated lastInterim:', currentText, '(mobile:', mobile, ')');
           if (onTranscriptChange) {
-            onTranscriptChange(pendingTextRef.current + interimTranscript);
+            log('  Calling onTranscriptChange (interim):', currentText);
+            onTranscriptChange(currentText);
           }
         }
       };
 
       recognition.onspeechstart = () => {
+        log('onspeechstart fired');
         setVoiceState('speaking');
         stopSilenceTimer();
       };
 
       recognition.onspeechend = () => {
+        log('onspeechend fired');
+        log('  Current pendingText:', pendingTextRef.current);
+        log('  Current lastInterim:', lastInterimRef.current);
+
         setVoiceState('listening');
         if (mobile) {
           // 모바일에서는 speechend 후 약간의 지연을 두고 종료
           // (final result가 도착할 시간 확보)
+          log('  Mobile: waiting 500ms before stop');
           setTimeout(() => {
+            log('  Mobile: 500ms passed, stopping recognition');
             if (recognitionRef.current) {
               recognition.stop();
             }
           }, 500);
         } else {
           // PC에서는 5초 타이머 시작
+          log('  PC: starting silence timer');
           startSilenceTimer();
         }
       };
 
       recognition.onerror = (event) => {
+        log('onerror fired:', event.error);
         console.error('Speech recognition error:', event.error);
         if (event.error === 'not-allowed') {
           alert(
@@ -249,15 +310,19 @@ export function useSpeechRecognition(
       };
 
       recognition.onend = () => {
+        log('onend fired');
         handleRecognitionEnd();
       };
 
       recognitionRef.current = recognition;
       pendingTextRef.current = initialValue;
+      log('Calling recognition.start()');
       recognition.start();
+      log('recognition.start() called successfully');
       setVoiceState('listening');
       startSilenceTimer();
     } catch (error) {
+      log('Error in startListening:', error);
       console.error('Microphone permission error:', error);
       alert(
         '마이크 권한이 필요합니다. 브라우저 설정에서 마이크 권한을 허용해주세요.'

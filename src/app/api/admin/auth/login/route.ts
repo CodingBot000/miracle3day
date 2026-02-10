@@ -83,6 +83,10 @@ export async function POST(req: NextRequest) {
   const res = NextResponse.json({ ok: true });
   setAuthCookies(res, tokens.accessToken, tokens.refreshToken);
   console.log("[AUTH-LOGIN DEBUG] Step10 JWT cookies set");
+  console.log("[AUTH-LOGIN DEBUG] 환경:", {
+    NODE_ENV: process.env.NODE_ENV,
+    APP_URL: process.env.APP_URL,
+  });
 
   // 5) 프런트에서 성공 여부만 보면 되게 최소 정보 반환
   console.log("[AUTH-LOGIN DEBUG] Step11 login success response", { email });

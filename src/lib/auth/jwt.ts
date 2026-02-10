@@ -115,8 +115,19 @@ export async function verifyRefreshToken(token: string): Promise<RefreshTokenPay
 export async function readAccessToken(): Promise<AccessTokenPayload | null> {
   const cookieStore = await cookies();
   const token = cookieStore.get(ACCESS_TOKEN_COOKIE)?.value;
+
+  console.log('[readAccessToken]', {
+    cookieName: ACCESS_TOKEN_COOKIE,
+    hasToken: !!token,
+    allCookies: Array.from(cookieStore.getAll()).map(c => c.name),
+  });
+
   if (!token) return null;
-  return verifyAccessToken(token);
+  const payload = await verifyAccessToken(token);
+
+  console.log('[readAccessToken] Verification result:', payload ? 'valid' : 'invalid');
+
+  return payload;
 }
 
 /**
@@ -160,6 +171,13 @@ export async function getSessionUser(): Promise<SessionUser | null> {
  */
 function getCookieOptions(maxAge: number) {
   const isProduction = process.env.NODE_ENV === "production";
+
+  console.log('[Cookie Options]', {
+    isProduction,
+    NODE_ENV: process.env.NODE_ENV,
+    APP_URL: process.env.APP_URL,
+  });
+
   return {
     httpOnly: true,
     secure: isProduction,

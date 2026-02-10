@@ -10,6 +10,17 @@ const limiter = rateLimit({
   interval: 60 * 1000, // 1분 = 60,000ms
 });
 
+// 디버깅용 GET 엔드포인트
+export async function GET() {
+  return NextResponse.json({
+    ok: true,
+    message: "Login API is working",
+    argon2Loaded: typeof hash !== 'undefined' && typeof verify !== 'undefined',
+    nodeVersion: process.version,
+    platform: process.platform,
+  });
+}
+
 export async function POST(req: NextRequest) {
   // ============================================
   // Rate Limiting 체크

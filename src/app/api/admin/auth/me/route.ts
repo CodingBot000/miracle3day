@@ -4,6 +4,10 @@ import { readAccessToken, readAdminSession } from "@/lib/auth/jwt";
 
 export async function GET() {
   console.log('[API /auth/me] 세션 확인 요청');
+  console.log('[API /auth/me] 환경:', {
+    NODE_ENV: process.env.NODE_ENV,
+    APP_URL: process.env.APP_URL,
+  });
 
   // 통합 JWT 우선, 기존 Admin JWT 호환
   const accessToken = await readAccessToken();
@@ -11,11 +15,13 @@ export async function GET() {
 
   const session = accessToken || oldAdminSession;
 
-  console.log('[API /auth/me] 세션 데이터:', session);
+  console.log('[API /auth/me] Access Token:', accessToken ? 'exists' : 'null');
+  console.log('[API /auth/me] Old Admin Session:', oldAdminSession ? 'exists' : 'null');
+  console.log('[API /auth/me] 최종 세션 데이터:', session);
 
   if (!session) {
     console.log('[API /auth/me] ❌ 세션 없음 - 401 반환');
-    return NextResponse.json({ ok: false }, { status: 401 });
+    return NextResponse.json({ ok: false, error: 'NO_SESSION' }, { status: 401 });
   }
 
   // Admin 테이블에서 id_uuid_hospital 조회

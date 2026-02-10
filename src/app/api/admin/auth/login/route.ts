@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { pool } from "@/lib/db";
-import argon2 from "argon2";
+import { hash, verify } from "@node-rs/argon2";
 import rateLimit from "@/lib/rate-limit";
 import { generateTokenPair, setAuthCookies } from "@/lib/auth/jwt";
 import type { TokenPayloadInput } from "@/lib/auth/types";
@@ -9,6 +9,17 @@ import type { TokenPayloadInput } from "@/lib/auth/types";
 const limiter = rateLimit({
   interval: 60 * 1000, // 1분 = 60,000ms
 });
+
+// 디버깅용 GET 엔드포인트
+export async function GET() {
+  return NextResponse.json({
+    ok: true,
+    message: "Login API is working",
+    argon2Loaded: typeof hash !== 'undefined' && typeof verify !== 'undefined',
+    nodeVersion: process.version,
+    platform: process.platform,
+  });
+}
 
 export async function POST(req: NextRequest) {
   // ============================================
@@ -56,12 +67,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false }, { status: 401 });
   }
 
-  const inputPasswordHash = await argon2.hash(password);
+  const inputPasswordHash = await hash(password);
   console.log("[AUTH-LOGIN DEBUG] Step5 hashed input password", inputPasswordHash);
   console.log("[AUTH-LOGIN DEBUG] Step6 stored password hash", user.password_hash);
 
-  // 2) 비밀번호 검증 (argon2.verify)
-  const passOk = await argon2.verify(user.password_hash, password);
+  // 2) 비밀번호 검증 (@node-rs/argon2)
+  const passOk = await verify(user.password_hash, password);
   console.log("[AUTH-LOGIN DEBUG] Step7 password verification result", passOk);
   if (!passOk) {
     console.log("[AUTH-LOGIN DEBUG] Step8 verification failed", { email });
@@ -83,6 +94,10 @@ export async function POST(req: NextRequest) {
   const res = NextResponse.json({ ok: true });
   setAuthCookies(res, tokens.accessToken, tokens.refreshToken);
   console.log("[AUTH-LOGIN DEBUG] Step10 JWT cookies set");
+  console.log("[AUTH-LOGIN DEBUG] 환경:", {
+    NODE_ENV: process.env.NODE_ENV,
+    APP_URL: process.env.APP_URL,
+  });
 
   // 5) 프런트에서 성공 여부만 보면 되게 최소 정보 반환
   console.log("[AUTH-LOGIN DEBUG] Step11 login success response", { email });

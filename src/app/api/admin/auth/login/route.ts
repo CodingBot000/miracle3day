@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { pool } from "@/lib/db";
-import argon2 from "argon2";
+import { hash, verify } from "@node-rs/argon2";
 import rateLimit from "@/lib/rate-limit";
 import { generateTokenPair, setAuthCookies } from "@/lib/auth/jwt";
 import type { TokenPayloadInput } from "@/lib/auth/types";
@@ -56,12 +56,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false }, { status: 401 });
   }
 
-  const inputPasswordHash = await argon2.hash(password);
+  const inputPasswordHash = await hash(password);
   console.log("[AUTH-LOGIN DEBUG] Step5 hashed input password", inputPasswordHash);
   console.log("[AUTH-LOGIN DEBUG] Step6 stored password hash", user.password_hash);
 
-  // 2) 비밀번호 검증 (argon2.verify)
-  const passOk = await argon2.verify(user.password_hash, password);
+  // 2) 비밀번호 검증 (@node-rs/argon2)
+  const passOk = await verify(user.password_hash, password);
   console.log("[AUTH-LOGIN DEBUG] Step7 password verification result", passOk);
   if (!passOk) {
     console.log("[AUTH-LOGIN DEBUG] Step8 verification failed", { email });

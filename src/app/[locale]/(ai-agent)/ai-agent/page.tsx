@@ -47,11 +47,12 @@ const UI_TEXTS: Record<'ko' | 'en', UITexts> = {
     send: 'Send',
     typing: 'Typing...',
     greeting:
-      "Hello! I'm your Beauty AI consultant.\n\nI can help you with dermatology, plastic surgery, skincare routines, and everything about K-Beauty.",
+      "Hello! I'm your Beauty AI consultant.\n\nI can help you with dermatology and about K-Beauty.",
     suggestions: [
       'Recommend dermatology clinics in Gangnam',
-      'How to use retinol properly',
-      'Acne skin care tips',
+      'Tell me about Thermage',
+      'Recommend clinics offering Ultherapy',
+      'Recommend treatments for skin firmness',
     ],
     error: 'Sorry, an error occurred. Please try again.',
     approvalTitle: 'Should I execute these actions?',

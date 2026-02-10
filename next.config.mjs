@@ -40,12 +40,14 @@ const nextConfig = {
 //   Supabase 시절 배경)
 
 // 당시 정적 라우트 기반의 페이지가 많았기 때문이에요.
-// Supabase + Next.js 조합에서는 보통 “디렉토리 구조 = URL 구조” 식으로 동작해서
+// Next.js 에서는 보통 "디렉토리 구조 = URL 구조" 식으로 동작해서
 // 디렉토리 경로처럼 끝에 / 붙이는 게 자연스러웠어
   trailingSlash: false,
   // Skip static optimization for pages using useSearchParams
   experimental: {
     missingSuspenseWithCSRBailout: false,
+    // @node-rs/argon2 같은 네이티브 모듈을 번들링에서 제외
+    serverComponentsExternalPackages: ['@node-rs/argon2'],
   },
   async headers() {
     // CSP 설정 - Stream Chat 포함

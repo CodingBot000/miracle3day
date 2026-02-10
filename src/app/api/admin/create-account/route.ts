@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { pool } from '@/lib/db';
 import { readSession } from '@/lib/admin/auth';
-import { hash, Algorithm } from '@node-rs/argon2';
+import { hash } from '@node-rs/argon2';
 
 
 export async function POST(req: NextRequest) {
@@ -54,9 +54,8 @@ export async function POST(req: NextRequest) {
 
     console.log('[create-account] ✅ 이메일 중복 없음');
 
-    // 5. 비번 해시 생성 (argon2id)
+    // 5. 비번 해시 생성 (argon2id - 기본값)
     const passwordHash = await hash(password, {
-      algorithm: Algorithm.Argon2id,
       memoryCost: 19456,
       timeCost: 2,
       parallelism: 1,

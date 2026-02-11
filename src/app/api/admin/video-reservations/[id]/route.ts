@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { readSession } from '@/lib/admin/auth';
+import { readAccessToken, readAdminSession } from '@/lib/auth/jwt';
 import { pool } from '@/lib/db';
 import {
   VideoReservationListItem,
@@ -18,8 +18,11 @@ export async function GET(
 ) {
   const { id } = await params;
 
-  // 1. Session check
-  const session = await readSession();
+  // 1. Session check - 통합 JWT 우선, 기존 Admin JWT 호환
+  const accessToken = await readAccessToken();
+  const oldAdminSession = await readAdminSession();
+  const session = accessToken || oldAdminSession;
+
   if (!session) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
@@ -157,8 +160,11 @@ export async function PATCH(
 ) {
   const { id } = await params;
 
-  // 1. Session check
-  const session = await readSession();
+  // 1. Session check - 통합 JWT 우선, 기존 Admin JWT 호환
+  const accessToken = await readAccessToken();
+  const oldAdminSession = await readAdminSession();
+  const session = accessToken || oldAdminSession;
+
   if (!session) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }

@@ -371,19 +371,19 @@ export function VideoConsultReservationAdminPage({
                         병원
                       </th>
                     )}
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[140px]">
                       희망 일시 (KST)
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[140px]">
                       확정 일시
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[100px]">
                       플랫폼
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[120px]">
                       화상상담
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[200px]">
                       액션
                     </th>
                   </tr>
@@ -428,19 +428,19 @@ export function VideoConsultReservationAdminPage({
                           }
                         </td>
                       )}
-                      <td className="px-4 py-4 whitespace-nowrap">
+                      <td className="px-4 py-4 whitespace-nowrap min-w-[140px]">
                         <PreferredTimesCell
                           slots={reservation.requested_slots}
                           earliestStart={reservation.earliest_requested_start}
                         />
                       </td>
-                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900 min-w-[140px]">
                         {reservation.confirmed_start_at
                           ? formatDateTime(reservation.confirmed_start_at)
                           : '-'}
                       </td>
                       {/* 플랫폼 배지 */}
-                      <td className="px-4 py-4 whitespace-nowrap">
+                      <td className="px-4 py-4 whitespace-nowrap min-w-[100px]">
                         {reservation.zoom_meeting_id && (
                           <span className="px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded">
                             Zoom
@@ -457,7 +457,7 @@ export function VideoConsultReservationAdminPage({
                       </td>
                       {/* 화상상담 입장 버튼 */}
                       <td
-                        className="px-4 py-4 whitespace-nowrap"
+                        className="px-4 py-4 whitespace-nowrap min-w-[120px]"
                         onClick={(e) => e.stopPropagation()}
                       >
                         {reservation.status === 'approved' && (
@@ -496,10 +496,10 @@ export function VideoConsultReservationAdminPage({
                         )}
                       </td>
                       <td
-                        className="px-4 py-4 whitespace-nowrap"
+                        className="px-4 py-4 whitespace-nowrap min-w-[200px]"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        <div className="flex gap-1">
+                        <div className="flex gap-1 flex-wrap">
                           {canApprove(reservation.status) && (
                             <Button
                               size="sm"

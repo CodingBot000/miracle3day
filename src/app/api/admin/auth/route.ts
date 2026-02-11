@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { pool } from '@/lib/db';
-import { readSession } from '@/lib/admin/auth';
+import { readAccessToken, readAdminSession } from '@/lib/auth/jwt';
 import { TABLE_ADMIN, TABLE_HOSPITAL_PREPARE } from '@/constants/tables';
 import { createSuccessResponse, createErrorResponse, handleApiError } from '@/lib/admin/api-utils';
 
@@ -15,7 +15,10 @@ export async function GET(request: NextRequest) {
 
     // If no ID in query params or invalid, try to get from session
     if (!adminId || adminId === '' || adminId === 'undefined' || adminId === 'null') {
-      const session = await readSession();
+      // 통합 JWT 우선, 기존 Admin JWT 호환
+      const accessToken = await readAccessToken();
+      const oldAdminSession = await readAdminSession();
+      const session = accessToken || oldAdminSession;
 
       if (!session || !session.sub) {
         return createErrorResponse('Admin ID is required and no valid session found', 401);

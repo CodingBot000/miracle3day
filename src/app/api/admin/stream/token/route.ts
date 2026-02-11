@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { readSession } from '@/lib/admin/auth';
+import { readAccessToken, readAdminSession } from '@/lib/auth/jwt';
 import { pool } from '@/lib/db';
 import { generateAdminToken } from '@/lib/stream/adminToken';
 
@@ -10,12 +10,17 @@ import { generateAdminToken } from '@/lib/stream/adminToken';
 export async function GET() {
   console.log('[API /admin/stream/token] Stream token generation request');
 
-  // 1. Check session
-  const session = await readSession();
+  // 1. Check session (support both new JWT and old admin session)
+  const accessToken = await readAccessToken();
+  const oldAdminSession = await readAdminSession();
+  const session = accessToken || oldAdminSession;
+
   if (!session) {
     console.log('[API /admin/stream/token] ❌ No session - 401');
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+
+  console.log('[API /admin/stream/token] Session type:', accessToken ? 'JWT' : 'Legacy');
 
   // 2. Get hospital info from admin table
   try {

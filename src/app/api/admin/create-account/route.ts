@@ -1,14 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { pool } from '@/lib/db';
-import { readSession } from '@/lib/admin/auth';
+import { readAccessToken, readAdminSession } from '@/lib/auth/jwt';
 import argon2 from 'argon2';
 
 
 export async function POST(req: NextRequest) {
   console.log('[create-account] API 호출됨');
 
-  // 1. 세션 검사
-  const session = await readSession();
+  // 1. 세션 검사 - 통합 JWT 우선, 기존 Admin JWT 호환
+  const accessToken = await readAccessToken();
+  const oldAdminSession = await readAdminSession();
+  const session = accessToken || oldAdminSession;
+
   if (!session) {
     console.log('[create-account] ❌ 세션 없음');
     return NextResponse.json({ ok: false, error: 'UNAUTHORIZED' }, { status: 401 });

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { readSession } from '@/lib/admin/auth';
+import { readAccessToken, readAdminSession } from '@/lib/auth/jwt';
 import { pool } from '@/lib/db';
 import { TABLE_HOSPITAL } from '@/constants/tables';
 import {
@@ -15,8 +15,11 @@ import {
  * 영상상담 예약 목록 조회
  */
 export async function GET(request: NextRequest) {
-  // 1. Session check
-  const session = await readSession();
+  // 1. Session check - 통합 JWT 우선, 기존 Admin JWT 호환
+  const accessToken = await readAccessToken();
+  const oldAdminSession = await readAdminSession();
+  const session = accessToken || oldAdminSession;
+
   if (!session) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
@@ -117,8 +120,13 @@ export async function GET(request: NextRequest) {
     ${whereClause}
   `;
 
+  console.log('[VIDEO-RESERVATIONS] Count Query:', countQuery);
+  console.log('[VIDEO-RESERVATIONS] Query Params:', queryParams);
+
   const { rows: countRows } = await pool.query(countQuery, queryParams);
   const totalCount = parseInt(countRows[0].total, 10);
+
+  console.log('[VIDEO-RESERVATIONS] Total Count:', totalCount);
 
   // 6. Fetch items with pagination
   const offset = (page - 1) * pageSize;
@@ -166,7 +174,12 @@ export async function GET(request: NextRequest) {
     LIMIT $${queryParams.length + 1} OFFSET $${queryParams.length + 2}
   `;
 
+  console.log('[VIDEO-RESERVATIONS] Data Query:', dataQuery);
+  console.log('[VIDEO-RESERVATIONS] Data Query Params:', [...queryParams, pageSize, offset]);
+
   const { rows } = await pool.query(dataQuery, [...queryParams, pageSize, offset]);
+
+  console.log('[VIDEO-RESERVATIONS] Rows Count:', rows.length);
 
   // 7. Transform data
   const items: VideoReservationListItem[] = rows.map((row) => {
